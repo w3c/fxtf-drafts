@@ -1,0 +1,82 @@
+<svg id="svg-root" width="100%" height="100%" 
+  viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!--======================================================================-->
+  <!--=  Copyright 2008 World Wide Web Consortium, (Massachusetts          =-->
+  <!--=  Institute of Technology, European Research Consortium for         =-->
+  <!--=  Informatics and Mathematics (ERCIM), Keio University).            =-->
+  <!--=  All Rights Reserved.                                              =-->
+  <!--=  See http://www.w3.org/Consortium/Legal/.                          =-->
+  <!--======================================================================-->
+  <SVGTestCase xmlns="http://www.w3.org/2000/02/svg/testsuite/description/" 
+    reviewer="[reviewer]" owner="ED" desc="Test filterUnits" status="created"
+    version="$Revision$" testname="$RCSfile$">
+    <d:TestDescription xmlns:d="http://www.w3.org/2000/02/svg/testsuite/description/">
+      <d:Reference xmlns="http://www.w3.org/1999/xhtml" xlink:href="SVGFilter.html#FilterEffectsRegion">
+        <p>
+          This test tests the 'filterUnits' attribute with the value 'userSpaceOnUse'.
+        </p>
+      </d:Reference>
+    </d:TestDescription>
+    <d:OperatorScript xmlns:d="http://www.w3.org/2000/02/svg/testsuite/description/" xmlns="http://www.w3.org/1999/xhtml">
+      <p>
+        Load the test, and inspect the image for any traces of red.
+      </p>
+    </d:OperatorScript>
+    <d:PassCriteria xmlns:d="http://www.w3.org/2000/02/svg/testsuite/description/" xmlns="http://www.w3.org/1999/xhtml">
+      <p>
+        The test has passed if:
+        <ul>
+          <li>The test shows one green rectangle split into two subrectangles that have equal size</li>
+          <li>There is no red visible</li>
+          <li>There is no green visible outside the two stroked subrectangles</li>
+        </ul>
+      </p>
+    </d:PassCriteria>
+  </SVGTestCase>
+  <title id="test-title">$RCSfile$</title>
+  <defs>
+    <font-face
+      font-family="SVGFreeSansASCII"
+      unicode-range="U+0-7F">
+      <font-face-src>
+        <font-face-uri xlink:href="../resources/SVGFreeSans.svg#ascii"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <g id="test-body-content" font-family="SVGFreeSansASCII,sans-serif" font-size="18">
+    
+    <defs>
+      <!-- test percentage resolving -->
+      <filter id="filter11" x="50" y="40" width="79.16%" height="33.33%" filterUnits="userSpaceOnUse">
+        <feFlood flood-color="lime"/>
+      </filter>
+            
+      <!-- test lacuna values -->
+      <filter id="filter12" filterUnits="userSpaceOnUse">
+        <feFlood flood-color="lime"/>
+      </filter>
+    </defs>
+    
+    <rect x="50" y="40" width="380" height="240" fill="red"/>
+    <rect x="50" y="40" width="10" height="10" fill="red" filter="url(#filter11)"/>
+    
+    <svg x="82" y="170" width="316" height="100" overflow="visible">
+      <rect x="259" y="52" width="95" height="60" fill="red" filter="url(#filter12)"/>
+    </svg>
+    
+    <line x1="50" y1="160" x2="430" y2="160" stroke="black"/>
+    <rect x="50" y="40" width="380" height="240" fill="none" stroke="black"/> 
+  </g>
+  <g font-family="SVGFreeSansASCII,sans-serif" font-size="32">
+  <text id="revision" x="10" y="340" stroke="none" 
+    fill="black">$Revision$</text>
+  </g>
+  <rect xmlid="test-frame" x="1" y="1" width="478" height="358" fill="none" stroke="#000"/>
+  <!-- comment out this watermark once the test is approved -->
+  <g id="draft-watermark">
+    <rect x="1" y="1" width="478" height="20" fill="red" stroke="black" stroke-width="1"/>
+    <text font-family="SVGFreeSansASCII,sans-serif" font-weight="bold" font-size="20" x="240" 
+      text-anchor="middle" y="18" stroke-width="0.5" stroke="black" fill="white">DRAFT</text>
+  </g>
+</svg>
