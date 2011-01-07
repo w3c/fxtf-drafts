@@ -1,0 +1,1262 @@
+// // File: svg.idl
+// #ifndef _SVG_IDL_
+// #define _SVG_IDL_
+// 
+// 
+// // For access to DOM2 core
+// #include "dom.idl"
+// 
+// // For access to DOM2 events
+// #include "events.idl"
+// 
+// // For access to those parts from DOM2 CSS OM used by SVG DOM.
+// #include "css.idl"
+// 
+// // For access to those parts from DOM2 Views OM used by SVG DOM.
+// #include "views.idl"
+// 
+// // For access to the SMIL OM used by SVG DOM.
+// #include "smil.idl"
+// 
+// #pragma prefix "dom.w3c.org"
+// #pragma javaPackage "org.w3c.dom"
+
+module dom {
+  exception DOMException { };
+  interface Element { };
+  interface Document { };
+  interface NodeList { };
+};
+
+module svg
+{
+  typedef dom::DOMException DOMException;
+  typedef dom::Element Element;
+  typedef dom::Document Document;
+  typedef dom::NodeList NodeList;
+  
+  /**
+   * The ImageData interface corresponds to pixel data that can be used as input to the SVGFilterElement interface.
+   */
+  interface ImageData {
+    /**
+     * The width of the bitmap that the ImageData represents.
+     */
+    readonly attribute long width;
+    
+    /**
+     * The height of the bitmap that the ImageData represents.
+     */
+    readonly attribute long height;
+    
+    /**
+     * An array of pixel values that is the bitmap. This array must
+     * always be in the form of width×height×4 integer values. The
+     * pixel data is in left-to-right order, starting from the top-left
+     * corner, and going row by row downwards. Every pixel is
+     * represented by four integer values, red, green, blue and alpha,
+     * in that order. The range of each color component is 0..255. The
+     * intent is that this is compatible with the HTML5 [<a href="#ref-html5">HTML5</a>] 
+     * canvas interfaces, in particular see 
+     * <a href="http://www.w3.org/TR/html5/the-canvas.html#imagedata">ImageData</a>.
+     */
+    readonly attribute sequence<octet> data;
+  };
+
+  /**
+   * The <a>SVGFilterElement</a> interface corresponds to the <a>'filter element'</a>
+   * element.
+   */
+  interface SVGFilterElement : 
+                SVGElement,
+                SVGURIReference,
+                SVGLangSpace,
+                SVGExternalResourcesRequired,
+                SVGStylable,
+                SVGUnitTypes { 
+
+    /**
+     * Corresponds to attribute <a>'filterUnits'</a> on the given <a>'filter element'</a>
+     * element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
+     */
+    readonly attribute SVGAnimatedEnumeration filterUnits;
+
+    /**
+     * Corresponds to attribute <a>'primitiveUnits'</a> on the given <a>'filter element'</a>
+     * element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
+     */
+    readonly attribute SVGAnimatedEnumeration primitiveUnits;
+
+    /**
+     * Corresponds to attribute <a>'x'</a> on the given <a>'filter element'</a> element.
+     */
+    readonly attribute SVGAnimatedLength x;
+
+    /**
+     * Corresponds to attribute <a>'y'</a> on the given <a>'filter element'</a> element.
+     */
+    readonly attribute SVGAnimatedLength y;
+
+    /**
+     * Corresponds to attribute <a>'width'</a> on the given <a>'filter element'</a> element.
+     */
+    readonly attribute SVGAnimatedLength width;
+
+    /**
+     * Corresponds to attribute <a>'height'</a> on the given <a>'filter element'</a> element.
+     */
+    readonly attribute SVGAnimatedLength height;
+
+    /**
+     * Corresponds to attribute <a>'filterRes'</a> on the given <a>'filter element'</a>
+     * element.  Contains the X component of attribute <a>'filterRes'</a>.
+     */
+    readonly attribute SVGAnimatedInteger filterResX;
+
+    /**
+     * Corresponds to attribute <a>'filterRes'</a> on the given <a>'filter element'</a>
+     * element.  Contains the Y component (possibly computed automatically) of
+     * attribute <a>'filterRes'</a>.
+     */
+    readonly attribute SVGAnimatedInteger filterResY;
+
+    /**
+     * Sets the values for attribute <a>'filterRes'</a>.
+     *
+     * @param filterResX The X component of attribute <a>'filterRes'</a>.
+     * @param filterResY The Y component of attribute <a>'filterRes'</a>.
+     * @raises DOMException(NO_MODIFICATION_ALLOWED_ERR) Raised on an attempt
+     *   to change the value of a readonly attribute.
+     */
+    void setFilterRes(in unsigned long filterResX, in unsigned long filterResY) raises(DOMException);
+	  
+	  /**
+	   * Applies the filter to the given ImageData object and returns the result.
+	   *
+	   * @param source The image to apply the filter to.
+	   * @return The result of the filter, see <a>ImageData</a> for how to construct this.
+	   */
+	  ImageData apply(in ImageData source);
+  };
+
+  /**
+   * This interface defines the set of DOM attributes that are common across
+   * the filter primitive interfaces.
+   */
+  interface SVGFilterPrimitiveStandardAttributes : SVGStylable { 
+
+    /**
+     * Corresponds to attribute <a>'x'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedLength x;
+
+    /**
+     * Corresponds to attribute <a>'y'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedLength y;
+
+    /**
+     * Corresponds to attribute <a>'width'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedLength width;
+
+    /**
+     * Corresponds to attribute <a>'height'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedLength height;
+
+    /**
+     * Corresponds to attribute <a>'result'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedString result;
+  };
+
+  /**
+   * The <a>SVGFEBlendElement</a> interface corresponds to the <a>'feBlend'</a>
+   * element.
+   */
+  interface SVGFEBlendElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Blend Mode Types
+     */
+    const unsigned short SVG_FEBLEND_MODE_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'normal'</span>.
+     *
+     * @defgroup Blend Mode Types
+     */
+    const unsigned short SVG_FEBLEND_MODE_NORMAL = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'multiply'</span>.
+     *
+     * @defgroup Blend Mode Types
+     */
+    const unsigned short SVG_FEBLEND_MODE_MULTIPLY = 2;
+
+    /**
+     * Corresponds to value <span class="attr-value">'screen'</span>.
+     *
+     * @defgroup Blend Mode Types
+     */
+    const unsigned short SVG_FEBLEND_MODE_SCREEN = 3;
+
+    /**
+     * Corresponds to value <span class="attr-value">'darken'</span>.
+     *
+     * @defgroup Blend Mode Types
+     */
+    const unsigned short SVG_FEBLEND_MODE_DARKEN = 4;
+
+    /**
+     * Corresponds to value <span class="attr-value">'lighten'</span>.
+     *
+     * @defgroup Blend Mode Types
+     */
+    const unsigned short SVG_FEBLEND_MODE_LIGHTEN = 5;
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feBlend'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'in2'</a> on the given <a>'feBlend'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in2;
+
+    /**
+     * Corresponds to attribute <a>'mode'</a> on the given <a>'feBlend'</a>
+     * element.  Takes one of the SVG_FEBLEND_MODE_* constants defined on
+     * this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration mode;
+  };
+
+  /**
+   * The <a>SVGFEColorMatrixElement</a> interface corresponds to the
+   * <a>'feColorMatrix'</a> element.
+   */
+  interface SVGFEColorMatrixElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Color Matrix Types
+     */
+    const unsigned short SVG_FECOLORMATRIX_TYPE_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'matrix'</span>.
+     *
+     * @defgroup Color Matrix Types
+     */
+    const unsigned short SVG_FECOLORMATRIX_TYPE_MATRIX = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'saturate'</span>.
+     *
+     * @defgroup Color Matrix Types
+     */
+    const unsigned short SVG_FECOLORMATRIX_TYPE_SATURATE = 2;
+
+    /**
+     * Corresponds to value <span class="attr-value">'hueRotate'</span>.
+     *
+     * @defgroup Color Matrix Types
+     */
+    const unsigned short SVG_FECOLORMATRIX_TYPE_HUEROTATE = 3;
+
+    /**
+     * Corresponds to value <span class="attr-value">'luminanceToAlpha'</span>.
+     *
+     * @defgroup Color Matrix Types
+     */
+    const unsigned short SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA = 4;
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feColorMatrix'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'type'</a> on the given <a>'feColorMatrix'</a>
+     * element.  Takes one of the SVG_FECOLORMATRIX_TYPE_* constants defined
+     * on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration type;
+
+    /**
+     * Corresponds to attribute <a>'values'</a> on the given <a>'feColorMatrix'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumberList values;
+  };
+
+  /**
+   * The <a>SVGFEComponentTransferElement</a> interface corresponds to the
+   * <a>'feComponentTransfer'</a> element.
+   */
+  interface SVGFEComponentTransferElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feComponentTransfer'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+  };
+
+  /**
+   * This interface defines a base interface used by the component transfer
+   * function interfaces.
+   */
+  interface SVGComponentTransferFunctionElement : SVGElement { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Component Transfer Types
+     */
+    const unsigned short SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'identity'</span>.
+     *
+     * @defgroup Component Transfer Types
+     */
+    const unsigned short SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'table'</span>.
+     *
+     * @defgroup Component Transfer Types
+     */
+    const unsigned short SVG_FECOMPONENTTRANSFER_TYPE_TABLE = 2;
+
+    /**
+     * Corresponds to value <span class="attr-value">'discrete'</span>.
+     *
+     * @defgroup Component Transfer Types
+     */
+    const unsigned short SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE = 3;
+
+    /**
+     * Corresponds to value <span class="attr-value">'linear'</span>.
+     *
+     * @defgroup Component Transfer Types
+     */
+    const unsigned short SVG_FECOMPONENTTRANSFER_TYPE_LINEAR = 4;
+
+    /**
+     * Corresponds to value <span class="attr-value">'gamma'</span>.
+     *
+     * @defgroup Component Transfer Types
+     */
+    const unsigned short SVG_FECOMPONENTTRANSFER_TYPE_GAMMA = 5;
+
+    /**
+     * Corresponds to attribute <a>'type'</a> on the given
+     * element.  Takes one of the SVG_FECOMPONENTTRANSFER_TYPE_* constants defined
+     * on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration type;
+
+    /**
+     * Corresponds to attribute <a>'tableValues'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedNumberList  tableValues;
+
+    /**
+     * Corresponds to attribute <a>'slope'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedNumber slope;
+
+    /**
+     * Corresponds to attribute <a>'intercept'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedNumber intercept;
+
+    /**
+     * Corresponds to attribute <a>'amplitude'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedNumber amplitude;
+
+    /**
+     * Corresponds to attribute <a>'exponent'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedNumber exponent;
+
+    /**
+     * Corresponds to attribute <a>'offset'</a> on the given element.
+     */
+    readonly attribute SVGAnimatedNumber offset;
+  };
+
+  /**
+   * The <a>SVGFEFuncRElement</a> interface corresponds to the <a>'feFuncR'</a>
+   * element.
+   */
+  interface SVGFEFuncRElement : SVGComponentTransferFunctionElement {};
+
+  /**
+   * The <a>SVGFEFuncRElement</a> interface corresponds to the <a>'feFuncG'</a>
+   * element.
+   */
+  interface SVGFEFuncGElement : SVGComponentTransferFunctionElement {};
+
+  /**
+   * The <a>SVGFEFuncBElement</a> interface corresponds to the <a>'feFuncB'</a>
+   * element.
+   */
+  interface SVGFEFuncBElement : SVGComponentTransferFunctionElement {};
+
+  /**
+   * The <a>SVGFEFuncAElement</a> interface corresponds to the <a>'feFuncA'</a>
+   * element.
+   */
+  interface SVGFEFuncAElement : SVGComponentTransferFunctionElement {};
+
+  /**
+   * The <a>SVGFECompositeElement</a> interface corresponds to the
+   * <a>'feComposite'</a> element.
+   */
+  interface SVGFECompositeElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Composite Operators
+     */
+    const unsigned short SVG_FECOMPOSITE_OPERATOR_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'over'</span>.
+     *
+     * @defgroup Composite Operators
+     */
+    const unsigned short SVG_FECOMPOSITE_OPERATOR_OVER = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'in'</span>.
+     *
+     * @defgroup Composite Operators
+     */
+    const unsigned short SVG_FECOMPOSITE_OPERATOR_IN = 2;
+
+    /**
+     * Corresponds to value <span class="attr-value">'out'</span>.
+     *
+     * @defgroup Composite Operators
+     */
+    const unsigned short SVG_FECOMPOSITE_OPERATOR_OUT = 3;
+
+    /**
+     * Corresponds to value <span class="attr-value">'atop'</span>.
+     *
+     * @defgroup Composite Operators
+     */
+    const unsigned short SVG_FECOMPOSITE_OPERATOR_ATOP = 4;
+
+    /**
+     * Corresponds to value <span class="attr-value">'xor'</span>.
+     *
+     * @defgroup Composite Operators
+     */
+    const unsigned short SVG_FECOMPOSITE_OPERATOR_XOR = 5;
+
+    /**
+     * Corresponds to value <span class="attr-value">'arithmetic'</span>.
+     *
+     * @defgroup Composite Operators
+     */
+    const unsigned short SVG_FECOMPOSITE_OPERATOR_ARITHMETIC = 6;
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feComposite'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'in2'</a> on the given <a>'feComposite'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in2;
+
+    /**
+     * Corresponds to attribute <a>'operator'</a> on the given <a>'feComposite'</a>
+     * element.  Takes one of the SVG_FECOMPOSITE_OPERATOR_* constants defined
+     * on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration operator;
+
+    /**
+     * Corresponds to attribute <a>'k1'</a> on the given <a>'feComposite'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber k1;
+
+    /**
+     * Corresponds to attribute <a>'k2'</a> on the given <a>'feComposite'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber k2;
+
+    /**
+     * Corresponds to attribute <a>'k3'</a> on the given <a>'feComposite'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber k3;
+
+    /**
+     * Corresponds to attribute <a>'k4'</a> on the given <a>'feComposite'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber k4;
+  };
+
+  /**
+   * The <a>SVGFEConvolveMatrixElement</a> interface corresponds to the
+   * <a>'feConvolveMatrix'</a> element.
+   */
+  interface SVGFEConvolveMatrixElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Edge Mode Values
+     */
+    const unsigned short SVG_EDGEMODE_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'duplicate'</span>.
+     *
+     * @defgroup Edge Mode Values
+     */
+    const unsigned short SVG_EDGEMODE_DUPLICATE = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'wrap'</span>.
+     *
+     * @defgroup Edge Mode Values
+     */
+    const unsigned short SVG_EDGEMODE_WRAP = 2;
+
+    /**
+     * Corresponds to value <span class="attr-value">'none'</span>.
+     *
+     * @defgroup Edge Mode Values
+     */
+    const unsigned short SVG_EDGEMODE_NONE = 3;
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'order'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedInteger orderX;
+
+    /**
+     * Corresponds to attribute <a>'order'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedInteger orderY;
+
+    /**
+     * Corresponds to attribute <a>'kernelMatrix'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedNumberList kernelMatrix;
+
+    /**
+     * Corresponds to attribute <a>'divisor'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber divisor;
+
+    /**
+     * Corresponds to attribute <a>'bias'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber bias;
+
+    /**
+     * Corresponds to attribute <a>'targetX'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedInteger targetX;
+
+    /**
+     * Corresponds to attribute <a>'targetY'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedInteger targetY;
+
+    /**
+     * Corresponds to attribute <a>'edgeMode'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.  Takes one of the SVG_EDGEMODE_*
+     * constants defined on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration edgeMode;
+
+    /**
+     * Corresponds to attribute <a>'kernelUnitLength'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber kernelUnitLengthX;
+
+    /**
+     * Corresponds to attribute <a>'kernelUnitLength'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber kernelUnitLengthY;
+
+    /**
+     * Corresponds to attribute <a>'preserveAlpha'</a> on the given
+     * <a>'feConvolveMatrix'</a> element.
+     */
+    readonly attribute SVGAnimatedBoolean preserveAlpha;
+  };
+
+  /**
+   * The <a>SVGFEDiffuseLightingElement</a> interface corresponds to the
+   * <a>'feDiffuseLighting'</a> element.
+   */
+  interface SVGFEDiffuseLightingElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feDiffuseLighting'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'surfaceScale'</a> on the given
+     * <a>'feDiffuseLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber surfaceScale;
+
+    /**
+     * Corresponds to attribute <a>'diffuseConstant'</a> on the given
+     * <a>'feDiffuseLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber diffuseConstant;
+
+    /**
+     * Corresponds to attribute <a>'kernelUnitLength'</a> on the given
+     * <a>'feDiffuseLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber kernelUnitLengthX;
+
+    /**
+     * Corresponds to attribute <a>'kernelUnitLength'</a> on the given
+     * <a>'feDiffuseLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber kernelUnitLengthY;
+  };
+
+  /**
+   * The <a>SVGFEDistantLightElement</a> interface corresponds to the
+   * <a>'feDistantLight'</a> element.
+   */
+  interface SVGFEDistantLightElement : SVGElement { 
+
+    /**
+     * Corresponds to attribute <a>'azimuth'</a> on the given
+     * <a>'feDistantLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber azimuth;
+
+    /**
+     * Corresponds to attribute <a>'elevation'</a> on the given
+     * <a>'feDistantLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber elevation;
+  };
+
+  /**
+   * The <a>SVGFEPointLightElement</a> interface corresponds to the
+   * <a>'fePointLight'</a> element.
+   */
+  interface SVGFEPointLightElement : SVGElement { 
+
+    /**
+     * Corresponds to attribute <a>'x'</a> on the given
+     * <a>'fePointLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber x;
+
+    /**
+     * Corresponds to attribute <a>'y'</a> on the given
+     * <a>'fePointLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber y;
+
+    /**
+     * Corresponds to attribute <a>'z'</a> on the given
+     * <a>'fePointLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber z;
+  };
+
+  /**
+   * The <a>SVGFESpotLightElement</a> interface corresponds to the
+   * <a>'feSpotLight'</a> element.
+   */
+  interface SVGFESpotLightElement : SVGElement { 
+
+    /**
+     * Corresponds to attribute <a>'x'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber x;
+
+    /**
+     * Corresponds to attribute <a>'y'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber y;
+
+    /**
+     * Corresponds to attribute <a>'z'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber z;
+
+    /**
+     * Corresponds to attribute <a>'pointsAtX'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber pointsAtX;
+
+    /**
+     * Corresponds to attribute <a>'pointsAtY'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber pointsAtY;
+
+    /**
+     * Corresponds to attribute <a>'pointsAtZ'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber pointsAtZ;
+
+    /**
+     * Corresponds to attribute <a>'specularExponent'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber specularExponent;
+
+    /**
+     * Corresponds to attribute <a>'limitingConeAngle'</a> on the given
+     * <a>'feSpotLight'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber limitingConeAngle;
+  };
+
+  /**
+   * The <a>SVGFEDisplacementMapElement</a> interface corresponds to the
+   * <a>'feDisplacementMap'</a> element.
+   */
+  interface SVGFEDisplacementMapElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Channel Selectors
+     */
+    const unsigned short SVG_CHANNEL_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'R'</span>.
+     *
+     * @defgroup Channel Selectors
+     */
+    const unsigned short SVG_CHANNEL_R = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'G'</span>.
+     *
+     * @defgroup Channel Selectors
+     */
+    const unsigned short SVG_CHANNEL_G = 2;
+
+    /**
+     * Corresponds to value <span class="attr-value">'B'</span>.
+     *
+     * @defgroup Channel Selectors
+     */
+    const unsigned short SVG_CHANNEL_B = 3;
+
+    /**
+     * Corresponds to value <span class="attr-value">'A'</span>.
+     *
+     * @defgroup Channel Selectors
+     */
+    const unsigned short SVG_CHANNEL_A = 4;
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feDisplacementMap'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'in2'</a> on the given <a>'feDisplacementMap'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in2;
+
+    /**
+     * Corresponds to attribute <a>'scale'</a> on the given <a>'feDisplacementMap'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber scale;
+
+    /**
+     * Corresponds to attribute <a>'xChannelSelector'</a> on the given
+     * <a>'feDisplacementMap'</a> element.  Takes one of the SVG_CHANNEL_*
+     * constants defined on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration xChannelSelector;
+
+    /**
+     * Corresponds to attribute <a>'yChannelSelector'</a> on the given
+     * <a>'feDisplacementMap'</a> element.  Takes one of the SVG_CHANNEL_*
+     * constants defined on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration yChannelSelector;
+  };
+
+  /**
+   * The <a>SVGFEFloodElement</a> interface corresponds to the
+   * <a>'feFlood'</a> element.
+   */
+  interface SVGFEFloodElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+  };
+
+  /**
+   * The <a>SVGFEGaussianBlurElement</a> interface corresponds to the
+   * <a>'feGaussianBlur'</a> element.
+   */
+  interface SVGFEGaussianBlurElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given
+     * <a>'feGaussianBlur'</a> element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'stdDeviation'</a> on the given
+     * <a>'feGaussianBlur'</a> element.  Contains the X component
+     * of attribute <a>'stdDeviation'</a>.
+     */
+    readonly attribute SVGAnimatedNumber stdDeviationX;
+
+    /**
+     * Corresponds to attribute <a>'stdDeviation'</a> on the given
+     * <a>'feGaussianBlur'</a> element.  Contains the Y component
+     * (possibly computed automatically) of attribute <a>'stdDeviation'</a>.
+     */
+    readonly attribute SVGAnimatedNumber stdDeviationY;
+
+    /**
+     * Sets the values for attribute <a>'stdDeviation'</a>.
+     *
+     * @param stdDeviationX The X component of attribute <a>'stdDeviation'</a>.
+     * @param stdDeviationY The Y component of attribute <a>'stdDeviation'</a>.
+     * @raises DOMException(NO_MODIFICATION_ALLOWED_ERR) Raised on an attempt
+     *   to change the value of a readonly attribute.
+     */
+    void setStdDeviation(in float stdDeviationX, in float stdDeviationY) raises(DOMException);
+  };
+
+  /**
+   * The <a>SVGFEUnsharpMaskElement</a> interface corresponds to the
+   * <a>'feUnsharpMask'</a> element.
+   */
+  interface SVGFEUnsharpMaskElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given
+     * <a>'feUnsharpMask'</a> element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'stdDeviation'</a> on the given
+     * <a>'feUnsharpMask'</a> element.  Contains the X component
+     * of attribute <a>'feUnsharpMask'</a>.
+     */
+    readonly attribute SVGAnimatedNumber stdDeviationX;
+
+    /**
+     * Corresponds to attribute <a>'stdDeviation'</a> on the given
+     * <a>'feUnsharpMask'</a> element.  Contains the Y component
+     * (possibly computed automatically) of attribute <a>'stdDeviation'</a>.
+     */
+    readonly attribute SVGAnimatedNumber stdDeviationY;
+
+    /**
+     * Corresponds to attribute <a>'amount'</a> on the given
+     * <a>'feUnsharpMask'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber amount;
+
+    /**
+     * Corresponds to attribute <a>'threshold'</a> on the given
+     * <a>'feUnsharpMask'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber threshold;
+
+    /**
+     * Sets the values for attribute <a>'stdDeviation'</a>.
+     *
+     * @param stdDeviationX The X component of attribute <a>'stdDeviation'</a>.
+     * @param stdDeviationY The Y component of attribute <a>'stdDeviation'</a>.
+     * @raises DOMException(NO_MODIFICATION_ALLOWED_ERR) Raised on an attempt
+     *   to change the value of a readonly attribute.
+     */
+    void setStdDeviation(in float stdDeviationX, in float stdDeviationY) raises(DOMException);
+  };
+
+  /**
+   * The <a>SVGFEImageElement</a> interface corresponds to the
+   * <a>'feImage'</a> element.
+   */
+  interface SVGFEImageElement : 
+                SVGElement,
+                SVGURIReference,
+                SVGLangSpace,
+                SVGExternalResourcesRequired,
+                SVGFilterPrimitiveStandardAttributes {
+
+    /**
+     * Corresponds to attribute <a>'preserveAspectRatio'</a> on the given
+     * <a>'feImage'</a> element.
+     */
+    readonly attribute SVGAnimatedPreserveAspectRatio preserveAspectRatio;
+  };
+
+  /**
+   * The <a>SVGFEMergeElement</a> interface corresponds to the
+   * <a>'feMerge'</a> element.
+   */
+  interface SVGFEMergeElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes {};
+
+  /**
+   * The <a>SVGFEMergeNodeElement</a> interface corresponds to the
+   * <a>'feMergeNode'</a> element.
+   */
+  interface SVGFEMergeNodeElement : SVGElement { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feMergeNode'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+  };
+
+  /**
+   * The <a>SVGFEMorphologyElement</a> interface corresponds to the
+   * <a>'feMorphology'</a> element.
+   */
+  interface SVGFEMorphologyElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Morphology Operators
+     */
+    const unsigned short SVG_MORPHOLOGY_OPERATOR_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'erode'</span>.
+     *
+     * @defgroup Morphology Operators
+     */
+    const unsigned short SVG_MORPHOLOGY_OPERATOR_ERODE = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'dilate'</span>.
+     *
+     * @defgroup Morphology Operators
+     */
+    const unsigned short SVG_MORPHOLOGY_OPERATOR_DILATE = 2;
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feMorphology'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'operator'</a> on the given <a>'feMorphology'</a>
+     * element.  Takes one of the SVG_MORPHOLOGY_OPERATOR_* constants
+     * defined on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration operator;
+
+    /**
+     * Corresponds to attribute <a>'radius'</a> on the given <a>'feMorphology'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber radiusX;
+
+    /**
+     * Corresponds to attribute <a>'radius'</a> on the given <a>'feMorphology'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber radiusY;
+  };
+
+  /**
+   * The <a>SVGFEOffsetElement</a> interface corresponds to the
+   * <a>'feOffset'</a> element.
+   */
+  interface SVGFEOffsetElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feOffset'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'dx'</a> on the given <a>'feOffset'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber dx;
+
+    /**
+     * Corresponds to attribute <a>'dy'</a> on the given <a>'feOffset'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedNumber dy;
+  };
+
+  /**
+   * The <a>SVGFESpecularLightingElement</a> interface corresponds to the
+   * <a>'feSpecularLighting'</a> element.
+   */
+  interface SVGFESpecularLightingElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feSpecularLighting'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+
+    /**
+     * Corresponds to attribute <a>'surfaceScale'</a> on the given
+     * <a>'feSpecularLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber surfaceScale;
+
+    /**
+     * Corresponds to attribute <a>'specularConstant'</a> on the given
+     * <a>'feSpecularLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber specularConstant;
+
+    /**
+     * Corresponds to attribute <a>'specularExponent'</a> on the given
+     * <a>'feSpecularLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber specularExponent;
+
+    /**
+     * Corresponds to attribute <a>'kernelUnitLength'</a> on the given
+     * <a>'feSpecularLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber kernelUnitLengthX;
+
+    /**
+     * Corresponds to attribute <a>'kernelUnitLength'</a> on the given
+     * <a>'feSpecularLighting'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber kernelUnitLengthY;
+  };
+
+  /**
+   * The <a>SVGFETileElement</a> interface corresponds to the
+   * <a>'feTile'</a> element.
+   */
+  interface SVGFETileElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * Corresponds to attribute <a>'in'</a> on the given <a>'feTile'</a>
+     * element.
+     */
+    readonly attribute SVGAnimatedString in1;
+  };
+
+  /**
+   * The <a>SVGFETurbulenceElement</a> interface corresponds to the
+   * <a>'feTurbulence'</a> element.
+   */
+  interface SVGFETurbulenceElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Turbulence Types
+     */
+    const unsigned short SVG_TURBULENCE_TYPE_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'fractalNoise'</span>.
+     *
+     * @defgroup Turbulence Types
+     */
+    const unsigned short SVG_TURBULENCE_TYPE_FRACTALNOISE = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'turbulence'</span>.
+     *
+     * @defgroup Turbulence Types
+     */
+    const unsigned short SVG_TURBULENCE_TYPE_TURBULENCE = 2;
+
+    /**
+     * The type is not one of predefined types. It is invalid to attempt to
+     * define a new value of this type or to attempt to switch an existing
+     * value to this type.
+     *
+     * @defgroup Stitch Options
+     */
+    const unsigned short SVG_STITCHTYPE_UNKNOWN = 0;
+
+    /**
+     * Corresponds to value <span class="attr-value">'stitch'</span>.
+     *
+     * @defgroup Stitch Options
+     */
+    const unsigned short SVG_STITCHTYPE_STITCH = 1;
+
+    /**
+     * Corresponds to value <span class="attr-value">'noStitch'</span>.
+     *
+     * @defgroup Stitch Options
+     */
+    const unsigned short SVG_STITCHTYPE_NOSTITCH = 2;
+
+    /**
+     * Corresponds to attribute <a>'baseFrequency'</a> on the given
+     * <a>'feTurbulence'</a> element.  Contains the X component of the
+     * <a>'baseFrequency'</a> attribute.
+     */
+    readonly attribute SVGAnimatedNumber baseFrequencyX;
+
+    /**
+     * Corresponds to attribute <a>'baseFrequency'</a> on the given
+     * <a>'feTurbulence'</a> element.  Contains the Y component of the
+     * (possibly computed automatically) <a>'baseFrequency'</a> attribute.
+     */
+    readonly attribute SVGAnimatedNumber baseFrequencyY;
+
+    /**
+     * Corresponds to attribute <a>'numOctaves'</a> on the given
+     * <a>'feTurbulence'</a> element.
+     */
+    readonly attribute SVGAnimatedInteger numOctaves;
+
+    /**
+     * Corresponds to attribute <a>'seed'</a> on the given
+     * <a>'feTurbulence'</a> element.
+     */
+    readonly attribute SVGAnimatedNumber seed;
+
+    /**
+     * Corresponds to attribute <a>'stitchTiles'</a> on the given
+     * <a>'feTurbulence'</a> element.  Takes one of the SVG_STITCHTYPE_*
+     * constants defined on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration stitchTiles;
+
+    /**
+     * Corresponds to attribute <a>'type'</a> on the given
+     * <a>'feTurbulence'</a> element.  Takes one of the SVG_TURBULENCE_TYPE_*
+     * constants defined on this interface.
+     */
+    readonly attribute SVGAnimatedEnumeration type;
+  };
+
+  /**
+   * The <a>SVGFEDropShadowElement</a> interface corresponds to the
+   * <a>'feDropShadow'</a> element.
+   */
+  interface SVGFEDropShadowElement : 
+                SVGElement,
+                SVGFilterPrimitiveStandardAttributes { 
+
+    readonly attribute SVGAnimatedString in1;
+    readonly attribute SVGAnimatedNumber dx;
+    readonly attribute SVGAnimatedNumber dy;
+    readonly attribute SVGAnimatedNumber stdDeviationX;
+    readonly attribute SVGAnimatedNumber stdDeviationY;
+  };
+};
+
+// #endif // _SVG_FILTERS_IDL_

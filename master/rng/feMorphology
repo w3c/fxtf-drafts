@@ -1,0 +1,34 @@
+  <define name='svg.feMorphology.content'>
+    <zeroOrMore>
+      <choice>
+        <ref name='animate'/>
+        <ref name='set'/>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name='feMorphology'>
+    <element name='feMorphology'>
+      <ref name='attlist.feMorphology'/>
+      <ref name='svg.feMorphology.content'/>
+    </element>
+  </define>
+
+  <define name='attlist.feMorphology' combine='interleave'>
+    <ref name='svg.Core.attrib'/>
+    <ref name='svg.FilterColor.attrib'/>
+    <ref name='svg.FilterPrimitiveWithIn.attrib'/>
+    <optional>
+      <attribute name='operator' a:defaultValue='erode'>
+        <choice>
+          <value>erode</value>
+          <value>dilate</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name='radius'>
+        <ref name='NumberOptionalNumber.datatype'/>
+      </attribute>
+    </optional>
+  </define>

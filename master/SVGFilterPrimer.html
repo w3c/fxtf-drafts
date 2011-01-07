@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional+edit//EN" "xhtml1-transitional+edit.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:edit="http://xmlns.grorg.org/SVGT12NG/" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>SVG Filters 1.2, Part 1: Primer</title>
+  <link rel="stylesheet" type="text/css" href="style/svg-style.css" />
+  <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/base" />
+</head>
+
+<body>
+
+<div class="head">
+  <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a></p>
+  <h1 id="pagetitle">SVG Filters 1.2, Part 1: Primer</h1>
+  <h2 id="pagesubtitle">W3C <edit:maturity/> <em><edit:date/></em></h2>
+  <dl>
+    <dt>This version:</dt>
+    <dd><edit:thisversion/></dd>
+    <dt>Latest version:</dt>
+    <dd><edit:latestversion/></dd>
+    <dt>Previous version:</dt>
+    <dd><edit:previousversion/></dd>
+    <dt>Editor:</dt>
+    <dd>Erik Dahlström, Opera Software &lt;<a href="mailto:ed@opera.com">ed@opera.com</a>&gt;</dd>
+    <dt>Authors:</dt>
+    <dd>The authors of this specification are the participants of the W3C SVG Working Group.</dd>
+  </dl>
+  <edit:copyright/>
+</div>
+
+<hr/>
+
+<h2 id="abstract" edit:toc="no">Abstract </h2>
+
+<p>
+SVG is language for describing vector graphics, however it's typically rendered on raster displays. SVG filter effects is a way of processing the generated raster image before it's displayed.
+</p>
+<p>Although originally designed for use in SVG, filter effects are defined in XML and are accessed via a presentation property, and therefore could be used in other environments, such as HTML styled with CSS and XSL:FO.
+</p>
+<p>
+This document introduces the features used by SVG filters.
+</p>
+
+<h2 id="status" edit:toc="no">Status of This Document </h2>
+
+<p><em>This section describes the status of this document at the time of its
+publication. Other documents may supersede this document. The latest status
+of this document series is maintained at the W3C. </em> </p>
+
+<p>This document is the first public working draft of this specification. </p>
+
+<p>This document has been produced by the <a
+href="http://www.w3.org/Graphics/SVG">W3C SVG Working Group</a> as part of
+the W3C <a href="http://www.w3.org/Graphics/Activity">Graphics Activity</a>
+within the <a href="http://www.w3.org/Interaction/">Interaction Domain</a>.
+</p>
+
+<p>We explicitly invite comments on this specification. Please send them to
+<a href="mailto:public-svg-filters@w3.org">public-svg-filters@w3.org</a> (<a
+href="http://lists.w3.org/Archives/Public/public-svg-filters/">archives</a>).
+For comments on the core SVG language, use <a
+href="mailto:www-svg@w3.org">www-svg@w3.org</a>: the public email list for
+issues related to vector graphics on the Web (<a
+href="http://lists.w3.org/Archives/Public/www-svg/">archives</a>). Acceptance
+of the archiving policy is requested automatically upon first post to either
+list. To subscribe to these lists send an email to <a
+href="mailto:public-svg-filters-request@w3.org">public-svg-filters-request@w3.org</a>
+or <a href="mailto:www-svg-request@w3.org">www-svg-request@w3.org</a> with
+the word subscribe in the subject line. </p>
+
+<p>The latest information regarding <a
+href="http://www.w3.org/Graphics/SVG/Disclosures">patent disclosures</a>
+related to this document is available on the Web. As of this publication, the
+SVG Working Group are not aware of any royalty-bearing patents they believe
+to be essential to SVG. </p>
+<p>Publication of this document does not imply endorsement by the W3C
+membership. A list of current W3C Recommendations and other technical
+documents can be found at <a
+href="http://www.w3.org/TR/">http://www.w3.org/TR/</a>. W3C publications may
+be updated, replaced, or obsoleted by other documents at any time. It is
+inappropriate to cite a W3C Working Draft as anything other than a <em>work
+in progress</em>." </p>
+
+<h2 id="howto" edit:toc="no">How to read this document and give feedback </h2>
+
+<p>This is a primer for the SVG Filter specification. It gives guidelines on
+how to use the SVG Filter specification with SVG 1.2. In many cases the
+reader will have to be familiar with the <a
+href="http://www.w3.org/TR/SVG11/">SVG</a> language. </p>
+
+<p>
+This document is informative.
+</p>
+
+<h2 id="toc" edit:toc="no">Table of Contents</h2>
+
+<edit:fulltoc/>
+
+<h2 id="Introduction">Filters in SVG</h2>
+
+<p>Filter effects are defined by <a>'filter element'</a> elements. To apply a filter effect
+to a <a>graphics element</a> or a <a>container element</a>, you set the
+value of the <a>'filter property'</a> property on the given element such that
+it references the filter effect.</p>
+
+<p>Each <a>'filter element'</a> element contains a set of
+<span id="TermFilterPrimitive" class="SVG-Term">filter primitives</span> as its children. Each filter
+primitive performs a single fundamental graphical operation (e.g., a blur or
+a lighting effect) on one or more inputs, producing a graphical result.
+Because most of the filter primitives represent some form of image
+processing, in most cases the output from a filter primitive is a single RGBA
+image.</p>
+
+<p>The original source graphic or the result from a filter primitive can be
+used as input into one or more other filter primitives. A common application
+is to use the source graphic multiple times. For example, a simple filter
+could replace one graphic by two by adding a black copy of original source
+graphic offset to create a drop shadow. In effect, there are now two layers
+of graphics, both with the same original source graphics.</p>
+
+<p>When applied to <a>container elements</a> such as <a>'g'</a>, the <a>'filter property'</a>
+property applies to the contents of the
+group as a whole. The group's children do not render to the screen directly;
+instead, the graphics commands necessary to render the children are stored
+temporarily. Typically, the graphics commands are executed as part of the
+processing of the referenced <a>'filter element'</a> element via use of the keywords
+<a>SourceGraphic</a> or <a>SourceAlpha</a>.
+Filter effects can be applied to <a>container elements</a> with no
+content (e.g., an empty <a>'g'</a> element), in which case the
+<a>SourceGraphic</a> or <a>SourceAlpha</a> consist of a transparent black
+rectangle that is the size of the
+<a>filter effects region</a>.</p>
+
+<p>Sometimes filter primitives result in undefined pixels. For example,
+filter primitive <a>'feOffset'</a> can shift an image down and to the
+right, leaving undefined pixels at the top and left. In these cases, the
+undefined pixels are set to transparent black.</p>
+
+<h2 id="Example">An example</h2>
+
+<p>The following shows an example of a filter effect.</p>
+
+<p><span class="example-ref">Example filters01</span> - introducing filter
+effects.</p>
+
+<edit:example href="examples/filters01.svg" image="yes" link="yes"/>
+
+<p>The filter effect used in the example above is repeated here with
+reference numbers in the left column before each of the six filter
+primitives:</p>
+
+<table summary="filter example with reference numbers">
+  <tbody>
+    <tr>
+      <td valign="top"><pre style="color:black"> 
+ 
+1
+2
+3
+ 
+ 
+ 
+ 
+4
+5
+ 
+6
+ 
+ 
+ </pre>
+      </td>
+      <td valign="top"><pre>&lt;filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="120"&gt;
+  &lt;desc&gt;Produces a 3D lighting effect.&lt;/desc&gt;
+  &lt;feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/&gt;
+  &lt;feOffset in="blur" dx="4" dy="4" result="offsetBlur"/&gt;
+  &lt;feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" 
+                      specularExponent="20" lighting-color="#bbbbbb" 
+                      result="specOut"&gt;
+    &lt;fePointLight x="-5000" y="-10000" z="20000"/&gt;
+  &lt;/feSpecularLighting&gt;
+  &lt;feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/&gt;
+  &lt;feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" 
+               k1="0" k2="1" k3="1" k4="0" result="litPaint"/&gt;
+  &lt;feMerge&gt;
+    &lt;feMergeNode in="offsetBlur"/&gt;
+    &lt;feMergeNode in="litPaint"/&gt;
+  &lt;/feMerge&gt;
+&lt;/filter&gt;</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following pictures show the intermediate image results from each of
+the six filter elements:</p>
+
+<table summary="filter example intermediate results">
+  <tbody>
+    <tr>
+      <td><p><img width="115" height="70"
+        alt="filters01 - original source graphic"
+        src="examples/filters01-0.png" /><br />
+        Source graphic</p>
+      </td>
+      <td> </td>
+      <td><p><img width="115" height="70"
+        alt="filters01 - after filter element 1"
+        src="examples/filters01-1.png" /><br />
+        After filter primitive 1</p>
+      </td>
+      <td> </td>
+      <td><p><img width="115" height="70"
+        alt="filters01 - after filter element 2"
+        src="examples/filters01-2.png" /><br />
+        After filter primitive 2</p>
+      </td>
+      <td> </td>
+      <td><p><img width="115" height="70"
+        alt="filters01 - after filter element 3"
+        src="examples/filters01-3.png" /><br />
+        After filter primitive 3</p>
+      </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td><p><img width="115" height="70"
+        alt="filters01 - after filter element 4"
+        src="examples/filters01-4.png" /><br />
+        After filter primitive 4</p>
+      </td>
+      <td> </td>
+      <td><p><img width="115" height="70"
+        alt="filters01 - after filter element 5"
+        src="examples/filters01-5.png" /><br />
+        After filter primitive 5</p>
+      </td>
+      <td> </td>
+      <td><p><img width="115" height="70"
+        alt="filters01 - after filter element 6"
+        src="examples/filters01-6.png" /><br />
+        After filter primitive 6</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ol>
+  <li>Filter primitive <a>'feGaussianBlur'</a> takes input <a>SourceAlpha</a>,
+    which is the alpha channel of
+    the source graphic. The result is stored in a temporary buffer named
+    "blur". Note that "blur" is used as input to both filter primitives 2 and
+    3.</li>
+  <li>Filter primitive <a>'feOffset'</a> takes buffer "blur", shifts
+    the result in a positive direction in both x and y, and creates a new
+    buffer named "offsetBlur". The effect is that of a drop shadow.</li>
+  <li>Filter primitive <a>'feSpecularLighting'</a>, uses buffer "blur"
+    as a model of a surface elevation and generates a lighting effect from a
+    single point source. The result is stored in buffer "specOut".</li>
+  <li>Filter primitive <a>'feComposite'</a> masks out the result of
+    filter primitive 3 by the original source graphics alpha channel so that
+    the intermediate result is no bigger than the original source
+  graphic.</li>
+  <li>Filter primitive <a>'feComposite'</a> composites the result of
+    the specular lighting with the original source graphic.</li>
+  <li>Filter primitive <a>'feMerge'</a> composites two layers together.
+    The lower layer consists of the drop shadow result from filter primitive
+    2. The upper layer consists of the specular lighting result from filter
+    primitive 5.</li>
+</ol>
+
+<h2 id="feGaussianBlurElement">Filter primitive <span
+class="element-name">'feGaussianBlur'</span></h2>
+
+<p>
+  The <a>'feGaussianBlur'</a> filter primitive can be used to create blur effects.
+  Below is an example where the blur is applied only in one direction, which can
+  give better performance in some <a>user agents</a>. 
+  <edit:example href="examples/feGaussianBlur-stdDeviation-00.svg" image="yes" link="yes"/>
+</p>
+
+<p>The blur filter can also be used for creating the impression of something being in motion, as in this example.
+  <edit:example href="examples/feGaussianBlur-motion-00.svg" image="yes" link="yes"/>
+</p>
+
+<h2 id="references">References </h2>
+<dl>
+  <dt id="SVG12Full">SVG12</dt>
+    <dd><strong>Scalable Vector Graphics (SVG) 1.2 Specification</strong>,
+      Dean Jackson editor, W3C, 27 October 2004 (Working Draft). See <a
+      href="http://www.w3.org/TR/2004/WD-SVG12-20041027/">http://www.w3.org/TR/2004/WD-SVG12-20041027/</a>
+    </dd>
+  <dt id="SVG12Requirements">SVG12Reqs</dt>
+    <dd><strong>SVG 1.1/1.2/2.0 Requirements</strong>, Dean Jackson editor,
+      W3C, 22 April 2002 (Working Draft). See <a
+      href="http://www.w3.org/TR/2002/WD-SVG2Reqs-20020422/">http://www.w3.org/TR/2002/WD-SVG2Reqs-20020422/</a>
+    </dd>
+  <dt id="SVGFilterRequirements">SVGFilterReqs</dt>
+    <dd><strong>SVG Filter Requirements</strong>, Erik Dahlström, W3C, 3 May 2007
+      (Working Draft). See <a
+      href="http://www.w3.org/TR/2007/WD-SVGFilterReqs12-20070501/">http://www.w3.org/TR/2007/WD-SVGFilterReqs12-20070501/</a>
+    </dd>
+  <dt id="SVG12Filter">SVG12Filters</dt>
+    <dd><strong>SVG Filters 1.2</strong>, Erik Dahlström editor, W3C, 3 May 2007 (Working Draft). See <a
+      href="http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/">http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/</a>
+    </dd>
+</dl>
+
+</body>
+</html>

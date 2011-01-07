@@ -1,0 +1,54 @@
+  <define name='svg.feComposite.content'>
+    <zeroOrMore>
+      <choice>
+        <ref name='animate'/>
+        <ref name='set'/>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name='feComposite'>
+    <element name='feComposite'>
+      <ref name='feComposite.attr'/>
+      <ref name='svg.feComposite.content'/>
+    </element>
+  </define>
+
+  <define name='feComposite.attr' combine='interleave'>
+    <ref name='svg.Core.attr'/>
+    <ref name='svg.FilterColor.attr'/>
+    <ref name='svg.FilterPrimitiveWithIn.attr'/>
+    <attribute name='in2'/>
+    <optional>
+      <attribute name='operator' a:defaultValue='over'>
+        <choice>
+          <value>over</value>
+          <value>in</value>
+          <value>out</value>
+          <value>atop</value>
+          <value>xor</value>
+          <value>arithmetic</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name='k1'>
+        <ref name='Number.datatype'/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name='k2'>
+        <ref name='Number.datatype'/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name='k3'>
+        <ref name='Number.datatype'/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name='k4'>
+        <ref name='Number.datatype'/>
+      </attribute>
+    </optional>
+  </define>
