@@ -118,12 +118,17 @@ to apply filter effects to SVG <a>graphics elements</a> and <a>container element
 maintain the semantic structure of the document, instead of resorting to
 images which aside from generally being a fixed resolution tend to obscure
 the original semantics of the elements they replace. This is especially true
-for effects applied to text. The various usage scenarios are listed in the
-SVG Filters Requirements document. </p>
+for effects applied to text.
+</p>
+
+<p>
+
+</p>
 
 <p>Note that even though this specification references parts of <a
 href="#ref-svg11">SVG 1.1</a> it does not require a complete SVG 1.1
-implementation. </p>
+implementation. <span class="note">Add link to conformance classes here.</span>
+</p>
 
 <p>This document is normative. </p>
 
@@ -150,26 +155,69 @@ SVG (SVG-enabled browsers only)</a><br />
   <dl>
     <dt id="TermNullFilter"><span
     class="SVG-TermDefine">null filter</span></dt>
-    <dd>The null filter output is all transparent black pixels. If applied to an element it means
-    that the element (and children if any) becomes invisible. Note that it does not affect event processing.</dd>
-    
+    <dd>
+      <p>
+      The null filter output is all transparent black pixels. If applied to an element it means
+    that the element (and children if any) becomes invisible. Note that it does not affect event processing.
+      </p>
+    </dd>
     <dt id="TermTransferFunctionElements"><span
     class="SVG-TermDefine">transfer function elements</span></dt>
-    <dd>The set of elements,
-    <a>'feFuncR'</a>, <a>'feFuncG'</a>, <a>'feFuncB'</a>, <a>'feFuncA'</a>, that define the transfer function for the <a>'feComponentTransfer'</a> filter primitive.</dd>
-	<dt id="TermUnsupportedValue"><span
-    class="SVG-TermDefine">unsupported value</span></dt>
+    <dd>
+      <p>
+      The set of elements,
+        <a>'feFuncR'</a>, <a>'feFuncG'</a>, <a>'feFuncB'</a>, <a>'feFuncA'</a>, that define the transfer function for the <a>'feComponentTransfer'</a> filter primitive.
+      </p>
+    </dd>
+  <dt id="TermClientBoundingRect"><span
+    class="SVG-TermDefine">bounding client rect</span></dt>
 	<dd>
-		<span class="note">FIXME: borrow definition from SVGT12.</span>
+    <p>
+    The union of all CSS border-boxes for the element if formatted by CSS, as defined by the CSS OM method 
+    <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [<a href="#ref-CSSOM">CSSOM</a>].
+    </p>
+	</dd>
+  <dt id="TermCSSBoundingBox"><span
+    class="SVG-TermDefine">CSS bounding box</span></dt>
+	<dd>
+    <p>
+    The union of all CSS border-boxes for the element and all it's descendant elements, provided the element is formatted by CSS. [<a href="#ref-CSS21">CSS</a>].
+    </p>
+	</dd>
+  <dt id="TermCurrentUserCoordinateSystem"><span
+    class="SVG-TermDefine">current user coordinate system</span></dt>
+	<dd>
+    <p>
+    For elements formatted by CSS: the current user coordinate system has its origin at the top-left corner of the 
+    <a href="#TermClientBoundingRect">bounding client rect</a> and one unit equals on CSS px. The viewport for resolving percentage values is defined by the width and height of the
+    <a href="#TermClientBoundingRect">bounding client rect</a>.
+    </p>
+    <p>
+    For SVG elements see <a>user coordinate system</a>.
+    </p>
+	</dd>
+  <dt id="TermObjectBoundingBoxUnits"><span
+    class="SVG-TermDefine">object bounding box units</span></dt>
+	<dd>
+    For elements formatted by CSS: the bounding box is defined by <a href="#TermCSSBoundingBox">the CSS bounding box.</a> 
+    <p>
+    For SVG elements the bounding box is defined by <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">the SVG bounding box</a>. 
+    </p>
+    <p>
+    For both cases the bounding box defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a>.
+    </p>
 	</dd>
 	<dt id="TermFilterPrimitiveReference"><span
     class="SVG-TermDefine">&lt;filter-primitive-reference&gt;</span></dt>
 	<dd>
-		A string that identifies a particular filter primitive's output.
+		<p>
+    A string that identifies a particular filter primitive's output.
+    </p>
 	</dd>
 	<dt id="TermFilterPrimitiveElements"><span
     class="SVG-TermDefine">filter primitives, filter primitive elements</span></dt>
 	<dd>
+    <p>
 		The set of elements that control the output of a <a>'filter element'</a> element, particularly:  
 			<a>'feDistantLight'</a>, 
 			<a>'fePointLight'</a>, 
@@ -194,6 +242,7 @@ SVG (SVG-enabled browsers only)</a><br />
 			<a>'feDiffuseSpecular'</a>,
       <a>'feUnsharpMask'</a>,
 			<a>'feCustom'</a>.
+      </p>
 	</dd>
   </dl>
   <br/>
@@ -221,14 +270,14 @@ follows:</p>
     <dd>Specifies the coordinate system for the various length values within
       the <a>filter primitives</a> and for the attributes that define the <a>filter primitive subregion</a>.<br />
       If <span class='attr-value'>primitiveUnits="userSpaceOnUse"</span>, any length values
-      within the filter definitions represent values in the current user
-      coordinate system in place at the time when the <a>'filter element'</a>
+      within the filter definitions represent values in the <a href="#TermCurrentUserCoordinateSystem">current user
+      coordinate system</a> in place at the time when the <a>'filter element'</a>
       element is referenced (i.e., the user coordinate system for the element
       referencing the <a>'filter element'</a> element via a <a>'filter property'</a>
       property).<br />
       If <span class='attr-value'>primitiveUnits="objectBoundingBox"</span>, then any length
       values within the filter definitions represent fractions or percentages
-      of the bounding box on the referencing element (see <a>object bounding box
+      of the bounding box on the referencing element (see <a href="#TermObjectBoundingBoxUnits">object bounding box
       units</a>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value
 	  this number is expanded out before the <a>'filter/primitiveUnits'</a> computation takes place.
 	  <br />
@@ -376,10 +425,9 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements that render. <edit:hostreq>The host language is resposible for
-              stating which elements render.</edit:hostreq>
-              For svg: container elements
-              and graphics elements
+            <td>All elements
+<!--              For svg: container elements
+              and graphics elements-->
               .</td>
           </tr>
           <tr valign="baseline">
@@ -416,6 +464,21 @@ as follows:</p>
 
 <p>If a <a>'filter property'</a> property references a non-existent object or the referenced  
 object is not a <a>'filter element'</a> element, then the <a>null filter</a> will be applied instead.
+</p>
+
+<h3>How the 'filter' property applies to content formatted by CSS (e.g HTML)</h3> 
+<p>
+The application of the <a>'filter property'</a> property to an element formatted by CSS establishes a pseudo-stacking-context the same way 
+that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does, 
+and all the element's boxes are rendered together as a group with the filter effect applied to the group as a whole.
+</p>
+<p>
+The <a>'filter property'</a> property has no effect on the geometry of the target element's CSS boxes, even though <a>'filter property'</a> can cause painting outside of an element's border-box. 
+</p>
+<p>
+The compositing model follows the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing model</a>: 
+first any filter effect is applied, then any clipping, masking and/or group opacity. 
+These effects all apply after any other CSS effects such as 'clip'. As per SVG, the application of <a>'filter property'</a> has no effect on mouse event hit-testing.
 </p>
 
 <br />
@@ -663,7 +726,7 @@ which the filter is applied.
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>Typically elements that can contain renderable elements. Host
+            <td>Typically elements that can contain renderable elements. 
               language is responsible for defining the applicable set of
               elements.
               For SVG: <a>container elements</a></td>
@@ -729,7 +792,7 @@ provided in response to the request.</p>
 
 <p>The optional
 <strong>&lt;x&gt;,&lt;y&gt;,&lt;width&gt;,&lt;height&gt;</strong> 
-<span class="note">ISSUE: define the type of each of these, probably &lt;number&gt;</span>
+<span class="specissue">ISSUE: define the type of each of these, probably &lt;number&gt;</span>
 	parameters
 on the <span class="attr-value">new</span> value indicate the subregion of the <a>container element</a>
  element to which <a>'enable-background'</a> applies' user space where access to the
@@ -1017,8 +1080,12 @@ primitives:</p>
 
         <dt id="FillPaint"><span class="attr-value">FillPaint</span></dt>
           <dd>
-			<p>This keyword represents the target element <i>rendered filled</i>. <edit:hostreq>The host language is responsible for specifying what <i>rendered filled</i> in this context means, if not specified <a>FillPaint</a> will be taken to mean a transparent black image.</edit:hostreq> For svg this keyword represents the value of the <a>'fill'</a>
+      <p>This keyword represents the target element <i>rendered filled</i>.</p>
+			<p>For svg this keyword represents the value of the <a>'fill'</a>
             property on the target element for the filter effect.</p>
+      <p>For non-SVG cases <a>FillPaint</a> generates a transparent black image. 
+        <span class="specissue">ISSUE: Consider whether this should be e.g the CSS bounding box filled with the current color, or if it makes sense to use the 'fill' property for this case too.</span>
+      </p>
 			<p class="note authoring">Note that text is generally painted filled, not stroked.</p>
 			<p>The <a>FillPaint</a> image has conceptually infinite extent. 
 			Frequently this image is opaque everywhere, but it might not be if the "paint"
@@ -1027,8 +1094,12 @@ primitives:</p>
 	  	</dd>
         <dt id="StrokePaint"><span class="attr-value">StrokePaint</span></dt>
           <dd>
-			<p>This keyword represents the target element <i>rendered stroked</i>. <edit:hostreq>The host language is responsible for specifying what <i>rendered stroked</i> in this context means, if not specified <a>StrokePaint</a> will be taken to mean a transparent black image.</edit:hostreq> For SVG this keyword represents the value of the <a>'stroke'</a>
-            property on the target element for the filter effect.</p>
+			<p>This keyword represents the target element <i>rendered stroked</i>.</p>
+      <p>For svg this keyword represents the value of the <a>'stroke'</a>
+         on the target element for the filter effect.</p>
+      <p>For non-SVG cases <a>StrokePaint</a> generates a transparent black image. 
+        <span class="specissue">ISSUE: Consider whether this should be e.g the CSS bounding box filled with the one of the border colors, or if it makes sense to use the 'stroke' property for this case too.</span>
+      </p>
 			<p class="note authoring">Note that text is generally painted filled, not stroked.</p>
 	  		<p>The <a>StrokePaint</a> image has conceptually infinite extent.
 			Frequently this image is opaque everywhere, but it 
@@ -3029,6 +3100,8 @@ class="element-name">'feTurbulence'</span></h2>
 
 <edit:with element="feTurbulence">
 
+<p class="specissue">ISSUE: Consider phasing out this C algorithm in favor of Simplex noise, which is more HW friendly.</p>
+
 <p>This filter primitive creates an image using the Perlin turbulence
 function. It allows the synthesis of artificial textures like clouds or
 marble. For a detailed description the of the Perlin turbulence function, see
@@ -3429,7 +3502,7 @@ The SVG WG is looking at providing a shorthand for diffuse+specular.
 <h2 id="feCustomElement">Filter primitive <span
 class="element-name">'feCustom'</span></h2>
 The SVG WG is looking to add a filter primitive that allows programmatic access
-to the pixel data for a filter.
+to the pixel data for a filter, e.g via OpenCL.
 </div>
 
 <h2 id="RelaxNG">RelaxNG Schema for Filter Effects 1.0</h2>
