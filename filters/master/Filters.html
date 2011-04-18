@@ -37,12 +37,22 @@
 <h2 id="abstract" edit:toc="no">Abstract</h2>
 
 <p>
-SVG is language for describing vector graphics, however it's typically rendered on raster displays. SVG filter effects is a way of processing the generated raster image before it's displayed.
+  Filter effects are a way of processing an element's display before it is
+  displayed in the document. Typically, rendering an element via CSS or SVG
+  can conceptually described as if the element, including its children, are
+  drawn into a buffer (such as a raster image) and then that buffer is
+  composited into the elements parent. Filters apply an effect before the
+  compositing stage. Examples of such effects are blurring, changing color
+  intensity and warping the image.
 </p>
-<p>Although originally designed for use in SVG, filter effects are defined in XML and are accessed via a presentation property, and therefore could be used in other environments, such as HTML styled with CSS and XSL:FO.
-</p>
+
 <p>
-This document defines the markup used by SVG filters.
+  Although originally designed for use in SVG, filter effects simply define
+  a set of operations to apply on an image buffer. In SVG they are triggered
+  by a style instruction (the 'filter property' property), and have very little
+  specific to an SVG environment. This specification describes filters in
+  a manner that allow them to be used in other presentational environments,
+  such as HTML styled by CSS and XSL:FO.
 </p>
 
 <h2 id="status" edit:toc="no">Status of This Document</h2>
@@ -51,66 +61,49 @@ This document defines the markup used by SVG filters.
 publication. Other documents may supersede this document. The latest status
 of this document series is maintained at the W3C. </em> </p>
 
-<p>This document is the first public working draft of this specification.
-There is an accompanying <a href="#SVG12FilterPrimer">Filter Effects 1.0, Part
-1: Primer</a> that lists the ways SVG filters may be used. </p>
-
-<p>This document has been produced by the <a
-href="http://www.w3.org/Graphics/SVG">W3C SVG Working Group</a> as part of
-the W3C <a href="http://www.w3.org/Graphics/Activity">Graphics Activity</a>
-within the <a href="http://www.w3.org/Interaction/">Interaction Domain</a>.
+<p>
+  This document is the first public working draft of this specification. There
+  is an accompanying <a href="http://dev.w3.org/SVG/modules/filters/publish/SVGFilterPrimer.html">Filter Effects 1.0, Part 1:
+  Primer</a> that lists the ways SVG filters may be used.
 </p>
 
 <p>
-The (<a href="http://lists.w3.org/Archives/Public/public-fx/">archived</a>)
-public mailing list <a
-href="mailto:www-style@w3.org?Subject=%5Bfilters%5D%20PUT%20SUBJECT%20HERE">
-public-fx@w3.org</a> (see <a
-href="http://www.w3.org/Mail/Request">instructions</a>) is preferred for
-discussion of this specification. Acceptance of the archiving policy is
-requested automatically upon first post to the list. When sending e-mail,
-please put the text &#8220;fitlers&#8221; in the subject, preferably like
-this: &#8220;[<!---->filters<!---->] <em>&hellip;summary of
-comment&hellip;</em>&#8221;
+  This document has been produced by the <a
+  href="http://www.w3.org/Style/CSS">W3C CSS</a> and <a
+  href="http://www.w3.org/Graphics/SVG">SVG</a> Working Groups as part of the
+  <a href="http://www.w3.org/Interaction/">W3C Interaction Domain</a>.
 </p>
 
-<p>The latest information regarding <a
-href="http://www.w3.org/Graphics/SVG/Disclosures">patent disclosures</a>
-related to this document is available on the Web. As of this publication, the
-SVG Working Group are not aware of any royalty-bearing patents they believe
-to be essential to SVG.</p>
+<p>
+  The (<a href="http://lists.w3.org/Archives/Public/public-fx/">archived</a>)
+  public mailing list <a
+  href="mailto:www-style@w3.org?Subject=%5Bfilters%5D%20PUT%20SUBJECT%20HERE">
+  public-fx@w3.org</a> (see <a
+  href="http://www.w3.org/Mail/Request">instructions</a>) is preferred for
+  discussion of this specification. Acceptance of the archiving policy is
+  requested automatically upon first post to the list. When sending e-mail,
+  please put the text &#8220;filters&#8221; in the subject, preferably like
+  this: &#8220;[<!---->filters<!---->] <em>&hellip;summary of
+  comment&hellip;</em>&#8221;
+</p>
 
-<p>Publication of this document does not imply endorsement by the W3C
-membership. A list of current W3C Recommendations and other technical
-documents can be found at <a
-href="http://www.w3.org/TR/">http://www.w3.org/TR/</a>. W3C publications may
-be updated, replaced, or obsoleted by other documents at any time. It is
-inappropriate to cite a W3C Working Draft as anything other than a <em>work
-in progress</em>." </p>
+<p>
+  The latest information regarding <a
+  href="http://www.w3.org/Graphics/SVG/Disclosures">patent disclosures</a>
+  related to this document is available on the Web. As of this publication,
+  the SVG Working Group are not aware of any royalty-bearing patents they
+  believe to be essential to SVG. <span class="note">[@@ Add patent link for CSS WG]</span>
+</p>
 
-<h2 id="howto" edit:toc="no">How to read this document and give feedback</h2>
-
-<p>This draft of Filter Effects 1.0 is essentially the filter chapter from <a
-href="#ref-svg11">SVG 1.1</a>. One of the goals is that this specification
-can be re-used more easily by other specifications that want to have filter
-effects. Some things that have been changed are: error handling is more
-similar to SVG Tiny 1.2, the addition of a <a>'feDropShadow'</a> filter primitive and the
-possibility to filter bitmap data with the DOM. </p>
-
-<p>The main purpose of this document is to encourage public feedback. The
-best way to give feedback is by sending an email to <a
-href="mailto:public-fx@w3.org">public-fx@w3.org</a>. Please
-include some kind of keyword that identifies the area of the specification
-the comment is referring to in the subject line of your message (e.g "Section
-X.Y - the 'filter' property" or "Filtering primitive handling"). If you have
-comments on multiple areas of this document, then it is probably best to
-split those comments into multiple messages. </p>
-
-<p>The public are welcome to comment on any aspect in this document, but
-there are a few areas in which the SVG Working Group are explicitly
-requesting feedback. These areas are noted in place within this document.
-There is also a specific area related to the specification that is listed
-here: </p>
+<p>
+  Publication of this document does not imply endorsement by the W3C
+  membership. A list of current W3C Recommendations and other technical
+  documents can be found at <a
+  href="http://www.w3.org/TR/">http://www.w3.org/TR/</a>. W3C publications may
+  be updated, replaced, or obsoleted by other documents at any time. It is
+  inappropriate to cite a W3C Working Draft as anything other than a <em>work
+  in progress</em>."
+</p>
 
 <p>
   The <a href="ChangeLog">list of changes made to this specification</a> is
@@ -121,30 +114,33 @@ here: </p>
 
 <h2 id="introduction">Introduction</h2>
 
-<p>This chapter describes a declarative filter effects feature set, which
-when combined with the other web technologies, like SVG or HTML, can describe
-much of the common artwork on the Web in such a way that client-side
-generation and alteration can be performed easily. In addition, the ability
-to apply filter effects to SVG <a>graphics elements</a> and <a>container elements</a> helps to
-maintain the semantic structure of the document, instead of resorting to
-images which aside from generally being a fixed resolution tend to obscure
-the original semantics of the elements they replace. This is especially true
-for effects applied to text.
+<p>
+  This chapter describes a declarative filter effects feature set, which when
+  combined with the other web technologies, such as SVG or HTML, can describe
+  much of the common artwork on the Web in such a way that client-side
+  generation and alteration can be performed easily. In addition, the ability
+  to apply filter effects to elements helps to maintain the semantic
+  structure of the document, instead of resorting to images which aside from
+  generally being a fixed resolution tend to obscure the original semantics of
+  the elements they replace. This is especially true for effects applied to
+  text.
 </p>
 
 <p>
 
 </p>
 
-<p>Note that even though this specification references parts of <a
-href="#ref-svg11">SVG 1.1</a> it does not require a complete SVG 1.1
-implementation. <span class="note">Add link to conformance classes here.</span>
+<p>
+  Note that even though this specification references parts of <a
+  href="#ref-svg11">SVG 1.1</a> it does not require an SVG 1.1
+  implementation. <span class="note">Add link to conformance classes
+  here.</span>
 </p>
 
-<p>This document is normative. </p>
+<p>This document is normative.</p>
 
 <p>This document contains explicit conformance criteria that overlap with
-some RNG definitions in requirements. If there is any conflict between the
+some RelaxNG definitions in requirements. If there is any conflict between the
 two, the explicit conformance criteria are the definitive reference. </p>
 
 <p>A filter effect consists of a series of graphics operations that are
@@ -154,12 +150,12 @@ instead of the original source graphic. The following illustrates the
 process:</p>
 
 <p><object data="examples/filters00.svg" type="image/svg+xml" height="78" width="400">
-	<img alt="Image showing source graphic transformed by filter effect"
-	src="examples/filters00.png" width="401" height="78" />
+  <img alt="Image showing source graphic transformed by filter effect"
+  src="examples/filters00.png" width="401" height="78" />
 </object></p>
 <p class="view-as-svg"><a href="examples/filters00.svg">View this example as
 SVG (SVG-enabled browsers only)</a><br />
- 	</p>
+</p>
 
 <h2 id="FilterDefinitions">Definitions</h2>
   <p>When used in this specification, terms have the meanings assigned in this section.</p>
@@ -182,22 +178,22 @@ SVG (SVG-enabled browsers only)</a><br />
     </dd>
   <dt id="TermClientBoundingRect"><span
     class="SVG-TermDefine">bounding client rect</span></dt>
-	<dd>
+  <dd>
     <p>
     The union of all CSS border-boxes for the element if formatted by CSS, as defined by the CSS OM method 
     <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [<a href="#ref-CSSOM">CSSOM</a>].
     </p>
-	</dd>
+  </dd>
   <dt id="TermCSSBoundingBox"><span
     class="SVG-TermDefine">CSS bounding box</span></dt>
-	<dd>
+  <dd>
     <p>
     The union of all CSS border-boxes for the element and all it's descendant elements, provided the element is formatted by CSS. [<a href="#ref-CSS21">CSS</a>].
     </p>
-	</dd>
+  </dd>
   <dt id="TermCurrentUserCoordinateSystem"><span
     class="SVG-TermDefine">current user coordinate system</span></dt>
-	<dd>
+  <dd>
     <p>
     For elements formatted by CSS: the current user coordinate system has its origin at the top-left corner of the 
     <a href="#TermClientBoundingRect">bounding client rect</a> and one unit equals on CSS px. The viewport for resolving percentage values is defined by the width and height of the
@@ -206,10 +202,10 @@ SVG (SVG-enabled browsers only)</a><br />
     <p>
     For SVG elements see <a>user coordinate system</a>.
     </p>
-	</dd>
+  </dd>
   <dt id="TermObjectBoundingBoxUnits"><span
     class="SVG-TermDefine">object bounding box units</span></dt>
-	<dd>
+  <dd>
     For elements formatted by CSS: the bounding box is defined by <a href="#TermCSSBoundingBox">the CSS bounding box.</a> 
     <p>
     For SVG elements the bounding box is defined by <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">the SVG bounding box</a>. 
@@ -217,46 +213,277 @@ SVG (SVG-enabled browsers only)</a><br />
     <p>
     For both cases the bounding box defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a>.
     </p>
-	</dd>
-	<dt id="TermFilterPrimitiveReference"><span
+  </dd>
+  <dt id="TermFilterPrimitiveReference"><span
     class="SVG-TermDefine">&lt;filter-primitive-reference&gt;</span></dt>
-	<dd>
-		<p>
+  <dd>
+    <p>
     A string that identifies a particular filter primitive's output.
     </p>
-	</dd>
-	<dt id="TermFilterPrimitiveElements"><span
+  </dd>
+  <dt id="TermFilterPrimitiveElements"><span
     class="SVG-TermDefine">filter primitives, filter primitive elements</span></dt>
-	<dd>
+  <dd>
     <p>
-		The set of elements that control the output of a <a>'filter element'</a> element, particularly:  
-			<a>'feDistantLight'</a>, 
-			<a>'fePointLight'</a>, 
-			<a>'feSpotLight'</a>,
-			<a>'feBlend'</a>,
-			<a>'feColorMatrix'</a>,
-			<a>'feComponentTransfer'</a>,
-			<a>'feComposite'</a>,
-			<a>'feConvolveMatrix'</a>,
-			<a>'feDiffuseLighting'</a>,
-			<a>'feDisplacementMap'</a>,
-			<a>'feFlood'</a>,
-			<a>'feGaussianBlur'</a>,
-			<a>'feImage'</a>,
-			<a>'feMerge'</a>,
-			<a>'feMorphology'</a>,
-			<a>'feOffset'</a>,
-			<a>'feSpecularLighting'</a>,
-			<a>'feTile'</a>,
-			<a>'feTurbulence'</a>,
-			<a>'feDropShadow'</a>,
-			<a>'feDiffuseSpecular'</a>,
+    The set of elements that control the output of a <a>'filter element'</a> element, particularly:  
+      <a>'feDistantLight'</a>, 
+      <a>'fePointLight'</a>, 
+      <a>'feSpotLight'</a>,
+      <a>'feBlend'</a>,
+      <a>'feColorMatrix'</a>,
+      <a>'feComponentTransfer'</a>,
+      <a>'feComposite'</a>,
+      <a>'feConvolveMatrix'</a>,
+      <a>'feDiffuseLighting'</a>,
+      <a>'feDisplacementMap'</a>,
+      <a>'feFlood'</a>,
+      <a>'feGaussianBlur'</a>,
+      <a>'feImage'</a>,
+      <a>'feMerge'</a>,
+      <a>'feMorphology'</a>,
+      <a>'feOffset'</a>,
+      <a>'feSpecularLighting'</a>,
+      <a>'feTile'</a>,
+      <a>'feTurbulence'</a>,
+      <a>'feDropShadow'</a>,
+      <a>'feDiffuseSpecular'</a>,
       <a>'feUnsharpMask'</a>,
-			<a>'feCustom'</a>.
+      <a>'feCustom'</a>.
       </p>
-	</dd>
+  </dd>
   </dl>
   <br/>
+
+<h2 id="FilterProperty">The <span class="prop-name">'filter'</span>
+property</h2>
+
+<p>The description of the <span class="prop-name">'filter'</span> property is
+as follows:</p>
+
+<div class="propdef">
+<dl>
+  <dt id='propdef-filter'><span class='propdef-title prop-name'>'filter'</span></dt>
+    <dd>
+      <table summary="filter property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td>none | <a href="#FilterFunction">&lt;filter-function&gt;</a> [ <a href="#FilterFunction">&lt;filter-function&gt;</a> ]* </td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>none</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All elements</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>no</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+
+<p>
+  If the value of the <a>'filter property'</a> property is <span class="prop-value">none</span> then there
+  is no filter effect applied. Otherwise, the list of functions (described <a href="#FilterFunction">below</a>)
+  are applied in order.
+</p>
+
+<h3 id="filters-in-css">How the <a>'filter property'</a> property applies to content formatted by CSS (e.g HTML)</h3> 
+<p>
+  The application of the <a>'filter property'</a> property to an element
+  formatted by CSS establishes a pseudo-stacking-context the same way that CSS
+  <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does,
+  and all the element's boxes are rendered together as a group with the filter
+  effect applied to the group as a whole.
+</p>
+<p>
+  The <a>'filter property'</a> property has no effect on the geometry of the
+  target element's CSS boxes, even though <a>'filter property'</a> can cause
+  painting outside of an element's border-box.
+</p>
+<p>
+  The compositing model follows the <a
+  href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
+  model</a>: first any filter effect is applied, then any clipping, masking
+  and opacity. These effects all apply after any other CSS effects such as
+  'border'. As per SVG, the application of <a>'filter property'</a> has no
+  effect on hit-testing.
+</p>
+
+<br />
+
+<h2 id="FilterFunction">Filter Functions</h2>
+
+<p>
+  The value of the <a>'filter property'</a> property is a list of &lt;filter-functions&gt;
+  applied in the order provided. The individual filter functions are
+  separated by whitespace. The set of allowed filter functions is given
+  below.
+</p>
+
+<dl>
+  <dt>
+    <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a>
+  </dt>
+  <dd>
+    An <a href="http://www.w3.org/TR/SVGTiny12/linking.html#IRIReference">IRI reference</a>
+    to a <a>'filter element'</a> element that defines the
+    filter effect. For example "url(commonfilters.xml#large-blur)". If the IRI references a non-existent object or the referenced  
+    object is not a <a>'filter element'</a> element, then the <a>null filter</a> will be applied instead.
+  </dd>
+
+  <dt>
+    grayscale(amount)
+  </dt>
+  <dd>
+    Converts the input image to grayscale. The value of 'amount' defines the proportion
+    of the conversion. A value of 1 is completely grayscale. A value of 0 leaves the
+    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
+    If the 'amount' parameter is missing, a value of 1 is used.
+    The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    sepia(amount)
+  </dt>
+  <dd>
+    Converts the input image to sepia. The value of 'amount' defines the proportion
+    of the conversion. A value of 1 is completely sepia. A value of 0 leaves the
+    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
+    If the 'amount' parameter is missing, a value of 1 is used.
+    The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    saturate(amount)
+  </dt>
+  <dd>
+    Saturates the input image. The value of 'amount' defines the proportion
+    of the conversion. A value of 1 is completely saturated. A value of 0 leaves the
+    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
+    If the 'amount' parameter is missing, a value of 1 is used.
+    The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    hue-rotate(angle)
+  </dt>
+  <dd>
+    Applies a hue rotation on the input image. The value of 'angle' defines the 
+    number of degrees around the color circle the input samples will be adjusted.
+    A value of 0 leaves the input unchanged. If the 'angle' parameter is missing,
+    a value of 0 is used.
+    The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    invert(amount)
+  </dt>
+  <dd>
+    Inverts the samples in the input image. The value of 'amount' defines the proportion
+    of the conversion. A value of 1 is completely inverted. A value of 0 leaves the
+    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
+    If the 'amount' parameter is missing, a value of 1 is used.
+    The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    gamma(amplitude, exponent, offset)
+  </dt>
+  <dd>
+    Applies a gamma function to the input image. 
+    The value of 'amplitude' defines the multiplier to the gamma function.
+    The value of 'exponent' defines the exponent of the gamma function.
+    The value of 'offset' defines the offset of the gamma function.
+    If any of the parameters are missing, the default value for 'amplitude'
+    is 1, for 'exponent' is 1, and for 'offset' is 0.
+    The markup equivalent of this function is <a href="#gammaEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    blur(radiusX, radiusY)
+  </dt>
+  <dd>
+    Applies a Gaussian blur to the input image.
+    The value of 'radiusX' defines the X value of the standard deviation to the Guassian function.
+    The value of 'radiusY' defines the Y value of the standard deviation to the Guassian function.
+    If one parameter is provided, then that value is used for both 'radiusX' and 'radiusY'.
+    If no parameters are provided, then the value for both attributes is 0.
+    The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    unsharp(amount, radius, threshold)
+  </dt>
+  <dd>
+    Applies an sharpening effect to the input image. This is equivalent to subtracting the
+    input samples from a blurred version of the image.
+    The value of 'amount' defines the proportion of the effect (as a multiplier on the
+    subtraction). A value of 1 applies the effect completely. A value of 0 leaves the
+    input unchanged.
+    The value of 'radius' defines the value of the standard deviation to the Guassian function.
+    The value of 'threshold' defines a point at which the function will not be applied.
+    If the 'threshold' parameter is not provided, then its value is 1. If the 'radius' parameter
+    is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0.
+    The markup equivalent of this function is <a href="#unsharpEquivalent">given below</a>.
+  </dd>
+
+</dl>
+
+<div class="note">
+  <p>
+    The above list is a collection of effects that can be easily defined in
+    terms of SVG filters. However, there are many more interesting effects
+    that can be considered for inclusion. If accepted, there will have to
+    be equivalent XML elements for the effect. Effects considered include:
+  </p>
+  <ul>
+  <li>brightness, contrast, exposure</li>
+  <li>halftone</li>
+  <li>motion-blur(radius, angle)</li>
+  <li>posterize(levels)</li>
+  <li>bump(x, y, radius, intensity)</li>
+  <li>generators</li>
+  <li>circle-crop(x, y, radius)</li>
+  <li>affine-transform(some matrix)</li>
+  <li>crop(x, y, w, h)</li>
+  <li>bloom(radius, intensity)</li>
+  <li>gloom(radius, intensity)</li>
+  <li>mosaic(w,h)</li>
+  <li>displace(url, intensity)</li>
+  <li>edge-detect(intensity)</li>
+  <li>pinch(x, y, radius, scale)</li>
+  <li>twirl(x, y, radius, angle)</li>
+  </ul>
+</div>
+
+<p>
+  The first function in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as
+  the input image. Subsequent operations take the output from the 
+  previous function as the input image. The exception is the function
+  that references a 'filter element' element, which can specify an
+  alternate input, but still uses the previous output as its
+  <a href="#SourceGraphic">SourceGraphic</a>.
+</p>
 
 <h2 id="FilterElement">The <span class="element-name">'filter'</span>
 element</h2>
@@ -290,8 +517,8 @@ follows:</p>
       values within the filter definitions represent fractions or percentages
       of the bounding box on the referencing element (see <a href="#TermObjectBoundingBoxUnits">object bounding box
       units</a>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value
-	  this number is expanded out before the <a>'filter/primitiveUnits'</a> computation takes place.
-	  <br />
+    this number is expanded out before the <a>'filter/primitiveUnits'</a> computation takes place.
+    <br />
       If attribute <a>'filter/primitiveUnits'</a> is not
       specified, then the effect is as if a value of <span
       class="attr-value">userSpaceOnUse</span> were specified.<br />
@@ -317,7 +544,7 @@ follows:</p>
       fractions or percentages of the bounding box on the referencing element
       (see <a>object bounding box units</a>).<br />
 
-	  <span class="requirement" id="assert_LacunaValuePrimitiveMarginsUnits">The <a>lacuna value</a> for <a>'filter/primitiveMarginUnits'</a> is <span
+    <span class="requirement" id="assert_LacunaValuePrimitiveMarginsUnits">The <a>lacuna value</a> for <a>'filter/primitiveMarginUnits'</a> is <span
       class="attr-value">userSpaceOnUse</span></span>.<br />
       <span class="anim-target">Animatable: yes.</span></dd>
 
@@ -411,90 +638,6 @@ even when the <a>'display'</a> property on the <a>'filter element'</a> element o
 to <span class="prop-value">none</span>.</p>
 <br />
 
-<h2 id="FilterProperty">The <span class="prop-name">'filter'</span>
-property</h2>
-
-<p>The description of the <span class="prop-name">'filter'</span> property is
-as follows:</p>
-
-<div class="propdef">
-<dl>
-  <dt id='propdef-filter'><span class='propdef-title prop-name'>'filter'</span></dt>
-    <dd>
-      <table summary="filter property" class="propinfo" cellspacing="0"
-      cellpadding="0">
-        <tbody>
-          <tr valign="baseline">
-            <td><em>Value:</em>  </td>
-            <td><a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a> | none | <a class="noxref"
-              href="http://www.w3.org/TR/REC-CSS2/cascade.html#value-def-inherit"><span
-              class="value-inst-inherit noxref">inherit</span></a></td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Initial:</em>  </td>
-            <td>none</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Applies to:</em>  </td>
-            <td>All elements
-<!--              For svg: container elements
-              and graphics elements-->
-              .</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Inherited:</em>  </td>
-            <td>no</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Percentages:</em>  </td>
-            <td>N/A</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Media:</em>  </td>
-            <td>visual</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Animatable:</em>  </td>
-            <td>yes</td>
-          </tr>
-        </tbody>
-      </table>
-    </dd>
-</dl>
-</div>
-
-<dl>
-  <dt><span class="prop-value"><a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a></span></dt>
-    <dd>An <a href="http://www.w3.org/TR/SVGTiny12/linking.html#IRIReference">IRI reference</a>
-      to a <a>'filter element'</a> element which defines the
-      filter effects that shall be applied to this element.
-    </dd>
-  <dt><span class="prop-value">none</span></dt>
-    <dd>Do not apply any filter effects to this element.</dd>
-</dl>
-
-<p>If a <a>'filter property'</a> property references a non-existent object or the referenced  
-object is not a <a>'filter element'</a> element, then the <a>null filter</a> will be applied instead.
-</p>
-
-<h3>How the 'filter' property applies to content formatted by CSS (e.g HTML)</h3> 
-<p>
-The application of the <a>'filter property'</a> property to an element formatted by CSS establishes a pseudo-stacking-context the same way 
-that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does, 
-and all the element's boxes are rendered together as a group with the filter effect applied to the group as a whole.
-</p>
-<p>
-The <a>'filter property'</a> property has no effect on the geometry of the target element's CSS boxes, even though <a>'filter property'</a> can cause painting outside of an element's border-box. 
-</p>
-<p>
-The compositing model follows the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing model</a>: 
-first any filter effect is applied, then any clipping, masking and/or group opacity. 
-These effects all apply after any other CSS effects such as 'clip'. As per SVG, the application of <a>'filter property'</a> has no effect on mouse event hit-testing.
-</p>
-
-<br />
-
-
 <h2 id="FilterEffectsRegion">Filter effects region</h2>
 
 <p>A <a>'filter element'</a>
@@ -546,16 +689,16 @@ different than the one used for the margin attributes on the
 
 <p>An example of the new attributes, which defines a generic drop shadow
 filter: </p>
-<pre class="examplesource">	&lt;filter id="dropShadow" x="0" y="0" width="1" height="1"
-			  filterMarginUnits="userSpaceOnUse"
-			  mx="0" my="0" mw="5" mh="5" &gt;
-		  &lt;feGaussianBlur stdDeviation="2" in="SourceAlpha" /&gt;
-		  &lt;feOffset dx="2" /&gt;
-		  &lt;feMerge&gt;
-			   &lt;feMergeNode /&gt;
-			   &lt;feMergeNode in="SourceGraphic" /&gt;
-		  &lt;/feMerge&gt;
-	&lt;/filter&gt; </pre>
+<pre class="examplesource"> &lt;filter id="dropShadow" x="0" y="0" width="1" height="1"
+        filterMarginUnits="userSpaceOnUse"
+        mx="0" my="0" mw="5" mh="5" &gt;
+      &lt;feGaussianBlur stdDeviation="2" in="SourceAlpha" /&gt;
+      &lt;feOffset dx="2" /&gt;
+      &lt;feMerge&gt;
+         &lt;feMergeNode /&gt;
+         &lt;feMergeNode in="SourceGraphic" /&gt;
+      &lt;/feMerge&gt;
+  &lt;/filter&gt; </pre>
 
 <p>In the above example, the filter region by default covers the entire
 bounds of the object (which is not enough to show the shadow). Adding the new
@@ -568,93 +711,93 @@ element has the following attributes which work together to define the filter
 effects region:</p>
 
  <dl class='definitions unemphasized-names'>
-	<dt id="FilterUnitsAttribute"><a>'filterUnits'</a></dt>
-	<dd>
-	    <p>Defines the coordinate system for attributes <a>'x'</a>, <a>'y'</a>,
-	    <a>'width'</a>, <a>'height'</a>.</p>
+  <dt id="FilterUnitsAttribute"><a>'filterUnits'</a></dt>
+  <dd>
+      <p>Defines the coordinate system for attributes <a>'x'</a>, <a>'y'</a>,
+      <a>'width'</a>, <a>'height'</a>.</p>
     
-		<p>If <span class="attr-value">filterUnits="userSpaceOnUse"</span>, <a>'x'</a>, <a>'y'</a>,
-	    <a>'width'</a>, <a>'height'</a> represent values in the current user coordinate
-	    system in place at the time when the <a>'filter element'</a> element is referenced (i.e., the
-	    user coordinate system for the element referencing the <a>'filter element'</a>
-	    element via a <a>'filter property'</a> property).</p>
+    <p>If <span class="attr-value">filterUnits="userSpaceOnUse"</span>, <a>'x'</a>, <a>'y'</a>,
+      <a>'width'</a>, <a>'height'</a> represent values in the current user coordinate
+      system in place at the time when the <a>'filter element'</a> element is referenced (i.e., the
+      user coordinate system for the element referencing the <a>'filter element'</a>
+      element via a <a>'filter property'</a> property).</p>
 
-	    <p>If <span class="attr-value">filterUnits="objectBoundingBox"</span>, then <a>'x'</a>, <a>'y'</a>,
-	    <a>'width'</a>, <a>'height'</a> represent fractions or percentages of the
-	    bounding box on the referencing element (see <a>object bounding box units</a>).</p>
+      <p>If <span class="attr-value">filterUnits="objectBoundingBox"</span>, then <a>'x'</a>, <a>'y'</a>,
+      <a>'width'</a>, <a>'height'</a> represent fractions or percentages of the
+      bounding box on the referencing element (see <a>object bounding box units</a>).</p>
 
-		<p>The <a>lacuna value</a> for <a>'filterUnits'</a> is <span
-	    class="attr-value">objectBoundingBox</span>.</p>
+    <p>The <a>lacuna value</a> for <a>'filterUnits'</a> is <span
+      class="attr-value">objectBoundingBox</span>.</p>
 
-	    <p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
-	<dt id="FilterRegionXYWidthHeightAttributes"><a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a></dt>
+      <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
+  <dt id="FilterRegionXYWidthHeightAttributes"><a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a></dt>
     <dd>
-		<p>These attributes define a rectangular region on the canvas to which this filter applies.</p>
-    	<p>The amount of memory and processing time required to apply the filter are
-    	   related to the size of this rectangle and the <a>'filterRes'</a> attribute of the filter.</p>
-		<p>The coordinate system for these attributes depends on the value for attribute <a>'filterUnits'</a>.</p>
-		<p>The bounds of this rectangle act as a hard clipping region for each <a>filter primitive</a> 
-		   included with a given <a>'filter element'</a> element; thus, if the effect of
-    	   a given filter primitive would extend beyond the bounds of the rectangle
-    	   (this sometimes happens when using a <a>'feGaussianBlur'</a> filter primitive with a
-    	   very large <a>'feGaussianBlur/stdDeviation'</a>), parts of the effect will get clipped.</p>
+    <p>These attributes define a rectangular region on the canvas to which this filter applies.</p>
+      <p>The amount of memory and processing time required to apply the filter are
+         related to the size of this rectangle and the <a>'filterRes'</a> attribute of the filter.</p>
+    <p>The coordinate system for these attributes depends on the value for attribute <a>'filterUnits'</a>.</p>
+    <p>The bounds of this rectangle act as a hard clipping region for each <a>filter primitive</a> 
+       included with a given <a>'filter element'</a> element; thus, if the effect of
+         a given filter primitive would extend beyond the bounds of the rectangle
+         (this sometimes happens when using a <a>'feGaussianBlur'</a> filter primitive with a
+         very large <a>'feGaussianBlur/stdDeviation'</a>), parts of the effect will get clipped.</p>
     
-		<p>The <a>lacuna value</a> for <a>'x'</a> and <a>'y'</a> is <span class="attr-value">-10%</span>.</p>
-		<p>The <a>lacuna value</a> for <a>'width'</a> and <a>'height'</a> is <span class="attr-value">120%</span>.</p>
-    	<p>Negative or zero values for <a>'width'</a> or <a>'height'</a> disable rendering of the element which
-		   referenced the filter. </p>
-		
-    	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
-	<dt id="FilterMarginAttribute"><a>'filterMarginUnits'</a></dt>
+    <p>The <a>lacuna value</a> for <a>'x'</a> and <a>'y'</a> is <span class="attr-value">-10%</span>.</p>
+    <p>The <a>lacuna value</a> for <a>'width'</a> and <a>'height'</a> is <span class="attr-value">120%</span>.</p>
+      <p>Negative or zero values for <a>'width'</a> or <a>'height'</a> disable rendering of the element which
+       referenced the filter. </p>
+    
+      <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
+  <dt id="FilterMarginAttribute"><a>'filterMarginUnits'</a></dt>
     <dd>
-		<p>Defines the coordinate system for attributes <a>'mx'</a>, <a>'my'</a>,
-    		<a>'mw'</a>, <a>'mh'</a>.</p>
-		<p>If <span class="attr-value">filterMarginUnits="userSpaceOnUse"</span>, <a>'mx'</a>, <a>'my'</a>,
-		    <a>'mw'</a>, <a>'mh'</a> represent values in the current <a>user coordinate system</a>
-		    in place at the time when the <a>'filter element'</a> element is referenced (i.e., the
-		    <a>user coordinate system</a> for the element referencing the <a>'filter element'</a>
-		    element via a <a>'filter property'</a> property).</p>
-		<p>If <span class="attr-value">filterMarginUnits="objectBoundingBox"</span>, then <a>'mx'</a>, <a>'my'</a>,
-	  		<a>'mw'</a>, <a>'mh'</a> represent fractions or percentages of the <a>'bounding box'</a>
-    		on the referencing element (see <a>object bounding box units</a>).</p>
-    	<p>The <a>lacuna value</a> for <a>'filterMarginUnits'</a> is 
-			<span class="attr-value">userSpaceOnUse</span>.</p>
-		<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>Defines the coordinate system for attributes <a>'mx'</a>, <a>'my'</a>,
+        <a>'mw'</a>, <a>'mh'</a>.</p>
+    <p>If <span class="attr-value">filterMarginUnits="userSpaceOnUse"</span>, <a>'mx'</a>, <a>'my'</a>,
+        <a>'mw'</a>, <a>'mh'</a> represent values in the current <a>user coordinate system</a>
+        in place at the time when the <a>'filter element'</a> element is referenced (i.e., the
+        <a>user coordinate system</a> for the element referencing the <a>'filter element'</a>
+        element via a <a>'filter property'</a> property).</p>
+    <p>If <span class="attr-value">filterMarginUnits="objectBoundingBox"</span>, then <a>'mx'</a>, <a>'my'</a>,
+        <a>'mw'</a>, <a>'mh'</a> represent fractions or percentages of the <a>'bounding box'</a>
+        on the referencing element (see <a>object bounding box units</a>).</p>
+      <p>The <a>lacuna value</a> for <a>'filterMarginUnits'</a> is 
+      <span class="attr-value">userSpaceOnUse</span>.</p>
+    <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="FilterRegionMyAttribute"><a>'mx'</a>, <a>'my'</a>, <a>'mw'</a>, <a>'mh'</a></dt>
-	<dd>
-    	<p>Defines the deltas to the <a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a> of the filter region.</p>
-	
-		<p>After the <a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a> have been calculated for the 
-			<a>filter region</a> the <a>'mx'</a>, <a>'my'</a>, <a>'mw'</a>, <a>'mh'</a> are calculated and added 
-			to the <a>filter region</a>. <span class="requirement" id="assert_OORFilterRegion">If the resulting 
-			<a>filter region</a> has a negative or zero width or height, the rendering of the element which 
-			referenced the filter is disabled.</span></p>
-	
-    	<p>The coordinate system for these attributes depends on the value for
-    		attribute <a>'filterMarginUnits'</a>.</p>
+  <dd>
+      <p>Defines the deltas to the <a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a> of the filter region.</p>
+  
+    <p>After the <a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a> have been calculated for the 
+      <a>filter region</a> the <a>'mx'</a>, <a>'my'</a>, <a>'mw'</a>, <a>'mh'</a> are calculated and added 
+      to the <a>filter region</a>. <span class="requirement" id="assert_OORFilterRegion">If the resulting 
+      <a>filter region</a> has a negative or zero width or height, the rendering of the element which 
+      referenced the filter is disabled.</span></p>
+  
+      <p>The coordinate system for these attributes depends on the value for
+        attribute <a>'filterMarginUnits'</a>.</p>
 
-    	<p>The <a>lacuna value</a> for <a>'mx'</a>, <a>'my'</a>, <a>'mw'</a> and <a>'mh'</a> is <span class="attr-value">0</span>.</p>
-    	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+      <p>The <a>lacuna value</a> for <a>'mx'</a>, <a>'my'</a>, <a>'mw'</a> and <a>'mh'</a> is <span class="attr-value">0</span>.</p>
+      <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
 
-	<dt id="FilterRegionFilterRes"><a>'filterRes'</a></dt> 
-	<dd>
-		<p>Defines the width and height of the intermediate
-	    images in pixels. If not provided, then a reasonable default resolution
-	    appropriate for the target device will be used. (For displays, an
-	    appropriate display resolution, preferably the current display's pixel
-	    resolution, is the default. For printing, an appropriate common printer
-	    resolution, such as 1200dpi, is the default.)</p>
-	    <p>Care should be taken when assigning a non-default value to this
-	    attribute. Too small of a value may result in unwanted pixelation in the
-	    result. Too large of a value may result in slow processing and large
-	    memory usage.</p>
-	    <p><span class="requirement" id="assert_OORFilterRegion">Negative or zero values disable rendering of the element which referenced the filter.</span></p>
-    	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+  <dt id="FilterRegionFilterRes"><a>'filterRes'</a></dt> 
+  <dd>
+    <p>Defines the width and height of the intermediate
+      images in pixels. If not provided, then a reasonable default resolution
+      appropriate for the target device will be used. (For displays, an
+      appropriate display resolution, preferably the current display's pixel
+      resolution, is the default. For printing, an appropriate common printer
+      resolution, such as 1200dpi, is the default.)</p>
+      <p>Care should be taken when assigning a non-default value to this
+      attribute. Too small of a value may result in unwanted pixelation in the
+      result. Too large of a value may result in slow processing and large
+      memory usage.</p>
+      <p><span class="requirement" id="assert_OORFilterRegion">Negative or zero values disable rendering of the element which referenced the filter.</span></p>
+      <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
 </dl>
 
 <p>Note that both of the two possible value for <a>'filterUnits'</a> (i.e., <span
@@ -794,7 +937,7 @@ initial/default value) depends on context:</p>
 </ul>
 
 <p>If a filter effect specifies either the <a>BackgroundImage</a> or the 
-	<a>BackgroundAlpha</a> pseudo input images and no
+  <a>BackgroundAlpha</a> pseudo input images and no
 ancestor <a>container element</a>
  element has a property value of <span class="attr-value">'enable-background:new'</span>, then the background
 image request is technically in error. Processing will proceed without
@@ -804,7 +947,7 @@ provided in response to the request.</p>
 <p>The optional
 <strong>&lt;x&gt;,&lt;y&gt;,&lt;width&gt;,&lt;height&gt;</strong> 
 <span class="specissue">ISSUE: define the type of each of these, probably &lt;number&gt;</span>
-	parameters
+  parameters
 on the <span class="attr-value">new</span> value indicate the subregion of the <a>container element</a>
  element to which <a>'enable-background'</a> applies' user space where access to the
 background image is allowed to happen. These parameters enable the user
@@ -956,63 +1099,63 @@ primitives:</p>
   <span class="adef">x</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
     <dd><p>The minimum x coordinate for the subregion which restricts
       calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
-		<p>The <a>lacuna value</a> for <span class="attr-name">x</span> is <span class="attr-value">0%</span>.</p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The <a>lacuna value</a> for <span class="attr-name">x</span> is <span class="attr-value">0%</span>.</p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="FilterPrimitiveYAttribute">
   <span class="adef">y</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
     <dd><p>The minimum y coordinate for the subregion which restricts
       calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>. </p>
-		<p>The <a>lacuna value</a> for <span class="attr-name">y</span> is <span class="attr-value">0%</span>.</p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The <a>lacuna value</a> for <span class="attr-name">y</span> is <span class="attr-value">0%</span>.</p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="FilterPrimitiveWidthAttribute">
   <span class="adef">width</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
     <dd><p>The width of the subregion which restricts calculation and rendering
       of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
       <p>A negative or zero value disables the effect of the given filter
       primitive (i.e., the result is a transparent black image).</p>
-	  <p>The <a>lacuna value</a> for <span class="attr-name">width</span> is <span class="attr-value">100%</span>.</p>
+    <p>The <a>lacuna value</a> for <span class="attr-name">width</span> is <span class="attr-value">100%</span>.</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+  </dd>
   <dt id="FilterPrimitiveHeightAttribute">
   <span class="adef">height</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
     <dd><p>The height of the subregion which restricts calculation and rendering
       of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
       <p>A negative or zero value disables the effect of the given filter
       primitive (i.e., the result is a transparent black image).</p>
-	  <p>The <a>lacuna value</a> for <span class="attr-name">height</span> is <span class="attr-value">100%</span>.</p>
+    <p>The <a>lacuna value</a> for <span class="attr-name">height</span> is <span class="attr-value">100%</span>.</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+  </dd>
   <dt id="FilterPrimitiveMxAttribute">
   <span class="adef">mx</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
     <dd><p>The margin delta for the x coordinate of the subregion which
-      	restricts calculation and rendering of the given <a>filter primitive</a>, 
-		see <a>filter primitive subregion</a>.</p> 
-		<p>The <a>lacuna value</a> for <span class="attr-name">mx</span> is <span class="attr-value">0</span>.</p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+        restricts calculation and rendering of the given <a>filter primitive</a>, 
+    see <a>filter primitive subregion</a>.</p> 
+    <p>The <a>lacuna value</a> for <span class="attr-name">mx</span> is <span class="attr-value">0</span>.</p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="FilterPrimitiveMyAttribute">
   <span class="adef">my</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
     <dd><p>The margin delta for the y coordinate of the subregion which
       restricts calculation and rendering of the given <a>filter primitive</a>, see <a>filter primitive subregion</a>.</p>
-		<p>The <a>lacuna value</a> for <span class="attr-name">my</span> is <span class="attr-value">0</span>.</p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The <a>lacuna value</a> for <span class="attr-name">my</span> is <span class="attr-value">0</span>.</p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="FilterPrimitiveMwAttribute">
   <span class="adef">mw</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
     <dd><p>The margin delta for the width of the subregion which restricts
       calculation and rendering of the given <a>filter primitive</a>, see <a>filter primitive subregion</a>.</p> 
-		<p>The <a>lacuna value</a> for <span class="attr-name">mw</span> is <span class="attr-value">0</span>.</p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The <a>lacuna value</a> for <span class="attr-name">mw</span> is <span class="attr-value">0</span>.</p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="FilterPrimitiveMhAttribute">
   <span class="adef">mh</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
     <dd><p>The margin delta for the height of the subregion which restricts
       calculation and rendering of the given <a>filter primitive</a>, see <a>filter primitive subregion</a>.</p>
-		<p>The <a>lacuna value</a> for <span class="attr-name">mh</span> is <span class="attr-value">0</span>.</p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The <a>lacuna value</a> for <span class="attr-name">mh</span> is <span class="attr-value">0</span>.</p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="FilterPrimitiveResultAttribute">
   <span class="adef">result</span> =
   "<em><a>&lt;filter-primitive-reference&gt;</a></em>"</dt>
@@ -1032,7 +1175,7 @@ primitives:</p>
       <a>&lt;filter-primitive-reference&gt;</a> will use the closest
       preceding <a>filter primitive</a> with the given result.</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+  </dd>
   <dt id="FilterPrimitiveInAttribute">
   <span class="adef">in</span> = "<em><a>SourceGraphic</a> | <a>SourceAlpha</a> | <a>BackgroundImage</a> | <a>BackgroundAlpha</a> | <a>FillPaint</a> | <a>StrokePaint</a> |
   <a>&lt;filter-primitive-reference&gt;</a></em>"</dt>
@@ -1040,9 +1183,9 @@ primitives:</p>
       either one of six keywords or can be a string which matches a previous
       <a>'feBlend/result'</a> attribute value within the same <a>'filter element'</a>
       element. If no value is provided and this is the first <a>filter primitive</a>, 
-	then this <a>filter primitive</a> will use <a>SourceGraphic</a>
+  then this <a>filter primitive</a> will use <a>SourceGraphic</a>
       as its input. If no value is provided and this is a subsequent <a>filter primitive</a>, 
-	then this <a>filter primitive</a> will use the result from the
+  then this <a>filter primitive</a> will use the result from the
       previous <a>filter primitive</a> as its input.</p> 
       <p>If the value for <span class="attr-name">result</span> appears
       multiple times within a given <a>'filter element'</a> element, then a reference to
@@ -1066,62 +1209,62 @@ primitives:</p>
         <dt id="SourceAlpha"><span class="attr-value">SourceAlpha</span></dt>
           <dd><p>This keyword represents the graphics elements
             that were the original input into the <a>'filter element'</a> element. 
-			<a>SourceAlpha</a> has all of the same rules
+      <a>SourceAlpha</a> has all of the same rules
             as <a>SourceGraphic</a> except that only the
             alpha channel is used. The input image is an RGBA image
             consisting of implicitly black color values for the RGB channels,
             but whose alpha channel is the same as <a>SourceGraphic</a>.</p>
-			<p class="note implementation">If this option is
+      <p class="note implementation">If this option is
             used, then some implementations might need to rasterize the
             graphics elements
             in order to extract the alpha channel.</p>
-		</dd>
+    </dd>
         <dt id="BackgroundImage"><span class="attr-value">BackgroundImage</span></dt>
           <dd><p>This keyword represents an image snapshot of the canvas under
             the filter region at the time that the <a>'filter element'</a> element was invoked. See
             <a href="#AccessingBackgroundImage">accessing the background
             image</a>.</p>
-		  </dd>
+      </dd>
         <dt id="BackgroundAlpha"><span class="attr-value">BackgroundAlpha</span></dt>
           <dd><p>Same as <a>BackgroundImage</a> except
             only the alpha channel is used. See <a>SourceAlpha</a> and <a
             href="#AccessingBackgroundImage">accessing the background
             image</a>.</p>
-		  </dd>
+      </dd>
 
         <dt id="FillPaint"><span class="attr-value">FillPaint</span></dt>
           <dd>
       <p>This keyword represents the target element <i>rendered filled</i>.</p>
-			<p>For svg this keyword represents the value of the <a>'fill'</a>
+      <p>For svg this keyword represents the value of the <a>'fill'</a>
             property on the target element for the filter effect.</p>
       <p>For non-SVG cases <a>FillPaint</a> generates a transparent black image. 
         <span class="specissue">ISSUE: Consider whether this should be e.g the CSS bounding box filled with the current color, or if it makes sense to use the 'fill' property for this case too.</span>
       </p>
-			<p class="note authoring">Note that text is generally painted filled, not stroked.</p>
-			<p>The <a>FillPaint</a> image has conceptually infinite extent. 
-			Frequently this image is opaque everywhere, but it might not be if the "paint"
-			itself has alpha, as in the case of a gradient or pattern which
-			itself includes transparent or semi-transparent parts.</p>
-	  	</dd>
+      <p class="note authoring">Note that text is generally painted filled, not stroked.</p>
+      <p>The <a>FillPaint</a> image has conceptually infinite extent. 
+      Frequently this image is opaque everywhere, but it might not be if the "paint"
+      itself has alpha, as in the case of a gradient or pattern which
+      itself includes transparent or semi-transparent parts.</p>
+      </dd>
         <dt id="StrokePaint"><span class="attr-value">StrokePaint</span></dt>
           <dd>
-			<p>This keyword represents the target element <i>rendered stroked</i>.</p>
+      <p>This keyword represents the target element <i>rendered stroked</i>.</p>
       <p>For svg this keyword represents the value of the <a>'stroke'</a>
          on the target element for the filter effect.</p>
       <p>For non-SVG cases <a>StrokePaint</a> generates a transparent black image. 
         <span class="specissue">ISSUE: Consider whether this should be e.g the CSS bounding box filled with the one of the border colors, or if it makes sense to use the 'stroke' property for this case too.</span>
       </p>
-			<p class="note authoring">Note that text is generally painted filled, not stroked.</p>
-	  		<p>The <a>StrokePaint</a> image has conceptually infinite extent.
-			Frequently this image is opaque everywhere, but it 
-			might not be if the "paint"
-			itself has alpha, as in the case of a gradient or pattern which
-			itself includes transparent or semi-transparent parts.
-			</p>
-		  </dd>
+      <p class="note authoring">Note that text is generally painted filled, not stroked.</p>
+        <p>The <a>StrokePaint</a> image has conceptually infinite extent.
+      Frequently this image is opaque everywhere, but it 
+      might not be if the "paint"
+      itself has alpha, as in the case of a gradient or pattern which
+      itself includes transparent or semi-transparent parts.
+      </p>
+      </dd>
         </dl>
       <p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+  </dd>
   </dl>
 </div>
 
@@ -1304,7 +1447,7 @@ light.</p>
   <dt id="feSpotLightPointsAtXAttribute"><span
   class="adef">pointsAtX</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
     <dd>X location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> 
-    	on the <a>'filter element'</a>
+      on the <a>'filter element'</a>
       element of the point at which the light source is pointing.<br />
       If the attribute is not specified, then the effect is as if a value of
       <span class="attr-value">0</span> were specified.<br />
@@ -1312,16 +1455,16 @@ light.</p>
   <dt id="feSpotLightPointsAtYAttribute"><span
   class="adef">pointsAtY</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
     <dd>Y location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> 
-    	on the <a>'filter element'</a> element of the point at which the light source is pointing.<br />
+      on the <a>'filter element'</a> element of the point at which the light source is pointing.<br />
       If the attribute is not specified, then the effect is as if a value of
       <span class="attr-value">0</span> were specified.<br />
       <span class="anim-target">Animatable: yes.</span></dd>
   <dt id="feSpotLightPointsAtZAttribute"><span
   class="adef">pointsAtZ</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
     <dd>Z location in the coordinate system established by the
-		    attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element of
-		    the point at which the light source is pointing, assuming that, in the
-    		<a>initial coordinate system</a>, the positive Z-axis comes out
+        attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element of
+        the point at which the light source is pointing, assuming that, in the
+        <a>initial coordinate system</a>, the positive Z-axis comes out
          towards the person viewing the content and assuming that
          one unit along the Z-axis equals 
          <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">
@@ -1541,33 +1684,33 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
           class="attr-name">values</span> is a single real number value (0 to
           1). A <span class="attr-value">saturate</span> operation is
           equivalent to the following matrix operation: 
-		  <p>
-		  <object data="mathml/feColorMatrix01.mml" type="application/mathml+xml" width="100%" height="130">
+      <p>
+      <object data="mathml/feColorMatrix01.mml" type="application/mathml+xml" width="100%" height="130">
           <pre>| R' |     |0.213+0.787s  0.715-0.715s  0.072-0.072s 0  0 |   | R |
 | G' |     |0.213-0.213s  0.715+0.285s  0.072-0.072s 0  0 |   | G |
 | B' |  =  |0.213-0.213s  0.715-0.715s  0.072+0.928s 0  0 | * | B |
 | A' |     |           0            0             0  1  0 |   | A |
 | 1  |     |           0            0             0  0  1 |   | 1 |</pre>
-		  </object>
-		</p>
+      </object>
+    </p>
         </li>
         <li>For <span class="attr-value">type="hueRotate"</span>, <span
           class="attr-name">values</span> is a single one real number value
           (degrees). A <span class="attr-value">hueRotate</span> operation is
           equivalent to the following matrix operation: 
-		  <p>
-		  <object data="mathml/feColorMatrix02.mml" type="application/mathml+xml" width="100%" height="130">
+      <p>
+      <object data="mathml/feColorMatrix02.mml" type="application/mathml+xml" width="100%" height="130">
           <pre>| R' |     | a00  a01  a02  0  0 |   | R |
 | G' |     | a10  a11  a12  0  0 |   | G |
 | B' |  =  | a20  a21  a22  0  0 | * | B |
 | A' |     | 0    0    0    1  0 |   | A |
 | 1  |     | 0    0    0    0  1 |   | 1 |</pre>
-		</object>
-		</p>
+    </object>
+    </p>
 
           where the terms a00, a01, etc. are calculated as follows: 
-		  <p>
-		<object data="mathml/feColorMatrix03.mml" type="application/mathml+xml" width="100%" height="230">
+      <p>
+    <object data="mathml/feColorMatrix03.mml" type="application/mathml+xml" width="100%" height="230">
           <pre>| a00 a01 a02 |    [+0.213 +0.715 +0.072]
 | a10 a11 a12 | =  [+0.213 +0.715 +0.072] +
 | a20 a21 a22 |    [+0.213 +0.715 +0.072]
@@ -1577,22 +1720,22 @@ cos(hueRotate value) *  [-0.213 +0.285 -0.072] +
                         [-0.213 -0.715+0.928]
 sin(hueRotate value) *  [+0.143 +0.140-0.283]
                         [-0.787 +0.715+0.072]</pre>
-		</object>
-		</p>
+    </object>
+    </p>
           Thus, the upper left term of the hue matrix turns out to be:
-		  <p>
-		<object data="mathml/feColorMatrix04.mml" type="application/mathml+xml" width="100%" height="30"> 
+      <p>
+    <object data="mathml/feColorMatrix04.mml" type="application/mathml+xml" width="100%" height="30"> 
           <pre>.213 + cos(hueRotate value)*.787 - sin(hueRotate value)*.213</pre>
-		  </object>
-		  </p>
+      </object>
+      </p>
 
         </li>
         <li>For <span class="attr-value">type="luminanceToAlpha"</span>,
           <span class="attr-name">values</span> is not applicable. A <span
           class="attr-value">luminanceToAlpha</span> operation is equivalent
           to the following matrix operation: 
-		  <p>
-		  <object data="mathml/feColorMatrix05.mml" type="application/mathml+xml" width="100%" height="130">
+      <p>
+      <object data="mathml/feColorMatrix05.mml" type="application/mathml+xml" width="100%" height="130">
           <pre>   | R' |     |      0        0        0  0  0 |   | R |
    | G' |     |      0        0        0  0  0 |   | G |
    | B' |  =  |      0        0        0  0  0 | * | B |
@@ -1600,7 +1743,7 @@ sin(hueRotate value) *  [+0.143 +0.140-0.283]
    | 1  |     |      0        0        0  0  1 |   | 1 |</pre>
    </object>
    </p>
-	      </li>
+        </li>
       </ul>
       If the attribute is not specified, then the default behavior depends on
       the value of attribute <a>'feColorMatrix/type'</a>. If <span
@@ -1650,10 +1793,10 @@ transfer functions for the four channels:</p>
 
 <p>The following rules apply to the processing of the <a>'feComponentTransfer'</a> element:</p>
 <ul>
-	<li>If more than one <a>transfer function element</a> of the same kind is specified, the last occurrence is to be used.</li>
-	<li>If any of the <a>transfer function elements</a> are unspecified, the <a>'feComponentTransfer'</a> must be processed as if those <a>transfer function elements</a> were specified with their <a>'type'</a> attributes set to <span class="attr-value">'identity'</span>.</li>
+  <li>If more than one <a>transfer function element</a> of the same kind is specified, the last occurrence is to be used.</li>
+  <li>If any of the <a>transfer function elements</a> are unspecified, the <a>'feComponentTransfer'</a> must be processed as if those <a>transfer function elements</a> were specified with their <a>'type'</a> attributes set to <span class="attr-value">'identity'</span>.</li>
 </ul>
-	
+  
 <edit:with element='feFuncR'>
 
 <div id='feFuncRElement'>
@@ -2456,8 +2599,8 @@ by property <a>'lighting-color'</a>.</p>
 to spatially displace the image from <a>'in'</a>.
 This is the transformation to be performed:</p>
 
-<pre>	P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
-	</pre>
+<pre> P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
+  </pre>
 
 <p>where P(x,y) is the input image, <a>'in'</a>, and
 P'(x,y) is the destination. XC(x,y) and YC(x,y) are the component values of
@@ -3331,36 +3474,36 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   class="adef">baseFrequency</span> =
   "<em><a>&lt;number-optional-number&gt;</a></em>"</dt>
     <dd>
-		<p>The base frequency (frequencies) parameter(s) for the noise function.
+    <p>The base frequency (frequencies) parameter(s) for the noise function.
       If two <a>&lt;number&gt;</a>s are provided, the first number represents a base frequency in the X
       direction and the second value represents a base frequency in the Y
       direction. If one number is provided, then that value is used for both
       X and Y.</p>
-		<p>The <a>lacuna value</a> for <a>'baseFrequency'</a> is <span class="attr-value">0</span>.</p>
-		<p>Negative values are <a>unsupported</a>.</p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
+    <p>The <a>lacuna value</a> for <a>'baseFrequency'</a> is <span class="attr-value">0</span>.</p>
+    <p>Negative values are <a>unsupported</a>.</p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
 </dd>
   <dt id="feTurbulenceNumOctavesAttribute"><span
   class="adef">numOctaves</span> = "<em><a>&lt;integer&gt;</a></em>"</dt>
     <dd>
-		<p>The numOctaves parameter for the noise function.</p>
-      	<p><span class="requirement" id="assert_turbulenceNumOctavesLacunaValue">The <a>lacuna value</a> for <a>'numOctaves'</a> is <span class="attr-value">1</span>.</span></p>
-		<p><span class="requirement" id="assert_turbulenceNumOctavesUnsupportedValue">Negative values are <a>unsupported</a>.</span></p>
-      	<p><span class="requirement" id="assert_turbulenceNumOctavesAnimatable"><span class="anim-target">Animatable: yes.</span></span></p>
-	</dd>
+    <p>The numOctaves parameter for the noise function.</p>
+        <p><span class="requirement" id="assert_turbulenceNumOctavesLacunaValue">The <a>lacuna value</a> for <a>'numOctaves'</a> is <span class="attr-value">1</span>.</span></p>
+    <p><span class="requirement" id="assert_turbulenceNumOctavesUnsupportedValue">Negative values are <a>unsupported</a>.</span></p>
+        <p><span class="requirement" id="assert_turbulenceNumOctavesAnimatable"><span class="anim-target">Animatable: yes.</span></span></p>
+  </dd>
   <dt id="feTurbulenceSeedAttribute">
   <span class="adef">seed</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
     <dd>
-		<p>The starting number for the pseudo random number generator.</p>
-		<p><span class="requirement" id="assert_turbulenceSeedLacunaValue">The <a>lacuna value</a> for <a>'seed'</a> is <span class="attr-value">0</span>.</span></p>
-	  	<p><span class="requirement" id="assert_turbulenceSeedTruncation">When the seed number is handed over to the algorithm above it must first be 
-	  truncated, i.e. rounded to the closest integer value towards zero.</span></p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The starting number for the pseudo random number generator.</p>
+    <p><span class="requirement" id="assert_turbulenceSeedLacunaValue">The <a>lacuna value</a> for <a>'seed'</a> is <span class="attr-value">0</span>.</span></p>
+      <p><span class="requirement" id="assert_turbulenceSeedTruncation">When the seed number is handed over to the algorithm above it must first be 
+    truncated, i.e. rounded to the closest integer value towards zero.</span></p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="feTurbulenceStitchTilesAttribute"><span
   class="adef">stitchTiles</span> = "<em>stitch | noStitch</em>"</dt>
     <dd>
-	<p>If <span class="attr-value">stitchTiles="noStitch"</span>, no attempt
+  <p>If <span class="attr-value">stitchTiles="noStitch"</span>, no attempt
       it made to achieve smooth transitions at the border of tiles which
       contain a turbulence function. Sometimes the result will show clear
       discontinuities at the tile borders.<br />
@@ -3379,17 +3522,17 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
       the right or bottom edges of the active area (the size of the resulting
       tile). In those cases, copy the lattice vector from the opposite edge
       of the active area.</p>
-	  <p><span class="requirement" id="assert_turbulenceStitchTilesLacunaValue">The <a>lacuna value</a> for <a>'stitchTiles'</a> attribute is <span class="attr-value">noStitch</span>.</span></p>
+    <p><span class="requirement" id="assert_turbulenceStitchTilesLacunaValue">The <a>lacuna value</a> for <a>'stitchTiles'</a> attribute is <span class="attr-value">noStitch</span>.</span></p>
       <p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+  </dd>
   <dt id="feTurbulenceTypeAttribute">
   <span class="adef">type</span> = "<em>fractalNoise | turbulence</em>"</dt>
     <dd>
-		<p>Indicates whether the filter primitive should perform a noise or
+    <p>Indicates whether the filter primitive should perform a noise or
       turbulence function.</p>
-		<p><span class="requirement" id="assert_turbulenceTypeLacunaValue">The <a>lacuna value</a> for <a>'type'</a> attribute is <span class="attr-value">turbulence</span>.</span></p>
-      	<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p><span class="requirement" id="assert_turbulenceTypeLacunaValue">The <a>lacuna value</a> for <a>'type'</a> attribute is <span class="attr-value">turbulence</span>.</span></p>
+        <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
 </dl>
 </div>
 
@@ -3426,18 +3569,18 @@ The above divided into steps:
 <ol>
   <li>Take the alpha channel of the input to the <a>'feDropShadow'</a> filter primitive and the <a>'feDropShadow/stdDeviation'</a> on the <a>'feDropShadow'</a> and do processing as if the
     following <a>'feGaussianBlur'</a> was applied: 
-    <pre class="examplesource">	&lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;</pre>
+    <pre class="examplesource"> &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;</pre>
     <br />
   </li>
   <li>Offset the result of step 1 by <a>'feDropShadow/dx'</a> and <a>'feDropShadow/dy'</a> as
     specified on the <a>'feDropShadow'</a>
     element, equivalent to applying an <a>'feOffset'</a> with these parameters: 
-    <pre class="examplesource">	&lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;</pre>
+    <pre class="examplesource"> &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;</pre>
     <br />
   </li>
   <li>Do processing as if an <a>'feFlood'</a> element with <a>'flood-color'</a> and 
-	<a>'flood-opacity'</a> as specified on the <a>'feDropShadow'</a> was applied: 
-    <pre class="examplesource">	&lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;</pre>
+  <a>'flood-opacity'</a> as specified on the <a>'feDropShadow'</a> was applied: 
+    <pre class="examplesource"> &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;</pre>
     <br />
   </li>
   <li>Composite the result of the <a href="#feFloodElement"><span
@@ -3446,15 +3589,15 @@ The above divided into steps:
     class="element-name">'feOffset'</span></a> in step 2 as if an <a>'feComposite'</a> filter primitive with <a
     href="#feCompositeOperatorAttribute"><span
     class="attr-name">operator</span></a>='in' was applied: 
-    <pre class="examplesource">	&lt;feComposite in2="offsetblur" operator="in"/&gt;</pre>
+    <pre class="examplesource"> &lt;feComposite in2="offsetblur" operator="in"/&gt;</pre>
     <br />
   </li>
   <li>Finally merge the result of the previous step, doing processing as if
     the following <a>'feMerge'</a> was performed: 
-    <pre class="examplesource">	&lt;feMerge&gt;
-	    &lt;feMergeNode/&gt;
-	    &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
-	&lt;/feMerge&gt;</pre>
+    <pre class="examplesource"> &lt;feMerge&gt;
+      &lt;feMergeNode/&gt;
+      &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
+  &lt;/feMerge&gt;</pre>
   </li>
 </ol>
 </p>
@@ -3477,29 +3620,29 @@ be exposed to the DOM.</span> </p>
   <dt id="feDropShadowDxAttribute">
   <span class="adef">dx</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
     <dd>
-		<p>The x offset of the drop shadow.</p> 
-		<p>The <a>lacuna value</a> for <a>'feDropShadow/dx'</a> is <span class="attr-value">2</span>.</p> 
-		<p>This attribute is then forwarded to the <a>'feOffset/dx'</a> attribute of the internal <a>'feOffset'</a> element.</p>
-		<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The x offset of the drop shadow.</p> 
+    <p>The <a>lacuna value</a> for <a>'feDropShadow/dx'</a> is <span class="attr-value">2</span>.</p> 
+    <p>This attribute is then forwarded to the <a>'feOffset/dx'</a> attribute of the internal <a>'feOffset'</a> element.</p>
+    <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="feDropShadowDyAttribute">
   <span class="adef">dy</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
     <dd>
-		<p>The y offset of the drop shadow.</p>
-		<p>The <a>lacuna value</a> for <a>'feDropShadow/dy'</a> is <span class="attr-value">2</span>. </p>
-		<p>This attribute is then forwarded to the <a>'feOffset/dy'</a> attribute of the internal <a>'feOffset'</a> element.</p>
-		<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The y offset of the drop shadow.</p>
+    <p>The <a>lacuna value</a> for <a>'feDropShadow/dy'</a> is <span class="attr-value">2</span>. </p>
+    <p>This attribute is then forwarded to the <a>'feOffset/dy'</a> attribute of the internal <a>'feOffset'</a> element.</p>
+    <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
   <dt id="feDropShadowStdDeviationAttribute"><span
   class="adef">stdDeviation</span> =
   "<em><a>&lt;number-optional-number&gt;</a></em>"</dt>
     <dd>
-		<p>The standard deviation for the blur operation in the drop shadow.</p>
-		<p>The <a>lacuna value</a> for <a>'feDropShadow/stdDeviation'</a> is <span class="attr-value">2</span>.</p> 
-		<p>This attribute is then forwarded to the <a>'feGaussianBlur/stdDeviation'</a> attribute of the internal
-			<a>'feGaussianBlur'</a> element.</p>
-		<p><span class="anim-target">Animatable: yes.</span></p>
-	</dd>
+    <p>The standard deviation for the blur operation in the drop shadow.</p>
+    <p>The <a>lacuna value</a> for <a>'feDropShadow/stdDeviation'</a> is <span class="attr-value">2</span>.</p> 
+    <p>This attribute is then forwarded to the <a>'feGaussianBlur/stdDeviation'</a> attribute of the internal
+      <a>'feGaussianBlur'</a> element.</p>
+    <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
 </dl>
 </div>
 
@@ -3540,14 +3683,86 @@ local cached copy, as you prefer).</p>
 The RNG is under construction, and only the individual RNG snippets are available at this time. They have not yet been integrated into a functional schema. The individual RNG files are available <a href="rng">here</a>. 
 </p>
 
+
+<h2 id="ShorthandEquivalents">Shorthands defined in terms of the 'filter element' element</h2>
+
+<p>
+  Below are the equivalents for each of the filter functions expressed in terms of
+  the 'filter element' element. The parameters from the function are labelled with
+  brackets in the following style: [amount].
+</p>
+
+<h3 id="grayscaleEquivalent">grayscale</h3>
+
+<pre class="examplesource"> &lt;filter id="grayscale"&gt;
+    &lt;feColorMatrix type="matrix"
+               values="(0.2125 * [amount]) (0.7154 * [amount]) (0.0721 * [amount]) 0 0
+                       (0.2125 * [amount]) (0.7154 * [amount]) (0.0721 * [amount]) 0 0
+                       (0.2125 * [amount]) (0.7154 * [amount]) (0.0721 * [amount]) 0 0
+                       0 0 0 1 0"/&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="sepiaEquivalent">sepia</h3>
+
+<pre class="examplesource"> &lt;filter id="sepia"&gt;
+    &lt;feColorMatrix type="matrix"
+               values="(0.393 * [amount]) (0.769 * [amount]) (0.189 * [amount]) 0 0
+                       (0.349 * [amount]) (0.686 * [amount]) (0.168 * [amount]) 0 0
+                       (0.272 * [amount]) (0.534 * [amount]) (0.131 * [amount]) 0 0
+                       0 0 0 1 0"/&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="saturateEquivalent">saturate</h3>
+
+<pre class="examplesource"> &lt;filter id="saturate"&gt;
+    &lt;feColorMatrix type="saturate"
+               values="(1 - [amount])"/&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="huerotateEquivalent">hue-rotate</h3>
+
+<pre class="examplesource"> &lt;filter id="hue-rotate"&gt;
+    &lt;feColorMatrix type="hueRotate"
+               values="[angle]"/&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="invertEquivalent">invert</h3>
+
+<pre class="examplesource"> &lt;filter id="invert"&gt;
+    &lt;feComponentTransfer&gt;
+        &lt;feFuncR type="table" tableValues="[amount] (1 - [amount])"/&gt;
+        &lt;feFuncG type="table" tableValues="[amount] (1 - [amount])"/&gt;
+        &lt;feFuncB type="table" tableValues="[amount] (1 - [amount])"/&gt;
+    &lt;/feComponentTransfer&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="gammaEquivalent">gamma</h3>
+
+<pre class="examplesource"> &lt;filter id="gamma"&gt;
+    &lt;feComponentTransfer&gt;
+        &lt;feFuncR type="gamma" amplitude="[amplitude]" exponent="[exponent]" offset="[offset]"/&gt;
+        &lt;feFuncG type="gamma" amplitude="[amplitude]" exponent="[exponent]" offset="[offset]"/&gt;
+        &lt;feFuncB type="gamma" amplitude="[amplitude]" exponent="[exponent]" offset="[offset]"/&gt;
+    &lt;/feComponentTransfer&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="blurEquivalent">blur</h3>
+
+<pre class="examplesource"> &lt;filter id="blur"&gt;
+    &lt;feGaussianBlur stdDeviation="[radiusX radiusY]"&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="unsharpEquivalent">unsharp</h3>
+
+<pre class="examplesource"> &lt;filter id="unsharp"&gt;
+    &lt;feUnsharpMask stdDeviation="[radius]" threshold="[threshold]" amount="[amount]"&gt;
+  &lt;/filter&gt; </pre>
+
 <h2 id="DOMInterfaces">DOM interfaces</h2>
+
 <div class="note">
 The interfaces below will be made available in a IDL file for an upcoming draft.
 </div>
-
-<!-- AUTO-GENERATED DOM INTERFACES GO HERE --> 
-
-<h2 id="DOMInterfaces">DOM interfaces</h2>
 
 <h3 id="InterfaceImageData">Interface ImageData</h3>
 
@@ -3726,8 +3941,8 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 <dl>
   <dt id="ref-CSS21"><strong class="normref">[CSS21]</strong></dt>
     <dd><strong>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</strong>, 
-		Bert Bos, Tantek Çelik, Ian Hickson, Håkon Wium Lie, eds.,
-		W3C, 23 April 2009, (Candidate Recommendation) </dd>
+    Bert Bos, Tantek Çelik, Ian Hickson, Håkon Wium Lie, eds.,
+    W3C, 23 April 2009, (Candidate Recommendation) </dd>
 
   <dt id="ref-NVDL"><strong class="normref">[NVDL]</strong></dt>
     <dd><strong>Document Schema Definition Languages (DSDL) — Part 4:
