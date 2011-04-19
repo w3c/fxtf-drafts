@@ -523,31 +523,6 @@ follows:</p>
       specified, then the effect is as if a value of <span
       class="attr-value">userSpaceOnUse</span> were specified.<br />
       <span class="anim-target">Animatable: yes.</span></dd>
-
-  <dt id="FilterElementFilterMarginUnitsAttribute"><span
-  class="adef">filterMarginUnits</span> = "<em>userSpaceOnUse</em> |
-  <em>objectBoundingBox</em>"</dt>
-    <dd>See <a>filter effects region</a>.</dd>
-  <dt id="FilterElementPrimitiveMarginUnitsAttribute"><span
-  class="adef">primitiveMarginUnits</span> = "<em>userSpaceOnUse</em> |
-  <em>objectBoundingBox</em>"</dt>
-    <dd>Specifies the coordinate system for the margin attributes within the
-      <a>filter primitives</a> which is used for determining the <a>filter primitive subregion</a>.<br />
-      If <span class='attr-value'>primitiveMarginUnits="userSpaceOnUse"</span>, any margin
-      attribute values within the filter definitions represent values in the
-      current user coordinate system in place at the time when the <a>'filter element'</a>
-      element is referenced (i.e., the <a>user coordinate system</a> for the element
-      referencing the <a>'filter element'</a> element via a <a>'filter property'</a>
-      property).<br />
-      If <span class='attr-value'>primitiveMarginUnits="objectBoundingBox"</span>, then any
-      margin attribute values within the filter definitions represent
-      fractions or percentages of the bounding box on the referencing element
-      (see <a>object bounding box units</a>).<br />
-
-    <span class="requirement" id="assert_LacunaValuePrimitiveMarginsUnits">The <a>lacuna value</a> for <a>'filter/primitiveMarginUnits'</a> is <span
-      class="attr-value">userSpaceOnUse</span></span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-
   <dt id="FilterElementXAttribute">
   <span class="adef">x</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
     <dd>See <a>filter effects region</a>.</dd>
@@ -560,40 +535,6 @@ follows:</p>
   <dt id="FilterElementHeightAttribute"><span class="adef">height</span> =
   "<em><a>&lt;length&gt;</a></em>"</dt>
     <dd>See <a>filter effects region</a>.</dd>
-
-  <dt id="FilterPrimitiveMxAttribute">
-  <span class="adef">mx</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
-    <dd>The margin delta for the x coordinate of the subregion which
-      restricts calculation and rendering of the given filter primitive. If
-      this attribute is not specified, the effect is as if a value of <span
-      class="attr-value">0</span> were specified. See <a
-      href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="FilterPrimitiveMyAttribute">
-  <span class="adef">my</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
-    <dd>The margin delta for the y coordinate of the subregion which
-      restricts calculation and rendering of the given filter primitive. If
-      this attribute is not specified, the effect is as if a value of <span
-      class="attr-value">0</span> were specified. See <a
-      href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. <br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="FilterPrimitiveMwAttribute">
-  <span class="adef">mw</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
-    <dd>The margin delta for the width of the subregion which restricts
-      calculation and rendering of the given filter primitive. If this
-      attribute is not specified, the effect is as if a value of <span
-      class="attr-value">0</span> were specified. See <a
-      href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="FilterPrimitiveMhAttribute">
-  <span class="adef">mh</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
-    <dd>The margin delta for the height of the subregion which restricts
-      calculation and rendering of the given filter primitive. If this
-      attribute is not specified, the effect is as if a value of <span
-      class="attr-value">0</span> were specified. See <a
-      href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-
 <dt id="FilterElementFilterResAttribute"><span
   class="adef">filterRes</span> = "<em><a>&lt;number-optional-number&gt;</a></em>"
   </dt>
@@ -645,67 +586,6 @@ element can define a region on the canvas to which a given filter effect
 applies and can provide a resolution for any intermediate continuous tone
 images used to process any raster-based <a>filter primitives</a>. 
 
-<h3 id="filter-margins">Filter Region extensions</h3>
-
-<p>In <a href="#ref-svg11">SVG 1.1</a>, a <span class="element">filter</span>
-defines the area upon which it applies. This makes it difficult to develop a
-generic filter that can be applied to arbitrary graphics, since the filter
-must define a large enough area to cover any graphical object to which it is
-applied. An example of this is a generic "drop shadow" filter, which is
-commonly specified as a combination of a Gaussian blur <a>'feGaussianBlur'</a>) that is offset <a>'feOffset'</a>) and then composed <a>'feComposite'</a>) with the original source graphic.
-Since the shadow has to extend beyond the original graphic's boundaries, the
-filter must be defined to have a larger area than the original graphic.
-Overestimating this margin has a negative effect on performance, since the
-complex filter operation has to touch a larger amount of user space (ie.
-pixels). </p>
-
-<p>In order to solve this problem this spec allows additional control over
-the filter region. The outer filter region is expressed by delta to the
-<a>'x'</a>, 
-<a>'y'</a>, 
-<a>'width'</a>, 
-<a>'height'</a>
- of the input filter region. </p>
-
-<p>In particular, the <a>'filter/filterMarginUnits'</a>, <a>'filter/primitiveMarginUnits'</a>, 
-<a>'mx'</a>, <a>'my'</a>, <a>'mw'</a> and <a>'mh'</a> are
-added to the <a>'filter element'</a> element. The <a>'filter/filterMarginUnits'</a> specifies the coordinate space of
-the margin attributes, which are used to increase or decrease the <a>'filter element'</a> element's 
-<a>'x'</a>, 
-<a>'y'</a>, 
-<a>'width'</a> and 
-<a>'height'</a>
-attributes (once they have been calculated). The <a>'filter/primitiveMarginUnits'</a> specifies the units for the
-new margin attributes on the <a>filter primitives</a>, also named 
-<a>'mx'</a>, 
-<a>'my'</a>, 
-<a>'mw'</a>, 
-<a>'mh'</a>. 
-These margins attribute override those set on the parent <a>'filter element'</a> element. 
-Note that this doesn't mean that a <a>'filter primitive'</a> can expand the filter region itself, just that the
-coordinate system used for filter primitive's margin attributes can be
-different than the one used for the margin attributes on the 
-<a>'filter element'</a> element. </p>
-
-<p>An example of the new attributes, which defines a generic drop shadow
-filter: </p>
-<pre class="examplesource"> &lt;filter id="dropShadow" x="0" y="0" width="1" height="1"
-        filterMarginUnits="userSpaceOnUse"
-        mx="0" my="0" mw="5" mh="5" &gt;
-      &lt;feGaussianBlur stdDeviation="2" in="SourceAlpha" /&gt;
-      &lt;feOffset dx="2" /&gt;
-      &lt;feMerge&gt;
-         &lt;feMergeNode /&gt;
-         &lt;feMergeNode in="SourceGraphic" /&gt;
-      &lt;/feMerge&gt;
-  &lt;/filter&gt; </pre>
-
-<p>In the above example, the filter region by default covers the entire
-bounds of the object (which is not enough to show the shadow). Adding the new
-margins extends the width and height by 5 user units each, which is always
-enough to display the blur (which has a standard deviation of 2 user units)
-and offset (which is another 2 units). </p>
-
 The <a>'filter element'</a>
 element has the following attributes which work together to define the filter
 effects region:</p>
@@ -748,38 +628,6 @@ effects region:</p>
       <p>Negative or zero values for <a>'width'</a> or <a>'height'</a> disable rendering of the element which
        referenced the filter. </p>
     
-      <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
-  <dt id="FilterMarginAttribute"><a>'filterMarginUnits'</a></dt>
-    <dd>
-    <p>Defines the coordinate system for attributes <a>'mx'</a>, <a>'my'</a>,
-        <a>'mw'</a>, <a>'mh'</a>.</p>
-    <p>If <span class="attr-value">filterMarginUnits="userSpaceOnUse"</span>, <a>'mx'</a>, <a>'my'</a>,
-        <a>'mw'</a>, <a>'mh'</a> represent values in the current <a>user coordinate system</a>
-        in place at the time when the <a>'filter element'</a> element is referenced (i.e., the
-        <a>user coordinate system</a> for the element referencing the <a>'filter element'</a>
-        element via a <a>'filter property'</a> property).</p>
-    <p>If <span class="attr-value">filterMarginUnits="objectBoundingBox"</span>, then <a>'mx'</a>, <a>'my'</a>,
-        <a>'mw'</a>, <a>'mh'</a> represent fractions or percentages of the <a>'bounding box'</a>
-        on the referencing element (see <a>object bounding box units</a>).</p>
-      <p>The <a>lacuna value</a> for <a>'filterMarginUnits'</a> is 
-      <span class="attr-value">userSpaceOnUse</span>.</p>
-    <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
-  <dt id="FilterRegionMyAttribute"><a>'mx'</a>, <a>'my'</a>, <a>'mw'</a>, <a>'mh'</a></dt>
-  <dd>
-      <p>Defines the deltas to the <a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a> of the filter region.</p>
-  
-    <p>After the <a>'x'</a>, <a>'y'</a>, <a>'width'</a>, <a>'height'</a> have been calculated for the 
-      <a>filter region</a> the <a>'mx'</a>, <a>'my'</a>, <a>'mw'</a>, <a>'mh'</a> are calculated and added 
-      to the <a>filter region</a>. <span class="requirement" id="assert_OORFilterRegion">If the resulting 
-      <a>filter region</a> has a negative or zero width or height, the rendering of the element which 
-      referenced the filter is disabled.</span></p>
-  
-      <p>The coordinate system for these attributes depends on the value for
-        attribute <a>'filterMarginUnits'</a>.</p>
-
-      <p>The <a>lacuna value</a> for <a>'mx'</a>, <a>'my'</a>, <a>'mw'</a> and <a>'mh'</a> is <span class="attr-value">0</span>.</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
 
@@ -1127,35 +975,6 @@ primitives:</p>
     <p>The <a>lacuna value</a> for <span class="attr-name">height</span> is <span class="attr-value">100%</span>.</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
-  <dt id="FilterPrimitiveMxAttribute">
-  <span class="adef">mx</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
-    <dd><p>The margin delta for the x coordinate of the subregion which
-        restricts calculation and rendering of the given <a>filter primitive</a>, 
-    see <a>filter primitive subregion</a>.</p> 
-    <p>The <a>lacuna value</a> for <span class="attr-name">mx</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
-  <dt id="FilterPrimitiveMyAttribute">
-  <span class="adef">my</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
-    <dd><p>The margin delta for the y coordinate of the subregion which
-      restricts calculation and rendering of the given <a>filter primitive</a>, see <a>filter primitive subregion</a>.</p>
-    <p>The <a>lacuna value</a> for <span class="attr-name">my</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
-  <dt id="FilterPrimitiveMwAttribute">
-  <span class="adef">mw</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
-    <dd><p>The margin delta for the width of the subregion which restricts
-      calculation and rendering of the given <a>filter primitive</a>, see <a>filter primitive subregion</a>.</p> 
-    <p>The <a>lacuna value</a> for <span class="attr-name">mw</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
-  <dt id="FilterPrimitiveMhAttribute">
-  <span class="adef">mh</span> = "<em><a>&lt;length&gt;</a></em>"</dt>
-    <dd><p>The margin delta for the height of the subregion which restricts
-      calculation and rendering of the given <a>filter primitive</a>, see <a>filter primitive subregion</a>.</p>
-    <p>The <a>lacuna value</a> for <span class="attr-name">mh</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
   <dt id="FilterPrimitiveResultAttribute">
   <span class="adef">result</span> =
   "<em><a>&lt;filter-primitive-reference&gt;</a></em>"</dt>
@@ -1273,19 +1092,13 @@ primitives:</p>
 <edit:with element="feBlend">
 <p>
 All <a>filter primitives</a> have attributes <a>'x'</a>, <a>'y'</a>,
-<a>'width'</a> and <a>'height'</a>, and <a>'mx'</a>,
-<a>'my'</a>, <a>'mw'</a> and <a>'mh'</a>, which
+<a>'width'</a> and <a>'height'</a> which
 together identify a subregion which restricts calculation and rendering of
 the given <a>filter primitive</a>. The <a>'x'</a>, <a>'y'</a>,
 <a>'width'</a> and <a>'height'</a> attributes are defined
 according to the same rules as other <a>filter primitives</a>' coordinate and length
 attributes and thus represent values in the coordinate system established by
 attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.
-The <a>'mx'</a>, <a>'my'</a>, <a>'mw'</a> and
-<a>'mh'</a> attributes contain deltas to the corresponding
-<a>'x'</a>, <a>'y'</a>, <a>'width'</a> and
-<a>'height'</a> attributes and contain values in the coordinate
-system established by attribute <a>'filter/primitiveMarginUnits'</a> on the <a>'filter element'</a> element.
 </p>
 
 <p><a>'x'</a>, <a>'y'</a>,
@@ -1301,11 +1114,7 @@ referenced node in X and Y and thereby produce a usually larger result), the
 default subregion is <span class="attr-value">0%, 0%, 100%, 100%</span>, where percentages are relative to the
 dimensions of the <a>filter region</a>.</p>
 
-<p>After the <strong>x</strong>, <strong>y</strong>, <strong>width</strong>,
-<strong>height</strong> have been calculated for the filter primitive
-subregion the margin attributes <strong>mx</strong>, <strong>my</strong>,
-<strong>mw</strong>, <strong>mh</strong> are calculated and added to the
-former to make the <a>filter primitive subregion</a>. If the <a>filter primitive
+<p>If the <a>filter primitive
 subregion</a> has a negative or zero width or height, the effect of the filter
 primitive is disabled. </p>
 
@@ -3684,7 +3493,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 </p>
 
 
-<h2 id="ShorthandEquivalents">Shorthands defined in terms of the 'filter element' element</h2>
+<h2 id="ShorthandEquivalents">Shorthands defined in terms of the <span class="element-name">'filter'</span> element</h2>
 
 <p>
   Below are the equivalents for each of the filter functions expressed in terms of

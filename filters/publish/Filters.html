@@ -14,7 +14,7 @@
 <div class="head">
   <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a></p>
   <h1 id="pagetitle">Filter Effects 1.0: Language</h1>
-  <h2 id="pagesubtitle">W3C Editor’s Draft <em>18 April 2011</em></h2>
+  <h2 id="pagesubtitle">W3C Editor’s Draft <em>19 April 2011</em></h2>
   <dl><dt>This version:</dt><dd><a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html" class="url">https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/TR/FilterEffects10/" class="url">http://www.w3.org/TR/FilterEffects10/</a></dd><dt>Previous version:</dt><dd><a href="http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/" class="url">http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/</a></dd><dt>Editors:</dt><dd><a href="mailto:ed@opera.com">Erik Dahlström</a>, (<a href="http://www.opera.com/">Opera Software ASA</a>)</dd><dd><a href="mailto:dino@apple.com">Dean Jackson</a> (<a href="http://www.apple.com/">Apple Inc</a>)</dd><dt>Authors:</dt><dd>The authors of this specification are the participants of the W3C SVG and CSS Working Groups.</dd></dl>
   <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2011 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
 </div>
@@ -100,8 +100,7 @@ property</a><ul class="toc">
 <li><a href="#FilterFunction">4 Filter Functions</a></li>
 <li><a href="#FilterElement">5 The <span class="element-name">‘filter’</span>
 element</a></li>
-<li><a href="#FilterEffectsRegion">6 Filter effects region</a><ul class="toc">
-<li><a href="#filter-margins">6.1 Filter Region extensions</a></li></ul></li>
+<li><a href="#FilterEffectsRegion">6 Filter effects region</a></li>
 <li><a href="#AccessBackgroundImage">7 Accessing the background image</a><ul class="toc">
 <li><a href="#AccessBackgroundImageSVG">7.1 Accessing the background image in SVG</a></li></ul></li>
 <li><a href="#FilterPrimitivesOverview">8 Filter primitives overview</a><ul class="toc">
@@ -135,7 +134,7 @@ element</a></li>
 <li><a href="#feDiffuseSpecularElement">28 Filter primitive <span class="element-name">‘feDiffuseSpecular’</span></a></li>
 <li><a href="#feCustomElement">29 Filter primitive <span class="element-name">‘feCustom’</span></a></li>
 <li><a href="#RelaxNG">30 RelaxNG Schema for Filter Effects 1.0</a></li>
-<li><a href="#ShorthandEquivalents">31 Shorthands defined in terms of the 'filter element' element</a><ul class="toc">
+<li><a href="#ShorthandEquivalents">31 Shorthands defined in terms of the <span class="element-name">‘filter’</span> element</a><ul class="toc">
 <li><a href="#grayscaleEquivalent">31.1 grayscale</a></li>
 <li><a href="#sepiaEquivalent">31.2 sepia</a></li>
 <li><a href="#saturateEquivalent">31.3 saturate</a></li>
@@ -475,43 +474,11 @@ follows:</p>
     <br/>
       If attribute <a href="#FilterElementPrimitiveUnitsAttribute"><span class="attr-name">‘primitiveUnits’</span></a> is not
       specified, then the effect is as if a value of <span class="attr-value">userSpaceOnUse</span> were specified.<br/>
-      <span class="anim-target">Animatable: yes.</span></dd><dt id="FilterElementFilterMarginUnitsAttribute"><span class="adef">filterMarginUnits</span> = "<em>userSpaceOnUse</em> |
-  <em>objectBoundingBox</em>"</dt><dd>See <a href="#FilterEffectsRegion"><span class="svg-term">filter effects region</span></a>.</dd><dt id="FilterElementPrimitiveMarginUnitsAttribute"><span class="adef">primitiveMarginUnits</span> = "<em>userSpaceOnUse</em> |
-  <em>objectBoundingBox</em>"</dt><dd>Specifies the coordinate system for the margin attributes within the
-      <a href="#TermFilterPrimitiveElements"><span class="svg-term">filter primitives</span></a> which is used for determining the <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive subregion</span></a>.<br/>
-      If <span class="attr-value">primitiveMarginUnits="userSpaceOnUse"</span>, any margin
-      attribute values within the filter definitions represent values in the
-      current user coordinate system in place at the time when the <a href="#FilterElement"><span class="element-name">‘filter’</span></a>
-      element is referenced (i.e., the <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermUserCoordinateSystem"><span class="svg-term">user coordinate system</span></a> for the element
-      referencing the <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element via a <a href="#FilterProperty"><span class="prop-name">‘filter’</span></a>
-      property).<br/>
-      If <span class="attr-value">primitiveMarginUnits="objectBoundingBox"</span>, then any
-      margin attribute values within the filter definitions represent
-      fractions or percentages of the bounding box on the referencing element
-      (see <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/coords.html#ObjectBoundingBoxUnits"><span class="svg-term">object bounding box units</span></a>).<br/>
-
-    <span class="requirement" id="assert_LacunaValuePrimitiveMarginsUnits">The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <a href="#FilterElementPrimitiveMarginUnitsAttribute"><span class="attr-name">‘primitiveMarginUnits’</span></a> is <span class="attr-value">userSpaceOnUse</span></span>.<br/>
       <span class="anim-target">Animatable: yes.</span></dd><dt id="FilterElementXAttribute">
   <span class="adef">x</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeCoordinate">&lt;coordinate&gt;</a></em>"</dt><dd>See <a href="#FilterEffectsRegion"><span class="svg-term">filter effects region</span></a>.</dd><dt id="FilterElementYAttribute">
   <span class="adef">y</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeCoordinate">&lt;coordinate&gt;</a></em>"</dt><dd>See <a href="#FilterEffectsRegion"><span class="svg-term">filter effects region</span></a>.</dd><dt id="FilterElementWidthAttribute"><span class="adef">width</span> =
   "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeLength">&lt;length&gt;</a></em>"</dt><dd>See <a href="#FilterEffectsRegion"><span class="svg-term">filter effects region</span></a>.</dd><dt id="FilterElementHeightAttribute"><span class="adef">height</span> =
-  "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeLength">&lt;length&gt;</a></em>"</dt><dd>See <a href="#FilterEffectsRegion"><span class="svg-term">filter effects region</span></a>.</dd><dt id="FilterPrimitiveMxAttribute">
-  <span class="adef">mx</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeCoordinate">&lt;coordinate&gt;</a></em>"</dt><dd>The margin delta for the x coordinate of the subregion which
-      restricts calculation and rendering of the given filter primitive. If
-      this attribute is not specified, the effect is as if a value of <span class="attr-value">0</span> were specified. See <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.<br/>
-      <span class="anim-target">Animatable: yes.</span></dd><dt id="FilterPrimitiveMyAttribute">
-  <span class="adef">my</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeCoordinate">&lt;coordinate&gt;</a></em>"</dt><dd>The margin delta for the y coordinate of the subregion which
-      restricts calculation and rendering of the given filter primitive. If
-      this attribute is not specified, the effect is as if a value of <span class="attr-value">0</span> were specified. See <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. <br/>
-      <span class="anim-target">Animatable: yes.</span></dd><dt id="FilterPrimitiveMwAttribute">
-  <span class="adef">mw</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeLength">&lt;length&gt;</a></em>"</dt><dd>The margin delta for the width of the subregion which restricts
-      calculation and rendering of the given filter primitive. If this
-      attribute is not specified, the effect is as if a value of <span class="attr-value">0</span> were specified. See <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.<br/>
-      <span class="anim-target">Animatable: yes.</span></dd><dt id="FilterPrimitiveMhAttribute">
-  <span class="adef">mh</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeLength">&lt;length&gt;</a></em>"</dt><dd>The margin delta for the height of the subregion which restricts
-      calculation and rendering of the given filter primitive. If this
-      attribute is not specified, the effect is as if a value of <span class="attr-value">0</span> were specified. See <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.<br/>
-      <span class="anim-target">Animatable: yes.</span></dd><dt id="FilterElementFilterResAttribute"><span class="adef">filterRes</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeNumberOptionalNumber">&lt;number-optional-number&gt;</a></em>"
+  "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeLength">&lt;length&gt;</a></em>"</dt><dd>See <a href="#FilterEffectsRegion"><span class="svg-term">filter effects region</span></a>.</dd><dt id="FilterElementFilterResAttribute"><span class="adef">filterRes</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeNumberOptionalNumber">&lt;number-optional-number&gt;</a></em>"
   </dt><dd>See <a href="#FilterEffectsRegion"><span class="svg-term">filter effects region</span></a>.</dd><dt id="FilterElementHrefAttribute"><span class="adef">xlink:href</span>
   = "<span class="attr-value">&lt;IRI&gt;</span>"</dt><dd>An <a href="http://www.w3.org/TR/SVGTiny12/linking.html#IRIReference">IRI reference</a>
       to another <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element within
@@ -555,67 +522,6 @@ element can define a region on the canvas to which a given filter effect
 applies and can provide a resolution for any intermediate continuous tone
 images used to process any raster-based <a href="#TermFilterPrimitiveElements"><span class="svg-term">filter primitives</span></a>. 
 
-<h3 id="filter-margins">6.1 Filter Region extensions</h3>
-
-<p>In <a href="#ref-svg11">SVG 1.1</a>, a <span class="element">filter</span>
-defines the area upon which it applies. This makes it difficult to develop a
-generic filter that can be applied to arbitrary graphics, since the filter
-must define a large enough area to cover any graphical object to which it is
-applied. An example of this is a generic "drop shadow" filter, which is
-commonly specified as a combination of a Gaussian blur <a href="#feGaussianBlurElement"><span class="element-name">‘feGaussianBlur’</span></a>) that is offset <a href="#feOffsetElement"><span class="element-name">‘feOffset’</span></a>) and then composed <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>) with the original source graphic.
-Since the shadow has to extend beyond the original graphic's boundaries, the
-filter must be defined to have a larger area than the original graphic.
-Overestimating this margin has a negative effect on performance, since the
-complex filter operation has to touch a larger amount of user space (ie.
-pixels). </p>
-
-<p>In order to solve this problem this spec allows additional control over
-the filter region. The outer filter region is expressed by delta to the
-<a href="#FilterElementXAttribute"><span class="attr-name">‘x’</span></a>, 
-<a href="#FilterElementYAttribute"><span class="attr-name">‘y’</span></a>, 
-<a href="#FilterElementWidthAttribute"><span class="attr-name">‘width’</span></a>, 
-<a href="#FilterElementHeightAttribute"><span class="attr-name">‘height’</span></a>
- of the input filter region. </p>
-
-<p>In particular, the <a href="#FilterElementFilterMarginUnitsAttribute"><span class="attr-name">‘filterMarginUnits’</span></a>, <a href="#FilterElementPrimitiveMarginUnitsAttribute"><span class="attr-name">‘primitiveMarginUnits’</span></a>, 
-<a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>, <a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a> and <a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a> are
-added to the <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element. The <a href="#FilterElementFilterMarginUnitsAttribute"><span class="attr-name">‘filterMarginUnits’</span></a> specifies the coordinate space of
-the margin attributes, which are used to increase or decrease the <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element's 
-<a href="#FilterElementXAttribute"><span class="attr-name">‘x’</span></a>, 
-<a href="#FilterElementYAttribute"><span class="attr-name">‘y’</span></a>, 
-<a href="#FilterElementWidthAttribute"><span class="attr-name">‘width’</span></a> and 
-<a href="#FilterElementHeightAttribute"><span class="attr-name">‘height’</span></a>
-attributes (once they have been calculated). The <a href="#FilterElementPrimitiveMarginUnitsAttribute"><span class="attr-name">‘primitiveMarginUnits’</span></a> specifies the units for the
-new margin attributes on the <a href="#TermFilterPrimitiveElements"><span class="svg-term">filter primitives</span></a>, also named 
-<a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, 
-<a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>, 
-<a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a>, 
-<a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a>. 
-These margins attribute override those set on the parent <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element. 
-Note that this doesn't mean that a  can expand the filter region itself, just that the
-coordinate system used for filter primitive's margin attributes can be
-different than the one used for the margin attributes on the 
-<a href="#FilterElement"><span class="element-name">‘filter’</span></a> element. </p>
-
-<p>An example of the new attributes, which defines a generic drop shadow
-filter: </p>
-<pre class="examplesource"> &lt;filter id="dropShadow" x="0" y="0" width="1" height="1"
-        filterMarginUnits="userSpaceOnUse"
-        mx="0" my="0" mw="5" mh="5" &gt;
-      &lt;feGaussianBlur stdDeviation="2" in="SourceAlpha" /&gt;
-      &lt;feOffset dx="2" /&gt;
-      &lt;feMerge&gt;
-         &lt;feMergeNode /&gt;
-         &lt;feMergeNode in="SourceGraphic" /&gt;
-      &lt;/feMerge&gt;
-  &lt;/filter&gt; </pre>
-
-<p>In the above example, the filter region by default covers the entire
-bounds of the object (which is not enough to show the shadow). Adding the new
-margins extends the width and height by 5 user units each, which is always
-enough to display the blur (which has a standard deviation of 2 user units)
-and offset (which is another 2 units). </p>
-
 The <a href="#FilterElement"><span class="element-name">‘filter’</span></a>
 element has the following attributes which work together to define the filter
 effects region:</p>
@@ -653,34 +559,6 @@ effects region:</p>
       <p>Negative or zero values for <a href="#FilterElementWidthAttribute"><span class="attr-name">‘width’</span></a> or <a href="#FilterElementHeightAttribute"><span class="attr-name">‘height’</span></a> disable rendering of the element which
        referenced the filter. </p>
     
-      <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd><dt id="FilterMarginAttribute"><a href="#FilterElementFilterMarginUnitsAttribute"><span class="attr-name">‘filterMarginUnits’</span></a></dt><dd>
-    <p>Defines the coordinate system for attributes <a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>,
-        <a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a>, <a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a>.</p>
-    <p>If <span class="attr-value">filterMarginUnits="userSpaceOnUse"</span>, <a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>,
-        <a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a>, <a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a> represent values in the current <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermUserCoordinateSystem"><span class="svg-term">user coordinate system</span></a>
-        in place at the time when the <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element is referenced (i.e., the
-        <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermUserCoordinateSystem"><span class="svg-term">user coordinate system</span></a> for the element referencing the <a href="#FilterElement"><span class="element-name">‘filter’</span></a>
-        element via a <a href="#FilterProperty"><span class="prop-name">‘filter’</span></a> property).</p>
-    <p>If <span class="attr-value">filterMarginUnits="objectBoundingBox"</span>, then <a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>,
-        <a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a>, <a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a> represent fractions or percentages of the 
-        on the referencing element (see <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/coords.html#ObjectBoundingBoxUnits"><span class="svg-term">object bounding box units</span></a>).</p>
-      <p>The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <a href="#FilterElementFilterMarginUnitsAttribute"><span class="attr-name">‘filterMarginUnits’</span></a> is 
-      <span class="attr-value">userSpaceOnUse</span>.</p>
-    <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd><dt id="FilterRegionMyAttribute"><a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>, <a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a>, <a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a></dt><dd>
-      <p>Defines the deltas to the <a href="#FilterElementXAttribute"><span class="attr-name">‘x’</span></a>, <a href="#FilterElementYAttribute"><span class="attr-name">‘y’</span></a>, <a href="#FilterElementWidthAttribute"><span class="attr-name">‘width’</span></a>, <a href="#FilterElementHeightAttribute"><span class="attr-name">‘height’</span></a> of the filter region.</p>
-  
-    <p>After the <a href="#FilterElementXAttribute"><span class="attr-name">‘x’</span></a>, <a href="#FilterElementYAttribute"><span class="attr-name">‘y’</span></a>, <a href="#FilterElementWidthAttribute"><span class="attr-name">‘width’</span></a>, <a href="#FilterElementHeightAttribute"><span class="attr-name">‘height’</span></a> have been calculated for the 
-      <a href="#FilterEffectsRegion"><span class="svg-term">filter region</span></a> the <a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>, <a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a>, <a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a> are calculated and added 
-      to the <a href="#FilterEffectsRegion"><span class="svg-term">filter region</span></a>. <span class="requirement" id="assert_OORFilterRegion">If the resulting 
-      <a href="#FilterEffectsRegion"><span class="svg-term">filter region</span></a> has a negative or zero width or height, the rendering of the element which 
-      referenced the filter is disabled.</span></p>
-  
-      <p>The coordinate system for these attributes depends on the value for
-        attribute <a href="#FilterElementFilterMarginUnitsAttribute"><span class="attr-name">‘filterMarginUnits’</span></a>.</p>
-
-      <p>The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <a href="#FilterElementMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterElementMyAttribute"><span class="attr-name">‘my’</span></a>, <a href="#FilterElementMwAttribute"><span class="attr-name">‘mw’</span></a> and <a href="#FilterElementMhAttribute"><span class="attr-name">‘mh’</span></a> is <span class="attr-value">0</span>.</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
   </dd><dt id="FilterRegionFilterRes"><a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a></dt><dd>
     <p>Defines the width and height of the intermediate
@@ -1034,27 +912,6 @@ primitives:</p>
       primitive (i.e., the result is a transparent black image).</p>
     <p>The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <span class="attr-name">height</span> is <span class="attr-value">100%</span>.</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd><dt id="FilterPrimitiveMxAttribute">
-  <span class="adef">mx</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeCoordinate">&lt;coordinate&gt;</a></em>"</dt><dd><p>The margin delta for the x coordinate of the subregion which
-        restricts calculation and rendering of the given <a href="#TermFilterPrimitiveElement"><span class="svg-term">filter primitive</span></a>, 
-    see <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive subregion</span></a>.</p> 
-    <p>The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <span class="attr-name">mx</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd><dt id="FilterPrimitiveMyAttribute">
-  <span class="adef">my</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeCoordinate">&lt;coordinate&gt;</a></em>"</dt><dd><p>The margin delta for the y coordinate of the subregion which
-      restricts calculation and rendering of the given <a href="#TermFilterPrimitiveElement"><span class="svg-term">filter primitive</span></a>, see <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive subregion</span></a>.</p>
-    <p>The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <span class="attr-name">my</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd><dt id="FilterPrimitiveMwAttribute">
-  <span class="adef">mw</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeLength">&lt;length&gt;</a></em>"</dt><dd><p>The margin delta for the width of the subregion which restricts
-      calculation and rendering of the given <a href="#TermFilterPrimitiveElement"><span class="svg-term">filter primitive</span></a>, see <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive subregion</span></a>.</p> 
-    <p>The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <span class="attr-name">mw</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd><dt id="FilterPrimitiveMhAttribute">
-  <span class="adef">mh</span> = "<em><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#DataTypeLength">&lt;length&gt;</a></em>"</dt><dd><p>The margin delta for the height of the subregion which restricts
-      calculation and rendering of the given <a href="#TermFilterPrimitiveElement"><span class="svg-term">filter primitive</span></a>, see <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive subregion</span></a>.</p>
-    <p>The <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue"><span class="svg-term">lacuna value</span></a> for <span class="attr-name">mh</span> is <span class="attr-value">0</span>.</p>
-        <p><span class="anim-target">Animatable: yes.</span></p>
   </dd><dt id="FilterPrimitiveResultAttribute">
   <span class="adef">result</span> =
   "<em><a href="#TermFilterPrimitiveReference">&lt;filter-primitive-reference&gt;</a></em>"</dt><dd><p>Assigned name for this <a href="#TermFilterPrimitiveElement"><span class="svg-term">filter primitive</span></a>. If supplied, then graphics
@@ -1153,19 +1010,13 @@ primitives:</p>
 
 <p>
 All <a href="#TermFilterPrimitiveElements"><span class="svg-term">filter primitives</span></a> have attributes <a href="filters.html#FilterPrimitiveXAttribute"><span class="attr-name">‘x’</span></a>, <a href="filters.html#FilterPrimitiveYAttribute"><span class="attr-name">‘y’</span></a>,
-<a href="filters.html#FilterPrimitiveWidthAttribute"><span class="attr-name">‘width’</span></a> and <a href="filters.html#FilterPrimitiveHeightAttribute"><span class="attr-name">‘height’</span></a>, and <a href="#FilterPrimitiveMxAttribute"><span class="attr-name">‘mx’</span></a>,
-<a href="#FilterPrimitiveMyAttribute"><span class="attr-name">‘my’</span></a>, <a href="#FilterPrimitiveMwAttribute"><span class="attr-name">‘mw’</span></a> and <a href="#FilterPrimitiveMhAttribute"><span class="attr-name">‘mh’</span></a>, which
+<a href="filters.html#FilterPrimitiveWidthAttribute"><span class="attr-name">‘width’</span></a> and <a href="filters.html#FilterPrimitiveHeightAttribute"><span class="attr-name">‘height’</span></a> which
 together identify a subregion which restricts calculation and rendering of
 the given <a href="#TermFilterPrimitiveElement"><span class="svg-term">filter primitive</span></a>. The <a href="filters.html#FilterPrimitiveXAttribute"><span class="attr-name">‘x’</span></a>, <a href="filters.html#FilterPrimitiveYAttribute"><span class="attr-name">‘y’</span></a>,
 <a href="filters.html#FilterPrimitiveWidthAttribute"><span class="attr-name">‘width’</span></a> and <a href="filters.html#FilterPrimitiveHeightAttribute"><span class="attr-name">‘height’</span></a> attributes are defined
 according to the same rules as other <a href="#TermFilterPrimitiveElements"><span class="svg-term">filter primitives</span></a>' coordinate and length
 attributes and thus represent values in the coordinate system established by
 attribute <a href="#FilterElementPrimitiveUnitsAttribute"><span class="attr-name">‘primitiveUnits’</span></a> on the <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element.
-The <a href="#FilterPrimitiveMxAttribute"><span class="attr-name">‘mx’</span></a>, <a href="#FilterPrimitiveMyAttribute"><span class="attr-name">‘my’</span></a>, <a href="#FilterPrimitiveMwAttribute"><span class="attr-name">‘mw’</span></a> and
-<a href="#FilterPrimitiveMhAttribute"><span class="attr-name">‘mh’</span></a> attributes contain deltas to the corresponding
-<a href="filters.html#FilterPrimitiveXAttribute"><span class="attr-name">‘x’</span></a>, <a href="filters.html#FilterPrimitiveYAttribute"><span class="attr-name">‘y’</span></a>, <a href="filters.html#FilterPrimitiveWidthAttribute"><span class="attr-name">‘width’</span></a> and
-<a href="filters.html#FilterPrimitiveHeightAttribute"><span class="attr-name">‘height’</span></a> attributes and contain values in the coordinate
-system established by attribute <a href="#FilterElementPrimitiveMarginUnitsAttribute"><span class="attr-name">‘primitiveMarginUnits’</span></a> on the <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element.
 </p>
 
 <p><a href="filters.html#FilterPrimitiveXAttribute"><span class="attr-name">‘x’</span></a>, <a href="filters.html#FilterPrimitiveYAttribute"><span class="attr-name">‘y’</span></a>,
@@ -1180,11 +1031,7 @@ referenced node in X and Y and thereby produce a usually larger result), the
 default subregion is <span class="attr-value">0%, 0%, 100%, 100%</span>, where percentages are relative to the
 dimensions of the <a href="#FilterEffectsRegion"><span class="svg-term">filter region</span></a>.</p>
 
-<p>After the <strong>x</strong>, <strong>y</strong>, <strong>width</strong>,
-<strong>height</strong> have been calculated for the filter primitive
-subregion the margin attributes <strong>mx</strong>, <strong>my</strong>,
-<strong>mw</strong>, <strong>mh</strong> are calculated and added to the
-former to make the <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive subregion</span></a>. If the <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive
+<p>If the <a href="#FilterPrimitiveSubRegion"><span class="svg-term">filter primitive
 subregion</span></a> has a negative or zero width or height, the effect of the filter
 primitive is disabled. </p>
 
@@ -3530,7 +3377,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 </p>
 
 
-<h2 id="ShorthandEquivalents">31 Shorthands defined in terms of the 'filter element' element</h2>
+<h2 id="ShorthandEquivalents">31 Shorthands defined in terms of the <span class="element-name">‘filter’</span> element</h2>
 
 <p>
   Below are the equivalents for each of the filter functions expressed in terms of
