@@ -1749,7 +1749,7 @@ which apply to the <a>transfer function elements</a>.</p>
 <p>This filter performs the combination of the two input images pixel-wise in
 image space using one of the Porter-Duff [<a
 href="#ref-PORTERDUFF">PORTERDUFF</a>] compositing operations: <em>over, in,
-atop, out, xor</em>. Additionally, a component-wise <em>arithmetic</em>
+atop, out, xor</em> [<a href="#ref-SVG-COMPOSITING">SVG-COMPOSITING</a>]. Additionally, a component-wise <em>arithmetic</em>
 operation (with the result clamped between [0..1]) can be applied.</p>
 
 <p>The <em>arithmetic</em> operation is useful for combining the output from
@@ -1758,6 +1758,15 @@ data. It is also useful for implementing <em>dissolve</em>. If the
 <em>arithmetic</em> operation is chosen, each result pixel is computed using
 the following formula:</p>
 <pre>result = k1*i1*i2 + k2*i1 + k3*i2 + k4</pre>
+where:
+<ul>
+ <li>
+ <code>i1</code> and <code>i2</code> indicate the corresponding pixel channel values of the input image, which map to <a>'in'</a> and <a>'in2'</a> respectively
+ </li>
+ <li>
+ <code>k1, k2, k3</code> and <code>k4</code> indicate the values of the attributes with the same name
+ </li>
+</ul>
 
 <p>For this filter primitive, the extent of the resulting image might grow as
 described in the section that describes the <a>filter primitive subregion</a>.</p>
@@ -1832,7 +1841,7 @@ pixel is determined by applying the kernel matrix to the corresponding source
 pixel and its neighboring pixels. The basic convolution formula which is
 applied to each color value for a given pixel is:</p>
 
-<p class="filterformula">RESULT<sub>X,Y</sub> = ( <br />
+<p class="filterformula" id="feConvolveMatrixElementFormula">COLOR<sub>X,Y</sub> = ( <br />
               SUM <sub>I=0 to [<a
 href="#feConvolveMatrixElementOrderAttribute">'orderY'</a>-1]</sub> { <br />
                 SUM <sub>J=0 to [<a
@@ -1842,7 +1851,7 @@ href="#feConvolveMatrixElementOrderAttribute">'orderX'</a>-J-1,  <a
 href="#feConvolveMatrixElementOrderAttribute">'orderY'</a>-I-1</sub> <br />
                 } <br />
               } <br />
-            ) /  <a>'divisor'</a> +  <a>'bias'</a><br />
+            ) /  <a>'divisor'</a> +  <a>'bias'</a>&nbsp;*&nbsp;ALPHA<sub>X,Y</sub><br />
 </p>
 
 <div class="note-editor">
@@ -1961,9 +1970,9 @@ considerably smaller than a device pixel.</p>
     <dd>After applying the <span class="attr-name">kernelMatrix</span> to the
       input image to yield a number and applying the <a>'divisor'</a>, the <a>'bias'</a> attribute is added to each component. One
       application of <a>'bias'</a> is when it is
-      desirable to have <span class="attr-value">.5</span> gray value be the zero response of the filter. If
-      <a>'bias'</a> is not specified, then the effect
-      is as if a value of zero were specified.<br />
+      desirable to have <span class="attr-value">.5</span> gray value be the zero response of the filter. 
+      The effect that bias has is to lighten the filter result as the bias value increases.
+      The <a>lacuna value</a> for <a>'bias'</a> is <span class="attr-value">0</span>.<br />
       <span class="anim-target">Animatable: yes.</span></dd>
   <dt id="feConvolveMatrixElementTargetXAttribute"><span
   class="adef">targetX</span> = "<span
@@ -2057,12 +2066,36 @@ Extended by two pixels using "duplicate":
   class="adef">preserveAlpha</span> = "<span class="attr-value">false |
   true</span>"</dt>
     <dd>A value of <span class="attr-value">false</span> indicates that the
-      convolution will apply to all channels, including the alpha channel.<br
-      />
+      convolution will apply to all channels, including the alpha channel.
+      In this case the <code>ALPHA<sub>X,Y</sub></code> of the
+      <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given pixel is:
+      <p class="filterformula">
+       ALPHA<sub>X,Y</sub>&nbsp;=&nbsp;(&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUM
+       <sub>I=0&nbsp;to&nbsp;[<a href="#feConvolveMatrixElementOrderAttribute">'orderY'</a>-1]</sub>&nbsp;{&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUM
+       <sub>J=0&nbsp;to&nbsp;[<a href="#feConvolveMatrixElementOrderAttribute">'orderX'</a>-1]</sub>&nbsp;{&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SOURCE
+       <sub>X-<a>'targetX'</a>+J,&nbsp;Y-<a>'targetY'</a>+I</sub>&nbsp;*&nbsp;
+       <a>'kernelMatrix'</a><sub><a href="#feConvolveMatrixElementOrderAttribute">'orderX'</a>-J-1,&nbsp;
+       <a href="#feConvolveMatrixElementOrderAttribute">'orderY'</a>-I-1</sub>&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;/&nbsp;
+       <a>'divisor'</a>&nbsp;+&nbsp;
+       <a>'bias'</a>&nbsp;
+       <br />
+       </p>
+      <br />
       A value of <span class="attr-value">true</span> indicates that the
       convolution will only apply to the color channels. In this case, the
       filter will temporarily unpremultiply the color component values, apply
-      the kernel, and then re-premultiply at the end.<br />
+      the kernel, and then re-premultiply at the end.
+      In this case the <code>ALPHA<sub>X,Y</sub></code>
+      of the <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given pixel is:
+      <p class="filterformula">
+        ALPHA<sub>X,Y</sub>&nbsp;=&nbsp;SOURCE<sub>X,Y</sub>
+      </p>
       The <a>lacuna value</a> for <a>'preserveAlpha'</a> is <span class="attr-value">false</span>.<br />
       <span class="anim-target">Animatable: yes.</span></dd>
 </dl>
@@ -3808,6 +3841,15 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
     <dd><strong>Compositing Digital Images</strong>, T. Porter, T. Duff,
       SIGGRAPH '84 Conference Proceedings, Association for Computing
       Machinery, Volume 18, Number 3, July 1984. </dd>
+  <dt id="ref-SVG-COMPOSITING"><strong class="normref">[SVG-COMPOSITING]</strong></dt>
+  <dd>
+    <cite class="w3cwd"><a href="http://www.w3.org/TR/2009/WD-SVGCompositing-20090430/">SVG Compositing Specification</a></cite>,
+    A. Grasso, ed.
+    World Wide Web Consortium, 30 April 2009.
+    <br/>This edition of SVG Compositing is http://www.w3.org/TR/2009/WD-SVGCompositing-20090430/.
+    <br/>The <a href="http://www.w3.org/TR/SVGCompositing/">latest edition of SVG Compositing</a> is available at
+    http://www.w3.org/TR/SVGCompositing/.
+  </dd>
   <dt id="ref-RNG"><strong class="normref">[RelaxNG]</strong></dt>
     <dd><strong>Document Schema Definition Languages (DSDL) — Part 2:
       Regular grammar- based validation — RELAX NG. ISO/IEC FDIS
