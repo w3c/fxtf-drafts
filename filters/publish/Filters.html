@@ -1543,27 +1543,44 @@ which apply to the <a href="#TermTransferFunctionElements"><span class="svg-term
 <dl><dt id="feComponentTransferTypeAttribute"><span class="adef">type</span>
   = "<em>identity | table | discrete | linear | gamma</em>"</dt><dd><p>Indicates the type of component transfer function. The type of
       function determines the applicability of the other attributes.</p>
+      <p>In the following, C is the initial component (e.g.,
+         <a href=""><span class="element-name">‘feFuncR’</span></a>), C' is the remapped component; both
+         in the closed interval [0,1].</p>
       <ul><li>For <span class="attr-value">identity</span>: 
           <pre>C' = C</pre>
         </li><li>For <span class="attr-value">table</span>, the function is
-          defined by linear interpolation into a lookup table by attribute <a href="#feComponentTransferTableValuesAttribute"><span class="attr-name">tableValues</span></a>, which provides a list of
-          <em>n+1</em> values (i.e., v<sub>0</sub> to v<sub>n</sub>) in order
-          to identify <em>n</em> interpolation ranges. Interpolations use the
-          following formula. 
-          <p>For a value <code>C</code> pick a <code>k</code> such that:</p>
-          <p class="filterformula">k/N &lt;= C &lt; (k+1)/N</p>
+          defined by linear interpolation
+          between values given in the attribute
+          <a href="#feComponentTransferTableValuesAttribute"><span class="attr-name">‘tableValues’</span></a>. The table has <em>n+1</em>
+          values (i.e., v<sub>0</sub> to v<sub>n</sub>)
+          specifying the start and end values for <em>n</em>
+          evenly sized interpolation regions. Interpolations
+          use the following formula:
+
+          <p>For a value <code>C &lt; 1</code> find <code>k</code> such that:</p>
+          <p class="filterformula">k/n &lt;= C &lt; (k+1)/n</p>
+
           <p>The result <code>C'</code> is given by:</p>
-          <p class="filterformula">C' = v<sub>k</sub> + (C - k/N)*N *
-          (v<sub>k+1</sub> - v<sub>k</sub>)</p>
-        </li><li>For <span class="attr-value">discrete</span>, the function is
-          defined by the step function defined by attribute <a href="#feComponentTransferTableValuesAttribute"><span class="attr-name">tableValues</span></a>, which provides a list of
+          <p class="filterformula">C' = v<sub>k</sub> + (C - k/n)*n * (v<sub>k+1</sub> - v<sub>k</sub>)</p>
+
+          <p>If <code>C = 1</code> then:</p>
+          <p class="filterformula">C' = v<sub>n</sub>.</p>
+        </li><li>For <span class="attr-value">discrete</span>, the function is defined by the step function
+          given in the attribute <a href="#feComponentTransferTableValuesAttribute"><span class="attr-name">‘tableValues’</span></a>, which provides a list of
           <em>n</em> values (i.e., v<sub>0</sub> to v<sub>n-1</sub>) in order
           to identify a step function consisting of <em>n</em> steps. The
-          step function is defined by the following formula. 
+          step function is defined by the following formula:
+
+          <p>For a value <code>C &lt; 1</code> find <code>k</code> such that:</p>
+          <p class="filterformula">k/n &lt;= C &lt; (k+1)/n</p>
+
           <p>For a value <code>C</code> pick a <code>k</code> such that:</p>
           <p class="filterformula">k/N &lt;= C &lt; (k+1)/N</p>
+
           <p>The result <code>C'</code> is given by:</p>
           <p class="filterformula">C' = v<sub>k</sub></p>
+          <p>If <code>C = 1</code> then:</p>
+          <p class="filterformula">C' = v<sub>n-1</sub>.</p>
         </li><li>For <span class="attr-value">linear</span>, the function is
           defined by the following linear equation: 
           <p class="filterformula">C' = <a href="#feComponentTransferSlopeAttribute"><span class="attr-name">slope</span></a> * C + <a href="#feComponentTransferInterceptAttribute"><span class="attr-name">intercept</span></a></p>
