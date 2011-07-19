@@ -2592,6 +2592,7 @@ href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.</p>
 class="element-name">'feGaussianBlur'</span></h2>
 
 <edit:elementsummary name='feGaussianBlur'/>
+<edit:with element='feGaussianBlur'>
 
 <p>This filter primitive performs a Gaussian blur on the input image.</p>
 
@@ -2599,26 +2600,20 @@ class="element-name">'feGaussianBlur'</span></h2>
 convolution:</p>
 
 <p class="filterformula">G(x,y) = H(x)I(y)</p>
-<p>where 
-<span >H(x) = exp(-x^2/ (2s^2)) / sqrt(2* pi*s^2)</span>
-</p>
+<p>where</p>
+<p class="filterformula">H(x) = exp(-x<sup>2</sup>/ (2s<sup>2</sup>)) / sqrt(2* pi*s<sup>2</sup>)</p>
 <p>and</p> 
-<p class="filterformula">I(y) = exp(-y^2/ (2t^2)) / sqrt(2* pi*t^2)</p>
+<p class="filterformula">I(x) = exp(-y<sup>2</sup>/ (2t<sup>2</sup>)) / sqrt(2* pi*t<sup>2</sup>)</p>
 <p>with 's' being the standard deviation in the x direction
-and 't' being the standard deviation in the y direction, as specified by <a
-href="#feGaussianBlurStdDeviationAttribute"><span
-class="attr-name">stdDeviation</span></a>.</p>
+and 't' being the standard deviation in the y direction, as specified by <a>'stdDeviation'</a>.</p>
 
-<p>The value of <a href="#feGaussianBlurStdDeviationAttribute"><span
-class="attr-name">stdDeviation</span></a> can be either one or two numbers.
+<p>The value of <a>'stdDeviation'</a> can be either one or two numbers.
 If two numbers are provided, the first number represents a standard deviation
 value along the x-axis of the current coordinate system and the second value
 represents a standard deviation in Y. If one number is provided, then that
 value is used for both X and Y.</p>
 
-<p>Even if only one value is provided for <a
-href="#feGaussianBlurStdDeviationAttribute"><span
-class="attr-name">stdDeviation</span></a>, this can be implemented as a
+<p>Even if only one value is provided for <a>'stdDeviation'</a>, this can be implemented as a
 separable convolution.</p>
 
 <p>For larger values of 's' (s &gt;= 2.0), an approximation can be used:
@@ -2634,6 +2629,8 @@ pixel.</p>
 pixel boundary between the output pixel and the one to the left, the second
 one centered on the pixel boundary between the output pixel and the one to
 the right) and one box blur of size 'd+1' centered on the output pixel.</p>
+
+<p>The approximation formula also applies correspondingly to 't'.</p>
 
 <p>Frequently this operation will take place on alpha-only images, such as
 that produced by the built-in input, <a href="#SourceAlpha"><span
@@ -2655,8 +2652,10 @@ is a tile, the filter is evaluated with periodic boundary conditions.</p>
       element. The second value represents a standard deviation in Y. If one
       number is provided, then that value is used for both X and Y.<br />
       A value of zero disables the effect of the given filter primitive (i.e., the result is the filter input image).<br />
-      If the attribute is not specified, then the effect is as if a value of
-      <span class="attr-value">0</span> were specified.<br />
+      If <a>'stdDeviation'</a> is <span class="attr-value">0</span> in only one of X or Y, 
+      then the effect is that the blur is only applied in the direction that has a non-zero value.
+      <br />
+      The <a>lacuna value</a> for <a>'stdDeviation'</a> is <span class="attr-value">0</span>.<br />
       <span class="anim-target">Animatable: yes.</span></dd>
 </dl>
 </div>
@@ -2664,6 +2663,7 @@ is a tile, the filter is evaluated with periodic boundary conditions.</p>
 <p><a href="#AnExample">The example</a> at the start of this chapter makes
 use of the <a>'feGaussianBlur'</a> filter primitive
 to create a drop shadow effect.</p>
+</edit:with>
 
 <h2 id="feUnsharpMaskElement">Filter primitive <span
 class="element-name">'feUnsharpMask'</span></h2>
