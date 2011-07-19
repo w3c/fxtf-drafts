@@ -2135,32 +2135,38 @@ D<sub>a</sub> = 1.0</p>
 <p>N is a function of x and y and depends on the surface gradient as
 follows:</p>
 
-<p>The surface described by the input alpha image A<sub>in</sub>(x,y) is:</p>
+<p>The surface described by the input alpha image I(x,y) is:</p>
 
-<p class="filterformula">Z (x,y) = surfaceScale *  A<sub>in</sub>(x,y)</p>
+<p class="filterformula">Z (x,y) = surfaceScale *  I(x,y)</p>
 
 <p id="SurfaceNormalCalculations">Surface normal is calculated using the Sobel gradient 3x3 filter.
 Different filter kernels are used depending on whether the given pixel is on
 the interior or an edge. For each case, the formula is:</p>
-
-<p class="filterformula">N<sub>x</sub> (x,y)= - surfaceScale *
+<p class="filterformula">N<sub>x</sub> (x,y) = - surfaceScale *
 FACTOR<sub>x</sub> *<br />
-           (K <sub>x</sub>(0,0)*I(x-dx,y-dy) +
-K<sub>x</sub>(1,0)*I(x,y-dy) + K<sub>x</sub>(2,0)*I(x+dx,y-dy) +<br />
-            K <sub>x</sub>(0,1)*I(x-dx,y)   +
-K<sub>x</sub>(1,1)*I(x,y)   + K<sub>x</sub>(2,1)*I(x+dx,y)   +<br />
-            K <sub>x</sub>(0,2)*I(x-dx,y+dy) +
-K<sub>x</sub>(1,2)*I(x,y+dy) + K<sub>x</sub>(2,2)*I(x+dx,y+dy))<br />
-N<sub>y</sub> (x,y)= - surfaceScale * FACTOR<sub>y</sub> *<br />
-           (K <sub>y</sub>(0,0)*I(x-dx,y-dy) +
-K<sub>y</sub>(1,0)*I(x,y-dy) + K<sub>y</sub>(2,0)*I(x+dx,y-dy) +<br />
-            K <sub>y</sub>(0,1)*I(x-dx,y)   +
-K<sub>y</sub>(1,1)*I(x,y)   + K<sub>y</sub>(2,1)*I(x+dx,y)   +<br />
-            K <sub>y</sub>(0,2)*I(x-dx,y+dy) +
-K<sub>y</sub>(1,2)*I(x,y+dy) + K<sub>y</sub>(2,2)*I(x+dx,y+dy))<br />
-N<sub>z</sub> (x,y) = 1.0<br />
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(K<sub>x</sub>(0,0)*I(x-dx,y-dy)&nbsp;+
+K<sub>x</sub>(1,0)*I(x,y-dy)&nbsp;+
+K<sub>x</sub>(2,0)*I(x+dx,y-dy)&nbsp;+<br />
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K<sub>x</sub>(0,1)*I(x-dx,y)&nbsp;&nbsp;&nbsp;&nbsp;+
+K<sub>x</sub>(1,1)*I(x,y)&nbsp;&nbsp;&nbsp;&nbsp;+
+K<sub>x</sub>(2,1)*I(x+dx,y)&nbsp;&nbsp;&nbsp;&nbsp;+<br />
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K<sub>x</sub>(0,2)*I(x-dx,y+dy)&nbsp;+
+K<sub>x</sub>(1,2)*I(x,y+dy)&nbsp;+
+K<sub>x</sub>(2,2)*I(x+dx,y+dy))<br />
+ N<sub>y</sub> (x,y) = - surfaceScale * FACTOR<sub>y</sub>
+*<br />
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(K<sub>y</sub>(0,0)*I(x-dx,y-dy)&nbsp;+
+K<sub>y</sub>(1,0)*I(x,y-dy)&nbsp;+
+K<sub>y</sub>(2,0)*I(x+dx,y-dy)&nbsp;+<br />
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K<sub>y</sub>(0,1)*I(x-dx,y)&nbsp;&nbsp;&nbsp;&nbsp;+
+K<sub>y</sub>(1,1)*I(x,y)&nbsp;&nbsp;&nbsp;&nbsp;+
+K<sub>y</sub>(2,1)*I(x+dx,y)&nbsp;&nbsp;&nbsp;&nbsp;+<br />
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K<sub>y</sub>(0,2)*I(x-dx,y+dy)&nbsp;+
+K<sub>y</sub>(1,2)*I(x,y+dy)&nbsp;+
+K<sub>y</sub>(2,2)*I(x+dx,y+dy))<br />
+ N<sub>z</sub> (x,y) = 1.0<br />
 <br />
-N = (N<sub>x</sub>, N<sub>y</sub>, N<sub>z</sub>) /
+ N = (N<sub>x</sub>, N<sub>y</sub>, N<sub>z</sub>) /
 Norm((N<sub>x</sub>,N<sub>y</sub>,N<sub>z</sub>))</p>
 
 <p>In these formulas, the <code>dx</code> and <code>dy</code> values (e.g.,
