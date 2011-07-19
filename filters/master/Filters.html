@@ -2656,8 +2656,9 @@ the right) and one box blur of size 'd+1' centered on the output pixel.</p>
 that produced by the built-in input, <a href="#SourceAlpha"><span
 class="attr-value">SourceAlpha</span></a>. The implementation may notice this
 and optimize the single channel case. If the input has infinite extent and is
-constant, this operation has no effect. If the input has infinite extent and
-is a tile, the filter is evaluated with periodic boundary conditions.</p>
+constant (e.g <span class="attr-value"><a href="#FillPaint">FillPaint</a></span>,
+this operation has no effect. If the input has infinite extent and the filter result
+is the input to an <a>'feTile'</a>, the filter is evaluated with periodic boundary conditions.</p>
 
 <div class="adef-list">
 <p><em>Attribute definitions:</em></p>
@@ -2850,9 +2851,11 @@ that produced by the built-in input, <a href="#SourceAlpha"><span
 class="attr-value">SourceAlpha</span></a>. In that case, the implementation
 might want to optimize the single channel case.</p>
 
-<p>If the input has infinite extent and is constant, this operation has no
-effect. If the input has infinite extent and is a tile, the filter is
-evaluated with periodic boundary conditions.</p>
+<p>If the input has infinite extent and is constant (e.g <span class="attr-value"><a href="#FillPaint">FillPaint</a></span>
+where the fill is a solid color), this operation has no effect.
+If the input has infinite extent and the filter result
+is the input to an <a>'feTile'</a>, the filter is evaluated with
+periodic boundary conditions.</p>
 
 <p>Because <span class="element-name">'feMorphology'</span> operates on
 premultipied color values, it will always result in color values less than or
