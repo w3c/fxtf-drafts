@@ -655,7 +655,7 @@ the filter will be applied.</p>
 <p class="note implementation">Sometimes implementers can achieve faster performance when the filter
 region can be mapped directly to device pixels; thus, for best performance on
 display devices, it is suggested that authors define their region such that
-the user agent can align the filter region pixel-for-pixel with the
+the user agent can align the <a>filter region</a> pixel-for-pixel with the
 background. In particular, for best filter effects performance, avoid
 rotating or skewing the user coordinate system. Explicit values for attribute
 <a>'filterRes'</a> can either help or harm performance.
@@ -676,7 +676,7 @@ height="120%"</span>.</p>
 <h2 id="AccessBackgroundImage">Accessing the background image</h2>
 
 <p id="AccessingBackgroundImage">Two possible pseudo input images for filter effects are <a>BackgroundImage</a> and <a>BackgroundAlpha</a>, which each represent an image
-snapshot of the canvas under the filter region at the time that the <a
+snapshot of the canvas under the <a>filter region</a> at the time that the <a
 href="#FilterElement"><span class="element-name">'filter'</span></a> element
 is invoked. <a>BackgroundImage</a> represents both
 the color values and alpha channel of the canvas (i.e., RGBA pixel values),
@@ -1036,7 +1036,7 @@ primitives:</p>
     </dd>
         <dt id="BackgroundImage"><span class="attr-value">BackgroundImage</span></dt>
           <dd><p>This keyword represents an image snapshot of the canvas under
-            the filter region at the time that the <a>'filter element'</a> element was invoked. See
+            the <a>filter region</a> at the time that the <a>'filter element'</a> element was invoked. See
             <a href="#AccessingBackgroundImage">accessing the background
             image</a>.</p>
       </dd>
@@ -1107,8 +1107,10 @@ href="#StrokePaint"><span class="attr-value">StrokePaint</span></a>), or for
 <a href="#feTileElement"><span class="element-name">'feTile'</span></a>
 (which is special because its principal function is to replicate the
 referenced node in X and Y and thereby produce a usually larger result), the
-default subregion is <span class="attr-value">0%, 0%, 100%, 100%</span>, where percentages are relative to the
-dimensions of the <a>filter region</a>.</p>
+default subregion is <span class="attr-value">0%, 0%, 100%, 100%</span>, 
+where as a special-case the percentages are relative to the dimensions of the <a>filter region</a>, 
+thus making the default <a>filter primitive subregion</a> equal to the <a>filter region</a>.
+</p>
 
 <p>If the <a>filter primitive
 subregion</a> has a negative or zero width or height, the effect of the filter
@@ -1118,10 +1120,10 @@ primitive is disabled. </p>
 the filter primitive.</p>
 
 <p>All intermediate offscreens are defined to not exceed the intersection of
-the <a>filter primitive subregion</a> with the <a href="#FilterEffectsRegion">filter
-region</a>. The filter region and any of the filter primitive subregions are
+the <a>filter primitive subregion</a> with the <a>filter region</a>. 
+The <a>filter region</a> and any of the filter primitive subregions are
 to be set up such that all offscreens are made big enough to accommodate any
-pixels which even partly intersect with either the filter region or the
+pixels which even partly intersect with either the <a>filter region</a> or the
 filter primitive subregions.</p>
 
 <p><a>'feTile'</a> references a previous filter primitive and then stitches the tiles together
@@ -1131,7 +1133,11 @@ order to fill its own <a>filter primitive subregion</a>.</p>
 <edit:example href="examples/filtersubregion00.svg" image="yes" link="yes"/>
 
 <p>
-In the example above there are three rects that each have a cross and a circle in them. The circle element in each one has a different filter applied, but with the same <a>filter primitive subregion</a>. The filter output should be limited to the <a>filter primitive subregion</a>, so you should never see the circles themselves, just the rects that make up the <a>filter primitive subregion</a>. 
+In the example above there are three rects that each have a cross and a circle in them.
+
+The circle element in each one has a different filter applied, but with the same <a>filter primitive subregion</a>.
+The filter output should be limited to the <a>filter primitive subregion</a>, so you should never see the circles 
+themselves, just the rects that make up the <a>filter primitive subregion</a>. 
 </p>
 <ul>
 <li>
@@ -2687,6 +2693,7 @@ For controlling the result there are three attributes that can be used:
 class="element-name">'feImage'</span></h2>
 
 <edit:elementsummary name='feImage'/>
+<edit:with element='feImage'>
 
 <p>This filter primitive refers to a graphic external to this filter element,
 which is loaded or rendered into an RGBA raster and becomes the result of the
@@ -2741,6 +2748,29 @@ class="prop-name">'image-rendering'</span> property setting.</p>
      </dd>
    </dl>
 </div>
+
+<p><span class="example-ref">Example feImage</span> illustrates how images are placed relative
+to an object. From left to right:</p>
+<ul>
+ <li>
+   The default placement of an image. Note that the image is
+   centered in the <a>filter region</a> and has the maximum size that will
+   fit in the region consistent with preserving the aspect ratio.
+ </li>
+ <li>
+   The image stretched to fit the bounding box of an object.
+ </li>
+ <li>
+   The image placed using user coordinates. Note that the image is
+   first centered in a box the size of the <a>filter region</a> and has the
+   maximum size that will fit in the box consistent with preserving
+   the aspect ratio. This box is then shifted by the given <a>'x'</a> and
+   <a>'y'</a> values relative to the viewport the object is in.
+ </li>
+</ul>
+
+<edit:example href='examples/feImage-01.svg' name='feImage' description='Examples of feImage use' image='yes' link='yes'/>
+</edit:with>
 
 <h2 id="feMergeElement">Filter primitive <span
 class="element-name">'feMerge'</span></h2>
@@ -3037,22 +3067,20 @@ class="element-name">'feTile'</span></h2>
 
 <p>This filter primitive fills a target rectangle with a repeated, tiled
 pattern of an input image. 
-The target rectangle is as large as the <a
-href="#FilterPrimitiveSubRegion">filter primitive subregion</a> established
+The target rectangle is as large as the <a>filter primitive subregion</a> established
 by the <span class="element-name">'feTile'</span> element.
 </p>
 
-<p>Typically, the input image has been defined with its own <a
-href="#FilterPrimitiveSubRegion">filter primitive subregion</a> in order to
+<p>Typically, the input image has been defined with its own <a>filter primitive subregion</a> in order to
 define a reference tile. <span class="element-name">'feTile'</span>
 replicates the reference tile in both X and Y to completely fill the target
 rectangle. The top/left corner of each given tile is at location
 <code>(x+i*width,y+j*height)</code>, where <code>(x,y)</code> represents the
-top/left of the input image's filter primitive subregion, <code>width</code>
+top/left of the input image's <a>filter primitive subregion</a>, <code>width</code>
 and <code>height</code> represent the width and height of the input image's
-filter primitive subregion, and <code>i</code> and <code>j</code> can be any
-integer value. In most cases, the input image will have a smaller filter
-primitive subregion than the <span class="element-name">'feTile'</span> in
+<a>filter primitive subregion</a>, and <code>i</code> and <code>j</code> can be any
+integer value. In most cases, the input image will have a smaller <a>filter
+primitive subregion</a> than the <span class="element-name">'feTile'</span> in
 order to achieve a repeated pattern effect.</p>
 
 <p class="requirement" id="assertTileArtifacts">Implementers must take appropriate measures in constructing the tiled
