@@ -489,7 +489,7 @@ follows:</p>
       the filter nodes defined from the referenced <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element. Inheritance can be
       indirect to an arbitrary level; thus, if the referenced <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element inherits attributes or its
       filter node specification due to its own <span class="attr-name">href</span> attribute, then the current element can
-      inherit those attributes or filter node specifications. 
+      inherit those attributes or filter node specifications.
 
       <div class="note">
       This attribute is deprecated and should not be used, it's included for
@@ -561,15 +561,16 @@ effects region:</p>
       <p><span class="anim-target">Animatable: yes.</span></p>
   </dd><dt id="FilterRegionFilterRes"><a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a></dt><dd>
     <p>Defines the width and height of the intermediate
-      images in pixels. If not provided, then a reasonable default resolution
-      appropriate for the target device will be used. (For displays, an
-      appropriate display resolution, preferably the current display's pixel
-      resolution, is the default. For printing, an appropriate common printer
-      resolution, such as 1200dpi, is the default.)</p>
+      images in pixels. If not provided, then the user agent will use reasonable
+      values to produce a high-quality result on the output device.</p>
+      
       <p>Care should be taken when assigning a non-default value to this
       attribute. Too small of a value may result in unwanted pixelation in the
       result. Too large of a value may result in slow processing and large
       memory usage.</p>
+      
+      <p>Non-integer values are truncated, i.e rounded to the closest integer value towards zero.</p>
+      
       <p><span class="requirement" id="assert_OORFilterRegion">Negative or zero values disable rendering of the element which referenced the filter.</span></p>
       <p><span class="anim-target">Animatable: yes.</span></p>
   </dd></dl>
@@ -2955,13 +2956,14 @@ in one pass, instead of two.</p>
       media and user agents, it is necessary that a value be provided for at
       least one of <span class="attr-name">filterRes</span> and <span class="attr-name">kernelUnitLength</span>. Discussion of intermediate
       images are in the <a href="#Introduction">Introduction</a> and in the
-      description of attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">filterRes</span></a>.<br/>
+      description of attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a>.<br/>
       If a negative or zero value is specified the default value will be used
       instead. <br/>
       <span class="anim-target">Animatable: yes.</span></dd></dl>
 </div>
 
-<p>The light source is defined by one of the child elements <a href="#feDistantLightElement"><span class="element-name">‘feDistantLight’</span></a>, <a href="#fePointLightElement"><span class="element-name">‘fePointLight’</span></a> or <a href="#feDistantLightElement"><span class="element-name">‘feDistantLight’</span></a>. The light color is
+<p>The light source is defined by one of the child elements <a href="#feDistantLightElement"><span class="element-name">‘feDistantLight’</span></a>, 
+<a href="#fePointLightElement"><span class="element-name">‘fePointLight’</span></a> or <a href="#feDistantLightElement"><span class="element-name">‘feDistantLight’</span></a>. The light color is
 specified by property <a href="#LightingColorProperty"><span class="prop-name">‘lighting-color’</span></a>.</p>
 
 <p><a href="#AnExample">The example</a> at the start of this chapter makes
