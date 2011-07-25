@@ -3159,7 +3159,9 @@ image will fill the entire <a>filter primitive subregion</a> for this filter pri
 <p>It is possible to create bandwidth-limited noise by synthesizing only one
 octave.</p>
 
-<p>The C code below shows the exact algorithm used for this filter effect.</p>
+<p>The C code below shows the exact algorithm used for this filter effect. 
+The <a>filter primitive subregion</a> is to be passed as the arguments fTileX, 
+fTileY, fTileWidth and fTileHeight.</p>
 
 <p>For fractalSum, you get a turbFunctionResult that is aimed at a range of
 -1 to 1 (the actual result might exceed this range in some cases). To convert
@@ -3298,9 +3300,9 @@ double noise2(int nColorChannel, double vec[2], StitchInfo *pStitchInfo)
   b = lerp(sx, u, v);
   return lerp(sy, a, b);
 }
-double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fBaseFreqY,
-          int nNumOctaves, bool bFractalSum, bool bDoStitching,
-          double fTileX, double fTileY, double fTileWidth, double fTileHeight)
+double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenceBaseFrequencyAttribute">fBaseFreqX</a>, double <a href="#feTurbulenceBaseFrequencyAttribute">fBaseFreqY</a>,
+          int <a href="#feTurbulenceNumOctavesAttribute">nNumOctaves</a>, bool bFractalSum, bool bDoStitching,
+          double <a href="#FilterPrimitiveSubRegion">fTileX</a>, double <a href="#FilterPrimitiveSubRegion">fTileY</a>, double <a href="#FilterPrimitiveSubRegion">fTileWidth</a>, double <a href="#FilterPrimitiveSubRegion">fTileHeight</a>)
 {
   StitchInfo stitch;
   StitchInfo *pStitchInfo = NULL; // Not stitching when NULL.
