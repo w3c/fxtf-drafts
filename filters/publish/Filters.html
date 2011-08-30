@@ -14,7 +14,7 @@
 <div class="head">
   <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a></p>
   <h1 id="pagetitle">Filter Effects 1.0: Language</h1>
-  <h2 id="pagesubtitle">W3C Editor’s Draft <em>25 July 2011</em></h2>
+  <h2 id="pagesubtitle">W3C Editor’s Draft <em>30 August 2011</em></h2>
   <dl><dt>This version:</dt><dd><a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html" class="url">https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/TR/FilterEffects10/" class="url">http://www.w3.org/TR/FilterEffects10/</a></dd><dt>Previous version:</dt><dd><a href="http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/" class="url">http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/</a></dd><dt>Editors:</dt><dd><a href="mailto:ed@opera.com">Erik Dahlström</a>, (<a href="http://www.opera.com/">Opera Software ASA</a>)</dd><dd><a href="mailto:dino@apple.com">Dean Jackson</a> (<a href="http://www.apple.com/">Apple Inc</a>)</dd><dt>Authors:</dt><dd>The authors of this specification are the participants of the W3C SVG and CSS Working Groups.</dd></dl>
   <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2011 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
 </div>
@@ -39,7 +39,8 @@
   by a style instruction (the 'filter property' property), and have very little
   specific to an SVG environment. This specification describes filters in
   a manner that allow them to be used in other presentational environments,
-  such as HTML styled by CSS and XSL:FO.
+  such as HTML styled by CSS and XSL:FO. It also defines a CSS property
+  value function that allows a filter chain to produce a CSS &lt;image&gt; value.
 </p>
 
 <h2 id="status">Status of This Document</h2>
@@ -133,50 +134,52 @@ element</a></li>
 <li><a href="#feDropShadowElement">27 Filter primitive <span class="element-name">‘feDropShadow’</span></a></li>
 <li><a href="#feDiffuseSpecularElement">28 Filter primitive <span class="element-name">‘feDiffuseSpecular’</span></a></li>
 <li><a href="#feCustomElement">29 Filter primitive <span class="element-name">‘feCustom’</span></a></li>
-<li><a href="#RelaxNG">30 RelaxNG Schema for Filter Effects 1.0</a></li>
-<li><a href="#ShorthandEquivalents">31 Shorthands defined in terms of the <span class="element-name">‘filter’</span> element</a><ul class="toc">
-<li><a href="#grayscaleEquivalent">31.1 grayscale</a></li>
-<li><a href="#sepiaEquivalent">31.2 sepia</a></li>
-<li><a href="#saturateEquivalent">31.3 saturate</a></li>
-<li><a href="#huerotateEquivalent">31.4 hue-rotate</a></li>
-<li><a href="#invertEquivalent">31.5 invert</a></li>
-<li><a href="#gammaEquivalent">31.6 gamma</a></li>
-<li><a href="#blurEquivalent">31.7 blur</a></li>
-<li><a href="#unsharpEquivalent">31.8 unsharp</a></li></ul></li>
-<li><a href="#DOMInterfaces">32 DOM interfaces</a><ul class="toc">
-<li><a href="#InterfaceImageData">32.1 Interface ImageData</a></li>
-<li><a href="#InterfaceSVGFilterElement">32.2 Interface SVGFilterElement</a></li>
-<li><a href="#InterfaceSVGFilterPrimitiveStandardAttributes">32.3 Interface SVGFilterPrimitiveStandardAttributes</a></li>
-<li><a href="#InterfaceSVGFEBlendElement">32.4 Interface SVGFEBlendElement</a></li>
-<li><a href="#InterfaceSVGFEColorMatrixElement">32.5 Interface SVGFEColorMatrixElement</a></li>
-<li><a href="#InterfaceSVGFEComponentTransferElement">32.6 Interface SVGFEComponentTransferElement</a></li>
-<li><a href="#InterfaceSVGComponentTransferFunctionElement">32.7 Interface SVGComponentTransferFunctionElement</a></li>
-<li><a href="#InterfaceSVGFEFuncRElement">32.8 Interface SVGFEFuncRElement</a></li>
-<li><a href="#InterfaceSVGFEFuncGElement">32.9 Interface SVGFEFuncGElement</a></li>
-<li><a href="#InterfaceSVGFEFuncBElement">32.10 Interface SVGFEFuncBElement</a></li>
-<li><a href="#InterfaceSVGFEFuncAElement">32.11 Interface SVGFEFuncAElement</a></li>
-<li><a href="#InterfaceSVGFECompositeElement">32.12 Interface SVGFECompositeElement</a></li>
-<li><a href="#InterfaceSVGFEConvolveMatrixElement">32.13 Interface SVGFEConvolveMatrixElement</a></li>
-<li><a href="#InterfaceSVGFEDiffuseLightingElement">32.14 Interface SVGFEDiffuseLightingElement</a></li>
-<li><a href="#InterfaceSVGFEDistantLightElement">32.15 Interface SVGFEDistantLightElement</a></li>
-<li><a href="#InterfaceSVGFEPointLightElement">32.16 Interface SVGFEPointLightElement</a></li>
-<li><a href="#InterfaceSVGFESpotLightElement">32.17 Interface SVGFESpotLightElement</a></li>
-<li><a href="#InterfaceSVGFEDisplacementMapElement">32.18 Interface SVGFEDisplacementMapElement</a></li>
-<li><a href="#InterfaceSVGFEFloodElement">32.19 Interface SVGFEFloodElement</a></li>
-<li><a href="#InterfaceSVGFEGaussianBlurElement">32.20 Interface SVGFEGaussianBlurElement</a></li>
-<li><a href="#InterfaceSVGFEImageElement">32.21 Interface SVGFEImageElement</a></li>
-<li><a href="#InterfaceSVGFEMergeElement">32.22 Interface SVGFEMergeElement</a></li>
-<li><a href="#InterfaceSVGFEMergeNodeElement">32.23 Interface SVGFEMergeNodeElement</a></li>
-<li><a href="#InterfaceSVGFEMorphologyElement">32.24 Interface SVGFEMorphologyElement</a></li>
-<li><a href="#InterfaceSVGFEOffsetElement">32.25 Interface SVGFEOffsetElement</a></li>
-<li><a href="#InterfaceSVGFESpecularLightingElement">32.26 Interface SVGFESpecularLightingElement</a></li>
-<li><a href="#InterfaceSVGFETileElement">32.27 Interface SVGFETileElement</a></li>
-<li><a href="#InterfaceSVGFETurbulenceElement">32.28 Interface SVGFETurbulenceElement</a></li>
-<li><a href="#InterfaceSVGFEDropShadowElement">32.29 Interface SVGFEDropShadowElement</a></li></ul></li>
-<li><a href="#references1">33 References</a><ul class="toc">
-<li><a href="#normref">33.1 Normative References</a></li>
-<li><a href="#informref">33.2 Informative References</a></li></ul></li>
-<li><a href="#changes">34 Changes</a></li></ul>
+<li><a href="#FilterCSSImageValue">30 The filter CSS &lt;image&gt; value</a></li>
+<li><a href="#RelaxNG">31 RelaxNG Schema for Filter Effects 1.0</a></li>
+<li><a href="#ShorthandEquivalents">32 Shorthands defined in terms of the <span class="element-name">‘filter’</span> element</a><ul class="toc">
+<li><a href="#grayscaleEquivalent">32.1 grayscale</a></li>
+<li><a href="#sepiaEquivalent">32.2 sepia</a></li>
+<li><a href="#saturateEquivalent">32.3 saturate</a></li>
+<li><a href="#huerotateEquivalent">32.4 hue-rotate</a></li>
+<li><a href="#invertEquivalent">32.5 invert</a></li>
+<li><a href="#gammaEquivalent">32.6 gamma</a></li>
+<li><a href="#blurEquivalent">32.7 blur</a></li>
+<li><a href="#unsharpEquivalent">32.8 unsharp</a></li>
+<li><a href="#dropshadowEquivalent">32.9 drop-shadow</a></li></ul></li>
+<li><a href="#DOMInterfaces">33 DOM interfaces</a><ul class="toc">
+<li><a href="#InterfaceImageData">33.1 Interface ImageData</a></li>
+<li><a href="#InterfaceSVGFilterElement">33.2 Interface SVGFilterElement</a></li>
+<li><a href="#InterfaceSVGFilterPrimitiveStandardAttributes">33.3 Interface SVGFilterPrimitiveStandardAttributes</a></li>
+<li><a href="#InterfaceSVGFEBlendElement">33.4 Interface SVGFEBlendElement</a></li>
+<li><a href="#InterfaceSVGFEColorMatrixElement">33.5 Interface SVGFEColorMatrixElement</a></li>
+<li><a href="#InterfaceSVGFEComponentTransferElement">33.6 Interface SVGFEComponentTransferElement</a></li>
+<li><a href="#InterfaceSVGComponentTransferFunctionElement">33.7 Interface SVGComponentTransferFunctionElement</a></li>
+<li><a href="#InterfaceSVGFEFuncRElement">33.8 Interface SVGFEFuncRElement</a></li>
+<li><a href="#InterfaceSVGFEFuncGElement">33.9 Interface SVGFEFuncGElement</a></li>
+<li><a href="#InterfaceSVGFEFuncBElement">33.10 Interface SVGFEFuncBElement</a></li>
+<li><a href="#InterfaceSVGFEFuncAElement">33.11 Interface SVGFEFuncAElement</a></li>
+<li><a href="#InterfaceSVGFECompositeElement">33.12 Interface SVGFECompositeElement</a></li>
+<li><a href="#InterfaceSVGFEConvolveMatrixElement">33.13 Interface SVGFEConvolveMatrixElement</a></li>
+<li><a href="#InterfaceSVGFEDiffuseLightingElement">33.14 Interface SVGFEDiffuseLightingElement</a></li>
+<li><a href="#InterfaceSVGFEDistantLightElement">33.15 Interface SVGFEDistantLightElement</a></li>
+<li><a href="#InterfaceSVGFEPointLightElement">33.16 Interface SVGFEPointLightElement</a></li>
+<li><a href="#InterfaceSVGFESpotLightElement">33.17 Interface SVGFESpotLightElement</a></li>
+<li><a href="#InterfaceSVGFEDisplacementMapElement">33.18 Interface SVGFEDisplacementMapElement</a></li>
+<li><a href="#InterfaceSVGFEFloodElement">33.19 Interface SVGFEFloodElement</a></li>
+<li><a href="#InterfaceSVGFEGaussianBlurElement">33.20 Interface SVGFEGaussianBlurElement</a></li>
+<li><a href="#InterfaceSVGFEImageElement">33.21 Interface SVGFEImageElement</a></li>
+<li><a href="#InterfaceSVGFEMergeElement">33.22 Interface SVGFEMergeElement</a></li>
+<li><a href="#InterfaceSVGFEMergeNodeElement">33.23 Interface SVGFEMergeNodeElement</a></li>
+<li><a href="#InterfaceSVGFEMorphologyElement">33.24 Interface SVGFEMorphologyElement</a></li>
+<li><a href="#InterfaceSVGFEOffsetElement">33.25 Interface SVGFEOffsetElement</a></li>
+<li><a href="#InterfaceSVGFESpecularLightingElement">33.26 Interface SVGFESpecularLightingElement</a></li>
+<li><a href="#InterfaceSVGFETileElement">33.27 Interface SVGFETileElement</a></li>
+<li><a href="#InterfaceSVGFETurbulenceElement">33.28 Interface SVGFETurbulenceElement</a></li>
+<li><a href="#InterfaceSVGFEDropShadowElement">33.29 Interface SVGFEDropShadowElement</a></li></ul></li>
+<li><a href="#references1">34 References</a><ul class="toc">
+<li><a href="#normref">34.1 Normative References</a></li>
+<li><a href="#informref">34.2 Informative References</a></li></ul></li>
+<li><a href="#changes">35 Changes</a></li></ul>
 
 <h2 id="introduction">1 Introduction</h2>
 
@@ -404,8 +407,8 @@ as follows:</p>
     blur(radiusX, radiusY)
   </dt><dd>
     Applies a Gaussian blur to the input image.
-    The value of 'radiusX' defines the X value of the standard deviation to the Guassian function.
-    The value of 'radiusY' defines the Y value of the standard deviation to the Guassian function.
+    The value of 'radiusX' defines the X value of the standard deviation to the Gaussian function.
+    The value of 'radiusY' defines the Y value of the standard deviation to the Gaussian function.
     If one parameter is provided, then that value is used for both 'radiusX' and 'radiusY'.
     If no parameters are provided, then the value for both attributes is 0.
     The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
@@ -417,11 +420,24 @@ as follows:</p>
     The value of 'amount' defines the proportion of the effect (as a multiplier on the
     subtraction). A value of 1 applies the effect completely. A value of 0 leaves the
     input unchanged.
-    The value of 'radius' defines the value of the standard deviation to the Guassian function.
+    The value of 'radius' defines the value of the standard deviation to the Gaussian function.
     The value of 'threshold' defines a point at which the function will not be applied.
     If the 'threshold' parameter is not provided, then its value is 1. If the 'radius' parameter
     is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0.
     The markup equivalent of this function is <a href="#unsharpEquivalent">given below</a>.
+  </dd><dt>
+    drop-shadow(offset-x, offset-y, radius, color)
+  </dt><dd>
+    Applies a drop shadow effect to the input image. A drop shadow is effectively
+    a blurred, offset version of the input image's alpha mask drawn in a
+    particular color, composited below the image. The value of 'offset-x' and
+    'offset-y' define the translation that is applied to the shadow. The value of
+    'radius' defines the standard-deviation input that is given to the blur
+    function. The value of 'color' is a CSS &lt;color&gt; value that provides the
+    color used to draw the shadow. If not specified, the 'offset-x', 'offset-y'
+    and 'radius' parameters are given the value 0. If the 'color' parameter is
+    not provided, then its value is "black". The markup equivalent of this
+    function is <a href="#dropshadowEquivalent">given below</a>.
   </dd></dl>
 
 <div class="note">
@@ -632,8 +648,7 @@ which the filter is applied.
 
 <div class="propdef">
 <dl><dt id="EnableBackgroundProperty"><span class="propdef-title prop-name">‘enable-background’</span></dt><dd>
-      <table summary="enable-background property" class="propinfo" cellspacing="0" cellpadding="0"><tbody><tr valign="baseline"><td><em>Value:</em>  </td><td>accumulate | new [ &lt;x&gt; &lt;y&gt; &lt;width&gt;
-              &lt;height&gt; ] | <a class="noxref" href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span class="value-inst-inherit noxref">inherit</span></a></td></tr><tr valign="baseline"><td><em>Initial:</em>  </td><td>accumulate</td></tr><tr valign="baseline"><td><em>Applies to:</em>  </td><td>Typically elements that can contain renderable elements. 
+      <table summary="enable-background property" class="propinfo" cellspacing="0" cellpadding="0"><tbody><tr valign="baseline"><td><em>Value:</em>  </td><td>accumulate | new | <a class="noxref" href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span class="value-inst-inherit noxref">inherit</span></a></td></tr><tr valign="baseline"><td><em>Initial:</em>  </td><td>accumulate</td></tr><tr valign="baseline"><td><em>Applies to:</em>  </td><td>Typically elements that can contain renderable elements. 
               language is responsible for defining the applicable set of
               elements.
               For SVG: <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermContainerElement"><span class="svg-term">container elements</span></a></td></tr><tr valign="baseline"><td><em>Inherited:</em>  </td><td>no</td></tr><tr valign="baseline"><td><em>Percentages:</em>  </td><td>N/A</td></tr><tr valign="baseline"><td><em>Media:</em>  </td><td>visual</td></tr><tr valign="baseline"><td><em>Animatable:</em>  </td><td>no</td></tr></tbody></table>
@@ -670,22 +685,6 @@ ancestor <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermGr
 image request is technically in error. Processing will proceed without
 interruption (i.e., no error message) and a transparent black image shall be
 provided in response to the request.</p>
-
-<p>The optional
-<strong>&lt;x&gt;,&lt;y&gt;,&lt;width&gt;,&lt;height&gt;</strong> 
-<span class="specissue">ISSUE: define the type of each of these, probably &lt;number&gt;</span>
-  parameters
-on the <span class="attr-value">new</span> value indicate the subregion of the <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermGraphicsElement"><span class="svg-term">container element</span></a>
- element to which <a href="#EnableBackgroundProperty"><span class="prop-name">‘enable-background’</span></a> applies' user space where access to the
-background image is allowed to happen. These parameters enable the user
-agent potentially to allocate smaller temporary image buffers than the
-default values. Thus, the values
-&lt;x&gt;,&lt;y&gt;,&lt;width&gt;,&lt;height&gt; act as a clipping rectangle
-on the background image canvas. If more than zero but less than four of the
-values &lt;x&gt;,&lt;y&gt;,&lt;width&gt; and &lt;height&gt; are specified or
-if negative or zero values are specified for &lt;width&gt; or &lt;height&gt;,
-<a href="#BackgroundImage"><span class="attr-value">BackgroundImage</span></a> and <a href="#BackgroundAlpha"><span class="attr-value">BackgroundAlpha</span></a> are processed as if background
-image processing were not enabled. </p>
 
 <h3 id="AccessBackgroundImageSVG">7.1 Accessing the background image in SVG</h3>
 <p>This section only applies to the SVG definition of enable-background.</p>
@@ -3481,16 +3480,41 @@ be exposed to the DOM.</span> </p>
 
 <div class="note">
 <h2 id="feDiffuseSpecularElement">28 Filter primitive <span class="element-name">‘feDiffuseSpecular’</span></h2>
-The SVG WG is looking at providing a shorthand for diffuse+specular.
+The WG is looking at providing a shorthand for diffuse+specular.
 </div>
 
 <div class="note">
 <h2 id="feCustomElement">29 Filter primitive <span class="element-name">‘feCustom’</span></h2>
-The SVG WG is looking to add a filter primitive that allows programmatic access
-to the pixel data for a filter, e.g via OpenCL.
+The WG is considering a proposal to add a filter primitive that would reference a
+programmable operation, similar to an OpenCL kernel or GLSL fragment shader. At
+this time, the WG is intending to <strong>not</strong> include such a feature
+in the current version of this specification. If you feel it is necessary, please
+submit feedback to the WG (by email, described in the introduction) with your
+reasons and, preferably, use cases.
 </div>
 
-<h2 id="RelaxNG">30 RelaxNG Schema for Filter Effects 1.0</h2>
+<h2 id="FilterCSSImageValue">30 The filter CSS &lt;image&gt; value</h2>
+
+<p>
+  The filter() function produces a CSS &lt;image&gt; value. It has the following syntax:
+</p>
+
+<h4 class="no-toc" id="filter-syntax">
+filter() syntax</h4>
+
+<pre class="prod"><code><dfn>&lt;filter&gt;</dfn> = filter(
+  &lt;image&gt;, 
+  none | &lt;filter-function&gt; [ &lt;filter-function&gt; ]*
+)
+</code></pre>
+
+<p>
+  The function takes two parameters. The first is a CSS &lt;image&gt; value. The second
+  is the value of a <span class="prop-name">filter</span> property. The function take the
+  input image parameter and apply the filter rules, returning a processing image.
+</p>
+
+<h2 id="RelaxNG">31 RelaxNG Schema for Filter Effects 1.0</h2>
 
 <p>The schema for Filter Effects 1.0 is written in <a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">RelaxNG</a>
 [<a href="#ref-RNG">RelaxNG</a>], a namespace-aware schema language that uses
@@ -3512,7 +3536,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 </p>
 
 
-<h2 id="ShorthandEquivalents">31 Shorthands defined in terms of the <span class="element-name">‘filter’</span> element</h2>
+<h2 id="ShorthandEquivalents">32 Shorthands defined in terms of the <span class="element-name">‘filter’</span> element</h2>
 
 <p>
   Below are the equivalents for each of the filter functions expressed in terms of
@@ -3520,7 +3544,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   brackets in the following style: [amount].
 </p>
 
-<h3 id="grayscaleEquivalent">31.1 grayscale</h3>
+<h3 id="grayscaleEquivalent">32.1 grayscale</h3>
 
 <pre class="examplesource"> &lt;filter id="grayscale"&gt;
     &lt;feColorMatrix type="matrix"
@@ -3530,7 +3554,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="sepiaEquivalent">31.2 sepia</h3>
+<h3 id="sepiaEquivalent">32.2 sepia</h3>
 
 <pre class="examplesource"> &lt;filter id="sepia"&gt;
     &lt;feColorMatrix type="matrix"
@@ -3540,21 +3564,21 @@ The RNG is under construction, and only the individual RNG snippets are availabl
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="saturateEquivalent">31.3 saturate</h3>
+<h3 id="saturateEquivalent">32.3 saturate</h3>
 
 <pre class="examplesource"> &lt;filter id="saturate"&gt;
     &lt;feColorMatrix type="saturate"
                values="(1 - [amount])"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="huerotateEquivalent">31.4 hue-rotate</h3>
+<h3 id="huerotateEquivalent">32.4 hue-rotate</h3>
 
 <pre class="examplesource"> &lt;filter id="hue-rotate"&gt;
     &lt;feColorMatrix type="hueRotate"
                values="[angle]"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="invertEquivalent">31.5 invert</h3>
+<h3 id="invertEquivalent">32.5 invert</h3>
 
 <pre class="examplesource"> &lt;filter id="invert"&gt;
     &lt;feComponentTransfer&gt;
@@ -3564,7 +3588,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="gammaEquivalent">31.6 gamma</h3>
+<h3 id="gammaEquivalent">32.6 gamma</h3>
 
 <pre class="examplesource"> &lt;filter id="gamma"&gt;
     &lt;feComponentTransfer&gt;
@@ -3574,25 +3598,38 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="blurEquivalent">31.7 blur</h3>
+<h3 id="blurEquivalent">32.7 blur</h3>
 
 <pre class="examplesource"> &lt;filter id="blur"&gt;
     &lt;feGaussianBlur stdDeviation="[radiusX radiusY]"&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="unsharpEquivalent">31.8 unsharp</h3>
+<h3 id="unsharpEquivalent">32.8 unsharp</h3>
 
 <pre class="examplesource"> &lt;filter id="unsharp"&gt;
     &lt;feUnsharpMask stdDeviation="[radius]" threshold="[threshold]" amount="[amount]"&gt;
   &lt;/filter&gt; </pre>
 
-<h2 id="DOMInterfaces">32 DOM interfaces</h2>
+<h3 id="dropshadowEquivalent">32.9 drop-shadow</h3>
+
+<pre class="examplesource"> &lt;filter id="drop-shadow"&gt;
+    &lt;feGaussianBlur in="[alpha-channel-of-input]" stdDeviation="[radius]"/&gt;
+    &lt;feOffset dx="[offset-x]" dy="[offset-y]" result="offsetblur"/&gt;
+    &lt;feFlood flood-color="[color]"/&gt;
+    &lt;feComposite in2="offsetblur" operator="in"/&gt;
+    &lt;feMerge&gt;
+      &lt;feMergeNode/&gt;
+      &lt;feMergeNode in="input-image"/&gt;
+    &lt;/feMerge&gt;
+  &lt;/filter&gt; </pre>
+
+<h2 id="DOMInterfaces">33 DOM interfaces</h2>
 
 <div class="note">
 The interfaces below will be made available in a IDL file for an upcoming draft.
 </div>
 
-<h3 id="InterfaceImageData">32.1 Interface ImageData</h3>
+<h3 id="InterfaceImageData">33.1 Interface ImageData</h3>
 
 
  The ImageData interface corresponds to pixel data that can be used as input to the SVGFilterElement interface.
@@ -3619,7 +3656,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
  <a href="http://www.w3.org/TR/html5/the-canvas.html#imagedata">ImageData</a>.
 </div></dd></dl></dd></dl>
 
-<h3 id="InterfaceSVGFilterElement">32.2 Interface SVGFilterElement</h3>
+<h3 id="InterfaceSVGFilterElement">33.2 Interface SVGFilterElement</h3>
 
 
 
@@ -3689,7 +3726,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFilterPrimitiveStandardAttributes">32.3 Interface SVGFilterPrimitiveStandardAttributes</h3>
+<h3 id="InterfaceSVGFilterPrimitiveStandardAttributes">33.3 Interface SVGFilterPrimitiveStandardAttributes</h3>
 
 
 
@@ -3719,7 +3756,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEBlendElement">32.4 Interface SVGFEBlendElement</h3>
+<h3 id="InterfaceSVGFEBlendElement">33.4 Interface SVGFEBlendElement</h3>
 
 
 
@@ -3781,7 +3818,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEColorMatrixElement">32.5 Interface SVGFEColorMatrixElement</h3>
+<h3 id="InterfaceSVGFEColorMatrixElement">33.5 Interface SVGFEColorMatrixElement</h3>
 
 
 
@@ -3838,7 +3875,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEComponentTransferElement">32.6 Interface SVGFEComponentTransferElement</h3>
+<h3 id="InterfaceSVGFEComponentTransferElement">33.6 Interface SVGFEComponentTransferElement</h3>
 
 
 
@@ -3854,7 +3891,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGComponentTransferFunctionElement">32.7 Interface SVGComponentTransferFunctionElement</h3>
+<h3 id="InterfaceSVGComponentTransferFunctionElement">33.7 Interface SVGComponentTransferFunctionElement</h3>
 
 
 
@@ -3929,7 +3966,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEFuncRElement">32.8 Interface SVGFEFuncRElement</h3>
+<h3 id="InterfaceSVGFEFuncRElement">33.8 Interface SVGFEFuncRElement</h3>
 
 
 
@@ -3939,7 +3976,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 };</pre>
 
 
-<h3 id="InterfaceSVGFEFuncGElement">32.9 Interface SVGFEFuncGElement</h3>
+<h3 id="InterfaceSVGFEFuncGElement">33.9 Interface SVGFEFuncGElement</h3>
 
 
 
@@ -3949,7 +3986,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 };</pre>
 
 
-<h3 id="InterfaceSVGFEFuncBElement">32.10 Interface SVGFEFuncBElement</h3>
+<h3 id="InterfaceSVGFEFuncBElement">33.10 Interface SVGFEFuncBElement</h3>
 
 
 
@@ -3959,7 +3996,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 };</pre>
 
 
-<h3 id="InterfaceSVGFEFuncAElement">32.11 Interface SVGFEFuncAElement</h3>
+<h3 id="InterfaceSVGFEFuncAElement">33.11 Interface SVGFEFuncAElement</h3>
 
 
 
@@ -3969,7 +4006,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 };</pre>
 
 
-<h3 id="InterfaceSVGFECompositeElement">32.12 Interface SVGFECompositeElement</h3>
+<h3 id="InterfaceSVGFECompositeElement">33.12 Interface SVGFECompositeElement</h3>
 
 
 
@@ -4056,7 +4093,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEConvolveMatrixElement">32.13 Interface SVGFEConvolveMatrixElement</h3>
+<h3 id="InterfaceSVGFEConvolveMatrixElement">33.13 Interface SVGFEConvolveMatrixElement</h3>
 
 
 
@@ -4153,7 +4190,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEDiffuseLightingElement">32.14 Interface SVGFEDiffuseLightingElement</h3>
+<h3 id="InterfaceSVGFEDiffuseLightingElement">33.14 Interface SVGFEDiffuseLightingElement</h3>
 
 
 
@@ -4189,7 +4226,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEDistantLightElement">32.15 Interface SVGFEDistantLightElement</h3>
+<h3 id="InterfaceSVGFEDistantLightElement">33.15 Interface SVGFEDistantLightElement</h3>
 
 
 
@@ -4209,7 +4246,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEPointLightElement">32.16 Interface SVGFEPointLightElement</h3>
+<h3 id="InterfaceSVGFEPointLightElement">33.16 Interface SVGFEPointLightElement</h3>
 
 
 
@@ -4234,7 +4271,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFESpotLightElement">32.17 Interface SVGFESpotLightElement</h3>
+<h3 id="InterfaceSVGFESpotLightElement">33.17 Interface SVGFESpotLightElement</h3>
 
 
 
@@ -4284,7 +4321,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEDisplacementMapElement">32.18 Interface SVGFEDisplacementMapElement</h3>
+<h3 id="InterfaceSVGFEDisplacementMapElement">33.18 Interface SVGFEDisplacementMapElement</h3>
 
 
 
@@ -4352,7 +4389,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEFloodElement">32.19 Interface SVGFEFloodElement</h3>
+<h3 id="InterfaceSVGFEFloodElement">33.19 Interface SVGFEFloodElement</h3>
 
 
 
@@ -4363,7 +4400,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 };</pre>
 
 
-<h3 id="InterfaceSVGFEGaussianBlurElement">32.20 Interface SVGFEGaussianBlurElement</h3>
+<h3 id="InterfaceSVGFEGaussianBlurElement">33.20 Interface SVGFEGaussianBlurElement</h3>
 
 
 
@@ -4402,7 +4439,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </dd></dl></dd></dl></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEImageElement">32.21 Interface SVGFEImageElement</h3>
+<h3 id="InterfaceSVGFEImageElement">33.21 Interface SVGFEImageElement</h3>
 
 
 
@@ -4421,7 +4458,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEMergeElement">32.22 Interface SVGFEMergeElement</h3>
+<h3 id="InterfaceSVGFEMergeElement">33.22 Interface SVGFEMergeElement</h3>
 
 
 
@@ -4432,7 +4469,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 };</pre>
 
 
-<h3 id="InterfaceSVGFEMergeNodeElement">32.23 Interface SVGFEMergeNodeElement</h3>
+<h3 id="InterfaceSVGFEMergeNodeElement">33.23 Interface SVGFEMergeNodeElement</h3>
 
 
 
@@ -4447,7 +4484,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEMorphologyElement">32.24 Interface SVGFEMorphologyElement</h3>
+<h3 id="InterfaceSVGFEMorphologyElement">33.24 Interface SVGFEMorphologyElement</h3>
 
 
 
@@ -4499,7 +4536,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEOffsetElement">32.25 Interface SVGFEOffsetElement</h3>
+<h3 id="InterfaceSVGFEOffsetElement">33.25 Interface SVGFEOffsetElement</h3>
 
 
 
@@ -4525,7 +4562,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFESpecularLightingElement">32.26 Interface SVGFESpecularLightingElement</h3>
+<h3 id="InterfaceSVGFESpecularLightingElement">33.26 Interface SVGFESpecularLightingElement</h3>
 
 
 
@@ -4566,7 +4603,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFETileElement">32.27 Interface SVGFETileElement</h3>
+<h3 id="InterfaceSVGFETileElement">33.27 Interface SVGFETileElement</h3>
 
 
 
@@ -4582,7 +4619,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFETurbulenceElement">32.28 Interface SVGFETurbulenceElement</h3>
+<h3 id="InterfaceSVGFETurbulenceElement">33.28 Interface SVGFETurbulenceElement</h3>
 
 
 
@@ -4666,7 +4703,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 </div></dd></dl></dd></dl>
 
 
-<h3 id="InterfaceSVGFEDropShadowElement">32.29 Interface SVGFEDropShadowElement</h3>
+<h3 id="InterfaceSVGFEDropShadowElement">33.29 Interface SVGFEDropShadowElement</h3>
 
 
 
@@ -4687,8 +4724,8 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 <dt id="__svg__SVGFEDropShadowElement__stdDeviationY"><b>stdDeviationY</b><span class="idl-type-parenthetical"> (readonly <a class="idlinterface" href="http://www.w3.org/TR/2003/REC-SVG11-20030114/types.html#InterfaceSVGAnimatedNumber">SVGAnimatedNumber</a>)</span></dt><dd> </dd></dl></dd></dl>
 
 
-<h2 id="references1">33 References</h2>
-<h3 id="normref">33.1 Normative References</h3>
+<h2 id="references1">34 References</h2>
+<h3 id="normref">34.1 Normative References</h3>
 <dl><dt id="ref-CSS21"><strong class="normref">[CSS21]</strong></dt><dd><strong>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</strong>, 
     Bert Bos, Tantek Çelik, Ian Hickson, Håkon Wium Lie, eds.,
     W3C, 23 April 2009, (Candidate Recommendation) </dd><dt id="ref-NVDL"><strong class="normref">[NVDL]</strong></dt><dd><strong>Document Schema Definition Languages (DSDL) — Part 4:
@@ -4716,11 +4753,11 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
       Dean Jackson editor, W3C, 22 December 2008 (Recommendation). See <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/">http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/</a>
     </dd></dl>
 
-<h3 id="informref">33.2 Informative References</h3>
+<h3 id="informref">34.2 Informative References</h3>
 <dl><dt id="ref-html5"><strong class="informref">[HTML5]</strong></dt><dd><strong>HTML5</strong>, Ian Hickson editor, Google,
       10 June 2008 (Working Draft). See <a href="http://www.w3.org/TR/2008/WD-html5-20080610/">http://www.w3.org/TR/2008/WD-html5-20080610/</a>
     </dd></dl>
 
-  <h2 id="changes">34 Changes</h2>
+  <h2 id="changes">35 Changes</h2>
   <p>For changes since the last published draft, see the public <a href="http://dev.w3.org/cvsweb/SVG/modules/filters/publish/">cvs log</a>.</p>
 <script src="style/expanders.js" type="text/javascript"> </script></body></html>

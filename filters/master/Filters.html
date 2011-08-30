@@ -51,7 +51,8 @@
   by a style instruction (the 'filter property' property), and have very little
   specific to an SVG environment. This specification describes filters in
   a manner that allow them to be used in other presentational environments,
-  such as HTML styled by CSS and XSL:FO.
+  such as HTML styled by CSS and XSL:FO. It also defines a CSS property
+  value function that allows a filter chain to produce a CSS &lt;image&gt; value.
 </p>
 
 <h2 id="status" edit:toc="no">Status of This Document</h2>
@@ -423,8 +424,8 @@ as follows:</p>
   </dt>
   <dd>
     Applies a Gaussian blur to the input image.
-    The value of 'radiusX' defines the X value of the standard deviation to the Guassian function.
-    The value of 'radiusY' defines the Y value of the standard deviation to the Guassian function.
+    The value of 'radiusX' defines the X value of the standard deviation to the Gaussian function.
+    The value of 'radiusY' defines the Y value of the standard deviation to the Gaussian function.
     If one parameter is provided, then that value is used for both 'radiusX' and 'radiusY'.
     If no parameters are provided, then the value for both attributes is 0.
     The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
@@ -439,11 +440,27 @@ as follows:</p>
     The value of 'amount' defines the proportion of the effect (as a multiplier on the
     subtraction). A value of 1 applies the effect completely. A value of 0 leaves the
     input unchanged.
-    The value of 'radius' defines the value of the standard deviation to the Guassian function.
+    The value of 'radius' defines the value of the standard deviation to the Gaussian function.
     The value of 'threshold' defines a point at which the function will not be applied.
     If the 'threshold' parameter is not provided, then its value is 1. If the 'radius' parameter
     is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0.
     The markup equivalent of this function is <a href="#unsharpEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    drop-shadow(offset-x, offset-y, radius, color)
+  </dt>
+  <dd>
+    Applies a drop shadow effect to the input image. A drop shadow is effectively
+    a blurred, offset version of the input image's alpha mask drawn in a
+    particular color, composited below the image. The value of 'offset-x' and
+    'offset-y' define the translation that is applied to the shadow. The value of
+    'radius' defines the standard-deviation input that is given to the blur
+    function. The value of 'color' is a CSS &lt;color&gt; value that provides the
+    color used to draw the shadow. If not specified, the 'offset-x', 'offset-y'
+    and 'radius' parameters are given the value 0. If the 'color' parameter is
+    not provided, then its value is "black". The markup equivalent of this
+    function is <a href="#dropshadowEquivalent">given below</a>.
   </dd>
 
 </dl>
@@ -715,8 +732,7 @@ which the filter is applied.
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td>accumulate | new [ &lt;x&gt; &lt;y&gt; &lt;width&gt;
-              &lt;height&gt; ] | <a class="noxref"
+            <td>accumulate | new | <a class="noxref"
               href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
               class="value-inst-inherit noxref">inherit</span></a></td>
           </tr>
@@ -789,22 +805,6 @@ ancestor <a>container element</a>
 image request is technically in error. Processing will proceed without
 interruption (i.e., no error message) and a transparent black image shall be
 provided in response to the request.</p>
-
-<p>The optional
-<strong>&lt;x&gt;,&lt;y&gt;,&lt;width&gt;,&lt;height&gt;</strong> 
-<span class="specissue">ISSUE: define the type of each of these, probably &lt;number&gt;</span>
-  parameters
-on the <span class="attr-value">new</span> value indicate the subregion of the <a>container element</a>
- element to which <a>'enable-background'</a> applies' user space where access to the
-background image is allowed to happen. These parameters enable the user
-agent potentially to allocate smaller temporary image buffers than the
-default values. Thus, the values
-&lt;x&gt;,&lt;y&gt;,&lt;width&gt;,&lt;height&gt; act as a clipping rectangle
-on the background image canvas. If more than zero but less than four of the
-values &lt;x&gt;,&lt;y&gt;,&lt;width&gt; and &lt;height&gt; are specified or
-if negative or zero values are specified for &lt;width&gt; or &lt;height&gt;,
-<a>BackgroundImage</a> and <a>BackgroundAlpha</a> are processed as if background
-image processing were not enabled. </p>
 
 <h3 id="AccessBackgroundImageSVG">Accessing the background image in SVG</h3>
 <p>This section only applies to the SVG definition of enable-background.</p>
@@ -3545,15 +3545,40 @@ be exposed to the DOM.</span> </p>
 <div class="note">
 <h2 id="feDiffuseSpecularElement">Filter primitive <span
 class="element-name">'feDiffuseSpecular'</span></h2>
-The SVG WG is looking at providing a shorthand for diffuse+specular.
+The WG is looking at providing a shorthand for diffuse+specular.
 </div>
 
 <div class="note">
 <h2 id="feCustomElement">Filter primitive <span
 class="element-name">'feCustom'</span></h2>
-The SVG WG is looking to add a filter primitive that allows programmatic access
-to the pixel data for a filter, e.g via OpenCL.
+The WG is considering a proposal to add a filter primitive that would reference a
+programmable operation, similar to an OpenCL kernel or GLSL fragment shader. At
+this time, the WG is intending to <strong>not</strong> include such a feature
+in the current version of this specification. If you feel it is necessary, please
+submit feedback to the WG (by email, described in the introduction) with your
+reasons and, preferably, use cases.
 </div>
+
+<h2 id="FilterCSSImageValue">The filter CSS &lt;image&gt; value</h2>
+
+<p>
+  The filter() function produces a CSS &lt;image&gt; value. It has the following syntax:
+</p>
+
+<h4 class='no-toc' id='filter-syntax'>
+filter() syntax</h4>
+
+<pre class='prod'><code><dfn>&lt;filter></dfn> = filter(
+  &lt;image>, 
+  none | &lt;filter-function&gt; [ &lt;filter-function&gt; ]*
+)
+</code></pre>
+
+<p>
+  The function takes two parameters. The first is a CSS &lt;image&gt; value. The second
+  is the value of a <span class="prop-name">filter</span> property. The function take the
+  input image parameter and apply the filter rules, returning a processing image.
+</p>
 
 <h2 id="RelaxNG">RelaxNG Schema for Filter Effects 1.0</h2>
 
@@ -3652,6 +3677,19 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 
 <pre class="examplesource"> &lt;filter id="unsharp"&gt;
     &lt;feUnsharpMask stdDeviation="[radius]" threshold="[threshold]" amount="[amount]"&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="dropshadowEquivalent">drop-shadow</h3>
+
+<pre class="examplesource"> &lt;filter id="drop-shadow"&gt;
+    &lt;feGaussianBlur in="[alpha-channel-of-input]" stdDeviation="[radius]"/&gt;
+    &lt;feOffset dx="[offset-x]" dy="[offset-y]" result="offsetblur"/&gt;
+    &lt;feFlood flood-color="[color]"/&gt;
+    &lt;feComposite in2="offsetblur" operator="in"/&gt;
+    &lt;feMerge&gt;
+      &lt;feMergeNode/&gt;
+      &lt;feMergeNode in="input-image"/&gt;
+    &lt;/feMerge&gt;
   &lt;/filter&gt; </pre>
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
