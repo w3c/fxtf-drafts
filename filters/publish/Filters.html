@@ -14,7 +14,7 @@
 <div class="head">
   <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a></p>
   <h1 id="pagetitle">Filter Effects 1.0: Language</h1>
-  <h2 id="pagesubtitle">W3C Editor’s Draft <em>30 August 2011</em></h2>
+  <h2 id="pagesubtitle">W3C Editor’s Draft <em>31 August 2011</em></h2>
   <dl><dt>This version:</dt><dd><a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html" class="url">https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/TR/FilterEffects10/" class="url">http://www.w3.org/TR/FilterEffects10/</a></dd><dt>Previous version:</dt><dd><a href="http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/" class="url">http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/</a></dd><dt>Editors:</dt><dd><a href="mailto:ed@opera.com">Erik Dahlström</a>, (<a href="http://www.opera.com/">Opera Software ASA</a>)</dd><dd><a href="mailto:dino@apple.com">Dean Jackson</a> (<a href="http://www.apple.com/">Apple Inc</a>)</dd><dt>Authors:</dt><dd>The authors of this specification are the participants of the W3C SVG and CSS Working Groups.</dd></dl>
   <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2011 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
 </div>
@@ -144,7 +144,7 @@ element</a></li>
 <li><a href="#invertEquivalent">32.5 invert</a></li>
 <li><a href="#gammaEquivalent">32.6 gamma</a></li>
 <li><a href="#blurEquivalent">32.7 blur</a></li>
-<li><a href="#unsharpEquivalent">32.8 unsharp</a></li>
+<li><a href="#sharpenEquivalent">32.8 sharpen</a></li>
 <li><a href="#dropshadowEquivalent">32.9 drop-shadow</a></li></ul></li>
 <li><a href="#DOMInterfaces">33 DOM interfaces</a><ul class="toc">
 <li><a href="#InterfaceImageData">33.1 Interface ImageData</a></li>
@@ -394,7 +394,7 @@ as follows:</p>
     If the 'amount' parameter is missing, a value of 1 is used.
     The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
   </dd><dt>
-    gamma(amplitude, exponent, offset)
+    gamma(amplitude exponent offset)
   </dt><dd>
     Applies a gamma function to the input image. 
     The value of 'amplitude' defines the multiplier to the gamma function.
@@ -404,7 +404,7 @@ as follows:</p>
     is 1, for 'exponent' is 1, and for 'offset' is 0.
     The markup equivalent of this function is <a href="#gammaEquivalent">given below</a>.
   </dd><dt>
-    blur(radiusX, radiusY)
+    blur(radiusX radiusY)
   </dt><dd>
     Applies a Gaussian blur to the input image.
     The value of 'radiusX' defines the X value of the standard deviation to the Gaussian function.
@@ -413,7 +413,7 @@ as follows:</p>
     If no parameters are provided, then the value for both attributes is 0.
     The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
   </dd><dt>
-    unsharp(amount, radius, threshold)
+    sharpen(amount radius threshold)
   </dt><dd>
     Applies an sharpening effect to the input image. This is equivalent to subtracting the
     input samples from a blurred version of the image.
@@ -424,20 +424,17 @@ as follows:</p>
     The value of 'threshold' defines a point at which the function will not be applied.
     If the 'threshold' parameter is not provided, then its value is 1. If the 'radius' parameter
     is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0.
-    The markup equivalent of this function is <a href="#unsharpEquivalent">given below</a>.
+    The markup equivalent of this function is <a href="#sharpenEquivalent">given below</a>.
   </dd><dt>
-    drop-shadow(offset-x, offset-y, radius, color)
+    drop-shadow(&lt;shadow&gt;)
   </dt><dd>
-    Applies a drop shadow effect to the input image. A drop shadow is effectively
-    a blurred, offset version of the input image's alpha mask drawn in a
-    particular color, composited below the image. The value of 'offset-x' and
-    'offset-y' define the translation that is applied to the shadow. The value of
-    'radius' defines the standard-deviation input that is given to the blur
-    function. The value of 'color' is a CSS &lt;color&gt; value that provides the
-    color used to draw the shadow. If not specified, the 'offset-x', 'offset-y'
-    and 'radius' parameters are given the value 0. If the 'color' parameter is
-    not provided, then its value is "black". The markup equivalent of this
-    function is <a href="#dropshadowEquivalent">given below</a>.
+    Applies a drop shadow effect to the input image. A drop shadow is
+    effectively a blurred, offset version of the input image's alpha mask
+    drawn in a particular color, composited below the image. The function
+    accepts a parameter of type &lt;shadow&gt; (defined in CSS3 Backgrounds),
+    with the exception that the 'inset' keyword is not allowed. The markup
+    equivalent of this function is <a href="#dropshadowEquivalent">given
+    below</a>.
   </dd></dl>
 
 <div class="note">
@@ -3604,7 +3601,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;feGaussianBlur stdDeviation="[radiusX radiusY]"&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="unsharpEquivalent">32.8 unsharp</h3>
+<h3 id="sharpenEquivalent">32.8 sharpen</h3>
 
 <pre class="examplesource"> &lt;filter id="unsharp"&gt;
     &lt;feUnsharpMask stdDeviation="[radius]" threshold="[threshold]" amount="[amount]"&gt;
