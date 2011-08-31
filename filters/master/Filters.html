@@ -407,7 +407,7 @@ as follows:</p>
   </dd>
 
   <dt>
-    gamma(amplitude, exponent, offset)
+    gamma(amplitude exponent offset)
   </dt>
   <dd>
     Applies a gamma function to the input image. 
@@ -420,7 +420,7 @@ as follows:</p>
   </dd>
 
   <dt>
-    blur(radiusX, radiusY)
+    blur(radiusX radiusY)
   </dt>
   <dd>
     Applies a Gaussian blur to the input image.
@@ -432,7 +432,7 @@ as follows:</p>
   </dd>
 
   <dt>
-    unsharp(amount, radius, threshold)
+    sharpen(amount radius threshold)
   </dt>
   <dd>
     Applies an sharpening effect to the input image. This is equivalent to subtracting the
@@ -444,23 +444,20 @@ as follows:</p>
     The value of 'threshold' defines a point at which the function will not be applied.
     If the 'threshold' parameter is not provided, then its value is 1. If the 'radius' parameter
     is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0.
-    The markup equivalent of this function is <a href="#unsharpEquivalent">given below</a>.
+    The markup equivalent of this function is <a href="#sharpenEquivalent">given below</a>.
   </dd>
 
   <dt>
-    drop-shadow(offset-x, offset-y, radius, color)
+    drop-shadow(&lt;shadow&gt;)
   </dt>
   <dd>
-    Applies a drop shadow effect to the input image. A drop shadow is effectively
-    a blurred, offset version of the input image's alpha mask drawn in a
-    particular color, composited below the image. The value of 'offset-x' and
-    'offset-y' define the translation that is applied to the shadow. The value of
-    'radius' defines the standard-deviation input that is given to the blur
-    function. The value of 'color' is a CSS &lt;color&gt; value that provides the
-    color used to draw the shadow. If not specified, the 'offset-x', 'offset-y'
-    and 'radius' parameters are given the value 0. If the 'color' parameter is
-    not provided, then its value is "black". The markup equivalent of this
-    function is <a href="#dropshadowEquivalent">given below</a>.
+    Applies a drop shadow effect to the input image. A drop shadow is
+    effectively a blurred, offset version of the input image's alpha mask
+    drawn in a particular color, composited below the image. The function
+    accepts a parameter of type &lt;shadow&gt; (defined in CSS3 Backgrounds),
+    with the exception that the 'inset' keyword is not allowed. The markup
+    equivalent of this function is <a href="#dropshadowEquivalent">given
+    below</a>.
   </dd>
 
 </dl>
@@ -3673,7 +3670,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;feGaussianBlur stdDeviation="[radiusX radiusY]"&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="unsharpEquivalent">unsharp</h3>
+<h3 id="sharpenEquivalent">sharpen</h3>
 
 <pre class="examplesource"> &lt;filter id="unsharp"&gt;
     &lt;feUnsharpMask stdDeviation="[radius]" threshold="[threshold]" amount="[amount]"&gt;
