@@ -14,7 +14,7 @@
 <div class="head">
   <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a></p>
   <h1 id="pagetitle">Filter Effects 1.0: Language</h1>
-  <h2 id="pagesubtitle">W3C Editor’s Draft <em>31 August 2011</em></h2>
+  <h2 id="pagesubtitle">W3C Editor’s Draft <em>07 September 2011</em></h2>
   <dl><dt>This version:</dt><dd><a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html" class="url">https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/TR/FilterEffects10/" class="url">http://www.w3.org/TR/FilterEffects10/</a></dd><dt>Previous version:</dt><dd><a href="http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/" class="url">http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/</a></dd><dt>Editors:</dt><dd><a href="mailto:ed@opera.com">Erik Dahlström</a>, (<a href="http://www.opera.com/">Opera Software ASA</a>)</dd><dd><a href="mailto:dino@apple.com">Dean Jackson</a> (<a href="http://www.apple.com/">Apple Inc</a>)</dd><dt>Authors:</dt><dd>The authors of this specification are the participants of the W3C SVG and CSS Working Groups.</dd></dl>
   <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2011 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
 </div>
@@ -142,10 +142,11 @@ element</a></li>
 <li><a href="#saturateEquivalent">32.3 saturate</a></li>
 <li><a href="#huerotateEquivalent">32.4 hue-rotate</a></li>
 <li><a href="#invertEquivalent">32.5 invert</a></li>
-<li><a href="#gammaEquivalent">32.6 gamma</a></li>
-<li><a href="#blurEquivalent">32.7 blur</a></li>
-<li><a href="#sharpenEquivalent">32.8 sharpen</a></li>
-<li><a href="#dropshadowEquivalent">32.9 drop-shadow</a></li></ul></li>
+<li><a href="#opacityEquivalent">32.6 opacity</a></li>
+<li><a href="#gammaEquivalent">32.7 gamma</a></li>
+<li><a href="#blurEquivalent">32.8 blur</a></li>
+<li><a href="#sharpenEquivalent">32.9 sharpen</a></li>
+<li><a href="#dropshadowEquivalent">32.10 drop-shadow</a></li></ul></li>
 <li><a href="#DOMInterfaces">33 DOM interfaces</a><ul class="toc">
 <li><a href="#InterfaceImageData">33.1 Interface ImageData</a></li>
 <li><a href="#InterfaceSVGFilterElement">33.2 Interface SVGFilterElement</a></li>
@@ -393,6 +394,15 @@ as follows:</p>
     input unchanged. Values between 0 and 1 are linear multipliers on the effect.
     If the 'amount' parameter is missing, a value of 1 is used.
     The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
+  </dd><dt>
+    opacity(amount)
+  </dt><dd>
+    Applies transparency to the samples in the input image. The value of 'amount' defines the proportion
+    of the conversion. A value of 1 is completely transparent. A value of 0 leaves the
+    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
+    This is equivalent to multiplying the input image samples by (1 - amount).
+    If the 'amount' parameter is missing, a value of 1 is used.
+    The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
   </dd><dt>
     gamma(amplitude exponent offset)
   </dt><dd>
@@ -1369,11 +1379,11 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
           equivalent to the following matrix operation: 
       <p>
       <object data="mathml/feColorMatrix01.mml" type="application/mathml+xml" width="100%" height="130">
-          <pre>| R' |     |0.213+0.787s  0.715-0.715s  0.072-0.072s 0  0 |   | R |
-| G' |     |0.213-0.213s  0.715+0.285s  0.072-0.072s 0  0 |   | G |
-| B' |  =  |0.213-0.213s  0.715-0.715s  0.072+0.928s 0  0 | * | B |
-| A' |     |           0            0             0  1  0 |   | A |
-| 1  |     |           0            0             0  0  1 |   | 1 |</pre>
+          <pre>| R' |     | (0.2127 + 0.7873s)  (0.7152 - 0.7152s)  (0.0722 - 0.0722s) 0  0 |   | R |
+| G' |     | (0.2127 - 0.2127s)  (0.7152 + 0.2848s)  (0.0722 - 0.0722s) 0  0 |   | G |
+| B' |  =  | (0.2127 - 0.2127s)  (0.7152 - 0.7152s)  (0.0722 + 0.9278s) 0  0 | * | B |
+| A' |     |           0                   0                   0        1  0 |   | A |
+| 1  |     |           0                   0                   0        0  1 |   | 1 |</pre>
       </object>
     </p>
         </li><li>For <span class="attr-value">type="hueRotate"</span>, <span class="attr-name">values</span> is a single one real number value
@@ -1392,21 +1402,23 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
           where the terms a00, a01, etc. are calculated as follows: 
       <p>
     <object data="mathml/feColorMatrix03.mml" type="application/mathml+xml" width="100%" height="230">
-          <pre>| a00 a01 a02 |    [+0.213 +0.715 +0.072]
-| a10 a11 a12 | =  [+0.213 +0.715 +0.072] +
-| a20 a21 a22 |    [+0.213 +0.715 +0.072]
-                        [+0.787 -0.715 -0.072]
-cos(hueRotate value) *  [-0.213 +0.285 -0.072] +
-                        [-0.213 -0.715 +0.928]
-                        [-0.213 -0.715+0.928]
-sin(hueRotate value) *  [+0.143 +0.140-0.283]
-                        [-0.787 +0.715+0.072]</pre>
+          <pre>| a00 a01 a02 |     [0.2127 0.7152 0.0722]
+| a10 a11 a12 | =   [0.2127 0.7152 0.0722] +
+| a20 a21 a22 |     [0.2127 0.7152 0.0722]
+
+                                            [ 0.7873 -0.7152 -0.0722]
+                    cos(hueRotate value) *  [-0.2127  0.2848 -0.0722] +
+                                            [-0.2127 -0.7152  0.9278]
+
+                                            [-0.2127 -0.7152  0.9278]
+                    sin(hueRotate value) *  [ 0.143   0.140  -0.283 ]
+                                            [-0.7873  0.7152  0.0722]</pre>
     </object>
     </p>
           Thus, the upper left term of the hue matrix turns out to be:
       <p>
     <object data="mathml/feColorMatrix04.mml" type="application/mathml+xml" width="100%" height="30"> 
-          <pre>.213 + cos(hueRotate value)*.787 - sin(hueRotate value)*.213</pre>
+          <pre>.2127 + cos(hueRotate value) * 0.7873 - sin(hueRotate value) * 0.2127</pre>
       </object>
       </p>
 
@@ -1418,7 +1430,7 @@ sin(hueRotate value) *  [+0.143 +0.140-0.283]
           <pre>   | R' |     |      0        0        0  0  0 |   | R |
    | G' |     |      0        0        0  0  0 |   | G |
    | B' |  =  |      0        0        0  0  0 | * | B |
-   | A' |     | 0.2125   0.7154   0.0721  0  0 |   | A |
+   | A' |     | 0.2127   0.7152   0.0722  0  0 |   | A |
    | 1  |     |      0        0        0  0  1 |   | 1 |</pre>
    </object>
    </p>
@@ -3545,9 +3557,9 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 
 <pre class="examplesource"> &lt;filter id="grayscale"&gt;
     &lt;feColorMatrix type="matrix"
-               values="(0.2125 * [amount]) (0.7154 * [amount]) (0.0721 * [amount]) 0 0
-                       (0.2125 * [amount]) (0.7154 * [amount]) (0.0721 * [amount]) 0 0
-                       (0.2125 * [amount]) (0.7154 * [amount]) (0.0721 * [amount]) 0 0
+               values="(0.2127 * [amount]) (0.7152 * [amount]) (0.0722 * [amount]) 0 0
+                       (0.2127 * [amount]) (0.7152 * [amount]) (0.0722 * [amount]) 0 0
+                       (0.2127 * [amount]) (0.7152 * [amount]) (0.0722 * [amount]) 0 0
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
@@ -3585,7 +3597,15 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="gammaEquivalent">32.6 gamma</h3>
+<h3 id="opacityEquivalent">32.6 opacity</h3>
+
+<pre class="examplesource"> &lt;filter id="opacity"&gt;
+    &lt;feComponentTransfer&gt;
+        &lt;feFuncA type="table" tableValues="0 [amount]"/&gt;
+    &lt;/feComponentTransfer&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="gammaEquivalent">32.7 gamma</h3>
 
 <pre class="examplesource"> &lt;filter id="gamma"&gt;
     &lt;feComponentTransfer&gt;
@@ -3595,19 +3615,19 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="blurEquivalent">32.7 blur</h3>
+<h3 id="blurEquivalent">32.8 blur</h3>
 
 <pre class="examplesource"> &lt;filter id="blur"&gt;
     &lt;feGaussianBlur stdDeviation="[radiusX radiusY]"&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="sharpenEquivalent">32.8 sharpen</h3>
+<h3 id="sharpenEquivalent">32.9 sharpen</h3>
 
 <pre class="examplesource"> &lt;filter id="unsharp"&gt;
     &lt;feUnsharpMask stdDeviation="[radius]" threshold="[threshold]" amount="[amount]"&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="dropshadowEquivalent">32.9 drop-shadow</h3>
+<h3 id="dropshadowEquivalent">32.10 drop-shadow</h3>
 
 <pre class="examplesource"> &lt;filter id="drop-shadow"&gt;
     &lt;feGaussianBlur in="[alpha-channel-of-input]" stdDeviation="[radius]"/&gt;
