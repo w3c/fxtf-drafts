@@ -14,7 +14,7 @@
 <div class="head">
   <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a></p>
   <h1 id="pagetitle">Filter Effects 1.0: Language</h1>
-  <h2 id="pagesubtitle">W3C Editor’s Draft <em>07 September 2011</em></h2>
+  <h2 id="pagesubtitle">W3C Editor’s Draft <em>29 September 2011</em></h2>
   <dl><dt>This version:</dt><dd><a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html" class="url">https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/TR/FilterEffects10/" class="url">http://www.w3.org/TR/FilterEffects10/</a></dd><dt>Previous version:</dt><dd><a href="http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/" class="url">http://www.w3.org/TR/2007/WD-SVGFilter12-20070501/</a></dd><dt>Editors:</dt><dd><a href="mailto:ed@opera.com">Erik Dahlström</a>, (<a href="http://www.opera.com/">Opera Software ASA</a>)</dd><dd><a href="mailto:dino@apple.com">Dean Jackson</a> (<a href="http://www.apple.com/">Apple Inc</a>)</dd><dt>Authors:</dt><dd>The authors of this specification are the participants of the W3C SVG and CSS Working Groups.</dd></dl>
   <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2011 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
 </div>
@@ -305,7 +305,7 @@ as follows:</p>
 
 <div class="propdef">
 <dl><dt id="propdef-filter"><span class="propdef-title prop-name">‘filter’</span></dt><dd>
-      <table summary="filter property" class="propinfo" cellspacing="0" cellpadding="0"><tbody><tr valign="baseline"><td><em>Value:</em>  </td><td>none | <a href="#FilterFunction">&lt;filter-function&gt;</a> [ <a href="#FilterFunction">&lt;filter-function&gt;</a> ]* </td></tr><tr valign="baseline"><td><em>Initial:</em>  </td><td>none</td></tr><tr valign="baseline"><td><em>Applies to:</em>  </td><td>All elements</td></tr><tr valign="baseline"><td><em>Inherited:</em>  </td><td>no</td></tr><tr valign="baseline"><td><em>Percentages:</em>  </td><td>N/A</td></tr><tr valign="baseline"><td><em>Media:</em>  </td><td>visual</td></tr><tr valign="baseline"><td><em>Animatable:</em>  </td><td>yes</td></tr></tbody></table>
+      <table summary="filter property" class="propinfo" cellspacing="0" cellpadding="0"><tbody><tr valign="baseline"><td><em>Value:</em>  </td><td>none | <a href="#FilterFunction">&lt;filter-function&gt;</a> [ <a href="#FilterFunction">&lt;filter-function&gt;</a> ]* </td></tr><tr valign="baseline"><td><em>Initial:</em>  </td><td>none</td></tr><tr valign="baseline"><td><em>Applies to:</em>  </td><td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except ‘mask’) and graphics elements"</span></td></tr><tr valign="baseline"><td><em>Inherited:</em>  </td><td>no</td></tr><tr valign="baseline"><td><em>Percentages:</em>  </td><td>N/A</td></tr><tr valign="baseline"><td><em>Media:</em>  </td><td>visual</td></tr><tr valign="baseline"><td><em>Animatable:</em>  </td><td>yes</td></tr></tbody></table>
     </dd></dl>
 </div>
 
@@ -1374,8 +1374,8 @@ of the premultiplication for all pixels with A = 1.</p>
           comma. For example, the identity matrix could be expressed as: 
           <pre>type="matrix" 
 values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
-        </li><li>For <span class="attr-value">type="saturate"</span>, <span class="attr-name">values</span> is a single real number value (0 to
-          1). A <span class="attr-value">saturate</span> operation is
+        </li><li>For <span class="attr-value">type="saturate"</span>, <span class="attr-name">values</span> is a single real number value.
+          A <span class="attr-value">saturate</span> operation is
           equivalent to the following matrix operation: 
       <p>
       <object data="mathml/feColorMatrix01.mml" type="application/mathml+xml" width="100%" height="130">
@@ -1385,6 +1385,9 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 | A' |     |           0                   0                   0        1  0 |   | A |
 | 1  |     |           0                   0                   0        0  1 |   | 1 |</pre>
       </object>
+      <div class="note authoring">A value of <span class="attr-value">0</span> produces a fully desaturated (grayscale) filter result,
+      while a value of <span class="attr-value">1</span> passes the filter input image through unchanged.
+      Values outside the 0..1 range under- or oversaturates the filter input image respectively.</div>
     </p>
         </li><li>For <span class="attr-value">type="hueRotate"</span>, <span class="attr-name">values</span> is a single one real number value
           (degrees). A <span class="attr-value">hueRotate</span> operation is
