@@ -167,7 +167,6 @@
         </title>
         <xsl:apply-templates select='head/*[not(self::link) and not(self::meta) and not(self::title)]'/>
         <xsl:apply-templates select='head/link[not(@rel="stylesheet" and contains(@href, "StyleSheets/TR") or @media="print")]'/>
-        <link rel='stylesheet' href='style/base.css'/> <!-- XXX remove this -->
         <link rel='stylesheet' href='http://www.w3.org/StyleSheets/TR/W3C-{$maturity-short}'/>
         <xsl:apply-templates select='head/link[@rel="stylesheet" and @media="print"]'/>
       </head>
