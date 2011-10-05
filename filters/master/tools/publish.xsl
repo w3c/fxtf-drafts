@@ -190,7 +190,7 @@
             <xsl:copy-of select='$header'/>
           </div>
         </xsl:if>
-        <script src='style/expanders.js' type='text/javascript'><xsl:text> </xsl:text></script>
+<!--        <script src='style/expanders.js' type='text/javascript'><xsl:text> </xsl:text></script> -->
       </body>
     </html>
   </xsl:template>
