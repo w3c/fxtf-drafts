@@ -9,13 +9,13 @@
 
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><title>Filter Effects 1.0</title><link rel="stylesheet" type="text/css" href="style/svg-style.css"/><link rel="stylesheet" type="text/css" href="style/svg-style-extra.css"/><link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-ED"/></head><body>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><title>Filter Effects 1.0</title><link rel="stylesheet" type="text/css" href="style/svg-style.css"/><link rel="stylesheet" type="text/css" href="style/svg-style-extra.css"/><link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-WD"/></head><body>
 
 <div class="head">
   <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a></p>
   <h1 id="pagetitle">Filter Effects 1.0</h1>
-  <h2 id="pagesubtitle">W3C Editor’s Draft <em>06 October 2011</em></h2>
-  <dl><dt>This version:</dt><dd><a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html" class="url">https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/TR/FilterEffects10/" class="url">http://www.w3.org/TR/FilterEffects10/</a></dd><dt>Editors:</dt><dd><a href="mailto:ed@opera.com">Erik Dahlström</a>, (<a href="http://www.opera.com/">Opera Software ASA</a>)</dd><dd><a href="mailto:dino@apple.com">Dean Jackson</a> (<a href="http://www.apple.com/">Apple Inc</a>)</dd><dt>Authors:</dt><dd>The authors of this specification are the participants of the W3C SVG and CSS Working Groups.</dd></dl>
+  <h2 id="pagesubtitle">W3C Working Draft <em>18 October 2011</em></h2>
+  <dl><dt>This version:</dt><dd><a href="http://www.w3.org/TR/2011/WD-FilterEffects10-20111018/" class="url">http://www.w3.org/TR/2011/WD-FilterEffects10-20111018/</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/TR/FilterEffects10/" class="url">http://www.w3.org/TR/FilterEffects10/</a></dd><dt>Editors:</dt><dd><a href="mailto:ed@opera.com">Erik Dahlström</a>, (<a href="http://www.opera.com/">Opera Software ASA</a>)</dd><dd><a href="mailto:dino@apple.com">Dean Jackson</a> (<a href="http://www.apple.com/">Apple Inc</a>)</dd><dt>Authors:</dt><dd>The authors of this specification are the participants of the W3C SVG and CSS Working Groups.</dd></dl>
   <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2011 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
 </div>
 
@@ -35,11 +35,11 @@
 
 <p>
   Although originally designed for use in SVG, filter effects simply define
-  a set of operations to apply on an image buffer. In SVG they are triggered
+  a set of operations to apply on an image buffer. They are triggered
   by a style instruction (the 'filter property' property), and have very little
   specific to an SVG environment. This specification describes filters in
   a manner that allow them to be used in other presentational environments,
-  such as HTML styled by CSS and XSL:FO. It also defines a CSS property
+  such as HTML styled by CSS or XSL:FO. It also defines a CSS property
   value function that allows a filter chain to produce a CSS &lt;image&gt; value.
 </p>
 
@@ -70,8 +70,10 @@
   the <a href="http://www.w3.org/Graphics/">Graphics Activity</a>)</p>
 
 <p>This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February
- 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/32061/status">public list of any patent disclosures</a> made in
- connection with the deliverables of the group; that page also includes
+ 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/32061/status">public list of any patent disclosures (CSS)</a> 
+ and a <a href="http://www.w3.org/2004/01/pp-impl/19480/status">public list of any patent disclosures (SVG)</a>
+ made in
+ connection with the deliverables of the group; these pages also include
  instructions for disclosing a patent. An individual who has actual
  knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
  Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
@@ -89,7 +91,7 @@
 <li><a href="#FilterDefinitions">2 Definitions</a></li>
 <li><a href="#FilterProperty">3 The <span class="prop-name">‘filter’</span>
 property</a><ul class="toc">
-<li><a href="#filters-in-css">3.1 How the 'filter' property property applies to content formatted by CSS (e.g HTML)</a></li></ul></li>
+<li><a href="#filters-in-css">3.1 How the 'filter' property property applies to content formatted with the CSS box model (e.g HTML)</a></li></ul></li>
 <li><a href="#FilterFunction">4 Filter Functions</a></li>
 <li><a href="#FilterElement">5 The <span class="element-name">‘filter’</span>
 element</a></li>
@@ -225,26 +227,26 @@ SVG (SVG-enabled browsers only)</a><br/>
       </p>
     </dd><dt id="TermClientBoundingRect"><span class="SVG-TermDefine">bounding client rect</span></dt><dd>
     <p>
-    The union of all CSS border-boxes for the element if formatted by CSS, as defined by the CSS OM method 
+    The union of all CSS border-boxes for the element if formatted with the CSS box model, as defined by the CSS OM method 
     <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [<a href="#ref-CSSOM">CSSOM</a>].
     </p>
   </dd><dt id="TermCSSBoundingBox"><span class="SVG-TermDefine">CSS bounding box</span></dt><dd>
     <p>
-    The union of all CSS border-boxes for the element and all it's descendant elements, provided the element is formatted by CSS. [<a href="#ref-CSS21">CSS</a>].
+    The union of all CSS border-boxes for the element and all it's descendant elements, provided the element is formatted with the CSS box model [<a href="#ref-CSS21">CSS</a>].
     </p>
   </dd><dt id="TermCurrentUserCoordinateSystem"><span class="SVG-TermDefine">current user coordinate system</span></dt><dd>
     <p>
-    For elements formatted by CSS: the current user coordinate system has its origin at the top-left corner of the 
+    For elements formatted with the CSS box model: the current user coordinate system has its origin at the top-left corner of the 
     <a href="#TermClientBoundingRect">bounding client rect</a> and one unit equals on CSS px. The viewport for resolving percentage values is defined by the width and height of the
     <a href="#TermClientBoundingRect">bounding client rect</a>.
     </p>
     <p>
-    For SVG elements see <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermUserCoordinateSystem"><span class="svg-term">user coordinate system</span></a>.
+    For elements using SVG layout see <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/intro.html#TermUserCoordinateSystem"><span class="svg-term">user coordinate system</span></a>.
     </p>
   </dd><dt id="TermObjectBoundingBoxUnits"><span class="SVG-TermDefine">object bounding box units</span></dt><dd>
-    For elements formatted by CSS: the bounding box is defined by <a href="#TermCSSBoundingBox">the CSS bounding box.</a> 
+    For elements formatted with the CSS box model: the bounding box is defined by <a href="#TermCSSBoundingBox">the CSS bounding box.</a> 
     <p>
-    For SVG elements the bounding box is defined by <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">the SVG bounding box</a>. 
+    For elements using SVG layout the bounding box is defined by <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">the SVG bounding box</a>. 
     </p>
     <p>
     For both cases the bounding box defines the coordinate system in which to resolve values, as defined in <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/coords.html#ObjectBoundingBoxUnits"><span class="svg-term">object bounding box units</span></a>.
@@ -301,10 +303,10 @@ as follows:</p>
   are applied in order.
 </p>
 
-<h3 id="filters-in-css">3.1 How the 'filter' property property applies to content formatted by CSS (e.g HTML)</h3>
+<h3 id="filters-in-css">3.1 How the 'filter' property property applies to content formatted with the CSS box model (e.g HTML)</h3>
 <p>
   The application of the <a href="#FilterProperty"><span class="prop-name">‘filter’</span></a> property to an element
-  formatted by CSS establishes a pseudo-stacking-context the same way that CSS
+  formatted with the CSS box model establishes a pseudo-stacking-context the same way that CSS
   <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does,
   and all the element's boxes are rendered together as a group with the filter
   effect applied to the group as a whole.
@@ -501,7 +503,7 @@ follows:</p>
       inherit those attributes or filter node specifications.
 
       <div class="note">
-      This attribute is deprecated and should not be used, it's included for
+      This attribute is deprecated and should not be used in new content, it's included for
       backwards compatibility reasons only.</div>
       <br/>
       <span class="anim-target">Animatable: yes.</span></dd></dl>
