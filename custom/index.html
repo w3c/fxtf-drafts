@@ -2,15 +2,15 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang=en>
- <head profile="http://www.w3.org/2006/03/hcard"><meta content="text/html;
-  charset=utf-8" http-equiv=Content-Type>
+ <head profile="http://www.w3.org/2006/03/hcard"><meta
+  content="text/html; charset=utf-8" http-equiv=Content-Type>
 
   <title>CSS shaders</title>
   <link href=default.css rel=stylesheet type="text/css">
   <link href="http://www.w3.org/StyleSheets/TR/W3C-ED.css" rel=stylesheet
   type="text/css">
-  <link href=alternate-spec-style.css id=st rel=stylesheet title="additional
-  spec styles" type="text/css">
+  <link href=alternate-spec-style.css id=st rel=stylesheet
+  title="additional spec styles" type="text/css">
   <script src=style-toggle.js type="text/javascript"></script>
 
   <style type="text/css">
@@ -47,7 +47,7 @@
 
     <dd class=vcard><span class=fn>Vincent Hardy</span>, <span
      class=org>Adobe Systems,</span> <span
-     class=email>vincent_hardy@yahoo.com</span>
+     class=email>vhardy@adobe.com</span>
 
     <dd class=vcard><span class=fn>Dean Jackson</span>, <span class=org>Apple
      Inc.,</span> <span class=email>dino@apple.com</span>
@@ -60,13 +60,13 @@
    <p class=copyright><a
     href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
     rel=license>Copyright</a> &copy; 2011 <a
-    href="http://www.w3.org/"><acronym title="World Wide Web
-    Consortium">W3C</acronym></a><sup>&reg;</sup> (<a
-    href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute
-    of Technology">MIT</acronym></a>, <a href="http://www.ercim.eu/"><acronym
-    title="European Research Consortium for Informatics and
-    Mathematics">ERCIM</acronym></a>, <a
-    href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
+    href="http://www.w3.org/"><acronym
+    title="World Wide Web Consortium">W3C</acronym></a><sup>&reg;</sup> (<a
+    href="http://www.csail.mit.edu/"><acronym
+    title="Massachusetts Institute of Technology">MIT</acronym></a>, <a
+    href="http://www.ercim.eu/"><acronym
+    title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>,
+    <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
     href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
     <a
     href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
@@ -193,6 +193,12 @@
     </ul>
 
    <li class=no-num><a href="#acknowledgments">Acknowledgments</a>
+
+   <li class=no-num><a href="#change-log">Change Log</a>
+    <ul class=toc>
+     <li><a href="#october-19-2011"><span class=secno>6.4. </span>October 19
+      2011</a>
+    </ul>
 
    <li class=no-num><a href="#references">References</a>
     <ul class=toc>
@@ -473,6 +479,10 @@
      content box, the padding box or the border box.</p>
 
     <p id=mesh-box>The <em>mesh-box</em> is the box the mesh aligns with.</p>
+
+    <p>The shader mesh can either be a set of connected triangles, or a set
+     of disconnected triangles. This option is controlled by the <a
+     href="#detached">detached</a> parameter.</p>
   </dl>
 
   <h3 id=model><span class=secno>2.2. </span>Model</h3>
@@ -535,6 +545,18 @@
    href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html#FilterEffectsRegion">filter
    region </a> is computed.
 
+  <div class=note id="about_interactivity"> One issue with filter effects is
+   the impact on interactivity. Filters can offset the visual rendering of
+   content and affect the way users interact with content. For example, the
+   <a
+   href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html#feOffsetElement">feOffset</a>
+   element moves the element's rendering by a given offset, which biases the
+   interaction: the end user may click on an element and actually hit a
+   different one because of the offset. This issue is expected to be more
+   acute with vertex shaders and the working group should consider a general
+   solution to this issue that works for both predefined filter effects and
+   custom ones.</div>
+
   <h2 id=filter-effects><span class=secno>3. </span>Integration in Filter
    Effects 1.0</h2>
 
@@ -573,7 +595,7 @@
       <tr>
        <td>&lt;vertex-mesh&gt;
 
-       <td>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;] <br>
+       <td>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp'detached'] <br>
         where: &lt;box&gt; = filter-box | border-box | padding-box |
         content-box
 
@@ -701,7 +723,7 @@
 
    <dl>
     <dt id=feCustomVertexMeshAttribute>vertexMesh:
-     +&lt;integer&gt;{1,2}[wsp&lt;box&gt;]
+     +&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp&rsquo;detached']
 
     <dd>See the <a href="#vertexMesh-attribute">vertexMesh</a> attribute
      discussion
@@ -737,9 +759,9 @@
        <tr>
         <td>&lt;array&gt;
 
-        <td>&rsquo;array(&lsquo;<code
-         class=css>&lt;number&gt;[wsp&lt;number&gt;]*</code>&rsquo;)&lsquo;<code
-         class=css></code>
+        <td>&lsquo;<code
+         class=css>array(</code>&rsquo;&lt;number&gt;[wsp&lt;number&gt;]*&lsquo;<code
+         class=css>)</code>&rsquo;
 
        <tr>
         <td>&lt;transform&gt;
@@ -756,15 +778,15 @@
        <tr>
         <td>&lt;mat&gt;
 
-        <td>&rsquo;mat2(&lsquo;<code
-         class=css>&lt;number&gt;(,&lt;number&gt;){3}</code>&rsquo;)&lsquo;<code
-         class=css> | <br>
-         </code>&rsquo;mat3(&lsquo;<code
-         class=css>&lt;number&gt;(,&lt;number&gt;){8}</code>&rsquo;)&lsquo;<code
-         class=css> | <br>
-         </code>&rsquo;mat4(&lsquo;<code
-         class=css>&lt;number&gt;(,&lt;number&gt;){15}</code>&rsquo;)&lsquo;<code
-         class=css> )</code>
+        <td>&lsquo;<code
+         class=css>mat2(</code>&rsquo;&lt;number&gt;(,&lt;number&gt;){3}&lsquo;<code
+         class=css>)</code>&rsquo; | <br>
+         &lsquo;<code
+         class=css>mat3(</code>&rsquo;&lt;number&gt;(,&lt;number&gt;){8}&lsquo;<code
+         class=css>)</code>&rsquo; | <br>
+         &lsquo;<code
+         class=css>mat4(</code>&rsquo;&lt;number&gt;(,&lt;number&gt;){15}&lsquo;<code
+         class=css>)</code>&rsquo; )
 
        <tr>
      </table>
@@ -812,7 +834,7 @@
   </div>
 
   <h4 id=vertexMesh-attribute><span class=secno>3.2.1. </span>The
-   &rsquo;vertexMesh' attribute</h4>
+   &lsquo;<code class=property>vertexMesh</code>&rsquo; attribute</h4>
 
   <p>The <code>&lt;feCustom&gt;</code>&lsquo;<code class=css>s
    </code>&rsquo;vertexMesh' attribute defines the granularity of vertices in
@@ -821,21 +843,21 @@
    region</a> area.
 
   <dl>
-   <dt>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;]
+   <dt>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp'detached']
 
-   <dd> One or two positive integers indicating the additional number of
-    vertex lines and columns that will make the vertex mesh. With the initial
-    value of &lsquo;<code class=css>0 0</code>&rsquo; there is a single line
-    and a single column, resulting in a four-vertices mesh (top-left,
-    top-right, bottom-right, bottom-left). If only one value is specified,
-    the second (columns) value computes to the first value. In other words, a
-    value of &lsquo;<code class=property>n</code>&rsquo; is equivalent to a
-    value of &lsquo;<code class=css>n n</code>&rsquo;.<br>
+   <dd> One or two positive integers (zero is invalid) indicating the
+    additional number of vertex lines and columns that will make the vertex
+    mesh. With the initial value of &lsquo;<code class=css>1 1</code>&rsquo;
+    there is a single line and a single column, resulting in a four-vertices
+    mesh (top-left, top-right, bottom-right, bottom-left). If only one value
+    is specified, the second (columns) value computes to the first value. In
+    other words, a value of &lsquo;<code class=property>n</code>&rsquo; is
+    equivalent to a value of &lsquo;<code class=css>n n</code>&rsquo;.<br>
     A value of &lsquo;<code class=css>n m</code>&rsquo; results in a vertex
-    mesh that has &lsquo;<code class=css>n + 1</code>&rsquo; lines and
-    &lsquo;<code class=css>m + 1</code>&rsquo; column and a total of
-    &lsquo;<code class=css>n + 2</code>&rsquo;.&lsquo;<code class=css>m +
-    2</code>&rsquo; vertices as illustrated in the following figure.
+    mesh that has &lsquo;<code class=property>n</code>&rsquo; lines and
+    &lsquo;<code class=property>m</code>&rsquo; column and a total of
+    &lsquo;<code class=css>n + 1</code>&rsquo;.&lsquo;<code class=css>m +
+    1</code>&rsquo; vertices as illustrated in the following figure.
     <p>The optional &lt;box&gt; parameter defines the box on which the vertex
      mesh is stretched to. It defaults to the &lsquo;<code
      class=property>filter-box</code>&rsquo; value which is &lsquo;<code
@@ -846,10 +868,30 @@
      &lsquo;<code class=property>content-box</code>&rsquo;. For SVG elements,
      the &lsquo;<code class=property>content-box</code>&rsquo; is the object
      bounding box.</p>
+
+    <p>The optional &lsquo;<code class=property>detached</code>&rsquo; string
+     specifies whether the mesh triangles are attached or detached. If the
+     value is not specified, the triangles are attached. If &lsquo;<code
+     class=property>detached</code>&rsquo; is specified, the triangles are
+     detached. When triangles are attached, the geometry provided to the
+     vertex shader is made of a triangles which share adjacent edges'
+     vertices. In the &lsquo;<code class=property>detached</code>&rsquo;
+     mode, the triangles do not share edges.</p>
+
+    <p>In the following figure, let us consider the top-left &lsquo;<code
+     class=property>tile</code>&rsquo; in the shader mesh. In the detached
+     mode, the vertex shader will receive the bottom right and top left
+     vertices multiple time, one of each of the two triangles which make up
+     the tile. Otherwise, the shader will receive these vertices only once,
+     because they are shared by the &lsquo;<code
+     class=property>connected</code>&rsquo; triangles.</p>
+
+    <p>See the discussion on uniforms passed to shaders to understand how the
+     shader programs can leverage that feature.</p>
   </dl>
 
   <div class=figure> <img src="images/shader-mesh-property.png" width=300>
-   <p class=caption>vertexMesh: 5 4</p>
+   <p class=caption>vertexMesh: 6 5</p>
   </div>
 
   <p>The above figure illustrates how a &lsquo;<code
@@ -896,11 +938,6 @@
 &lt;/div&gt;
     </pre>
   </div>
-
-  <div class=note>It may be confusing to have the <code>vertexMesh</code>
-   attribute represent the number of <em>additional</em> lines and columns.
-   May be it should simply be the number of lines and columns, default to
-   <code>1 1</code> and require integral values equal or superior to 1.</div>
 
   <h3 id=shader-inputs><span class=secno>3.3. </span>Shader inputs in filter
    graph</h3>
@@ -1195,7 +1232,20 @@
    language</h3>
 
   <p>This document recommends the adoption on GLSL ES for alignment with
-   fragment shaders in WebGL.
+   shaders in WebGL.
+
+  <p>In particular, the same restrictions as defined in WebGL should apply to
+   CSS shaders:
+
+  <ul>
+   <li><a
+    href="http://www.khronos.org/registry/webgl/specs/latest/#SUPPORTED_GLSL_CONSTRUCTS">supported
+    GLSL constructs.</a>
+
+   <li><a
+    href="http://www.khronos.org/registry/webgl/specs/latest/#6">differences
+    between WebGL and OpenGL ES 2.0</a> as it applies to shaders.
+  </ul>
 
   <p>All the parameters specified in the <code>&lt;shader-params&gt;</code>
    values (e.g., the <code>feCustom's param</code> attribute or the
@@ -1250,7 +1300,26 @@
 
      <td>The vertex's coordinate in the <a href="#mesh-box">mesh box</a>.
       Coordinates are in the [0, 1] range on both axis.
+
+    <tr>
+     <td>attribute vec3 a_triangleCoord;
+
+     <td>
+      <p>The x and y values provide the coordinate of the current
+       &lsquo;<code class=property>tile</code>&rsquo; in the shader mesh. For
+       example, (0, 0) for the top right tile in the mesh. The x and y values
+       are in the [0, mesh columns] and [0, mesh rows] range, respectively.</p>
+
+      <p>The z coordinate is computed according to the following figure. The
+       z coordinate value is provided for each vertex and corresponding
+       triangle. For example, for the bottom right vertex of the top
+       triangle, the z coordinate will be 2. For the bottom right vertex of
+       the bottom triangle, the z coordinate will be 4.</p>
   </table>
+
+  <div class=figure> <img src="images/a_triangleCoord.z.png" width="50%">
+   <p class=caption>The a_triangleCoord.z value</p>
+  </div>
 
   <h4 id=shader-uniform-variables><span class=secno>6.2.2. </span>Shader
    uniform variables</h4>
@@ -1270,13 +1339,23 @@
       the shaders. It is applied to the filtered element's rendering.</em>
 
     <tr>
-     <td> uniform sampler2D s_texture
+     <td> uniform sampler2D u_texture
 
      <td>The input texture. Includes transparent margins for the filter
       margins.
 
     <tr>
-     <td> uniform vec2 s_texureSize
+     <td> uniform sampler2D u_contentTexture
+
+     <td>A texture with the rendering of the filtered element. If the filter
+      is the first in the filter chain, then, this texture is the same as the
+      s_texture uniform. However, if there are preceding filters, this
+      provides the rendering of the original filtered element, whereas
+      s_texture provides the output of the preceding filter in the filter
+      chain (or graph).
+
+    <tr>
+     <td> uniform vec2 u_texureSize
 
      <td>The input texture's size. Includes the filter margins.
 
@@ -1286,6 +1365,19 @@
      <td>The mesh box position and size in the <a href="#filter-box">filter
       box</a> coordinate system. For example, if the mesh box is the filter
       box, the value will be (-0.5, -0.5, 1, 1).
+
+    <tr>
+     <td>uniform vec2 u_tileSize
+
+     <td>The size of the current mesh tile, in the same coordinate space as
+      the vertices.
+
+    <tr>
+     <td>uniform vec2 u_meshSize
+
+     <td>The size of the current mesh in terms of tiles. The x coordinate
+      provides the number of columns and the y coordinate provides the number
+      of rows.
   </table>
 
   <h4 id=varyings><span class=secno>6.2.3. </span>Varyings</h4>
@@ -1302,7 +1394,7 @@
     <tr>
      <td>varying vec2 v_texCoord;
 
-     <td>The current pixel's texture coordinates (in s_texture).
+     <td>The current pixel's texture coordinates (in u_texture).
   </table>
 
   <h4 id=other-uniform-variables-the-css-shaders-><span class=secno>6.2.4.
@@ -1422,11 +1514,11 @@ void main()
    class=idl></code>
    <pre>
 varying vec2 v_texCoord;
-uniform sampler2D s_texture;
+uniform sampler2D u_texture;
 
 void main()
 {  
-    gl_FragColor = texture2D(s_texture, v_texCoord);  
+    gl_FragColor = texture2D(u_texture, v_texCoord);  
 }        
 </pre>
   </div>
@@ -1449,9 +1541,9 @@ void main()
   <p>In addition, CSS shaders offer a restricted environment for shaders.
    Scripts have no access to the shaders output and no communication is
    possible between the shaders and the page's scripts or external servers.
-   Consequently, the main security consideration is a possible denial of
-   service attack. There are active efforts to address these issues for WebGL
-   and these efforts would apply to CSS shaders.
+   Possible denial of service attack are a concern. There are active efforts
+   to address these issues for WebGL and these efforts would apply to CSS
+   shaders.
 
   <p>In addition, the group may consider adding restrictions on the number of
    parameters allowed for shaders, as well as the size of input textures,
@@ -1475,9 +1567,40 @@ void main()
   <p>Many thanks to Mihnea Vlad-Ovidenie, Alexandru Chiculita and Andrei
    Valentin Onea for their help defining and prototyping the features
    proposed in this note. Thanks to Ken Russell for his input and discussion
-   about WebGL. Thanks to Benoit Jacob and Robert O'Callahan for the
+   about WebGL. Thanks to Benoit Jacob and Robert O&#146;Callahan for the
    discussion on security, parameter typing and filter margins and some WebGL
    precedents.
+
+  <h2 class=no-num id=change-log>Change Log</h2>
+
+  <h3 id=october-19-2011><span class=secno>6.4. </span>October 19 2011</h3>
+
+  <ul>
+   <li>Added &lsquo;<code class=property>detached</code>&rsquo; mode proposal
+    for shader mesh.
+
+   <li>Added new uniforms: u_contentTexture, u_tileSize, u_tilePos,
+    u_meshSize
+
+   <li>Added new attribute: a_triangleCoord.
+
+   <li><a
+    href="http://www.w3.org/Graphics/fx/wiki/Custom_Filters#Issue_01">Issue
+    01</a>: changed shaderMesh to be the number of lines and columns instead
+    of the number of additional lines and columns.
+
+   <li><a
+    href="http://www.w3.org/Graphics/fx/wiki/Custom_Filters#Issue_03">Issue
+    03</a>: added a <a href="#about_interactivity">note</a> at the end of the
+    model section.
+
+   <li><a
+    href="http://lists.w3.org/Archives/Public/www-style/2011Oct/0186.html">Feedback
+    from Chris Marrin</a>: added references to WebGL restrictions.
+
+   <li>Renamed s_texture to u_texture for consistency, since uniforms are
+    prefixed with &lsquo;<code class=css>u_</code>&rsquo;
+  </ul>
 
   <h2 class=no-num id=references>References</h2>
 
@@ -1527,8 +1650,8 @@ void main()
   <ul class=indexlist>
    <li>filter-margin-top, filter-margin-right, filter-margin-bottom,
     filter-margin-left, <a href="#filter-margin-top-filter-margin-right-fi"
-    title="filter-margin-top, filter-margin-right, filter-margin-bottom,
-    filter-margin-left"><strong>4.1.</strong></a>
+    title="filter-margin-top, filter-margin-right, filter-margin-bottom, filter-margin-left"><strong>4.1.</strong></a>
+    
   </ul>
   <!--end-index-->
 
