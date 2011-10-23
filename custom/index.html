@@ -34,7 +34,7 @@
    </style>
 
  <body>
-  <div class=head> <!--begin-logo-->
+  <div class=head id=div-head> <!--begin-logo-->
    <p><a href="http://www.w3.org/"><img alt=W3C height=48
     src="http://www.w3.org/Icons/w3c_home" width=72></a> <!--end-logo-->
 
@@ -300,28 +300,27 @@
 
   <div class=example> <code class=idl></code>
    <pre>
-    &lt;style&gt;
-    .waving      {
-        <strong>filter: custom(url('wave.vs'), 20 20, phase 0, amplitude 50);</strong>
-        transition-property: filter;
-        transition-duration: 0.2s;
-    }
+&lt;style&gt;
+.waving      {
+    <strong>filter: custom(url('wave.vs'), 20 20, phase 0, amplitude 50);</strong>
+    transition-property: filter;
+    transition-duration: 0.2s;
+}
 
-    .waving:hover {
-        <strong>filter: custom(url('wave.vs'), 20 20, phase 90, amplitude 20);</strong>
-    }
+.waving:hover {
+    <strong>filter: custom(url('wave.vs'), 20 20, phase 90, amplitude 20);</strong>
+}
 
-    &lt;/style&gt;
+&lt;/style&gt;
 
-    &lt;html&gt;
-    ...
-        &lt;div class='waving'&gt;
-            &lt;h2&gt;Hello CSS Shaders&lt;/h2&gt;
-            ...
-        &lt;/div&gt;
-    ...
-    &lt;/html&gt;
-    </pre>
+&lt;html&gt;
+...
+    &lt;div class='waving'&gt;
+        &lt;h2&gt;Hello CSS Shaders&lt;/h2&gt;
+        ...
+    &lt;/div&gt;
+...
+&lt;/html&gt;</pre>
   </div>
 
   <p>The meaning of the different parameters are explained in this document
@@ -348,22 +347,22 @@
 
   <div class=example> <code class=idl></code>
    <pre>
-    &lt;style&gt;
-    .old-book-page {
-        <strong>filter: grayscale(1.0) custom(url('book.vs') url('old-page-paper.fs'));</strong>
-    }
+&lt;style&gt;
+.old-book-page {
+    <strong>filter: grayscale(1.0) 
+            custom(url('book.vs') url('old-page-paper.fs'));</strong>
+}
 
-    &lt;/style&gt;
+&lt;/style&gt;
 
-    &lt;html&gt;
-    ...
-        &lt;div class='old-book-page'&gt;
-            &lt;h2&gt;Hello CSS Shaders&lt;/h2&gt;
-            ...
-        &lt;/div&gt;
-    ...
-    &lt;/html&gt;
-    </pre>
+&lt;html&gt;
+...
+    &lt;div class='old-book-page'&gt;
+        &lt;h2&gt;Hello CSS Shaders&lt;/h2&gt;
+        ...
+    &lt;/div&gt;
+...
+&lt;/html&gt;   </pre>
   </div>
 
   <p>Note how the &lsquo;<code class=property>filter</code>&rsquo; property
@@ -375,14 +374,12 @@
   <p>The shading language is discussed in a later <a
    href="#shader-language">section</a>.
 
-  <p class=note>The proposal allows an arbitrary number of parameters for
-   shaders
+  <p>Each shader defines its own set of parameters. Typically, different
+   shaders will have different parameters with different types. For example,
+   a &lsquo;<code class=property>box-blur</code>&rsquo; shader could have a
+   &lsquo;<code class=property>box-size</code>&rsquo; parameter.
 
-  <p class=note>Note that each shader defines its own set of parameters.
-   Typically, different shaders will have different parameters with different
-   types. For example, a &lsquo;<code class=property>box-blur</code>&rsquo;
-   shader could have a &lsquo;<code class=property>box-size</code>&rsquo;
-   parameter.
+  <p>The proposal allows an arbitrary number of parameters for shaders
 
   <h3 id=webgl-and-filter-effects><span class=secno>1.3. </span>Relation to
    WebGL and Filter Effects</h3>
@@ -393,11 +390,11 @@
    provides an implementation for the HTML5 <a
    href="http://dev.w3.org/html5/spec/the-canvas-element.html">canvas</a>
    element. WebGL offers a 3D context for canvas and, within that context,
-   pixel shaders are available (and so are vertex shaders and all the other
-   3D features WebGL has to offer). WebGL operates within the bounds of the
-   canvas for which it provides a context for full 3D features. By contrast,
-   CSS shaders provide a way to apply arbitrary vertex and fragment shaders
-   to arbitrary Web content.
+   fragment shaders are available (and so are vertex shaders and all the
+   other 3D features WebGL has to offer). WebGL operates within the bounds of
+   the canvas for which it provides a context for full 3D features. By
+   contrast, CSS shaders provide a way to apply arbitrary vertex and fragment
+   shaders to arbitrary Web content.
 
   <h4 id=filter-effects0><span class=secno>1.3.2. </span>Filter Effects</h4>
 
@@ -571,36 +568,37 @@
   <p>The <code>custom()</code> function has the following syntax:
 
   <dl>
-   <dt>custom(<span class=highlight>&lt;vertex-shader&gt;</span><span
+   <dt><code>custom(<span class=highlight>&lt;vertex-shader&gt;</span><span
     class=highlight2>[</span><span class=fade>wsp</span><span
     class=highlight>&lt;fragment-shader&gt;</span><span
     class=highlight2>][,</span><span
     class=highlight>&lt;vertex-mesh&gt;</span><span
     class=highlight2>][,</span><span
-    class=highlight>&lt;params&gt;</span><span class=highlight2>]</span>)
+    class=highlight>&lt;params&gt;</span><span
+    class=highlight2>]</span>)</code>
 
-   <dd>Where:
+   <dd>
     <table class=values-desc>
      <tbody>
       <tr>
-       <td>&lt;vertex-shader&gt;
+       <td><code>&lt;vertex-shader&gt;</code>
 
-       <td>&lt;uri&gt; | none
-
-      <tr>
-       <td>&lt;fragment-shader&gt;
-
-       <td>&lt;uri&gt; | none
+       <td><code>&lt;uri&gt; | none</code>
 
       <tr>
-       <td>&lt;vertex-mesh&gt;
+       <td><code>&lt;fragment-shader&gt;</code>
 
-       <td>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp'detached'] <br>
-        where: &lt;box&gt; = filter-box | border-box | padding-box |
-        content-box
+       <td><code>&lt;uri&gt; | none</code>
 
       <tr>
-       <td id="#shader-params">&lt;params&gt;
+       <td><code>&lt;vertex-mesh&gt;</code>
+
+       <td><code>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp'detached']</code><br>
+        where: <code>&lt;box&gt; = filter-box | border-box | padding-box |
+        content-box</code>
+
+      <tr>
+       <td id="#shader-params"><code>&lt;params&gt;</code>
 
        <td>See the <code>&lt;feCustom&gt;</code>&lsquo;<code class=css>s <a
         href="#feCustomParamsAttribute"><code>params</code></a>
@@ -699,7 +697,8 @@
 
   <div>
    <dl>
-    <dt id=feCustomVertexShaderAttribute>vertexShader: &lt;uri&gt;
+    <dt id=feCustomVertexShaderAttribute>vertexShader:
+     <code>&lt;uri&gt;</code>
 
     <dd>The shader at &lt;uri&gt; provides the implementation for the
      <code>feCustom</code> vertex shader. If the shader cannot be retrieved,
@@ -710,7 +709,8 @@
    </dl>
 
    <dl>
-    <dt id=feCustomFragmentShaderAttribute>fragmentShader: &lt;uri&gt;
+    <dt id=feCustomFragmentShaderAttribute>fragmentShader:
+     <code>&lt;uri&gt;</code>
 
     <dd>The shader at &lt;uri&gt; provides the implementation for the
      <code>feCustom</code> fragment shader. If the shader cannot be
@@ -723,7 +723,7 @@
 
    <dl>
     <dt id=feCustomVertexMeshAttribute>vertexMesh:
-     +&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp&rsquo;detached']
+     <code>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp</code>&rsquo;detached']
 
     <dd>See the <a href="#vertexMesh-attribute">vertexMesh</a> attribute
      discussion
@@ -731,7 +731,7 @@
 
    <dl>
     <dt id=feCustomParamsAttribute>params:
-     [&lt;param-def&gt;[,&lt;param-def&gt;*]]
+     <code>[&lt;param-def&gt;[,&lt;param-def&gt;*]]</code>
 
     <dd> Parameters are passed as uniforms to both the vertex and the
      fragment shaders.
@@ -791,14 +791,13 @@
        <tr>
      </table>
 
-     <p class=note>There are two ways to specify a 4x4 matrix. They differ in
-      <a href="#integration-with-css-animations-transitions">how they are
+     <p>There are two ways to specify a 4x4 matrix. They differ in <a
+      href="#integration-with-css-animations-transitions">how they are
       interpolated.</a></p>
 
-     <p class=note>The <code>&lt;mat&gt;</code> values are in column major
-      order. For example, <code>mat2(1, 2, 3, 4)</code> has <code>[1,
-      2]</code> in the first column and <code>[3, 4]</code> in the second
-      one.</p>
+     <p>The <code>&lt;mat&gt;</code> values are in column major order. For
+      example, <code>mat2(1, 2, 3, 4)</code> has <code>[1, 2]</code> in the
+      first column and <code>[3, 4]</code> in the second one.</p>
    </dl>
   </div>
 
@@ -818,8 +817,8 @@
     <code>&lt;script&gt;</code> elements, as shown in the following code
     snippet.</p>
 
-   <div>
-    <pre><code class=xml>
+   <div><code class=xml></code>
+    <pre>
 &lt;script id="warp" type="x-shader/x-vertex" &gt;
 &lt;-- source code here --&gt;
 &lt;/script&gt;
@@ -828,8 +827,7 @@
 &lt;style&gt;
 .shaded {
     filter: custom(url(#warp));
-}
-        </code></pre>
+}</pre>
    </div>
   </div>
 
@@ -843,7 +841,7 @@
    region</a> area.
 
   <dl>
-   <dt>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp'detached']
+   <dt><code>+&lt;integer&gt;{1,2}[wsp&lt;box&gt;][wsp'detached']</code>
 
    <dd> One or two positive integers (zero is invalid) indicating the
     additional number of vertex lines and columns that will make the vertex
@@ -917,8 +915,7 @@
     ...
     &lt;div class="distorted"&gt;
     ..
-    &lt;/div&gt;
-        </pre>
+    &lt;/div&gt;</pre>
    which could also be written as: <code class=idl></code>
    <pre>
 &lt;style&gt;
@@ -935,8 +932,7 @@
 
 &lt;div class="distorted"&gt;
 ..
-&lt;/div&gt;
-    </pre>
+&lt;/div&gt;</pre>
   </div>
 
   <h3 id=shader-inputs><span class=secno>3.3. </span>Shader inputs in filter
@@ -1013,7 +1009,7 @@
         y="fy(targetBox, [filter-margin-top])"
         width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
         height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
-    <!-- filter primitives for the filter function -->
+    &lt;!-- filter primitives for the filter function --&gt;
 &lt;/filter&gt;
 </pre>
 
@@ -1101,7 +1097,7 @@
     <tr>
      <th>Value:
 
-     <td>&lt;margin-width&gt; | inherit | auto
+     <td><code>&lt;margin-width&gt; | inherit | auto</code>
 
     <tr>
      <th>Initial
@@ -1231,8 +1227,11 @@
   <h3 id=recommendation><span class=secno>6.2. </span>Recommended shading
    language</h3>
 
-  <p>This document recommends the adoption on GLSL ES for alignment with
-   shaders in WebGL.
+  <p>This document recommends the adoption of the subset of <a
+   href="http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf">GLSL
+   ES</a> defined in the <a
+   href="http://www.khronos.org/registry/webgl/specs/1.0/">WebGL 1.0</a>
+   specification.
 
   <p>In particular, the same restrictions as defined in WebGL should apply to
    CSS shaders:
@@ -1273,7 +1272,8 @@
 
     <li>Define a shading language specific to custom filter effects.
    </ul>
-  </div>
+   The implementation could use the mime type of the url or &lt;script&gt;
+   element to determine the the shading language.</div>
 
   <h4 id=vertex-attribute-variables><span class=secno>6.2.1. </span>Vertex
    attribute variables</h4>
@@ -1283,26 +1283,26 @@
   <table class=values-desc>
    <tbody>
     <tr>
-     <td>attribute vec4 a_position
+     <td><code>attribute vec4 a_position</code>
 
      <td>The vertex coordinates in the <a href="#filter-region">filter
       region</a> box. Coordinates are normalized to the [-0.5, 0.5] range
       along the x, y and z axis.
 
     <tr>
-     <td>attribute vec2 a_texCoord;
+     <td><code>attribute vec2 a_texCoord;</code>
 
      <td>The vertex's texture coordinate. Coordinates are in the [0, 1] range
       on both axis
 
     <tr>
-     <td>attribute vec2 a_meshCoord;
+     <td><code>attribute vec2 a_meshCoord;</code>
 
      <td>The vertex's coordinate in the <a href="#mesh-box">mesh box</a>.
       Coordinates are in the [0, 1] range on both axis.
 
     <tr>
-     <td>attribute vec3 a_triangleCoord;
+     <td><code>attribute vec3 a_triangleCoord;</code>
 
      <td>
       <p>The x and y values provide the coordinate of the current
@@ -1330,7 +1330,7 @@
   <table class=values-desc>
    <tbody>
     <tr>
-     <td>uniform mat4 u_projectionMatrix
+     <td><code>uniform mat4 u_projectionMatrix</code>
 
      <td>The current projection matrix to the destination texture's
       coordinate space). <em>Note that the &lsquo;<code class=css>model
@@ -1339,41 +1339,41 @@
       the shaders. It is applied to the filtered element's rendering.</em>
 
     <tr>
-     <td> uniform sampler2D u_texture
+     <td><code>uniform sampler2D u_texture</code>
 
      <td>The input texture. Includes transparent margins for the filter
       margins.
 
     <tr>
-     <td> uniform sampler2D u_contentTexture
+     <td><code>uniform sampler2D u_contentTexture</code>
 
      <td>A texture with the rendering of the filtered element. If the filter
       is the first in the filter chain, then, this texture is the same as the
-      s_texture uniform. However, if there are preceding filters, this
+      u_texture uniform. However, if there are preceding filters, this
       provides the rendering of the original filtered element, whereas
-      s_texture provides the output of the preceding filter in the filter
+      u_texture provides the output of the preceding filter in the filter
       chain (or graph).
 
     <tr>
-     <td> uniform vec2 u_texureSize
+     <td><code>uniform vec2 u_textureSize</code>
 
      <td>The input texture's size. Includes the filter margins.
 
     <tr>
-     <td> uniform vec4 v_meshBox
+     <td><code>uniform vec4 v_meshBox</code>
 
      <td>The mesh box position and size in the <a href="#filter-box">filter
       box</a> coordinate system. For example, if the mesh box is the filter
       box, the value will be (-0.5, -0.5, 1, 1).
 
     <tr>
-     <td>uniform vec2 u_tileSize
+     <td><code>uniform vec2 u_tileSize</code>
 
      <td>The size of the current mesh tile, in the same coordinate space as
       the vertices.
 
     <tr>
-     <td>uniform vec2 u_meshSize
+     <td><code>uniform vec2 u_meshSize</code>
 
      <td>The size of the current mesh in terms of tiles. The x coordinate
       provides the number of columns and the y coordinate provides the number
@@ -1476,9 +1476,7 @@ uniform float distortAmount;
 uniform vec3 lightVector;
 uniform sampler2D disp;
 uniform vec2 dispSize;
-...
-    
-</pre>
+...</pre>
   </div>
 
   <p>As illustrated in the example, for each <code>&lt;textureName&gt;
@@ -1519,8 +1517,7 @@ uniform sampler2D u_texture;
 void main()
 {  
     gl_FragColor = texture2D(u_texture, v_texCoord);  
-}        
-</pre>
+}        </pre>
   </div>
 
   <h4 id=texture-access><span class=secno>6.2.6. </span>Texture access</h4>

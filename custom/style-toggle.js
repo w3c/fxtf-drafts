@@ -1,5 +1,4 @@
 (function() {
-
     var defaultStyleText = 'default spec. style';
     var additionalStyleText = "additional spec. style";
     var toggle;
@@ -25,7 +24,8 @@
         toggle.textContent = defaultStyleText;
         toggle.setAttribute('class', 'toggle');
         toggle.setAttribute('href', '#');
-        toggle.addEventListener("DOMActivate", toggleStyle, false);
+        toggle.addEventListener("click", toggleStyle, false);
     };
+    
 })();
 
