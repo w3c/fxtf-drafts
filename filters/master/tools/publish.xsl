@@ -1614,9 +1614,19 @@
             <xsl:copy>
               <xsl:copy-of select='@*[local-name() != "href" and namespace-uri() = ""]'/>
               <xsl:if test='@href'>
+                <xsl:message>Resolving <xsl:value-of select='local-name(.)'/> of <xsl:value-of select='@href'/> against <xsl:value-of select='$base'/></xsl:message>
                 <xsl:attribute name='href' select='if ($base = "") then @href else resolve-uri(@href, $base)'/>
               </xsl:if>
-              <xsl:copy-of select='node()'/>
+              <xsl:for-each select='node()'>
+                <xsl:copy>
+                  <xsl:copy-of select='@*[local-name() != "href" and namespace-uri() = ""]'/>
+                  <xsl:if test='@href'>
+                    <xsl:message>Resolving <xsl:value-of select='local-name(.)'/> of <xsl:value-of select='@href'/> against <xsl:value-of select='$base'/></xsl:message>
+                    <xsl:attribute name='href' select='if ($base = "") then @href else resolve-uri(@href, $base)'/>
+                  </xsl:if>
+                  <xsl:copy-of select='node()'/>
+                </xsl:copy>
+              </xsl:for-each>
             </xsl:copy>
           </xsl:for-each>
         </x:definitions>
