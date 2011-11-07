@@ -1,8 +1,9 @@
 <!DOCTYPE html public '-//W3C//DTD HTML 4.01//EN'
   'http://www.w3.org/TR/html4/strict.dtd'>
-<html>
+<html lang="en">
 <head profile="http://www.w3.org/2006/03/hcard">
   <title>Filter Effects 1.0</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style/default.css">
   <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
   <link id="st" href="style/alternate-spec-style.css" rel="stylesheet" type="text/css" title="additional spec styles">
@@ -172,9 +173,10 @@
 <p>
   A filter effect is a graphical operation that is applied to an element as it is
   drawn into the document. It is an image-based effect, in that it takes zero or
-  more images as input, a number of parameters specific to the effect, and
-  then produces an image as output. The output image is either rendered into the
-  document, or uses as an input image to another filter effect.
+  more images as input, a number of parameters specific to the effect, and then
+  produces an image as output. The output image is either rendered into the
+  document instead of the original element, used as an input image to another
+  filter effect, or provided as a CSS image value.
 </p>
 
 <p>
@@ -193,9 +195,8 @@
 <ol>
   <li>
     A small set of canned filter functions that are given by name. While not
-    particularly powerful, these are convenient and easily understood. For common effects,
-    such as blurring content, these provide a simple approach to achieving the
-    result, and can be chained easily to apply multiple effects.
+    particularly powerful, these are convenient and easily understood and provide
+    a simple approach to achieving common effects, such as blurring.
   </li>
   <li>
     A graph of individual filter effects described in markup that define an overall effect.
@@ -229,6 +230,7 @@
   <tbody>
     <tr>
       <td valign="top"><pre>
+ 
  
 1
 2
@@ -333,32 +335,32 @@
 </table>
 <ol>
   <li>
-    Filter primitive <a>'feGaussianBlur'</a> takes input <a>SourceAlpha</a>,
+    Filter primitive <code>feGaussianBlur</code> takes input <a>SourceAlpha</a>,
     which is the alpha channel of the source graphic. The result is stored in a
     temporary buffer named "blur". Note that "blur" is used as input to both
     filter primitives 2 and 3.
   </li>
   <li>
-    Filter primitive <a>'feOffset'</a> takes buffer "blur", shifts the result in
+    Filter primitive <code>feOffset</code> takes buffer "blur", shifts the result in
     a positive direction in both x and y, and creates a new buffer named
     "offsetBlur". The effect is that of a drop shadow.
   </li>
   <li>
-    Filter primitive <a>'feSpecularLighting'</a>, uses buffer "blur" as a model
+    Filter primitive <code>feSpecularLighting</code>, uses buffer "blur" as a model
     of a surface elevation and generates a lighting effect from a single point
     source. The result is stored in buffer "specOut".
   </li>
   <li>
-    Filter primitive <a>'feComposite'</a> masks out the result of filter
+    Filter primitive <code>feComposite</code> masks out the result of filter
     primitive 3 by the original source graphics alpha channel so that the
     intermediate result is no bigger than the original source graphic.
   </li>
   <li>
-    Filter primitive <a>'feComposite'</a> composites the result of the specular
+    Filter primitive <code>feComposite</code> composites the result of the specular
     lighting with the original source graphic.
   </li>
   <li>
-    Filter primitive <a>'feMerge'</a> composites two layers together. The lower
+    Filter primitive <code>feMerge</code> composites two layers together. The lower
     layer consists of the drop shadow result from filter primitive 2. The upper
     layer consists of the specular lighting result from filter primitive 5.
   </li>
@@ -385,32 +387,17 @@
   here.</span>
 </p>
 
-
-<p>
-  A filter effect consists of a series of graphics operations that are
-applied to a given <span id="TermSourceGraphic" class="SVG-Term">source graphic</span> to produce a modified graphical
-result. The result of the filter effect is rendered to the target device
-instead of the original source graphic. The following illustrates the
-process:</p>
-
-<p><object data="examples/filters00.svg" type="image/svg+xml" height="78" width="400">
-  <img alt="Image showing source graphic transformed by filter effect"
-  src="examples/filters00.png" width="401" height="78" />
-</object></p>
-<p class="view-as-svg"><a href="examples/filters00.svg">View this example as
-SVG (SVG-enabled browsers only)</a><br />
-</p>
-
 <!-- ****************************************************************************** -->
 
 <h2 id="definitions">Definitions</h2>
 
 <p>
-  When used in this specification, terms have the meanings assigned in this section.</p>
+  When used in this specification, terms have the meanings assigned in this section.
+</p>
 
 <dl>
-  <dt id="TermNullFilter"><span
-  class="SVG-TermDefine">null filter</span></dt>
+  <dt id="term-null-filter"><span
+  class="termDefine">null filter</span></dt>
   <dd>
     <p>
     The null filter output is all transparent black pixels. If applied to an element it means
@@ -657,7 +644,7 @@ as follows:</p>
 <h2 id="FilterFunction">Filter Functions</h2>
 
 <p>
-  The value of the <a>'filter property'</a> property is a list of &lt;filter-functions&gt;
+  The value of the <a>'filter'</a> property is a list of &lt;filter-functions&gt;
   applied in the order provided. The individual filter functions are
   separated by whitespace. The set of allowed filter functions is given
   below.
@@ -679,9 +666,9 @@ as follows:</p>
   </dt>
   <dd>
     Converts the input image to grayscale. The value of 'amount' defines the proportion
-    of the conversion. A value of 1 is completely grayscale. A value of 0 leaves the
-    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
-    If the 'amount' parameter is missing, a value of 1 is used.
+    of the conversion. A value of 100% is completely grayscale. A value of 0% leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    If the 'amount' parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
   </dd>
 
@@ -690,9 +677,9 @@ as follows:</p>
   </dt>
   <dd>
     Converts the input image to sepia. The value of 'amount' defines the proportion
-    of the conversion. A value of 1 is completely sepia. A value of 0 leaves the
-    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
-    If the 'amount' parameter is missing, a value of 1 is used.
+    of the conversion. A value of 100% is completely sepia. A value of 0 leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    If the 'amount' parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
   </dd>
 
@@ -701,9 +688,10 @@ as follows:</p>
   </dt>
   <dd>
     Saturates the input image. The value of 'amount' defines the proportion
-    of the conversion. A value of 1 is completely saturated. A value of 0 leaves the
-    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
-    If the 'amount' parameter is missing, a value of 1 is used.
+    of the conversion. A value of 100% is completely saturated. A value of 0% leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    Values of amount over 100% are allowed, providing super-saturated results.
+    If the 'amount' parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
   </dd>
 
@@ -713,8 +701,8 @@ as follows:</p>
   <dd>
     Applies a hue rotation on the input image. The value of 'angle' defines the 
     number of degrees around the color circle the input samples will be adjusted.
-    A value of 0 leaves the input unchanged. If the 'angle' parameter is missing,
-    a value of 0 is used.
+    A value of 0deg leaves the input unchanged. If the 'angle' parameter is missing,
+    a value of 0deg is used.
     The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
   </dd>
 
@@ -723,9 +711,9 @@ as follows:</p>
   </dt>
   <dd>
     Inverts the samples in the input image. The value of 'amount' defines the proportion
-    of the conversion. A value of 1 is completely inverted. A value of 0 leaves the
-    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
-    If the 'amount' parameter is missing, a value of 1 is used.
+    of the conversion. A value of 100% is completely inverted. A value of 0% leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    If the 'amount' parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
   </dd>
 
@@ -734,10 +722,10 @@ as follows:</p>
   </dt>
   <dd>
     Applies transparency to the samples in the input image. The value of 'amount' defines the proportion
-    of the conversion. A value of 1 is completely transparent. A value of 0 leaves the
-    input unchanged. Values between 0 and 1 are linear multipliers on the effect.
-    This is equivalent to multiplying the input image samples by (1 - amount).
-    If the 'amount' parameter is missing, a value of 1 is used.
+    of the conversion. A value of 100% is completely transparent. A value of 0% leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    This is equivalent to multiplying the input image samples by (100 - amount).
+    If the 'amount' parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
   </dd>
 
@@ -773,12 +761,12 @@ as follows:</p>
     Applies an sharpening effect to the input image. This is equivalent to subtracting the
     input samples from a blurred version of the image.
     The value of 'amount' defines the proportion of the effect (as a multiplier on the
-    subtraction). A value of 1 applies the effect completely. A value of 0 leaves the
+    subtraction). A value of 100% applies the effect completely. A value of 0% leaves the
     input unchanged.
     The value of 'radius' defines the value of the standard deviation to the Gaussian function.
     The value of 'threshold' defines a point at which the function will not be applied.
     If the 'threshold' parameter is not provided, then its value is 1. If the 'radius' parameter
-    is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0.
+    is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0%.
     The markup equivalent of this function is <a href="#sharpenEquivalent">given below</a>.
   </dd>
 
@@ -4151,16 +4139,17 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 <p>
   Below are the equivalents for each of the filter functions expressed in terms of
   the 'filter element' element. The parameters from the function are labelled with
-  brackets in the following style: [amount].
+  brackets in the following style: [amount]. In the case of parameters that are
+  percentage values, they are converted to real numbers.
 </p>
 
 <h3 id="grayscaleEquivalent">grayscale</h3>
 
 <pre class="examplesource"> &lt;filter id="grayscale"&gt;
     &lt;feColorMatrix type="matrix"
-               values="(0.2126 * [amount]) (0.7152 * [amount]) (0.0722 * [amount]) 0 0
-                       (0.2126 * [amount]) (0.7152 * [amount]) (0.0722 * [amount]) 0 0
-                       (0.2126 * [amount]) (0.7152 * [amount]) (0.0722 * [amount]) 0 0
+               values="(0.2126 + 0.7874 * [1 - amount]) (0.7152 - 0.7152 * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
+                       (0.2126 - 0.2126 * [1 - amount]) (0.7152 + 0.2848 * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
+                       (0.2126 - 0.2126 * [1 - amount]) (0.7152 - 0.7152 * [1 - amount]) (0.0722 + 0.9278 * [1 - amount]) 0 0
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
@@ -4168,9 +4157,9 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 
 <pre class="examplesource"> &lt;filter id="sepia"&gt;
     &lt;feColorMatrix type="matrix"
-               values="(0.393 * [amount]) (0.769 * [amount]) (0.189 * [amount]) 0 0
-                       (0.349 * [amount]) (0.686 * [amount]) (0.168 * [amount]) 0 0
-                       (0.272 * [amount]) (0.534 * [amount]) (0.131 * [amount]) 0 0
+               values="(0.393 + 0.607 * [1 - amount]) (0.769 - 0.769 * [1 - amount]) (0.189 - 0.189 * [1 - amount]) 0 0
+                       (0.349 - 0.349 * [1 - amount]) (0.686 + 0.314 * [1 - amount]) (0.168 - 0.168 * [1 - amount]) 0 0
+                       (0.272 - 0.272 * [1 - amount]) (0.534 - 0.534 * [1 - amount]) (0.131 + 0.869 * [1 - amount]) 0 0
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
