@@ -705,8 +705,8 @@ as follows:</p>
   </dt>
   <dd>
     Saturates the input image. The value of 'amount' defines the proportion
-    of the conversion. A value of 100% is completely saturated. A value of 0% leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    of the conversion. A value of 0% is completely un-saturated. A value of 100% leaves the
+    input unchanged. Other values are linear multipliers on the effect.
     Values of amount over 100% are allowed, providing super-saturated results.
     If the 'amount' parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
@@ -719,7 +719,8 @@ as follows:</p>
     Applies a hue rotation on the input image. The value of 'angle' defines the 
     number of degrees around the color circle the input samples will be adjusted.
     A value of 0deg leaves the input unchanged. If the 'angle' parameter is missing,
-    a value of 0deg is used.
+    a value of 0deg is used. Implementations should not normalize this value in order
+    to allow animations beyond 360deg.
     The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
   </dd>
 
@@ -739,52 +740,46 @@ as follows:</p>
   </dt>
   <dd>
     Applies transparency to the samples in the input image. The value of 'amount' defines the proportion
-    of the conversion. A value of 100% is completely transparent. A value of 0% leaves the
+    of the conversion. A value of 0% is completely transparent. A value of 100% leaves the
     input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    This is equivalent to multiplying the input image samples by (100 - amount).
+    This is equivalent to multiplying the input image samples by amount.
     If the 'amount' parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
   </dd>
 
   <dt>
-    gamma(amplitude exponent offset)
+    brightness(amount)
   </dt>
   <dd>
-    Applies a gamma function to the input image. 
-    The value of 'amplitude' defines the multiplier to the gamma function.
-    The value of 'exponent' defines the exponent of the gamma function.
-    The value of 'offset' defines the offset of the gamma function.
-    If any of the parameters are missing, the default value for 'amplitude'
-    is 1, for 'exponent' is 1, and for 'offset' is 0.
-    The markup equivalent of this function is <a href="#gammaEquivalent">given below</a>.
+    Applies a linear multiplier to input image, making it appear more
+    or less bright.
+    A value of 0% will create an image that is completely black. A value of 100% leaves the
+    input unchanged. Other values are linear multipliers on the effect.
+    Values of amount over 100% are allowed, providing brighter results.
+    If the 'amount' parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
   </dd>
 
   <dt>
-    blur(radiusX radiusY)
+    contrast(amount)
+  </dt>
+  <dd>
+    Adjusts the contrast of the input.
+    A value of 0% will create an image that is completely black. A value of 100% leaves the
+    input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
+    If the 'amount' parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
+  </dd>
+
+  <dt>
+    blur(radius)
   </dt>
   <dd>
     Applies a Gaussian blur to the input image.
-    The value of 'radiusX' defines the X value of the standard deviation to the Gaussian function.
-    The value of 'radiusY' defines the Y value of the standard deviation to the Gaussian function.
-    If one parameter is provided, then that value is used for both 'radiusX' and 'radiusY'.
-    If no parameters are provided, then the value for both attributes is 0.
-    The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    sharpen(amount radius threshold)
-  </dt>
-  <dd>
-    Applies an sharpening effect to the input image. This is equivalent to subtracting the
-    input samples from a blurred version of the image.
-    The value of 'amount' defines the proportion of the effect (as a multiplier on the
-    subtraction). A value of 100% applies the effect completely. A value of 0% leaves the
-    input unchanged.
     The value of 'radius' defines the value of the standard deviation to the Gaussian function.
-    The value of 'threshold' defines a point at which the function will not be applied.
-    If the 'threshold' parameter is not provided, then its value is 1. If the 'radius' parameter
-    is not provided, then its value is 0. If no parameters are provided, then the value for 'amount' is 0%.
-    The markup equivalent of this function is <a href="#sharpenEquivalent">given below</a>.
+    If no parameter is provided, then a value 0 is used. The parameter is
+    specified a CSS length, but does not accept percentage values.
+    The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
   </dd>
 
   <dt>
@@ -872,9 +867,613 @@ as follows:</p>
 <h2 id="FilterElement">The <span class="element-name">'filter'</span>
 element</h2>
 
-<edit:elementsummary name='filter'/>
+<div class="element-summary">
+  <div class="element-summary-name">
+    <span class="element-name">
+      ‘filter’
+    </span>
+  </div>
+  <dl>
+    <dt>
+      Categories:</dt>
+      <dd>
+        None</dd>
+        <dt>
+          Content model:</dt>
+          <dd>
+            Any number of the following elements, in any order:
+            <ul class="no-bullets">
+              <li>
+                <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermDescriptiveElement">
+                  descriptive elements</a>
+                  <span class="expanding">
+                    — <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DescElement">
+                      <span class="element-name">
+                        ‘desc’
+                      </span>
+                    </a>
+                    , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/metadata.html#MetadataElement">
+                      <span class="element-name">
+                        ‘metadata’
+                      </span>
+                    </a>
+                    , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#TitleElement">
+                      <span class="element-name">
+                        ‘title’
+                      </span>
+                    </a>
 
-<edit:with element='filter'>
+                  </span>
+                </li>
+                <li>
+                  <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermFilterPrimitiveElement">
+                    filter primitive elements</a>
+                    <span class="expanding">
+                      — <a href="#feBlendElement">
+                        <span class="element-name">
+                          ‘feBlend’
+                        </span>
+                      </a>
+                      , <a href="#feColorMatrixElement">
+                        <span class="element-name">
+                          ‘feColorMatrix’
+                        </span>
+                      </a>
+                      , <a href="#feComponentTransferElement">
+                        <span class="element-name">
+                          ‘feComponentTransfer’
+                        </span>
+                      </a>
+                      , <a href="#feCompositeElement">
+                        <span class="element-name">
+                          ‘feComposite’
+                        </span>
+                      </a>
+                      , <a href="#feConvolveMatrixElement">
+                        <span class="element-name">
+                          ‘feConvolveMatrix’
+                        </span>
+                      </a>
+                      , <a href="#feDiffuseLightingElement">
+                        <span class="element-name">
+                          ‘feDiffuseLighting’
+                        </span>
+                      </a>
+                      , <a href="#feDisplacementMapElement">
+                        <span class="element-name">
+                          ‘feDisplacementMap’
+                        </span>
+                      </a>
+                      , <a href="#feFloodElement">
+                        <span class="element-name">
+                          ‘feFlood’
+                        </span>
+                      </a>
+                      , <a href="#feGaussianBlurElement">
+                        <span class="element-name">
+                          ‘feGaussianBlur’
+                        </span>
+                      </a>
+                      , <a href="#feImageElement">
+                        <span class="element-name">
+                          ‘feImage’
+                        </span>
+                      </a>
+                      , <a href="#feMergeElement">
+                        <span class="element-name">
+                          ‘feMerge’
+                        </span>
+                      </a>
+                      , <a href="#feMorphologyElement">
+                        <span class="element-name">
+                          ‘feMorphology’
+                        </span>
+                      </a>
+                      , <a href="#feOffsetElement">
+                        <span class="element-name">
+                          ‘feOffset’
+                        </span>
+                      </a>
+                      , <a href="#feSpecularLightingElement">
+                        <span class="element-name">
+                          ‘feSpecularLighting’
+                        </span>
+                      </a>
+                      , <a href="#feTileElement">
+                        <span class="element-name">
+                          ‘feTile’
+                        </span>
+                      </a>
+                      , <a href="#feTurbulenceElement">
+                        <span class="element-name">
+                          ‘feTurbulence’
+                        </span>
+                      </a>
+
+                    </span>
+                  </li>
+                  <li>
+                    <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateElement">
+                      <span class="element-name">
+                        ‘animate’
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#SetElement">
+                      <span class="element-name">
+                        ‘set’
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </dd>
+              <dt>
+                Attributes:</dt>
+                <dd>
+                  <ul class="no-bullets">
+                    <li>
+                      <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermCoreAttributes">
+                        core attributes</a>
+                        <span class="expanding">
+                          — <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#IDAttribute">
+                            <span class="attr-name">
+                              ‘id’
+                            </span>
+                          </a>
+                          , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLBaseAttribute">
+                            <span class="attr-name">
+                              ‘xml:base’
+                            </span>
+                          </a>
+                          , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLLangAttribute">
+                            <span class="attr-name">
+                              ‘xml:lang’
+                            </span>
+                          </a>
+                          , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLSpaceAttribute">
+                            <span class="attr-name">
+                              ‘xml:space’
+                            </span>
+                          </a>
+
+                        </span>
+                      </li>
+                      <li>
+                        <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermPresentationAttribute">
+                          presentation attributes</a>
+                          <span class="expanding">
+                            — <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#AlignmentBaselineProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘alignment-baseline’">
+                                ‘alignment-baseline’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#BaselineShiftProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘baseline-shift’">
+                                ‘baseline-shift’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘clip’">
+                                ‘clip’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipPathProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘clip-path’">
+                                ‘clip-path’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipRuleProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘clip-rule’">
+                                ‘clip-rule’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘color’">
+                                ‘color’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorInterpolationProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘color-interpolation’">
+                                ‘color-interpolation’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorInterpolationFiltersProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘color-interpolation-filters’">
+                                ‘color-interpolation-filters’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProfileProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘color-profile’">
+                                ‘color-profile’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorRenderingProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘color-rendering’">
+                                ‘color-rendering’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#CursorProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘cursor’">
+                                ‘cursor’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DirectionProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘direction’">
+                                ‘direction’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘display’">
+                                ‘display’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘dominant-baseline’">
+                                ‘dominant-baseline’
+                              </span>
+                            </a>
+                            , <a href="#EnableBackgroundProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘enable-background’">
+                                ‘enable-background’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘fill’">
+                                ‘fill’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillOpacityProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘fill-opacity’">
+                                ‘fill-opacity’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘fill-rule’">
+                                ‘fill-rule’
+                              </span>
+                            </a>
+                            , <a href="#FilterProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘filter’">
+                                ‘filter’
+                              </span>
+                            </a>
+                            , <a href="#FloodColorProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘flood-color’">
+                                ‘flood-color’
+                              </span>
+                            </a>
+                            , <a href="#FloodOpacityProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘flood-opacity’">
+                                ‘flood-opacity’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontFamilyProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘font-family’">
+                                ‘font-family’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘font-size’">
+                                ‘font-size’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeAdjustProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘font-size-adjust’">
+                                ‘font-size-adjust’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStretchProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘font-stretch’">
+                                ‘font-stretch’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStyleProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘font-style’">
+                                ‘font-style’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontVariantProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘font-variant’">
+                                ‘font-variant’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontWeightProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘font-weight’">
+                                ‘font-weight’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationHorizontalProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘glyph-orientation-horizontal’">
+                                ‘glyph-orientation-horizontal’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationVerticalProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘glyph-orientation-vertical’">
+                                ‘glyph-orientation-vertical’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘image-rendering’">
+                                ‘image-rendering’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘kerning’">
+                                ‘kerning’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘letter-spacing’">
+                                ‘letter-spacing’
+                              </span>
+                            </a>
+                            , <a href="#LightingColorProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘lighting-color’">
+                                ‘lighting-color’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerEndProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘marker-end’">
+                                ‘marker-end’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerMidProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘marker-mid’">
+                                ‘marker-mid’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerStartProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘marker-start’">
+                                ‘marker-start’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#MaskProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘mask’">
+                                ‘mask’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OpacityProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘opacity’">
+                                ‘opacity’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OverflowProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘overflow’">
+                                ‘overflow’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#PointerEventsProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘pointer-events’">
+                                ‘pointer-events’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ShapeRenderingProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘shape-rendering’">
+                                ‘shape-rendering’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopColorProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stop-color’">
+                                ‘stop-color’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopOpacityProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stop-opacity’">
+                                ‘stop-opacity’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke’">
+                                ‘stroke’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDasharrayProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke-dasharray’">
+                                ‘stroke-dasharray’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDashoffsetProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke-dashoffset’">
+                                ‘stroke-dashoffset’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinecapProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke-linecap’">
+                                ‘stroke-linecap’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinejoinProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke-linejoin’">
+                                ‘stroke-linejoin’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeMiterlimitProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke-miterlimit’">
+                                ‘stroke-miterlimit’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeOpacityProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke-opacity’">
+                                ‘stroke-opacity’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeWidthProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘stroke-width’">
+                                ‘stroke-width’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextAnchorProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘text-anchor’">
+                                ‘text-anchor’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextDecorationProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘text-decoration’">
+                                ‘text-decoration’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#TextRenderingProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘text-rendering’">
+                                ‘text-rendering’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#UnicodeBidiProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘unicode-bidi’">
+                                ‘unicode-bidi’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#VisibilityProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘visibility’">
+                                ‘visibility’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WordSpacingProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘word-spacing’">
+                                ‘word-spacing’
+                              </span>
+                            </a>
+                            , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WritingModeProperty">
+                              <span class="attr-name" title="Presentation attribute for property ‘writing-mode’">
+                                ‘writing-mode’
+                              </span>
+                            </a>
+
+                          </span>
+                        </li>
+                        <li>
+                          <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermXLinkAttributes">
+                            xlink attributes</a>
+                            <span class="expanding">
+                              — <a href="#FilterElementHrefAttribute">
+                                <span class="attr-name">
+                                  ‘xlink:href’
+                                </span>
+                              </a>
+                              , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkShowAttribute">
+                                <span class="attr-name">
+                                  ‘xlink:show’
+                                </span>
+                              </a>
+                              , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkActuateAttribute">
+                                <span class="attr-name">
+                                  ‘xlink:actuate’
+                                </span>
+                              </a>
+                              , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkTypeAttribute">
+                                <span class="attr-name">
+                                  ‘xlink:type’
+                                </span>
+                              </a>
+                              , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkRoleAttribute">
+                                <span class="attr-name">
+                                  ‘xlink:role’
+                                </span>
+                              </a>
+                              , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkArcRoleAttribute">
+                                <span class="attr-name">
+                                  ‘xlink:arcrole’
+                                </span>
+                              </a>
+                              , <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkTitleAttribute">
+                                <span class="attr-name">
+                                  ‘xlink:title’
+                                </span>
+                              </a>
+
+                            </span>
+                          </li>
+                          <li>
+                            <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#ClassAttribute">
+                              <span class="attr-name">
+                                ‘class’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#StyleAttribute">
+                              <span class="attr-name">
+                                ‘style’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute">
+                              <span class="attr-name">
+                                ‘externalResourcesRequired’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementXAttribute">
+                              <span class="attr-name">
+                                ‘x’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementYAttribute">
+                              <span class="attr-name">
+                                ‘y’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementWidthAttribute">
+                              <span class="attr-name">
+                                ‘width’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementHeightAttribute">
+                              <span class="attr-name">
+                                ‘height’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementFilterResAttribute">
+                              <span class="attr-name">
+                                ‘filterRes’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementFilterUnitsAttribute">
+                              <span class="attr-name">
+                                ‘filterUnits’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementPrimitiveUnitsAttribute">
+                              <span class="attr-name">
+                                ‘primitiveUnits’
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#FilterElementHrefAttribute">
+                              <span class="attr-name">
+                                ‘xlink:href’
+                              </span>
+                            </a>
+                          </li>
+                        </ul>
+                      </dd>
+                      <dt>
+                        DOM Interfaces:</dt>
+                        <dd>
+                          <ul class="no-bullets">
+                            <li>
+                              <a class="idlinterface" href="#InterfaceSVGFilterElement">
+                                SVGFilterElement</a>
+                              </li>
+                            </ul>
+                          </dd>
+                        </dl>
+                      </div>
 
 <p>
   The description of the <a>'filter element'</a> element
@@ -4469,26 +5068,30 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="gammaEquivalent">gamma</h3>
+<h3 id="brightnessEquivalent">brightness</h3>
 
-<pre class="examplesource"> &lt;filter id="gamma"&gt;
+<pre class="examplesource"> &lt;filter id="brightness"&gt;
     &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="gamma" amplitude="[amplitude]" exponent="[exponent]" offset="[offset]"/&gt;
-        &lt;feFuncG type="gamma" amplitude="[amplitude]" exponent="[exponent]" offset="[offset]"/&gt;
-        &lt;feFuncB type="gamma" amplitude="[amplitude]" exponent="[exponent]" offset="[offset]"/&gt;
+        &lt;feFuncR type="linear" slope="[amount]"/&gt;
+        &lt;feFuncG type="linear" slope="[amount]"/&gt;
+        &lt;feFuncB type="linear" slope="[amount]"/&gt;
+    &lt;/feComponentTransfer&gt;
+  &lt;/filter&gt; </pre>
+
+<h3 id="contrastEquivalent">contrast</h3>
+
+<pre class="examplesource"> &lt;filter id="contrast"&gt;
+    &lt;feComponentTransfer&gt;
+        &lt;feFuncR type="linear" slope="[amount]" intercept="-(0.5 * [amount] + 0.5)"/&gt;
+        &lt;feFuncG type="linear" slope="[amount]" intercept="-(0.5 * [amount] + 0.5)"/&gt;
+        &lt;feFuncB type="linear" slope="[amount]" intercept="-(0.5 * [amount] + 0.5)"/&gt;
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
 <h3 id="blurEquivalent">blur</h3>
 
 <pre class="examplesource"> &lt;filter id="blur"&gt;
-    &lt;feGaussianBlur stdDeviation="[radiusX radiusY]"&gt;
-  &lt;/filter&gt; </pre>
-
-<h3 id="sharpenEquivalent">sharpen</h3>
-
-<pre class="examplesource"> &lt;filter id="unsharp"&gt;
-    &lt;feUnsharpMask stdDeviation="[radius]" threshold="[threshold]" amount="[amount]"&gt;
+    &lt;feGaussianBlur stdDeviation="[radius radius]"&gt;
   &lt;/filter&gt; </pre>
 
 <h3 id="dropshadowEquivalent">drop-shadow</h3>
