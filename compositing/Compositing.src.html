@@ -1,0 +1,192 @@
+<!DOCTYPE html public '-//W3C//DTD HTML 4.01//EN'
+  'http://www.w3.org/TR/html4/strict.dtd'>
+<html lang="en">
+<head profile="http://www.w3.org/2006/03/hcard">
+  <title>Filter Effects 1.0</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style/default.css">
+  <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
+  <link id="st" href="style/alternate-spec-style.css" rel="stylesheet" type="text/css" title="additional spec styles">
+  <script type="text/javascript" src="style/style-toggle.js"></script>
+  <style type="text/css">
+  
+  /* Alternate stylesheet fonts are here because in some browsers (Opera 11.5) */
+  /* The fonts are not applied if only loaded from the alternate stylesheet    */
+  @import url(http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic);
+  @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+  a.toggle {
+    position: fixed;
+    top: 0.5em;
+    right: 0.5em;
+    font-size: smaller;
+    color: gray;
+    opacity: 0.2;
+  }
+
+  a.toggle:hover {
+    opacity: 1;
+    color: #46A4E9;
+  }
+
+  div.issue-marker {
+    position: absolute;
+    width: 20ex;
+    margin-left: -26ex;
+    padding-left: 1em;
+    padding: 5px;
+    font-weight: normal;
+    font-size: 11px;
+    text-align: right;
+    background-color: white;
+    font-size: 90%;
+  }
+
+  div.issue-marker a {
+    color: red;
+  }
+  
+  .todo {
+      font-weight: bold;
+      border-left: 0.5em solid #f44;
+      padding-left: 1em;
+      margin-top: 0.5em;
+      color: #a0a0a0;
+  }
+  
+  .todo:before {
+      content: "TO DO : ";
+      color: #f44;
+  }
+ </style>
+</head>
+
+<div id="div-head" class="head">
+<!--logo-->
+
+<h1>Compositing and Blending 1.0</h1>
+
+<h2 class="no-num no-toc">22 February 2012</h2>
+<dl>
+  <dt>Editors:</dt>
+  <dd class="vcard">
+    <span class="fn">Rik Cabanier</span>,
+    <span class="org">Adobe Systems</span>,
+    <span class="email">cabanier@adobe.com</span>
+  </dd>
+  <dt>Authors:</dt>
+  <dd>
+    The authors of this specification are the participants
+    of the W3C CSS and SVG Working Groups.
+  </dd>
+</dl>
+
+<!--copyright-->
+
+<hr title="Separator for header">
+</div>
+
+<h2 class="no-num no-toc" id="abstract">Abstract</h2>
+
+<p>
+  Compositing describes the way how the shapes of different elements are 
+  combined into a single image. Conceptually, each element is rendered into 
+  its own buffer and is then merged with its backdrop. The most widely used 
+  compositing operation is simple alpha compositing. (see
+  <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a>)
+  This spec will introduce additional compositing operators that will enable
+  advanced graphical effects. 
+ </p>
+ 
+ <p>
+  Blending (also known as transparency) describes how colors are 'blended'
+  together. Typically, the color of an element and the color of its backdrop
+  are combined to create a new color. This new color replaces the old color
+  and is then composited with the backdrop using the specified compositing mode.
+</p>
+
+<h2 class="no-num no-toc" id="status">Status of This Document</h2>
+
+<p>
+  <em>This section describes the status of this document at the time of its
+  publication. Other documents may supersede this document. A list of current W3C
+  publications and the latest revision of this technical report can be found in
+  the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at
+  http://www.w3.org/TR/.</em>
+</p>
+
+<p>
+  This document is the first public working draft of this specification.
+</p>
+
+<p>
+  Publication as a Working Draft does not imply endorsement by the W3C
+  Membership. This is a draft document and may be updated, replaced or obsoleted
+  by other documents at any time. It is inappropriate to cite this document as
+  other than work in progress.
+</p>
+
+<p>
+  The (<a href="http://lists.w3.org/Archives/Public/public-fx/">archived</a>)
+  public mailing list <a href="mailto:public-fx@w3.org">public-fx@w3.org</a> (see
+  <a href="http://www.w3.org/Mail/Request">instructions</a>) is preferred for
+  discussion of this specification. When sending e-mail, please put the text
+  “Compositing” in the subject, preferably like this: “[Compositing] <em>…summary of comment…</em>”
+</p>
+
+<p>
+  This document was produced by the <a
+  href="http://www.w3.org/Style/CSS/members">CSS Working Group</a> (part of the
+  <a href="http://www.w3.org/Style/">Style Activity</a>) and the <a
+  href="http://www.w3.org/Graphics/SVG/">SVG Working Group</a> (part of the <a
+  href="http://www.w3.org/Graphics/">Graphics Activity</a>)
+</p>
+
+<p>
+  This document was produced by groups operating under the <a
+  href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C
+  Patent Policy</a>. W3C maintains a <a
+  href="http://www.w3.org/2004/01/pp-impl/32061/status">public list of any patent
+  disclosures (CSS)</a> and a <a
+  href="http://www.w3.org/2004/01/pp-impl/19480/status">public list of any patent
+  disclosures (SVG)</a> made in connection with the deliverables of each group;
+  these pages also include instructions for disclosing a patent. An individual
+  who has actual knowledge of a patent which the individual believes contains <a
+  href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
+  Claim(s)</a> must disclose the information in accordance with <a
+  href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
+  6 of the W3C Patent Policy</a>.
+</p>
+
+<p>
+  The <a href="ChangeLog">list of changes made to this specification</a> is
+  available.
+</p>
+
+<h2 class="no-num no-toc" id="contents">Table of contents</h2>
+
+<!--toc-->
+
+<!-- ****************************************************************************** -->
+
+<h2 id="introduction">Introduction</h2>
+
+<p>
+ ....
+</p>
+
+
+<!-- ****************************************************************************** -->
+
+
+<h3 id="informref">Informative References</h3>
+<dl>
+  <dt id="ref-html5"><strong class="informref">[HTML5]</strong></dt>
+    <dd><strong>HTML5</strong>, Ian Hickson editor, Google,
+      10 June 2008 (Working Draft). See <a
+      href="http://www.w3.org/TR/2008/WD-html5-20080610/">http://www.w3.org/TR/2008/WD-html5-20080610/</a>
+    </dd>
+</dl>
+
+</body>
+</html>
