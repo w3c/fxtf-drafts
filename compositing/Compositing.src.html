@@ -2,7 +2,7 @@
   'http://www.w3.org/TR/html4/strict.dtd'>
 <html lang="en">
 <head profile="http://www.w3.org/2006/03/hcard">
-  <title>Filter Effects 1.0</title>
+  <title>Compositing and Blending 1.0</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style/default.css">
   <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
@@ -170,15 +170,152 @@
 <!-- ****************************************************************************** -->
 
 <h2 id="introduction">Introduction</h2>
+<p>
+At the basic level, compositing describes how shapes interact while blending describes how colors interact.
+Both idioms use a rendered version of the current element (ie a shape or a group) and mix it with the backdrop.
+</p>
 
 <p>
- ....
 </p>
+
+<p>
+This document will describe the algorithms of compositing and blending in the first part. The second part describes how they are specified in CSS.
+</p>
+
+<h2 id="whatiscompositing">What is compositing</h2>
+<h3 id="whatiscompositing">Explain compositing</h3>
+Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the 'opacity'. This coverage information is used to control the compositing of colors.
+
+Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the background image using a simplistic formula that has the effect of overlaying the object over the background. Where the objects overlap and coverage is not complete the color of the background may show through the object that has just been rendered. 
+
+<h4 id="simplealphablending">simple alpha blending</h4>
+<p>
+In computer graphics, alpha compositing is the process of combining an image with a background to create the appearance of partial or full transparency. 
+The alpha value is stored alongside the color and has a value between 0 and 1.  A value of 0 means that the pixel does not have any coverage information and is transparent; i.e. there was no color contribution from any geometry because the geometry did not overlap this pixel. A value of 1 means that the pixel is opaque because the geometry completely overlapped the pixel.
+</p>
+
+<p style="text-align:center"><img src="examples/simple_box.svg"/>
+<br/>
+Figure 1
+</p>
+<p>
+Figure 1 describes the most basic case of a composition. It consists of 1 shape that is filled with a solid color so no compositing operation is required.
+</p>
+<p style="text-align:center"><img src="examples/two_box.svg"/>
+<br/>
+Figure 2
+</p>
+<p>
+Figure 2 is a more complex example. There is still no alpha but there are 2 shapes that intersect each other.
+</p>
+<p>
+This operation can be described as: 
+	... [simple compositing formula]
+where Co is the result of the operation, Ca is the color of the pixel in element A, Cb is the color of the pixel in element B, and αa and αb are the alpha of the pixels in elements A and B respectively.
+
+[add a simple example here]
+
+Alpha can be specified on elements or groups. If alpha is specified on a group, the group is computed first and then the alpha compositing formula is applied to the group and its backdrop
+</p>
+
+<h4 id="groupinvariance">Group invariance</h4>
+An important behavior of simple alpha compositing is its group invariance.
+Adding or removing grouping with no optional attributes should not show visual differences.
+ie a + b + c = a + (b+c) = (a+b)+c
+When adding attributes to the group such as knockout, isolate or Port-Duff blending, groups will no longer be invariant.
+
+<h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
+The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
+The list of PD operators is:
+	[add list]
+
+The following diagram shows the four different regions of a single pixel that are considered when compositing:
+	[show diagram]
+
+The 'source over' compositing operator corresponds with the default simple alpha compositing rules.
+The diagram below shows an example of the 'source over' operator with two 50% opaque shapes. Firstly, it shows the two shapes that will be composited together using the 'source over' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting opacity of the overlapping region of the two shapes will be 75% as all of the sub-pixel regions contribute color and opacity. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source over' operator.
+	[show diagram]
+
+
+A Porter Duff operator such as 'source atop', used extensively in upcoming examples, contains contributions from only two of the sub-pixel regions. The 'source atop'(src-atop) operator selects the source color from the overlapping region and the destination color not obscured by the source to produce the resultant color. The resultant opacity is the combined opacity from these two regions.
+
+The diagram below shows an example of the 'source atop' operator with two 50% opaque shapes. It is similar to the previous diagram for 'source over'. Firstly, it shows the two shapes that will be composited together using the 'source atop' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section of the diagram indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting opacity of the overlapping region of the two shapes will be 50%, as only two of the sub-pixel regions contribute color and opacity. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source atop' operator. The region where only source color was present is not rendered as the 'source atop' only select source color that overlaps destination color.
+
+
+The twelve porter duff operators are shown below for opaque and partially transparent objects. The blue rectangle is the source and the orange circle is the destination.
+
+<h3 id="backgroundcalculation">Background calculation</h3>
+<h4 id="whyisitneeded">Why is it needed</h4>
+<h4 id="howisitdone">How is it done</h4>
+d.	Enable-background
+3.	What is blending
+a.	Explain blending
+b.	List of blending modes
+c.	Background calculation
+d.	Isolate
+e.	Knockout
+4.	How is compositing/blending specified in CSS
 
 
 <!-- ****************************************************************************** -->
 
 
+<h2 id="references1">References</h2>
+<h3 id="normref">Normative References</h3>
+<dl>
+  <dt id="ref-CSS21"><strong class="normref">[CSS21]</strong></dt>
+    <dd><strong>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</strong>, 
+    Bert Bos, Tantek Çelik, Ian Hickson, Håkon Wium Lie, eds.,
+    W3C, 23 April 2009, (Candidate Recommendation) </dd>
+
+  <dt id="ref-NVDL"><strong class="normref">[NVDL]</strong></dt>
+    <dd><strong>Document Schema Definition Languages (DSDL) — Part 4:
+      Namespace-based Validation Dispatching Language — NVDL. ISO/IEC FCD
+      19757-4</strong>, See <a
+      href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/</a>
+    </dd>
+
+  <dt id="ref-PORTERDUFF"><strong class="normref">[PORTERDUFF]</strong></dt>
+    <dd><strong>Compositing Digital Images</strong>, T. Porter, T. Duff,
+      SIGGRAPH '84 Conference Proceedings, Association for Computing
+      Machinery, Volume 18, Number 3, July 1984. </dd>
+  <dt id="ref-SVG-COMPOSITING"><strong class="normref">[SVG-COMPOSITING]</strong></dt>
+  <dd>
+    <cite class="w3cwd"><a href="http://www.w3.org/TR/2009/WD-SVGCompositing-20090430/">SVG Compositing Specification</a></cite>,
+    A. Grasso, ed.
+    World Wide Web Consortium, 30 April 2009.
+    <br/>The <a href="http://www.w3.org/TR/SVGCompositing/">latest edition of SVG Compositing</a> is available at
+    http://www.w3.org/TR/SVGCompositing/.
+  </dd>
+  <dt id="ref-RNG"><strong class="normref">[RelaxNG]</strong></dt>
+    <dd><strong>Document Schema Definition Languages (DSDL) — Part 2:
+      Regular grammar- based validation — RELAX NG. ISO/IEC FDIS
+      19757-2:2002(E)</strong>, J. Clark, <span class="ruby"><span
+      xml:lang="ja" lang="ja" class="rb">村田 真</span> <span
+      class="rp">(</span><span class="rt"><span
+      class="familyname">Murata</span> M.</span><span
+      class="rp">)</span></span>, eds., 12 December 2002. See <a
+      href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf</a>
+    </dd>
+  <dt id="ref-Schema2"><strong class="normref">[Schema2]</strong></dt>
+    <dd><strong>XML Schema Part 2: Datatypes Second Edition</strong>, P.
+      Biron, A. Malhotra, eds. W3C, 28 October 2004 (Recommendation). Latest
+      version available at <a
+      href="http://www.w3.org/TR/xmlschema-2/">http://www.w3.org/TR/xmlschema-2/</a>.
+      See also <a
+      href="http://www.w3.org/TR/2005/NOTE-xml11schema10-20050511/">Processing
+      XML 1.1 documents with XML Schema 1.0 processors</a>. </dd>
+  <dt id="ref-svg11"><strong class="normref">[SVG11]</strong></dt>
+    <dd><strong>Scalable Vector Graphics (SVG) 1.1 Specification</strong>,
+      Dean Jackson editor, W3C, 14 January 2003 (Recommendation). See <a
+      href="http://www.w3.org/TR/2003/REC-SVG11-20030114/">http://www.w3.org/TR/2003/REC-SVG11-20030114/</a>
+    </dd>
+  <dt id="ref-svgt12"><strong class="normref">[SVGT12]</strong></dt>
+    <dd><strong>Scalable Vector Graphics (SVG) Tiny 1.2 Specification</strong>,
+      Dean Jackson editor, W3C, 22 December 2008 (Recommendation). See <a
+      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/">http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/</a>
+    </dd>
+</dl>
 <h3 id="informref">Informative References</h3>
 <dl>
   <dt id="ref-html5"><strong class="informref">[HTML5]</strong></dt>
