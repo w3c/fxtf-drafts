@@ -58,6 +58,12 @@
       content: "TO DO : ";
       color: #f44;
   }
+  
+  pre {
+    color: #a52a2a;
+    font-family: monospace;
+    font-size: 90%
+}  
  </style>
 </head>
 
@@ -89,7 +95,7 @@
 <h2 class="no-num no-toc" id="abstract">Abstract</h2>
 
 <p>
-  Compositing describes the way how the shapes of different elements are 
+  Compositing describes how shapes of different elements are 
   combined into a single image. Conceptually, each element is rendered into 
   its own buffer and is then merged with its backdrop. The most widely used 
   compositing operation is simple alpha compositing. (see
@@ -183,15 +189,83 @@ This document will describe the algorithms of compositing and blending in the fi
 </p>
 
 <h2 id="whatiscompositing">What is compositing</h2>
-<h3 id="whatiscompositing">Explain compositing</h3>
+<p>
 Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the 'opacity'. This coverage information is used to control the compositing of colors.
-
+</p>
+<p>
 Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the background image using a simplistic formula that has the effect of overlaying the object over the background. Where the objects overlap and coverage is not complete the color of the background may show through the object that has just been rendered. 
+</p>
 
-<h4 id="simplealphablending">simple alpha blending</h4>
+<h3 id="simplealphablending">simple alpha blending</h3>
 <p>
 In computer graphics, alpha compositing is the process of combining an image with a background to create the appearance of partial or full transparency. 
 The alpha value is stored alongside the color and has a value between 0 and 1.  A value of 0 means that the pixel does not have any coverage information and is transparent; i.e. there was no color contribution from any geometry because the geometry did not overlap this pixel. A value of 1 means that the pixel is opaque because the geometry completely overlapped the pixel.
+</p>
+
+<p>
+A shape's contribution to a composition is described by the multiplication of its color (Ca) and its alpha (αa). This is also called the <code>premultiplied alpha</code> value. We will call this the 'pixel' from here on.
+<pre>
+ca = Ca x αa
+</pre>
+with 
+<br/>
+ca: the pixel value<br/>
+Ca: the color value<br/>
+αa: the alpha value
+</p>
+<p>
+Conceptually, 'alpha' means 'allow (1 - alpha) from behind to show'. With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the background pixel. Thus, the formula becomes:
+<pre>
+co = ca + cb x (1 - αa)
+</pre>
+with 
+<br/>
+co: the pixel after compositing<br/>
+ca: the pixel of the shape<br/>
+cb: the pixel of the backdrop<br/>
+αa: the alpha value of the shape
+</p>
+
+<p style="text-align:center"><img src="examples/group_alpha.svg"/>
+<br/>
+Figure 1
+</p>
+
+<p>
+There are circumstances that we have to know the alpha value of the pixel.
+For example in figure 1, shape 2 and 3 are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 shine through. Without knowing αa of the group, we would not be able to calculate this.<br/>
+Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the backdrop. So:
+<pre>
+αo = αa + αb x (1 - αa)
+</pre>
+with 
+<br/>
+αo: the alpha after compositing<br/>
+αa: the alpha of the shape<br/>
+αb: the alpha of the backdrop
+</p>
+<p>
+If you want to know the color of a shape and not just its pixel value, you can reverse the formula for premultiplied alpha:
+<pre>
+Co = co / αo
+</pre>
+By replacing co with the simple alpha compositing formula, you can directly use the color values that the user specified:
+<pre>
+Co = 1/αo x (Ca x αa + Cb x αb x (1 - αa))
+</pre>
+with 
+<br/>
+αo: the alpha after compositing<br/>
+Co: the color after compositing<br/>
+Ca: the color of the shape<br/>
+Cb: the color of the backdrop<br/>
+αa: the alpha of the shape<br/>
+αb: the alpha of the backdrop
+</p>
+
+<h3 id="simplealphablendingexamples">Examples of simple alpha blending</h3>
+<p>
+Next we will run through a couple of scenarios that show how alpha compositing works.
 </p>
 
 <p style="text-align:center"><img src="examples/simple_box.svg"/>
@@ -199,8 +273,9 @@ The alpha value is stored alongside the color and has a value between 0 and 1.  
 Figure 1
 </p>
 <p>
-Figure 1 describes the most basic case of a composition. It consists of 1 shape that is filled with a solid color so no compositing operation is required.
+Figure 1 describes the most basic case. It consists of 1 shape that is filled with a solid color so no compositing operation is required.<br/>
 </p>
+
 <p style="text-align:center"><img src="examples/two_box.svg"/>
 <br/>
 Figure 2
@@ -209,22 +284,107 @@ Figure 2
 Figure 2 is a more complex example. There is still no alpha but there are 2 shapes that intersect each other.
 </p>
 <p>
-This operation can be described as: 
-	... [simple compositing formula]
-where Co is the result of the operation, Ca is the color of the pixel in element A, Cb is the color of the pixel in element B, and αa and αb are the alpha of the pixels in elements A and B respectively.
-
-[add a simple example here]
-
-Alpha can be specified on elements or groups. If alpha is specified on a group, the group is computed first and then the alpha compositing formula is applied to the group and its backdrop
+Applying the compositing value, you get:
+<pre>
+αo = 1 + 1 x (1 - 1) = 1
+co = RGB(0, 0, 255) x 1 + RGB(255, 0, 0) x 1 x (1 - 1)
+co = RGB(0, 0, 255)
+Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
+</pre>
 </p>
 
-<h4 id="groupinvariance">Group invariance</h4>
-An important behavior of simple alpha compositing is its group invariance.
-Adding or removing grouping with no optional attributes should not show visual differences.
-ie a + b + c = a + (b+c) = (a+b)+c
-When adding attributes to the group such as knockout, isolate or Port-Duff blending, groups will no longer be invariant.
+<p style="text-align:center"><img src="examples/two_box_transparency.svg"/>
+<br/>
+Figure 3
+</p>
+<p>
+Figure 3 is an example where the shape has alpha but the backdrop is opaque.
+</p>
+<p>
+Applying the compositing value, you get:
+<pre>
+αo = .5 + 1 x (1 - .5) = 1
+co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * 1 * (1 - .5)
+co = RGB(0, 0, 127) + RGB(127, 0, 0)
+co = RGB(127, 0, 127)
+Co = 1/1 * RGB(127, 0, 127) = RGB(127, 0, 127)
+</pre>
+</p>
 
+<p style="text-align:center"><img src="examples/two_box_transparency_both.svg"/>
+<br/>
+Figure 4
+</p>
+<p>
+Figure 4 is an example where both the shape and the backdrop have alpha.
+</p>
+<p>
+Applying the compositing value, you get:
+<pre>
+αo = .5 + .5 x (1 - .5) = .75
+co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * .5 * (1 - .5)
+co = RGB(0, 0, 127) + RGB(127, 0, 0)
+co = RGB(63, 0, 127)
+Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
+</pre>
+</p>
+
+<h3 id="groupinvariance">Group invariance</h3>
+An important behavior of simple alpha compositing is its group invariance.
+Adding or removing grouping with default attributes should not show visual differences.<br/>
+so: a + b + c = a + (b + c) = (a + b)+c<br/>
+When adding attributes to the group such as knockout, isolate, blending or Port-Duff compositing, groups are no longer be invariant.
+
+<h3 id="groupalpha">Group alpha</h3>
+
+<h3 id="matting">Matting</h3>
+<p>
+The end result of alpha compositing can contain alpha. For instance, a solid red shape with an opacity value of .5 will end up with a RGB(255, 0, 0, .5) color.
+Since monitors and printers can't display opacity, we have to remove this alpha value by compositing it with solid white. This process is called 'matting'.
+</p>
+<p>
+Applying the compositing formula, you get:
+<pre>
+co = RGB(255, 0, 255) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
+co = RGB(0, 0, 127) + RGB(127, 127, 127)
+co = RGB(127, 127, 255)
+</pre>
+</p>
+
+<h2 id="backgroundcalculation">Background calculation</h2>
+Until now, we haven't discussed how the backgkdrop is calculated. A first assumption would be that it consists of everything that was drawn earlier.<br/>
+The problem with that is how you would deal with parent groups that have opacity or non-default blending or compositing modes.<br/>
+It turns out that these non-default attributes should be ignored when calculating the background. So, if you are an element in a group that has opacity, the opacity is ignored when calculating the backdrop.
+
+<h3 id="backgroundexamples">Examples of backdrop calculation</h3>
+<p style="text-align:center"><img src="examples/simple_backdrop.svg"/>
+<br/>
+Figure 5
+</p>
+<p>
+Figure 5 has 2 simple shapes. The backdrop for the blue shape is the bottom right corner of the red shape.
+The dotted line shows the area that is examined during compositing of the blue shape.
+</p>
+
+<p style="text-align:center"><img src="examples/simple_backdrop_alpha.svg"/>
+<br/>
+Figure 6
+</p>
+<p>
+In figure 6, the shape in the background has an alpha value. The alpha value of the background shape is preserved when the backdrop is calculated.
+</p>
+
+<p style="text-align:center"><img src="examples/group_alpha_backdrop.svg"/>
+<br/>
+Figure 7
+</p>
+<p>
+In figure 7, the blue and green shapes are in a group that has alpha. When calculating the backdrop for the blue shape, the red and green shapes are combined with simple alpha compositing and the group alpha is ignored.
+</p>
+
+<h2 id="advancedcompositing">Advanced compositing features</h2>
 <h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
+NOT FINISHED
 The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
 The list of PD operators is:
 	[add list]
@@ -244,6 +404,255 @@ The diagram below shows an example of the 'source atop' operator with two 50% op
 
 The twelve porter duff operators are shown below for opaque and partially transparent objects. The blue rectangle is the source and the orange circle is the destination.
 
+<h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
+
+<h2 id="blending">Blending</h2>
+
+<h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
+<h3 id="csscompositingkeyword">Compositing</h3>
+<h4 id="alpha-compositing">The <span class="prop-name">'alpha-compositing'</span> property</h4>
+
+<p>
+  The description of the <span class="prop-name">'alpha-compositing'</span> property is
+as follows:</p>
+
+<div class="propdef">
+<dl>
+  <dt id='propdef-alpha-compositing'><span class='propdef-title prop-name'>'alpha-compositing'</span></dt>
+    <dd>
+      <table summary="alpha-compositing property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | <a class="noxref"
+              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
+              class="value-inst-inherit noxref">inherit</span></a></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>src-over</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>no</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+
+<h4 id="enable-background">The <span class="prop-name">'enable-background'</span> property</h4>
+<p>
+  The description of the <span class="prop-name">'enable-background'</span> property is
+as follows:</p>
+
+<div class="propdef">
+<dl>
+  <dt id='propdef-enable-background'><span class='propdef-title prop-name'>'enable-background'</span></dt>
+    <dd>
+      <table summary="enable-background property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> accumulate | new | <a class="noxref"
+              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
+              class="value-inst-inherit noxref">inherit</span></a> </td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>accumulate</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>yes</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+
+<h3 id="cssblending">Blending</h3>
+<h4 id="blend-mode">The <span class="prop-name">'blend-mode'</span> property</h4>
+
+<p>
+  The description of the <span class="prop-name">'blend-mode'</span> property is
+as follows:</p>
+
+<div class="propdef">
+<dl>
+  <dt id='propdef-blend-mode'><span class='propdef-title prop-name'>'blend-mode'</span></dt>
+    <dd>
+      <table summary="blend-mode property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> normal | plus | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity | <a class="noxref"
+              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
+              class="value-inst-inherit noxref">inherit</span></a> </td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>normal</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>no</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+
+<h4 id="enable-background">The <span class="prop-name">'isolation'</span> property</h4>
+<p>
+  The description of the <span class="prop-name">'isolation'</span> property is
+as follows:</p>
+
+<div class="propdef">
+<dl>
+  <dt id='propdef-isolation'><span class='propdef-title prop-name'>'isolation'</span></dt>
+    <dd>
+      <table summary="isolation property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> accumulate | isolate | <a class="noxref"
+              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
+              class="value-inst-inherit noxref">inherit</span></a> </td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>accumulate</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>yes</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+
+<h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
+<p>
+  The description of the <span class="prop-name">'knock-out'</span> property is
+as follows:</p>
+
+<div class="propdef">
+<dl>
+  <dt id='propdef-knock-out'><span class='propdef-title prop-name'>'knock-out'</span></dt>
+    <dd>
+      <table summary="knock-out property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> preserve | knock-out | <a class="noxref"
+              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
+              class="value-inst-inherit noxref">inherit</span></a> </td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>preserve</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>yes</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+<!--
 <h3 id="backgroundcalculation">Background calculation</h3>
 <h4 id="whyisitneeded">Why is it needed</h4>
 <h4 id="howisitdone">How is it done</h4>
@@ -255,7 +664,7 @@ c.	Background calculation
 d.	Isolate
 e.	Knockout
 4.	How is compositing/blending specified in CSS
-
+ -->
 
 <!-- ****************************************************************************** -->
 
