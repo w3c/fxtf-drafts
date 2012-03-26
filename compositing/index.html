@@ -203,6 +203,9 @@
     <ul class=toc>
      <li><a href="#backgroundexamples"><span class=secno>3.1. </span>Examples
       of backdrop calculation</a>
+
+     <li><a href="#backgroundnew"><span class=secno>3.2. </span>Establishing
+      a new background context</a>
     </ul>
 
    <li><a href="#advancedcompositing"><span class=secno>4. </span>Advanced
@@ -290,6 +293,9 @@
         </span>&lsquo;<code class=property>luminosity</code>&rsquo; blend
         mode</a>
       </ul>
+
+     <li><a href="#blendingnonseparable"><span class=secno>5.3. </span>Effect
+      of group isolation on blending</a>
     </ul>
 
    <li><a href="#csscompositingandblending"><span class=secno>6.
@@ -588,6 +594,16 @@ co = RGB(127, 127, 255)
    If the group had blending, compositing or filtering, those would also be
    ignored.
 
+  <h3 id=backgroundnew><span class=secno>3.2. </span>Establishing a new
+   background context</h3>
+
+  <p>Under certain circumstances, you might want to limit the background
+   calculation upto a certain parent group. Compositing and blending each
+   have an attribute (or TBD the same attribute) that can be set on the group
+   where you want this to happen.<br>
+   See the sections on compositing and blending on how this affects
+   rendering.
+
   <h2 id=advancedcompositing><span class=secno>4. </span>Advanced compositing
    features</h2>
 
@@ -691,6 +707,8 @@ co = RGB(127, 127, 255)
     B(Cb, Cs) = Cs
 </pre>
 
+  <p><img src="examples/normal.png">
+
   <h4 id=blendingplus><span class=secno>5.1.2. </span>&lsquo;<code
    class=property>plus</code>&rsquo; blend mode</h4>
 
@@ -699,6 +717,8 @@ co = RGB(127, 127, 255)
   <pre>
     B(Cb, Cs) = Cb + Cs
 </pre>
+
+  <p><img src="examples/plus.png">
 
   <h4 id=blendingmultiply><span class=secno>5.1.3. </span>&lsquo;<code
    class=property>multiply</code>&rsquo; blend mode</h4>
@@ -713,6 +733,8 @@ co = RGB(127, 127, 255)
   <pre>
     B(Cb, Cs) = Cb x Cs
 </pre>
+
+  <p><img src="examples/multiply.png">
 
   <h4 id=blendingscreen><span class=secno>5.1.4. </span>&lsquo;<code
    class=property>screen</code>&rsquo; blend mode</h4>
@@ -730,6 +752,8 @@ co = RGB(127, 127, 255)
     B(Cb, Cs) = 1 - [(1 - Cb) x (1 - Cs)]
               = Cb + Cs -(Cb x Cs)
 </pre>
+
+  <p><img src="examples/screen.png">
 
   <h4 id=blendingoverlay><span class=secno>5.1.5. </span>&lsquo;<code
    class=property>overlay</code>&rsquo; blend mode</h4>
@@ -749,6 +773,8 @@ co = RGB(127, 127, 255)
    class=property>hardlight</code>&rsquo; blend mode. See the definition of
    &lsquo;<code class=property>hardlight</code>&rsquo; for the formula.
 
+  <p><img src="examples/overlay.png">
+
   <h4 id=blendingdarken><span class=secno>5.1.6. </span>&lsquo;<code
    class=property>darken</code>&rsquo; blend mode</h4>
 
@@ -761,6 +787,8 @@ co = RGB(127, 127, 255)
     B(Cb, Cs) = min(Cb, Cs)
 </pre>
 
+  <p><img src="examples/darken.png">
+
   <h4 id=blendinglighten><span class=secno>5.1.7. </span>&lsquo;<code
    class=property>lighten</code>&rsquo; blend mode</h4>
 
@@ -772,6 +800,8 @@ co = RGB(127, 127, 255)
   <pre>
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
+
+  <p><img src="examples/lighten.png">
 
   <h4 id=blendingcolordodge><span class=secno>5.1.8. </span>&lsquo;<code
    class=property>color-dodge</code>&rsquo; blend mode</h4>
@@ -786,6 +816,8 @@ co = RGB(127, 127, 255)
         B(Cb, Cs) = 1	
 </pre>
 
+  <p><img src="examples/colordodge.png">
+
   <h4 id=blendingcolorburn><span class=secno>5.1.9. </span>&lsquo;<code
    class=property>color-burn</code>&rsquo; blend mode</h4>
 
@@ -798,6 +830,8 @@ co = RGB(127, 127, 255)
     else
         B(Cb, Cs) = 0	
 </pre>
+
+  <p><img src="examples/colorburn.png">
 
   <h4 id=blendinghardlight><span class=secno>5.1.10. </span>&lsquo;<code
    class=property>hard-light</code>&rsquo; blend mode</h4>
@@ -814,6 +848,8 @@ co = RGB(127, 127, 255)
 
   <p>See the definition of &lsquo;<code class=property>multiply</code>&rsquo;
    and &lsquo;<code class=property>screen</code>&rsquo; for their formulas.
+
+  <p><img src="examples/hardlight.png">
 
   <h4 id=blendingsoftlight><span class=secno>5.1.11. </span>&lsquo;<code
    class=property>soft-light</code>&rsquo; blend mode</h4>
@@ -833,6 +869,8 @@ with
         D(Cb) = sqrt(Cb)
 </pre>
 
+  <p><img src="examples/softlight.png">
+
   <h4 id=blendingdifference><span class=secno>5.1.12. </span>&lsquo;<code
    class=property>difference</code>&rsquo; blend mode</h4>
 
@@ -846,6 +884,8 @@ with
     B(Cb, Cs) = | Cb - Cs |
 </pre>
 
+  <p><img src="examples/difference.png">
+
   <h4 id=blendingexclusion><span class=secno>5.1.13. </span>&lsquo;<code
    class=property>exclusion</code>&rsquo; blend mode</h4>
 
@@ -856,6 +896,8 @@ with
   <pre>
     B(Cb, Cs) = Cb + Cs - 2 x Cb x Cs
 </pre>
+
+  <p><img src="examples/exclusion.png">
 
   <h3 id=blendingnonseparable><span class=secno>5.2. </span>Non-separable
    blend modes</h3>
@@ -916,6 +958,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 	B(Cb, Cs) = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
 </pre>
 
+  <p><img src="examples/hue.png">
+
   <h4 id=blendingsaturation><span class=secno>5.2.2. </span>&lsquo;<code
    class=property>saturation</code>&rsquo; blend mode</h4>
 
@@ -926,6 +970,8 @@ components having the minimum, middle, and maximum values upon entry to the func
   <pre>
 	B(Cb, Cs) = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
 </pre>
+
+  <p><img src="examples/saturation.png">
 
   <h4 id=blendingcolor><span class=secno>5.2.3. </span>&lsquo;<code
    class=property>color</code>&rsquo; blend mode</h4>
@@ -939,6 +985,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
 </pre>
 
+  <p><img src="examples/color.png">
+
   <h4 id=blendingluminosity><span class=secno>5.2.4. </span>&lsquo;<code
    class=property>luminosity</code>&rsquo; blend mode</h4>
 
@@ -950,6 +998,26 @@ components having the minimum, middle, and maximum values upon entry to the func
 	B(Cb, Cs) = SetLum(Cb, Lum(Cs))
 </pre>
 
+  <p><img src="examples/luminosity.png">
+
+  <h3 id=blendingnonseparable><span class=secno>5.3. </span>Effect of group
+   isolation on blending</h3>
+
+  <p> In the following example, the red and green rectangles are in a group
+   and the green rectangle has a multiply blend mode.
+
+  <p><img src="examples/group_non_isolated.svg">
+
+  <p> The background that is available for blending, is the blue and red
+   rectangle and is shown on the right.<br>
+   Now, if we made the group isolated, only the red rectangle is in the
+   background and the result becomes as follows:
+
+  <p><img src="examples/group_isolated.svg">
+
+  <p> The result is that the green rectangle doesn't blend with the blue
+   rectangle.
+
   <h2 id=csscompositingandblending><span class=secno>6. </span>Specifying
    Compositing and Blending in CSS</h2>
 
@@ -958,9 +1026,10 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <p> If an element specifies non-default blending, compositing or opacity,
    its renderstyle will revert to &lsquo;<code
-   class=property>flat</code>&rsquo;.
+   class=property>flat</code>&rsquo;. This means that elements with z-index
+   will be not honor the depth of elements outside of the group.
 
-  <p> Order: first blending is applied, followed by filters and then
+  <p> Order: first blending is applied, followed by filtering and then
    compositing.
 
   <h3 id=csscompositingkeyword><span class=secno>6.2. </span>Compositing</h3>

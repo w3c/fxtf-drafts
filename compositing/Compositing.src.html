@@ -386,6 +386,10 @@ Figure 7
 In figure 7, the blue and green shapes are in a group that has alpha. When calculating the backdrop for the blue shape, the red and green shapes are combined with simple alpha compositing and the group alpha is ignored. If the group had blending, compositing or filtering, those would also be ignored.
 </p>
 
+<h3 id="backgroundnew">Establishing a new background context</h3>
+Under certain circumstances, you might want to limit the background calculation upto a certain parent group. Compositing and blending each have an attribute (or TBD the same attribute) that can be set on the group where you want this to happen.<br/>
+See the sections on compositing and blending on how this affects rendering.
+
 <h2 id="advancedcompositing">Advanced compositing features</h2>
 <h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
 NOT FINISHED
@@ -442,6 +446,7 @@ This is the default attribute which specifies no blending. The blending formula 
 <pre>
     B(Cb, Cs) = Cs
 </pre>
+<img src="examples/normal.png"/>
 </p>
 
 <h4 id="blendingplus">'plus' blend mode</h4>
@@ -451,6 +456,7 @@ The source is added to the backdrop.
     B(Cb, Cs) = Cb + Cs
 </pre>
 </p>
+<img src="examples/plus.png"/>
 
 <h4 id="blendingmultiply">'multiply' blend mode</h4>
 <p>
@@ -462,6 +468,7 @@ The resultant color is always at least as dark as either the source or destinati
     B(Cb, Cs) = Cb x Cs
 </pre>
 </p>
+<img src="examples/multiply.png"/>
 
 <h4 id="blendingscreen">'screen' blend mode</h4>
 <p>
@@ -474,6 +481,7 @@ The result color is always at least as light as either of the two constituent co
               = Cb + Cs -(Cb x Cs)
 </pre>
 </p>
+<img src="examples/screen.png"/>
 
 <h4 id="blendingoverlay">'overlay' blend mode</h4>
 <p>
@@ -486,6 +494,7 @@ Source colors overlay the backdrop while preserving its highlights and shadows. 
 </pre>
 Overlay is the inverse of the 'hardlight' blend mode. See the definition of 'hardlight' for the formula.
 </p>
+<img src="examples/overlay.png"/>
 
 <h4 id="blendingdarken">'darken' blend mode</h4>
 <p>
@@ -496,6 +505,7 @@ The backdrop is replaced with the source where the source is darker; otherwise, 
     B(Cb, Cs) = min(Cb, Cs)
 </pre>
 </p>
+<img src="examples/darken.png"/>
 
 <h4 id="blendinglighten">'lighten' blend mode</h4>
 <p>
@@ -506,6 +516,7 @@ The backdrop is replaced with the source where the source is lighter; otherwise,
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
 </p>
+<img src="examples/lighten.png"/>
 
 <h4 id="blendingcolordodge">'color-dodge' blend mode</h4>
 <p>
@@ -517,6 +528,7 @@ Brightens the backdrop color to reflect the source color. Painting with black pr
         B(Cb, Cs) = 1	
 </pre>
 </p>
+<img src="examples/colordodge.png"/>
 
 <h4 id="blendingcolorburn">'color-burn' blend mode</h4>
 <p>
@@ -528,6 +540,7 @@ Darkens the backdrop color to reflect the source color. Painting with white prod
         B(Cb, Cs) = 0	
 </pre>
 </p>
+<img src="examples/colorburn.png"/>
 
 <h4 id="blendinghardlight">'hard-light' blend mode</h4>
 <p>
@@ -540,6 +553,7 @@ Multiplies or screens the colors, depending on the source color value. The effec
 </pre>
 See the definition of 'multiply' and 'screen' for their formulas.
 </p>
+<img src="examples/hardlight.png"/>
 
 <h4 id="blendingsoftlight">'soft-light' blend mode</h4>
 <p>
@@ -556,6 +570,7 @@ with
         D(Cb) = sqrt(Cb)
 </pre>
 </p>
+<img src="examples/softlight.png"/>
 
 <h4 id="blendingdifference">'difference' blend mode</h4>
 <p>
@@ -567,6 +582,7 @@ Painting with white inverts the backdrop color; painting with black produces no 
     B(Cb, Cs) = | Cb - Cs |
 </pre>
 </p>
+<img src="examples/difference.png"/>
 
 <h4 id="blendingexclusion">'exclusion' blend mode</h4>
 <p>
@@ -575,6 +591,7 @@ Produces an effect similar to that of the Difference mode but lower in contrast.
     B(Cb, Cs) = Cb + Cs - 2 x Cb x Cs
 </pre>
 </p>
+<img src="examples/exclusion.png"/>
 
 <h3 id="blendingnonseparable">Non-separable blend modes</h3>
 <p>
@@ -626,6 +643,7 @@ Creates a color with the hue of the source color and the saturation and luminosi
 	B(Cb, Cs) = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
 </pre>
 </p>
+<img src="examples/hue.png"/>
 
 <h4 id="blendingsaturation">'saturation' blend mode</h4>
 <p>
@@ -634,6 +652,7 @@ Creates a color with the saturation of the source color and the hue and luminosi
 	B(Cb, Cs) = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
 </pre>
 </p>
+<img src="examples/saturation.png"/>
 
 <h4 id="blendingcolor">'color' blend mode</h4>
 <p>
@@ -642,6 +661,7 @@ Creates a color with the hue and saturation of the source color and the luminosi
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
 </pre>
 </p>
+<img src="examples/color.png"/>
 
 <h4 id="blendingluminosity">'luminosity' blend mode</h4>
 <p>
@@ -650,14 +670,28 @@ Creates a color with the luminosity of the source color and the hue and saturati
 	B(Cb, Cs) = SetLum(Cb, Lum(Cs))
 </pre>
 </p>
+<img src="examples/luminosity.png"/>
+
+<h3 id="blendingnonseparable">Effect of group isolation on blending</h3>
+<p>
+In the following example, the red and green rectangles are in a group and the green rectangle has a multiply blend mode.
+</p>
+<img src="examples/group_non_isolated.svg"/>
+<p>
+The background that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
+Now, if we made the group isolated, only the red rectangle is in the background and the result becomes as follows:
+</p>
+<img src="examples/group_isolated.svg"/>
+<p>
+The result is that the green rectangle doesn't blend with the blue rectangle.
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
 <p>
-If an element specifies non-default blending, compositing or opacity, its renderstyle will revert to 'flat'.
+If an element specifies non-default blending, compositing or opacity, its renderstyle will revert to 'flat'. This means that elements with z-index will be not honor the depth of elements outside of the group.
 </p>
 <p>
-Order: first blending is applied, followed by filters and then compositing.
+Order: first blending is applied, followed by filtering and then compositing.
 </p>
 <h3 id="csscompositingkeyword">Compositing</h3>
 <h4 id="alpha-compositing">The <span class="prop-name">'alpha-compositing'</span> property</h4>
