@@ -72,7 +72,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">22 February 2012</h2>
+<h2 class="no-num no-toc">4 April 2012</h2>
 <dl>
   <dt>Editors:</dt>
   <dd class="vcard">
@@ -353,11 +353,12 @@ co = RGB(255, 0, 255) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
 co = RGB(0, 0, 127) + RGB(127, 127, 127)
 co = RGB(127, 127, 255)
 </pre>
+which is the value that is sent to the monitor.
 </p>
 
 <h2 id="backgroundcalculation">Background calculation</h2>
-Until now, we haven't discussed how the backgkdrop is calculated. A first assumption would be that it consists of everything that was drawn earlier and this turns out to be correct.<br/>
-If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or compositing modes<br/>However, since the opacity and blending on a group is applied at a later stage, it turns out that these non-default attributes can be ignored when calculating the background. So, if you are an element in a group that has opacity, the opacity is ignored when calculating the backdrop.
+Until now, we haven't discussed how the backdrop is calculated. A first assumption would be that it consists of everything that was drawn earlier and this turns out to be correct.<br/>
+If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the background. So, if you are an element in a group that has opacity, the opacity is ignored when calculating the backdrop.
 
 <h3 id="backgroundexamples">Examples of backdrop calculation</h3>
 <p style="text-align:center"><img src="examples/simple_backdrop.svg"/>
@@ -391,7 +392,8 @@ See the sections on compositing and blending on how this affects rendering.
 
 <h2 id="advancedcompositing">Advanced compositing features</h2>
 <h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
-NOT FINISHED
+<p>
+<span class="issue">NOT FINISHED. Work in progress.</span><br/>
 The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
 The list of PD operators is:
 	[add list]
@@ -410,8 +412,10 @@ The diagram below shows an example of the 'source atop' operator with two 50% op
 
 
 The twelve porter duff operators are shown below for opaque and partially transparent objects. The blue rectangle is the source and the orange circle is the destination.
+</p>
 
 <h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
+<span class="issue">NOT FINISHED. Work in progress.</span><br/>
 
 <h2 id="blending">Blending</h2>
 <p>
@@ -470,15 +474,6 @@ This is the default attribute which specifies no blending. The blending formula 
 </pre>
 <img src="examples/normal.png"/>
 </p>
-
-<h4 id="blendingplus">'plus' blend mode</h4>
-<p>
-The source is added to the backdrop.
-<pre>
-    B(Cb, Cs) = Cb + Cs
-</pre>
-</p>
-<img src="examples/plus.png"/>
 
 <h4 id="blendingmultiply">'multiply' blend mode</h4>
 <p>
@@ -709,7 +704,7 @@ The result is that the green rectangle doesn't blend with the blue rectangle.
 
 <h3 id="blendingnonseparable">Knockout groups</h3>
 <p>
-A knockout group is conceptually the reverse of an isolated group. When calculating the background for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
+A knockout group is conceptually the inverse of an isolated group. When calculating the background for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
 </p>
 <img src="examples/knockout.svg"/>
 <p>
@@ -741,7 +736,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | <a class="noxref"
+            <td> clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | plus | <a class="noxref"
               href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
               class="value-inst-inherit noxref">inherit</span></a></td>
           </tr>
@@ -751,7 +746,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+            <td>All elements. In SVG, it applies only to container elements (except 'mask') and graphics elements</td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -799,7 +794,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+            <td>All container elements. In SVG, it applies to all container elements except 'mask'</td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -822,6 +817,10 @@ as follows:</p>
     </dd>
 </dl>
 </div>
+<p>
+For non-container elements, enable-background is always 'new'. This means that the content of the element always establishes its own context.<br/>
+For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not composite with the content that is underneath.
+</p>
 
 <h3 id="cssblending">Blending</h3>
 <h4 id="blend-mode">The <span class="prop-name">'blend-mode'</span> property</h4>
@@ -839,7 +838,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> normal | plus | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity | <a class="noxref"
+            <td> normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity | <a class="noxref"
               href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
               class="value-inst-inherit noxref">inherit</span></a> </td>
           </tr>
@@ -849,7 +848,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+            <td>All elements. In SVG, it applies only to container elements (except 'mask') and graphics elements</td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -897,7 +896,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+            <td>All container elements. In SVG, it applies to all container elements except 'mask'</span></td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -920,6 +919,10 @@ as follows:</p>
     </dd>
 </dl>
 </div>
+<p>
+For non-container elements, isolation is always 'isolate'. This means that the content of the element always establishes its own context.<br/>
+For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content that is underneath.
+</p>
 
 <h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
 <p>
@@ -945,7 +948,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except 'mask') and graphics elements"</span></td>
+            <td>All container elements. In SVG, it applies to all container elements except 'mask'</td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -971,8 +974,13 @@ as follows:</p>
 Note that knockout applies to blending as well as compositing. Conceptually, every shape will do a 'clear' with its own shape before it blends and composites.
 </p>
 </div>
+
 <h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
+<p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 An author might want to specify the blending of multiple backgrounds of an element. The background compositing and blending is always treated as an isolated group.
+</p>
+
 <h4 id="background-alpha-compositing">The <span class="prop-name">'background-alpha-compositing'</span> property</h4>
 
 <p>
@@ -988,7 +996,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | <a class="noxref"
+            <td> clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | plus | <a class="noxref"
               href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
               class="value-inst-inherit noxref">inherit</span></a></td>
           </tr>
@@ -1036,7 +1044,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> normal | plus | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity | <a class="noxref"
+            <td> normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity | <a class="noxref"
               href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
               class="value-inst-inherit noxref">inherit</span></a> </td>
           </tr>
@@ -1072,8 +1080,9 @@ as follows:</p>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in Canvas </h2>
 <p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.
-To allow blending, we can extend the list with the blending keywords: normal, plus, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</br>
+To allow blending, we can extend the list with the blending keywords: normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</br>
 </p>
 <p>
 If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the src-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
