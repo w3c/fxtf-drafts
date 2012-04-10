@@ -105,7 +105,7 @@
  </p>
  
  <p>
-  Blending (also known as transparency) describes how colors are 'blended'
+  Blending describes how colors are "blended"
   together. Typically, the color of an element and the color of its backdrop
   are combined to create a new color. This new color replaces the old color
   and is then composited with the backdrop using the specified compositing mode.
@@ -190,7 +190,7 @@ This document will describe the algorithms of compositing and blending in the fi
 
 <h2 id="whatiscompositing">What is compositing</h2>
 <p>
-Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the 'opacity'. This coverage information is used to control the compositing of colors.
+Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. This coverage information is used to control the compositing of colors.
 </p>
 <p>
 Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the background image using a simplistic formula that has the effect of overlaying the object over the background. Where the objects overlap and coverage is not complete the color of the background may show through the object that has just been rendered. 
@@ -203,7 +203,7 @@ The alpha value is stored alongside the color and has a value between 0 and 1.  
 </p>
 
 <p>
-A shape's contribution to a composition is described by the multiplication of its color (Ca) and its alpha (αa). This is also called the <code>premultiplied alpha</code> value. We will call this the 'pixel' from here on.
+A shape's contribution to a composition is described by the multiplication of its color (Ca) and its alpha (αa). This is also called the <code>premultiplied alpha</code> value. We will call this the "pixel" from here on.
 <pre>
 ca = Ca x αa
 </pre>
@@ -214,7 +214,7 @@ Ca: the color value<br/>
 αa: the alpha value
 </p>
 <p>
-Conceptually, 'alpha' means 'allow (1 - alpha) from behind to show'. With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the background pixel. Thus, the formula becomes:
+Conceptually, "alpha" means "allow (1 - alpha) from behind to show". With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the background pixel. Thus, the formula becomes:
 <pre>
 co = ca + cb x (1 - αa)
 </pre>
@@ -233,7 +233,7 @@ Figure 1
 
 <p>
 There are circumstances that we have to know the alpha value of the pixel.
-For example in figure 1, shape 2 and 3 have opacity. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 shine through. Without knowing αa of the group, we would not be able to calculate this.<br/>
+For example in figure 1, shape 2 and 3 have <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 shine through. Without knowing αa of the group, we would not be able to calculate this.<br/>
 Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the backdrop. So:
 <pre>
 αo = αa + αb x (1 - αa)
@@ -343,8 +343,8 @@ If there is alpha on the group, it is multipied with the alpha value of the grou
 
 <h3 id="matting">Matting</h3>
 <p>
-The end result of alpha compositing can contain alpha. For instance, a solid red shape with an opacity value of .5 will end up with a RGB(255, 0, 0, .5) color.
-Since monitors and printers can't display opacity, we have to remove this alpha value by compositing it with solid white. This process is called 'matting'.
+The end result of alpha compositing can contain alpha. For instance, a solid red shape with an <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> value of 50% will end up with a RGB(255, 0, 0, .5) color.
+Since monitors and printers can't display <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, we have to remove this alpha value by compositing it with solid white. This process is called matting.
 </p>
 <p>
 Applying the compositing formula, you get:
@@ -358,7 +358,7 @@ which is the value that is sent to the monitor.
 
 <h2 id="backgroundcalculation">Background calculation</h2>
 Until now, we haven't discussed how the backdrop is calculated. A first assumption would be that it consists of everything that was drawn earlier and this turns out to be correct.<br/>
-If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the background. So, if you are an element in a group that has opacity, the opacity is ignored when calculating the backdrop.
+If you think it through a little more, it seems that there would be a complication if parent groups have <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the background. So, if you are an element in a group that has <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> is ignored when calculating the backdrop.
 
 <h3 id="backgroundexamples">Examples of backdrop calculation</h3>
 <p style="text-align:center"><img src="examples/simple_backdrop.svg"/>
@@ -404,13 +404,13 @@ The following diagram shows the four different regions of a single pixel that ar
 	[show diagram]
 
 The 'source over' compositing operator corresponds with the default simple alpha compositing rules.
-The diagram below shows an example of the 'source over' operator with two 50% opaque shapes. Firstly, it shows the two shapes that will be composited together using the 'source over' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting opacity of the overlapping region of the two shapes will be 75% as all of the sub-pixel regions contribute color and opacity. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source over' operator.
+The diagram below shows an example of the 'source over' operator with two 50% opaque shapes. Firstly, it shows the two shapes that will be composited together using the 'source over' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting 'opacity' of the overlapping region of the two shapes will be 75% as all of the sub-pixel regions contribute color and <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source over' operator.
 	[show diagram]
 
 
-A Porter Duff operator such as 'source atop', used extensively in upcoming examples, contains contributions from only two of the sub-pixel regions. The 'source atop'(src-atop) operator selects the source color from the overlapping region and the destination color not obscured by the source to produce the resultant color. The resultant opacity is the combined opacity from these two regions.
+A Porter Duff operator such as 'source atop', used extensively in upcoming examples, contains contributions from only two of the sub-pixel regions. The 'source atop'(src-atop) operator selects the source color from the overlapping region and the destination color not obscured by the source to produce the resultant color. The resultant 'opacity is the combined <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> from these two regions.
 
-The diagram below shows an example of the 'source atop' operator with two 50% opaque shapes. It is similar to the previous diagram for 'source over'. Firstly, it shows the two shapes that will be composited together using the 'source atop' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section of the diagram indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting opacity of the overlapping region of the two shapes will be 50%, as only two of the sub-pixel regions contribute color and opacity. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source atop' operator. The region where only source color was present is not rendered as the 'source atop' only select source color that overlaps destination color.
+The diagram below shows an example of the 'source atop' operator with two 50% opaque shapes. It is similar to the previous diagram for 'source over'. Firstly, it shows the two shapes that will be composited together using the 'source atop' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section of the diagram indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> of the overlapping region of the two shapes will be 50%, as only two of the sub-pixel regions contribute color and <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source atop' operator. The region where only source color was present is not rendered as the 'source atop' only select source color that overlaps destination color.
 
 
 The twelve porter duff operators are shown below for opaque and partially transparent objects. The blue rectangle is the source and the orange circle is the destination.
@@ -421,10 +421,10 @@ The twelve porter duff operators are shown below for opaque and partially transp
 
 <h2 id="blending">Blending</h2>
 <p>
-Blending takes the colors of the source element and mixes them with the backdrop. The resulting blended element then replaces the original source. Note that the opacity of the source element is ignored during blending. The alpha of the backdrop will also be ignored. Note that this calculation always happens in non-premultiplied space.
+Blending takes the colors of the source element and mixes them with the backdrop. The resulting blended element then replaces the original source. Note that the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> of the source element is ignored during blending. The alpha of the backdrop will also be ignored. Note that this calculation always happens in non-premultiplied space.
 </p>
 <p>
-We will describe the 'mixing' formula as:
+We will describe the "mixing" formula as:
 <pre>
 	Cm = B(Cb, Cs)
 </pre>
@@ -451,8 +451,8 @@ Cb: the backdrop color<br/>
 </p>
 <img src="examples/blend_background_opacity.svg"/>
 <p>
-This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of opacity.<br/>
-Note how the top rectangle shifts more toward red as the opacity of the backdrop lowers.
+This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>.<br/>
+Note how the top rectangle shifts more toward red as the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> of the backdrop lowers.
 </p>
 <p>
 This formula creates a new image which is then composited with the specified Porter-Duff compositing formula. For simple alpha blending, the formula thus becomes:
@@ -723,8 +723,8 @@ In the top example you can see that the green rectangle is blending with the red
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
 <p>
-If an element specifies non-default blending, compositing or opacity, its renderstyle will revert to 'flat'. This means that elements with z-index will be not honor the depth of elements outside of the group.<br/>
-This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-color/#opacity">opacity</a> value smaller than 1.
+If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its renderstyle will revert to 'flat'. This means that elements with z-index will be not honor the depth of elements outside of the group.<br/>
+This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-color/#opacity"><a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a></a> value smaller than 1.
 </p>
 <p>
 Order: first filtering is applied, followed by blending and then compositing.
