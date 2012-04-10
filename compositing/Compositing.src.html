@@ -72,7 +72,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">4 April 2012</h2>
+<h2 class="no-num no-toc">5 April 2012</h2>
 <dl>
   <dt>Editors:</dt>
   <dd class="vcard">
@@ -387,8 +387,10 @@ In figure 7, the blue and green shapes are in a group that has alpha. When calcu
 </p>
 
 <h3 id="backgroundnew">Establishing a new background context</h3>
-Under certain circumstances, you might want to limit the background calculation up to a certain parent group. For example, if you import a artwork, you usually don't want its contents to blend with the background. In other words, you want to 'isolate' that compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have an attribute (or TBD the same attribute) that can be set on the group where you want this to happen.<br/>
+<p>
+Under certain circumstances, you might want to limit the background calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the background because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have an attribute (or TBD the same attribute) that can be set on the group where you want this to happen.<br/>
 See the sections on compositing and blending on how this affects rendering.
+</p>
 
 <h2 id="advancedcompositing">Advanced compositing features</h2>
 <h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
@@ -443,8 +445,14 @@ with:
 <br/>
 Cr: the result color<br/>
 B: the formula that does the blending<br/>
+Cs: the source color<br/>
 Cb: the backdrop color<br/>
 αb: the backdrop alpha<br/>
+</p>
+<img src="examples/blend_background_opacity.svg"/>
+<p>
+This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of opacity.<br/>
+Note how the top rectangle shifts more toward red as the opacity of the backdrop lowers.
 </p>
 <p>
 This formula creates a new image which is then composited with the specified Porter-Duff compositing formula. For simple alpha blending, the formula thus becomes:
@@ -460,7 +468,7 @@ now subsitute the result of blending for Ca:
 </p>
 <h3 id="blendingseparable">Separable blend modes</h3>
 <p>
-A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent backdrop and source colors—that is, if the blend mode function B is applied separately to each set of corresponding components.
+A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent backdrop and source colors—that is, if the mixing formula is applied <strong>separately</strong> to each set of corresponding components.
 </p>
 <p>
 Each of the following blend modes will apply the blending function B(Cb, Cs) on each of the color components.
@@ -612,7 +620,7 @@ Produces an effect similar to that of the Difference mode but lower in contrast.
 
 <h3 id="blendingnonseparable">Non-separable blend modes</h3>
 <p>
-Nonseparable blend modes consider all color components in combination as opposed to the seperable ones that looks at each component individually.<br/>
+Nonseparable blend modes consider all color components in combination as opposed to the seperable ones that look at each component individually.<br/>
 All of these blend modes conceptually entail the following steps:<br/>
 a) Convert the backdrop and source colors from the blending color space to an intermediate HSL (hue-saturation-luminosity) representation.<br/>
 b) Create a new color from some combination of hue, saturation, and luminosity components selected from the backdrop and source colors.<br/>
@@ -715,7 +723,8 @@ In the top example you can see that the green rectangle is blending with the red
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
 <p>
-If an element specifies non-default blending, compositing or opacity, its renderstyle will revert to 'flat'. This means that elements with z-index will be not honor the depth of elements outside of the group.
+If an element specifies non-default blending, compositing or opacity, its renderstyle will revert to 'flat'. This means that elements with z-index will be not honor the depth of elements outside of the group.<br/>
+This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-color/#opacity">opacity</a> value smaller than 1.
 </p>
 <p>
 Order: first filtering is applied, followed by blending and then compositing.

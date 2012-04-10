@@ -77,7 +77,7 @@
 
    <h1>Compositing and Blending 1.0</h1>
 
-   <h2 class="no-num no-toc" id=april-2012>4 April 2012</h2>
+   <h2 class="no-num no-toc" id=april-2012>5 April 2012</h2>
 
    <dl>
     <dt>Editors:
@@ -618,11 +618,11 @@ co = RGB(127, 127, 255)
   <h3 id=backgroundnew><span class=secno>3.2. </span>Establishing a new
    background context</h3>
 
-  <p>Under certain circumstances, you might want to limit the background
-   calculation up to a certain parent group. For example, if you import a
-   artwork, you usually don't want its contents to blend with the background.
-   In other words, you want to &lsquo;<code
-   class=property>isolate</code>&rsquo; that compositing and blending of that
+  <p> Under certain circumstances, you might want to limit the background
+   calculation up to a certain parent group. For example, if you import
+   artwork, you usually don't want its contents to blend with the background
+   because it will change the look. In other words, you want to &lsquo;<code
+   class=property>isolate</code>&rsquo; the compositing and blending of that
    artwork from the rest of the tree.<br>
    Compositing and blending each have an attribute (or TBD the same
    attribute) that can be set on the group where you want this to happen.<br>
@@ -727,8 +727,17 @@ co = RGB(127, 127, 255)
   <p>with: <br>
    Cr: the result color<br>
    B: the formula that does the blending<br>
+   Cs: the source color<br>
    Cb: the backdrop color<br>
    αb: the backdrop alpha<br>
+
+  <p><img src="examples/blend_background_opacity.svg">
+
+  <p> This example has a red rectangle with a blending mode that is placed on
+   top of a set of green rectangles that have different levels of
+   opacity.<br>
+   Note how the top rectangle shifts more toward red as the opacity of the
+   backdrop lowers.
 
   <p> This formula creates a new image which is then composited with the
    specified Porter-Duff compositing formula. For simple alpha blending, the
@@ -749,8 +758,9 @@ now subsitute the result of blending for Ca:
 
   <p> A blend mode is termed separable if each component of the result color
    is completely determined by the corresponding components of the
-   constituent backdrop and source colors—that is, if the blend mode
-   function B is applied separately to each set of corresponding components.
+   constituent backdrop and source colors—that is, if the mixing formula is
+   applied <strong>separately</strong> to each set of corresponding
+   components.
 
   <p> Each of the following blend modes will apply the blending function
    B(Cb, Cs) on each of the color components.
@@ -950,7 +960,7 @@ with
    blend modes</h3>
 
   <p> Nonseparable blend modes consider all color components in combination
-   as opposed to the seperable ones that looks at each component
+   as opposed to the seperable ones that look at each component
    individually.<br>
    All of these blend modes conceptually entail the following steps:<br>
    a) Convert the backdrop and source colors from the blending color space to
@@ -1092,7 +1102,10 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p> If an element specifies non-default blending, compositing or opacity,
    its renderstyle will revert to &lsquo;<code
    class=property>flat</code>&rsquo;. This means that elements with z-index
-   will be not honor the depth of elements outside of the group.
+   will be not honor the depth of elements outside of the group.<br>
+   This is the same behavior as specifying an <a
+   href="http://www.w3.org/TR/css3-color/#opacity">opacity</a> value smaller
+   than 1.
 
   <p> Order: first filtering is applied, followed by blending and then
    compositing.
