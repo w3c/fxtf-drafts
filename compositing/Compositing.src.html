@@ -559,7 +559,7 @@ In figure 7, the blue and green shapes are in a group that has alpha. When calcu
 
 <h3 id="backgroundnew">Establishing a new background context</h3>
 <p>
-Under certain circumstances, you might want to limit the background calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the background of the page you are integrating because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have an attribute (or <span class="issue">TBD the same attribute</span>) that can be set on the group where you want this to happen.<br/>
+Under certain circumstances, you might want to limit the background calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the background of the page you are integrating because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have <span class="issue">an attribute (or the same attribute)</span> that can be set on the group where you want this to happen.<br/>
 See the sections on compositing and blending on how this affects rendering.
 </p>
 
@@ -714,6 +714,9 @@ Plus is an additional operator that is defined in the Porter-Duff paper [REFEREN
 <p><span class="issue">TODO.</span></p>
 
 <h4 id="groupcompositingknockout">Knockout groups and Porter Duff modes</h4>
+<p><span class="issue">TODO.</span></p>
+
+<h4 id="groupcompositingknockout">Clip to self behavior</h4>
 <p><span class="issue">TODO.</span></p>
 
 
@@ -1040,12 +1043,12 @@ This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-co
 Order: first filtering is applied, followed by blending and then compositing.
 </p>
 <p>
-Conceptually all HTML elements are a group that consists of the following "layers" in stacking order:
+Conceptually all HTML elements are part of a group that consists of the following "layers" in stacking order:
 <ol>
 <li>the box shadow</li>
 <li>the background layers</li>
 <li>the text shadow</li>
-<li>the text or </li>
+<li>the text and nested elements</li>
 </ol>
 </p>
 <h3 id="csscompositingkeyword">Compositing</h3>
@@ -1097,6 +1100,9 @@ as follows:</p>
     </dd>
 </dl>
 </div>
+<p>
+In CSS, compositing is always done with the 'clip-to-self' algorithm.
+</p>
 
 <h4 id="enable-background">The <span class="prop-name">'enable-background'</span> property</h4>
 <p>
@@ -1146,8 +1152,7 @@ as follows:</p>
 </dl>
 </div>
 <p>
-For non-container elements, enable-background is always 'new'. This means that the content of the element always establishes its own context.<br/>
-For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not composite with the content that is underneath.
+For an individual layer 'enable-background' is always 'new'. This means that the content of a layer always establishes its own context. For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not composite with the content in other layers or the content that is underneath.
 </p>
 
 <h3 id="cssblending">Blending</h3>
@@ -1248,8 +1253,7 @@ as follows:</p>
 </dl>
 </div>
 <p>
-If an element's content is defined elsewhere, the content of the element is always rendered as an isolated group.<br/>
-For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content that is underneath.
+For an individual layer 'isolation' is always 'isolate'. This means that the content of a layer always establishes its own context. For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content in other layers or the content that is underneath.
 </p>
 
 <h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
@@ -1299,7 +1303,7 @@ as follows:</p>
     </dd>
 </dl>
 <p>
-Note that knockout applies to blending as well as compositing. Conceptually, every shape will do a 'clear' with its own shape before it blends and composites.
+Note that knockout applies to blending as well as compositing. The end result is if every shape composites with a 'clear' operation before it blends and composites.
 </p>
 </div>
 

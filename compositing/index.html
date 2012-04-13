@@ -409,6 +409,9 @@
 
        <li><a href="#groupcompositingknockout"><span class=secno>4.2.2.
         </span>Knockout groups and Porter Duff modes</a>
+
+       <li><a href="#groupcompositingknockout"><span class=secno>4.2.3.
+        </span>Clip to self behavior</a>
       </ul>
     </ul>
 
@@ -866,9 +869,9 @@ co = RGB(127, 127, 255)
    of the page you are integrating because it will change the look. In other
    words, you want to &lsquo;<code class=property>isolate</code>&rsquo; the
    compositing and blending of that artwork from the rest of the tree.<br>
-   Compositing and blending each have an attribute (or <span class=issue>TBD
-   the same attribute</span>) that can be set on the group where you want
-   this to happen.<br>
+   Compositing and blending each have <span class=issue>an attribute (or the
+   same attribute)</span> that can be set on the group where you want this to
+   happen.<br>
    See the sections on compositing and blending on how this affects
    rendering.
 
@@ -1127,6 +1130,11 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <h4 id=groupcompositingknockout><span class=secno>4.2.2. </span>Knockout
    groups and Porter Duff modes</h4>
+
+  <p><span class=issue>TODO.</span>
+
+  <h4 id=groupcompositingknockout><span class=secno>4.2.3. </span>Clip to
+   self behavior</h4>
 
   <p><span class=issue>TODO.</span>
 
@@ -1565,7 +1573,7 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p> Order: first filtering is applied, followed by blending and then
    compositing.
 
-  <p> Conceptually all HTML elements are a group that consists of the
+  <p> Conceptually all HTML elements are part of a group that consists of the
    following "layers" in stacking order:
 
   <ol>
@@ -1575,7 +1583,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 
    <li>the text shadow
 
-   <li>the text or
+   <li>the text and nested elements
   </ol>
 
   <h3 id=csscompositingkeyword><span class=secno>6.2. </span>Compositing</h3>
@@ -1642,6 +1650,9 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
+  <p> In CSS, compositing is always done with the &lsquo;<code
+   class=property>clip-to-self</code>&rsquo; algorithm.
+
   <h4 id=enable-background><span class=secno>6.2.2. </span>The <span
    class=prop-name>&lsquo;<code
    class=property>enable-background</code>&rsquo;</span> property</h4>
@@ -1701,12 +1712,13 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
-  <p> For non-container elements, enable-background is always &lsquo;<code
-   class=property>new</code>&rsquo;. This means that the content of the
-   element always establishes its own context.<br>
-   For instance, if you link to an SVG file through the &lsquo;<code
-   class=property>img</code>&rsquo; tag, the content of that SVG will not
-   composite with the content that is underneath.
+  <p> For an individual layer &lsquo;<code
+   class=property>enable-background</code>&rsquo; is always &lsquo;<code
+   class=property>new</code>&rsquo;. This means that the content of a layer
+   always establishes its own context. For instance, if you link to an SVG
+   file through the &lsquo;<code class=property>img</code>&rsquo; tag, the
+   content of that SVG will not composite with the content in other layers or
+   the content that is underneath.
 
   <h3 id=cssblending><span class=secno>6.3. </span>Blending</h3>
 
@@ -1829,11 +1841,13 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
-  <p> If an element's content is defined elsewhere, the content of the
-   element is always rendered as an isolated group.<br>
-   For instance, if you link to an SVG file through the &lsquo;<code
-   class=property>img</code>&rsquo; tag, the content of that SVG will not
-   blend with the content that is underneath.
+  <p> For an individual layer &lsquo;<code
+   class=property>isolation</code>&rsquo; is always &lsquo;<code
+   class=property>isolate</code>&rsquo;. This means that the content of a
+   layer always establishes its own context. For instance, if you link to an
+   SVG file through the &lsquo;<code class=property>img</code>&rsquo; tag,
+   the content of that SVG will not blend with the content in other layers or
+   the content that is underneath.
 
   <h4 id=knock-out><span class=secno>6.3.3. </span>The <span
    class=prop-name>&lsquo;<code class=property>knock-out</code>&rsquo;</span>
@@ -1892,10 +1906,10 @@ components having the minimum, middle, and maximum values upon entry to the func
      </table>
    </dl>
 
-   <p> Note that knockout applies to blending as well as compositing.
-    Conceptually, every shape will do a &lsquo;<code
-    class=property>clear</code>&rsquo; with its own shape before it blends
-    and composites.</p>
+   <p> Note that knockout applies to blending as well as compositing. The end
+    result is if every shape composites with a &lsquo;<code
+    class=property>clear</code>&rsquo; operation before it blends and
+    composites.</p>
   </div>
 
   <h3 id=cssbackgroundsyntax><span class=secno>6.4. </span>Specifying
