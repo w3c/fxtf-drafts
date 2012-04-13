@@ -72,13 +72,18 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">5 April 2012</h2>
+<h2 class="no-num no-toc">13 April 2012</h2>
 <dl>
   <dt>Editors:</dt>
   <dd class="vcard">
     <span class="fn">Rik Cabanier</span>,
     <span class="org">Adobe Systems</span>,
     <span class="email">cabanier@adobe.com</span>
+  </dd>
+   <dd class="vcard">
+    <span class="fn">Nikos Andronikos</span>,
+    <span class="org"> Canon Information Systems Research Australia</span>,
+    <span class="email">Nikos.Andronikos@cisra.canon.com.au</span>
   </dd>
   <dt>Authors:</dt>
   <dd>
@@ -97,7 +102,7 @@
 <p>
   Compositing describes how shapes of different elements are 
   combined into a single image. Conceptually, each element is rendered into 
-  its own buffer and is then merged with its backdrop. The most widely used 
+  its own buffer and is then merged with its <a href="#background">background</a>. The most widely used 
   compositing operation is simple alpha compositing. (see
   <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a>)
   This spec will introduce additional compositing operators that will enable
@@ -106,9 +111,9 @@
  
  <p>
   Blending describes how colors are "blended"
-  together. Typically, the color of an element and the color of its backdrop
+  together. Typically, the color of an element and the color of its <a href="#background">background</a>
   are combined to create a new color. This new color replaces the old color
-  and is then composited with the backdrop using the specified compositing mode.
+  and is then composited with the <a href="#background">background</a> using the specified compositing mode.
 </p>
 
 <h2 class="no-num no-toc" id="status">Status of This Document</h2>
@@ -178,27 +183,27 @@
 <h2 id="introduction">Introduction</h2>
 <p>
 At the basic level, compositing describes how shapes interact while blending describes how colors interact.
-Both idioms use a rendered version of the current element (ie a shape or a group) and mix it with the backdrop.
+Both idioms use a rendered version of the current element (ie a shape or a group) and mix it with the <a href="#background">backdrop</a>.
 </p>
 
 <p>
 </p>
 
 <p>
-This document will describe the algorithms of compositing and blending in the first part. The second part describes how they are specified in CSS.
+This document will describe the algorithms of compositing and blending in the first part. <strong>This part is not written for a particular model; instead it provides a generic model for blending and compositing.</strong><br/>The second part describes how they are specified in CSS, SVG and Canvas. <br/><span class="issue">The keywords in thedefinition section will most likely transition to their respective specifications.</span>
 </p>
 
 <h2 id="whatiscompositing">What is compositing</h2>
 <p>
-Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. This coverage information is used to control the compositing of colors.
+Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the opacity. This coverage information is used to control the compositing of colors.
 </p>
 <p>
-Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the background image using a simplistic formula that has the effect of overlaying the object over the background. Where the objects overlap and coverage is not complete the color of the background may show through the object that has just been rendered. 
+Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the <a href="#background">background</a> image using a simplistic formula that has the effect of overlaying the object over the <a href="#background">background</a>. Where the objects overlap and coverage is not complete the color of the <a href="#background">background</a> may show through the object that has just been rendered. 
 </p>
 
 <h3 id="simplealphablending">simple alpha blending</h3>
 <p>
-In computer graphics, alpha compositing is the process of combining an image with a background to create the appearance of partial or full transparency. 
+In computer graphics, alpha compositing is the process of combining an image with a <a href="#background">background</a> to create the appearance of partial or full transparency. 
 The alpha value is stored alongside the color and has a value between 0 and 1.  A value of 0 means that the pixel does not have any coverage information and is transparent; i.e. there was no color contribution from any geometry because the geometry did not overlap this pixel. A value of 1 means that the pixel is opaque because the geometry completely overlapped the pixel.
 </p>
 
@@ -214,7 +219,7 @@ Ca: the color value<br/>
 αa: the alpha value
 </p>
 <p>
-Conceptually, "alpha" means "allow (1 - alpha) from behind to show". With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the background pixel. Thus, the formula becomes:
+Conceptually, "alpha" means "allow (1 - alpha) from behind to show". With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the <a href="#background">background</a> pixel. Thus, the formula becomes:
 <pre>
 co = ca + cb x (1 - αa)
 </pre>
@@ -222,7 +227,7 @@ with
 <br/>
 co: the pixel after compositing<br/>
 ca: the pixel of the shape<br/>
-cb: the pixel of the backdrop<br/>
+cb: the pixel of the <a href="#background">backdrop</a><br/>
 αa: the alpha value of the shape
 </p>
 
@@ -233,8 +238,8 @@ Figure 1
 
 <p>
 There are circumstances that we have to know the alpha value of the pixel.
-For example in figure 1, shape 2 and 3 have <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 shine through. Without knowing αa of the group, we would not be able to calculate this.<br/>
-Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the backdrop. So:
+For example in figure 1, shape 2 and 3 have opacity. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 shine through. Without knowing αa of the group, we would not be able to calculate this.<br/>
+Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the <a href="#background">backdrop</a>. So:
 <pre>
 αo = αa + αb x (1 - αa)
 </pre>
@@ -242,7 +247,7 @@ with
 <br/>
 αo: the alpha after compositing<br/>
 αa: the alpha of the shape<br/>
-αb: the alpha of the backdrop
+αb: the alpha of the <a href="#background">backdrop</a>
 </p>
 <p>
 If you want to know the color of a shape and not just its pixel value, you can reverse the formula for premultiplied alpha:
@@ -258,9 +263,9 @@ with
 αo: the alpha after compositing<br/>
 Co: the color after compositing<br/>
 Ca: the color of the shape<br/>
-Cb: the color of the backdrop<br/>
+Cb: the color of the <a href="#background">backdrop</a><br/>
 αa: the alpha of the shape<br/>
-αb: the alpha of the backdrop
+αb: the alpha of the <a href="#background">backdrop</a>
 </p>
 
 <h3 id="simplealphablendingexamples">Examples of simple alpha blending</h3>
@@ -298,7 +303,7 @@ Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
 Figure 3
 </p>
 <p>
-Figure 3 is an example where the shape has alpha but the backdrop is opaque.
+Figure 3 is an example where the shape has alpha but the <a href="#background">backdrop</a> is opaque.
 </p>
 <p>
 Applying the compositing value, you get:
@@ -316,7 +321,7 @@ Co = 1/1 * RGB(127, 0, 127) = RGB(127, 0, 127)
 Figure 4
 </p>
 <p>
-Figure 4 is an example where both the shape and the backdrop have alpha.
+Figure 4 is an example where both the shape and the <a href="#background">backdrop</a> have alpha.
 </p>
 <p>
 Applying the compositing value, you get:
@@ -340,25 +345,31 @@ When adding attributes to the group such as knockout, isolate, blending or Port-
 Conceptually each group creates a new context. The content of a group is calculated first followed by blending and compositing.
 If there is alpha on the group, it is multipied with the alpha value of the group's content.
 </p>
+<p>
+The elements within a group are always processed before the group. This means that alpha, blending and compositing on the group always happens after the group's content is calculated.
 
 <h3 id="matting">Matting</h3>
 <p>
-The end result of alpha compositing can contain alpha. For instance, a solid red shape with an <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> value of 50% will end up with a RGB(255, 0, 0, .5) color.
-Since monitors and printers can't display <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, we have to remove this alpha value by compositing it with solid white. This process is called matting.
+The end result of alpha compositing can contain alpha. For instance, a solid red shape with an opacity value of 50% will end up with a RGB(255, 0, 0, .5) color.
+Since monitors and printers can't display opacity, we have to remove this alpha value by compositing it with solid white. This process is called matting.
 </p>
 <p>
 Applying the compositing formula, you get:
 <pre>
-co = RGB(255, 0, 255) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
+co = RGB(0, 0, 255) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
 co = RGB(0, 0, 127) + RGB(127, 127, 127)
 co = RGB(127, 127, 255)
 </pre>
 which is the value that is sent to the monitor.
 </p>
 
-<h2 id="backgroundcalculation">Background calculation</h2>
-Until now, we haven't discussed how the backdrop is calculated. A first assumption would be that it consists of everything that was drawn earlier and this turns out to be correct.<br/>
-If you think it through a little more, it seems that there would be a complication if parent groups have <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the background. So, if you are an element in a group that has <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> is ignored when calculating the backdrop.
+<h2 id="background">Background calculation</h2>
+<p>
+The background (also known as backdrop) is the content that is behind the element.
+<p>
+Until now, we haven't discussed how it is calculated. A first assumption would be that it consists of everything that was drawn earlier and this turns out to be correct.<br/>
+If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the background. So, for an element that is a member of a group that has opacity, the opacity should be ignored when calculating the backdrop.
+</p>
 
 <h3 id="backgroundexamples">Examples of backdrop calculation</h3>
 <p style="text-align:center"><img src="examples/simple_backdrop.svg"/>
@@ -388,40 +399,167 @@ In figure 7, the blue and green shapes are in a group that has alpha. When calcu
 
 <h3 id="backgroundnew">Establishing a new background context</h3>
 <p>
-Under certain circumstances, you might want to limit the background calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the background because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have an attribute (or TBD the same attribute) that can be set on the group where you want this to happen.<br/>
+Under certain circumstances, you might want to limit the background calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the background of the page you are integrating because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have an attribute (or <span class="issue">TBD the same attribute</span>) that can be set on the group where you want this to happen.<br/>
 See the sections on compositing and blending on how this affects rendering.
 </p>
 
 <h2 id="advancedcompositing">Advanced compositing features</h2>
-<h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
 <p>
 <span class="issue">NOT FINISHED. Work in progress.</span><br/>
-The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
-The list of PD operators is:
-	[add list]
+While the advanced blending modes are concerned with the colour of the final pixel, Porter Duff blending is largely concerned with determining where the contribution for the colour comes from.
+Porter Duff compositing is based on a model of a pixel in which two shapes (source and destination) may contribute to the final colour of the pixel. The pixel is divided into 4 sub-pixel regions and each region represents a possible combination of source and destination.<br/>
+The four regions are:<br/>
+• Source Only – Where only the source contributes to the pixel colour<br/>
+• Destination only – where only the destination contributes to the pixel colour<br/>
+• Both - Source and Destination – where both the source and destination may combine to define the pixel colour<br/>
+• None - No source or Destination – where neither make a contribution to the final pixel colour<br/><br/>
+The contribution from each region to the final pixel colour is defined by the coverage of the shape at that pixel, and the operator in use.
+Coverage is specified in terms of alpha. Full alpha (1) implies full coverage, while zero alpha implies no coverage.
+This means that the area of each region within the sub-pixel is dependent on the coverage of each shape contributing to the pixel.
+The area of each region can be calculated with the following equations:
+<table border="1">
+<tr>
+<th>Both</th>
+<th>alpha_a x alpha_b</th>
+</tr>
+<tr>
+<th>Source only</th>
+<th>alpha_a(1 – alpha_b)</th>
+</tr>
+<tr>
+<th>Destination only</th>
+<th>alpha_b(1 – alpha_a)</th>
+</tr>
+<tr>
+<th>None</th>
+<th>(1 – alpha_a)(1 – alpha_b)</th>
+</tr>
+</table>
 
-The following diagram shows the four different regions of a single pixel that are considered when compositing:
-	[show diagram]
+The image in Figure [X] above represents coverage of 0.5 for both source and destination.
+<pre>
+Both = 0.5 x 0.5 = 0.25 
+Source Only = 0.5 (1 – 0.5) = 0.25
+Destination Only = 0.5(1 – 0.5) = 0.25
+None = (1 – 0.5)(1 – 0.5) = 0.25
+</pre>
 
-The 'source over' compositing operator corresponds with the default simple alpha compositing rules.
-The diagram below shows an example of the 'source over' operator with two 50% opaque shapes. Firstly, it shows the two shapes that will be composited together using the 'source over' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting 'opacity' of the overlapping region of the two shapes will be 75% as all of the sub-pixel regions contribute color and <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source over' operator.
-	[show diagram]
-
-
-A Porter Duff operator such as 'source atop', used extensively in upcoming examples, contains contributions from only two of the sub-pixel regions. The 'source atop'(src-atop) operator selects the source color from the overlapping region and the destination color not obscured by the source to produce the resultant color. The resultant 'opacity is the combined <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> from these two regions.
-
-The diagram below shows an example of the 'source atop' operator with two 50% opaque shapes. It is similar to the previous diagram for 'source over'. Firstly, it shows the two shapes that will be composited together using the 'source atop' operator. The next section demonstrates a subpixel view of the region where the two objects overlap. It shows the coverage of the colors input to the compositing operation. The third section of the diagram indicates which colors from this sub-pixel view are selected by the operator to contribute to the resultant color of the overlapping region. The resulting <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> of the overlapping region of the two shapes will be 50%, as only two of the sub-pixel regions contribute color and <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>. The calculation of resultant opacities will be described later. The last section of the diagram demonstrates the combination of the two objects using the 'source atop' operator. The region where only source color was present is not rendered as the 'source atop' only select source color that overlaps destination color.
-
-
-The twelve porter duff operators are shown below for opaque and partially transparent objects. The blue rectangle is the source and the orange circle is the destination.
+Therefore, the area of each region is 25% in this example.
 </p>
 
 <h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
-<span class="issue">NOT FINISHED. Work in progress.</span><br/>
+<p>
+The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
+<br/>
+There are 12 basic Porter Duff operators, satisfying all possible combinations of source and destination.<br/>
+<span class="issue">[INSERT PICTURE OF GEOMETRIC COVERAGE OF EACH OPERATOR]</span><br/>
+From the geometric representation of each operator, the contribution of each shape can be seen to be expressed as a fraction of the total coverage of the output.
+For example, in source over, the possible contribution of source is full (1) and the possible contribution of destination is whatever is remaining (1 – alpha_a). This is modified by the coverage of source and destination to give the equation for the final coverage of the pixel:
+<pre>
+    alpha_o = alpha_a x 1 + alpha_b x (1 – alpha_a)
+</pre>
+The fractional terms Fa (1 in this example) and Fb (1 – alpha_a in this example) are defined for each operator and specify the fraction of the shapes that may contribute to the final pixel value.
+The general form of the equation for coverage is:
+<pre>
+    alpha_a x Fa + alpha_b x Fb
+</pre>
+and incorporating colour gives the general Porter Duff equation
+<pre>
+    co = alpha_a x Fa x Ca + alpha_b x Fb x Cb
+</pre>
+Where: co is the output colour pre-multiplied with the output alpha [0 <= co <= 1] alpha_a is the coverage of the source Fa is defined by the operator and controls inclusion of the source Ca is the colour of the source (not multiplied by alpha) alpha_b is the coverage of the dest Fb is defined by the operator and controls inclusion of the dest Cb is the colour of the dest (not multiplied by alpha)
+<span class="issue">[BREAK THIS IMAGE UP AND SHOW EACH IN THEIR RESPECTIVE SECTIONS]</span>
+<h4 id="porterduffblendingmodes_clear">Clear</h4>
+No regions are enabled.
+<pre>
+    Fa = 0 Fb = 0
+    co = 0 alpha_o = 0
+</pre>
+<h4 id="porterduffblendingmodes_clear">Source</h4>
+Only the source will be present.
+<pre>
+    Fa = 1 Fb = 0
+    co = alpha_a x Ca alpha_o = alpha_a
+</pre>
+<h4 id="porterduffblendingmodes_clear">Dest</h4>
+Only the dest will be present.
+<pre>
+    Fa = 0 Fb = 1
+    co = alpha_b x Cb alpha_o = alpha_b
+</pre>
+<h4 id="porterduffblendingmodes_clear">Source Over</h4>
+Source is placed over the dest
+<pre>
+    Fa = 1 Fb = 1 – alpha_a
+    co = alpha_a x Ca + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a + alpha_b x (1 – alpha_a)
+</pre>
+<h4 id="porterduffblendingmodes_clear">Dest Over</h4>
+Dest is placed over the source.
+<pre>
+    Fa = 1 – alpha_b Fb = 1
+    co = alpha_a x Ca x (1 – alpha_b) + alpha_b x Cb alpha_o = alpha_a x (1 – alpha_b) + alpha_b
+</pre>
+<h4 id="porterduffblendingmodes_clear">Source In</h4>
+The source that overlaps the destination, replaces the destination.
+<pre>
+    Fa = alpha_b Fb = 0
+    co = alpha_a x Ca x alpha_b alpha_o = alpha_a x alpha_b
+</pre>
+<h4 id="porterduffblendingmodes_clear">Dest In</h4>
+Destination which overlaps the source, replaces the source.
+<pre>
+    Fa = 0 Fb = alpha_a
+    co = alpha_b x Cb x alpha_a alpha_o = alpha_b x alpha_a
+</pre>
+<h4 id="porterduffblendingmodes_clear">Source Out</h4>
+Source is placed, where it falls outside of the destination.
+<pre>
+    Fa = 1 – alpha_b Fb = 0
+    co = alpha_a x Ca x (1 – alpha_b) alpha_o = alpha_a x (1 – alpha_b)
+</pre>
+<h4 id="porterduffblendingmodes_clear">Dest Out</h4>
+Destination is placed, where it falls outside of the source.
+<pre>
+    Fa = 0 Fb = 1 – alpha_a
+    co = alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_b x (1 – alpha_a)
+</pre>
+<h4 id="porterduffblendingmodes_clear">Src Atop</h4>
+Source which overlaps the destination, replaces the destination. Destination is placed elsewhere.
+<pre>
+    Fa = alpha_b Fb = 1 – alpha_a
+    co = alpha_a x Ca x alpha_b + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a x alpha_b + alpha_b x (1 – alpha_a)
+</pre>
+<h4 id="porterduffblendingmodes_clear">Dest Atop</h4>
+Dest which overlaps the source replaces the source. Source is placed elsewhere.
+<pre>
+    Fa = 1 - alpha_b Fb = alpha_a
+    co = alpha_a x Ca x (1 - alpha_b) + alpha_b x Cb x alpha_a alpha_o = alpha_a x (1 - alpha_b) + alpha_b x alpha_a
+</pre>
+<h4 id="porterduffblendingmodes_clear">XOR</h4>
+The non-overlapping regions of source and destination are combined.
+<pre>
+    Fa = 1 - alpha_b Fb = 1 – alpha_a
+    co = alpha_a x Ca x (1 - alpha_b) + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a x (1 - alpha_b) + alpha_b x (1 – alpha_a)
+</pre>
+<h4 id="porterduffblendingmodes_clear">Plus</h4>
+Plus is an additional operator that is defined in the Porter-Duff paper [REFERENCE].
+<pre>
+    Fa = 1 Fb = 1
+    co = alpha_a x Ca + alpha_b x Cb alpha_o = alpha_a + alpha_b
+</pre>
+<h3 id="groupcompositing">Group compositing behavior with Porter Duff modes</h3>
+<p><span class="issue">TODO.</span></p>
+
+<h4 id="groupcompositingisolation">Isolated groups and Porter Duff modes</h4>
+<p><span class="issue">TODO.</span></p>
+
+<h4 id="groupcompositingknockout">Knockout groups and Porter Duff modes</h4>
+<p><span class="issue">TODO.</span></p>
+
 
 <h2 id="blending">Blending</h2>
 <p>
-Blending takes the colors of the source element and mixes them with the backdrop. The resulting blended element then replaces the original source. Note that the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> of the source element is ignored during blending. The alpha of the backdrop will also be ignored. Note that this calculation always happens in non-premultiplied space.
+Blending takes the colors of the source element and mixes them with the <a href="#background">backdrop</a>. The resulting blended element then replaces the original source. Note that the opacity of the source element is ignored during blending. The alpha of the <a href="#background">backdrop</a> will also be ignored. Note that this calculation always happens in non-premultiplied space.
 </p>
 <p>
 We will describe the "mixing" formula as:
@@ -432,12 +570,12 @@ with:
 <br/>
 Cm: the result color after blending<br/>
 B: the formula that does the blending<br/>
-Cb: the backdrop color<br/>
+Cb: the <a href="#background">backdrop</a> color<br/>
 Cs: the source color<br/>
 If the result of the mixing formula falls outside of the color range, it will be clamped to minimum or maximum value of the color range.
 </p>
 <p>
-However, we can not use this value since this calculation is overlooking the alpha of the background. If the backdrop is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
+However, we can not use this value since this calculation is overlooking the alpha of the <a href="#background">background</a>. If the <a href="#background">backdrop</a> is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
 <pre>
 	Cr = (1 - αb) x Cs + αb x B(Cb, Cs)
 </pre>
@@ -446,13 +584,13 @@ with:
 Cr: the result color<br/>
 B: the formula that does the blending<br/>
 Cs: the source color<br/>
-Cb: the backdrop color<br/>
-αb: the backdrop alpha<br/>
+Cb: the <a href="#background">backdrop</a> color<br/>
+αb: the <a href="#background">backdrop</a> alpha<br/>
 </p>
 <img src="examples/blend_background_opacity.svg"/>
 <p>
-This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>.<br/>
-Note how the top rectangle shifts more toward red as the <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> of the backdrop lowers.
+This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of opacity.<br/>
+Note how the top rectangle shifts more toward red as the opacity of the <a href="#background">backdrop</a> lowers.
 </p>
 <p>
 This formula creates a new image which is then composited with the specified Porter-Duff compositing formula. For simple alpha blending, the formula thus becomes:
@@ -468,7 +606,7 @@ now subsitute the result of blending for Ca:
 </p>
 <h3 id="blendingseparable">Separable blend modes</h3>
 <p>
-A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent backdrop and source colors—that is, if the mixing formula is applied <strong>separately</strong> to each set of corresponding components.
+A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent <a href="#background">backdrop</a> and source colors—that is, if the mixing formula is applied <strong>separately</strong> to each set of corresponding components.
 </p>
 <p>
 Each of the following blend modes will apply the blending function B(Cb, Cs) on each of the color components.
@@ -497,7 +635,7 @@ The resultant color is always at least as dark as either the source or destinati
 
 <h4 id="blendingscreen">'screen' blend mode</h4>
 <p>
-Multiplies the complements of the backdrop and source color values, then complements the result.
+Multiplies the complements of the <a href="#background">backdrop</a> and source color values, then complements the result.
 </p>
 <p>
 The result color is always at least as light as either of the two constituent colors. Screening any color with white produces white; screening with black leaves the original color unchanged. The effect is similar to projecting multiple photographic slides simultaneously onto a single screen.
@@ -510,10 +648,10 @@ The result color is always at least as light as either of the two constituent co
 
 <h4 id="blendingoverlay">'overlay' blend mode</h4>
 <p>
-Multiplies or screens the colors, depending on the backdrop color value.
+Multiplies or screens the colors, depending on the <a href="#background">backdrop</a> color value.
 </p>
 <p>
-Source colors overlay the backdrop while preserving its highlights and shadows. The backdrop color is not replaced but is mixed with the source color to reflect the lightness or darkness of the backdrop.
+Source colors overlay the <a href="#background">backdrop</a> while preserving its highlights and shadows. The <a href="#background">backdrop</a> color is not replaced but is mixed with the source color to reflect the lightness or darkness of the <a href="#background">backdrop</a>.
 <pre>
     B(Cb, Cs) = HardLight(Cs, Cb)
 </pre>
@@ -523,9 +661,9 @@ Overlay is the inverse of the 'hardlight' blend mode. See the definition of 'har
 
 <h4 id="blendingdarken">'darken' blend mode</h4>
 <p>
-Selects the darker of the backdrop and source colors.
+Selects the darker of the <a href="#background">backdrop</a> and source colors.
 </p><p>
-The backdrop is replaced with the source where the source is darker; otherwise, it is left unchanged.
+The <a href="#background">backdrop</a> is replaced with the source where the source is darker; otherwise, it is left unchanged.
 <pre>
     B(Cb, Cs) = min(Cb, Cs)
 </pre>
@@ -534,9 +672,9 @@ The backdrop is replaced with the source where the source is darker; otherwise, 
 
 <h4 id="blendinglighten">'lighten' blend mode</h4>
 <p>
-Selects the lighter of the backdrop and source colors.
+Selects the lighter of the <a href="#background">backdrop</a> and source colors.
 </p><p>
-The backdrop is replaced with the source where the source is lighter; otherwise, it is left unchanged.
+The <a href="#background">backdrop</a> is replaced with the source where the source is lighter; otherwise, it is left unchanged.
 <pre>
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
@@ -545,7 +683,7 @@ The backdrop is replaced with the source where the source is lighter; otherwise,
 
 <h4 id="blendingcolordodge">'color-dodge' blend mode</h4>
 <p>
-Brightens the backdrop color to reflect the source color. Painting with black produces no changes.
+Brightens the <a href="#background">backdrop</a> color to reflect the source color. Painting with black produces no changes.
 <pre>
     if(Cs < 1)
         B(Cb, Cs) = min(1, Cb / (1 - Cs))
@@ -557,7 +695,7 @@ Brightens the backdrop color to reflect the source color. Painting with black pr
 
 <h4 id="blendingcolorburn">'color-burn' blend mode</h4>
 <p>
-Darkens the backdrop color to reflect the source color. Painting with white produces no change.
+Darkens the <a href="#background">backdrop</a> color to reflect the source color. Painting with white produces no change.
 <pre>
     if(Cs > 0)
         B(Cb, Cs) = 1 - min(1, (1 - Cb) / Cs)
@@ -569,7 +707,7 @@ Darkens the backdrop color to reflect the source color. Painting with white prod
 
 <h4 id="blendinghardlight">'hard-light' blend mode</h4>
 <p>
-Multiplies or screens the colors, depending on the source color value. The effect is similar to shining a harsh spotlight on the backdrop.
+Multiplies or screens the colors, depending on the source color value. The effect is similar to shining a harsh spotlight on the <a href="#background">backdrop</a>.
 <pre>
     if(Cs <= 0.5)
         B(Cb, Cs) = Multiply(Cb, 2 x Cs)
@@ -582,7 +720,7 @@ See the definition of 'multiply' and 'screen' for their formulas.
 
 <h4 id="blendingsoftlight">'soft-light' blend mode</h4>
 <p>
-Darkens or lightens the colors, depending on the source color value. The effect is similar to shining a diffused spotlight on the backdrop
+Darkens or lightens the colors, depending on the source color value. The effect is similar to shining a diffused spotlight on the <a href="#background">backdrop</a>
 <pre>
     if(Cs <= 0.5)
         B(Cb, Cs) = Cb - (1 - 2 x Cs) x Cb x (1 - Cb)
@@ -602,7 +740,7 @@ with
 Subtracts the darker of the two constituent colors from the lighter color.
 </p>
 <p>
-Painting with white inverts the backdrop color; painting with black produces no change.
+Painting with white inverts the <a href="#background">backdrop</a> color; painting with black produces no change.
 <pre>
     B(Cb, Cs) = | Cb - Cs |
 </pre>
@@ -611,7 +749,7 @@ Painting with white inverts the backdrop color; painting with black produces no 
 
 <h4 id="blendingexclusion">'exclusion' blend mode</h4>
 <p>
-Produces an effect similar to that of the Difference mode but lower in contrast. Painting with white inverts the backdrop color; painting with black produces no change
+Produces an effect similar to that of the Difference mode but lower in contrast. Painting with white inverts the <a href="#background">backdrop</a> color; painting with black produces no change
 <pre>
     B(Cb, Cs) = Cb + Cs - 2 x Cb x Cs
 </pre>
@@ -622,8 +760,8 @@ Produces an effect similar to that of the Difference mode but lower in contrast.
 <p>
 Nonseparable blend modes consider all color components in combination as opposed to the seperable ones that look at each component individually.<br/>
 All of these blend modes conceptually entail the following steps:<br/>
-a) Convert the backdrop and source colors from the blending color space to an intermediate HSL (hue-saturation-luminosity) representation.<br/>
-b) Create a new color from some combination of hue, saturation, and luminosity components selected from the backdrop and source colors.<br/>
+a) Convert the <a href="#background">backdrop</a> and source colors from the blending color space to an intermediate HSL (hue-saturation-luminosity) representation.<br/>
+b) Create a new color from some combination of hue, saturation, and luminosity components selected from the <a href="#background">backdrop</a> and source colors.<br/>
 c) Convert the result back to the original color space.<br/>
 </p>
 <p>
@@ -663,7 +801,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 
 <h4 id="blendinghue">'hue' blend mode</h4>
 <p>
-Creates a color with the hue of the source color and the saturation and luminosity of the backdrop color.
+Creates a color with the hue of the source color and the saturation and luminosity of the <a href="#background">backdrop</a> color.
 <pre>
 	B(Cb, Cs) = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
 </pre>
@@ -672,7 +810,7 @@ Creates a color with the hue of the source color and the saturation and luminosi
 
 <h4 id="blendingsaturation">'saturation' blend mode</h4>
 <p>
-Creates a color with the saturation of the source color and the hue and luminosity of the backdrop color. Painting with this mode in an area of the backdrop that is a pure gray (no saturation) produces no change.
+Creates a color with the saturation of the source color and the hue and luminosity of the <a href="#background">backdrop</a> color. Painting with this mode in an area of the <a href="#background">backdrop</a> that is a pure gray (no saturation) produces no change.
 <pre>
 	B(Cb, Cs) = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
 </pre>
@@ -681,7 +819,7 @@ Creates a color with the saturation of the source color and the hue and luminosi
 
 <h4 id="blendingcolor">'color' blend mode</h4>
 <p>
-Creates a color with the hue and saturation of the source color and the luminosity of the backdrop color. This preserves the gray levels of the backdrop and is useful for colouring monochrome images or tinting colour images.
+Creates a color with the hue and saturation of the source color and the luminosity of the <a href="#background">backdrop</a> color. This preserves the gray levels of the <a href="#background">backdrop</a> and is useful for colouring monochrome images or tinting colour images.
 <pre>
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
 </pre>
@@ -690,7 +828,7 @@ Creates a color with the hue and saturation of the source color and the luminosi
 
 <h4 id="blendingluminosity">'luminosity' blend mode</h4>
 <p>
-Creates a color with the luminosity of the source color and the hue and saturation of the backdrop color. This produces an inverse effect to that of the Color mode.
+Creates a color with the luminosity of the source color and the hue and saturation of the <a href="#background">backdrop</a> color. This produces an inverse effect to that of the Color mode.
 <pre>
 	B(Cb, Cs) = SetLum(Cb, Lum(Cs))
 </pre>
@@ -703,8 +841,8 @@ In the following example, the red and green rectangles are in a group and the gr
 </p>
 <img src="examples/group_non_isolated.svg"/>
 <p>
-The background that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
-Now, if we made the group isolated, only the red rectangle is in the background and the result becomes as follows:
+The <a href="#background">background</a> that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
+Now, if we made the group isolated, only the red rectangle is in the <a href="#background">background</a> and the result becomes as follows:
 </p>
 <img src="examples/group_isolated.svg"/>
 <p>
@@ -712,22 +850,25 @@ The result is that the green rectangle doesn't blend with the blue rectangle.
 
 <h3 id="blendingnonseparable">Knockout groups</h3>
 <p>
-A knockout group is conceptually the inverse of an isolated group. When calculating the background for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
+A knockout group is conceptually the inverse of an isolated group. When calculating the <a href="#background">background</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
 </p>
 <img src="examples/knockout.svg"/>
 <p>
 The example above show the effect of group knockout. The group contains a red rectangle and a green rectangle that has a difference mode applied to it.<br/>
-In the top example you can see that the green rectangle is blending with the red rectangle in its group and the blue rectangle in the background.<br/>The example below that has knockout turned on and the green rectangle only blends with the blue rectangle.
+In the top example you can see that the green rectangle is blending with the red rectangle in its group and the blue rectangle in the <a href="#background">background</a>.<br/>The example below that has knockout turned on and the green rectangle only blends with the blue rectangle.
 </p>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
 <p>
 If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its renderstyle will revert to 'flat'. This means that elements with z-index will be not honor the depth of elements outside of the group.<br/>
-This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-color/#opacity"><a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a></a> value smaller than 1.
+This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-color/#opacity">'opacity'</a> value smaller than 1.
 </p>
 <p>
 Order: first filtering is applied, followed by blending and then compositing.
+</p>
+<p>
+<span class="issue">What will happen with 'box-shadow' or 'text-shadow'?</span>
 </p>
 <h3 id="csscompositingkeyword">Compositing</h3>
 <h4 id="alpha-compositing">The <span class="prop-name">'alpha-compositing'</span> property</h4>
@@ -905,7 +1046,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All container elements. In SVG, it applies to all container elements except 'mask'</span></td>
+            <td>All HTML elements. In SVG, it applies to all container elements except 'mask'</span></td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -929,7 +1070,7 @@ as follows:</p>
 </dl>
 </div>
 <p>
-For non-container elements, isolation is always 'isolate'. This means that the content of the element always establishes its own context.<br/>
+If an element's content is defined elsewhere, the content of the element is always rendered as an isolated group.<br/>
 For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content that is underneath.
 </p>
 
@@ -957,7 +1098,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All container elements. In SVG, it applies to all container elements except 'mask'</td>
+            <td>All HTML elements. In SVG, it applies to all container elements except 'mask'</td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -984,10 +1125,10 @@ Note that knockout applies to blending as well as compositing. Conceptually, eve
 </p>
 </div>
 
-<h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
+<h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element <a href="#background">background</a></h3>
 <p>
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
-An author might want to specify the blending of multiple backgrounds of an element. The background compositing and blending is always treated as an isolated group.
+An author might want to specify the blending of multiple backgrounds of an element. The <a href="#background">background</a> compositing and blending is always treated as an isolated group.
 </p>
 
 <h4 id="background-alpha-compositing">The <span class="prop-name">'background-alpha-compositing'</span> property</h4>
@@ -1005,9 +1146,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | plus | <a class="noxref"
-              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
-              class="value-inst-inherit noxref">inherit</span></a></td>
+            <td> compositing-style [, compositing-style]* </td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1015,7 +1154,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements that support a background"</span></td>
+            <td>All HTML elements"</span></td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -1038,6 +1177,12 @@ as follows:</p>
     </dd>
 </dl>
 </div>
+<pre>
+	compositing-style = clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | plus | <a class="noxref"
+              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
+              class="value-inst-inherit noxref">inherit</span></a>
+</pre>
+
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
 
 <p>
@@ -1053,9 +1198,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity | <a class="noxref"
-              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
-              class="value-inst-inherit noxref">inherit</span></a> </td>
+            <td>blend-style [, blend-style]*</td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1063,7 +1206,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All elements that support a background</td>
+            <td>All HTML elements</td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -1087,7 +1230,32 @@ as follows:</p>
 </dl>
 </div>
 
+<pre>
+	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity | <a class="noxref"
+              href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
+              class="value-inst-inherit noxref">inherit</span></a>
+</pre>
+
+<h4 id="box-shadow-blend-mode">The <span class="prop-name">'box-shadow-blend-mode'</span> property</h4>
+<p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+Sets the blend mode of the box shadow. Also needs to be added to the shorthand.
+</p>
+
+<h4 id="text-shadow-blend-mode">The <span class="prop-name">'text-shadow-blend-mode'</span> property</h4>
+<p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+Set the blend mode of the text shadow. Also needs to be added to the shorthand.
+</p>
+
+<h4 id="text-blend-mode">The <span class="prop-name">'text-blend-mode'</span> property</h4>
+<p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+Set the blend mode of the text.
+</p>
+
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in Canvas </h2>
+<h3 id="csscompositingandblending">Specifying the current compositing and blending mode</h3>
 <p>
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.
@@ -1095,6 +1263,23 @@ To allow blending, we can extend the list with the blending keywords: normal, mu
 </p>
 <p>
 If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the src-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
+</p>
+<p>
+<span class="issue">or</span>
+</p>
+<p>
+The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.<br/>
+To allow blending, we can add a new operator 'globalBlendOperation' on the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#2dcontext">2D context</a> with the blending keywords: normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.<br/>
+The default value will be 'normal'.<br/>
+Blending is done first, followed by compositing.
+</p>
+
+<h3 id="csscompositingandblending">Specifying the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>'s compositing and blending mode</h3>
+<p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+Introduce 2 new keywords that allow compositing and blending on the shadow color:<br/>
+shadow-alpha-compositing would set the compositing mode of the shadow (the default would be 'src-over'/'normal')<br/>
+shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
 </p>
 
 <h2 id="references1">References</h2>
