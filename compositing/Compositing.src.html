@@ -5,65 +5,213 @@
   <title>Compositing and Blending 1.0</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style/default.css">
-  <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
-  <link id="st" href="style/alternate-spec-style.css" rel="stylesheet" type="text/css" title="additional spec styles">
-  <script type="text/javascript" src="style/style-toggle.js"></script>
-  <style type="text/css">
+
+       <style type="text/css">
   
   /* Alternate stylesheet fonts are here because in some browsers (Opera 11.5) */
   /* The fonts are not applied if only loaded from the alternate stylesheet    */
-  @import url(http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic);
-  @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
-
-  a.toggle {
-    position: fixed;
-    top: 0.5em;
-    right: 0.5em;
-    font-size: smaller;
-    color: gray;
-    opacity: 0.2;
-  }
-
-  a.toggle:hover {
-    opacity: 1;
-    color: #46A4E9;
-  }
-
-  div.issue-marker {
-    position: absolute;
-    width: 20ex;
-    margin-left: -26ex;
-    padding-left: 1em;
-    padding: 5px;
-    font-weight: normal;
-    font-size: 11px;
-    text-align: right;
-    background-color: white;
-    font-size: 90%;
-  }
-
-  div.issue-marker a {
-    color: red;
-  }
   
-  .todo {
-      font-weight: bold;
-      border-left: 0.5em solid #f44;
-      padding-left: 1em;
-      margin-top: 0.5em;
-      color: #a0a0a0;
-  }
-  
-  .todo:before {
-      content: "TO DO : ";
-      color: #f44;
-  }
-  
-  pre {
-    color: #a52a2a;
-    font-family: monospace;
-    font-size: 90%
-}  
+  /* License font the following two fonts: fonts/Droid-Serif-fontfacekit/Google Android License.txt */
+  @import url(fonts/Droid-Serif-fontfacekit/stylesheet.css);
+  @import url(fonts/Droid-Sans-Mono-fontfacekit/stylesheet.css);
+
+         a.toggle {
+             position: fixed;
+             top: 0.5em;
+             right: 0.5em;
+         	font-size: smaller;
+         	color: gray;
+         	opacity: 0.2;
+         }
+
+         a.toggle:hover {
+             opacity: 1;
+             color: #46A4E9;
+         }
+         
+         .issue.resolved, .issue.stale, .issue.moved {
+             display: none;
+         }
+         
+         
+         #region-style-example p, #region-style-example pre {
+         	clear: both;
+         }
+
+         #region_styling_illustration {
+         	margin: 0px auto;
+         	width: 70ex;
+         }
+         
+         .big.note {
+             font-size: 1.2em;
+             line-height: 1.3em;
+             color: #2f2f2f;
+         }
+         
+         #mobile-logo {
+             display: none;
+         }
+         
+         @media screen and (min-width: 68em){    
+             
+                  .issue-marker {
+                      position: absolute;
+                      width: 20ex;
+                      margin-left: -22ex;
+                      text-align: right;
+                      margin-bottom: 1em;
+                  }
+                  
+                  div.issue-marker .issue-marker {
+                      position: static;
+                      width: auto;
+                      margin-left: 0;
+                      text-align: right;
+                  }  
+                  
+                  div.issue-marker {
+                      position: absolute;
+                      width: 20ex;
+                      margin-left: -22ex;
+                  }
+         }
+
+         @media screen and (max-width: 68em){
+                  .issue-marker {
+                      margin-bottom: 1em;
+                  }
+                  
+                  .issue-marker a:link {
+                      padding-left: 0.5em;
+                  }
+         } 
+         
+         #issue-manager form{
+             background: #eee;
+             padding:10px 1em;
+         }
+         
+         /* hide all non-"updated" issues */
+         #issue-manager[data-view_state="updated"] #issue-list>div:not([data-issue_state="updated"]){
+             display:none;
+         }
+            
+         /* hide all non-"new" issues */
+         #issue-manager[data-view_state="new"] #issue-list>div:not([data-issue_state="new"]){
+             display:none;
+         }
+                  
+          #issue-manager .issue-marker{ 
+              background: none;
+              position: relative;  
+              margin:0; 
+              width:auto;
+              text-align:left; 
+              padding:0.5em 0;
+          }
+          
+          #issue-manager .issue-marker a:link{
+              padding:0.5em;
+          }
+          
+          #issue-list div[data-issue_state="new"]{
+              background:#C1FFC1;
+          }  
+
+          #issue-list div[data-issue_state="resolved"]{
+              background:white;
+              color: #a0a0a0;
+          }  
+
+          #issue-list div[data-issue_state="updated"]{
+              background:papayawhip;
+          }     
+          
+          #issue-list{
+              margin-top:20px;
+          }
+
+          #issue-list pre{
+              padding:1em;
+              margin:0;
+          }   
+          
+          #issue-list>div{
+              position:relative;
+          }
+          
+          #issue-list a.issue-markup-trigger{  
+              font-size: 0.8em;
+              padding: 0.2em 0.5em;
+              background: #eee;      
+              text-decoration: none;    
+              color: #444;
+              position: absolute;
+              right: 10px;
+              top: 10px;  
+              z-index: 1;
+          }  
+          
+           #issue-list a.issue-markup-trigger:hover{
+               background: #ddd;
+               color: #000;
+           }                        
+          
+          #issue-list .showMarkup pre{
+              display: block;
+          }                           
+          
+          #issue-list .showMarkup .issue-marker,
+          #issue-list pre{
+              display: none;
+          }
+      
+         .issue-marker {
+              background:#eee;  
+              border:1px solid #ddd; 
+              font-size: 1em;
+          }
+          
+          .issue-marker.wrapper {
+              background: none;
+              border: none;
+          }
+
+         .issue-marker a:link {
+              color: #c00;
+              background: none;
+              font-weight: normal;
+              padding-right: 0.5em;
+          }
+         
+         .issue-details {  
+              padding:0.5em;
+              font-size: 0.8em;
+              line-height: 1.5;
+          }
+
+         .issue-details p{
+              padding:0;
+              margin:0; 
+          }           
+
+         .issue-details .status{
+              background:#333;   
+              color:white;
+              float:left;    
+              padding:0.15em 0.8em;    
+              font-size:0.8em;
+              margin-right:0.8em;
+              text-transform:uppercase;      
+          }
+       </style>
+       
+       <link rel="stylesheet" type="text/css"
+        href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
+        
+       <link id="st" href="style/alternate-spec-style.css" rel="stylesheet" 
+              type="text/css" title="alternate spec style">
  </style>
 </head>
 
@@ -273,6 +421,7 @@ Cb: the color of the <a href="#background">backdrop</a><br/>
 Next we will run through a couple of scenarios that show how alpha compositing works.
 </p>
 
+<div class="example">
 <p style="text-align:center"><img src="examples/simple_box.svg"/>
 <br/>
 Figure 1
@@ -280,7 +429,9 @@ Figure 1
 <p>
 Figure 1 describes the most basic case. It consists of 1 shape that is filled with a solid color so no compositing operation is required.<br/>
 </p>
+</div>
 
+<div class="example">
 <p style="text-align:center"><img src="examples/two_box.svg"/>
 <br/>
 Figure 2
@@ -297,7 +448,9 @@ co = RGB(0, 0, 255)
 Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
 </pre>
 </p>
+</div>
 
+<div class="example">
 <p style="text-align:center"><img src="examples/two_box_transparency.svg"/>
 <br/>
 Figure 3
@@ -315,7 +468,9 @@ co = RGB(127, 0, 127)
 Co = 1/1 * RGB(127, 0, 127) = RGB(127, 0, 127)
 </pre>
 </p>
+</div>
 
+<div class="example">
 <p style="text-align:center"><img src="examples/two_box_transparency_both.svg"/>
 <br/>
 Figure 4
@@ -333,6 +488,7 @@ co = RGB(63, 0, 127)
 Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
 </pre>
 </p>
+</div>
 
 <h3 id="groupinvariance">Group invariance</h3>
 An important behavior of simple alpha compositing is its group invariance.
@@ -372,6 +528,7 @@ If you think it through a little more, it seems that there would be a complicati
 </p>
 
 <h3 id="backgroundexamples">Examples of backdrop calculation</h3>
+<div class="example">
 <p style="text-align:center"><img src="examples/simple_backdrop.svg"/>
 <br/>
 Figure 5
@@ -380,7 +537,8 @@ Figure 5
 Figure 5 has 2 simple shapes. The backdrop for the blue shape is the bottom right corner of the red shape.
 The dotted line shows the area that is examined during compositing of the blue shape.
 </p>
-
+</div>
+<div class="example">
 <p style="text-align:center"><img src="examples/simple_backdrop_alpha.svg"/>
 <br/>
 Figure 6
@@ -388,7 +546,8 @@ Figure 6
 <p>
 In figure 6, the shape in the background has an alpha value. The alpha value of the background shape is preserved when the backdrop is calculated.
 </p>
-
+</div>
+<div class="example">
 <p style="text-align:center"><img src="examples/group_alpha_backdrop.svg"/>
 <br/>
 Figure 7
@@ -396,6 +555,7 @@ Figure 7
 <p>
 In figure 7, the blue and green shapes are in a group that has alpha. When calculating the backdrop for the blue shape, the red and green shapes are combined with simple alpha compositing and the group alpha is ignored. If the group had blending, compositing or filtering, those would also be ignored.
 </p>
+</div>
 
 <h3 id="backgroundnew">Establishing a new background context</h3>
 <p>
@@ -587,11 +747,13 @@ Cs: the source color<br/>
 Cb: the <a href="#background">backdrop</a> color<br/>
 αb: the <a href="#background">backdrop</a> alpha<br/>
 </p>
+<div class="example">
 <img src="examples/blend_background_opacity.svg"/>
 <p>
 This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of opacity.<br/>
 Note how the top rectangle shifts more toward red as the opacity of the <a href="#background">backdrop</a> lowers.
 </p>
+</div>
 <p>
 This formula creates a new image which is then composited with the specified Porter-Duff compositing formula. For simple alpha blending, the formula thus becomes:
 <pre>
@@ -603,6 +765,8 @@ now subsitute the result of blending for Ca:
     αo x Co = αa x ((1 - αb) x Cs + αb x B(Cb, Cs)) + (1 - αa) x αb x Cb
             = αa x (1 - αb) x Cs + αa x αb x B(Cb, Cs) + (1 - αa) x αb x Cb
 </pre>
+<br>
+For simplicity, all the examples in this chapter have 'src-over' compositing applied to them.
 </p>
 <h3 id="blendingseparable">Separable blend modes</h3>
 <p>
@@ -839,24 +1003,32 @@ Creates a color with the luminosity of the source color and the hue and saturati
 <p>
 In the following example, the red and green rectangles are in a group and the green rectangle has a multiply blend mode.
 </p>
+<div class="example">
 <img src="examples/group_non_isolated.svg"/>
 <p>
 The <a href="#background">background</a> that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
 Now, if we made the group isolated, only the red rectangle is in the <a href="#background">background</a> and the result becomes as follows:
 </p>
+</div>
+
+<div class="example">
 <img src="examples/group_isolated.svg"/>
 <p>
 The result is that the green rectangle doesn't blend with the blue rectangle.
+</p>
+</div>
 
 <h3 id="blendingnonseparable">Knockout groups</h3>
 <p>
 A knockout group is conceptually the inverse of an isolated group. When calculating the <a href="#background">background</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
 </p>
+<div class="example">
 <img src="examples/knockout.svg"/>
 <p>
 The example above show the effect of group knockout. The group contains a red rectangle and a green rectangle that has a difference mode applied to it.<br/>
 In the top example you can see that the green rectangle is blending with the red rectangle in its group and the blue rectangle in the <a href="#background">background</a>.<br/>The example below that has knockout turned on and the green rectangle only blends with the blue rectangle.
 </p>
+</div>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
@@ -868,7 +1040,13 @@ This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-co
 Order: first filtering is applied, followed by blending and then compositing.
 </p>
 <p>
-<span class="issue">What will happen with 'box-shadow' or 'text-shadow'?</span>
+Conceptually all HTML elements are a group that consists of the following "layers" in stacking order:
+<ol>
+<li>the box shadow</li>
+<li>the background layers</li>
+<li>the text shadow</li>
+<li>the text or </li>
+</ol>
 </p>
 <h3 id="csscompositingkeyword">Compositing</h3>
 <h4 id="alpha-compositing">The <span class="prop-name">'alpha-compositing'</span> property</h4>
@@ -1254,8 +1432,8 @@ Set the blend mode of the text shadow. Also needs to be added to the shorthand.
 Set the blend mode of the text.
 </p>
 
-<h2 id="csscompositingandblending">Specifying Compositing and Blending in Canvas </h2>
-<h3 id="csscompositingandblending">Specifying the current compositing and blending mode</h3>
+<h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
+<h3 id="canvascompositingandblending">Specifying the current compositing and blending mode</h3>
 <p>
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.
@@ -1274,7 +1452,7 @@ The default value will be 'normal'.<br/>
 Blending is done first, followed by compositing.
 </p>
 
-<h3 id="csscompositingandblending">Specifying the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>'s compositing and blending mode</h3>
+<h3 id="canvascompositingandblending">Specifying the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>'s compositing and blending mode</h3>
 <p>
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 Introduce 2 new keywords that allow compositing and blending on the shadow color:<br/>
