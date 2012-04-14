@@ -1430,13 +1430,31 @@ Sets the blend mode of the box shadow. Also needs to be added to the shorthand.
 Set the blend mode of the text shadow. Also needs to be added to the shorthand.
 </p>
 
-<h4 id="text-blend-mode">The <span class="prop-name">'text-blend-mode'</span> property</h4>
+<h4 id="text-blend-mode">The <span class="prop-name">'foreground-blend-mode'</span> property</h4>
 <p>
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
-Set the blend mode of the text.
+Sets the blend mode of the text or nested elements.
+</p>
+
+<h4 id="background-alpha-compositing">Alternate proposal</h4>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+<p>
+To cut down on the number of new keywords, we could extend blend-mode to take the following additional parameters:
+<dl>
+<dt>box-shadow</dt>
+<dd>list of blendmodes that target each shadow</dd>
+<dt>background</dt>
+<dd>list of blendmodes that target each background layer</dd>
+<dt>text-shadow</dt>
+<dd>list of blendmodes that target each text shadow</dd>
+<dt>foreground</dt>
+<dd>blendmode that targets the text and nested elements</dd>
+</dl>
+A possible drawback is that there are no other keywords that target all these layers at once.
 </p>
 
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
+<p><strong>This spec is not intending to become an official extension for Canvas. These keywords are only here to start a discussion and will be removed once there is consensus.</strong></p>
 <h3 id="canvascompositingandblending">Specifying the current compositing and blending mode</h3>
 <p>
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
@@ -1452,8 +1470,9 @@ If a blend mode is specified, the blended image is calculated as specified above
 <p>
 The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.<br/>
 To allow blending, we can add a new operator 'globalBlendOperation' on the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#2dcontext">2D context</a> with the blending keywords: normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.<br/>
-The default value will be 'normal'.<br/>
-Blending is done first, followed by compositing.
+The default value will be 'normal'.<br/><br/>
+Blending is done first, followed by compositing.<br/>
+In Canvas, clip-to-self is false. If you want to limit the how much of the destination is impacted, you need to set a clipping path.
 </p>
 
 <h3 id="canvascompositingandblending">Specifying the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>'s compositing and blending mode</h3>

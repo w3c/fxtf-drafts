@@ -554,7 +554,11 @@
 
        <li><a href="#text-blend-mode"><span class=secno>6.4.5. </span>The
         <span class=prop-name>&lsquo;<code
-        class=property>text-blend-mode</code>&rsquo;</span> property</a>
+        class=property>foreground-blend-mode</code>&rsquo;</span>
+        property</a>
+
+       <li><a href="#background-alpha-compositing"><span class=secno>6.4.6.
+        </span>Alternate proposal</a>
       </ul>
     </ul>
 
@@ -2065,13 +2069,46 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <h4 id=text-blend-mode><span class=secno>6.4.5. </span>The <span
    class=prop-name>&lsquo;<code
-   class=property>text-blend-mode</code>&rsquo;</span> property</h4>
+   class=property>foreground-blend-mode</code>&rsquo;</span> property</h4>
 
   <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
-   Set the blend mode of the text.
+   Sets the blend mode of the text or nested elements.
+
+  <h4 id=background-alpha-compositing><span class=secno>6.4.6.
+   </span>Alternate proposal</h4>
+
+  <p><span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+
+  <p> To cut down on the number of new keywords, we could extend blend-mode
+   to take the following additional parameters:
+
+  <dl>
+   <dt>box-shadow
+
+   <dd>list of blendmodes that target each shadow
+
+   <dt>background
+
+   <dd>list of blendmodes that target each background layer
+
+   <dt>text-shadow
+
+   <dd>list of blendmodes that target each text shadow
+
+   <dt>foreground
+
+   <dd>blendmode that targets the text and nested elements
+  </dl>
+
+  <p>A possible drawback is that there are no other keywords that target all
+   these layers at once.
 
   <h2 id=canvascompositingandblending><span class=secno>7. </span>Specifying
    Compositing and Blending in Canvas</h2>
+
+  <p><strong>This spec is not intending to become an official extension for
+   Canvas. These keywords are only here to start a discussion and will be
+   removed once there is consensus.</strong>
 
   <h3 id=canvascompositingandblending><span class=secno>7.1.
    </span>Specifying the current compositing and blending mode</h3>
@@ -2102,7 +2139,10 @@ components having the minimum, middle, and maximum values upon entry to the func
    difference, exclusion, hue, saturation, color and luminosity.<br>
    The default value will be &lsquo;<code
    class=property>normal</code>&rsquo;.<br>
-   Blending is done first, followed by compositing.
+   <br>
+   Blending is done first, followed by compositing.<br>
+   In Canvas, clip-to-self is false. If you want to limit the how much of the
+   destination is impacted, you need to set a clipping path.
 
   <h3 id=canvascompositingandblending><span class=secno>7.2.
    </span>Specifying the <a
