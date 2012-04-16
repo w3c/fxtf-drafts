@@ -565,12 +565,22 @@
       </ul>
     </ul>
 
-   <li><a href="#references1"><span class=secno>7. </span>References</a>
+   <li><a href="#canvascompositingandblending"><span class=secno>7.
+    </span>Specifying Compositing and Blending in Canvas </a>
     <ul class=toc>
-     <li><a href="#normref"><span class=secno>7.1. </span>Normative
+     <li><a href="#canvascompositingandblending"><span class=secno>7.1.
+      </span>Specifying the current compositing and blending mode</a>
+
+     <li><a href="#canvascompositingandblending"><span class=secno>7.2.
+      </span>Specifying the shadow's compositing and blending mode</a>
+    </ul>
+
+   <li><a href="#references1"><span class=secno>8. </span>References</a>
+    <ul class=toc>
+     <li><a href="#normref"><span class=secno>8.1. </span>Normative
       References</a>
 
-     <li><a href="#informref"><span class=secno>7.2. </span>Informative
+     <li><a href="#informref"><span class=secno>8.2. </span>Informative
       References</a>
     </ul>
   </ul>
@@ -2099,42 +2109,66 @@ components having the minimum, middle, and maximum values upon entry to the func
    compositing on borders</h4>
 
   <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
-   Is there a need to target this part of the element?</p>
-  <!--
-<h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
-<p><strong>This spec is not intending to become an official extension for Canvas. These keywords are only here to start a discussion and will be removed once there is consensus.</strong></p>
-<h3 id="canvascompositingandblending">Specifying the current compositing and blending mode</h3>
-<p>
-<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
-The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.
-To allow blending, we can extend the list with the blending keywords: normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</br>
-</p>
-<p>
-If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the src-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
-</p>
-<p>
-<span class="issue">or</span>
-</p>
-<p>
-The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.<br/>
-To allow blending, we can add a new operator 'globalBlendOperation' on the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#2dcontext">2D context</a> with the blending keywords: normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.<br/>
-The default value will be 'normal'.<br/><br/>
-Blending is done first, followed by compositing.<br/>
-In Canvas, clip-to-self is false. If you want to limit the how much of the destination is impacted, you need to set a clipping path.
-</p>
+   Is there a need to target this part of the element?
 
-<h3 id="canvascompositingandblending">Specifying the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>'s compositing and blending mode</h3>
-<p>
-<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
-Introduce 2 new keywords that allow compositing and blending on the shadow color:<br/>
-shadow-alpha-compositing would set the compositing mode of the shadow (the default would be 'src-over'/'normal')<br/>
-shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
-</p>
--->
+  <h2 id=canvascompositingandblending><span class=secno>7. </span>Specifying
+   Compositing and Blending in Canvas</h2>
 
-  <h2 id=references1><span class=secno>7. </span>References</h2>
+  <p><strong>This spec is not intending to become an official extension for
+   Canvas. These keywords are only here to start a discussion and will be
+   removed once there is consensus.</strong>
 
-  <h3 id=normref><span class=secno>7.1. </span>Normative References</h3>
+  <h3 id=canvascompositingandblending><span class=secno>7.1.
+   </span>Specifying the current compositing and blending mode</h3>
+
+  <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas
+   specification</a> already defines the Porter-Duff operators. To allow
+   blending, we can extend the list with the blending keywords:
+
+  <pre>normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</pre>
+
+  <p>If a blend mode is specified, the blended image is calculated as
+   specified above and is then always composited to the destination with the
+   src-over compositing operator.<br>
+   Isolation and knockout do not apply in a canvas context since there is no
+   concept of grouping.
+
+  <p> <span class=issue>or</span>
+
+  <p> The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas
+   specification</a> already defines the Porter-Duff operators.<br>
+   To allow blending, we can add a new operator &lsquo;<code
+   class=property>globalBlendOperation</code>&rsquo; on the <a
+   href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#2dcontext">2D
+   context</a> with the blending keywords:
+
+  <pre>
+normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.
+</pre>
+
+  <p>The default value will be &lsquo;<code
+   class=property>normal</code>&rsquo;.<br>
+   <br>
+   Blending is done first, followed by compositing.<br>
+
+  <h3 id=canvascompositingandblending><span class=secno>7.2.
+   </span>Specifying the <a
+   href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>&lsquo;<code
+   class=css>s compositing and blending mode</code></h3>
+
+  <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   Introduce 2 new keywords that allow compositing and blending on the shadow
+   color:<br>
+   shadow-alpha-compositing would set the compositing mode of the shadow (the
+   default would be &rsquo;src-over'/&lsquo;<code
+   class=property>normal</code>&rsquo;)<br>
+   shadow-blend-mode would set the blend operation on the shadow (the default
+   is &lsquo;<code class=property>normal</code>&rsquo;).
+
+  <h2 id=references1><span class=secno>8. </span>References</h2>
+
+  <h3 id=normref><span class=secno>8.1. </span>Normative References</h3>
 
   <dl>
    <dt id=ref-CSS21><strong class=normref>[CSS21]</strong>
@@ -2204,7 +2238,7 @@ shadow-blend-mode would set the blend operation on the shadow (the default is 'n
     
   </dl>
 
-  <h3 id=informref><span class=secno>7.2. </span>Informative References</h3>
+  <h3 id=informref><span class=secno>8.2. </span>Informative References</h3>
 
   <dl>
    <dt id=ref-html5><strong class=informref>[HTML5]</strong>
