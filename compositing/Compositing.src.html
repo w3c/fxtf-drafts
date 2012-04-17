@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">16 April 2012</h2>
+<h2 class="no-num no-toc">17 April 2012</h2>
 <dl>
   <dt>Editors:</dt>
   <dd class="vcard">
@@ -250,7 +250,7 @@
 <p>
   Compositing describes how shapes of different elements are 
   combined into a single image. Conceptually, each element is rendered into 
-  its own buffer and is then merged with its <a href="#background">background</a>. The most widely used 
+  its own buffer and is then merged with its <a href="#backdrop">backdrop</a>. The most widely used 
   compositing operation is simple alpha compositing. (see
   <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a>)
   This spec will introduce additional compositing operators that will enable
@@ -259,9 +259,9 @@
  
  <p>
   Blending describes how colors are "blended"
-  together. Typically, the color of an element and the color of its <a href="#background">background</a>
+  together. Typically, the color of an element and the color of its <a href="#backdrop">backdrop</a>
   are combined to create a new color. This new color replaces the old color
-  and is then composited with the <a href="#background">background</a> using the specified compositing mode.
+  and is then composited with the <a href="#backdrop">backdrop</a> using the specified compositing mode.
 </p>
 
 <h2 class="no-num no-toc" id="status">Status of This Document</h2>
@@ -331,7 +331,7 @@
 <h2 id="introduction">Introduction</h2>
 <p>
 At the basic level, compositing describes how shapes interact while blending describes how colors interact.
-Both idioms use a rendered version of the current element (ie a shape or a group) and mix it with the <a href="#background">backdrop</a>.
+Both idioms use a rendered version of the current element (ie a shape or a group) and mix it with the <a href="#backdrop">backdrop</a>.
 </p>
 
 <p>
@@ -346,12 +346,12 @@ This document will describe the algorithms of compositing and blending in the fi
 Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the opacity. This coverage information is used to control the compositing of colors.
 </p>
 <p>
-Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the <a href="#background">background</a> image using a simplistic formula that has the effect of overlaying the object over the <a href="#background">background</a>. Where the objects overlap and coverage is not complete the color of the <a href="#background">background</a> may show through the object that has just been rendered. 
+Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the <a href="#backdrop">backdrop</a> image using a simplistic formula that has the effect of overlaying the object over the <a href="#backdrop">backdrop</a>. Where the objects overlap and coverage is not complete the color of the <a href="#backdrop">backdrop</a> may show through the object that has just been rendered. 
 </p>
 
 <h3 id="simplealphablending">simple alpha blending</h3>
 <p>
-In computer graphics, alpha compositing is the process of combining an image with a <a href="#background">background</a> to create the appearance of partial or full transparency. 
+In computer graphics, alpha compositing is the process of combining an image with a <a href="#backdrop">backdrop</a> to create the appearance of partial or full transparency. 
 The alpha value is stored alongside the color and has a value between 0 and 1.  A value of 0 means that the pixel does not have any coverage information and is transparent; i.e. there was no color contribution from any geometry because the geometry did not overlap this pixel. A value of 1 means that the pixel is opaque because the geometry completely overlapped the pixel.
 </p>
 
@@ -367,7 +367,7 @@ Ca: the color value<br/>
 αa: the alpha value
 </p>
 <p>
-Conceptually, "alpha" means "allow (1 - alpha) from behind to show". With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the <a href="#background">background</a> pixel. Thus, the formula becomes:
+Conceptually, "alpha" means "allow (1 - alpha) from behind to show". With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the <a href="#backdrop">backdrop</a> pixel. Thus, the formula becomes:
 <pre>
 co = ca + cb x (1 - αa)
 </pre>
@@ -375,7 +375,7 @@ with
 <br/>
 co: the pixel after compositing<br/>
 ca: the pixel of the shape<br/>
-cb: the pixel of the <a href="#background">backdrop</a><br/>
+cb: the pixel of the <a href="#backdrop">backdrop</a><br/>
 αa: the alpha value of the shape
 </p>
 
@@ -387,7 +387,7 @@ Figure 1
 <p>
 There are circumstances that we have to know the alpha value of the pixel.
 For example in figure 1, shape 2 and 3 have opacity. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 shine through. Without knowing αa of the group, we would not be able to calculate this.<br/>
-Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the <a href="#background">backdrop</a>. So:
+Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the <a href="#backdrop">backdrop</a>. So:
 <pre>
 αo = αa + αb x (1 - αa)
 </pre>
@@ -395,7 +395,7 @@ with
 <br/>
 αo: the alpha after compositing<br/>
 αa: the alpha of the shape<br/>
-αb: the alpha of the <a href="#background">backdrop</a>
+αb: the alpha of the <a href="#backdrop">backdrop</a>
 </p>
 <p>
 If you want to know the color of a shape and not just its pixel value, you can reverse the formula for premultiplied alpha:
@@ -411,9 +411,9 @@ with
 αo: the alpha after compositing<br/>
 Co: the color after compositing<br/>
 Ca: the color of the shape<br/>
-Cb: the color of the <a href="#background">backdrop</a><br/>
+Cb: the color of the <a href="#backdrop">backdrop</a><br/>
 αa: the alpha of the shape<br/>
-αb: the alpha of the <a href="#background">backdrop</a>
+αb: the alpha of the <a href="#backdrop">backdrop</a>
 </p>
 
 <h3 id="simplealphablendingexamples">Examples of simple alpha blending</h3>
@@ -456,7 +456,7 @@ Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
 Figure 3
 </p>
 <p>
-Figure 3 is an example where the shape has alpha but the <a href="#background">backdrop</a> is opaque.
+Figure 3 is an example where the shape has alpha but the <a href="#backdrop">backdrop</a> is opaque.
 </p>
 <p>
 Applying the compositing value, you get:
@@ -476,7 +476,7 @@ Co = 1/1 * RGB(127, 0, 127) = RGB(127, 0, 127)
 Figure 4
 </p>
 <p>
-Figure 4 is an example where both the shape and the <a href="#background">backdrop</a> have alpha.
+Figure 4 is an example where both the shape and the <a href="#backdrop">backdrop</a> have alpha.
 </p>
 <p>
 Applying the compositing value, you get:
@@ -519,15 +519,15 @@ co = RGB(127, 127, 255)
 which is the value that is sent to the monitor.
 </p>
 
-<h2 id="background">Background calculation</h2>
+<h2 id="backdrop">Backdrop calculation</h2>
 <p>
-The background (also known as backdrop) is the content that is behind the element.
+The backdrop is the content that is behind the element.
 <p>
 Until now, we haven't discussed how it is calculated. A first assumption would be that it consists of everything that was drawn earlier and this turns out to be correct.<br/>
-If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the background. So, for an element that is a member of a group that has opacity, the opacity should be ignored when calculating the backdrop.
+If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the backdrop. So, for an element that is a member of a group that has opacity, the opacity should be ignored when calculating the backdrop.
 </p>
 
-<h3 id="backgroundexamples">Examples of backdrop calculation</h3>
+<h3 id="backdropexamples">Examples of backdrop calculation</h3>
 <div class="example">
 <p style="text-align:center"><img src="examples/simple_backdrop.svg"/>
 <br/>
@@ -544,7 +544,7 @@ The dotted line shows the area that is examined during compositing of the blue s
 Figure 6
 </p>
 <p>
-In figure 6, the shape in the background has an alpha value. The alpha value of the background shape is preserved when the backdrop is calculated.
+In figure 6, the shape in the backdrop has an alpha value. The alpha value of the backdrop shape is preserved when the backdrop is calculated.
 </p>
 </div>
 <div class="example">
@@ -557,9 +557,9 @@ In figure 7, the blue and green shapes are in a group that has alpha. When calcu
 </p>
 </div>
 
-<h3 id="backgroundnew">Establishing a new background context</h3>
+<h3 id="backdropnew">Establishing a new backdrop context</h3>
 <p>
-Under certain circumstances, you might want to limit the background calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the background of the page you are integrating because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have <span class="issue">an attribute (or the same attribute)</span> that can be set on the group where you want this to happen.<br/>
+Under certain circumstances, you might want to limit the backdrop calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the backdrop of the page you are integrating because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have <span class="issue">an attribute (or the same attribute)</span> that can be set on the group where you want this to happen.<br/>
 See the sections on compositing and blending on how this affects rendering.
 </p>
 
@@ -722,7 +722,7 @@ Plus is an additional operator that is defined in the Porter-Duff paper [REFEREN
 
 <h2 id="blending">Blending</h2>
 <p>
-Blending takes the colors of the source element and mixes them with the <a href="#background">backdrop</a>. The resulting blended element then replaces the original source. Note that the opacity of the source element is ignored during blending. The alpha of the <a href="#background">backdrop</a> will also be ignored. Note that this calculation always happens in non-premultiplied space.
+Blending takes the colors of the source element and mixes them with the <a href="#backdrop">backdrop</a>. The resulting blended element then replaces the original source. Note that the opacity of the source element is ignored during blending. The alpha of the <a href="#backdrop">backdrop</a> will also be ignored. Note that this calculation always happens in non-premultiplied space.
 </p>
 <p>
 We will describe the "mixing" formula as:
@@ -733,12 +733,12 @@ with:
 <br/>
 Cm: the result color after blending<br/>
 B: the formula that does the blending<br/>
-Cb: the <a href="#background">backdrop</a> color<br/>
+Cb: the <a href="#backdrop">backdrop</a> color<br/>
 Cs: the source color<br/>
 If the result of the mixing formula falls outside of the color range, it will be clamped to minimum or maximum value of the color range.
 </p>
 <p>
-However, we can not use this value since this calculation is overlooking the alpha of the <a href="#background">background</a>. If the <a href="#background">backdrop</a> is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
+However, we can not use this value since this calculation is overlooking the alpha of the <a href="#backdrop">backdrop</a>. If the <a href="#backdrop">backdrop</a> is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
 <pre>
 	Cr = (1 - αb) x Cs + αb x B(Cb, Cs)
 </pre>
@@ -747,14 +747,14 @@ with:
 Cr: the result color<br/>
 B: the formula that does the blending<br/>
 Cs: the source color<br/>
-Cb: the <a href="#background">backdrop</a> color<br/>
-αb: the <a href="#background">backdrop</a> alpha<br/>
+Cb: the <a href="#backdrop">backdrop</a> color<br/>
+αb: the <a href="#backdrop">backdrop</a> alpha<br/>
 </p>
 <div class="example">
 <img src="examples/blend_background_opacity.svg"/>
 <p>
 This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of opacity.<br/>
-Note how the top rectangle shifts more toward red as the opacity of the <a href="#background">backdrop</a> lowers.
+Note how the top rectangle shifts more toward red as the opacity of the <a href="#backdrop">backdrop</a> lowers.
 </p>
 </div>
 <p>
@@ -773,7 +773,7 @@ For simplicity, all the examples in this chapter have 'src-over' compositing app
 </p>
 <h3 id="blendingseparable">Separable blend modes</h3>
 <p>
-A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent <a href="#background">backdrop</a> and source colors—that is, if the mixing formula is applied <strong>separately</strong> to each set of corresponding components.
+A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent <a href="#backdrop">backdrop</a> and source colors—that is, if the mixing formula is applied <strong>separately</strong> to each set of corresponding components.
 </p>
 <p>
 Each of the following blend modes will apply the blending function B(Cb, Cs) on each of the color components.
@@ -802,7 +802,7 @@ The resultant color is always at least as dark as either the source or destinati
 
 <h4 id="blendingscreen">'screen' blend mode</h4>
 <p>
-Multiplies the complements of the <a href="#background">backdrop</a> and source color values, then complements the result.
+Multiplies the complements of the <a href="#backdrop">backdrop</a> and source color values, then complements the result.
 </p>
 <p>
 The result color is always at least as light as either of the two constituent colors. Screening any color with white produces white; screening with black leaves the original color unchanged. The effect is similar to projecting multiple photographic slides simultaneously onto a single screen.
@@ -815,10 +815,10 @@ The result color is always at least as light as either of the two constituent co
 
 <h4 id="blendingoverlay">'overlay' blend mode</h4>
 <p>
-Multiplies or screens the colors, depending on the <a href="#background">backdrop</a> color value.
+Multiplies or screens the colors, depending on the <a href="#backdrop">backdrop</a> color value.
 </p>
 <p>
-Source colors overlay the <a href="#background">backdrop</a> while preserving its highlights and shadows. The <a href="#background">backdrop</a> color is not replaced but is mixed with the source color to reflect the lightness or darkness of the <a href="#background">backdrop</a>.
+Source colors overlay the <a href="#backdrop">backdrop</a> while preserving its highlights and shadows. The <a href="#backdrop">backdrop</a> color is not replaced but is mixed with the source color to reflect the lightness or darkness of the <a href="#backdrop">backdrop</a>.
 <pre>
     B(Cb, Cs) = HardLight(Cs, Cb)
 </pre>
@@ -828,9 +828,9 @@ Overlay is the inverse of the 'hardlight' blend mode. See the definition of 'har
 
 <h4 id="blendingdarken">'darken' blend mode</h4>
 <p>
-Selects the darker of the <a href="#background">backdrop</a> and source colors.
+Selects the darker of the <a href="#backdrop">backdrop</a> and source colors.
 </p><p>
-The <a href="#background">backdrop</a> is replaced with the source where the source is darker; otherwise, it is left unchanged.
+The <a href="#backdrop">backdrop</a> is replaced with the source where the source is darker; otherwise, it is left unchanged.
 <pre>
     B(Cb, Cs) = min(Cb, Cs)
 </pre>
@@ -839,9 +839,9 @@ The <a href="#background">backdrop</a> is replaced with the source where the sou
 
 <h4 id="blendinglighten">'lighten' blend mode</h4>
 <p>
-Selects the lighter of the <a href="#background">backdrop</a> and source colors.
+Selects the lighter of the <a href="#backdrop">backdrop</a> and source colors.
 </p><p>
-The <a href="#background">backdrop</a> is replaced with the source where the source is lighter; otherwise, it is left unchanged.
+The <a href="#backdrop">backdrop</a> is replaced with the source where the source is lighter; otherwise, it is left unchanged.
 <pre>
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
@@ -850,7 +850,7 @@ The <a href="#background">backdrop</a> is replaced with the source where the sou
 
 <h4 id="blendingcolordodge">'color-dodge' blend mode</h4>
 <p>
-Brightens the <a href="#background">backdrop</a> color to reflect the source color. Painting with black produces no changes.
+Brightens the <a href="#backdrop">backdrop</a> color to reflect the source color. Painting with black produces no changes.
 <pre>
     if(Cs < 1)
         B(Cb, Cs) = min(1, Cb / (1 - Cs))
@@ -862,7 +862,7 @@ Brightens the <a href="#background">backdrop</a> color to reflect the source col
 
 <h4 id="blendingcolorburn">'color-burn' blend mode</h4>
 <p>
-Darkens the <a href="#background">backdrop</a> color to reflect the source color. Painting with white produces no change.
+Darkens the <a href="#backdrop">backdrop</a> color to reflect the source color. Painting with white produces no change.
 <pre>
     if(Cs > 0)
         B(Cb, Cs) = 1 - min(1, (1 - Cb) / Cs)
@@ -874,7 +874,7 @@ Darkens the <a href="#background">backdrop</a> color to reflect the source color
 
 <h4 id="blendinghardlight">'hard-light' blend mode</h4>
 <p>
-Multiplies or screens the colors, depending on the source color value. The effect is similar to shining a harsh spotlight on the <a href="#background">backdrop</a>.
+Multiplies or screens the colors, depending on the source color value. The effect is similar to shining a harsh spotlight on the <a href="#backdrop">backdrop</a>.
 <pre>
     if(Cs <= 0.5)
         B(Cb, Cs) = Multiply(Cb, 2 x Cs)
@@ -887,7 +887,7 @@ See the definition of 'multiply' and 'screen' for their formulas.
 
 <h4 id="blendingsoftlight">'soft-light' blend mode</h4>
 <p>
-Darkens or lightens the colors, depending on the source color value. The effect is similar to shining a diffused spotlight on the <a href="#background">backdrop</a>
+Darkens or lightens the colors, depending on the source color value. The effect is similar to shining a diffused spotlight on the <a href="#backdrop">backdrop</a>
 <pre>
     if(Cs <= 0.5)
         B(Cb, Cs) = Cb - (1 - 2 x Cs) x Cb x (1 - Cb)
@@ -907,7 +907,7 @@ with
 Subtracts the darker of the two constituent colors from the lighter color.
 </p>
 <p>
-Painting with white inverts the <a href="#background">backdrop</a> color; painting with black produces no change.
+Painting with white inverts the <a href="#backdrop">backdrop</a> color; painting with black produces no change.
 <pre>
     B(Cb, Cs) = | Cb - Cs |
 </pre>
@@ -916,7 +916,7 @@ Painting with white inverts the <a href="#background">backdrop</a> color; painti
 
 <h4 id="blendingexclusion">'exclusion' blend mode</h4>
 <p>
-Produces an effect similar to that of the Difference mode but lower in contrast. Painting with white inverts the <a href="#background">backdrop</a> color; painting with black produces no change
+Produces an effect similar to that of the Difference mode but lower in contrast. Painting with white inverts the <a href="#backdrop">backdrop</a> color; painting with black produces no change
 <pre>
     B(Cb, Cs) = Cb + Cs - 2 x Cb x Cs
 </pre>
@@ -927,8 +927,8 @@ Produces an effect similar to that of the Difference mode but lower in contrast.
 <p>
 Nonseparable blend modes consider all color components in combination as opposed to the seperable ones that look at each component individually.<br/>
 All of these blend modes conceptually entail the following steps:<br/>
-a) Convert the <a href="#background">backdrop</a> and source colors from the blending color space to an intermediate HSL (hue-saturation-luminosity) representation.<br/>
-b) Create a new color from some combination of hue, saturation, and luminosity components selected from the <a href="#background">backdrop</a> and source colors.<br/>
+a) Convert the <a href="#backdrop">backdrop</a> and source colors from the blending color space to an intermediate HSL (hue-saturation-luminosity) representation.<br/>
+b) Create a new color from some combination of hue, saturation, and luminosity components selected from the <a href="#backdrop">backdrop</a> and source colors.<br/>
 c) Convert the result back to the original color space.<br/>
 </p>
 <p>
@@ -968,7 +968,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 
 <h4 id="blendinghue">'hue' blend mode</h4>
 <p>
-Creates a color with the hue of the source color and the saturation and luminosity of the <a href="#background">backdrop</a> color.
+Creates a color with the hue of the source color and the saturation and luminosity of the <a href="#backdrop">backdrop</a> color.
 <pre>
 	B(Cb, Cs) = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
 </pre>
@@ -977,7 +977,7 @@ Creates a color with the hue of the source color and the saturation and luminosi
 
 <h4 id="blendingsaturation">'saturation' blend mode</h4>
 <p>
-Creates a color with the saturation of the source color and the hue and luminosity of the <a href="#background">backdrop</a> color. Painting with this mode in an area of the <a href="#background">backdrop</a> that is a pure gray (no saturation) produces no change.
+Creates a color with the saturation of the source color and the hue and luminosity of the <a href="#backdrop">backdrop</a> color. Painting with this mode in an area of the <a href="#backdrop">backdrop</a> that is a pure gray (no saturation) produces no change.
 <pre>
 	B(Cb, Cs) = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
 </pre>
@@ -986,7 +986,7 @@ Creates a color with the saturation of the source color and the hue and luminosi
 
 <h4 id="blendingcolor">'color' blend mode</h4>
 <p>
-Creates a color with the hue and saturation of the source color and the luminosity of the <a href="#background">backdrop</a> color. This preserves the gray levels of the <a href="#background">backdrop</a> and is useful for colouring monochrome images or tinting colour images.
+Creates a color with the hue and saturation of the source color and the luminosity of the <a href="#backdrop">backdrop</a> color. This preserves the gray levels of the <a href="#backdrop">backdrop</a> and is useful for colouring monochrome images or tinting colour images.
 <pre>
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
 </pre>
@@ -995,7 +995,7 @@ Creates a color with the hue and saturation of the source color and the luminosi
 
 <h4 id="blendingluminosity">'luminosity' blend mode</h4>
 <p>
-Creates a color with the luminosity of the source color and the hue and saturation of the <a href="#background">backdrop</a> color. This produces an inverse effect to that of the Color mode.
+Creates a color with the luminosity of the source color and the hue and saturation of the <a href="#backdrop">backdrop</a> color. This produces an inverse effect to that of the Color mode.
 <pre>
 	B(Cb, Cs) = SetLum(Cb, Lum(Cs))
 </pre>
@@ -1009,8 +1009,8 @@ In the following example, the red and green rectangles are in a group and the gr
 <div class="example">
 <img src="examples/group_non_isolated.svg"/>
 <p>
-The <a href="#background">background</a> that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
-Now, if we made the group isolated, only the red rectangle is in the <a href="#background">background</a> and the result becomes as follows:
+The <a href="#backdrop">backdrop</a> that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
+Now, if we made the group isolated, only the red rectangle is in the <a href="#backdrop">backdrop</a> and the result becomes as follows:
 </p>
 </div>
 
@@ -1023,13 +1023,13 @@ The result is that the green rectangle doesn't blend with the blue rectangle.
 
 <h3 id="blendingnonseparable">Knockout groups</h3>
 <p>
-A knockout group is conceptually the inverse of an isolated group. When calculating the <a href="#background">background</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
+A knockout group is conceptually the inverse of an isolated group. When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
 </p>
 <div class="example">
 <img src="examples/knockout.svg"/>
 <p>
 The example above show the effect of group knockout. The group contains a red rectangle and a green rectangle that has a difference mode applied to it.<br/>
-In the top example you can see that the green rectangle is blending with the red rectangle in its group and the blue rectangle in the <a href="#background">background</a>.<br/>The example below that has knockout turned on and the green rectangle only blends with the blue rectangle.
+In the top example you can see that the green rectangle is blending with the red rectangle in its group and the blue rectangle in the <a href="#backdrop">backdrop</a>.<br/>The example below that has knockout turned on and the green rectangle only blends with the blue rectangle.
 </p>
 </div>
 
@@ -1307,7 +1307,7 @@ Note that knockout applies to blending as well as compositing. The end result is
 </p>
 </div>
 
-<h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element <a href="#background">background</a></h3>
+<h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
 <p>
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 An author might want to specify the blending of multiple backgrounds of an element. The <a href="#background">background</a> compositing and blending is always treated as an isolated group.
