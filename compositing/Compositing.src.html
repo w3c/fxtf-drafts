@@ -1602,6 +1602,10 @@ A possible drawback is that there are no other keywords that target all these la
 <span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 Is there a need to target this part of the element?
 </p>
+
+<h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+Please see the <a href="http://www.w3.org/Graphics/fx/wiki/BlendingInCanvas">W3 wiki</a>.
 <!--
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
 <p><strong>This spec is not intending to become an official extension for Canvas. These keywords are only here to start a discussion and will be removed once there is consensus.</strong></p>
@@ -1634,6 +1638,19 @@ shadow-alpha-compositing would set the compositing mode of the shadow (the defau
 shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
 </p>
 -->
+
+<h2 id="security">Security issues with compositing and blending</h2>
+<p>
+It is important that the timing to the blending and compositing operations is independant of the source and destination pixel. In other words, operations should be implemented in such a way that they always take the same amount of time regardless of the pixel values.<br/>
+If this rule is not followed, an attacker could mount a timing attack.
+</p>
+<p> A timing attack is a method of obtaining information about content that
+   is otherwise protected, based on studying the amount of time it takes for
+   an operation to occur.If, for example, red pixels took longer to
+   draw than green pixels, one might be able to reconstruct a rough image of 
+   the element being rendered, even without ever having access to the content 
+   of the element.</p>
+
 <h2 id="references1">References</h2>
 <h3 id="normref">Normative References</h3>
 <dl>

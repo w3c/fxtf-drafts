@@ -565,12 +565,18 @@
       </ul>
     </ul>
 
-   <li><a href="#references1"><span class=secno>7. </span>References</a>
+   <li><a href="#canvascompositingandblending"><span class=secno>7.
+    </span>Specifying Compositing and Blending in Canvas </a>
+
+   <li><a href="#security"><span class=secno>8. </span>Security issues with
+    compositing and blending</a>
+
+   <li><a href="#references1"><span class=secno>9. </span>References</a>
     <ul class=toc>
-     <li><a href="#normref"><span class=secno>7.1. </span>Normative
+     <li><a href="#normref"><span class=secno>9.1. </span>Normative
       References</a>
 
-     <li><a href="#informref"><span class=secno>7.2. </span>Informative
+     <li><a href="#informref"><span class=secno>9.2. </span>Informative
       References</a>
     </ul>
   </ul>
@@ -2271,8 +2277,15 @@ components having the minimum, middle, and maximum values upon entry to the func
    compositing on borders</h4>
 
   <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
-   Is there a need to target this part of the element?</p>
-  <!--
+   Is there a need to target this part of the element?
+
+  <h2 id=canvascompositingandblending><span class=secno>7. </span>Specifying
+   Compositing and Blending in Canvas</h2>
+
+  <p><span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   Please see the <a
+   href="http://www.w3.org/Graphics/fx/wiki/BlendingInCanvas">W3 wiki</a>.
+   <!--
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
 <p><strong>This spec is not intending to become an official extension for Canvas. These keywords are only here to start a discussion and will be removed once there is consensus.</strong></p>
 <h3 id="canvascompositingandblending">Specifying the current compositing and blending mode</h3>
@@ -2304,10 +2317,27 @@ shadow-alpha-compositing would set the compositing mode of the shadow (the defau
 shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
 </p>
 -->
+   
 
-  <h2 id=references1><span class=secno>7. </span>References</h2>
+  <h2 id=security><span class=secno>8. </span>Security issues with
+   compositing and blending</h2>
 
-  <h3 id=normref><span class=secno>7.1. </span>Normative References</h3>
+  <p> It is important that the timing to the blending and compositing
+   operations is independant of the source and destination pixel. In other
+   words, operations should be implemented in such a way that they always
+   take the same amount of time regardless of the pixel values.<br>
+   If this rule is not followed, an attacker could mount a timing attack.
+
+  <p> A timing attack is a method of obtaining information about content that
+   is otherwise protected, based on studying the amount of time it takes for
+   an operation to occur.If, for example, red pixels took longer to draw than
+   green pixels, one might be able to reconstruct a rough image of the
+   element being rendered, even without ever having access to the content of
+   the element.
+
+  <h2 id=references1><span class=secno>9. </span>References</h2>
+
+  <h3 id=normref><span class=secno>9.1. </span>Normative References</h3>
 
   <dl>
    <dt id=ref-CSS21><strong class=normref>[CSS21]</strong>
@@ -2377,7 +2407,7 @@ shadow-blend-mode would set the blend operation on the shadow (the default is 'n
     
   </dl>
 
-  <h3 id=informref><span class=secno>7.2. </span>Informative References</h3>
+  <h3 id=informref><span class=secno>9.2. </span>Informative References</h3>
 
   <dl>
    <dt id=ref-html5><strong class=informref>[HTML5]</strong>
