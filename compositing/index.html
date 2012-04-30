@@ -6,69 +6,211 @@
   <title>Compositing and Blending 1.0</title>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
-  <link href="http://www.w3.org/StyleSheets/TR/W3C-ED.css" rel=stylesheet
-  type="text/css">
-  <link href="style/alternate-spec-style.css" id=st rel=stylesheet
-  title="additional spec styles" type="text/css">
-  <script src="style/style-toggle.js" type="text/javascript"></script>
 
   <style type="text/css">
   
   /* Alternate stylesheet fonts are here because in some browsers (Opera 11.5) */
   /* The fonts are not applied if only loaded from the alternate stylesheet    */
-  @import url(http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic);
-  @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
-
-  a.toggle {
-    position: fixed;
-    top: 0.5em;
-    right: 0.5em;
-    font-size: smaller;
-    color: gray;
-    opacity: 0.2;
-  }
-
-  a.toggle:hover {
-    opacity: 1;
-    color: #46A4E9;
-  }
-
-  div.issue-marker {
-    position: absolute;
-    width: 20ex;
-    margin-left: -26ex;
-    padding-left: 1em;
-    padding: 5px;
-    font-weight: normal;
-    font-size: 11px;
-    text-align: right;
-    background-color: white;
-    font-size: 90%;
-  }
-
-  div.issue-marker a {
-    color: red;
-  }
   
-  .todo {
-      font-weight: bold;
-      border-left: 0.5em solid #f44;
-      padding-left: 1em;
-      margin-top: 0.5em;
-      color: #a0a0a0;
-  }
-  
-  .todo:before {
-      content: "TO DO : ";
-      color: #f44;
-  }
-  
-  pre {
-    color: #a52a2a;
-    font-family: monospace;
-    font-size: 90%
-}  
- </style>
+  /* License font the following two fonts: fonts/Droid-Serif-fontfacekit/Google Android License.txt */
+  @import url(fonts/Droid-Serif-fontfacekit/stylesheet.css);
+  @import url(fonts/Droid-Sans-Mono-fontfacekit/stylesheet.css);
+
+         a.toggle {
+             position: fixed;
+             top: 0.5em;
+             right: 0.5em;
+         	font-size: smaller;
+         	color: gray;
+         	opacity: 0.2;
+         }
+
+         a.toggle:hover {
+             opacity: 1;
+             color: #46A4E9;
+         }
+         
+         .issue.resolved, .issue.stale, .issue.moved {
+             display: none;
+         }
+         
+         
+         #region-style-example p, #region-style-example pre {
+         	clear: both;
+         }
+
+         #region_styling_illustration {
+         	margin: 0px auto;
+         	width: 70ex;
+         }
+         
+         .big.note {
+             font-size: 1.2em;
+             line-height: 1.3em;
+             color: #2f2f2f;
+         }
+         
+         #mobile-logo {
+             display: none;
+         }
+         
+         @media screen and (min-width: 68em){    
+             
+                  .issue-marker {
+                      position: absolute;
+                      width: 20ex;
+                      margin-left: -22ex;
+                      text-align: right;
+                      margin-bottom: 1em;
+                  }
+                  
+                  div.issue-marker .issue-marker {
+                      position: static;
+                      width: auto;
+                      margin-left: 0;
+                      text-align: right;
+                  }  
+                  
+                  div.issue-marker {
+                      position: absolute;
+                      width: 20ex;
+                      margin-left: -22ex;
+                  }
+         }
+
+         @media screen and (max-width: 68em){
+                  .issue-marker {
+                      margin-bottom: 1em;
+                  }
+                  
+                  .issue-marker a:link {
+                      padding-left: 0.5em;
+                  }
+         } 
+         
+         #issue-manager form{
+             background: #eee;
+             padding:10px 1em;
+         }
+         
+         /* hide all non-"updated" issues */
+         #issue-manager[data-view_state="updated"] #issue-list>div:not([data-issue_state="updated"]){
+             display:none;
+         }
+            
+         /* hide all non-"new" issues */
+         #issue-manager[data-view_state="new"] #issue-list>div:not([data-issue_state="new"]){
+             display:none;
+         }
+                  
+          #issue-manager .issue-marker{ 
+              background: none;
+              position: relative;  
+              margin:0; 
+              width:auto;
+              text-align:left; 
+              padding:0.5em 0;
+          }
+          
+          #issue-manager .issue-marker a:link{
+              padding:0.5em;
+          }
+          
+          #issue-list div[data-issue_state="new"]{
+              background:#C1FFC1;
+          }  
+
+          #issue-list div[data-issue_state="resolved"]{
+              background:white;
+              color: #a0a0a0;
+          }  
+
+          #issue-list div[data-issue_state="updated"]{
+              background:papayawhip;
+          }     
+          
+          #issue-list{
+              margin-top:20px;
+          }
+
+          #issue-list pre{
+              padding:1em;
+              margin:0;
+          }   
+          
+          #issue-list>div{
+              position:relative;
+          }
+          
+          #issue-list a.issue-markup-trigger{  
+              font-size: 0.8em;
+              padding: 0.2em 0.5em;
+              background: #eee;      
+              text-decoration: none;    
+              color: #444;
+              position: absolute;
+              right: 10px;
+              top: 10px;  
+              z-index: 1;
+          }  
+          
+           #issue-list a.issue-markup-trigger:hover{
+               background: #ddd;
+               color: #000;
+           }                        
+          
+          #issue-list .showMarkup pre{
+              display: block;
+          }                           
+          
+          #issue-list .showMarkup .issue-marker,
+          #issue-list pre{
+              display: none;
+          }
+      
+         .issue-marker {
+              background:#eee;  
+              border:1px solid #ddd; 
+              font-size: 1em;
+          }
+          
+          .issue-marker.wrapper {
+              background: none;
+              border: none;
+          }
+
+         .issue-marker a:link {
+              color: #c00;
+              background: none;
+              font-weight: normal;
+              padding-right: 0.5em;
+          }
+         
+         .issue-details {  
+              padding:0.5em;
+              font-size: 0.8em;
+              line-height: 1.5;
+          }
+
+         .issue-details p{
+              padding:0;
+              margin:0; 
+          }           
+
+         .issue-details .status{
+              background:#333;   
+              color:white;
+              float:left;    
+              padding:0.15em 0.8em;    
+              font-size:0.8em;
+              margin-right:0.8em;
+              text-transform:uppercase;      
+          }
+       </style>
+  <link href="https://www.w3.org/StyleSheets/TR/W3C-ED.css" rel=stylesheet
+  type="text/css">
+  <link href="style/alternate-spec-style.css" id=st rel=stylesheet
+  title="alternate spec style" type="text/css">
 
  <body>
   <div class=head id=div-head> <!--begin-logo-->
@@ -77,7 +219,7 @@
 
    <h1>Compositing and Blending 1.0</h1>
 
-   <h2 class="no-num no-toc" id=february-2012>22 February 2012</h2>
+   <h2 class="no-num no-toc" id=april-2012>30 April 2012</h2>
 
    <dl>
     <dt>Editors:
@@ -85,6 +227,10 @@
     <dd class=vcard> <span class=fn>Rik Cabanier</span>, <span
      class=org>Adobe Systems</span>, <span
      class=email>cabanier@adobe.com</span>
+
+    <dd class=vcard> <span class=fn>Nikos Andronikos</span>, <span class=org>
+     Canon Information Systems Research Australia</span>, <span
+     class=email>Nikos.Andronikos@cisra.canon.com.au</span>
 
     <dt>Authors:
 
@@ -115,64 +261,57 @@
 
   <p> Compositing describes how shapes of different elements are combined
    into a single image. Conceptually, each element is rendered into its own
-   buffer and is then merged with its backdrop. The most widely used
-   compositing operation is simple alpha compositing. (see <a
+   buffer and is then merged with its <a href="#backdrop">backdrop</a>. The
+   most widely used compositing operation is simple alpha compositing. (see
+   <a
    href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple
    Alpha Compositing</a>) This spec will introduce additional compositing
    operators that will enable advanced graphical effects.
 
-  <p> Blending (also known as transparency) describes how colors are
-   &lsquo;<code class=property>blended</code>&rsquo; together. Typically, the
-   color of an element and the color of its backdrop are combined to create a
-   new color. This new color replaces the old color and is then composited
-   with the backdrop using the specified compositing mode.
+  <p> Blending describes how colors are "blended" together. Typically, the
+   color of an element and the color of its <a href="#backdrop">backdrop</a>
+   are combined to create a new color. This new color replaces the old color
+   and is then composited with the <a href="#backdrop">backdrop</a> using the
+   specified compositing mode.
 
   <h2 class="no-num no-toc" id=status>Status of This Document</h2>
+  <!--begin-status-->
 
-  <p> <em>This section describes the status of this document at the time of
-   its publication. Other documents may supersede this document. A list of
-   current W3C publications and the latest revision of this technical report
-   can be found in the <a href="http://www.w3.org/TR/">W3C technical reports
-   index</a> at http://www.w3.org/TR/.</em>
+  <p>This is a public copy of the editors' draft. It is provided for
+   discussion only and may change at any moment. Its publication here does
+   not imply endorsement of its contents by W3C. Don't cite this document
+   other than as work in progress.
 
-  <p> This document is the first public working draft of this specification.
-
-  <p> Publication as a Working Draft does not imply endorsement by the W3C
-   Membership. This is a draft document and may be updated, replaced or
-   obsoleted by other documents at any time. It is inappropriate to cite this
-   document as other than work in progress.
-
-  <p> The (<a
+  <p>The (<a
    href="http://lists.w3.org/Archives/Public/public-fx/">archived</a>) public
    mailing list <a href="mailto:public-fx@w3.org">public-fx@w3.org</a> (see
    <a href="http://www.w3.org/Mail/Request">instructions</a>) is preferred
    for discussion of this specification. When sending e-mail, please put the
-   text “Compositing” in the subject, preferably like this:
-   “[Compositing] <em>…summary of comment…</em>”
+   text &#8220;unknown-shortname&#8221; in the subject, preferably like this:
+   &#8220;[<!---->unknown-shortname<!---->] <em>&hellip;summary of
+   comment&hellip;</em>&#8221;
 
-  <p> This document was produced by the <a
+  <p>This document was produced by the <a
    href="http://www.w3.org/Style/CSS/members">CSS Working Group</a> (part of
    the <a href="http://www.w3.org/Style/">Style Activity</a>) and the <a
    href="http://www.w3.org/Graphics/SVG/">SVG Working Group</a> (part of the
-   <a href="http://www.w3.org/Graphics/">Graphics Activity</a>)
+   <a href="http://www.w3.org/Graphics/">Graphics Activity</a>).
 
-  <p> This document was produced by groups operating under the <a
+  <p>This document was produced by groups operating under the <a
    href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February
    2004 W3C Patent Policy</a>. W3C maintains a <a
-   href="http://www.w3.org/2004/01/pp-impl/32061/status">public list of any
-   patent disclosures (CSS)</a> and a <a
-   href="http://www.w3.org/2004/01/pp-impl/19480/status">public list of any
-   patent disclosures (SVG)</a> made in connection with the deliverables of
-   each group; these pages also include instructions for disclosing a patent.
-   An individual who has actual knowledge of a patent which the individual
-   believes contains <a
+   href="http://www.w3.org/2004/01/pp-impl/32061/status"
+   rel=disclosure>public list of any patent disclosures (CSS)</a> and a <a
+   href="http://www.w3.org/2004/01/pp-impl/19480/status"
+   rel=disclosure>public list of any patent disclosures (SVG)</a> made in
+   connection with the deliverables of each group; these pages also include
+   instructions for disclosing a patent. An individual who has actual
+   knowledge of a patent which the individual believes contains <a
    href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
    Claim(s)</a> must disclose the information in accordance with <a
    href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
-   6 of the W3C Patent Policy</a>.
-
-  <p> The <a href=ChangeLog>list of changes made to this specification</a> is
-   available.
+   6 of the W3C Patent Policy</a>.</p>
+  <!--end-status-->
 
   <h2 class="no-num no-toc" id=contents>Table of contents</h2>
   <!--begin-toc-->
@@ -198,14 +337,14 @@
      <li><a href="#matting"><span class=secno>2.5. </span>Matting</a>
     </ul>
 
-   <li><a href="#backgroundcalculation"><span class=secno>3.
-    </span>Background calculation</a>
+   <li><a href="#backdrop"><span class=secno>3. </span>Backdrop
+    calculation</a>
     <ul class=toc>
-     <li><a href="#backgroundexamples"><span class=secno>3.1. </span>Examples
+     <li><a href="#backdropexamples"><span class=secno>3.1. </span>Examples
       of backdrop calculation</a>
 
-     <li><a href="#backgroundnew"><span class=secno>3.2. </span>Establishing
-      a new background context</a>
+     <li><a href="#backdropnew"><span class=secno>3.2. </span>Establishing a
+      new backdrop context</a>
     </ul>
 
    <li><a href="#advancedcompositing"><span class=secno>4. </span>Advanced
@@ -213,9 +352,59 @@
     <ul class=toc>
      <li><a href="#porterduffblendingmodes"><span class=secno>4.1. </span>The
       porter-duff blending modes</a>
+      <ul class=toc>
+       <li><a href="#porterduffblendingmodes_clear"><span class=secno>4.1.1.
+        </span>Clear</a>
 
-     <li><a href="#porterduffblendingmodes"><span class=secno>4.2. </span>The
-      porter-duff blending modes</a>
+       <li><a href="#porterduffblendingmodes_src"><span class=secno>4.1.2.
+        </span>Source</a>
+
+       <li><a href="#porterduffblendingmodes_dst"><span class=secno>4.1.3.
+        </span>Dest</a>
+
+       <li><a href="#porterduffblendingmodes_srcover"><span
+        class=secno>4.1.4. </span>Source Over</a>
+
+       <li><a href="#porterduffblendingmodes_dstover"><span
+        class=secno>4.1.5. </span>Dest Over</a>
+
+       <li><a href="#porterduffblendingmodes_srcin"><span class=secno>4.1.6.
+        </span>Source In</a>
+
+       <li><a href="#porterduffblendingmodes_dstin"><span class=secno>4.1.7.
+        </span>Dest In</a>
+
+       <li><a href="#porterduffblendingmodes_srcout"><span class=secno>4.1.8.
+        </span>Source Out</a>
+
+       <li><a href="#porterduffblendingmodes_dstout"><span class=secno>4.1.9.
+        </span>Dest Out</a>
+
+       <li><a href="#porterduffblendingmodes_srcatop"><span
+        class=secno>4.1.10. </span>Src Atop</a>
+
+       <li><a href="#porterduffblendingmodes_dstatop"><span
+        class=secno>4.1.11. </span>Dest Atop</a>
+
+       <li><a href="#porterduffblendingmodes_xor"><span class=secno>4.1.12.
+        </span>XOR</a>
+
+       <li><a href="#porterduffblendingmodes_plus"><span class=secno>4.1.13.
+        </span>Plus</a>
+      </ul>
+
+     <li><a href="#groupcompositing"><span class=secno>4.2. </span>Group
+      compositing behavior with Porter Duff modes</a>
+      <ul class=toc>
+       <li><a href="#groupcompositingisolation"><span class=secno>4.2.1.
+        </span>Isolated groups and Porter Duff modes</a>
+
+       <li><a href="#groupcompositingknockout"><span class=secno>4.2.2.
+        </span>Knockout groups and Porter Duff modes</a>
+
+       <li><a href="#groupcompositingknockout"><span class=secno>4.2.3.
+        </span>Clip to self behavior</a>
+      </ul>
     </ul>
 
    <li><a href="#blending"><span class=secno>5. </span>Blending</a>
@@ -227,50 +416,47 @@
         </span>&lsquo;<code class=property>normal</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingplus"><span class=secno>5.1.2.
-        </span>&lsquo;<code class=property>plus</code>&rsquo; blend mode</a>
-
-       <li><a href="#blendingmultiply"><span class=secno>5.1.3.
+       <li><a href="#blendingmultiply"><span class=secno>5.1.2.
         </span>&lsquo;<code class=property>multiply</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingscreen"><span class=secno>5.1.4.
+       <li><a href="#blendingscreen"><span class=secno>5.1.3.
         </span>&lsquo;<code class=property>screen</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingoverlay"><span class=secno>5.1.5.
+       <li><a href="#blendingoverlay"><span class=secno>5.1.4.
         </span>&lsquo;<code class=property>overlay</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingdarken"><span class=secno>5.1.6.
+       <li><a href="#blendingdarken"><span class=secno>5.1.5.
         </span>&lsquo;<code class=property>darken</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendinglighten"><span class=secno>5.1.7.
+       <li><a href="#blendinglighten"><span class=secno>5.1.6.
         </span>&lsquo;<code class=property>lighten</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingcolordodge"><span class=secno>5.1.8.
+       <li><a href="#blendingcolordodge"><span class=secno>5.1.7.
         </span>&lsquo;<code class=property>color-dodge</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingcolorburn"><span class=secno>5.1.9.
+       <li><a href="#blendingcolorburn"><span class=secno>5.1.8.
         </span>&lsquo;<code class=property>color-burn</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendinghardlight"><span class=secno>5.1.10.
+       <li><a href="#blendinghardlight"><span class=secno>5.1.9.
         </span>&lsquo;<code class=property>hard-light</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingsoftlight"><span class=secno>5.1.11.
+       <li><a href="#blendingsoftlight"><span class=secno>5.1.10.
         </span>&lsquo;<code class=property>soft-light</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingdifference"><span class=secno>5.1.12.
+       <li><a href="#blendingdifference"><span class=secno>5.1.11.
         </span>&lsquo;<code class=property>difference</code>&rsquo; blend
         mode</a>
 
-       <li><a href="#blendingexclusion"><span class=secno>5.1.13.
+       <li><a href="#blendingexclusion"><span class=secno>5.1.12.
         </span>&lsquo;<code class=property>exclusion</code>&rsquo; blend
         mode</a>
       </ul>
@@ -296,6 +482,9 @@
 
      <li><a href="#blendingnonseparable"><span class=secno>5.3. </span>Effect
       of group isolation on blending</a>
+
+     <li><a href="#blendingnonseparable"><span class=secno>5.4.
+      </span>Knockout groups</a>
     </ul>
 
    <li><a href="#csscompositingandblending"><span class=secno>6.
@@ -330,14 +519,56 @@
         class=prop-name>&lsquo;<code
         class=property>knock-out</code>&rsquo;</span> property</a>
       </ul>
+
+     <li><a href="#cssbackgroundsyntax"><span class=secno>6.4.
+      </span>Specifying blending and compositing in the element
+      background</a>
+      <ul class=toc>
+       <li><a href="#background-alpha-compositing"><span class=secno>6.4.1.
+        </span>The <span class=prop-name>&lsquo;<code
+        class=property>background-alpha-compositing</code>&rsquo;</span>
+        property</a>
+
+       <li><a href="#background-blend-mode"><span class=secno>6.4.2.
+        </span>The <span class=prop-name>&lsquo;<code
+        class=property>background-blend-mode</code>&rsquo;</span>
+        property</a>
+
+       <li><a href="#box-shadow-blend-mode"><span class=secno>6.4.3.
+        </span>The <span class=prop-name>&lsquo;<code
+        class=property>box-shadow-blend-mode</code>&rsquo;</span>
+        property</a>
+
+       <li><a href="#text-shadow-blend-mode"><span class=secno>6.4.4.
+        </span>The <span class=prop-name>&lsquo;<code
+        class=property>text-shadow-blend-mode</code>&rsquo;</span>
+        property</a>
+
+       <li><a href="#text-blend-mode"><span class=secno>6.4.5. </span>The
+        <span class=prop-name>&lsquo;<code
+        class=property>foreground-blend-mode</code>&rsquo;</span>
+        property</a>
+
+       <li><a href="#background-alpha-compositing"><span class=secno>6.4.6.
+        </span>Alternate proposal</a>
+
+       <li><a href="#borders-issue"><span class=secno>6.4.7. </span>blending
+        and compositing on borders</a>
+      </ul>
     </ul>
 
-   <li><a href="#references1"><span class=secno>7. </span>References</a>
+   <li><a href="#canvascompositingandblending"><span class=secno>7.
+    </span>Specifying Compositing and Blending in Canvas </a>
+
+   <li><a href="#security"><span class=secno>8. </span>Security issues with
+    compositing and blending</a>
+
+   <li><a href="#references1"><span class=secno>9. </span>References</a>
     <ul class=toc>
-     <li><a href="#normref"><span class=secno>7.1. </span>Normative
+     <li><a href="#normref"><span class=secno>9.1. </span>Normative
       References</a>
 
-     <li><a href="#informref"><span class=secno>7.2. </span>Informative
+     <li><a href="#informref"><span class=secno>9.2. </span>Informative
       References</a>
     </ul>
   </ul>
@@ -348,46 +579,51 @@
 
   <p> At the basic level, compositing describes how shapes interact while
    blending describes how colors interact. Both idioms use a rendered version
-   of the current element (ie a shape or a group) and mix it with the
-   backdrop.
+   of the current element (ie a shape or a group) and mix it with the <a
+   href="#backdrop">backdrop</a>.
 
   <p>
 
   <p> This document will describe the algorithms of compositing and blending
-   in the first part. The second part describes how they are specified in
-   CSS.
+   in the first part. <strong>This part is not written for a particular
+   model; instead it provides a generic model for blending and
+   compositing.</strong><br>
+   The second part describes how they are specified in CSS. <br>
+   <span class=issue>The keywords in thedefinition section will most likely
+   transition to their respective specifications.</span>
 
   <h2 id=whatiscompositing><span class=secno>2. </span>What is compositing</h2>
 
   <p> Compositing is the process by which graphical objects are combined.
    Alpha compositing uses the alpha values, or channel (bit mask) to
    represent the coverage of each pixel. The alpha channel is often said to
-   represent the &lsquo;<code class=property>opacity</code>&rsquo;. This
-   coverage information is used to control the compositing of colors.
+   represent the opacity. This coverage information is used to control the
+   compositing of colors.
 
   <p> Simple alpha compositing, like that found by default in SVG 1.1 and in
-   GDI+ and many other graphics engines, composites each object onto the
-   background image using a simplistic formula that has the effect of
-   overlaying the object over the background. Where the objects overlap and
-   coverage is not complete the color of the background may show through the
-   object that has just been rendered.
+   GDI+ and many other graphics engines, composites each object onto the <a
+   href="#backdrop">backdrop</a> image using a simplistic formula that has
+   the effect of overlaying the object over the <a
+   href="#backdrop">backdrop</a>. Where the objects overlap and coverage is
+   not complete the color of the <a href="#backdrop">backdrop</a> may show
+   through the object that has just been rendered.
 
   <h3 id=simplealphablending><span class=secno>2.1. </span>simple alpha
    blending</h3>
 
   <p> In computer graphics, alpha compositing is the process of combining an
-   image with a background to create the appearance of partial or full
-   transparency. The alpha value is stored alongside the color and has a
-   value between 0 and 1. A value of 0 means that the pixel does not have any
-   coverage information and is transparent; i.e. there was no color
-   contribution from any geometry because the geometry did not overlap this
-   pixel. A value of 1 means that the pixel is opaque because the geometry
-   completely overlapped the pixel.
+   image with a <a href="#backdrop">backdrop</a> to create the appearance of
+   partial or full transparency. The alpha value is stored alongside the
+   color and has a value between 0 and 1. A value of 0 means that the pixel
+   does not have any coverage information and is transparent; i.e. there was
+   no color contribution from any geometry because the geometry did not
+   overlap this pixel. A value of 1 means that the pixel is opaque because
+   the geometry completely overlapped the pixel.
 
   <p> A shape's contribution to a composition is described by the
    multiplication of its color (Ca) and its alpha (αa). This is also called
-   the <code>premultiplied alpha</code> value. We will call this the
-   &lsquo;<code class=property>pixel</code>&rsquo; from here on.
+   the <code>premultiplied alpha</code> value. We will call this the "pixel"
+   from here on.
 
   <pre>
 ca = Ca x αa
@@ -398,12 +634,11 @@ ca = Ca x αa
    Ca: the color value<br>
    αa: the alpha value
 
-  <p> Conceptually, &lsquo;<code class=property>alpha</code>&rsquo; means
-   &lsquo;<code class=css>allow (1 - alpha) from behind to
-   show</code>&rsquo;. With this in mind, we can easily determine the pixel
-   after compositing.<br>
-   Take the foreground pixel and add (1 - alpha) of the background pixel.
-   Thus, the formula becomes:
+  <p> Conceptually, "alpha" means "allow (1 - alpha) from behind to show".
+   With this in mind, we can easily determine the pixel after
+   compositing.<br>
+   Take the foreground pixel and add (1 - alpha) of the <a
+   href="#backdrop">backdrop</a> pixel. Thus, the formula becomes:
 
   <pre>
 co = ca + cb x (1 - αa)
@@ -412,7 +647,7 @@ co = ca + cb x (1 - αa)
   <p>with <br>
    co: the pixel after compositing<br>
    ca: the pixel of the shape<br>
-   cb: the pixel of the backdrop<br>
+   cb: the pixel of the <a href="#backdrop">backdrop</a><br>
    αa: the alpha value of the shape
 
   <p style="text-align:center"><img src="examples/group_alpha.svg"> <br>
@@ -427,7 +662,8 @@ co = ca + cb x (1 - αa)
    this.<br>
    Luckily, the alpha value is determined the same way as the pixel
    value:<br>
-   take the alpha of the shape and add (1-alpha) of the backdrop. So:
+   take the alpha of the shape and add (1-alpha) of the <a
+   href="#backdrop">backdrop</a>. So:
 
   <pre>
 αo = αa + αb x (1 - αa)
@@ -436,7 +672,7 @@ co = ca + cb x (1 - αa)
   <p>with <br>
    αo: the alpha after compositing<br>
    αa: the alpha of the shape<br>
-   αb: the alpha of the backdrop
+   αb: the alpha of the <a href="#backdrop">backdrop</a>
 
   <p> If you want to know the color of a shape and not just its pixel value,
    you can reverse the formula for premultiplied alpha:
@@ -456,9 +692,9 @@ Co = 1/αo x (Ca x αa + Cb x αb x (1 - αa))
    αo: the alpha after compositing<br>
    Co: the color after compositing<br>
    Ca: the color of the shape<br>
-   Cb: the color of the backdrop<br>
+   Cb: the color of the <a href="#backdrop">backdrop</a><br>
    αa: the alpha of the shape<br>
-   αb: the alpha of the backdrop
+   αb: the alpha of the <a href="#backdrop">backdrop</a>
 
   <h3 id=simplealphablendingexamples><span class=secno>2.2. </span>Examples
    of simple alpha blending</h3>
@@ -466,60 +702,69 @@ Co = 1/αo x (Ca x αa + Cb x αb x (1 - αa))
   <p> Next we will run through a couple of scenarios that show how alpha
    compositing works.
 
-  <p style="text-align:center"><img src="examples/simple_box.svg"> <br>
-   Figure 1
+  <div class=example>
+   <p style="text-align:center"><img src="examples/simple_box.svg"> <br>
+    Figure 1</p>
 
-  <p> Figure 1 describes the most basic case. It consists of 1 shape that is
-   filled with a solid color so no compositing operation is required.<br>
+   <p> Figure 1 describes the most basic case. It consists of 1 shape that is
+    filled with a solid color so no compositing operation is required.<br>
+   </p>
+  </div>
 
-  <p style="text-align:center"><img src="examples/two_box.svg"> <br>
-   Figure 2
+  <div class=example>
+   <p style="text-align:center"><img src="examples/two_box.svg"> <br>
+    Figure 2</p>
 
-  <p> Figure 2 is a more complex example. There is still no alpha but there
-   are 2 shapes that intersect each other.
+   <p> Figure 2 is a more complex example. There is still no alpha but there
+    are 2 shapes that intersect each other.</p>
 
-  <p> Applying the compositing value, you get:
+   <p> Applying the compositing value, you get:
 
-  <pre>
+   <pre>
 αo = 1 + 1 x (1 - 1) = 1
 co = RGB(0, 0, 255) x 1 + RGB(255, 0, 0) x 1 x (1 - 1)
 co = RGB(0, 0, 255)
 Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
 </pre>
+  </div>
 
-  <p style="text-align:center"><img src="examples/two_box_transparency.svg">
-   <br>
-   Figure 3
+  <div class=example>
+   <p style="text-align:center"><img src="examples/two_box_transparency.svg">
+    <br>
+    Figure 3</p>
 
-  <p> Figure 3 is an example where the shape has alpha but the backdrop is
-   opaque.
+   <p> Figure 3 is an example where the shape has alpha but the <a
+    href="#backdrop">backdrop</a> is opaque.</p>
 
-  <p> Applying the compositing value, you get:
+   <p> Applying the compositing value, you get:
 
-  <pre>
+   <pre>
 αo = .5 + 1 x (1 - .5) = 1
 co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * 1 * (1 - .5)
 co = RGB(0, 0, 127) + RGB(127, 0, 0)
 co = RGB(127, 0, 127)
 Co = 1/1 * RGB(127, 0, 127) = RGB(127, 0, 127)
 </pre>
+  </div>
 
-  <p style="text-align:center"><img
-   src="examples/two_box_transparency_both.svg"> <br>
-   Figure 4
+  <div class=example>
+   <p style="text-align:center"><img
+    src="examples/two_box_transparency_both.svg"> <br>
+    Figure 4</p>
 
-  <p> Figure 4 is an example where both the shape and the backdrop have
-   alpha.
+   <p> Figure 4 is an example where both the shape and the <a
+    href="#backdrop">backdrop</a> have alpha.</p>
 
-  <p> Applying the compositing value, you get:
+   <p> Applying the compositing value, you get:
 
-  <pre>
+   <pre>
 αo = .5 + .5 x (1 - .5) = .75
 co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * .5 * (1 - .5)
 co = RGB(0, 0, 127) + RGB(127, 0, 0)
 co = RGB(63, 0, 127)
 Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
 </pre>
+  </div>
 
   <h3 id=groupinvariance><span class=secno>2.3. </span>Group invariance</h3>
 
@@ -537,162 +782,470 @@ Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
    alpha on the group, it is multipied with the alpha value of the group's
    content.
 
+  <p> The elements within a group are always processed before the group. This
+   means that alpha, blending and compositing on the group always happens
+   after the group's content is calculated.
+
   <h3 id=matting><span class=secno>2.5. </span>Matting</h3>
 
   <p> The end result of alpha compositing can contain alpha. For instance, a
-   solid red shape with an opacity value of .5 will end up with a RGB(255, 0,
-   0, .5) color. Since monitors and printers can't display opacity, we have
-   to remove this alpha value by compositing it with solid white. This
-   process is called &lsquo;<code class=property>matting</code>&rsquo;.
+   solid red shape with an opacity value of 50% will end up with a RGB(255,
+   0, 0, .5) color. Since monitors and printers can't display opacity, we
+   have to remove this alpha value by compositing it with solid white. This
+   process is called matting.
 
   <p> Applying the compositing formula, you get:
 
   <pre>
-co = RGB(255, 0, 255) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
+co = RGB(0, 0, 255) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
 co = RGB(0, 0, 127) + RGB(127, 127, 127)
 co = RGB(127, 127, 255)
 </pre>
 
-  <h2 id=backgroundcalculation><span class=secno>3. </span>Background
-   calculation</h2>
+  <p>which is the value that is sent to the monitor.
 
-  <p>Until now, we haven't discussed how the backgkdrop is calculated. A
-   first assumption would be that it consists of everything that was drawn
-   earlier.<br>
-   The problem with that is how you would deal with parent groups that have
-   opacity or non-default blending or compositing modes since the opacity and
-   blending on a group is applied at a later stage.<br>
-   It turns out that these non-default attributes can be ignored when
-   calculating the background. So, if you are an element in a group that has
-   opacity, the opacity is ignored when calculating the backdrop.
+  <h2 id=backdrop><span class=secno>3. </span>Backdrop calculation</h2>
 
-  <h3 id=backgroundexamples><span class=secno>3.1. </span>Examples of
-   backdrop calculation</h3>
+  <p> The backdrop is the content that is behind the element.
 
-  <p style="text-align:center"><img src="examples/simple_backdrop.svg"> <br>
-   Figure 5
+  <p> Until now, we haven't discussed how it is calculated. A first
+   assumption would be that it consists of everything that was drawn earlier
+   and this turns out to be correct.<br>
+   If you think it through a little more, it seems that there would be a
+   complication if parent groups have opacity, non-default blending or
+   non-default compositing modes<br>
+   However, since these operators are applied after the group contents are
+   calculated, it turns out that they can be ignored when calculating the
+   backdrop. So, for an element that is a member of a group that has opacity,
+   the opacity should be ignored when calculating the backdrop.
 
-  <p> Figure 5 has 2 simple shapes. The backdrop for the blue shape is the
-   bottom right corner of the red shape. The dotted line shows the area that
-   is examined during compositing of the blue shape.
+  <h3 id=backdropexamples><span class=secno>3.1. </span>Examples of backdrop
+   calculation</h3>
 
-  <p style="text-align:center"><img src="examples/simple_backdrop_alpha.svg">
-   <br>
-   Figure 6
+  <div class=example>
+   <p style="text-align:center"><img src="examples/simple_backdrop.svg"> <br>
+    Figure 5</p>
 
-  <p> In figure 6, the shape in the background has an alpha value. The alpha
-   value of the background shape is preserved when the backdrop is
-   calculated.
+   <p> Figure 5 has 2 simple shapes. The backdrop for the blue shape is the
+    bottom right corner of the red shape. The dotted line shows the area that
+    is examined during compositing of the blue shape.</p>
+  </div>
 
-  <p style="text-align:center"><img src="examples/group_alpha_backdrop.svg">
-   <br>
-   Figure 7
+  <div class=example>
+   <p style="text-align:center"><img
+    src="examples/simple_backdrop_alpha.svg"> <br>
+    Figure 6</p>
 
-  <p> In figure 7, the blue and green shapes are in a group that has alpha.
-   When calculating the backdrop for the blue shape, the red and green shapes
-   are combined with simple alpha compositing and the group alpha is ignored.
-   If the group had blending, compositing or filtering, those would also be
-   ignored.
+   <p> In figure 6, the shape in the backdrop has an alpha value. The alpha
+    value of the backdrop shape is preserved when the backdrop is calculated.
+    </p>
+  </div>
 
-  <h3 id=backgroundnew><span class=secno>3.2. </span>Establishing a new
-   background context</h3>
+  <div class=example>
+   <p style="text-align:center"><img src="examples/group_alpha_backdrop.svg">
+    <br>
+    Figure 7</p>
 
-  <p>Under certain circumstances, you might want to limit the background
-   calculation upto a certain parent group. Compositing and blending each
-   have an attribute (or TBD the same attribute) that can be set on the group
-   where you want this to happen.<br>
+   <p> In figure 7, the blue and green shapes are in a group that has alpha.
+    When calculating the backdrop for the blue shape, the red and green
+    shapes are combined with simple alpha compositing and the group alpha is
+    ignored. If the group had blending, compositing or filtering, those would
+    also be ignored.</p>
+  </div>
+
+  <h3 id=backdropnew><span class=secno>3.2. </span>Establishing a new
+   backdrop context</h3>
+
+  <p> Under certain circumstances, you might want to limit the backdrop
+   calculation up to a certain parent group. For example, if you import
+   artwork, you usually don't want its contents to blend with the backdrop of
+   the page you are integrating because it will change the look. In other
+   words, you want to &lsquo;<code class=property>isolate</code>&rsquo; the
+   compositing and blending of that artwork from the rest of the tree.<br>
+   Compositing and blending each have <span class=issue>an attribute (or the
+   same attribute)</span> that can be set on the group where you want this to
+   happen.<br>
    See the sections on compositing and blending on how this affects
    rendering.
 
   <h2 id=advancedcompositing><span class=secno>4. </span>Advanced compositing
    features</h2>
 
+  <p> <span class=issue>NOT FINISHED. Work in progress.</span><br>
+   While the advanced blending modes are concerned with the colour of the
+   final pixel, Porter Duff blending is largely concerned with determining
+   where the contribution for the colour comes from. Porter Duff compositing
+   is based on a model of a pixel in which two shapes (source and
+   destination) may contribute to the final colour of the pixel. The pixel is
+   divided into 4 sub-pixel regions and each region represents a possible
+   combination of source and destination.<br>
+   <br>
+   The four regions are:
+
+  <ul>
+   <li>Source Only – Where only the source contributes to the pixel colour
+
+   <li>Destination only – where only the destination contributes to the
+    pixel colour
+
+   <li>Both - Source and Destination – where both the source and
+    destination may combine to define the pixel colour
+
+   <li>None - No source or Destination – where neither make a contribution
+    to the final pixel colour
+  </ul>
+
+  <div class=figure>
+   <p style="text-align:center"><img src="examples/PD_regions.svg">
+  </div>
+
+  <p>The contribution from each region to the final pixel colour is defined
+   by the coverage of the shape at that pixel, and the operator in use.
+   Coverage is specified in terms of alpha. Full alpha (1) implies full
+   coverage, while zero alpha implies no coverage. This means that the area
+   of each region within the sub-pixel is dependent on the coverage of each
+   shape contributing to the pixel. The area of each region can be calculated
+   with the following equations:
+
+  <div class=data>
+   <table>
+    <tbody>
+     <tr>
+      <th>Both
+
+      <th>alpha_a x alpha_b
+
+     <tr>
+      <th>Source only
+
+      <th>alpha_a(1 – alpha_b)
+
+     <tr>
+      <th>Destination only
+
+      <th>alpha_b(1 – alpha_a)
+
+     <tr>
+      <th>None
+
+      <th>(1 – alpha_a)(1 – alpha_b)
+   </table>
+  </div>
+
+  <p>The image in Figure [X] above represents coverage of 0.5 for both source
+   and destination.
+
+  <pre>
+Both = 0.5 x 0.5 = 0.25 
+Source Only = 0.5 (1 – 0.5) = 0.25
+Destination Only = 0.5(1 – 0.5) = 0.25
+None = (1 – 0.5)(1 – 0.5) = 0.25
+</pre>
+
+  <p>Therefore, the area of each region is 25% in this example.
+
   <h3 id=porterduffblendingmodes><span class=secno>4.1. </span>The
    porter-duff blending modes</h3>
 
-  <p>NOT FINISHED The landmark 1984 paper [3] by Thomas Porter and Tom Duff,
-   who worked for Lucasfilm, defined the algebra of compositing and developed
-   the twelve "Porter Duff" operators. These operators control the results of
-   mixing the four sub-pixel regions formed by the overlapping of graphical
-   objects that have an alpha or pixel coverage channel/value. The operators
-   use all practical combinations of the four regions. The list of PD
-   operators is: [add list] The following diagram shows the four different
-   regions of a single pixel that are considered when compositing: [show
-   diagram] The &lsquo;<code class=css>source over</code>&rsquo; compositing
-   operator corresponds with the default simple alpha compositing rules. The
-   diagram below shows an example of the &lsquo;<code class=css>source
-   over</code>&rsquo; operator with two 50% opaque shapes. Firstly, it shows
-   the two shapes that will be composited together using the &lsquo;<code
-   class=css>source over</code>&rsquo; operator. The next section
-   demonstrates a subpixel view of the region where the two objects overlap.
-   It shows the coverage of the colors input to the compositing operation.
-   The third section indicates which colors from this sub-pixel view are
-   selected by the operator to contribute to the resultant color of the
-   overlapping region. The resulting opacity of the overlapping region of the
-   two shapes will be 75% as all of the sub-pixel regions contribute color
-   and opacity. The calculation of resultant opacities will be described
-   later. The last section of the diagram demonstrates the combination of the
-   two objects using the &lsquo;<code class=css>source over</code>&rsquo;
-   operator. [show diagram] A Porter Duff operator such as &lsquo;<code
-   class=css>source atop</code>&rsquo;, used extensively in upcoming
-   examples, contains contributions from only two of the sub-pixel regions.
-   The &lsquo;<code class=css>source atop</code>&rsquo;(src-atop) operator
-   selects the source color from the overlapping region and the destination
-   color not obscured by the source to produce the resultant color. The
-   resultant opacity is the combined opacity from these two regions. The
-   diagram below shows an example of the &lsquo;<code class=css>source
-   atop</code>&rsquo; operator with two 50% opaque shapes. It is similar to
-   the previous diagram for &lsquo;<code class=css>source over</code>&rsquo;.
-   Firstly, it shows the two shapes that will be composited together using
-   the &lsquo;<code class=css>source atop</code>&rsquo; operator. The next
-   section demonstrates a subpixel view of the region where the two objects
-   overlap. It shows the coverage of the colors input to the compositing
-   operation. The third section of the diagram indicates which colors from
-   this sub-pixel view are selected by the operator to contribute to the
-   resultant color of the overlapping region. The resulting opacity of the
-   overlapping region of the two shapes will be 50%, as only two of the
-   sub-pixel regions contribute color and opacity. The calculation of
-   resultant opacities will be described later. The last section of the
-   diagram demonstrates the combination of the two objects using the
-   &lsquo;<code class=css>source atop</code>&rsquo; operator. The region
-   where only source color was present is not rendered as the &lsquo;<code
-   class=css>source atop</code>&rsquo; only select source color that overlaps
-   destination color. The twelve porter duff operators are shown below for
-   opaque and partially transparent objects. The blue rectangle is the source
-   and the orange circle is the destination.
+  <p> The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked
+   for Lucasfilm, defined the algebra of compositing and developed the twelve
+   "Porter Duff" operators. These operators control the results of mixing the
+   four sub-pixel regions formed by the overlapping of graphical objects that
+   have an alpha or pixel coverage channel/value. The operators use all
+   practical combinations of the four regions. <br>
+   There are 12 basic Porter Duff operators, satisfying all possible
+   combinations of source and destination.<br>
+   From the geometric representation of each operator, the contribution of
+   each shape can be seen to be expressed as a fraction of the total coverage
+   of the output. For example, in source over, the possible contribution of
+   source is full (1) and the possible contribution of destination is
+   whatever is remaining (1 – alpha_a). This is modified by the coverage of
+   source and destination to give the equation for the final coverage of the
+   pixel:
 
-  <h3 id=porterduffblendingmodes><span class=secno>4.2. </span>The
-   porter-duff blending modes</h3>
+  <pre>
+    alpha_o = alpha_a x 1 + alpha_b x (1 – alpha_a)
+</pre>
+
+  <p>The fractional terms Fa (1 in this example) and Fb (1 – alpha_a in
+   this example) are defined for each operator and specify the fraction of
+   the shapes that may contribute to the final pixel value. The general form
+   of the equation for coverage is:
+
+  <pre>
+    alpha_a x Fa + alpha_b x Fb
+</pre>
+
+  <p>and incorporating colour gives the general Porter Duff equation
+
+  <pre>
+    co = alpha_a x Fa x Ca + alpha_b x Fb x Cb
+</pre>
+
+  <p>Where: co is the output colour pre-multiplied with the output alpha [0
+   <= co <= 1] alpha_a is the coverage of the source Fa is defined by the
+   operator and controls inclusion of the source Ca is the colour of the
+   source (not multiplied by alpha) alpha_b is the coverage of the dest Fb is
+   defined by the operator and controls inclusion of the dest Cb is the
+   colour of the dest (not multiplied by alpha)
+
+  <h4 id="porterduffblendingmodes_clear"><span class=secno>4.1.1.
+   </span>Clear</h4>
+
+  <p>No regions are enabled.
+
+  <p><img src="examples/PD_clr.svg">
+
+  <pre>
+    Fa = 0 Fb = 0
+    co = 0 alpha_o = 0
+</pre>
+
+  <h4 id="porterduffblendingmodes_src"><span class=secno>4.1.2. </span>Source</h4>
+
+  <p>Only the source will be present.
+
+  <p><img src="examples/PD_src.svg">
+
+  <pre>
+    Fa = 1 Fb = 0
+    co = alpha_a x Ca alpha_o = alpha_a
+</pre>
+
+  <h4 id="porterduffblendingmodes_dst"><span class=secno>4.1.3. </span>Dest</h4>
+
+  <p>Only the dest will be present.
+
+  <p><img src="examples/PD_dst.svg">
+
+  <pre>
+    Fa = 0 Fb = 1
+    co = alpha_b x Cb alpha_o = alpha_b
+</pre>
+
+  <h4 id="porterduffblendingmodes_srcover"><span class=secno>4.1.4.
+   </span>Source Over</h4>
+
+  <p>Source is placed over the dest
+
+  <p><img src="examples/PD_src-over.svg">
+
+  <pre>
+    Fa = 1 Fb = 1 – alpha_a
+    co = alpha_a x Ca + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a + alpha_b x (1 – alpha_a)
+</pre>
+
+  <h4 id="porterduffblendingmodes_dstover"><span class=secno>4.1.5.
+   </span>Dest Over</h4>
+
+  <p>Dest is placed over the source.
+
+  <p><img src="examples/PD_dst-over.svg">
+
+  <pre>
+    Fa = 1 – alpha_b Fb = 1
+    co = alpha_a x Ca x (1 – alpha_b) + alpha_b x Cb alpha_o = alpha_a x (1 – alpha_b) + alpha_b
+</pre>
+
+  <h4 id="porterduffblendingmodes_srcin"><span class=secno>4.1.6.
+   </span>Source In</h4>
+
+  <p><img src="examples/PD_src-in.svg">
+
+  <p>The source that overlaps the destination, replaces the destination.
+
+  <pre>
+    Fa = alpha_b Fb = 0
+    co = alpha_a x Ca x alpha_b alpha_o = alpha_a x alpha_b
+</pre>
+
+  <h4 id="porterduffblendingmodes_dstin"><span class=secno>4.1.7. </span>Dest
+   In</h4>
+
+  <p>Destination which overlaps the source, replaces the source.
+
+  <p><img src="examples/PD_dst-in.svg">
+
+  <pre>
+    Fa = 0 Fb = alpha_a
+    co = alpha_b x Cb x alpha_a alpha_o = alpha_b x alpha_a
+</pre>
+
+  <h4 id="porterduffblendingmodes_srcout"><span class=secno>4.1.8.
+   </span>Source Out</h4>
+
+  <p>Source is placed, where it falls outside of the destination.
+
+  <p><img src="examples/PD_src-out.svg">
+
+  <pre>
+    Fa = 1 – alpha_b Fb = 0
+    co = alpha_a x Ca x (1 – alpha_b) alpha_o = alpha_a x (1 – alpha_b)
+</pre>
+
+  <h4 id="porterduffblendingmodes_dstout"><span class=secno>4.1.9.
+   </span>Dest Out</h4>
+
+  <p>Destination is placed, where it falls outside of the source.
+
+  <p><img src="examples/PD_dst-out.svg">
+
+  <pre>
+    Fa = 0 Fb = 1 – alpha_a
+    co = alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_b x (1 – alpha_a)
+</pre>
+
+  <h4 id="porterduffblendingmodes_srcatop"><span class=secno>4.1.10.
+   </span>Src Atop</h4>
+
+  <p>Source which overlaps the destination, replaces the destination.
+   Destination is placed elsewhere.
+
+  <p><img src="examples/PD_src-atop.svg">
+
+  <pre>
+    Fa = alpha_b Fb = 1 – alpha_a
+    co = alpha_a x Ca x alpha_b + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a x alpha_b + alpha_b x (1 – alpha_a)
+</pre>
+
+  <h4 id="porterduffblendingmodes_dstatop"><span class=secno>4.1.11.
+   </span>Dest Atop</h4>
+
+  <p><img src="examples/PD_dst-atop.svg">
+
+  <p>Dest which overlaps the source replaces the source. Source is placed
+   elsewhere.
+
+  <pre>
+    Fa = 1 - alpha_b Fb = alpha_a
+    co = alpha_a x Ca x (1 - alpha_b) + alpha_b x Cb x alpha_a alpha_o = alpha_a x (1 - alpha_b) + alpha_b x alpha_a
+</pre>
+
+  <h4 id="porterduffblendingmodes_xor"><span class=secno>4.1.12. </span>XOR</h4>
+
+  <p>The non-overlapping regions of source and destination are combined.
+
+  <p><img src="examples/PD_xor.svg">
+
+  <pre>
+    Fa = 1 - alpha_b Fb = 1 – alpha_a
+    co = alpha_a x Ca x (1 - alpha_b) + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a x (1 - alpha_b) + alpha_b x (1 – alpha_a)
+</pre>
+
+  <h4 id="porterduffblendingmodes_plus"><span class=secno>4.1.13. </span>Plus</h4>
+
+  <p>Plus is an additional operator that is defined in the Porter-Duff paper
+   [3].
+
+  <pre>
+    Fa = 1 Fb = 1
+    co = alpha_a x Ca + alpha_b x Cb alpha_o = alpha_a + alpha_b
+</pre>
+
+  <h3 id=groupcompositing><span class=secno>4.2. </span>Group compositing
+   behavior with Porter Duff modes</h3>
+
+  <h4 id=groupcompositingisolation><span class=secno>4.2.1. </span>Isolated
+   groups and Porter Duff modes</h4>
+
+  <p>Using Porter Duff within an isolated group has the effect of making the
+   backdrop empty for the first element within the group. Subsequent elements
+   are composited with the result of the previous composites.
+
+  <h4 id=groupcompositingknockout><span class=secno>4.2.2. </span>Knockout
+   groups and Porter Duff modes</h4>
+
+  <p> Knock out groups have the effect, prior to any compositing, of clearing
+   the backdrop anywhere that the source shape exists, this is independent of
+   the source alpha. Knock-out can also be thought of as inserting a clear
+   operation with clip-to-self enabled between each element in the
+   compositing stack.
+
+  <h4 id=groupcompositingknockout><span class=secno>4.2.3. </span>Clip to
+   self behavior</h4>
+
+  <p> When clip-to-self is enabled, compositing operations are restricted to
+   areas where the source shape exists, this is independent of the source
+   alpha. Some of the Porter Duff operators are unchanged, because they
+   normally have no effect outside the source region. The changes can be seen
+   in the clear, src, src-in, dst-in, src-out and dst-atop.
+
+  <div class=figure> <img src="examples/clip-to-self.png"></div>
 
   <h2 id=blending><span class=secno>5. </span>Blending</h2>
 
   <p> Blending takes the colors of the source element and mixes them with the
-   backdrop. The resulting blended element then replaces the original source.
-   Note that the opacity of the source element is ignored during blending.
-   The backdrop will also be matted to remove all alpha.
+   <a href="#backdrop">backdrop</a>. The resulting blended element then
+   replaces the original source. Note that the opacity of the source element
+   is ignored during blending. The alpha of the <a
+   href="#backdrop">backdrop</a> will also be ignored. Note that this
+   calculation always happens in non-premultiplied space.
 
-  <p> We will describe the &lsquo;<code class=property>mixing</code>&rsquo;
-   formula as:
+  <p> We will describe the "mixing" formula as:
 
   <pre>
-	Cr = B(Cb, Cs)
+	Cm = B(Cb, Cs)
+</pre>
+
+  <p>with: <br>
+   Cm: the result color after blending<br>
+   B: the formula that does the blending<br>
+   Cb: the <a href="#backdrop">backdrop</a> color<br>
+   Cs: the source color<br>
+   If the result of the mixing formula falls outside of the color range, it
+   will be clamped to minimum or maximum value of the color range.
+
+  <p> However, we can not use this value since this calculation is
+   overlooking the alpha of the <a href="#backdrop">backdrop</a>. If the <a
+   href="#backdrop">backdrop</a> is not opaque, the result of the blend
+   function should be mixed with the original color of the source element.
+   The value of the new color now becomes:
+
+  <pre>
+	Cr = (1 - αb) x Cs + αb x B(Cb, Cs)
 </pre>
 
   <p>with: <br>
    Cr: the result color<br>
    B: the formula that does the blending<br>
-   Cb: the backdrop color<br>
    Cs: the source color<br>
-   If the result of the mixing formula falls outside of the color range, it
-   will be clamped.
+   Cb: the <a href="#backdrop">backdrop</a> color<br>
+   αb: the <a href="#backdrop">backdrop</a> alpha<br>
+
+  <div class=example> <img src="examples/blend_background_opacity.svg">
+   <p> This example has a red rectangle with a blending mode that is placed
+    on top of a set of green rectangles that have different levels of
+    opacity.<br>
+    Note how the top rectangle shifts more toward red as the opacity of the
+    <a href="#backdrop">backdrop</a> lowers.</p>
+  </div>
+
+  <p> This formula creates a new image which is then composited with the
+   specified Porter-Duff compositing formula. For simple alpha blending, the
+   formula thus becomes:
+
+  <pre>
+simple alpha blending:
+	co = ca + cb x (1 - αa)
+written as non-premultiplied:
+	αo x Co = αa x Ca + (1 - αa) x αb x Cb
+now subsitute the result of blending for Ca:
+    αo x Co = αa x ((1 - αb) x Cs + αb x B(Cb, Cs)) + (1 - αa) x αb x Cb
+            = αa x (1 - αb) x Cs + αa x αb x B(Cb, Cs) + (1 - αa) x αb x Cb
+</pre>
+
+  <p><br>
+   For simplicity, all the examples in this chapter have &lsquo;<code
+   class=property>src-over</code>&rsquo; compositing applied to them.
 
   <h3 id=blendingseparable><span class=secno>5.1. </span>Separable blend
    modes</h3>
 
   <p> A blend mode is termed separable if each component of the result color
    is completely determined by the corresponding components of the
-   constituent backdrop and source colors—that is, if the blend mode
-   function B is applied separately to each set of corresponding components.
+   constituent <a href="#backdrop">backdrop</a> and source colors—that is,
+   if the mixing formula is applied <strong>separately</strong> to each set
+   of corresponding components.
 
   <p> Each of the following blend modes will apply the blending function
    B(Cb, Cs) on each of the color components.
@@ -709,18 +1262,7 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/normal.png">
 
-  <h4 id=blendingplus><span class=secno>5.1.2. </span>&lsquo;<code
-   class=property>plus</code>&rsquo; blend mode</h4>
-
-  <p> The source is added to the backdrop.
-
-  <pre>
-    B(Cb, Cs) = Cb + Cs
-</pre>
-
-  <p><img src="examples/plus.png">
-
-  <h4 id=blendingmultiply><span class=secno>5.1.3. </span>&lsquo;<code
+  <h4 id=blendingmultiply><span class=secno>5.1.2. </span>&lsquo;<code
    class=property>multiply</code>&rsquo; blend mode</h4>
 
   <p> The source color is multiplied by the destination color and replaces
@@ -736,11 +1278,11 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/multiply.png">
 
-  <h4 id=blendingscreen><span class=secno>5.1.4. </span>&lsquo;<code
+  <h4 id=blendingscreen><span class=secno>5.1.3. </span>&lsquo;<code
    class=property>screen</code>&rsquo; blend mode</h4>
 
-  <p> Multiplies the complements of the backdrop and source color values,
-   then complements the result.
+  <p> Multiplies the complements of the <a href="#backdrop">backdrop</a> and
+   source color values, then complements the result.
 
   <p> The result color is always at least as light as either of the two
    constituent colors. Screening any color with white produces white;
@@ -755,15 +1297,17 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/screen.png">
 
-  <h4 id=blendingoverlay><span class=secno>5.1.5. </span>&lsquo;<code
+  <h4 id=blendingoverlay><span class=secno>5.1.4. </span>&lsquo;<code
    class=property>overlay</code>&rsquo; blend mode</h4>
 
-  <p> Multiplies or screens the colors, depending on the backdrop color
-   value.
+  <p> Multiplies or screens the colors, depending on the <a
+   href="#backdrop">backdrop</a> color value.
 
-  <p> Source colors overlay the backdrop while preserving its highlights and
-   shadows. The backdrop color is not replaced but is mixed with the source
-   color to reflect the lightness or darkness of the backdrop.
+  <p> Source colors overlay the <a href="#backdrop">backdrop</a> while
+   preserving its highlights and shadows. The <a
+   href="#backdrop">backdrop</a> color is not replaced but is mixed with the
+   source color to reflect the lightness or darkness of the <a
+   href="#backdrop">backdrop</a>.
 
   <pre>
     B(Cb, Cs) = HardLight(Cs, Cb)
@@ -775,13 +1319,14 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/overlay.png">
 
-  <h4 id=blendingdarken><span class=secno>5.1.6. </span>&lsquo;<code
+  <h4 id=blendingdarken><span class=secno>5.1.5. </span>&lsquo;<code
    class=property>darken</code>&rsquo; blend mode</h4>
 
-  <p> Selects the darker of the backdrop and source colors.
+  <p> Selects the darker of the <a href="#backdrop">backdrop</a> and source
+   colors.
 
-  <p> The backdrop is replaced with the source where the source is darker;
-   otherwise, it is left unchanged.
+  <p> The <a href="#backdrop">backdrop</a> is replaced with the source where
+   the source is darker; otherwise, it is left unchanged.
 
   <pre>
     B(Cb, Cs) = min(Cb, Cs)
@@ -789,13 +1334,14 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/darken.png">
 
-  <h4 id=blendinglighten><span class=secno>5.1.7. </span>&lsquo;<code
+  <h4 id=blendinglighten><span class=secno>5.1.6. </span>&lsquo;<code
    class=property>lighten</code>&rsquo; blend mode</h4>
 
-  <p> Selects the lighter of the backdrop and source colors.
+  <p> Selects the lighter of the <a href="#backdrop">backdrop</a> and source
+   colors.
 
-  <p> The backdrop is replaced with the source where the source is lighter;
-   otherwise, it is left unchanged.
+  <p> The <a href="#backdrop">backdrop</a> is replaced with the source where
+   the source is lighter; otherwise, it is left unchanged.
 
   <pre>
     B(Cb, Cs) = max(Cb, Cs)
@@ -803,11 +1349,11 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/lighten.png">
 
-  <h4 id=blendingcolordodge><span class=secno>5.1.8. </span>&lsquo;<code
+  <h4 id=blendingcolordodge><span class=secno>5.1.7. </span>&lsquo;<code
    class=property>color-dodge</code>&rsquo; blend mode</h4>
 
-  <p> Brightens the backdrop color to reflect the source color. Painting with
-   black produces no changes.
+  <p> Brightens the <a href="#backdrop">backdrop</a> color to reflect the
+   source color. Painting with black produces no changes.
 
   <pre>
     if(Cs < 1)
@@ -818,11 +1364,11 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/colordodge.png">
 
-  <h4 id=blendingcolorburn><span class=secno>5.1.9. </span>&lsquo;<code
+  <h4 id=blendingcolorburn><span class=secno>5.1.8. </span>&lsquo;<code
    class=property>color-burn</code>&rsquo; blend mode</h4>
 
-  <p> Darkens the backdrop color to reflect the source color. Painting with
-   white produces no change.
+  <p> Darkens the <a href="#backdrop">backdrop</a> color to reflect the
+   source color. Painting with white produces no change.
 
   <pre>
     if(Cs > 0)
@@ -833,11 +1379,12 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/colorburn.png">
 
-  <h4 id=blendinghardlight><span class=secno>5.1.10. </span>&lsquo;<code
+  <h4 id=blendinghardlight><span class=secno>5.1.9. </span>&lsquo;<code
    class=property>hard-light</code>&rsquo; blend mode</h4>
 
   <p> Multiplies or screens the colors, depending on the source color value.
-   The effect is similar to shining a harsh spotlight on the backdrop.
+   The effect is similar to shining a harsh spotlight on the <a
+   href="#backdrop">backdrop</a>.
 
   <pre>
     if(Cs <= 0.5)
@@ -851,11 +1398,12 @@ co = RGB(127, 127, 255)
 
   <p><img src="examples/hardlight.png">
 
-  <h4 id=blendingsoftlight><span class=secno>5.1.11. </span>&lsquo;<code
+  <h4 id=blendingsoftlight><span class=secno>5.1.10. </span>&lsquo;<code
    class=property>soft-light</code>&rsquo; blend mode</h4>
 
   <p> Darkens or lightens the colors, depending on the source color value.
-   The effect is similar to shining a diffused spotlight on the backdrop
+   The effect is similar to shining a diffused spotlight on the <a
+   href="#backdrop">backdrop</a>
 
   <pre>
     if(Cs <= 0.5)
@@ -871,14 +1419,14 @@ with
 
   <p><img src="examples/softlight.png">
 
-  <h4 id=blendingdifference><span class=secno>5.1.12. </span>&lsquo;<code
+  <h4 id=blendingdifference><span class=secno>5.1.11. </span>&lsquo;<code
    class=property>difference</code>&rsquo; blend mode</h4>
 
   <p> Subtracts the darker of the two constituent colors from the lighter
    color.
 
-  <p> Painting with white inverts the backdrop color; painting with black
-   produces no change.
+  <p> Painting with white inverts the <a href="#backdrop">backdrop</a> color;
+   painting with black produces no change.
 
   <pre>
     B(Cb, Cs) = | Cb - Cs |
@@ -886,12 +1434,12 @@ with
 
   <p><img src="examples/difference.png">
 
-  <h4 id=blendingexclusion><span class=secno>5.1.13. </span>&lsquo;<code
+  <h4 id=blendingexclusion><span class=secno>5.1.12. </span>&lsquo;<code
    class=property>exclusion</code>&rsquo; blend mode</h4>
 
   <p> Produces an effect similar to that of the Difference mode but lower in
-   contrast. Painting with white inverts the backdrop color; painting with
-   black produces no change
+   contrast. Painting with white inverts the <a href="#backdrop">backdrop</a>
+   color; painting with black produces no change
 
   <pre>
     B(Cb, Cs) = Cb + Cs - 2 x Cb x Cs
@@ -903,13 +1451,15 @@ with
    blend modes</h3>
 
   <p> Nonseparable blend modes consider all color components in combination
-   as opposed to the seperable ones that looks at each component
+   as opposed to the seperable ones that look at each component
    individually.<br>
    All of these blend modes conceptually entail the following steps:<br>
-   a) Convert the backdrop and source colors from the blending color space to
-   an intermediate HSL (hue-saturation-luminosity) representation.<br>
+   a) Convert the <a href="#backdrop">backdrop</a> and source colors from the
+   blending color space to an intermediate HSL (hue-saturation-luminosity)
+   representation.<br>
    b) Create a new color from some combination of hue, saturation, and
-   luminosity components selected from the backdrop and source colors.<br>
+   luminosity components selected from the <a href="#backdrop">backdrop</a>
+   and source colors.<br>
    c) Convert the result back to the original color space.<br>
 
   <p> The nonseparable blend mode formulas make use of several auxiliary
@@ -952,7 +1502,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>hue</code>&rsquo; blend mode</h4>
 
   <p> Creates a color with the hue of the source color and the saturation and
-   luminosity of the backdrop color.
+   luminosity of the <a href="#backdrop">backdrop</a> color.
 
   <pre>
 	B(Cb, Cs) = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
@@ -964,8 +1514,9 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>saturation</code>&rsquo; blend mode</h4>
 
   <p> Creates a color with the saturation of the source color and the hue and
-   luminosity of the backdrop color. Painting with this mode in an area of
-   the backdrop that is a pure gray (no saturation) produces no change.
+   luminosity of the <a href="#backdrop">backdrop</a> color. Painting with
+   this mode in an area of the <a href="#backdrop">backdrop</a> that is a
+   pure gray (no saturation) produces no change.
 
   <pre>
 	B(Cb, Cs) = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
@@ -977,9 +1528,9 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>color</code>&rsquo; blend mode</h4>
 
   <p> Creates a color with the hue and saturation of the source color and the
-   luminosity of the backdrop color. This preserves the gray levels of the
-   backdrop and is useful for colouring monochrome images or tinting colour
-   images.
+   luminosity of the <a href="#backdrop">backdrop</a> color. This preserves
+   the gray levels of the <a href="#backdrop">backdrop</a> and is useful for
+   colouring monochrome images or tinting colour images.
 
   <pre>
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
@@ -991,8 +1542,8 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>luminosity</code>&rsquo; blend mode</h4>
 
   <p> Creates a color with the luminosity of the source color and the hue and
-   saturation of the backdrop color. This produces an inverse effect to that
-   of the Color mode.
+   saturation of the <a href="#backdrop">backdrop</a> color. This produces an
+   inverse effect to that of the Color mode.
 
   <pre>
 	B(Cb, Cs) = SetLum(Cb, Lum(Cs))
@@ -1006,17 +1557,35 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p> In the following example, the red and green rectangles are in a group
    and the green rectangle has a multiply blend mode.
 
-  <p><img src="examples/group_non_isolated.svg">
+  <div class=example> <img src="examples/group_non_isolated.svg">
+   <p> The <a href="#backdrop">backdrop</a> that is available for blending,
+    is the blue and red rectangle and is shown on the right.<br>
+    Now, if we made the group isolated, only the red rectangle is in the <a
+    href="#backdrop">backdrop</a> and the result becomes as follows:</p>
+  </div>
 
-  <p> The background that is available for blending, is the blue and red
-   rectangle and is shown on the right.<br>
-   Now, if we made the group isolated, only the red rectangle is in the
-   background and the result becomes as follows:
+  <div class=example> <img src="examples/group_isolated.svg">
+   <p> The result is that the green rectangle doesn't blend with the blue
+    rectangle.</p>
+  </div>
 
-  <p><img src="examples/group_isolated.svg">
+  <h3 id=blendingnonseparable><span class=secno>5.4. </span>Knockout groups</h3>
 
-  <p> The result is that the green rectangle doesn't blend with the blue
-   rectangle.
+  <p> A knockout group is conceptually the inverse of an isolated group. When
+   calculating the <a href="#backdrop">backdrop</a> for an element inside a
+   knockout group, the elements of the group are ignored. Instead, you only
+   look at the elements that are behind the knockout group.
+
+  <div class=example> <img src="examples/knockout.svg">
+   <p> The example above show the effect of group knockout. The group
+    contains a red rectangle and a green rectangle that has a difference mode
+    applied to it.<br>
+    In the top example you can see that the green rectangle is blending with
+    the red rectangle in its group and the blue rectangle in the <a
+    href="#backdrop">backdrop</a>.<br>
+    The example below that has knockout turned on and the green rectangle
+    only blends with the blue rectangle.</p>
+  </div>
 
   <h2 id=csscompositingandblending><span class=secno>6. </span>Specifying
    Compositing and Blending in CSS</h2>
@@ -1024,13 +1593,31 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h3 id=csscompositingrules><span class=secno>6.1. </span>Behavior specific
    to CSS</h3>
 
-  <p> If an element specifies non-default blending, compositing or opacity,
-   its renderstyle will revert to &lsquo;<code
-   class=property>flat</code>&rsquo;. This means that elements with z-index
-   will be not honor the depth of elements outside of the group.
+  <p> If an element specifies non-default blending, compositing or <a
+   href="http://www.w3.org/TR/css3-color/#transparency">&lsquo;<code
+   class=property>opacity</code>&rsquo;</a>, its renderstyle will revert to
+   &lsquo;<code class=property>flat</code>&rsquo;. This means that elements
+   with z-index will be not honor the depth of elements outside of the
+   group.<br>
+   This is the same behavior as specifying an <a
+   href="http://www.w3.org/TR/css3-color/#opacity">&lsquo;<code
+   class=property>opacity</code>&rsquo;</a> value smaller than 1.
 
-  <p> Order: first blending is applied, followed by filtering and then
+  <p> Order: first filtering is applied, followed by blending and then
    compositing.
+
+  <p> Conceptually all HTML elements are part of a group that consists of the
+   following "layers" in stacking order:
+
+  <ol>
+   <li>the box shadow
+
+   <li>the background layers
+
+   <li>the text shadow
+
+   <li>the text and nested elements
+  </ol>
 
   <h3 id=csscompositingkeyword><span class=secno>6.2. </span>Compositing</h3>
 
@@ -1056,9 +1643,7 @@ components having the minimum, middle, and maximum values upon entry to the func
         <td><em>Value:</em>  
 
         <td> clear | src | dst | src-over | dst-over | src-in | dst-in |
-         src-out | dst-out | src-atop | dst-atop | xor | <a class=noxref
-         href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
-         class="value-inst-inherit noxref">inherit</span></a>
+         src-out | dst-out | src-atop | dst-atop | xor | plus
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -1068,9 +1653,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Applies to:</em>  
 
-        <td>All elements <span class=specissue>In SVG 1.1 it applies only to
-         "container elements (except &lsquo;<code
-         class=property>mask</code>&rsquo;) and graphics elements"</span>
+        <td>All elements. In SVG, it applies only to container elements
+         (except &lsquo;<code class=property>mask</code>&rsquo;) and graphics
+         elements
 
        <tr valign=baseline>
         <td><em>Inherited:</em>  
@@ -1095,6 +1680,9 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
+  <p> In CSS, compositing is always done with the &lsquo;<code
+   class=property>clip-to-self</code>&rsquo; algorithm.
+
   <h4 id=enable-background><span class=secno>6.2.2. </span>The <span
    class=prop-name>&lsquo;<code
    class=property>enable-background</code>&rsquo;</span> property</h4>
@@ -1116,9 +1704,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> accumulate | new | <a class=noxref
-         href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
-         class="value-inst-inherit noxref">inherit</span></a>
+        <td> accumulate | new
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -1128,9 +1714,8 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Applies to:</em>  
 
-        <td>All elements <span class=specissue>In SVG 1.1 it applies only to
-         "container elements (except &lsquo;<code
-         class=property>mask</code>&rsquo;) and graphics elements"</span>
+        <td>All container elements. In SVG, it applies to all container
+         elements except &lsquo;<code class=property>mask</code>&rsquo;
 
        <tr valign=baseline>
         <td><em>Inherited:</em>  
@@ -1155,6 +1740,14 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
+  <p> For an individual layer &lsquo;<code
+   class=property>enable-background</code>&rsquo; is always &lsquo;<code
+   class=property>new</code>&rsquo;. This means that the content of a layer
+   always establishes its own context. For instance, if you link to an SVG
+   file through the &lsquo;<code class=property>img</code>&rsquo; tag, the
+   content of that SVG will not composite with the content in other layers or
+   the content that is underneath.
+
   <h3 id=cssblending><span class=secno>6.3. </span>Blending</h3>
 
   <h4 id=blend-mode><span class=secno>6.3.1. </span>The <span
@@ -1177,11 +1770,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> normal | plus | multiply | screen | overlay | darken | lighten |
+        <td> normal | multiply | screen | overlay | darken | lighten |
          color-dodge | color-burn | hard-light | soft-light | difference |
-         exclusion | hue | saturation | color | luminosity | <a class=noxref
-         href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
-         class="value-inst-inherit noxref">inherit</span></a>
+         exclusion | hue | saturation | color | luminosity
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -1191,9 +1782,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Applies to:</em>  
 
-        <td>All elements <span class=specissue>In SVG 1.1 it applies only to
-         "container elements (except &lsquo;<code
-         class=property>mask</code>&rsquo;) and graphics elements"</span>
+        <td>All elements. In SVG, it applies only to container elements
+         (except &lsquo;<code class=property>mask</code>&rsquo;) and graphics
+         elements
 
        <tr valign=baseline>
         <td><em>Inherited:</em>  
@@ -1238,9 +1829,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> accumulate | isolate | <a class=noxref
-         href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
-         class="value-inst-inherit noxref">inherit</span></a>
+        <td> accumulate | isolate
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -1250,9 +1839,8 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Applies to:</em>  
 
-        <td>All elements <span class=specissue>In SVG 1.1 it applies only to
-         "container elements (except &lsquo;<code
-         class=property>mask</code>&rsquo;) and graphics elements"</span>
+        <td>All HTML elements. In SVG, it applies to all container elements
+         except &lsquo;<code class=property>mask</code>&rsquo;
 
        <tr valign=baseline>
         <td><em>Inherited:</em>  
@@ -1276,6 +1864,14 @@ components having the minimum, middle, and maximum values upon entry to the func
      </table>
    </dl>
   </div>
+
+  <p> For an individual layer &lsquo;<code
+   class=property>isolation</code>&rsquo; is always &lsquo;<code
+   class=property>isolate</code>&rsquo;. This means that the content of a
+   layer always establishes its own context. For instance, if you link to an
+   SVG file through the &lsquo;<code class=property>img</code>&rsquo; tag,
+   the content of that SVG will not blend with the content in other layers or
+   the content that is underneath.
 
   <h4 id=knock-out><span class=secno>6.3.3. </span>The <span
    class=prop-name>&lsquo;<code class=property>knock-out</code>&rsquo;</span>
@@ -1297,9 +1893,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> preserve | knock-out | <a class=noxref
-         href="http://www.w3.org/TR/2009/CR-CSS2-20090423/cascade.html#value-def-inherit"><span
-         class="value-inst-inherit noxref">inherit</span></a>
+        <td> preserve | knock-out
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -1309,9 +1903,8 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Applies to:</em>  
 
-        <td>All elements <span class=specissue>In SVG 1.1 it applies only to
-         "container elements (except &lsquo;<code
-         class=property>mask</code>&rsquo;) and graphics elements"</span>
+        <td>All HTML elements. In SVG, it applies to all container elements
+         except &lsquo;<code class=property>mask</code>&rsquo;
 
        <tr valign=baseline>
         <td><em>Inherited:</em>  
@@ -1334,25 +1927,424 @@ components having the minimum, middle, and maximum values upon entry to the func
         <td>yes
      </table>
    </dl>
+
+   <p> Note that knockout applies to blending as well as compositing. The end
+    result is if every shape composites with a &lsquo;<code
+    class=property>clear</code>&rsquo; operation before it blends and
+    composites.</p>
   </div>
-  <!--
-<h3 id="backgroundcalculation">Background calculation</h3>
-<h4 id="whyisitneeded">Why is it needed</h4>
-<h4 id="howisitdone">How is it done</h4>
-d.	Enable-background
-3.	What is blending
-a.	Explain blending
-b.	List of blending modes
-c.	Background calculation
-d.	Isolate
-e.	Knockout
-4.	How is compositing/blending specified in CSS
- -->
-  <!-- ****************************************************************************** -->
 
-  <h2 id=references1><span class=secno>7. </span>References</h2>
+  <h3 id=cssbackgroundsyntax><span class=secno>6.4. </span>Specifying
+   blending and compositing in the element background</h3>
 
-  <h3 id=normref><span class=secno>7.1. </span>Normative References</h3>
+  <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   An author might want to specify the blending of multiple backgrounds of an
+   element. The <a href="#background">background</a> compositing and blending
+   is always treated as an isolated group.
+
+  <h4 id=background-alpha-compositing><span class=secno>6.4.1. </span>The
+   <span class=prop-name>&lsquo;<code
+   class=property>background-alpha-compositing</code>&rsquo;</span> property</h4>
+
+  <p> The description of the <span class=prop-name>&lsquo;<code
+   class=property>background-alpha-compositing</code>&rsquo;</span> property
+   is as follows:
+
+  <div class=propdef>
+   <dl>
+    <dt id=propdef-background-alpha-compositing><span
+     class="propdef-title prop-name">&lsquo;<code
+     class=property>background-alpha-compositing</code>&rsquo;</span>
+
+    <dd>
+     <table cellpadding=0 cellspacing=0 class=propinfo
+      summary="background-alpha-compositing property">
+      <tbody>
+       <tr valign=baseline>
+        <td><em>Value:</em>  
+
+        <td> compositing-style [, compositing-style]*
+
+       <tr valign=baseline>
+        <td><em>Initial:</em>  
+
+        <td>src-over
+
+       <tr valign=baseline>
+        <td><em>Applies to:</em>  
+
+        <td>All HTML elements"
+
+       <tr valign=baseline>
+        <td><em>Inherited:</em>  
+
+        <td>no
+
+       <tr valign=baseline>
+        <td><em>Percentages:</em>  
+
+        <td>N/A
+
+       <tr valign=baseline>
+        <td><em>Media:</em>  
+
+        <td>visual
+
+       <tr valign=baseline>
+        <td><em>Animatable:</em>  
+
+        <td>yes
+     </table>
+   </dl>
+  </div>
+
+  <pre>
+	compositing-style = clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | plus 
+</pre>
+
+  <h4 id=background-blend-mode><span class=secno>6.4.2. </span>The <span
+   class=prop-name>&lsquo;<code
+   class=property>background-blend-mode</code>&rsquo;</span> property</h4>
+
+  <p> The description of the <span class=prop-name>&lsquo;<code
+   class=property>background-blend-mode</code>&rsquo;</span> property is as
+   follows:
+
+  <div class=propdef>
+   <dl>
+    <dt id=propdef-blend-mode><span
+     class="propdef-title prop-name">&lsquo;<code
+     class=property>background-blend-mode</code>&rsquo;</span>
+
+    <dd>
+     <table cellpadding=0 cellspacing=0 class=propinfo
+      summary="background-blend-mode property">
+      <tbody>
+       <tr valign=baseline>
+        <td><em>Value:</em>  
+
+        <td>blend-style [, blend-style]*
+
+       <tr valign=baseline>
+        <td><em>Initial:</em>  
+
+        <td>normal
+
+       <tr valign=baseline>
+        <td><em>Applies to:</em>  
+
+        <td>All HTML elements
+
+       <tr valign=baseline>
+        <td><em>Inherited:</em>  
+
+        <td>no
+
+       <tr valign=baseline>
+        <td><em>Percentages:</em>  
+
+        <td>N/A
+
+       <tr valign=baseline>
+        <td><em>Media:</em>  
+
+        <td>visual
+
+       <tr valign=baseline>
+        <td><em>Animatable:</em>  
+
+        <td>yes
+     </table>
+   </dl>
+  </div>
+
+  <pre>
+	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
+</pre>
+
+  <h4 id=box-shadow-blend-mode><span class=secno>6.4.3. </span>The <span
+   class=prop-name>&lsquo;<code
+   class=property>box-shadow-blend-mode</code>&rsquo;</span> property</h4>
+
+  <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   Sets the blend mode of the box shadow.<br>
+   <span class=issue>Also needs to be added to the shorthand.</span><br>
+   The description of the <span class=prop-name>&lsquo;<code
+   class=property>box-shadow-blend-mode</code>&rsquo;</span> property is as
+   follows:
+
+  <div class=propdef>
+   <dl>
+    <dt id=propdef-blend-mode><span
+     class="propdef-title prop-name">&lsquo;<code
+     class=property>box-shadow-blend-mode</code>&rsquo;</span>
+
+    <dd>
+     <table cellpadding=0 cellspacing=0 class=propinfo
+      summary="box-shadow-blend-mode property">
+      <tbody>
+       <tr valign=baseline>
+        <td><em>Value:</em>  
+
+        <td>blend-style [, blend-style]*
+
+       <tr valign=baseline>
+        <td><em>Initial:</em>  
+
+        <td>normal
+
+       <tr valign=baseline>
+        <td><em>Applies to:</em>  
+
+        <td>All HTML elements
+
+       <tr valign=baseline>
+        <td><em>Inherited:</em>  
+
+        <td>no
+
+       <tr valign=baseline>
+        <td><em>Percentages:</em>  
+
+        <td>N/A
+
+       <tr valign=baseline>
+        <td><em>Media:</em>  
+
+        <td>visual
+
+       <tr valign=baseline>
+        <td><em>Animatable:</em>  
+
+        <td>yes
+     </table>
+   </dl>
+  </div>
+
+  <pre>
+	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
+</pre>
+
+  <h4 id=text-shadow-blend-mode><span class=secno>6.4.4. </span>The <span
+   class=prop-name>&lsquo;<code
+   class=property>text-shadow-blend-mode</code>&rsquo;</span> property</h4>
+
+  <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   Set the blend mode of the text shadow.<br>
+   <span class=issue>Also needs to be added to the shorthand.</span><br>
+   The description of the <span class=prop-name>&lsquo;<code
+   class=property>text-shadow-blend-mode</code>&rsquo;</span> property is as
+   follows:
+
+  <div class=propdef>
+   <dl>
+    <dt id=propdef-blend-mode><span
+     class="propdef-title prop-name">&lsquo;<code
+     class=property>text-shadow-blend-mode</code>&rsquo;</span>
+
+    <dd>
+     <table cellpadding=0 cellspacing=0 class=propinfo
+      summary="text-shadow-blend-mode property">
+      <tbody>
+       <tr valign=baseline>
+        <td><em>Value:</em>  
+
+        <td>blend-style [, blend-style]*
+
+       <tr valign=baseline>
+        <td><em>Initial:</em>  
+
+        <td>normal
+
+       <tr valign=baseline>
+        <td><em>Applies to:</em>  
+
+        <td>All HTML elements
+
+       <tr valign=baseline>
+        <td><em>Inherited:</em>  
+
+        <td>no
+
+       <tr valign=baseline>
+        <td><em>Percentages:</em>  
+
+        <td>N/A
+
+       <tr valign=baseline>
+        <td><em>Media:</em>  
+
+        <td>visual
+
+       <tr valign=baseline>
+        <td><em>Animatable:</em>  
+
+        <td>yes
+     </table>
+   </dl>
+  </div>
+
+  <pre>
+	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
+</pre>
+
+  <h4 id=text-blend-mode><span class=secno>6.4.5. </span>The <span
+   class=prop-name>&lsquo;<code
+   class=property>foreground-blend-mode</code>&rsquo;</span> property</h4>
+
+  <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   Sets the blend mode of the text or nested elements.<br>
+   <span class=issue>Also needs to be added to the shorthand.</span><br>
+   The description of the <span class=prop-name>&lsquo;<code
+   class=property>foreground-blend-mode</code>&rsquo;</span> property is as
+   follows:
+
+  <div class=propdef>
+   <dl>
+    <dt id=propdef-blend-mode><span
+     class="propdef-title prop-name">&lsquo;<code
+     class=property>foreground-blend-mode</code>&rsquo;</span>
+
+    <dd>
+     <table cellpadding=0 cellspacing=0 class=propinfo
+      summary="foreground-blend-mode property">
+      <tbody>
+       <tr valign=baseline>
+        <td><em>Value:</em>  
+
+        <td>blend-style [, blend-style]*
+
+       <tr valign=baseline>
+        <td><em>Initial:</em>  
+
+        <td>normal
+
+       <tr valign=baseline>
+        <td><em>Applies to:</em>  
+
+        <td>All HTML elements
+
+       <tr valign=baseline>
+        <td><em>Inherited:</em>  
+
+        <td>no
+
+       <tr valign=baseline>
+        <td><em>Percentages:</em>  
+
+        <td>N/A
+
+       <tr valign=baseline>
+        <td><em>Media:</em>  
+
+        <td>visual
+
+       <tr valign=baseline>
+        <td><em>Animatable:</em>  
+
+        <td>yes
+     </table>
+   </dl>
+  </div>
+
+  <pre>
+	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
+</pre>
+
+  <h4 id=background-alpha-compositing><span class=secno>6.4.6.
+   </span>Alternate proposal</h4>
+
+  <p><span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+
+  <p> To cut down on the number of new keywords, we could extend blend-mode
+   to take the following additional parameters:
+
+  <dl>
+   <dt>box-shadow
+
+   <dd>list of blendmodes that target each shadow
+
+   <dt>background
+
+   <dd>list of blendmodes that target each background layer
+
+   <dt>text-shadow
+
+   <dd>list of blendmodes that target each text shadow
+
+   <dt>foreground
+
+   <dd>blendmode that targets the text and nested elements
+  </dl>
+
+  <p>A possible drawback is that there are no other keywords that target all
+   these layers at once.
+
+  <h4 id=borders-issue><span class=secno>6.4.7. </span>blending and
+   compositing on borders</h4>
+
+  <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   Is there a need to target this part of the element?
+
+  <h2 id=canvascompositingandblending><span class=secno>7. </span>Specifying
+   Compositing and Blending in Canvas</h2>
+
+  <p><span class=issue>DRAFT.This proposal needs more discussion.</span><br>
+   Please see the <a
+   href="http://www.w3.org/Graphics/fx/wiki/BlendingInCanvas">W3 wiki</a>.
+   <!--
+<h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
+<p><strong>This spec is not intending to become an official extension for Canvas. These keywords are only here to start a discussion and will be removed once there is consensus.</strong></p>
+<h3 id="canvascompositingandblending">Specifying the current compositing and blending mode</h3>
+<p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.
+To allow blending, we can extend the list with the blending keywords:
+<pre>normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</pre>
+If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the src-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
+</p>
+<p>
+<span class="issue">or</span>
+</p>
+<p>
+The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.<br/>
+To allow blending, we can add a new operator 'globalBlendOperation' on the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#2dcontext">2D context</a> with the blending keywords: 
+<pre>
+normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.
+</pre>
+The default value will be 'normal'.<br/><br/>
+Blending is done first, followed by compositing.<br/>
+</p>
+
+<h3 id="canvascompositingandblending">Specifying the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>'s compositing and blending mode</h3>
+<p>
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
+Introduce 2 new keywords that allow compositing and blending on the shadow color:<br/>
+shadow-alpha-compositing would set the compositing mode of the shadow (the default would be 'src-over'/'normal')<br/>
+shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
+</p>
+-->
+   
+
+  <h2 id=security><span class=secno>8. </span>Security issues with
+   compositing and blending</h2>
+
+  <p> It is important that the timing to the blending and compositing
+   operations is independant of the source and destination pixel. In other
+   words, operations should be implemented in such a way that they always
+   take the same amount of time regardless of the pixel values.<br>
+   If this rule is not followed, an attacker could mount a timing attack.
+
+  <p> A timing attack is a method of obtaining information about content that
+   is otherwise protected, based on studying the amount of time it takes for
+   an operation to occur.If, for example, red pixels took longer to draw than
+   green pixels, one might be able to reconstruct a rough image of the
+   element being rendered, even without ever having access to the content of
+   the element.
+
+  <h2 id=references1><span class=secno>9. </span>References</h2>
+
+  <h3 id=normref><span class=secno>9.1. </span>Normative References</h3>
 
   <dl>
    <dt id=ref-CSS21><strong class=normref>[CSS21]</strong>
@@ -1422,7 +2414,7 @@ e.	Knockout
     
   </dl>
 
-  <h3 id=informref><span class=secno>7.2. </span>Informative References</h3>
+  <h3 id=informref><span class=secno>9.2. </span>Informative References</h3>
 
   <dl>
    <dt id=ref-html5><strong class=informref>[HTML5]</strong>

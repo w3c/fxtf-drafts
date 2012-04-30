@@ -1,21 +1,9 @@
 /*
  * Style sheet for the CSS3 specification,
  * to be used in addition to http://www.w3.org/StyleSheets/TR/W3C-{WD,PR,REC}
- * $Id: default.css,v 1.8 2011/08/18 02:18:14 tatkinsj Exp $
  */
 
 @media print {
-
-	/* the following doesn't work for now,
-		 instead we rely on a patched version of html2ps which has this built-in */
-	.dlink { display: none }
-
-	/* the following doesn't work for now,
-		 instead we rely on a patched version of html2ps which has this built-in */
-	div.navbar {
-		 display: none;
-	}
-
 	html { margin: 0 !important }
 	body { font-family: serif }
 	th, td { font-family: inherit }
@@ -29,12 +17,14 @@
 	margin: 1.5cm 1.1cm;
 }
 
-/* html body { margin-left: 8.5em } /* Overrides 70px in base.css */
-
-body {counter-reset: exampleno figure; max-width: 50em; margin: 0 auto !important; color: #444; }
+body {
+	counter-reset: exampleno figure issue;
+	margin: 0 auto !important;
+	max-width: 50em;
+}
 
 /* Pagination */
-h1, h2, h3, h4, h5, h6 { page-break-after: avoid; font-family: inherit }
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid }
 div.figure, div.sidefigure, pre, table.propdef, table.propdef-extra,
 div.example { page-break-inside: avoid }
 dt { page-break-after: avoid }
@@ -48,22 +38,20 @@ h1 + h2 { margin-top: 0; }
 
 h4 { margin-top: 4em; }
 
-p, div.note {
-	text-indent: 0;
-	margin-bottom: 0;
-	margin-top: 1em
+p, div.note, div.issue {
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
-dd > p:first-child, li > p:first-child, .note > p:first-child {
+dd > p:first-child, li > p:first-child, .note > p:first-child, .issue > p:first-child {
 	margin-top: 0
 }
 
 pre {
-	text-align: left; /* fixes justification in Mac IE 5 */
-	text-indent: 0;   /* fixes indent in Mac Netscape 6 */
 	margin-top: 1em;
 	margin-bottom: 1em;
-	font-size: 90% /*smaller*/;
+	color: red;
+	font-family: monospace;
 }
 
 img {
@@ -71,34 +59,28 @@ img {
 	color: white;
 }
 .toc {
-	text-indent: 0;
 }
 
-
-@media all { /* NS < 6 doesn't like borders around inline elements... */
-
-	body {
-		line-height: 1.5;
-	}
-
-	a:link, a:visited {
-		color: inherit;
-		text-decoration: underline;
-	}
-
-	a.logo:link, a.logo:visited {
-		padding: 0;
-		border-style: none;
-	}
-
-	/* Hmm, this seems to confuse many browsers... */
-	dl dd { margin: 0 0 1em 2em }
-	.head dd { margin-bottom: 0; }
-	ul, ol { margin-left: 0; padding-left: 2em; }
-	li { margin: 0.25em 2em 0.5em 0; padding-left: 0 }
-
+body {
+	line-height: 1.5;
 }
-ul.indexlist { margin-left: 0; /*column-width: 13em; columns: 13em*/ }
+
+a:link, a:visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+a.logo:link, a.logo:visited {
+	padding: 0;
+	border-style: none;
+}
+
+dl dd { margin: 0 0 1em 2em }
+.head dd { margin-bottom: 0; }
+ul, ol { margin-left: 0; padding-left: 2em; }
+li { margin: 0.25em 2em 0.5em 0; padding-left: 0 }
+
+ul.indexlist { margin-left: 0; columns: 13em; }
 ul.indexlist li { margin-left: 0; list-style: none }
 ul.indexlist li li { margin-left: 1em }
 
@@ -107,17 +89,16 @@ ul.indexlist li li { margin-left: 1em }
 .example {
 	counter-increment: exampleno;
 }
-div.example:before {
-	content: "Example";
-	content: "Example " counter(exampleno);
-	min-width: 7.5em;
-	text-transform: uppercase;      
-}
-pre.example:before {
+div.example:before, pre.example:before {
 	content: "Example";
 	content: "Example " counter(exampleno);
 	min-width: 7.5em;
 	text-transform: uppercase;
+	display: block;
+}
+div.illegal-example:before, pre.illegal-example:before {
+	content: "Invalid Example";
+	content: "Invalid Example" counter(exampleno);
 }
 div.example, div.illegal-example, div.html, div.illegal-html, div.xml,
 div.illegal-xml, pre.example, pre.illegal-example, pre.html,
@@ -150,7 +131,6 @@ pre.illegal-xml { color: red }
 div.illegal-xml { color: red }
 div.illegal-xml p { color: black }
 
-/* code { font-size: 90% } */
 .css, .property { color: #005a9c }		/* inline CSS code (SPAN/CODE) */
 code.css { font-family: inherit; font-size: 100% }
 code.html { color: #600 }	/* inline HTML */
@@ -159,52 +139,53 @@ code.xml { color: #600 }	/* inline XML */
 .descriptor { }			/* name of a CSS descriptor (SPAN) */
 .type { font-style: italic }	/* A <type> value for a property */
 
-dfn { font-weight: bolder; /*font-size: 1em*/ }
+dfn { font-weight: bolder; }
 
-p.issue, div.issue, p.note, div.note, div.example {
+.issue, .note, div.example, pre.example {
 	padding: .5em;
+	/* padding: .5rem; /* proposed unit in css3-values */
 	border-left-width: .5em;
+	/* border-left-width: .5rem; /* proposed unit in css3-values */
 	border-left-style: solid;
 }
+span.note, span.issue { padding: .1em .5em .15em; }
 
 /* Open issue / editorial remark; not intended for a final publication */
-p.issue, div.issue {
+.issue {
 	border-color: #E05252;
 	background: #FBE9E9;
 	counter-increment: issue;
 }
 
-p.issue:before, div.issue:before {
+.issue:before {
 	content: "Issue " counter(issue);
 	padding-right: 1em;
 	text-transform: uppercase;
 	color: #E05252;    
 }
 
-span.issue { color: red; }
-
 /* Class note is a non-normative note. May be inline or a P or DIV */
-p.note, div.note {
+.note {
 	border-color: #52E052;
 	background: #E9FBE9;
 }
-
-span.note { color: green; }
-
 
 .normref { color: red }	
 .informref { color: green }	
 
 /* Example box */
-div.example {
+div.example, pre.example {
 	border-color: #E0CB52;
 	background: #FCFAEE;    
 }
 
-div.example:before { color: #B9AB2D; }
+div.example:before, pre.example:before { 
+	color: #B9AB2D; 
+	font-family: sans-serif;
+}
 
 /* ToC not indented, but font style shows hierarchy */
-ul.toc {margin: 1em 0; padding: 0; line-height: 1.3; font-weight: bold; text-transform: uppercase; }
+ul.toc {margin: 1em 0; padding: 0; line-height: 1.3; font-weight: bold; /*text-transform: uppercase;*/ }
 ul.toc ul {margin: 0; padding: 0; font-weight: normal; text-transform: none; }
 ul.toc ul ul {margin: 0 0 0 2em; font-style: italic; }
 ul.toc ul ul ul {margin: 0}
@@ -217,24 +198,19 @@ ul.toc li li li, ul.toc li li li ul {margin-left: 0; display: inline}
 ul.toc li li li ul, ul.toc li li li ul li {margin-left: 0; display: inline}
 */
 
-@media all { /* NS4 doesn't align the floats properly :-( */
-
-	/* Section numbers in a column of their own */
-	ul.toc span.secno {margin-right: 1em} /* workaround for Opera6 */
-	ul.toc span.secno {float: left; width: 4em; margin-left: -5em}
-	ul.toc ul ul span.secno { margin-left: -7em; }
-	/*ul.toc span.secno {text-align: right}*/
-	ul.toc li {clear: both}
-	ul.toc {margin-left: 5em}
-	/* If we had 'tab', floats would not be needed here:
-		 ul.toc span.secno {tab: 5em right; margin-right: 1em}
-		 ul.toc li {text-indent: 5em hanging}
-	 The second line in case items wrap
-	*/
-}
+/* Section numbers in a column of their own */
+ul.toc span.secno {float: left; width: 4em; margin-left: -5em}
+ul.toc ul ul span.secno { margin-left: -7em; }
+/*ul.toc span.secno {text-align: right}*/
+ul.toc li {clear: both}
+ul.toc {margin-left: 5em}
+/* If we had 'tab', floats would not be needed here:
+	 ul.toc span.secno {tab: 5em right; margin-right: 1em}
+	 ul.toc li {text-indent: 5em hanging}
+ The second line in case items wrap
+*/
 
 ul.index {
-	list-style: disc;		/* Mac NS has problem with 'none' */
 	list-style: none;
 }
 
@@ -334,11 +310,6 @@ table.propdef, table.propdef-extra, table.descdef {
 	border-left: 0.5em solid #8CCBF2;
 }
 
-/* Since Jan 2008, some CSS modules use <th> instead of <td> in the
-first column of a table.propdef. These rules handle both. As of Jan
-2008, http://www.w3.org/Style/spec-mark-up still only documents <td>
-*/
-
 table.propdef td, table.propdef-extra td, table.descdef td,
 table.propdef th, table.propdef-extra th, table.descdef th {
 	padding: 0.5em;
@@ -408,16 +379,6 @@ table.propdef td.footnote:before {
 	width: 4em;
 	border-top: thin solid;
 }
-
-/* table.propdef tr:first-child td { padding-top: 0.1em; padding-bottom: 0.1em } */
-
-/* This would replace :first-child for Opera, but it confuses WinIE :-( */
-/*
-table.propdef td { width: 8em }
-table.propdef td + td { width: auto }
-table.propdef tr { background: #005A9C; color: white }
-table.propdef tr + tr { background: transparent; color: black }
-*/
 
 table.proptable td .property {
 	display: block;
@@ -548,3 +509,27 @@ ol.inline, ol.inline li {display: inline; padding: 0; margin: 0}
 ol.inline {counter-reset: list-item}
 ol.inline li {counter-increment: list-item}
 ol.inline li:before {content: "(" counter(list-item) ") "; font-weight: bold}
+
+/* This styles the obsoletion notice on some of our older/abandoned specs. */
+details.obsolete[open] {
+	background: #fdd; 
+	color: red; 
+	font-weight: bold; 
+	text-align: center; 
+	padding: .5em; 
+	border: thick solid red; 
+	border-radius: 1em; 
+	position: fixed; 
+	left: 1em; 
+	right: 1em;
+	bottom: 1em; 
+	z-index: 1000;
+}
+
+details.obsolete:not([open]) > summary {
+	background: #fdd; 
+	color: red; 
+	font-weight: bold; 
+	text-align: center; 
+	padding: .5em; 	
+}
