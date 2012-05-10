@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">30 April 2012</h2>
+<h2 class="no-num no-toc">10 May 2012</h2>
 <dl>
   <dt>Editors:</dt>
   <dd class="vcard">
@@ -684,7 +684,7 @@ Knock out groups have the effect, prior to any compositing, of clearing the back
 Knock-out can also be thought of as inserting a clear operation with clip-to-self enabled between each element in the compositing stack.
 </p>
 
-<h4 id="groupcompositingknockout">Clip to self behavior</h4>
+<h4 id="groupcompositingcliptoself">Clip to self behavior</h4>
 <p>
 When clip-to-self is enabled, compositing operations are restricted to areas where the source shape exists, this is independent of the source alpha.
 Some of the Porter Duff operators are unchanged, because they normally have no effect outside the source region. The changes can be seen in the clear, src, src-in, dst-in, src-out and dst-atop.
@@ -918,6 +918,8 @@ The nonseparable blend mode formulas make use of several auxiliary functions:
                       
         if(x > 1)
             C = l + (((Cred - L) * (1 - L) / (x - L))
+        
+        return C
     
     SetLum(C, l)
         d = l - Lum(C)
@@ -925,6 +927,8 @@ The nonseparable blend mode formulas make use of several auxiliary functions:
         Cgreen = Cgreen + d
         Cblue = Cblue + d
         return ClipColor(C)
+        
+    Sat(C) = max(Cred, Cgreen, Cblue) - min(Cred, Cgreen, Cblue)
         
 The subscripts min, mid, and max in the next function refer to the color
 components having the minimum, middle, and maximum values upon entry to the function.
@@ -975,48 +979,48 @@ Creates a color with the luminosity of the source color and the hue and saturati
 </p>
 <img src="examples/luminosity.png"/>
 
-<h3 id="blendingnonseparable">Effect of group isolation on blending</h3>
+<h3 id="blendingisolation">Effect of group isolation on blending</h3>
 <p>
 In the following example, the red and green rectangles are in a group and the green rectangle has a multiply blend mode.
 </p>
 <div class="example">
 <img src="examples/group_non_isolated.svg"/>
+</div>
 <p>
 The <a href="#backdrop">backdrop</a> that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
 Now, if we made the group isolated, only the red rectangle is in the <a href="#backdrop">backdrop</a> and the result becomes as follows:
 </p>
-</div>
 
 <div class="example">
 <img src="examples/group_isolated.svg"/>
+</div>
 <p>
 The result is that the green rectangle doesn't blend with the blue rectangle.
 </p>
-</div>
 
-<h3 id="blendingnonseparable">Knockout groups</h3>
+<h3 id="blendingknockout">Effect of group knockout on blending</h3>
 <p>
 A knockout group is conceptually the inverse of an isolated group. When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
 </p>
 <div class="example">
 <img src="examples/knockout.svg"/>
+</div>
 <p>
 The example above show the effect of group knockout. The group contains a red rectangle and a green rectangle that has a difference mode applied to it.<br/>
 In the top example you can see that the green rectangle is blending with the red rectangle in its group and the blue rectangle in the <a href="#backdrop">backdrop</a>.<br/>The example below that has knockout turned on and the green rectangle only blends with the blue rectangle.
 </p>
-</div>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
 <p>
-If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its renderstyle will revert to 'flat'. This means that elements with z-index will be not honor the depth of elements outside of the group.<br/>
+If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its renderstyle and that of all of its children will revert to 'flat'. Also elements with z-index will be not honor the depth of elements outside of the group.<br/>
 This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-color/#opacity">'opacity'</a> value smaller than 1.
 </p>
 <p>
 Order: first filtering is applied, followed by blending and then compositing.
 </p>
 <p>
-Conceptually all HTML elements are part of a group that consists of the following "layers" in stacking order:
+Conceptually all HTML elements are part of a group that consists of the following "layers" in this stacking order:
 <ol>
 <li>the box shadow</li>
 <li>the background layers</li>
@@ -1026,7 +1030,6 @@ Conceptually all HTML elements are part of a group that consists of the followin
 </p>
 <h3 id="csscompositingkeyword">Compositing</h3>
 <h4 id="alpha-compositing">The <span class="prop-name">'alpha-compositing'</span> property</h4>
-
 <p>
   The description of the <span class="prop-name">'alpha-compositing'</span> property is
 as follows:</p>
@@ -1072,11 +1075,12 @@ as follows:</p>
 </dl>
 </div>
 <p>
-In CSS, compositing is always done with the 'clip-to-self' algorithm.
+Elements will always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'true'.
 </p>
 
-<h4 id="enable-background">The <span class="prop-name">'enable-background'</span> property</h4>
+<h4 id="comp-enable-background">The <span class="prop-name">'enable-background'</span> property</h4>
 <p>
+The behavior of this keyword is described in the section on <a href="#backdropnew">establishing a new backdrop contextg</a>. Basically, the compositing of elements in a group with 'enable-background: true' will behave as if there was no content prior to the group.<br/>
   The description of the <span class="prop-name">'enable-background'</span> property is
 as follows:</p>
 
@@ -1173,9 +1177,10 @@ as follows:</p>
 </div>
 
 <h4 id="enable-background">The <span class="prop-name">'isolation'</span> property</h4>
+<span class="issue">For an implementor, it would be easier to have this keyword apply to compositing as well and not have the <a href"#comp-enable-background">'enable-background'</a> keyword.</span>
 <p>
-  The description of the <span class="prop-name">'isolation'</span> property is
-as follows:</p>
+  The behavior of this keyword is described in the section on <a href="#blendingisolation">effect of group isolation on blending</a>. Basically, the blending of elements in an isolated group will behave as if there was no content prior to the group.<br/>
+The description of the <span class="prop-name">'isolation'</span> property is as follows:</p>
 
 <div class="propdef">
 <dl>
@@ -1221,9 +1226,10 @@ as follows:</p>
 For an individual layer 'isolation' is always 'isolate'. This means that the content of a layer always establishes its own context. For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content in other layers or the content that is underneath.
 </p>
 
+<h3 id="csscommonkeywords">Keywords that apply to both blending and compositing in CSS</h3>
 <h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
 <p>
-  The description of the <span class="prop-name">'knock-out'</span> property is
+  This behavior of this keyword is described in the sections on <a href="#blendingknockout">effect of group knockout on blending</a> and <a href="#groupcompositingknockout">knockout groups and Porter Duff modes</a>. The description of the <span class="prop-name">'knock-out'</span> property is
 as follows:</p>
 
 <div class="propdef">
@@ -1265,9 +1271,6 @@ as follows:</p>
       </table>
     </dd>
 </dl>
-<p>
-Note that knockout applies to blending as well as compositing. The end result is if every shape composites with a 'clear' operation before it blends and composites.
-</p>
 </div>
 
 <h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
@@ -1325,6 +1328,9 @@ as follows:</p>
 <pre>
 	compositing-style = clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | plus 
 </pre>
+<p>
+Background images will always composite with each other with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'false'.
+</p>
 
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
 
