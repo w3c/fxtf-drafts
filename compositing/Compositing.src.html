@@ -1,4 +1,4 @@
-<!DOCTYPE html public '-//W3C//DTD HTML 4.01//EN'
+﻿<!DOCTYPE html public '-//W3C//DTD HTML 4.01//EN'
   'http://www.w3.org/TR/html4/strict.dtd'>
 <html lang="en">
 <head profile="http://www.w3.org/2006/03/hcard">
@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">10 May 2012</h2>
+<h2 class="no-num no-toc">24 May 2012</h2>
 <dl>
   <dt>Editors:</dt>
   <dd class="vcard">
@@ -230,7 +230,7 @@
   </dd>
    <dd class="vcard">
     <span class="fn">Nikos Andronikos</span>,
-    <span class="org"> Canon Information Systems Research Australia</span>,
+    <span class="org">Canon Information Systems Research Australia</span>,
     <span class="email">Nikos.Andronikos@cisra.canon.com.au</span>
   </dd>
   <dt>Authors:</dt>
@@ -247,14 +247,14 @@
 
 <h2 class="no-num no-toc" id="abstract">Abstract</h2>
 
-<p>
+ <p>
   Compositing describes how shapes of different elements are 
   combined into a single image. Conceptually, each element is rendered into 
   its own buffer and is then merged with its <a href="#backdrop">backdrop</a>. The most widely used 
-  compositing operation is simple alpha compositing. (see
-  <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a>)
-  This spec will introduce additional compositing operators that will enable
-  advanced graphical effects. 
+  compositing operation is <a href="#src-ver">src-over</a>, and this is used by the <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a> model of 
+  previous versions of SVG, such as SVG 1.0, SVG 1.1, SVG Tiny 1.2, etc.
+  This spec will introduce additional advanced compositing operators that will allow shapes to interact in more complex ways.
+  This spec will also introduce advanced blending modes, which enable the user to control how the colours of two shapes combine in areas where they overlap.
  </p>
  
  <p>
@@ -267,6 +267,7 @@
 <h2 class="no-num no-toc" id="status">Status of This Document</h2>
 
 <!-- status -->
+  “Compositing” in the subject, preferably like this: “[Compositing] <em>…summary of comment…</em>”
  
 <h2 class="no-num no-toc" id="contents">Table of contents</h2>
 
@@ -277,14 +278,17 @@
 <h2 id="introduction">Introduction</h2>
 <p>
 At the basic level, compositing describes how shapes interact while blending describes how colors interact.
-Both idioms use a rendered version of the current element (ie a shape or a group) and mix it with the <a href="#backdrop">backdrop</a>.
+Both idioms take a rendered version of the current element (ie a shape or a group) and mix it with the <a href="#backdrop">backdrop</a>.
 </p>
 
 <p>
 </p>
 
 <p>
-This document will describe the algorithms of compositing and blending in the first part. <strong>This part is not written for a particular model; instead it provides a generic model for blending and compositing.</strong><br/>The second part describes how they are specified in CSS. <br/><span class="issue">The keywords in thedefinition section will most likely transition to their respective specifications.</span>
+The first part of this document will describe the algorithms of compositing and blending.
+<strong>Note: This document is not written for a particular model; instead it provides a generic model for blending and compositing.</strong><br/>
+The second part describes how they are specified in CSS. <br/>
+<span class="issue">The keywords in thedefinition section will most likely transition to their respective specifications.</span>
 </p>
 
 <h2 id="whatiscompositing">What is compositing</h2>
@@ -292,17 +296,21 @@ This document will describe the algorithms of compositing and blending in the fi
 Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the opacity. This coverage information is used to control the compositing of colors.
 </p>
 <p>
+Blending is the compositing step where the resultant colour of a region where two shapes overlap, is calculated.
+</p>
+<p>
 Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the <a href="#backdrop">backdrop</a> image using a simplistic formula that has the effect of overlaying the object over the <a href="#backdrop">backdrop</a>. Where the objects overlap and coverage is not complete the color of the <a href="#backdrop">backdrop</a> may show through the object that has just been rendered. 
 </p>
 
-<h3 id="simplealphablending">simple alpha blending</h3>
+<h3 id="simplealphacompositing">simple alpha compositing</h3>
 <p>
-In computer graphics, alpha compositing is the process of combining an image with a <a href="#backdrop">backdrop</a> to create the appearance of partial or full transparency. 
-The alpha value is stored alongside the color and has a value between 0 and 1.  A value of 0 means that the pixel does not have any coverage information and is transparent; i.e. there was no color contribution from any geometry because the geometry did not overlap this pixel. A value of 1 means that the pixel is opaque because the geometry completely overlapped the pixel.
+In computer graphics, alpha compositing is the process of combining an image with a <a href="#backdrop">backdrop</a> to give the appearance of partial or full transparency. 
+For each pixel, an alpha value is stored alongside the color value. The alpha value is between 0 and 1, inclusive.  A value of 0 means that the pixel has no coverage at that point, and is therefore
+transparent; i.e. there is no color contribution from any geometry because the geometry does not overlap this pixel. A value of 1 means that the pixel is fully opaque; the geometry completely overlaps the pixel.
 </p>
 
 <p>
-A shape's contribution to a composition is described by the multiplication of its color (Ca) and its alpha (αa). This is also called the <code>premultiplied alpha</code> value. We will call this the "pixel" from here on.
+The multiplication of the color (Ca) and alpha (αa) gives the pixel value. This is also called the <code>pre-multiplied value</code>.
 <pre>
 ca = Ca x αa
 </pre>
@@ -313,16 +321,16 @@ Ca: the color value<br/>
 αa: the alpha value
 </p>
 <p>
-Conceptually, "alpha" means "allow (1 - alpha) from behind to show". With this in mind, we can easily determine the pixel after compositing.<br/>Take the foreground pixel and add (1 - alpha) of the <a href="#backdrop">backdrop</a> pixel. Thus, the formula becomes:
+Conceptually, "alpha" means "allow (1 - α) from behind to show". Thus, to determine the pixel value after compositing, take the foreground pixel and add (1 - α) of the <a href="#backdrop">backdrop</a> pixel.
 <pre>
 co = ca + cb x (1 - αa)
 </pre>
 with 
 <br/>
-co: the pixel after compositing<br/>
-ca: the pixel of the shape<br/>
-cb: the pixel of the <a href="#backdrop">backdrop</a><br/>
-αa: the alpha value of the shape
+co: the pixel value after compositing<br/>
+ca: the pixel value of the shape being composited<br/>
+cb: the pixel value of the <a href="#backdrop">backdrop</a><br/>
+αa: the alpha value of the shape being composited
 </p>
 
 <p style="text-align:center"><img src="examples/group_alpha.svg"/>
@@ -331,8 +339,9 @@ Figure 1
 </p>
 
 <p>
-There are circumstances that we have to know the alpha value of the pixel.
-For example in figure 1, shape 2 and 3 have opacity. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 shine through. Without knowing αa of the group, we would not be able to calculate this.<br/>
+It can be useful to calcluate the alpha value of a pixel, independent of any color information.
+<span class="issue">The following example uses groups before they are introduced. A simpler example would suffice.</span>
+For example in figure 1, shape 2 and 3 are partially transparent. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 show through. Without knowing αa of the group, we would not be able to calculate this.<br/>
 Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the <a href="#backdrop">backdrop</a>. So:
 <pre>
 αo = αa + αb x (1 - αa)
@@ -344,11 +353,11 @@ with
 αb: the alpha of the <a href="#backdrop">backdrop</a>
 </p>
 <p>
-If you want to know the color of a shape and not just its pixel value, you can reverse the formula for premultiplied alpha:
+To determine the color of a pre-multiplied value, independent of the alpha, reverse the formula for pre-multiplied alpha:
 <pre>
 Co = co / αo
 </pre>
-By replacing co with the simple alpha compositing formula, you can directly use the color values that the user specified:
+Substituting co with the simple alpha compositing formula, gives an equation, in which non color values (not pre-multiplied values) may be used.
 <pre>
 Co = 1/αo x (Ca x αa + Cb x αb x (1 - αa))
 </pre>
@@ -362,7 +371,7 @@ Cb: the color of the <a href="#backdrop">backdrop</a><br/>
 αb: the alpha of the <a href="#backdrop">backdrop</a>
 </p>
 
-<h3 id="simplealphablendingexamples">Examples of simple alpha blending</h3>
+<h3 id="simplealphacompositingexamples">Examples of simple alpha compositing</h3>
 <p>
 Next we will run through a couple of scenarios that show how alpha compositing works.
 </p>
@@ -373,7 +382,8 @@ Next we will run through a couple of scenarios that show how alpha compositing w
 Figure 1
 </p>
 <p>
-Figure 1 describes the most basic case. It consists of 1 shape that is filled with a solid color so no compositing operation is required.<br/>
+Figure 1 describes the most basic case. It consists of 1 shape that is filled with a solid color (α = 1).
+The shape is composited with an empty background. The empty background has no effect on the appearance of the shape.
 </p>
 </div>
 
@@ -383,16 +393,17 @@ Figure 1 describes the most basic case. It consists of 1 shape that is filled wi
 Figure 2
 </p>
 <p>
-Figure 2 is a more complex example. There is still no alpha but there are 2 shapes that intersect each other.
+Figure 2 is a more complex example. There is no transparency, but the 2 shapes intersect one another.
 </p>
 <p>
-Applying the compositing value, you get:
+Applying the compositing formula in the area of intersection, gives:
 <pre>
 αo = 1 + 1 x (1 - 1) = 1
 co = RGB(0, 0, 255) x 1 + RGB(255, 0, 0) x 1 x (1 - 1)
 co = RGB(0, 0, 255)
 Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
 </pre>
+
 </p>
 </div>
 
@@ -402,10 +413,10 @@ Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
 Figure 3
 </p>
 <p>
-Figure 3 is an example where the shape has alpha but the <a href="#backdrop">backdrop</a> is opaque.
+Figure 3 shows an example where the shape has some transparency, but the <a href="#backdrop">backdrop</a> is fully opaque.
 </p>
 <p>
-Applying the compositing value, you get:
+Applying the compositing formula in the area of intersection, gives:
 <pre>
 αo = .5 + 1 x (1 - .5) = 1
 co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * 1 * (1 - .5)
@@ -422,10 +433,10 @@ Co = 1/1 * RGB(127, 0, 127) = RGB(127, 0, 127)
 Figure 4
 </p>
 <p>
-Figure 4 is an example where both the shape and the <a href="#backdrop">backdrop</a> have alpha.
+Figure 4 shows an example where both the shape and the <a href="#backdrop">backdrop</a> are transparent.
 </p>
 <p>
-Applying the compositing value, you get:
+Applying the compositing formula in the area of intersection, gives:
 <pre>
 αo = .5 + .5 x (1 - .5) = .75
 co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * .5 * (1 - .5)
@@ -436,11 +447,21 @@ Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
 </p>
 </div>
 
+<h3 id="groups">Groups</h3>
+<span class="issue">Groups are a complex subject and need more definition.</span>
+Key points to specify in this section:
+<ul>
+<li>Elements within a group are composited together, onto a group backdrop, to give the group composite.</li>
+<li>The group composite is then composited with the page.</li>
+<li>Each single object behaves as if it were in a group by itself.</li>
+<li>There is no double contribution.</li>
+</ul>
+
 <h3 id="groupinvariance">Group invariance</h3>
 An important behavior of simple alpha compositing is its group invariance.
 Adding or removing grouping with default attributes should not show visual differences.<br/>
 so: a + b + c = a + (b + c) = (a + b)+c<br/>
-When adding attributes to the group such as knockout, isolate, blending or Port-Duff compositing, groups are no longer be invariant.
+When adding attributes to the group such as knockout, isolate, blending modes other than normal or Port-Duff compositing operators other than source-over, groups may no longer be invariant.
 
 <h3 id="groupalpha">Group alpha and blending</h3>
 <p>
@@ -451,26 +472,31 @@ If there is alpha on the group, it is multipied with the alpha value of the grou
 The elements within a group are always processed before the group. This means that alpha, blending and compositing on the group always happens after the group's content is calculated.
 
 <h3 id="matting">Matting</h3>
+<span class="issue">NA: Could we change this section so that it doesn't talk about matting, but instead defines the page backdrop?</span>
 <p>
-The end result of alpha compositing can contain alpha. For instance, a solid red shape with an opacity value of 50% will end up with a RGB(255, 0, 0, .5) color.
-Since monitors and printers can't display opacity, we have to remove this alpha value by compositing it with solid white. This process is called matting.
+The end result of alpha compositing may contain alpha. For instance, a solid red shape with an alpha value of 0.5 is described as RGBA(255, 0, 0, .5).
+Monitors and printers display color and have no concept of transparency. Therefore, to represent this RGBA value, the alpha component is removed by compositing with a solid white backdrop RGBA(255, 255, 255, 1.0).
+This process is called matting.
 </p>
 <p>
-Applying the compositing formula, you get:
+Applying the compositing formula, gives:
 <pre>
-co = RGB(0, 0, 255) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
-co = RGB(0, 0, 127) + RGB(127, 127, 127)
-co = RGB(127, 127, 255)
+co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
+co = RGB(127, 0, 0) + RGB(127, 127, 127)
+co = RGB(255, 127, 127)
 </pre>
-which is the value that is sent to the monitor.
+which is the value that is displayed by the monitor.
 </p>
 
 <h2 id="backdrop">Backdrop calculation</h2>
 <p>
-The backdrop is the content that is behind the element.
+The backdrop is the content behind the element and is what the element is composited with.
 <p>
-Until now, we haven't discussed how it is calculated. A first assumption would be that it consists of everything that was drawn earlier and this turns out to be correct.<br/>
-If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or non-default compositing modes<br/>However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the backdrop. So, for an element that is a member of a group that has opacity, the opacity should be ignored when calculating the backdrop.
+The backdrop is the result of compositing all previous elements.
+<span class="issue">NA: Too conversational, and not really explaining what the following examples show. Backdrop should include the empty areas as well as the shape? To fix.</span>
+If you think it through a little more, it seems that there would be a complication if parent groups have opacity, non-default blending or non-default compositing modes<br/>
+However, since these operators are applied after the group contents are calculated, it turns out that they can be ignored when calculating the backdrop. 
+So, for an element that is a member of a group that has opacity, the opacity should be ignored when calculating the backdrop.
 </p>
 
 <h3 id="backdropexamples">Examples of backdrop calculation</h3>
@@ -480,7 +506,7 @@ If you think it through a little more, it seems that there would be a complicati
 Figure 5
 </p>
 <p>
-Figure 5 has 2 simple shapes. The backdrop for the blue shape is the bottom right corner of the red shape.
+Figure 5 has 2 simple shapes. The backdrop for the blue shape includes the bottom right corner of the red shape .
 The dotted line shows the area that is examined during compositing of the blue shape.
 </p>
 </div>
@@ -494,7 +520,7 @@ In figure 6, the shape in the backdrop has an alpha value. The alpha value of th
 </p>
 </div>
 <div class="example">
-<p style="text-align:center"><img src="examples/group_alpha_backdrop.svg"/>
+<p style="text-align:center"><img src="examples/group_αbackdrop.svg"/>
 <br/>
 Figure 7
 </p>
@@ -511,8 +537,8 @@ See the sections on compositing and blending on how this affects rendering.
 
 <h2 id="advancedcompositing">Advanced compositing features</h2>
 <p>
-<span class="issue">NOT FINISHED. Work in progress.</span><br/>
-While the advanced blending modes are concerned with the colour of the final pixel, Porter Duff blending is largely concerned with determining where the contribution for the colour comes from.
+<a href="#simplealphacompositing">Simple alpha compositing</a> uses the source-over Porter Duff compositing operator. Additional compositing operators exist and may be specified with the <a href="#propdef-alpha-compositing">alpha-compositing property</a>.
+The additional compositing operators allow for more complex interactions between the shapes of elements being composited. The compositing operators are described in <a href="#porterduffcompositingoperators">'The Porter-Duff compositing operators'</a>.
 Porter Duff compositing is based on a model of a pixel in which two shapes (source and destination) may contribute to the final colour of the pixel. The pixel is divided into 4 sub-pixel regions and each region represents a possible combination of source and destination.<br/>
 <br />
 The four regions are:
@@ -535,19 +561,19 @@ The area of each region can be calculated with the following equations:
 <table>
 <tr>
 <th>Both</th>
-<th>alpha_a x alpha_b</th>
+<th>αa x αb</th>
 </tr>
 <tr>
 <th>Source only</th>
-<th>alpha_a(1 – alpha_b)</th>
+<th>αa(1 – αb)</th>
 </tr>
 <tr>
 <th>Destination only</th>
-<th>alpha_b(1 – alpha_a)</th>
+<th>αb(1 – αa)</th>
 </tr>
 <tr>
 <th>None</th>
-<th>(1 – alpha_a)(1 – alpha_b)</th>
+<th>(1 – αa)(1 – αb)</th>
 </tr>
 </table>
 </div>
@@ -562,119 +588,132 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 Therefore, the area of each region is 25% in this example.
 </p>
 
-<h3 id="porterduffblendingmodes">The porter-duff blending modes</h3>
+<h3 id="porterduffcompositingoperators">The porter-duff Compositing Operators</h3>
 <p>
 The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
 <br/>
 There are 12 basic Porter Duff operators, satisfying all possible combinations of source and destination.<br/>
 
 From the geometric representation of each operator, the contribution of each shape can be seen to be expressed as a fraction of the total coverage of the output.
-For example, in source over, the possible contribution of source is full (1) and the possible contribution of destination is whatever is remaining (1 – alpha_a). This is modified by the coverage of source and destination to give the equation for the final coverage of the pixel:
+For example, in source over, the possible contribution of source is full (1) and the possible contribution of destination is whatever is remaining (1 – αa). This is modified by the coverage of source and destination to give the equation for the final coverage of the pixel:
 <pre>
-    alpha_o = alpha_a x 1 + alpha_b x (1 – alpha_a)
+    αo = αa x 1 + αb x (1 – αa)
 </pre>
-The fractional terms Fa (1 in this example) and Fb (1 – alpha_a in this example) are defined for each operator and specify the fraction of the shapes that may contribute to the final pixel value.
+The fractional terms Fa (1 in this example) and Fb (1 – αa in this example) are defined for each operator and specify the fraction of the shapes that may contribute to the final pixel value.
 The general form of the equation for coverage is:
 <pre>
-    alpha_a x Fa + alpha_b x Fb
+    αa x Fa + αb x Fb
 </pre>
 and incorporating colour gives the general Porter Duff equation
 <pre>
-    co = alpha_a x Fa x Ca + alpha_b x Fb x Cb
+    co = αa x Fa x Ca + αb x Fb x Cb
 </pre>
-Where: co is the output colour pre-multiplied with the output alpha [0 <= co <= 1] alpha_a is the coverage of the source Fa is defined by the operator and controls inclusion of the source Ca is the colour of the source (not multiplied by alpha) alpha_b is the coverage of the dest Fb is defined by the operator and controls inclusion of the dest Cb is the colour of the dest (not multiplied by alpha)
-<h4 id="porterduffblendingmodes_clear">Clear</h4>
+Where: co is the output colour pre-multiplied with the output alpha [0 <= co <= 1] αa is the coverage of the source Fa is defined by the operator and controls inclusion of the source Ca is the colour of the source (not multiplied by alpha) αb is the coverage of the dest Fb is defined by the operator and controls inclusion of the dest Cb is the colour of the dest (not multiplied by alpha)
+<h4 id="porterduffcompositingoperators_clear">Clear</h4>
 <p>No regions are enabled.</p>
 <img src="examples/PD_clr.svg"/>
+<img src="examples/PD_clr.svg"/>
 <pre>
-    Fa = 0 Fb = 0
-    co = 0 alpha_o = 0
+    Fa = 0; Fb = 0
+    co = 0
+    αo = 0
 </pre>
-<h4 id="porterduffblendingmodes_src">Source</h4>
+<h4 id="porterduffcompositingoperators_src">Source</h4>
 <p>Only the source will be present.</p>
 <img src="examples/PD_src.svg"/>
 <pre>
-    Fa = 1 Fb = 0
-    co = alpha_a x Ca alpha_o = alpha_a
+    Fa = 1; Fb = 0
+    co = αa x Ca
+    αo = αa
 </pre>
-<h4 id="porterduffblendingmodes_dst">Dest</h4>
+<h4 id="porterduffcompositingoperators_dst">Dest</h4>
 <p>Only the dest will be present.</p>
 <img src="examples/PD_dst.svg"/>
 <pre>
-    Fa = 0 Fb = 1
-    co = alpha_b x Cb alpha_o = alpha_b
+    Fa = 0; Fb = 1
+    co = αb x Cb
+    αo = αb
 </pre>
-<h4 id="porterduffblendingmodes_srcover">Source Over</h4>
+<h4 id="porterduffcompositingoperators_srcover">Source Over</h4>
 <p>Source is placed over the dest</p>
 <img src="examples/PD_src-over.svg"/>
 <pre>
-    Fa = 1 Fb = 1 – alpha_a
-    co = alpha_a x Ca + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a + alpha_b x (1 – alpha_a)
+    Fa = 1; Fb = 1 – αa
+    co = αa x Ca + αb x Cb x (1 – αa)
+    αo = αa + αb x (1 – αa)
 </pre>
-<h4 id="porterduffblendingmodes_dstover">Dest Over</h4>
+<h4 id="porterduffcompositingoperators_dstover">Dest Over</h4>
 <p>Dest is placed over the source.</p>
 <img src="examples/PD_dst-over.svg"/>
 <pre>
-    Fa = 1 – alpha_b Fb = 1
-    co = alpha_a x Ca x (1 – alpha_b) + alpha_b x Cb alpha_o = alpha_a x (1 – alpha_b) + alpha_b
+    Fa = 1 – αb; Fb = 1
+    co = αa x Ca x (1 – αb) + αb x Cb
+    αo = αa x (1 – αb) + αb
 </pre>
-<h4 id="porterduffblendingmodes_srcin">Source In</h4>
+<h4 id="porterduffcompositingoperators_srcin">Source In</h4>
 <img src="examples/PD_src-in.svg"/>
 <p>The source that overlaps the destination, replaces the destination.</p>
 <pre>
-    Fa = alpha_b Fb = 0
-    co = alpha_a x Ca x alpha_b alpha_o = alpha_a x alpha_b
+    Fa = αb; Fb = 0
+    co = αa x Ca x αb
+    αo = αa x αb
 </pre>
-<h4 id="porterduffblendingmodes_dstin">Dest In</h4>
+<h4 id="porterduffcompositingoperators_dstin">Dest In</h4>
 <p>Destination which overlaps the source, replaces the source.</p>
 <img src="examples/PD_dst-in.svg"/>
 <pre>
-    Fa = 0 Fb = alpha_a
-    co = alpha_b x Cb x alpha_a alpha_o = alpha_b x alpha_a
+    Fa = 0 Fb = αa
+    co = αb x Cb x αa αo = αb x αa
 </pre>
-<h4 id="porterduffblendingmodes_srcout">Source Out</h4>
+<h4 id="porterduffcompositingoperators_srcout">Source Out</h4>
 <p>Source is placed, where it falls outside of the destination.</p>
 <img src="examples/PD_src-out.svg"/>
 <pre>
-    Fa = 1 – alpha_b Fb = 0
-    co = alpha_a x Ca x (1 – alpha_b) alpha_o = alpha_a x (1 – alpha_b)
+    Fa = 1 – αb; Fb = 0
+    co = αa x Ca x (1 – αb)
+    αo = αa x (1 – αb)
 </pre>
-<h4 id="porterduffblendingmodes_dstout">Dest Out</h4>
+<h4 id="porterduffcompositingoperators_dstout">Dest Out</h4>
 <p>Destination is placed, where it falls outside of the source.</p>
 <img src="examples/PD_dst-out.svg"/>
 <pre>
-    Fa = 0 Fb = 1 – alpha_a
-    co = alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_b x (1 – alpha_a)
+    Fa = 0; Fb = 1 – αa
+    co = αb x Cb x (1 – αa)
+    αo = αb x (1 – αa)
 </pre>
-<h4 id="porterduffblendingmodes_srcatop">Src Atop</h4>
+<h4 id="porterduffcompositingoperators_srcatop">Src Atop</h4>
 <p>Source which overlaps the destination, replaces the destination. Destination is placed elsewhere.</p>
 <img src="examples/PD_src-atop.svg"/>
 <pre>
-    Fa = alpha_b Fb = 1 – alpha_a
-    co = alpha_a x Ca x alpha_b + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a x alpha_b + alpha_b x (1 – alpha_a)
+    Fa = αb; Fb = 1 – αa
+    co = αa x Ca x αb + αb x Cb x (1 – αa)
+    αo = αa x αb + αb x (1 – αa)
 </pre>
-<h4 id="porterduffblendingmodes_dstatop">Dest Atop</h4>
+<h4 id="porterduffcompositingoperators_dstatop">Dest Atop</h4>
 <img src="examples/PD_dst-atop.svg"/>
 <p>Dest which overlaps the source replaces the source. Source is placed elsewhere.</p>
 <pre>
-    Fa = 1 - alpha_b Fb = alpha_a
-    co = alpha_a x Ca x (1 - alpha_b) + alpha_b x Cb x alpha_a alpha_o = alpha_a x (1 - alpha_b) + alpha_b x alpha_a
+    Fa = 1 - αb; Fb = αa
+    co = αa x Ca x (1 - αb) + αb x Cb x αa
+    αo = αa x (1 - αb) + αb x αa
 </pre>
-<h4 id="porterduffblendingmodes_xor">XOR</h4>
+<h4 id="porterduffcompositingoperators_xor">XOR</h4>
 <p>The non-overlapping regions of source and destination are combined.</p>
 <img src="examples/PD_xor.svg"/>
 <pre>
-    Fa = 1 - alpha_b Fb = 1 – alpha_a
-    co = alpha_a x Ca x (1 - alpha_b) + alpha_b x Cb x (1 – alpha_a) alpha_o = alpha_a x (1 - alpha_b) + alpha_b x (1 – alpha_a)
+    Fa = 1 - αb; Fb = 1 – αa
+    co = αa x Ca x (1 - αb) + αb x Cb x (1 – αa)
+    αo = αa x (1 - αb) + αb x (1 – αa)
 </pre>
-<h4 id="porterduffblendingmodes_plus">Plus</h4>
+<h4 id="porterduffcompositingoperators_plus">Plus</h4>
 <p>Plus is an additional operator that is defined in the Porter-Duff paper [3].</p>
 <pre>
-    Fa = 1 Fb = 1
-    co = alpha_a x Ca + alpha_b x Cb alpha_o = alpha_a + alpha_b
+    Fa = 1; Fb = 1
+    co = αa x Ca + αb x Cb;
+    αo = αa + αb
 </pre>
 <h3 id="groupcompositing">Group compositing behavior with Porter Duff modes</h3>
-
+<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 <h4 id="groupcompositingisolation">Isolated groups and Porter Duff modes</h4>
 <p>Using Porter Duff within an isolated group has the effect of making the backdrop empty for the first element within the group. Subsequent elements are composited with the result of the previous composites.</p>
 
@@ -686,8 +725,12 @@ Knock-out can also be thought of as inserting a clear operation with clip-to-sel
 
 <h4 id="groupcompositingcliptoself">Clip to self behavior</h4>
 <p>
-When clip-to-self is enabled, compositing operations are restricted to areas where the source shape exists, this is independent of the source alpha.
+<span class="issue">NA: Do we use bounding box for clip to self or areas where shape exists (α > 0)?</span>
+When compositing, the areas of the composite that may be modified by the compositing operation, must fall within the bounding box of th element being composited (i.e. α > 0).
+This is known as 'clip to self' in some graphics libraries.
+The alternative is to not clip the compositing operation at all. The results can be seen below.
 Some of the Porter Duff operators are unchanged, because they normally have no effect outside the source region. The changes can be seen in the clear, src, src-in, dst-in, src-out and dst-atop.
+<span class="issue">NA: Fix the image so it is relevant to the text - once text finalised.</span>
 <div class="figure">
 <img src="examples/clip-to-self.png" />
 </div>
@@ -695,7 +738,13 @@ Some of the Porter Duff operators are unchanged, because they normally have no e
 
 <h2 id="blending">Blending</h2>
 <p>
-Blending takes the colors of the source element and mixes them with the <a href="#backdrop">backdrop</a>. The resulting blended element then replaces the original source. Note that the opacity of the source element is ignored during blending. The alpha of the <a href="#backdrop">backdrop</a> will also be ignored. Note that this calculation always happens in non-premultiplied space.
+Blending is the aspect of compositing that calculates the mixing of colors where the source element and backdrop overlap.
+Blending takes the colors of the source element and mixes them with the <a href="#backdrop">backdrop</a> in areas where the source element and backdrop overlap.
+Conceptually, the colors in the source element are blended in place with the backdrop.
+The opacity of the source element and <a href="#backdrop">backdrop</a> are ignored during blending; it is stricltly a colour based operation.
+After blending, the modified source element is composited with the backdrop.
+In practice, this is usually all performed in one step.
+Note: the blending calcualtions must use non-premultiplied color values.
 </p>
 <p>
 We will describe the "mixing" formula as:
@@ -708,10 +757,13 @@ Cm: the result color after blending<br/>
 B: the formula that does the blending<br/>
 Cb: the <a href="#backdrop">backdrop</a> color<br/>
 Cs: the source color<br/>
-If the result of the mixing formula falls outside of the color range, it will be clamped to minimum or maximum value of the color range.
+The result of the mixing formula must be clamped to the minimum and maximum values of the color range.
 </p>
 <p>
-However, we can not use this value since this calculation is overlooking the alpha of the <a href="#backdrop">backdrop</a>. If the <a href="#backdrop">backdrop</a> is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
+Compositing, 
+<span class="issue">NA: The following contradicts the earilier paragraph a bit. What it is really showing is the compositing equation for dest-over with the mixing function. It'd be better to use source-over or a general equation.</span>
+However, we can not use this value since this calculation is overlooking the alpha of the <a href="#backdrop">backdrop</a>.
+If the <a href="#backdrop">backdrop</a> is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
 <pre>
 	Cr = (1 - αb) x Cs + αb x B(Cb, Cs)
 </pre>
@@ -731,9 +783,10 @@ Note how the top rectangle shifts more toward red as the opacity of the <a href=
 </p>
 </div>
 <p>
-This formula creates a new image which is then composited with the specified Porter-Duff compositing formula. For simple alpha blending, the formula thus becomes:
+The following formula gives the color value in the area where the source and backdrop intersects and then composites with the specified Porter-Duff compositing formula. For simple alpha blending, the formula thus becomes:
+<span class="issue">NA: I think the following formula just uses source over - we need a general version.</span>
 <pre>
-simple alpha blending:
+simple alpha compositing:
 	co = ca + cb x (1 - αa)
 written as non-premultiplied:
 	αo x Co = αa x Ca + (1 - αa) x αb x Cb
@@ -741,8 +794,6 @@ now subsitute the result of blending for Ca:
     αo x Co = αa x ((1 - αb) x Cs + αb x B(Cb, Cs)) + (1 - αa) x αb x Cb
             = αa x (1 - αb) x Cs + αa x αb x B(Cb, Cs) + (1 - αa) x αb x Cb
 </pre>
-<br>
-For simplicity, all the examples in this chapter have 'src-over' compositing applied to them.
 </p>
 <h3 id="blendingseparable">Separable blend modes</h3>
 <p>
@@ -750,6 +801,7 @@ A blend mode is termed separable if each component of the result color is comple
 </p>
 <p>
 Each of the following blend modes will apply the blending function B(Cb, Cs) on each of the color components.
+For simplicity, all the examples in this chapter use 'src-over' compositing.
 </p>
 
 <h4 id="blendingnormal">'normal' blend mode</h4>
@@ -979,7 +1031,7 @@ Creates a color with the luminosity of the source color and the hue and saturati
 </p>
 <img src="examples/luminosity.png"/>
 
-<h3 id="blendingisolation">Effect of group isolation on blending</h3>
+<h3 id="isolationblending">Effect of group isolation on blending</h3>
 <p>
 In the following example, the red and green rectangles are in a group and the green rectangle has a multiply blend mode.
 </p>
@@ -987,20 +1039,25 @@ In the following example, the red and green rectangles are in a group and the gr
 <img src="examples/group_non_isolated.svg"/>
 </div>
 <p>
-The <a href="#backdrop">backdrop</a> that is available for blending, is the blue and red rectangle and is shown on the right.<br/>
-Now, if we made the group isolated, only the red rectangle is in the <a href="#backdrop">backdrop</a> and the result becomes as follows:
+The <a href="#backdrop">backdrop</a> that is used for compositing the green square, is the composite of the the blue and red rectangle and is shown on the right.<br/>
+If the group is isolated, only the elements within the group may be included in the <a href="#backdrop">backdrop</a>. The <a href="#backdrop">backdrop</a> is then made up of only the red rectangle, the result is as follows:
 </p>
 
 <div class="example">
 <img src="examples/group_isolated.svg"/>
 </div>
 <p>
-The result is that the green rectangle doesn't blend with the blue rectangle.
+The result is that the green rectangle doesn't blend with the blue rectangle during compositing of the group.
 </p>
 
-<h3 id="blendingknockout">Effect of group knockout on blending</h3>
+<h3 id="knockoutblending">Effect of knockout groups on blending</h3>
 <p>
-A knockout group is conceptually the inverse of an isolated group. When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
+The knockout property has no special effect on blending.
+</p>
+<p>
+<span class="issue">Move this into groups section</span>
+In a knockout group, each individual element shall be composited with the groups initial backdrop rather than with the stack of preceeding elements in the group.
+When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
 </p>
 <div class="example">
 <img src="examples/knockout.svg"/>
@@ -1020,7 +1077,8 @@ This is the same behavior as specifying an <a href="http://www.w3.org/TR/css3-co
 Order: first filtering is applied, followed by blending and then compositing.
 </p>
 <p>
-Conceptually all HTML elements are part of a group that consists of the following "layers" in this stacking order:
+Conceptually all HTML elements are part of a group that consists of the following sub groups, each containing a single element.
+In stacking order:
 <ol>
 <li>the box shadow</li>
 <li>the background layers</li>
@@ -1271,6 +1329,7 @@ as follows:</p>
       </table>
     </dd>
 </dl>
+Note that knockout applies to blending as well as compositing. The end result is if every shape composites with a 'clear' operation (with clip-to-self enabled) before it blends and composites.
 </div>
 
 <h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
