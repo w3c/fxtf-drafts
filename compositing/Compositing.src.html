@@ -1075,9 +1075,23 @@ Creates a color with the luminosity of the source color and the hue and saturati
 
 <h3 id="isolationblending">Effect of group isolation on blending</h3>
 <p>
-In the following example, the red and green rectangles are in a group and the green rectangle has a multiply blend mode.
+In the following example, the elements used to construct the paper aeroplane are within a group. Each of these elements has the <a href="#propdef-blend-mode">blend-mode</a> property set to multiply.<br />
+The aeroplane on the left is a normal group, the aeroplane on the right is an <a href="isolatedgroups">isolated group</a>.<br />
+In the isolated group, the elements within the group are composited onto an empty initial backdrop, this stops the elements within the group multiplying with the backdrop.<br />
+In the normal group, the elements within the group are composited onto the initial backdrop containing the land and sky. Therefore the elements of the aeroplane multiply with the land and sky.<br />
+In both instances, the result of the group composite is composited onto the land and sky using the normal blend-mode (the default blend-mode applied to the group).
+<div class="example"><img src="examples/isolate_blend_example.png"/></div>
+</p>
+
+<p>
+<span class="issue">
+NA: I think the new example above demonstrates the 'effect' of the group isolation better than the below example. Can remove the old example below?.
+</span>
+
+In the next example, the red and green rectangles are in a group and the green rectangle has a multiply blend mode.
 </p>
 <div class="example">
+<span class="issue">Text in the following svg image is compressed and unreadable on FireFox.</span>
 <img src="examples/group_non_isolated.svg"/>
 </div>
 <p>
@@ -1086,15 +1100,11 @@ If the group is isolated, only the elements within the group may be included in 
 </p>
 
 <div class="example">
+<span class="issue">Text in the following svg image is compressed and unreadable on FireFox.</span>
 <img src="examples/group_isolated.svg"/>
 </div>
 <p>
 The result is that the green rectangle doesn't blend with the blue rectangle during compositing of the group.
-</p>
-
-<h3 id="knockoutblending">Effect of knockout groups on blending</h3>
-<p>
-The knockout property has no special effect on blending.
 </p>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>

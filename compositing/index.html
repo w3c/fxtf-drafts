@@ -476,9 +476,6 @@
 
      <li><a href="#isolationblending"><span class=secno>6.3. </span>Effect of
       group isolation on blending</a>
-
-     <li><a href="#knockoutblending"><span class=secno>6.4. </span>Effect of
-      knockout groups on blending</a>
     </ul>
 
    <li><a href="#csscompositingandblending"><span class=secno>7.
@@ -1241,7 +1238,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p><span class=issue>NA: We need to decide whether we merge
    enable-background and isolation. Personally, I think we should. We could
    possibly have a third value for isolation which isolates only the blend
-   modes.</span><br>
+   modes, since hte main point of isolation is to restrict blend modes to
+   certain elements</span><br>
 
   <p> When compositing the elements within an isolated group, the elements
    are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the
@@ -1679,10 +1677,32 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h3 id=isolationblending><span class=secno>6.3. </span>Effect of group
    isolation on blending</h3>
 
-  <p> In the following example, the red and green rectangles are in a group
-   and the green rectangle has a multiply blend mode.
+  <p> In the following example, the elements used to construct the paper
+   aeroplane are within a group. Each of these elements has the <a
+   href="#propdef-blend-mode">blend-mode</a> property set to multiply.<br>
+   The aeroplane on the left is a normal group, the aeroplane on the right is
+   an <a href=isolatedgroups>isolated group</a>.<br>
+   In the isolated group, the elements within the group are composited onto
+   an empty initial backdrop, this stops the elements within the group
+   multiplying with the backdrop.<br>
+   In the normal group, the elements within the group are composited onto the
+   initial backdrop containing the land and sky. Therefore the elements of
+   the aeroplane multiply with the land and sky.<br>
+   In both instances, the result of the group composite is composited onto
+   the land and sky using the normal blend-mode (the default blend-mode
+   applied to the group).
 
-  <div class=example> <img src="examples/group_non_isolated.svg"></div>
+  <div class=example><img src="examples/isolate_blend_example.png"></div>
+
+  <p> <span class=issue> NA: I think the new example above demonstrates the
+   ‘<code class=property>effect</code>’ of the group isolation better
+   than the below example. Can remove the old example below?. </span> In the
+   next example, the red and green rectangles are in a group and the green
+   rectangle has a multiply blend mode.
+
+  <div class=example> <span class=issue>Text in the following svg image is
+   compressed and unreadable on FireFox.</span> <img
+   src="examples/group_non_isolated.svg"></div>
 
   <p> The <a href="#backdrop">backdrop</a> that is used for compositing the
    green square, is the composite of the the blue and red rectangle and is
@@ -1692,15 +1712,12 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="#backdrop">backdrop</a> is then made up of only the red rectangle,
    the result is as follows:
 
-  <div class=example> <img src="examples/group_isolated.svg"></div>
+  <div class=example> <span class=issue>Text in the following svg image is
+   compressed and unreadable on FireFox.</span> <img
+   src="examples/group_isolated.svg"></div>
 
   <p> The result is that the green rectangle doesn't blend with the blue
    rectangle during compositing of the group.
-
-  <h3 id=knockoutblending><span class=secno>6.4. </span>Effect of knockout
-   groups on blending</h3>
-
-  <p> The knockout property has no special effect on blending.
 
   <h2 id=csscompositingandblending><span class=secno>7. </span>Specifying
    Compositing and Blending in CSS</h2>
