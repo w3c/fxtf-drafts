@@ -485,65 +485,54 @@
       </span>Behavior specific to CSS</a>
 
      <li><a href="#csscompositingkeyword"><span class=secno>7.2.
-      </span>Compositing</a>
+      </span>Properties</a>
       <ul class=toc>
        <li><a href="#alpha-compositing"><span class=secno>7.2.1. </span>The
         <span class=prop-name>‘<code
         class=property>alpha-compositing</code>’</span> property</a>
 
-       <li><a href="#comp-enable-background"><span class=secno>7.2.2.
-        </span>The <span class=prop-name>‘<code
-        class=property>enable-background</code>’</span> property</a>
-      </ul>
-
-     <li><a href="#cssblending"><span class=secno>7.3. </span>Blending</a>
-      <ul class=toc>
-       <li><a href="#blend-mode"><span class=secno>7.3.1. </span>The <span
+       <li><a href="#blend-mode"><span class=secno>7.2.2. </span>The <span
         class=prop-name>‘<code class=property>blend-mode</code>’</span>
         property</a>
 
-       <li><a href="#enable-background"><span class=secno>7.3.2. </span>The
+       <li><a href="#enable-background"><span class=secno>7.2.3. </span>The
         <span class=prop-name>‘<code
         class=property>isolation</code>’</span> property</a>
-      </ul>
 
-     <li><a href="#csscommonkeywords"><span class=secno>7.4. </span>Keywords
-      that apply to both blending and compositing in CSS</a>
-      <ul class=toc>
-       <li><a href="#knock-out"><span class=secno>7.4.1. </span>The <span
+       <li><a href="#knock-out"><span class=secno>7.2.4. </span>The <span
         class=prop-name>‘<code class=property>knock-out</code>’</span>
         property</a>
       </ul>
 
-     <li><a href="#cssbackgroundsyntax"><span class=secno>7.5.
+     <li><a href="#cssbackgroundsyntax"><span class=secno>7.3.
       </span>Specifying blending and compositing in the element
       background</a>
       <ul class=toc>
-       <li><a href="#background-alpha-compositing"><span class=secno>7.5.1.
+       <li><a href="#background-alpha-compositing"><span class=secno>7.3.1.
         </span>The <span class=prop-name>‘<code
         class=property>background-alpha-compositing</code>’</span>
         property</a>
 
-       <li><a href="#background-blend-mode"><span class=secno>7.5.2.
+       <li><a href="#background-blend-mode"><span class=secno>7.3.2.
         </span>The <span class=prop-name>‘<code
         class=property>background-blend-mode</code>’</span> property</a>
 
-       <li><a href="#box-shadow-blend-mode"><span class=secno>7.5.3.
+       <li><a href="#box-shadow-blend-mode"><span class=secno>7.3.3.
         </span>The <span class=prop-name>‘<code
         class=property>box-shadow-blend-mode</code>’</span> property</a>
 
-       <li><a href="#text-shadow-blend-mode"><span class=secno>7.5.4.
+       <li><a href="#text-shadow-blend-mode"><span class=secno>7.3.4.
         </span>The <span class=prop-name>‘<code
         class=property>text-shadow-blend-mode</code>’</span> property</a>
 
-       <li><a href="#text-blend-mode"><span class=secno>7.5.5. </span>The
+       <li><a href="#text-blend-mode"><span class=secno>7.3.5. </span>The
         <span class=prop-name>‘<code
         class=property>foreground-blend-mode</code>’</span> property</a>
 
-       <li><a href="#background-alpha-compositing"><span class=secno>7.5.6.
+       <li><a href="#background-alpha-compositing"><span class=secno>7.3.6.
         </span>Alternate proposal</a>
 
-       <li><a href="#borders-issue"><span class=secno>7.5.7. </span>blending
+       <li><a href="#borders-issue"><span class=secno>7.3.7. </span>blending
         and compositing on borders</a>
       </ul>
     </ul>
@@ -855,14 +844,14 @@ co = RGB(255, 127, 127)
    makes only a single contribution to the final composite.
 
   <dl>
-   <dt>initial backdrop
+   <dt id=initialbackdrop>initial backdrop
 
    <dd> The intial backdrop is the backdrop selected for compositing the
     group's first element. This will be the same as the group backdrop in a
     non-isolated group, or a fully transparent backdrop for an isolated
     group.
 
-   <dt>group backdrop
+   <dt id=groupbackdrop>group backdrop
 
    <dd> The group backdrop is the result of compositing all elements up to
     but not including the frist element in the group. The use of <a
@@ -1234,12 +1223,6 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <h4 id=groupcompositingisolation><span class=secno>5.2.1. </span>Isolated
    groups and Porter Duff modes</h4>
-
-  <p><span class=issue>NA: We need to decide whether we merge
-   enable-background and isolation. Personally, I think we should. We could
-   possibly have a third value for isolation which isolates only the blend
-   modes, since hte main point of isolation is to restrict blend modes to
-   certain elements</span><br>
 
   <p> When compositing the elements within an isolated group, the elements
    are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the
@@ -1752,7 +1735,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    <li>the text and nested elements
   </ol>
 
-  <h3 id=csscompositingkeyword><span class=secno>7.2. </span>Compositing</h3>
+  <h3 id=csscompositingkeyword><span class=secno>7.2. </span>Properties</h3>
 
   <h4 id=alpha-compositing><span class=secno>7.2.1. </span>The <span
    class=prop-name>‘<code class=property>alpha-compositing</code>’</span>
@@ -1817,83 +1800,14 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>clip-to-self</code>’</a> set to ‘<code
    class=property>true</code>’.
 
-  <h4 id=comp-enable-background><span class=secno>7.2.2. </span>The <span
-   class=prop-name>‘<code class=property>enable-background</code>’</span>
-   property</h4>
-
-  <p> The behavior of this keyword is described in the section on <a
-   href="#groupcompositingisolation">isolated groups and Porter Duff
-   modes</a>. Basically, the compositing of elements in a group with ‘<code
-   class=css>enable-background: true</code>’ will behave as if there was no
-   content prior to the group.<br>
-   The description of the <span class=prop-name>‘<code
-   class=property>enable-background</code>’</span> property is as follows:
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-enable-background><span
-     class="propdef-title prop-name">‘<code
-     class=property>enable-background</code>’</span>
-
-    <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="enable-background property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
-
-        <td> accumulate | new
-
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>accumulate
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>All container elements. In SVG, it applies to all container
-         elements except ‘<code class=property>mask</code>’
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>yes
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>yes
-     </table>
-   </dl>
-  </div>
-
-  <p> For an individual layer ‘<code
-   class=property>enable-background</code>’ is always ‘<code
-   class=property>new</code>’. This means that the content of a layer
-   always establishes its own context. For instance, if you link to an SVG
-   file through the ‘<code class=property>img</code>’ tag, the content of
-   that SVG will not composite with the content in other layers or the
-   content that is underneath.
-
-  <h3 id=cssblending><span class=secno>7.3. </span>Blending</h3>
-
-  <h4 id=blend-mode><span class=secno>7.3.1. </span>The <span
+  <h4 id=blend-mode><span class=secno>7.2.2. </span>The <span
    class=prop-name>‘<code class=property>blend-mode</code>’</span>
    property</h4>
 
-  <p> The description of the <span class=prop-name>‘<code
-   class=property>blend-mode</code>’</span> property is as follows:
+  <p> Defines the blend mode used when compositing an element onto the page.
+   The blend mode defines the formula used to mix colours when shapes
+   overlap. This behaviour is described in more detail in <a
+   href="#blending">Blending</a>.
 
   <div class=propdef>
    <dl>
@@ -1907,9 +1821,22 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> normal | multiply | screen | overlay | darken | lighten |
-         color-dodge | color-burn | hard-light | soft-light | difference |
-         exclusion | hue | saturation | color | luminosity
+        <td> <a href="#blendingnormal">normal</a> | <a
+         href="#blendingmultiply">multiply</a> | <a
+         href="#blendingscreen">screen</a> | <a
+         href="#blendingoverlay">overlay</a> | <a
+         href="#blendingdarken">darken</a> | <a
+         href="#blendinglighten">lighten</a> | <a
+         href="#blendingcolordodge">color-dodge</a> | <a
+         href="#blendingcolorburn">color-burn</a> | <a
+         href="#blendinghardlight">hard-light</a> | <a
+         href="#blendingsoftlight">soft-light</a> | <a
+         href="#blendingdifference">difference</a> | <a
+         href="#blendingexclusion">exclusion</a> | <a
+         href="#blendinghue">hue</a> | <a
+         href="#blendingsaturation">saturation</a> | <a
+         href="#blendingcolor">color</a> | <a
+         href="#blendingluminosity">luminosity</a>
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -1946,20 +1873,20 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
-  <h4 id=enable-background><span class=secno>7.3.2. </span>The <span
+  <h4 id=enable-background><span class=secno>7.2.3. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
    property</h4>
 
-  <p><span class=issue>For an implementor, it would be easier to have this
-   keyword apply to compositing as well and not have the ‘<code
-   class=property>enable-background</code>’ keyword.</span>
-
-  <p> The behavior of this keyword is described in the section on <a
-   href="#blendingisolation">effect of group isolation on blending</a>.
-   Basically, the blending of elements in an isolated group will behave as if
-   there was no content prior to the group.<br>
-   The description of the <span class=prop-name>‘<code
-   class=property>isolation</code>’</span> property is as follows:
+  <p> Defines whether a group is isolated or not.<br>
+   When a group is isolated, the elements within the group are composited
+   onto an empty backdrop, prior to the group being composited onto the
+   page.<br>
+   The default behaviour is for groups to be non-isolated. In this case, the
+   elements within the group are composited onto a backdrop made up of
+   everything underneath the group. The group is then composited onto the
+   page.<br>
+   This behaviour is described in more detail in <a
+   href="#isolatedgroups">Isolated Gropus</a>.
 
   <div class=propdef>
    <dl>
@@ -2016,18 +1943,21 @@ components having the minimum, middle, and maximum values upon entry to the func
    tag, the content of that SVG will not blend with the content in other
    layers or the content that is underneath.
 
-  <h3 id=csscommonkeywords><span class=secno>7.4. </span>Keywords that apply
-   to both blending and compositing in CSS</h3>
-
-  <h4 id=knock-out><span class=secno>7.4.1. </span>The <span
+  <h4 id=knock-out><span class=secno>7.2.4. </span>The <span
    class=prop-name>‘<code class=property>knock-out</code>’</span>
    property</h4>
 
-  <p> This behavior of this keyword is described in the sections on <a
-   href="#blendingknockout">effect of group knockout on blending</a> and <a
-   href="#groupcompositingknockout">knockout groups and Porter Duff
-   modes</a>. The description of the <span class=prop-name>‘<code
-   class=property>knock-out</code>’</span> property is as follows:
+  <p> Defines whether a group is a knock-out group. When
+   knock-out="knock-out", the group is a knock-out group. The elements within
+   the group are always composited onto the <a
+   href="#initialbackdrop">initial backdrop</a>. This effectively ‘<code
+   class=css>knocks out</code>’ any element from within the group that is
+   already drawn. When knock-out="prserve", the group is not a knock-out
+   group. Elements within the group are composited onto one another, with the
+   first element in the group being composited onto the <a
+   href="#initialbackdrop">initial backdrop</a>. This behavior of this
+   keyword is described in more detail in <a href="#knockoutgroups">Knockout
+   Groups</a>.
 
   <div class=propdef>
    <dl>
@@ -2080,7 +2010,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>clear</code>’ operation (with clip-to-self enabled)
    before it blends and composites.</div>
 
-  <h3 id=cssbackgroundsyntax><span class=secno>7.5. </span>Specifying
+  <h3 id=cssbackgroundsyntax><span class=secno>7.3. </span>Specifying
    blending and compositing in the element background</h3>
 
   <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
@@ -2088,7 +2018,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    element. The <a href="#background">background</a> compositing and blending
    is always treated as an isolated group.
 
-  <h4 id=background-alpha-compositing><span class=secno>7.5.1. </span>The
+  <h4 id=background-alpha-compositing><span class=secno>7.3.1. </span>The
    <span class=prop-name>‘<code
    class=property>background-alpha-compositing</code>’</span> property</h4>
 
@@ -2153,7 +2083,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>clip-to-self</code>’</a> set to ‘<code
    class=property>false</code>’.
 
-  <h4 id=background-blend-mode><span class=secno>7.5.2. </span>The <span
+  <h4 id=background-blend-mode><span class=secno>7.3.2. </span>The <span
    class=prop-name>‘<code
    class=property>background-blend-mode</code>’</span> property</h4>
 
@@ -2212,7 +2142,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=box-shadow-blend-mode><span class=secno>7.5.3. </span>The <span
+  <h4 id=box-shadow-blend-mode><span class=secno>7.3.3. </span>The <span
    class=prop-name>‘<code
    class=property>box-shadow-blend-mode</code>’</span> property</h4>
 
@@ -2274,7 +2204,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=text-shadow-blend-mode><span class=secno>7.5.4. </span>The <span
+  <h4 id=text-shadow-blend-mode><span class=secno>7.3.4. </span>The <span
    class=prop-name>‘<code
    class=property>text-shadow-blend-mode</code>’</span> property</h4>
 
@@ -2336,7 +2266,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=text-blend-mode><span class=secno>7.5.5. </span>The <span
+  <h4 id=text-blend-mode><span class=secno>7.3.5. </span>The <span
    class=prop-name>‘<code
    class=property>foreground-blend-mode</code>’</span> property</h4>
 
@@ -2398,7 +2328,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=background-alpha-compositing><span class=secno>7.5.6.
+  <h4 id=background-alpha-compositing><span class=secno>7.3.6.
    </span>Alternate proposal</h4>
 
   <p><span class=issue>DRAFT.This proposal needs more discussion.</span><br>
@@ -2427,7 +2357,7 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p>A possible drawback is that there are no other keywords that target all
    these layers at once.
 
-  <h4 id=borders-issue><span class=secno>7.5.7. </span>blending and
+  <h4 id=borders-issue><span class=secno>7.3.7. </span>blending and
    compositing on borders</h4>
 
   <p> <span class=issue>DRAFT.This proposal needs more discussion.</span><br>
