@@ -447,47 +447,6 @@ Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
 </p>
 </div>
 
-<h3 id="groups">Groups</h3>
-<span class="issue">Groups are a complex subject and need more definition.</span>
-Key points to specify in this section:
-<ul>
-<li>Elements within a group are composited together, onto a group backdrop, to give the group composite.</li>
-<li>The group composite is then composited with the page.</li>
-<li>Each single object behaves as if it were in a group by itself.</li>
-<li>There is no double contribution.</li>
-</ul>
-
-<h3 id="groupinvariance">Group invariance</h3>
-An important behavior of simple alpha compositing is its group invariance.
-Adding or removing grouping with default attributes should not show visual differences.<br/>
-so: a + b + c = a + (b + c) = (a + b)+c<br/>
-When adding attributes to the group such as knockout, isolate, blending modes other than normal or Port-Duff compositing operators other than source-over, groups may no longer be invariant.
-
-<h3 id="groupalpha">Group alpha and blending</h3>
-<p>
-Conceptually each group creates a new context. The content of a group is calculated first followed by blending and compositing.
-If there is alpha on the group, it is multipied with the alpha value of the group's content.
-</p>
-<p>
-The elements within a group are always processed before the group. This means that alpha, blending and compositing on the group always happens after the group's content is calculated.
-
-<h3 id="matting">Matting</h3>
-<span class="issue">NA: Could we change this section so that it doesn't talk about matting, but instead defines the page backdrop?</span>
-<p>
-The end result of alpha compositing may contain alpha. For instance, a solid red shape with an alpha value of 0.5 is described as RGBA(255, 0, 0, .5).
-Monitors and printers display color and have no concept of transparency. Therefore, to represent this RGBA value, the alpha component is removed by compositing with a solid white backdrop RGBA(255, 255, 255, 1.0).
-This process is called matting.
-</p>
-<p>
-Applying the compositing formula, gives:
-<pre>
-co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
-co = RGB(127, 0, 0) + RGB(127, 127, 127)
-co = RGB(255, 127, 127)
-</pre>
-which is the value that is displayed by the monitor.
-</p>
-
 <h2 id="backdrop">Backdrop calculation</h2>
 <p>
 The backdrop is the content behind the element and is what the element is composited with.
@@ -529,10 +488,84 @@ In figure 7, the blue and green shapes are in a group that has alpha. When calcu
 </p>
 </div>
 
-<h3 id="backdropnew">Establishing a new backdrop context</h3>
+<h3 id="matting">Matting</h3>
+<span class="issue">NA: Could we change this section so that it doesn't talk about matting, but instead defines the page backdrop?</span>
 <p>
-Under certain circumstances, you might want to limit the backdrop calculation up to a certain parent group. For example, if you import artwork, you usually don't want its contents to blend with the backdrop of the page you are integrating because it will change the look. In other words, you want to 'isolate' the compositing and blending of that artwork from the rest of the tree.<br/>Compositing and blending each have <span class="issue">an attribute (or the same attribute)</span> that can be set on the group where you want this to happen.<br/>
-See the sections on compositing and blending on how this affects rendering.
+The end result of alpha compositing may contain alpha. For instance, a solid red shape with an alpha value of 0.5 is described as RGBA(255, 0, 0, .5).
+Monitors and printers display color and have no concept of transparency. Therefore, to represent this RGBA value, the alpha component is removed by compositing with a solid white backdrop RGBA(255, 255, 255, 1.0).
+This process is called matting.
+</p>
+<p>
+Applying the compositing formula, gives:
+<pre>
+co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
+co = RGB(127, 0, 0) + RGB(127, 127, 127)
+co = RGB(255, 127, 127)
+</pre>
+which is the value that is displayed by the monitor.
+</p>
+
+<h2 id="groups">Compositing Groups</h2>
+<p>
+Compositing groups allow for more control over the interaction of compositing with the backdrop. Groups can be used to specify how a compositing effect
+within a group will interact with the content that is already in the scene (the backdrop).
+</p>
+<p>
+Compositing groups may be made up of any number of elements, and may contain other compositing groups.
+</p>
+<p>
+The default properties of a compositing group shall cause no visual difference compared to no groups. See <a href="#groupinvariance">Group Invariance</a>.
+The result of this is that single elements behave as if they were in a group by themselves.
+</p>
+<p>
+A compositing group is rendered by first compositing the elements of the group onto the inital backdrop. The result of this is a single element containing
+color and alpha information. This element is then composited onto the group backdrop.
+Steps shall be taken to ensure the group backdrop makes only a single contribution to the final composite.
+<dl>
+<dt>initial backdrop</dt>
+<dl>
+The intial backdrop is the backdrop selected for compositing the group's first element. This will be the same as the group backdrop in a non-isolated
+group, or a fully transparent backdrop for an isolated group.
+</dl>
+<dt>group backdrop</dt>
+<dl>
+The group backdrop is the result of compositing all elements up to but not including the frist element in the group.
+The use of <a href="#knockoutgroups">knockout groups</a> changes this definition.
+</dl>
+</dt>
+</p>
+
+<h3 id="groupinvariance">Group invariance</h3>
+<p>
+An important behavior of simple alpha compositing is its group invariance. This behaviour is preserved in the more complex model described in this specification.
+Adding or removing grouping with default attributes shall not show visual differences.<br/>
+<pre>so: A + B + C = A + (B + C) = (A + B) + C</pre>
+When adding attributes to the group such as knockout, isolate, blending modes other than normal or Porter-Duff compositing operators other than source-over, groups may no longer be invariant.
+</p>
+
+<h3 id="isolatedgroups">Isolated Groups</h3>
+<p>
+Isolated groups are controlled with the <a href="#propdef-isolation">isolation</a> property.<br />
+In an isolated group, the initial backdrop shall be black and fully transparent - RGBA(0, 0, 0, 0).<br />
+In this instance, the initial backdrop is different than the group backdrop. The only interaction with the group backdrop shall occur when the group's
+computed color, shape and alpha are composited with it.
+</p>
+
+See <a href="#groupcompositingisolation">'Isolated groups and Porter Duff modes'</a> for a description of the effect of isolated groups on compositing.
+See <a href="#isolationblending">'Effect of group isolation on blending'</a> for a description of the effect of isolated groups on blending.
+
+<h3 id="knockoutgroups">Knockout Groups</h3>
+<p>
+In a knockout group, each individual element shall be composited with the initial backdrop rather than with the stack of preceeding elements in the group.
+When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, only the elements that are behind the knockout group are included in the backdrop.
+</p>
+<div class="example">
+<img src="examples/knockout.png"/>
+</div>
+<p>
+The above example demonstrates two versions of a group containing three squares (red, green, blue) that are 50% opaque. The group is composited over a grey striped background.<br />
+On the left, the group has knock-out="knock-out". On the right, the group has knock-out="preserve".<br />
+It can be seen that where knock-out="knock-out", each element within the group is only composited with the elements underneath the group.
 </p>
 
 <h2 id="advancedcompositing">Advanced compositing features</h2>
@@ -1053,18 +1086,6 @@ The result is that the green rectangle doesn't blend with the blue rectangle dur
 <h3 id="knockoutblending">Effect of knockout groups on blending</h3>
 <p>
 The knockout property has no special effect on blending.
-</p>
-<p>
-<span class="issue">Move this into groups section</span>
-In a knockout group, each individual element shall be composited with the groups initial backdrop rather than with the stack of preceeding elements in the group.
-When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, you only look at the elements that are behind the knockout group.
-</p>
-<div class="example">
-<img src="examples/knockout.svg"/>
-</div>
-<p>
-The example above show the effect of group knockout. The group contains a red rectangle and a green rectangle that has a difference mode applied to it.<br/>
-In the top example you can see that the green rectangle is blending with the red rectangle in its group and the blue rectangle in the <a href="#backdrop">backdrop</a>.<br/>The example below that has knockout turned on and the green rectangle only blends with the blue rectangle.
 </p>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
