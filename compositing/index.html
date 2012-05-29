@@ -859,24 +859,18 @@ co = RGB(255, 127, 127)
 
   <dl>
    <dt>initial backdrop
-  </dl>
 
-  <dl></dl>
+   <dd> The intial backdrop is the backdrop selected for compositing the
+    group's first element. This will be the same as the group backdrop in a
+    non-isolated group, or a fully transparent backdrop for an isolated
+    group.
 
-  <p>The intial backdrop is the backdrop selected for compositing the group's
-   first element. This will be the same as the group backdrop in a
-   non-isolated group, or a fully transparent backdrop for an isolated group.
-   
-
-  <dl>
    <dt>group backdrop
+
+   <dd> The group backdrop is the result of compositing all elements up to
+    but not including the frist element in the group. The use of <a
+    href="#knockoutgroups">knockout groups</a> changes this definition.
   </dl>
-
-  <dl></dl>
-
-  <p>The group backdrop is the result of compositing all elements up to but
-   not including the frist element in the group. The use of <a
-   href="#knockoutgroups">knockout groups</a> changes this definition.
 
   <h3 id=groupinvariance><span class=secno>4.1. </span>Group invariance</h3>
 
@@ -917,7 +911,9 @@ co = RGB(255, 127, 127)
    Instead, only the elements that are behind the knockout group are included
    in the backdrop.
 
-  <div class=example> <img src="examples/knockout.png"></div>
+  <div class=example>
+   <p style="text-align:center"><img src="examples/knockout.png"></p>
+  </div>
 
   <p> The above example demonstrates two versions of a group containing three
    squares (red, green, blue) that are 50% opaque. The group is composited
@@ -937,29 +933,44 @@ co = RGB(255, 127, 127)
    additional compositing operators allow for more complex interactions
    between the shapes of elements being composited. The compositing operators
    are described in <a href="#porterduffcompositingoperators">‘<code
-   class=css>The Porter-Duff compositing operators</code>’</a>. Porter Duff
-   compositing is based on a model of a pixel in which two shapes (source and
-   destination) may contribute to the final colour of the pixel. The pixel is
-   divided into 4 sub-pixel regions and each region represents a possible
-   combination of source and destination.<br>
+   class=css>The Porter-Duff compositing operators</code>’</a>. The
+   operators that applies to an element or group is selected using the <a
+   href="#propdef-alpha-compositing">alpha-compositing</a>property.
+
+  <p> Porter Duff compositing is based on a model of a pixel in which two
+   shapes (source and destination) may contribute to the final colour of the
+   pixel. The pixel is divided into 4 sub-pixel regions and each region
+   represents a possible combination of source and destination.<br>
    <br>
    The four regions are:
 
-  <ul>
-   <li>Source Only – Where only the source contributes to the pixel colour
+  <dl>
+   <dt>Source Only
 
-   <li>Destination only – where only the destination contributes to the
-    pixel colour
+   <dd>Where only the source contributes to the pixel colour
 
-   <li>Both - Source and Destination – where both the source and
-    destination may combine to define the pixel colour
+   <dt>Destination only
 
-   <li>None - No source or Destination – where neither make a contribution
-    to the final pixel colour
-  </ul>
+   <dd>where only the destination contributes to the pixel colour
+
+   <dt>Both
+
+   <dd>Source and Destination – where both the source and destination may
+    combine to define the pixel colour
+
+   <dt>None
+
+   <dd>No source or Destination – where neither make a contribution to the
+    final pixel colour
+  </dl>
+
+  <p class=note>Destination is synonymous with backdrop. The term destination
+   is used in this section as this is considered the standard when working
+   with Porter Duff compositing. Additionally, the compositing operators use
+   ‘<code class=property>dest</code>’ in their names.
 
   <div class=figure>
-   <p style="text-align:center"><img src="examples/PD_regions.svg">
+   <p style="text-align:center"><img src="examples/PD_regions.svg"></p>
   </div>
 
   <p>The contribution from each region to the final pixel colour is defined
@@ -1224,40 +1235,54 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <h3 id=groupcompositing><span class=secno>5.2. </span>Group compositing
    behavior with Porter Duff modes</h3>
 
-  <p><span class=issue>DRAFT.This proposal needs more discussion.</span><br>
-
   <h4 id=groupcompositingisolation><span class=secno>5.2.1. </span>Isolated
    groups and Porter Duff modes</h4>
 
-  <p>Using Porter Duff within an isolated group has the effect of making the
-   backdrop empty for the first element within the group. Subsequent elements
-   are composited with the result of the previous composites.
+  <p><span class=issue>NA: We need to decide whether we merge
+   enable-background and isolation. Personally, I think we should. We could
+   possibly have a third value for isolation which isolates only the blend
+   modes.</span><br>
+
+  <p> When compositing the elements within an isolated group, the elements
+   are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the
+   bottom element in the group uses a Porter-Duff compositing operator which
+   is dependent on the backdrop, such as dest, source-in, dest-in, dest-out
+   or src-atop, then the result of the composite will be empty. Subsequent
+   elements within the group are composited with the result of the first
+   composite.
 
   <h4 id=groupcompositingknockout><span class=secno>5.2.2. </span>Knockout
    groups and Porter Duff modes</h4>
 
-  <p> Knock out groups have the effect, prior to any compositing, of clearing
-   the backdrop anywhere that the source shape exists, this is independent of
-   the source alpha. Knock-out can also be thought of as inserting a clear
-   operation with clip-to-self enabled between each element in the
-   compositing stack.
+  <p> Every element within a knock-out group is composited with the initial
+   backdrop. This means, that for every element within the group, the
+   backdrop for the compositing of that element, is the initial backdrop.
+
+  <p> In the example below, the elements within the group (the circle and the
+   square) are composited using the <a
+   href="#porterduffcompositingoperators_srcatop">src-atop</a> operator, with
+   only the hexagon. This has the effect of ‘<code class=css>knocking
+   out</code>’ the circle, where it is overlapped by the square.<br>
+   Additionally, because the src-atop Porter-Duff operator is used, the
+   source shape (either the square or the circle) is only placed where the
+   backdrop exists (the backdrop is always the hexagon due to the knock-out
+   mode).
+
+  <div class=example><img src="examples/pd-knockout.png"></div>
 
   <h4 id=groupcompositingcliptoself><span class=secno>5.2.3. </span>Clip to
    self behavior</h4>
 
-  <p> <span class=issue>NA: Do we use bounding box for clip to self or areas
-   where shape exists (α > 0)?</span> When compositing, the areas of the
-   composite that may be modified by the compositing operation, must fall
-   within the bounding box of th element being composited (i.e. α > 0). This
-   is known as ‘<code class=css>clip to self</code>’ in some graphics
-   libraries. The alternative is to not clip the compositing operation at
-   all. The results can be seen below. Some of the Porter Duff operators are
-   unchanged, because they normally have no effect outside the source region.
-   The changes can be seen in the clear, src, src-in, dst-in, src-out and
-   dst-atop. <span class=issue>NA: Fix the image so it is relevant to the
-   text - once text finalised.</span>
+  <p> When compositing, the areas of the composite that may be modified by
+   the compositing operation, must fall within the shape of the element being
+   composited (i.e. where α > 0). This is known as ‘<code class=css>clip
+   to self</code>’ in some graphics libraries. The alternative is to not
+   clip the compositing operation at all. The results can be seen below. Some
+   of the Porter Duff operators are unchanged, because they normally have no
+   effect outside the source region. The changes can be seen in the clear,
+   src, src-in, dst-in, src-out and dst-atop.
 
-  <div class=figure> <img src="examples/clip-to-self.png"></div>
+  <div class=figure><img src="examples/clip-to-self.png"></div>
 
   <h2 id=blending><span class=secno>6. </span>Blending</h2>
 

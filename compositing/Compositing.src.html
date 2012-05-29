@@ -523,15 +523,15 @@ color and alpha information. This element is then composited onto the group back
 Steps shall be taken to ensure the group backdrop makes only a single contribution to the final composite.
 <dl>
 <dt>initial backdrop</dt>
-<dl>
+<dd>
 The intial backdrop is the backdrop selected for compositing the group's first element. This will be the same as the group backdrop in a non-isolated
 group, or a fully transparent backdrop for an isolated group.
-</dl>
+</dd>
 <dt>group backdrop</dt>
-<dl>
+<dd>
 The group backdrop is the result of compositing all elements up to but not including the frist element in the group.
 The use of <a href="#knockoutgroups">knockout groups</a> changes this definition.
-</dl>
+</dd>
 </dt>
 </p>
 
@@ -560,7 +560,7 @@ In a knockout group, each individual element shall be composited with the initia
 When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, only the elements that are behind the knockout group are included in the backdrop.
 </p>
 <div class="example">
-<img src="examples/knockout.png"/>
+<p style="text-align:center"><img src="examples/knockout.png"/></p>
 </div>
 <p>
 The above example demonstrates two versions of a group containing three squares (red, green, blue) that are 50% opaque. The group is composited over a grey striped background.<br />
@@ -572,20 +572,24 @@ It can be seen that where knock-out="knock-out", each element within the group i
 <p>
 <a href="#simplealphacompositing">Simple alpha compositing</a> uses the source-over Porter Duff compositing operator. Additional compositing operators exist and may be specified with the <a href="#propdef-alpha-compositing">alpha-compositing property</a>.
 The additional compositing operators allow for more complex interactions between the shapes of elements being composited. The compositing operators are described in <a href="#porterduffcompositingoperators">'The Porter-Duff compositing operators'</a>.
+The operators that applies to an element or group is selected using the <a href="#propdef-alpha-compositing">alpha-compositing</a>property.
+</p>
+<p>
 Porter Duff compositing is based on a model of a pixel in which two shapes (source and destination) may contribute to the final colour of the pixel. The pixel is divided into 4 sub-pixel regions and each region represents a possible combination of source and destination.<br/>
 <br />
 The four regions are:
-<ul>
-<li>Source Only – Where only the source contributes to the pixel colour</li>
-<li>Destination only – where only the destination contributes to the pixel colour</li>
-<li>Both - Source and Destination – where both the source and destination may combine to define the pixel colour</li>
-<li>None - No source or Destination – where neither make a contribution to the final pixel colour</li>
-</ul>
+<dl>
+<dt>Source Only</dt><dd>Where only the source contributes to the pixel colour</dd>
+<dt>Destination only</dt><dd>where only the destination contributes to the pixel colour</dd>
+<dt>Both</dt><dd>Source and Destination – where both the source and destination may combine to define the pixel colour</dd>
+<dt>None</dt><dd>No source or Destination – where neither make a contribution to the final pixel colour</dd>
+</dl>
+
+<p class="note">Destination is synonymous with backdrop. The term destination is used in this section as this is considered the standard when working with Porter Duff compositing. Additionally, the compositing operators use 'dest' in their names.</p>
 
 <div class="figure">
-<p style="text-align:center"><img src="examples/PD_regions.svg"/>
+<p style="text-align:center"><img src="examples/PD_regions.svg"/></p>
 </div>
-
 The contribution from each region to the final pixel colour is defined by the coverage of the shape at that pixel, and the operator in use.
 Coverage is specified in terms of alpha. Full alpha (1) implies full coverage, while zero alpha implies no coverage.
 This means that the area of each region within the sub-pixel is dependent on the coverage of each shape contributing to the pixel.
@@ -745,28 +749,33 @@ Where: co is the output colour pre-multiplied with the output alpha [0 <= co <= 
     co = αa x Ca + αb x Cb;
     αo = αa + αb
 </pre>
+
 <h3 id="groupcompositing">Group compositing behavior with Porter Duff modes</h3>
-<span class="issue">DRAFT.This proposal needs more discussion.</span><br/>
 <h4 id="groupcompositingisolation">Isolated groups and Porter Duff modes</h4>
-<p>Using Porter Duff within an isolated group has the effect of making the backdrop empty for the first element within the group. Subsequent elements are composited with the result of the previous composites.</p>
+<span class="issue">NA: We need to decide whether we merge enable-background and isolation. Personally, I think we should. We could possibly have a third value for isolation which isolates only the blend modes, since hte main point of isolation is to restrict blend modes to certain elements</span><br/>
+<p>
+When compositing the elements within an isolated group, the elements are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the bottom element in the group uses a Porter-Duff compositing operator
+which is dependent on the backdrop, such as dest, source-in, dest-in, dest-out or src-atop, then the result of the composite will be empty. Subsequent elements within the group are composited with the result of the first composite.
+</p>
 
 <h4 id="groupcompositingknockout">Knockout groups and Porter Duff modes</h4>
 <p>
-Knock out groups have the effect, prior to any compositing, of clearing the backdrop anywhere that the source shape exists, this is independent of the source alpha.
-Knock-out can also be thought of as inserting a clear operation with clip-to-self enabled between each element in the compositing stack.
+Every element within a knock-out group is composited with the initial backdrop.
+This means, that for every element within the group, the backdrop for the compositing of that element, is the initial backdrop.
+</p><p>
+In the example below, the elements within the group (the circle and the square) are composited using the <a href="#porterduffcompositingoperators_srcatop">src-atop</a> operator, with only the hexagon.
+This has the effect of 'knocking out' the circle, where it is overlapped by the square.<br />
+Additionally, because the src-atop Porter-Duff operator is used, the source shape (either the square or the circle) is only placed where the backdrop exists (the backdrop is always the hexagon due to the knock-out mode).
+<div class="example"><img src="examples/pd-knockout.png" /></div>
 </p>
 
 <h4 id="groupcompositingcliptoself">Clip to self behavior</h4>
 <p>
-<span class="issue">NA: Do we use bounding box for clip to self or areas where shape exists (α > 0)?</span>
-When compositing, the areas of the composite that may be modified by the compositing operation, must fall within the bounding box of th element being composited (i.e. α > 0).
+When compositing, the areas of the composite that may be modified by the compositing operation, must fall within the shape of the element being composited (i.e. where α > 0).
 This is known as 'clip to self' in some graphics libraries.
 The alternative is to not clip the compositing operation at all. The results can be seen below.
 Some of the Porter Duff operators are unchanged, because they normally have no effect outside the source region. The changes can be seen in the clear, src, src-in, dst-in, src-out and dst-atop.
-<span class="issue">NA: Fix the image so it is relevant to the text - once text finalised.</span>
-<div class="figure">
-<img src="examples/clip-to-self.png" />
-</div>
+<div class="figure"><img src="examples/clip-to-self.png" /></div>
 </p>
 
 <h2 id="blending">Blending</h2>
