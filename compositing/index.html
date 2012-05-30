@@ -340,8 +340,6 @@
     <ul class=toc>
      <li><a href="#backdropexamples"><span class=secno>3.1. </span>Examples
       of backdrop calculation</a>
-
-     <li><a href="#matting"><span class=secno>3.2. </span>Matting</a>
     </ul>
 
    <li><a href="#groups"><span class=secno>4. </span>Compositing Groups</a>
@@ -354,6 +352,9 @@
 
      <li><a href="#knockoutgroups"><span class=secno>4.3. </span>Knockout
       Groups</a>
+
+     <li><a href="#pagebackdrop"><span class=secno>4.4. </span>Page Group</a>
+      
     </ul>
 
    <li><a href="#advancedcompositing"><span class=secno>5. </span>Advanced
@@ -789,7 +790,7 @@ Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
   </div>
 
   <div class=example>
-   <p style="text-align:center"><img src="examples/group_αbackdrop.svg">
+   <p style="text-align:center"><img src="examples/group_alpha_backdrop.svg">
     <br>
     Figure 7</p>
 
@@ -799,28 +800,6 @@ Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
     ignored. If the group had blending, compositing or filtering, those would
     also be ignored.</p>
   </div>
-
-  <h3 id=matting><span class=secno>3.2. </span>Matting</h3>
-
-  <p><span class=issue>NA: Could we change this section so that it doesn't
-   talk about matting, but instead defines the page backdrop?</span>
-
-  <p> The end result of alpha compositing may contain alpha. For instance, a
-   solid red shape with an alpha value of 0.5 is described as RGBA(255, 0, 0,
-   .5). Monitors and printers display color and have no concept of
-   transparency. Therefore, to represent this RGBA value, the alpha component
-   is removed by compositing with a solid white backdrop RGBA(255, 255, 255,
-   1.0). This process is called matting.
-
-  <p> Applying the compositing formula, gives:
-
-  <pre>
-co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
-co = RGB(127, 0, 0) + RGB(127, 127, 127)
-co = RGB(255, 127, 127)
-</pre>
-
-  <p>which is the value that is displayed by the monitor.
 
   <h2 id=groups><span class=secno>4. </span>Compositing Groups</h2>
 
@@ -908,6 +887,30 @@ co = RGB(255, 127, 127)
    has knock-out="preserve".<br>
    It can be seen that where knock-out="knock-out", each element within the
    group is only composited with the elements underneath the group.
+
+  <h3 id=pagebackdrop><span class=secno>4.4. </span>Page Group</h3>
+
+  <p> The top level group is the page group. All other elements and groups
+   are composited into this group. The page group is an <a
+   href="#isolatedgroups">isolated group</a>.<br>
+   The page group is composited with a backdrop color defined by the User
+   Agent. Typically this will be white with 100% opacity.<br>
+   The page group may be used as an element in another graphical composition.
+   
+
+  <p> For example, <br>
+   an SVG file contains a red object at 50% opacity, <br>
+   The user agent composites the page group onto a white background with 100%
+   opacity. <br>
+   The results are as follows:
+
+  <pre>
+co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
+co = RGB(127, 0, 0) + RGB(127, 127, 127)
+co = RGB(255, 127, 127)
+</pre>
+
+  <p>which is the color value ultimately displayed by the user agent.
 
   <h2 id=advancedcompositing><span class=secno>5. </span>Advanced compositing
    features</h2>
@@ -1927,7 +1930,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    the group are always composited onto the <a
    href="#initialbackdrop">initial backdrop</a>. This effectively ‘<code
    class=css>knocks out</code>’ any element from within the group that is
-   already drawn. When knock-out="prserve", the group is not a knock-out
+   already drawn. When knock-out="preserve", the group is not a knock-out
    group. Elements within the group are composited onto one another, with the
    first element in the group being composited onto the <a
    href="#initialbackdrop">initial backdrop</a>. This behavior of this

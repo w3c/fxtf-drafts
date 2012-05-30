@@ -479,7 +479,7 @@ In figure 6, the shape in the backdrop has an alpha value. The alpha value of th
 </p>
 </div>
 <div class="example">
-<p style="text-align:center"><img src="examples/group_αbackdrop.svg"/>
+<p style="text-align:center"><img src="examples/group_alpha_backdrop.svg"/>
 <br/>
 Figure 7
 </p>
@@ -487,23 +487,6 @@ Figure 7
 In figure 7, the blue and green shapes are in a group that has alpha. When calculating the backdrop for the blue shape, the red and green shapes are combined with simple alpha compositing and the group alpha is ignored. If the group had blending, compositing or filtering, those would also be ignored.
 </p>
 </div>
-
-<h3 id="matting">Matting</h3>
-<span class="issue">NA: Could we change this section so that it doesn't talk about matting, but instead defines the page backdrop?</span>
-<p>
-The end result of alpha compositing may contain alpha. For instance, a solid red shape with an alpha value of 0.5 is described as RGBA(255, 0, 0, .5).
-Monitors and printers display color and have no concept of transparency. Therefore, to represent this RGBA value, the alpha component is removed by compositing with a solid white backdrop RGBA(255, 255, 255, 1.0).
-This process is called matting.
-</p>
-<p>
-Applying the compositing formula, gives:
-<pre>
-co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
-co = RGB(127, 0, 0) + RGB(127, 127, 127)
-co = RGB(255, 127, 127)
-</pre>
-which is the value that is displayed by the monitor.
-</p>
 
 <h2 id="groups">Compositing Groups</h2>
 <p>
@@ -566,6 +549,26 @@ When calculating the <a href="#backdrop">backdrop</a> for an element inside a kn
 The above example demonstrates two versions of a group containing three squares (red, green, blue) that are 50% opaque. The group is composited over a grey striped background.<br />
 On the left, the group has knock-out="knock-out". On the right, the group has knock-out="preserve".<br />
 It can be seen that where knock-out="knock-out", each element within the group is only composited with the elements underneath the group.
+</p>
+
+<h3 id="pagebackdrop">The Page Group</h3>
+<p>
+The top level group is the page group. All other elements and groups are composited into this group.
+The page group is an <a href="#isolatedgroups">isolated group</a>.<br />
+The page group is composited with a backdrop color defined by the User Agent. Typically this will be white with 100% opacity.<br />
+The page group may be used as an element in another graphical composition.
+</p>
+<p>
+For example, <br />
+an SVG file contains a red object at 50% opacity, <br />
+The user agent composites the page group onto a white background with 100% opacity. <br />
+The results are as follows:
+<pre>
+co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
+co = RGB(127, 0, 0) + RGB(127, 127, 127)
+co = RGB(255, 127, 127)
+</pre>
+which is the color value ultimately displayed by the user agent.
 </p>
 
 <h2 id="advancedcompositing">Advanced compositing features</h2>
@@ -1255,7 +1258,7 @@ For an individual layer 'isolation' is always 'isolate'. This means that the con
 <p>
 Defines whether a group is a knock-out group.
 When knock-out="knock-out", the group is a knock-out group. The elements within the group are always composited onto the <a href="#initialbackdrop">initial backdrop</a>. This effectively 'knocks out' any element from within the group that is already drawn.
-When knock-out="prserve", the group is not a knock-out group. Elements within the group are composited onto one another, with the first element in the group being composited onto the <a href="#initialbackdrop">initial backdrop</a>.
+When knock-out="preserve", the group is not a knock-out group. Elements within the group are composited onto one another, with the first element in the group being composited onto the <a href="#initialbackdrop">initial backdrop</a>.
 This behavior of this keyword is described in more detail in <a href="#knockoutgroups">Knockout Groups</a>.
 
 <div class="propdef">
