@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">29 May 2012</h2>
+<h2 class="no-num no-toc">30 May 2012</h2>
 <dl>
   <dt>Editors:</dt>
   <dd class="vcard">
@@ -1082,6 +1082,30 @@ In the isolated group, the elements within the group are composited onto an empt
 In the normal group, the elements within the group are composited onto the initial backdrop containing the land and sky. Therefore the elements of the aeroplane multiply with the land and sky.<br />
 In both instances, the result of the group composite is composited onto the land and sky using the normal blend-mode (the default blend-mode applied to the group).
 <div class="example"><img src="examples/isolate_blend_example.png"/></div>
+</p>
+
+<h2 id="generalformula">General Formula</h2>
+<p>
+<p>
+Apply the blend in place
+<pre>
+Ca = (1 - αb) x Ca + αb x B(Cb, Cs)
+</pre>
+</p>
+<p>
+Composite
+<pre>
+Co = αa x Fa x Ca + αb x Fb x Cb
+</pre>
+</p>
+Where:<br />
+<strong>Ca</strong>: is the source color<br />
+<strong>Cb</strong>: is the backdrop color<br />
+<strong>αa</strong>: is the source alpha<br />
+<strong>αb</strong>: is the backdrop alpha<br />
+<strong>B(Cb, Cs)</strong>: is the mixing function<br />
+<strong>Fa</strong>: is defined by the Porter Duff operator in use<br />
+<strong>Fb</strong>: is defined by the Porter Duff operator in use<br />
 </p>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
