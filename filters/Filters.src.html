@@ -907,7 +907,7 @@ interpolations occur by default in the sRGB color space.</p>
       <div>The <code>&lt;vertex-shader&gt;</code> and <code>&lt;fragment-shader&gt;</code> parameters reference the 
           shader sources. The <code>&lt;vertex-mesh&gt;</code> parameter specifies the granularity of the vertex mesh.
           The <code>&lt;params&gt;</code> specify the parameters and corresponding passed to the shader programs.
-          The markup equivalent is <a href="#customEquivalent">given below</a>.</div>
+          The markup equivalent is <a href="#customEquivalent">given below</a>.</div>
       
       <div class="note">It might be clearer to name the <code>custom()</code> function 
           the <code>shader()</code> function instead and introduce an <code>feCustomShader</code>
@@ -5396,11 +5396,6 @@ The WG is looking at providing a shorthand for diffuse+specular.
 <h2 id="feCustomElement">Filter primitive <span
 class="element-name">'feCustom'</span></h2>
 
-
-<p>The <a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/publish/Filters.html">Filter Effects</a>
-    specification does not define the <code>feCustom</code> element. This document proposes the following
-    definition.</p>
-    
     <div class="element-summary">
         <div class="element-summary-name">
             <span class="element-name">‘feCustom’</span>
@@ -5439,12 +5434,18 @@ class="element-name">'feCustom'</span></h2>
                 </dd>
         </dl>
         <dl>
-            <dt id="feCustomFragmentShaderAttribute">fragmentShader: <code>&lt;uri&gt;</code></dt>
-            <dd>The shader at &lt;uri&gt; provides the implementation for the <code>feCustom</code>
+            <dt id="feCustomFragmentShaderAttribute">fragmentShader: <code>&lt;uri&gt; | mix(&lt;uri&gt;[,blend-mode][,alpha-compositing])</code></dt>
+            <dd>There are two forms for the fragment shader:
+                <ol>
+                    <li>direct shader reference with a <code>&lt;uri&gt;</code></li>
+                    <li>
+                
+                
+                The shader at &lt;uri&gt; provides the implementation for the <code>feCustom</code>
                 fragment shader. If the 
                 shader cannot be retrieved, or if the shader cannot be loaded or compiled because it contains erroneous code,  the shader is a <a href="#default-shaders">pass through</a>. Otherwise, the fragment shader
                 is invoked for each of the pixels during the rasterization phase that follows
-                the vertex shader processing.
+                the vertex shader processing. 
                 </dd>
         </dl>
         <dl>
