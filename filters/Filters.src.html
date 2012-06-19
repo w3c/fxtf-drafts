@@ -832,7 +832,7 @@ interpolations occur by default in the sRGB color space.</p>
   </dd>
   
   <dt>
-    custom(&lt;vertex-shader&gt; [ , &lt;fragment-shader&gt; ]? [ , &lt;vertex-mesh&gt; ]? [ , &lt;params&gt; ]?)
+    custom(&lt;vertex-shader&gt; &lt;fragment-shader&gt;? [ , &lt;vertex-mesh&gt; ]? [ , &lt;params&gt; ]?)
   </dt>
   <dd>
       <table class="values-desc">
@@ -842,7 +842,7 @@ interpolations occur by default in the sRGB color space.</p>
           </tr>
           <tr>
               <td><code>&lt;fragment-shader&gt;</code></td>
-              <td><code>none | &lt;uri&gt; | mix(&lt;uri&gt; [ , &lt;blend-mode&gt; ]? [ , &lt;alpha-compositing&gt; ]?)</code></td>
+              <td><code>none | &lt;uri&gt; | mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</code></td>
           </tr>
           <tr>
               <td><code>&lt;vertex-mesh&gt;</code></td>
@@ -5345,7 +5345,7 @@ class="element-name">'feCustom'</span></h2>
                 </dd>
         </dl>
         <dl>
-            <dt id="feCustomFragmentShaderAttribute">fragmentShader: <code>&lt;uri&gt; | mix(&lt;uri&gt; [ , &lt;blend-mode&gt; ]? [ , &lt;alpha-compositing&gt; ]?)</code></dt>
+            <dt id="feCustomFragmentShaderAttribute">fragmentShader: <code>&lt;uri&gt; | mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</code></dt>
             <dd>There are two forms for the fragment shader:
                 <ol>
                     <li>direct shader reference with a <code>&lt;uri&gt;</code></li>
@@ -5381,9 +5381,10 @@ class="element-name">'feCustom'</span></h2>
                         <td>[ true | false ]{1,4} | <br />
                             &lt;number&gt;{1,4} | <br/>
                             &lt;array&gt; | <br />
-                            <a href="http://www.w3.org/TR/css3-3d-transforms/#transform-functions">&lt;transform-function&gt</a>+ | <br />
+                            <a href="http://www.w3.org/TR/css3-3d-transforms/#transform-functions">&lt;transform-function&gt;</a>+ | <br />
                             &lt;mat&gt; | <br />
-                            texture(&lt;uri&gt;)</td>
+                            &lt;color&gt; | <br />
+                            texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)</td>
                     </tr>
                     <tr>
                         <td>&lt;array&gt;</td>
@@ -5398,6 +5399,8 @@ class="element-name">'feCustom'</span></h2>
                     </tr>
                     <tr></tr>
                 </table>
+
+                <p>The data type &lt;filter-primitive-reference&gt; can just be used for the <a href="#shader-inputs">primitive feCustom</a>.</p>
                 
                 <p>There are two ways to specify a 4x4 matrix. They differ in 
                     <a href="#integration-with-css-animations-transitions">how 
@@ -5522,13 +5525,13 @@ which could also be written as:
 <h3 id="shader-inputs">Shader inputs in filter graph</h3>
 
 <p>When an <code>feCustom</code> filter primitive is used in a filter graph, a 'texture' parameter 
-    can take a value of 'result(&lt;name&gt;)' where 'name' is the output of another filter primitive.</p>
+    can take a value of &lt;filter-primitive-reference&gt; where &lt;filter-primitive-reference&gt; references the output of another filter primitive.</p>
     
 <code class="idl"><pre>
 &lt;filter&gt;
     &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
     &lt;feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="4" result="turbulence"/&gt;
-    &lt;feCustom fragmentShader="url(complex.fs)" params="tex1 result(blur), tex2 result(turbulence)" /&gt;
+    &lt;feCustom fragmentShader="url(complex.fs)" params="tex1 texture(blur), tex2 texture(turbulence)" /&gt;
 &lt;/filter&gt;</pre></code>
 
 
@@ -5889,7 +5892,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
           </td>
       </tr>
       <tr>
-          <td>texture(&lt;uri&gt;)</td>
+          <td>texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)</td>
           <td>sampler2D</td>
       </tr>
   </table>

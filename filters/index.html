@@ -75,14 +75,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 18 June 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 19 June 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
-     href="http://www.w3.org/TR/2012/ED-unknown-shortname-20120618/">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-unknown-shortname-20120618/-->
+     href="http://www.w3.org/TR/2012/ED-unknown-shortname-20120619/">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
+     <!--http://www.w3.org/TR/2012/WD-unknown-shortname-20120619/-->
 
     <dt>Editors:
 
@@ -1219,7 +1219,7 @@
     keyword is not allowed. The markup equivalent of this function is <a
     href="#dropshadowEquivalent">given below</a>.
 
-   <dt> custom(&lt;vertex-shader&gt; [ , &lt;fragment-shader&gt; ]? [ ,
+   <dt> custom(&lt;vertex-shader&gt; &lt;fragment-shader&gt;? [ ,
     &lt;vertex-mesh&gt; ]? [ , &lt;params&gt; ]?)
 
    <dd>
@@ -1233,8 +1233,8 @@
       <tr>
        <td><code>&lt;fragment-shader&gt;</code>
 
-       <td><code>none | &lt;uri&gt; | mix(&lt;uri&gt; [ , &lt;blend-mode&gt;
-        ]? [ , &lt;alpha-compositing&gt; ]?)</code>
+       <td><code>none | &lt;uri&gt; | mix(&lt;uri&gt; [ &lt;blend-mode&gt; ||
+        &lt;alpha-compositing&gt; ]?)</code>
 
       <tr>
        <td><code>&lt;vertex-mesh&gt;</code>
@@ -11967,8 +11967,8 @@ double turbulence(int nColorChannel, double *point, double <a
 
    <dl>
     <dt id=feCustomFragmentShaderAttribute>fragmentShader: <code>&lt;uri&gt;
-     | mix(&lt;uri&gt; [ , &lt;blend-mode&gt; ]? [ ,
-     &lt;alpha-compositing&gt; ]?)</code>
+     | mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt;
+     ]?)</code>
 
     <dd>There are two forms for the fragment shader:
      <ol>
@@ -12020,7 +12020,8 @@ double turbulence(int nColorChannel, double *point, double <a
          href="http://www.w3.org/TR/css3-3d-transforms/#transform-functions">&lt;transform-function&gt;</a>+
          | <br>
          &lt;mat&gt; | <br>
-         texture(&lt;uri&gt;)
+         &lt;color&gt; | <br>
+         texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)
 
        <tr>
         <td>&lt;array&gt;
@@ -12036,6 +12037,9 @@ double turbulence(int nColorChannel, double *point, double <a
 
        <tr>
      </table>
+
+     <p>The data type &lt;filter-primitive-reference&gt; can just be used for
+      the <a href="#shader-inputs">primitive feCustom</a>.</p>
 
      <p>There are two ways to specify a 4x4 matrix. They differ in <a
       href="#integration-with-css-animations-transitions">how they are
@@ -12186,8 +12190,9 @@ double turbulence(int nColorChannel, double *point, double <a
 
   <p>When an <code>feCustom</code> filter primitive is used in a filter
    graph, a ‘<code class=property>texture</code>’ parameter can take a
-   value of ‘<code class=css>result(&lt;name&gt;)</code>’ where ‘<code
-   class=property>name</code>’ is the output of another filter primitive.
+   value of &lt;filter-primitive-reference&gt; where
+   &lt;filter-primitive-reference&gt; references the output of another filter
+   primitive.
 
   <p><code class=idl></code>
 
@@ -12195,7 +12200,7 @@ double turbulence(int nColorChannel, double *point, double <a
 &lt;filter&gt;
     &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
     &lt;feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="4" result="turbulence"/&gt;
-    &lt;feCustom fragmentShader="url(complex.fs)" params="tex1 result(blur), tex2 result(turbulence)" /&gt;
+    &lt;feCustom fragmentShader="url(complex.fs)" params="tex1 texture(blur), tex2 texture(turbulence)" /&gt;
 &lt;/filter&gt;</pre>
 
   <h2 id=FilterCSSImageValue><span class=secno>33. </span>The filter CSS
@@ -12605,7 +12610,7 @@ double turbulence(int nColorChannel, double *point, double <a
       <td> mat2, mat3 or mat4
 
      <tr>
-      <td>texture(&lt;uri&gt;)
+      <td>texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)
 
       <td>sampler2D
    </table>
