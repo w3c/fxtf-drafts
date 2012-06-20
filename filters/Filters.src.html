@@ -5338,7 +5338,7 @@ class="element-name">'feCustom'</span></h2>
     <div>
         <dl>
             <dt id="feCustomVertexShaderAttribute">vertexShader: <code>&lt;uri&gt;</code></dt>
-            <dd>The shader at &lt;uri&gt; provides the implementation for the <code>feCustom</code>
+            <dd>The shader referenced by &lt;uri&gt; provides the implementation for the <code>feCustom</code>
                 vertex shader. If the 
                 shader cannot be retrieved, or if the shader cannot be loaded or compiled because it contains erroneous code, the shader is a <a href="#default-shaders">pass through</a>. Otherwise, the vertex shader is invoked for all the vertex mesh vertices. 
                 </dd>
@@ -5426,20 +5426,57 @@ class="element-name">'feCustom'</span></h2>
     </div>
     <h3 id="fragmentShader-attribute">The 'fragmentShader' attribute</h3>
 
-    <p class="todo">The introduced function mix(...) needs to be described</p>
+    <dl>
+      <dt>&lt;uri&gt;</dt>
+      <dd>
+        The shader referenced by &lt;uri&gt; provides the implementation for the <a>feCustom element</a> fragment
+        shader. If the shader cannot be retrieved, or if the shader cannot be loaded or compiled because
+        it contains erroneous code, the shader is a <a href="#default-shaders">pass through</a>.
+        Otherwise, the fragment shader is invoked for each of the pixels during the rasterization phase
+        that follows the vertex shader processing.
+      </dd>
+    </dl>
 
-    <p>There are two forms for the fragment shader:
-    <ol>
-        <li>direct shader reference with a <code>&lt;uri&gt;</code></li>
-        <li>
-    
-    
-    The shader at &lt;uri&gt; provides the implementation for the <code>feCustom</code>
-    fragment shader. If the 
-    shader cannot be retrieved, or if the shader cannot be loaded or compiled because it contains erroneous code,  the shader is a <a href="#default-shaders">pass through</a>. Otherwise, the fragment shader
-    is invoked for each of the pixels during the rasterization phase that follows
-    the vertex shader processing. </li></ol>
-    </p>
+    <dl>
+      <dt>mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</dt>
+      <dd>
+        The <a href="#security">security model</a> disallows any color value based conditions for the
+        fragment shader. Authors may use the <code>mix</code> function for a basic control of compositing
+        and color managment within a fragment shader. The processeing model for <code>mix</code> is
+        provided <a href="#processing-model-mix">below</a>.
+        <dl>
+          <dt>&lt;uri&gt;</dt>
+          <dd>
+            The shader referenced by &lt;uri&gt; provides the implementation for the <a>feCustom element</a> fragment
+            shader. If the shader cannot be retrieved, or if the shader cannot be loaded or compiled because
+            it contains erroneous code, the shader is a <a href="#default-shaders">pass through</a>.
+            Otherwise, the fragment shader is invoked for each of the pixels during the rasterization phase
+            that follows the vertex shader processing.
+          </dd>
+          <dt>&lt;blend-mode&gt;</dt>
+          <dd>
+            Each pixel can be blended with its backdrop by using one of the predefined blend modes and it's
+            appropriate blend mode keyword (See [[COMPOSITING]]).
+          </dd>
+          <dt>&lt;alpha-compositing&gt;</dt>
+          <dd>
+            Each pixel can be composed with its backdrop by using one of the predefined alpha-compositing
+            operators and it's appropriate alpha-compositing keyword (See [[COMPOSITING]]).
+          </dd>
+        </dl>
+      </dd>
+    </dl>
+
+    <h4 id="processing-model-mix">
+      Processing model for <code>mix</code> function
+    </h4>
+
+    <div class="figure">
+      <img src="images/mix-fragment-shader.png" width="451" height="726"/>
+      <p class="caption">fragmentShader: processing model for mix</p>
+    </div>
+
+    <p class="todo">Processing model for <code>mix</code> missing.</p>
 
     <h3 id="vertexMesh-attribute">The 'vertexMesh' attribute</h3>
 

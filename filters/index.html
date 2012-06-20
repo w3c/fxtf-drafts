@@ -75,14 +75,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 19 June 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 June 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
-     href="http://www.w3.org/TR/2012/ED-unknown-shortname-20120619/">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-unknown-shortname-20120619/-->
+     href="http://www.w3.org/TR/2012/ED-unknown-shortname-20120620/">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
+     <!--http://www.w3.org/TR/2012/WD-unknown-shortname-20120620/-->
 
     <dt>Editors:
 
@@ -361,6 +361,10 @@
      <li><a href="#fragmentShader-attribute"><span class=secno>32.1.
       </span>The ‘<code class=property>fragmentShader</code>’
       attribute</a>
+      <ul class=toc>
+       <li><a href="#processing-model-mix"><span class=secno>32.1.1. </span>
+        Processing model for <code>mix</code> function </a>
+      </ul>
 
      <li><a href="#vertexMesh-attribute"><span class=secno>32.2. </span>The
       ‘<code class=property>vertexMesh</code>’ attribute</a>
@@ -11955,10 +11959,10 @@ double turbulence(int nColorChannel, double *point, double <a
     <dt id=feCustomVertexShaderAttribute>vertexShader:
      <code>&lt;uri&gt;</code>
 
-    <dd>The shader at &lt;uri&gt; provides the implementation for the
-     <code>feCustom</code> vertex shader. If the shader cannot be retrieved,
-     or if the shader cannot be loaded or compiled because it contains
-     erroneous code, the shader is a <a href="#default-shaders">pass
+    <dd>The shader referenced by &lt;uri&gt; provides the implementation for
+     the <code>feCustom</code> vertex shader. If the shader cannot be
+     retrieved, or if the shader cannot be loaded or compiled because it
+     contains erroneous code, the shader is a <a href="#default-shaders">pass
      through</a>. Otherwise, the vertex shader is invoked for all the vertex
      mesh vertices.
    </dl>
@@ -12072,21 +12076,60 @@ double turbulence(int nColorChannel, double *point, double <a
   <h3 id=fragmentShader-attribute><span class=secno>32.1. </span>The ‘<code
    class=property>fragmentShader</code>’ attribute</h3>
 
-  <p class=todo>The introduced function mix(...) needs to be described
+  <dl>
+   <dt>&lt;uri&gt;
 
-  <p>There are two forms for the fragment shader:
-
-  <ol>
-   <li>direct shader reference with a <code>&lt;uri&gt;</code>
-
-   <li> The shader at &lt;uri&gt; provides the implementation for the
-    <code>feCustom</code> fragment shader. If the shader cannot be retrieved,
-    or if the shader cannot be loaded or compiled because it contains
-    erroneous code, the shader is a <a href="#default-shaders">pass
+   <dd> The shader referenced by &lt;uri&gt; provides the implementation for
+    the <a>feCustom element</a> fragment shader. If the shader cannot be
+    retrieved, or if the shader cannot be loaded or compiled because it
+    contains erroneous code, the shader is a <a href="#default-shaders">pass
     through</a>. Otherwise, the fragment shader is invoked for each of the
     pixels during the rasterization phase that follows the vertex shader
     processing.
-  </ol>
+  </dl>
+
+  <dl>
+   <dt>mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)
+
+   <dd> The <a href="#security">security model</a> disallows any color value
+    based conditions for the fragment shader. Authors may use the
+    <code>mix</code> function for a basic control of compositing and color
+    managment within a fragment shader. The processeing model for
+    <code>mix</code> is provided <a href="#processing-model-mix">below</a>.
+    <dl>
+     <dt>&lt;uri&gt;
+
+     <dd> The shader referenced by &lt;uri&gt; provides the implementation
+      for the <a>feCustom element</a> fragment shader. If the shader cannot
+      be retrieved, or if the shader cannot be loaded or compiled because it
+      contains erroneous code, the shader is a <a
+      href="#default-shaders">pass through</a>. Otherwise, the fragment
+      shader is invoked for each of the pixels during the rasterization phase
+      that follows the vertex shader processing.
+
+     <dt>&lt;blend-mode&gt;
+
+     <dd> Each pixel can be blended with its backdrop by using one of the
+      predefined blend modes and it's appropriate blend mode keyword (See
+      [[COMPOSITING]]).
+
+     <dt>&lt;alpha-compositing&gt;
+
+     <dd> Each pixel can be composed with its backdrop by using one of the
+      predefined alpha-compositing operators and it's appropriate
+      alpha-compositing keyword (See [[COMPOSITING]]).
+    </dl>
+  </dl>
+
+  <h4 id=processing-model-mix><span class=secno>32.1.1. </span> Processing
+   model for <code>mix</code> function</h4>
+
+  <div class=figure> <img height=726 src="images/mix-fragment-shader.png"
+   width=451>
+   <p class=caption>fragmentShader: processing model for mix</p>
+  </div>
+
+  <p class=todo>Processing model for <code>mix</code> missing.
 
   <h3 id=vertexMesh-attribute><span class=secno>32.2. </span>The ‘<code
    class=property>vertexMesh</code>’ attribute</h3>
