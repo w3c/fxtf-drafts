@@ -75,14 +75,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 June 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 21 June 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
-     href="http://www.w3.org/TR/2012/ED-unknown-shortname-20120620/">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-unknown-shortname-20120620/-->
+     href="http://www.w3.org/TR/2012/ED-unknown-shortname-20120621/">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
+     <!--http://www.w3.org/TR/2012/WD-unknown-shortname-20120621/-->
 
     <dt>Editors:
 
@@ -359,15 +359,15 @@
     class=property>feCustom</code>’</span></a>
     <ul class=toc>
      <li><a href="#fragmentShader-attribute"><span class=secno>32.1.
-      </span>The ‘<code class=property>fragmentShader</code>’
+      </span>The ‘<code class=css>fragmentShader attribute</code>’
       attribute</a>
       <ul class=toc>
        <li><a href="#processing-model-mix"><span class=secno>32.1.1. </span>
-        Processing model for <code>mix</code> function </a>
+        Processing model for ‘<code class=css>mix</code>’ function </a>
       </ul>
 
      <li><a href="#vertexMesh-attribute"><span class=secno>32.2. </span>The
-      ‘<code class=property>vertexMesh</code>’ attribute</a>
+      ‘<code class=css>vertexMesh attribute</code>’ attribute</a>
 
      <li><a href="#shader-inputs"><span class=secno>32.3. </span>Shader
       inputs in filter graph</a>
@@ -12043,11 +12043,11 @@ double turbulence(int nColorChannel, double *point, double <a
    </dl>
   </div>
 
-  <div class=note>There may be different ways to specify the
+  <p class=issue>There may be different ways to specify the
    &lt;param-value&gt; syntax. For example, it might be better to not have a
    <code>texture()</code> function and simply a &lt;uri&gt; for texture
    parameters. Or it might be better to not have a <code>mat&lt;n&gt;</code>
-   prefixes for matrices.</div>
+   prefixes for matrices.
 
   <div class=note>
    <p>The following <a
@@ -12073,56 +12073,65 @@ double turbulence(int nColorChannel, double *point, double <a
    </div>
   </div>
 
-  <h3 id=fragmentShader-attribute><span class=secno>32.1. </span>The ‘<code
-   class=property>fragmentShader</code>’ attribute</h3>
+  <h3 id=fragmentShader-attribute><span class=secno>32.1. </span>The
+   <a>‘<code class=css>fragmentShader attribute</code>’</a> attribute</h3>
 
   <dl>
    <dt>&lt;uri&gt;
 
    <dd> The shader referenced by &lt;uri&gt; provides the implementation for
-    the <a>feCustom element</a> fragment shader. If the shader cannot be
-    retrieved, or if the shader cannot be loaded or compiled because it
-    contains erroneous code, the shader is a <a href="#default-shaders">pass
-    through</a>. Otherwise, the fragment shader is invoked for each of the
-    pixels during the rasterization phase that follows the vertex shader
-    processing.
+    the <a>‘<code class=css>feCustom element</code>’</a> element fragment
+    shader. If the shader cannot be retrieved, or if the shader cannot be
+    loaded or compiled because it contains erroneous code, the shader is a <a
+    href="#default-shaders">pass through</a>. Otherwise, the fragment shader
+    is invoked for each of the pixels during the rasterization phase that
+    follows the vertex shader processing.
   </dl>
 
   <dl>
    <dt>mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)
 
    <dd> The <a href="#security">security model</a> disallows any color value
-    based conditions for the fragment shader. Authors may use the
-    <code>mix</code> function for a basic control of compositing and color
-    managment within a fragment shader. The processeing model for
-    <code>mix</code> is provided <a href="#processing-model-mix">below</a>.
+    based conditions for the fragment shader. Authors may use the ‘<code
+    class=css>mix</code>’ function for a basic control of compositing and
+    color managment within a fragment shader. The processing model for
+    ‘<code class=css>mix</code>’ is provided <a
+    href="#processing-model-mix">below</a>.
     <dl>
      <dt>&lt;uri&gt;
 
      <dd> The shader referenced by &lt;uri&gt; provides the implementation
-      for the <a>feCustom element</a> fragment shader. If the shader cannot
-      be retrieved, or if the shader cannot be loaded or compiled because it
-      contains erroneous code, the shader is a <a
-      href="#default-shaders">pass through</a>. Otherwise, the fragment
-      shader is invoked for each of the pixels during the rasterization phase
-      that follows the vertex shader processing.
+      for the <a>‘<code class=css>feCustom element</code>’</a> element
+      fragment shader. If the shader cannot be retrieved, or if the shader
+      cannot be loaded or compiled because it contains erroneous code, the
+      shader is a <a href="#default-shaders">pass through</a>. Otherwise, the
+      fragment shader is invoked for each of the pixels during the
+      rasterization phase that follows the vertex shader processing.
 
      <dt>&lt;blend-mode&gt;
 
-     <dd> Each pixel can be blended with its backdrop by using one of the
-      predefined blend modes and it's appropriate blend mode keyword (See
-      [[COMPOSITING]]).
+     <dd>
+      <p> Each pixel can be blended with its backdrop by using one of the
+       predefined blend modes and it's appropriate blend mode keyword (See
+       [[COMPOSITING]]).</p>
+
+      <p> The lacuna value is ‘<code class=css>normal</code>’.</p>
 
      <dt>&lt;alpha-compositing&gt;
 
-     <dd> Each pixel can be composed with its backdrop by using one of the
-      predefined alpha-compositing operators and it's appropriate
-      alpha-compositing keyword (See [[COMPOSITING]]).
+     <dd>
+      <p> Each pixel can be composed with its backdrop by using one of the
+       predefined alpha-compositing operators and it's appropriate
+       alpha-compositing keyword (See [[COMPOSITING]]).</p>
+
+      <p> The lacuna value is ‘<code class=css>source-over</code>’.</p>
     </dl>
+
+    <p class=issue>backdrop should be the mix color?</p>
   </dl>
 
   <h4 id=processing-model-mix><span class=secno>32.1.1. </span> Processing
-   model for <code>mix</code> function</h4>
+   model for ‘<code class=css>mix</code>’ function</h4>
 
   <div class=figure> <img height=726 src="images/mix-fragment-shader.png"
    width=451>
@@ -12131,92 +12140,129 @@ double turbulence(int nColorChannel, double *point, double <a
 
   <p class=todo>Processing model for <code>mix</code> missing.
 
-  <h3 id=vertexMesh-attribute><span class=secno>32.2. </span>The ‘<code
-   class=property>vertexMesh</code>’ attribute</h3>
+  <h3 id=vertexMesh-attribute><span class=secno>32.2. </span>The <a>‘<code
+   class=css>vertexMesh attribute</code>’</a> attribute</h3>
 
-  <p>The <code>&lt;feCustom&gt;</code>‘<code class=css>s
-   </code>’vertexMesh' attribute defines the granularity of vertices in the
-   <a href="#vertex-mesh">shader mesh</a>. By default, the vertex mesh is
-   made of two triangles that encompass the <a href="#filter-region">filter
-   region</a> area.
+  <p> The <a>‘<code class=css>vertexMesh attribute</code>’</a> attribute
+   of the <a>‘<code class=css>feCustom element</code>’</a> element
+   defines the granularity of vertices in the <a href="#vertex-mesh">shader
+   mesh</a>. By default, the vertex mesh is made of two triangles that
+   encompass the <a href="#filter-region">filter region</a> area.
+
+  <p class=issue> For feCustom it should be the primitive subregion. For
+   custom() it should be the bounding client rect with extensions of previous
+   filter effects?
 
   <dl>
-   <dt><code>&lt;integer&gt;{0,2} &lt;box&gt;? [ detached | attached
-    ]?</code>
+   <dt>&lt;integer&gt;{0,2}
 
-   <dd> One or two positive integers (zero is invalid) indicating the
-    additional number of vertex lines and columns that will make the vertex
-    mesh. With the initial value of ‘<code class=css>1 1</code>’ there is
-    a single line and a single column, resulting in a four-vertices mesh
-    (top-left, top-right, bottom-right, bottom-left). If only one value is
-    specified, the second (columns) value computes to the first value. In
-    other words, a value of ‘<code class=property>n</code>’ is equivalent
-    to a value of ‘<code class=css>n n</code>’.<br>
-    A value of ‘<code class=css>n m</code>’ results in a vertex mesh that
-    has ‘<code class=property>n</code>’ lines and ‘<code
-    class=property>m</code>’ column and a total of ‘<code class=css>n +
-    1</code>’.‘<code class=css>m + 1</code>’ vertices as illustrated in
-    the following figure.
-    <p>The optional &lt;box&gt; parameter defines the box on which the vertex
-     mesh is stretched to. It defaults to the ‘<code
-     class=property>filter-box</code>’ value which is ‘<code
-     class=property>border-box</code>’ with the added filter margins. For
+   <dd>
+    <p> One or two positive integers greater then zero indicate the
+     additional number of vertex lines and columns that will make the vertex
+     mesh. With the initial value of ‘<code class=css>1 1</code>’ there
+     is a single row and a single column, resulting in a four-vertices mesh
+     (top-left, top-right, bottom-right, bottom-left). If the second
+     parameter is not provided, it takes a value equal to the first. A value
+     of ‘<code class=css><em>n m</em></code>’ results in a vertex mesh
+     that has <em>n</em> rows and <em>m</em> columns. This results in a total
+     of <em>(n + 1) * (m + 1)</em> vertices as illustrated in the <a
+     href="#vertexMesh56">figure below</a>.</p>
+
+    <p> The lacuna value is ‘<code class=css>1 1</code>’.</p>
+
+    <p> If one of the passed parameters is zero or negative, the UA must
+     fallback to the lacuna values.</p>
+
+   <dt>&lt;box&gt; = "border-box | filter-box | content-box | adding-box"
+
+   <dd>
+    <p> The optional &lt;box&gt; parameter defines the box on which the
+     vertex mesh is stretched to. It defaults to the ‘<code
+     class=css>filter-box</code>’ value which is ‘<code
+     class=css>border-box</code>’ with the added filter margins. For
      elements that do not have padding or borders (e.g., SVG elements), the
-     values ‘<code class=property>padding-box</code>’ and ‘<code
-     class=property>border-box</code>’ are equivalent to ‘<code
-     class=property>content-box</code>’. For SVG elements, the ‘<code
-     class=property>content-box</code>’ is the object bounding box.</p>
+     values ‘<code class=css>padding-box</code>’ and ‘<code
+     class=css>border-box</code>’ are equivalent to ‘<code
+     class=css>content-box</code>’. For SVG elements, the ‘<code
+     class=css>content-box</code>’ is the object bounding box.</p>
 
-    <p>The optional ‘<code class=property>detached</code>’ string
-     specifies whether the mesh triangles are attached or detached. If the
-     value is not specified, the triangles are attached. If ‘<code
-     class=property>detached</code>’ is specified, the triangles are
-     detached. When triangles are attached, the geometry provided to the
-     vertex shader is made of a triangles which share adjacent edges'
-     vertices. In the ‘<code class=property>detached</code>’ mode, the
-     triangles do not share edges.</p>
+    <p> The lacuna value is ‘<code class=css>filter-box</code>’.</p>
 
-    <p>In the following figure, let us consider the top-left ‘<code
-     class=property>tile</code>’ in the shader mesh. In the detached mode,
-     the vertex shader will receive the bottom right and top left vertices
-     multiple time, one of each of the two triangles which make up the tile.
-     Otherwise, the shader will receive these vertices only once, because
-     they are shared by the ‘<code class=property>connected</code>’
-     triangles.</p>
+    <p class=issue> Does it make sense to have the &lt;box&gt; parameter at
+     all? Given the fact that feCustom might just be one effect in a filter
+     chain and the previous result has a different effect region anyway?</p>
 
-    <p>See the discussion on uniforms passed to shaders to understand how the
-     shader programs can leverage that feature.</p>
+    <p class=issue> ‘<code class=css>filter-box</code>’ should be
+     ‘<code class=css>adding-box</code>’ (alias bounding client rect)
+     with added filter margins.</p>
+
+    <p class=issue> Can ‘<code class=css>adding-box</code>’ and bounding
+     client rect be renamed to ‘<code class=css>target box</code>’? This
+     is smaller and easier to use. CSS Shaders already defined this term.</p>
+
+    <p class=issue> Definitions of nearly all boxes are missing.</p>
+
+   <dt>detached | attached
+
+   <dd> The optional keywords specify whether the mesh triangles are attached
+    or detached.
+    <dl>
+     <dt>detached
+
+     <dd> If ‘<code class=css>detached</code>’ is specified, the
+      triangles are detached. The geometry provided to the vertex shader is
+      made of triangles which do not share adjacent edges' vertices.
+
+     <dt>attached
+
+     <dd> If ‘<code class=css>attached</code>’ is specified, the
+      triangles are attached. The geometry provided to the vertex shader is
+      made of triangles which share adjacent edges' vertices.
+    </dl>
+    The lacuna value is ‘<code class=css>attached</code>’.
   </dl>
 
-  <div class=figure> <img src="images/shader-mesh-property.png" width=300>
-   <p class=caption>vertexMesh: 6 5</p>
+  <p> In the following figure, let us consider the top-left "tile" in the
+   shader mesh. In the detached mode, the vertex shader will receive the
+   bottom right and top left vertices multiple time, one of each of the two
+   triangles which make up the tile. Otherwise, the shader will receive these
+   vertices only once, because they are shared by the "connected" triangles.
+
+  <p> See the discussion on uniforms passed to shaders to understand how the
+   shader programs can leverage that feature.
+
+  <p class=issue>Reference to discussion missing.
+
+  <div class=figure id=vertexMesh56> <img
+   src="images/shader-mesh-property.png" width=300>
+   <p class=caption> The figure illustrates how a <a>‘<code
+    class=css>vertexMesh attribute</code>’</a> value of ‘<code
+    class=css>5 6</code>’ adds vertices passed to the vertex shader. The
+    red vertices are the default ones and the gray vertices are resulting
+    from the <a>‘<code class=css>vertexMesh attribute</code>’</a> value.</p>
   </div>
 
-  <p>The above figure illustrates how a ‘<code
-   class=property>vertexMesh</code>’ value of ‘<code class=css>5
-   4</code>’ adds vertices passed to the vertex shader. The red vertices
-   are the default ones and the gray vertices are resulting from the ‘<code
-   class=property>vertexMesh</code>’ value.
-
   <div class=example>
-   <p>The following example applies a vertex shader (‘<code
+   <p> The following example applies a vertex shader (‘<code
     class=css>distort.vs</code>’) to elements with class ‘<code
     class=property>distorted</code>’. The vertex shader will operate on a
     mesh that has 5 lines and 4 columns (because there are 4 additional lines
     and 3 additional columns).</p>
-   <code class=idl></code>
-   <pre>
-    &lt;style&gt;
-    .distorted {
-        filter: custom(url(distort.vs), 4 3);
-    }
-    &lt;/style&gt;
 
-    ...
-    &lt;div class="distorted"&gt;
-    ..
-    &lt;/div&gt;</pre>
-   which could also be written as: <code class=idl></code>
+   <pre>
+&lt;style&gt;
+.distorted {
+    filter: custom(url(distort.vs), 4 3);
+}
+&lt;/style&gt;
+
+...
+&lt;div class="distorted"&gt;
+..
+&lt;/div&gt;</pre>
+
+   <p> which could also be written as:</p>
+
    <pre>
 &lt;style&gt;
 .distorted {
@@ -12238,20 +12284,27 @@ double turbulence(int nColorChannel, double *point, double <a
   <h3 id=shader-inputs><span class=secno>32.3. </span>Shader inputs in filter
    graph</h3>
 
-  <p>When an <code>feCustom</code> filter primitive is used in a filter
-   graph, a ‘<code class=property>texture</code>’ parameter can take a
-   value of &lt;filter-primitive-reference&gt; where
+  <p> When an <a>‘<code class=css>feCustom element</code>’</a> filter
+   primitive is used in a filter graph, a ‘<code
+   class=css>texture</code>’ parameter can take a value of
+   &lt;filter-primitive-reference&gt; where
    &lt;filter-primitive-reference&gt; references the output of another filter
    primitive.
 
-  <p><code class=idl></code>
+  <div class=example>
+   <p> The <a>‘<code class=css>feCustom element</code>’</a> filter
+    primitive references the previous filter primitives ‘<code
+    class=css>blur</code>’ and ‘<code class=css>turbulence</code>’.</p>
 
-  <pre>
+   <pre>
 &lt;filter&gt;
     &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
-    &lt;feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="4" result="turbulence"/&gt;
-    &lt;feCustom fragmentShader="url(complex.fs)" params="tex1 texture(blur), tex2 texture(turbulence)" /&gt;
+    &lt;feTurbulence type="fractalNoise" baseFrequency="0.4"
+        numOctaves="4" result="turbulence" /&gt;
+    &lt;feCustom fragmentShader="url(complex.fs)"
+        params="tex1 texture(blur), tex2 texture(turbulence)" /&gt;
 &lt;/filter&gt;</pre>
+  </div>
 
   <h2 id=FilterCSSImageValue><span class=secno>33. </span>The filter CSS
    &lt;image&gt; value</h2>
