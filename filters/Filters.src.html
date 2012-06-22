@@ -403,8 +403,7 @@
       <a>'feFuncR'</a>, <a>'feFuncG'</a>, <a>'feFuncB'</a>, <a>'feFuncA'</a>, that define the transfer function for the <a>'feComponentTransfer'</a> filter primitive.
     </p>
   </dd>
-<dt id="TermClientBoundingRect"><span
-  class="SVG-TermDefine">bounding client rect</span></dt>
+<dt id="TermClientBoundingRect"><dfn>bounding client rect</dfn></dt>
 <dd>
   <p>
   The union of all CSS border-boxes for the element if formatted with the CSS box model, as defined by the CSS OM method 
@@ -1722,6 +1721,149 @@ values for <a>'x'</a>, <a>'y'</a> and percentages values greater than <span clas
 <a>'width'</a>, <a>'height'</a>. This, for example, is why the defaults for
 the filter effects region are <span class="attr-value">x="-10%" y="-10%" width="120%"
 height="120%"</span>.</p>
+
+<h2 id="filter-margin-property">
+  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 
+  'filter-margin-right', and 'filter-margin' properties
+</h2>
+
+<p>
+  The filter-margin properties define the <a href="#FilterEffectsRegion">filter effect region</a>
+  for <a href="#FilterFunction">filter functions</a> such as the 'custom()' function defined in this document.
+  If the filter property references a <a>'filter element'</a> element, then the filter effect
+  region defined by the element takes precedence over the 'filter-margin' property.
+</p>
+    
+<p>
+  On a regular <a>'filter element'</a> element, the <a>'x attribute'</a>, <a>'y attribute'</a>,
+  <a>'width attribute'</a> and <a>'height attribute'</a> attributes define the <a href="#FilterEffectsRegion">filter
+  effects region</a>.
+</p>
+    
+<p>
+  The following sections describe the 'filter-margin-top', 'filter-margin-left', 'filter-margin-bottom',
+  'filter-margin-right' properties.
+</p>
+
+<p>
+  The filter-margin properties are a shorthand mechanism for defining a filter region equivalent to:</p>
+
+<pre>
+&lt;filter filterUnits="objectBoundingBox" 
+        x="fx(targetBox, [filter-margin-left])"
+        y="fy(targetBox, [filter-margin-top])"
+        width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
+        height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
+    &lt;!-- filter primitives for the filter function --&gt;
+&lt;/filter&gt;
+</pre>
+
+<p>
+  Where:
+</p>
+
+<ul>
+    <li><code id="targetBox">targetBox</code> is the <span class="term">bounding client rect</span>
+    <li><code>fx(box, left) = - (left / box.width)</code></li>
+    <li><code>fy(box, top) = - (top / box.height)</code></li>
+    <li><code>fw(box, left, right) = ((box.width + left + right) / box.width)</code></li>
+    <li><code>fh(box, top, bottom) = ((box.height + top + bottom) / box.height)</code></li> 
+</ul>
+
+<p>
+  Margin properties specify the width of the <a href="#FilterEffectsRegion">filter region</a> of a box. The
+  'filter-margin' shorthand property sets the margin for all four sides while the other margin properties
+  only set their respective side. These properties apply to all elements (which is different from the regular
+  margin properties where vertical margins will not have any effect on non-replaced inline elements).
+</p>
+    
+<p>
+  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 'filter-margin-right' can
+  take the same values as the 'margin-top', 'margin-bottom', 'margin-left' and 'margin-right' 
+  properties, respectively. In addition, they can take the ''auto'' value which is also their default value.
+</p>
+    
+<p>
+  The 'filter-margin' property can take the same values as the 'margin' property and is a shorthand
+  for setting 'filter-margin-top', 'filter-margin-right', 'filter-margin-bottom' and 
+  'filter-margin-left' at the same place in the stylesheet.
+</p>
+    
+<p>
+  The following figure illustrates how the various filter-margin properties affect the filter region.
+</p>
+
+<div class="figure">
+  <img src="images/filter-region.png" width="300" />
+  <p class="caption">The filter region</p>
+</div>
+
+<p>The blue border delimit the filter region. The margins are represented by:</p>
+
+<ul>
+  <li>A: filter-margin-left</li>
+  <li>B: filter-margin-right</li>
+  <li>C: filter-margin-top</li>
+  <li>D: filter-margin-bottom</li>
+</ul>
+
+<table class="propdef">
+  <tr>
+    <th>Name:
+    <td>
+      <dfn>filter-margin-top</dfn>, <dfn>filter-margin-right</dfn>, <dfn>filter-margin-bottom</dfn>, <dfn>filter-margin-left</dfn>
+    </td>
+  <tr>
+    <th>Value:</th>
+    <td><code>&lt;margin-width&gt; | auto</code></td>
+  <tr>
+    <th>Initial</th>
+    <td>auto</td>
+  <tr>
+    <th>Applies to:</th>
+    <td>all elements</td>
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>refer to the dimension of the bound client rect
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the bound client rect</td>
+  </tr>
+</table>
+
+<table class="propdef">
+  <tr>
+    <th>Name:
+    <td><dfn>filter-margin</dfn>
+  <tr>
+    <th>Value:</th>
+    <td><code>&lt;margin-width&gt;{1,4} | auto</code></td>
+  <tr>
+    <th>Initial</th>
+    <td>auto</td>
+  <tr>
+    <th>Applies to:</th>
+    <td>all elements</td>
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>refer to the dimension of the bound client rect
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the bound client rect</td>
+  </tr>
+</table>
 
 <h2 id="AccessBackgroundImage">Accessing the background image</h2>
 
