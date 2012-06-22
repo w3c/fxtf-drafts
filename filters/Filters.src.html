@@ -374,8 +374,8 @@
 <p>
   Note that even though this specification references parts of <a
   href="#ref-svg11">SVG 1.1</a> it does not require an SVG 1.1
-  implementation. <span class="note">Add link to conformance classes
-  here.</span>
+  implementation.
+  <p class="issue">Add link to conformance classes here.</p>
 </p>
 
 <!-- ****************************************************************************** -->
@@ -387,68 +387,57 @@
 </p>
 
 <dl>
-  <dt id="term-null-filter"><span
-  class="termDefine">null filter</span></dt>
+  <dt id="term-null-filter"><dfn>null filter</dfn></dt>
   <dd>
     <p>
     The null filter output is all transparent black pixels. If applied to an element it means
   that the element (and children if any) becomes invisible. Note that it does not affect event processing.
     </p>
   </dd>
-  <dt id="TermTransferFunctionElements"><span
-  class="SVG-TermDefine">transfer function elements</span></dt>
+  <dt id="TermTransferFunctionElements"><dfn>transfer function elements</dfn></dt>
   <dd>
-    <p>
-    The set of elements,
-      <a>'feFuncR'</a>, <a>'feFuncG'</a>, <a>'feFuncB'</a>, <a>'feFuncA'</a>, that define the transfer function for the <a>'feComponentTransfer'</a> filter primitive.
-    </p>
+    The set of <a>'feFuncR element'</a>, <a>'feFuncG element'</a>, <a>'feFuncB element'</a>,
+    <a>'feFuncA element'</a> elements, that define the transfer function for the <a>'feComponentTransfer element'</a>
+    <span class="term">filter primitive</span>.
   </dd>
 <dt id="TermClientBoundingRect"><dfn>bounding client rect</dfn></dt>
 <dd>
   <p>
-  The union of all CSS border-boxes for the element if formatted with the CSS box model, as defined by the CSS OM method 
-  <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [<a href="#ref-CSSOM">CSSOM</a>].
+    The union of all border boxes for the element that has an associated CSS layout box and is not
+    in the <code>http://www.w3.org/2000/svg</code> namespace and it's descendant elements. Or the
+    object bounding box [[SVG11]], if the element does not have
+    an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace
+    (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
+    [<a href="#ref-CSSOM">CSSOM</a>]).
   </p>
 </dd>
-<dt id="TermCSSBoundingBox"><span
-  class="SVG-TermDefine">CSS bounding box</span></dt>
+<dt id="TermUserCoordinateSystem"><dfn>local coordinate system</dfn>, <dfn>user coordinate system</dfn></dt>
 <dd>
   <p>
-  The union of all CSS border-boxes for the element and all it's descendant elements, provided the element is formatted with the CSS box model [<a href="#ref-CSS21">CSS</a>].
+    In general, a coordinate system defines locations and distances on the current
+    canvas. The current local coordinate system (also user coordinate system) is the
+    coordinate system that is currently active and which is used to define how
+    coordinates and lengths are located and computed, respectively, on the current
+    canvas.
+  </p>
+  <p>
+    For elements that have an associated CSS layout box, the current user coordinate system has its origin at
+    the top-left corner of the <span class="term">bounding client rect</span> and one unit equals on CSS px.
+    The viewport for resolving percentage values is defined by the width and height of the
+    <span class="term">bounding client rect</span>.
+  </p>
+  <p>
+    If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code>
+    namespace, the current user coordinate system has its origin at the top-left corner of the element's
+    nearest viewport.
   </p>
 </dd>
-<dt id="TermCurrentUserCoordinateSystem"><span
-  class="SVG-TermDefine">current user coordinate system</span></dt>
+<dt id="TermObjectBoundingBoxUnits"><dfn>object bounding box units</dfn></dt>
 <dd>
-  <p>
-  For elements formatted with the CSS box model: the current user coordinate system has its origin at the top-left corner of the 
-  <a href="#TermClientBoundingRect">bounding client rect</a> and one unit equals on CSS px. The viewport for resolving percentage values is defined by the width and height of the
-  <a href="#TermClientBoundingRect">bounding client rect</a>.
-  </p>
-  <p>
-  For elements using SVG layout see <a>user coordinate system</a>.
-  </p>
+  The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a>.
+  <p class="issue">Reference to SVG missing?</p>
 </dd>
-<dt id="TermObjectBoundingBoxUnits"><span
-  class="SVG-TermDefine">object bounding box units</span></dt>
-<dd>
-  For elements formatted with the CSS box model: the bounding box is defined by <a href="#TermCSSBoundingBox">the CSS bounding box.</a> 
-  <p>
-  For elements using SVG layout the bounding box is defined by <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">the SVG bounding box</a>. 
-  </p>
-  <p>
-  For both cases the bounding box defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a>.
-  </p>
-</dd>
-<dt id="TermFilterPrimitiveReference"><span
-  class="SVG-TermDefine">&lt;filter-primitive-reference&gt;</span></dt>
-<dd>
-  <p>
-  A string that identifies a particular filter primitive's output.
-  </p>
-</dd>
-<dt id="TermFilterPrimitiveElements"><span
-  class="SVG-TermDefine">filter primitives, filter primitive elements</span></dt>
+<dt id="TermFilterPrimitiveElements"><dfn>filter primitives</dfn>, <dfn>filter primitive elements</dfn></dt>
 <dd>
   <p>
   The set of elements that control the output of a <a>'filter element'</a> element, particularly:  
@@ -481,117 +470,50 @@
 
 <!-- ****************************************************************************** -->
 
-<h2 id="security">Security</h2>
-
-<p class="todo">Should this section be merged with the CSS shaders 
-    <a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#security-considerations">security
-        considerations</a> section?</a>
-        
-<h3 id="timing-attacks">Timing Attacks</h3>
+<h2 id="FilterProperty">
+  The 'filter' property
+</h2>
 
 <p>
-  Since a filter effect is applying a processing operation on input values, it
-  is vital that no private information leaks from that operation. The same rules
-  for cross-origin restrictions and tainting of data values apply to filtered
-  content. There are a number of extra cases that are called out here.
+  The description of the 'filter' property is as follows:
 </p>
-
-<p>
-  A timing attack is a method of obtaining information about content that is
-  otherwise protected, based on studying the amount of time it takes for an
-  operation to occur. For example, rendering is an operation that takes a
-  significant amount of time, and that time depends on the complexity of the
-  drawing operations involved. If, for example, red pixels took longer to draw
-  than green pixels, one might be able to obtain an indication of the proportion
-  of red to green in the element being rendered, even without ever having access
-  to the content of the element. Taking that to its theoretical extreme, an
-  attack may be able to modify content in a way that exposes such variations in
-  timing over a long enough period.
-</p>
-
-<p>
-  Filter effects do not add new vulnerabilities to such attacks, but they
-  possibly allow malicious code to be written that accelerates the process. For
-  example, a filter effect might be able to modify input pixel values in a manner
-  that amplifies the differences in rendering. It is essential that a filter
-  effect expose as little private information to the system as possible. One of
-  the well-documented security issues is exposing the user's browsing history to
-  script based on detecting the color of link elements styled with the 'visited'
-  pseudo-class.
-</p>
-
-<p>
-  A user agent must ensure that any content passed to a filter effect has
-  discernible information removed. This includes, but is not limited-to:
-</p>
-
-<ul>
-  <li>visited link styles must not be applied</li>
-  <li>file input should not identify any file names</li>
-  <li>editable content should not highlight dictionary information</li>
-  <li>cross-origin restrictions described below</li>
-</ul>
-
-<h3 id="origin-restrictions">Origin Restrictions</h3>
-
-<p>
-  Input to a filter effect must not include anything as input that would
-  violate cross-origin restrictions. If cross-origin access is required,
-  then the requested content should be explicitly marked with CORS data.
-</p>
-
-<p>
-  This restriction includes:
-</p>
-
-<ul>
-  <li>Any 'iframe' content</li>
-  <li>Any images, either as content or via styling, that are not exposed with CORS</li>
-  <li>Any tainted canvas</li>
-  <li>Any cross-origin content referenced by 'use'</li>
-</ul>
-
-<p>
-  For content that falls under this restriction, it should not be rendered into
-  the input image. For example, a filter effect that is applying to a cross-origin
-  'iframe' element would receive a completely blank input image.
-</p>
-
-<h2 id="FilterProperty">The <span class="prop-name">'filter'</span>
-property</h2>
-
-<p>
-  The description of the <span class="prop-name">'filter'</span> property is
-as follows:</p>
 
 
 <table summary="filter property" class="propdef">
   <tbody>
-    <tr valign="baseline">
-      <td><em>Value:</em>  </td>
-      <td>none | <a href="#FilterFunction">&lt;filter-function&gt;</a> [ <a href="#FilterFunction">&lt;filter-function&gt;</a> ]* </td>
+    <tr>
+      <td>
+        <em>Name:</em>
+      </td>
+      <td>
+        <dfn id="effects">filter</dfn>
+      </td>
     </tr>
-    <tr valign="baseline">
+    <tr>
+      <td><em>Value:</em>  </td>
+      <td>none | <span class="term">&lt;filter-function&gt;</span> [ <span class="term">&lt;filter-function&gt;</span> ]* </td>
+    </tr>
+    <tr>
       <td><em>Initial:</em>  </td>
       <td>none</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Applies to:</em>  </td>
       <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except ‘mask’) and graphics elements"</span></td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Inherited:</em>  </td>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Percentages:</em>  </td>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Media:</em>  </td>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Animatable:</em>  </td>
       <td>yes</td>
     </tr>
@@ -599,45 +521,212 @@ as follows:</p>
 </table>
 
 <p>
-  If the value of the <a>'filter property'</a> property is <span class="prop-value">none</span> then there
+  If the value of the 'filter' property is ''none'' then there
   is no filter effect applied. Otherwise, the list of functions (described <a href="#FilterFunction">below</a>)
   are applied in order.
 </p>
 
-<h2 id="ColorInterpolationFiltersProperty">The <span class="prop-name">'color-interpolation-filters'</span>
-property</h2>
+<p>
+  The application of the 'filter' property to an element
+  formatted with the CSS box model establishes a pseudo-stacking-context the same way that CSS
+  <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does,
+  and all the element's descendants are rendered together as a group with the filter
+  effect applied to the group as a whole.
+</p>
 
 <p>
-  The description of the <span class="prop-name">'color-interpolation-filters'</span> property is
-as follows:</p>
+  The 'filter' property has no effect on the geometry of the
+  target element's CSS boxes, even though 'filter' can cause
+  painting outside of an element's border box.
+</p>
+
+<p>
+  The compositing model follows the <a
+  href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
+  model</a> [[SVG11]]: first any filter effect is applied, then any clipping, masking
+  and opacity. These effects all apply after any other CSS effects such as
+  'border'. As per SVG, the application of 'filter' has no
+  effect on hit-testing.
+</p>
+
+<h2 id="filter-margin-property">
+  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 
+  'filter-margin-right', and 'filter-margin' properties
+</h2>
+
+<p>
+  The filter-margin properties define the <a href="#FilterEffectsRegion">filter effect region</a>
+  for <a href="#FilterFunction">filter functions</a> such as the 'custom()' function defined in this document.
+  If the filter property references a <a>'filter element'</a> element, then the filter effect
+  region defined by the element takes precedence over the 'filter-margin' property.
+</p>
+    
+<p>
+  On a regular <a>'filter element'</a> element, the <a>'x attribute'</a>, <a>'y attribute'</a>,
+  <a>'width attribute'</a> and <a>'height attribute'</a> attributes define the <a href="#FilterEffectsRegion">filter
+  effects region</a>.
+</p>
+    
+<p>
+  The following sections describe the 'filter-margin-top', 'filter-margin-left', 'filter-margin-bottom',
+  'filter-margin-right' properties.
+</p>
+
+<p>
+  The filter-margin properties are a shorthand mechanism for defining a filter region equivalent to:</p>
+
+<pre>
+&lt;filter filterUnits="objectBoundingBox" 
+        x="fx(targetBox, [filter-margin-left])"
+        y="fy(targetBox, [filter-margin-top])"
+        width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
+        height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
+    &lt;!-- filter primitives for the filter function --&gt;
+&lt;/filter&gt;
+</pre>
+
+<p>
+  Where:
+</p>
+
+<ul>
+    <li><code id="targetBox">targetBox</code> is the <span class="term">bounding client rect</span>
+    <li><code>fx(box, left) = - (left / box.width)</code></li>
+    <li><code>fy(box, top) = - (top / box.height)</code></li>
+    <li><code>fw(box, left, right) = ((box.width + left + right) / box.width)</code></li>
+    <li><code>fh(box, top, bottom) = ((box.height + top + bottom) / box.height)</code></li> 
+</ul>
+
+<p>
+  Margin properties specify the width of the <a href="#FilterEffectsRegion">filter region</a> of a box. The
+  'filter-margin' shorthand property sets the margin for all four sides while the other margin properties
+  only set their respective side. These properties apply to all elements (which is different from the regular
+  margin properties where vertical margins will not have any effect on non-replaced inline elements).
+</p>
+    
+<p>
+  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 'filter-margin-right' can
+  take the same values as the 'margin-top', 'margin-bottom', 'margin-left' and 'margin-right' 
+  properties, respectively. In addition, they can take the ''auto'' value which is also their default value.
+</p>
+    
+<p>
+  The 'filter-margin' property can take the same values as the 'margin' property and is a shorthand
+  for setting 'filter-margin-top', 'filter-margin-right', 'filter-margin-bottom' and 
+  'filter-margin-left' at the same place in the stylesheet.
+</p>
+    
+<p>
+  The following figure illustrates how the various filter-margin properties affect the filter region.
+</p>
+
+<div class="figure">
+  <img src="images/filter-region.png" width="300" />
+  <p class="caption">The filter region</p>
+</div>
+
+<p>The blue border delimit the filter region. The margins are represented by:</p>
+
+<ul>
+  <li>A: filter-margin-left</li>
+  <li>B: filter-margin-right</li>
+  <li>C: filter-margin-top</li>
+  <li>D: filter-margin-bottom</li>
+</ul>
+
+<table class="propdef">
+  <tr>
+    <th>Name:
+    <td>
+      <dfn>filter-margin-top</dfn>, <dfn>filter-margin-right</dfn>, <dfn>filter-margin-bottom</dfn>, <dfn>filter-margin-left</dfn>
+    </td>
+  <tr>
+    <th>Value:</th>
+    <td><code>&lt;margin-width&gt; | auto</code></td>
+  <tr>
+    <th>Initial</th>
+    <td>auto</td>
+  <tr>
+    <th>Applies to:</th>
+    <td>all elements</td>
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>refer to the dimension of the <span class="term">bounding client rect</span>
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the <span class="term">bounding client rect</span></td>
+  </tr>
+</table>
+
+<table class="propdef">
+  <tr>
+    <th>Name:
+    <td><dfn>filter-margin</dfn>
+  <tr>
+    <th>Value:</th>
+    <td><code>&lt;margin-width&gt;{1,4} | auto</code></td>
+  <tr>
+    <th>Initial</th>
+    <td>auto</td>
+  <tr>
+    <th>Applies to:</th>
+    <td>all elements</td>
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>refer to the dimension of the <span class="term">bounding client rect</span>
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the <span class="term">bounding client rect</span></td>
+  </tr>
+</table>
+
+<h2 id="ColorInterpolationFiltersProperty">
+  The 'color-interpolation-filters' property
+</h2>
+
+<p>
+  The description of the 'color-interpolation-filters' property is as follows:
+</p>
 
 <table summary="color-interpolation-filters property" class="propdef">
-  <tr valign="baseline">
+  <tr>
     <td><em>Value:</em>&nbsp;&nbsp;</td>
     <td>auto | sRGB | linearRGB</td>
   </tr>
-  <tr valign="baseline">
+  <tr>
     <td><em>Initial:</em>&nbsp;&nbsp;</td>
     <td>linearRGB</td>
   </tr>
-  <tr valign="baseline">
+  <tr>
     <td><em>Applies to:</em>&nbsp;&nbsp;</td>
     <td><a href="filters.html#TermFilterPrimitive">filter
     primitives</a></td>
   </tr>
-  <tr valign="baseline">
+  <tr>
     <td><em>Inherited:</em>&nbsp;&nbsp;</td>
     <td>yes</td>
   </tr>
-  <tr valign="baseline">
+  <tr>
     <td><em>Percentages:</em>&nbsp;&nbsp;</td>
     <td>N/A</td>
   </tr>
-  <tr valign="baseline">
+  <tr>
     <td><em>Media:</em>&nbsp;&nbsp;</td>
     <td>visual</td>
   </tr>
-  <tr valign="baseline">
+  <tr>
     <td><em><a
     href="animate.html#Animatable">Animatable</a>:</em>&nbsp;&nbsp;</td>
     <td>yes</td>
@@ -645,62 +734,39 @@ as follows:</p>
 </table>
 
 <dl>
-  <dt><span class='prop-value'>auto</span></dt>
-  <dd>Indicates that the user agent can choose either the
-  <span class='prop-value'>sRGB</span> or
-  <span class='prop-value'>linearRGB</span> spaces for filter effects color
+  <dt>''auto''</dt>
+  <dd>Indicates that the user agent can choose either the ''sRGB or
+  ''linearRGB'' spaces for filter effects color
   operations. This option indicates that the author doesn't require that color
   operations occur in a particular color space.</dd>
 
-  <dt><span class='prop-value'>sRGB</span></dt>
+  <dt>''sRGB''</dt>
   <dd>Indicates that filter effects color operations should occur in the sRGB
   color space.</dd>
 
-  <dt><span class='prop-value'>linearRGB</span></dt>
+  <dt>''linearRGB''</dt>
   <dd>Indicates that filter effects color operations should occur in the
   linearized RGB color space.</dd>
 </dl>
 
-<p>The <a>'color-interpolation-filters'</a> property specifies the color space
-for imaging operations performed via filter effects.</p>
-
-<p>Note that <a>'color-interpolation-filters'</a> has a different initial
-value than <a>'color-interpolation'</a>. <a>'color-interpolation-filters'</a>
-has an initial value of <span class="prop-value">linearRGB</span>, whereas
-<a>'color-interpolation'</a> has an initial value of
-<span class="prop-value">sRGB</span>.  Thus, in the default case, filter
-effects operations occur in the linearRGB color space, whereas all other color
-interpolations occur by default in the sRGB color space.</p>
-
-
-<h3 id="filters-in-css">How the 'filter' property property applies to content formatted with the CSS box model (e.g HTML)</h3>
 <p>
-  The application of the <a>'filter property'</a> property to an element
-  formatted with the CSS box model establishes a pseudo-stacking-context the same way that CSS
-  <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does,
-  and all the element's boxes are rendered together as a group with the filter
-  effect applied to the group as a whole.
-</p>
-<p>
-  The <a>'filter property'</a> property has no effect on the geometry of the
-  target element's CSS boxes, even though <a>'filter property'</a> can cause
-  painting outside of an element's border-box.
-</p>
-<p>
-  The compositing model follows the <a
-  href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
-  model</a>: first any filter effect is applied, then any clipping, masking
-  and opacity. These effects all apply after any other CSS effects such as
-  'border'. As per SVG, the application of <a>'filter property'</a> has no
-  effect on hit-testing.
+  The 'color-interpolation-filters' property specifies the color space for imaging
+  operations performed via filter effects.
 </p>
 
-<br />
+<p class="note">
+  Note that 'color-interpolation-filters' has a different initial
+  value than 'color-interpolation'. 'color-interpolation-filters' has an initial
+  value of ''linearRGB'', where as 'color-interpolation' has an initial value of
+  ''sRGB''.  Thus, in the default case, filter effects operations occur in the
+  linearRGB color space, whereas all other color interpolations occur by default
+  in the sRGB color space.
+</p>
 
 <h2 id="FilterFunction">Filter Functions</h2>
 
 <p>
-  The value of the <a>'filter'</a> property is a list of &lt;filter-functions&gt;
+  The value of the 'filter' property is a list of <dfn>&lt;filter-function&gt;</dfn>s
   applied in the order provided. The individual filter functions are
   separated by whitespace. The set of allowed filter functions is given
   below.
@@ -713,7 +779,7 @@ interpolations occur by default in the sRGB color space.</p>
   <dd>
     An <a>IRI reference</a>
     to a <a>'filter element'</a> element that defines the
-    filter effect. For example "url(commonfilters.xml#large-blur)". If the IRI references a non-existent object or the referenced  
+    filter effect. For example ''url(commonfilters.xml#large-blur)''. If the IRI references a non-existent object or the referenced  
     object is not a <a>'filter element'</a> element, then the <a>null filter</a> will be applied instead.
   </dd>
 
@@ -1722,149 +1788,6 @@ values for <a>'x'</a>, <a>'y'</a> and percentages values greater than <span clas
 the filter effects region are <span class="attr-value">x="-10%" y="-10%" width="120%"
 height="120%"</span>.</p>
 
-<h2 id="filter-margin-property">
-  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 
-  'filter-margin-right', and 'filter-margin' properties
-</h2>
-
-<p>
-  The filter-margin properties define the <a href="#FilterEffectsRegion">filter effect region</a>
-  for <a href="#FilterFunction">filter functions</a> such as the 'custom()' function defined in this document.
-  If the filter property references a <a>'filter element'</a> element, then the filter effect
-  region defined by the element takes precedence over the 'filter-margin' property.
-</p>
-    
-<p>
-  On a regular <a>'filter element'</a> element, the <a>'x attribute'</a>, <a>'y attribute'</a>,
-  <a>'width attribute'</a> and <a>'height attribute'</a> attributes define the <a href="#FilterEffectsRegion">filter
-  effects region</a>.
-</p>
-    
-<p>
-  The following sections describe the 'filter-margin-top', 'filter-margin-left', 'filter-margin-bottom',
-  'filter-margin-right' properties.
-</p>
-
-<p>
-  The filter-margin properties are a shorthand mechanism for defining a filter region equivalent to:</p>
-
-<pre>
-&lt;filter filterUnits="objectBoundingBox" 
-        x="fx(targetBox, [filter-margin-left])"
-        y="fy(targetBox, [filter-margin-top])"
-        width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
-        height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
-    &lt;!-- filter primitives for the filter function --&gt;
-&lt;/filter&gt;
-</pre>
-
-<p>
-  Where:
-</p>
-
-<ul>
-    <li><code id="targetBox">targetBox</code> is the <span class="term">bounding client rect</span>
-    <li><code>fx(box, left) = - (left / box.width)</code></li>
-    <li><code>fy(box, top) = - (top / box.height)</code></li>
-    <li><code>fw(box, left, right) = ((box.width + left + right) / box.width)</code></li>
-    <li><code>fh(box, top, bottom) = ((box.height + top + bottom) / box.height)</code></li> 
-</ul>
-
-<p>
-  Margin properties specify the width of the <a href="#FilterEffectsRegion">filter region</a> of a box. The
-  'filter-margin' shorthand property sets the margin for all four sides while the other margin properties
-  only set their respective side. These properties apply to all elements (which is different from the regular
-  margin properties where vertical margins will not have any effect on non-replaced inline elements).
-</p>
-    
-<p>
-  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 'filter-margin-right' can
-  take the same values as the 'margin-top', 'margin-bottom', 'margin-left' and 'margin-right' 
-  properties, respectively. In addition, they can take the ''auto'' value which is also their default value.
-</p>
-    
-<p>
-  The 'filter-margin' property can take the same values as the 'margin' property and is a shorthand
-  for setting 'filter-margin-top', 'filter-margin-right', 'filter-margin-bottom' and 
-  'filter-margin-left' at the same place in the stylesheet.
-</p>
-    
-<p>
-  The following figure illustrates how the various filter-margin properties affect the filter region.
-</p>
-
-<div class="figure">
-  <img src="images/filter-region.png" width="300" />
-  <p class="caption">The filter region</p>
-</div>
-
-<p>The blue border delimit the filter region. The margins are represented by:</p>
-
-<ul>
-  <li>A: filter-margin-left</li>
-  <li>B: filter-margin-right</li>
-  <li>C: filter-margin-top</li>
-  <li>D: filter-margin-bottom</li>
-</ul>
-
-<table class="propdef">
-  <tr>
-    <th>Name:
-    <td>
-      <dfn>filter-margin-top</dfn>, <dfn>filter-margin-right</dfn>, <dfn>filter-margin-bottom</dfn>, <dfn>filter-margin-left</dfn>
-    </td>
-  <tr>
-    <th>Value:</th>
-    <td><code>&lt;margin-width&gt; | auto</code></td>
-  <tr>
-    <th>Initial</th>
-    <td>auto</td>
-  <tr>
-    <th>Applies to:</th>
-    <td>all elements</td>
-  <tr>
-    <th>Inherited:
-    <td>no
-  <tr>
-    <th>Percentages:
-    <td>refer to the dimension of the bound client rect
-  <tr>
-    <th>Media:
-    <td>visual
-  <tr>
-    <th>Computed value:
-    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the bound client rect</td>
-  </tr>
-</table>
-
-<table class="propdef">
-  <tr>
-    <th>Name:
-    <td><dfn>filter-margin</dfn>
-  <tr>
-    <th>Value:</th>
-    <td><code>&lt;margin-width&gt;{1,4} | auto</code></td>
-  <tr>
-    <th>Initial</th>
-    <td>auto</td>
-  <tr>
-    <th>Applies to:</th>
-    <td>all elements</td>
-  <tr>
-    <th>Inherited:
-    <td>no
-  <tr>
-    <th>Percentages:
-    <td>refer to the dimension of the bound client rect
-  <tr>
-    <th>Media:
-    <td>visual
-  <tr>
-    <th>Computed value:
-    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the bound client rect</td>
-  </tr>
-</table>
-
 <h2 id="AccessBackgroundImage">Accessing the background image</h2>
 
 <p id="AccessingBackgroundImage">Two possible pseudo input images for filter effects are <a>BackgroundImage</a> and <a>BackgroundAlpha</a>, which each represent an image
@@ -1900,34 +1823,34 @@ which the filter is applied.
 
 <table summary="enable-background property" class="propdef">
   <tbody>
-    <tr valign="baseline">
+    <tr>
       <td><em>Value:</em>  </td>
       <td>accumulate | new</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Initial:</em>  </td>
       <td>accumulate</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Applies to:</em>  </td>
       <td>Typically elements that can contain renderable elements. 
         language is responsible for defining the applicable set of
         elements.
         For SVG: <a>container elements</a></td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Inherited:</em>  </td>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Percentages:</em>  </td>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Media:</em>  </td>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Animatable:</em>  </td>
       <td>no</td>
     </tr>
@@ -2246,7 +2169,7 @@ primitives:</p>
   </dd>
   <dt id="FilterPrimitiveResultAttribute">
   <span class="adef">result</span> =
-  "<em><a>&lt;filter-primitive-reference&gt;</a></em>"</dt>
+  "<em><a><dfn>&lt;filter-primitive-reference&gt;</dfn></a></em>"</dt>
     <dd><p>
   Assigned name for this <a>filter primitive</a>. If supplied, then graphics
       that result from processing this <a>filter primitive</a> can be referenced by
@@ -2255,7 +2178,8 @@ primitives:</p>
       provided, the output will only be available for re-use as the implicit
       input into the next <a>filter primitive</a> if that <a>filter primitive</a> provides
       no value for its <a>'in'</a> attribute.</p>
-      <p>
+      <p class="issue">Can &lt;filter-primitive-reference&gt; be defined as &lt;author-ident&gt; as in CSS Values and Units?</p>
+      <p class="note">
   Note that a <a>&lt;filter-primitive-reference&gt;</a> is not an XML
       ID; instead, a <a>&lt;filter-primitive-reference&gt;</a> is only
       meaningful within a given <a>'filter element'</a> element and thus have only
@@ -2340,7 +2264,7 @@ primitives:</p>
   For non-SVG cases <a>FillPaint</a> generates a transparent black image.
       </p>
       <p class="issue">
-        Consider whether this should be e.g the CSS bounding box filled with the current color, or if it makes sense to use the 'fill' property for this case too.
+        Consider whether this should be e.g the <span class="term">bounding client rect</spam> filled with the current color, or if it makes sense to use the 'fill' property for this case too.
       </p>
       <p class="note authoring">Note that text is generally painted filled, not stroked.</p>
       <p>
@@ -2359,7 +2283,7 @@ primitives:</p>
       <p>
   For non-SVG cases <a>StrokePaint</a> generates a transparent black image. 
       </p>
-      <p class="issue">Consider whether this should be e.g the CSS bounding box filled with the one of the border colors, or if it makes sense to use the 'stroke' property for this case too.
+      <p class="issue">Consider whether this should be e.g the <span class="term">bounding client rect</spam> filled with the one of the border colors, or if it makes sense to use the 'stroke' property for this case too.
       </p>
       <p class="note authoring">Note that text is generally painted filled, not stroked.</p>
         <p>
@@ -2648,32 +2572,32 @@ color of the light source for <a>filter primitives</a> <a>'feDiffuseLighting'</a
 
 <table summary="lighting-color property" class="propdef">
   <tbody>
-    <tr valign="baseline">
+    <tr>
       <td><em>Value:</em>  </td>
       <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Initial:</em>  </td>
       <td>white</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Applies to:</em>  </td>
       <td><a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a>
       elements</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Inherited:</em>  </td>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Percentages:</em>  </td>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Media:</em>  </td>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Animatable:</em>  </td>
       <td>yes</td>
     </tr>
@@ -4277,34 +4201,34 @@ properties.</p>
 
 <table summary="flood-color property" class="propdef">
   <tbody>
-    <tr valign="baseline">
+    <tr>
       <td><em>Value:</em>  </td>
       <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Initial:</em>  </td>
       <td>black</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Applies to:</em>  </td>
       <td><a href="#feFloodElement"><span
         class="element-name">'feFlood'</span></a> and <a
         href="#feDropShadowElement"><span
         class="element-name">'feDropShadow'</span></a> elements</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Inherited:</em>  </td>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Percentages:</em>  </td>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Media:</em>  </td>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Animatable:</em>  </td>
       <td>yes</td>
     </tr>
@@ -4318,35 +4242,35 @@ href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.</p>
 
 <table summary="flood-opacity property" class="propdef">
   <tbody>
-    <tr valign="baseline">
+    <tr>
       <td><em>Value:</em>  </td>
       <td>&lt;opacity-value&gt;
         <p class="issue">Should it be number? What is 'opacity' doing?</p></td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Initial:</em>  </td>
       <td>1</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Applies to:</em>  </td>
       <td><a href="#feFloodElement"><span
         class="element-name">'feFlood'</span></a> and <a
         href="#feDropShadowElement"><span
         class="element-name">'feDropShadow'</span></a> elements</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Inherited:</em>  </td>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Percentages:</em>  </td>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Media:</em>  </td>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
+    <tr>
       <td><em>Animatable:</em>  </td>
       <td>yes</td>
     </tr>
@@ -5515,10 +5439,10 @@ class="element-name">'feCustom'</span></h2>
                         <td>[ true | false ]{1,4} | <br />
                             &lt;number&gt;{1,4} | <br/>
                             &lt;array&gt; | <br />
-                            <a href="http://www.w3.org/TR/css3-3d-transforms/#transform-functions">&lt;transform-function&gt;</a>+ | <br />
+                            <a href="http://www.w3.org/TR/css3-transforms/#transform-functions">&lt;transform-function&gt;</a>+ | <br />
                             &lt;mat&gt; | <br />
                             &lt;color&gt; | <br />
-                            texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)</td>
+                            texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
                     </tr>
                     <tr>
                         <td>&lt;array&gt;</td>
@@ -5534,7 +5458,7 @@ class="element-name">'feCustom'</span></h2>
                     <tr></tr>
                 </table>
 
-                <p>The data type &lt;filter-primitive-reference&gt; can just be used for the <a href="#shader-inputs">primitive feCustom</a>.</p>
+                <p>The data type <span class="term">&lt;filter-primitive-reference&gt;</span> can just be used for the <a href="#shader-inputs">primitive feCustom</a>.</p>
                 
                 <p>There are two ways to specify a 4x4 matrix. They differ in 
                     <a href="#integration-with-css-animations-transitions">how 
@@ -5626,28 +5550,12 @@ class="element-name">'feCustom'</span></h2>
       </dd>
     </dl>
 
-    <h4 id="processing-model-mix">
-      Processing model for ''mix'' function
-    </h4>
-
-    <div class="figure">
-      <img src="images/mix-fragment-shader.png" width="451" height="726"/>
-      <p class="caption">fragmentShader: processing model for mix</p>
-    </div>
-
-    <p class="todo">Processing model for <code>mix</code> missing.</p>
-
     <h3 id="vertexMesh-attribute">The <a>'vertexMesh attribute'</a> attribute</h3>
 
     <p>
       The <a>'vertexMesh attribute'</a> attribute of the <a>'feCustom element'</a> element defines the granularity
       of vertices in the <a href="#vertex-mesh">shader mesh</a>. By default, the vertex mesh is made of two triangles
       that encompass the <a href="#filter-region">filter region</a> area.
-    </p>
-
-    <p class="issue">
-      For feCustom it should be the primitive subregion. For custom() it should be the bounding client rect with
-      extensions of previous filter effects?
     </p>
 
     <dl>
@@ -5670,36 +5578,44 @@ class="element-name">'feCustom'</span></h2>
           If one of the passed parameters is zero or negative, the UA must fallback to the lacuna values.
         </p>
       </dd>
-      <dt>&lt;box&gt; = "border-box | filter-box | content-box | adding-box"</dt>
+      <dt>&lt;box&gt; = "filter-box | border-box | padding-box | content-box"</dt>
       <dd>
-        <p>
-          The optional &lt;box&gt; parameter defines the box on which the vertex mesh is stretched to.
-          It defaults to the ''filter-box'' value which is ''border-box'' with the added filter margins. 
-          For elements that do not have padding or borders (e.g., SVG elements), the values ''padding-box''
-          and ''border-box'' are equivalent to ''content-box''. For SVG elements, the ''content-box'' is 
-          the object bounding box.
-        </p>
+        The optional &lt;box&gt; parameter defines the box on which the vertex mesh is stretched to.
+        <dl>
+          <dt>filter-box</dt>
+          <dd>
+            The filter region as defined in <a href="#FilterEffectsRegion">Filter Effects Region</a> or by the
+            'filter-margin' property.
+          </dd>
+          <dt>border-box</dt>
+          <dd>
+            The border box as defined in the CSS box model [[CSS2]] for elements that have an associated CSS
+            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the stroke bounding box
+            [[SVG2]], if the element does not have an associated CSS layout box and is in the
+            http://www.w3.org/2000/svg namespace.
+          </dd>
+          <dt>padding-box</dt>
+          <dd>
+            The padding box as defined in the CSS box model [[CSS2]] for elements that have an associated CSS
+            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the object bounding box
+            [[SVG11]], if the element does not have an associated CSS layout box and is in the
+            http://www.w3.org/2000/svg namespace.
+          </dd>
+          <dt>content-box</dt>
+          <dd>
+            The content box as defined in the CSS box model [[CSS2]] for elements that have an associated CSS
+            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the object bounding box
+            [[SVG11]], if the element does not have an associated CSS layout box and is in the
+            http://www.w3.org/2000/svg namespace.
+          </dd>
+        </dl>
 
         <p>
           The lacuna value is ''filter-box''.
         </p>
         <p class="issue">
-          Does it make sense to have the &lt;box&gt; parameter at all? Given the fact that
-          feCustom might just be one effect in a filter chain and the previous result has a different
-          effect region anyway?
-        </p>
-
-        <p class="issue">
-          ''filter-box'' should be ''adding-box'' (alias bounding client rect) with added filter margins.
-        </p>
-
-        <p class="issue">
-          Can ''adding-box'' and bounding client rect be renamed to ''target box''? This is smaller and
-          easier to use. CSS Shaders already defined this term.
-        </p>
-
-        <p class="issue">
-          Definitions of nearly all boxes are missing.
+          Is it possible to omit the &lt;box&gt; parameter? It may not include the subregion of previous
+          effects for short hand filters.
         </p>
       </dd>
       <dt>detached | attached</dt>
@@ -5789,7 +5705,7 @@ class="element-name">'feCustom'</span></h2>
 
 <p>
   When an <a>'feCustom element'</a> filter primitive is used in a filter graph, a ''texture'' parameter 
-  can take a value of &lt;filter-primitive-reference&gt; where &lt;filter-primitive-reference&gt;
+  can take a value of <span class="term">&lt;filter-primitive-reference&gt;</span> where <span class="term">&lt;filter-primitive-reference&gt;</span>
   references the output of another filter primitive.
 </p>
 
@@ -5809,6 +5725,23 @@ class="element-name">'feCustom'</span></h2>
 &lt;/filter&gt;</pre>
 </div>
 
+<h3>Processing Model</h3>
+
+<p class="todo">
+  Move the processgin model from <a href="file:///Users/dschulze/Documents/hg/FXTF/custom/index.html#shader-model">CSS
+  Shader</a> to this section.
+</p>
+
+<h4 id="processing-model-mix">
+  Processing model for ''mix'' function
+</h4>
+
+<div class="figure">
+  <img src="images/mix-fragment-shader.png" width="451" height="726"/>
+  <p class="caption">fragmentShader: processing model for mix</p>
+</div>
+
+<p class="todo">Processing model for <code>mix</code> missing.</p>
 
 <h2 id="FilterCSSImageValue">The filter CSS &lt;image&gt; value</h2>
 
@@ -5827,8 +5760,84 @@ filter() syntax</h4>
 
 <p>
   The function takes two parameters. The first is a CSS &lt;image&gt; value. The second
-  is the value of a <span class="prop-name">filter</span> property. The function take the
+  is the value of a 'filter' property. The function take the
   input image parameter and apply the filter rules, returning a processing image.
+</p>
+
+<h2 id="security">Security</h2>
+
+<p class="todo">Should this section be merged with the CSS shaders 
+    <a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#security-considerations">security
+        considerations</a> section?</a>
+        
+<h3 id="timing-attacks">Timing Attacks</h3>
+
+<p>
+  Since a filter effect is applying a processing operation on input values, it
+  is vital that no private information leaks from that operation. The same rules
+  for cross-origin restrictions and tainting of data values apply to filtered
+  content. There are a number of extra cases that are called out here.
+</p>
+
+<p>
+  A timing attack is a method of obtaining information about content that is
+  otherwise protected, based on studying the amount of time it takes for an
+  operation to occur. For example, rendering is an operation that takes a
+  significant amount of time, and that time depends on the complexity of the
+  drawing operations involved. If, for example, red pixels took longer to draw
+  than green pixels, one might be able to obtain an indication of the proportion
+  of red to green in the element being rendered, even without ever having access
+  to the content of the element. Taking that to its theoretical extreme, an
+  attack may be able to modify content in a way that exposes such variations in
+  timing over a long enough period.
+</p>
+
+<p>
+  Filter effects do not add new vulnerabilities to such attacks, but they
+  possibly allow malicious code to be written that accelerates the process. For
+  example, a filter effect might be able to modify input pixel values in a manner
+  that amplifies the differences in rendering. It is essential that a filter
+  effect expose as little private information to the system as possible. One of
+  the well-documented security issues is exposing the user's browsing history to
+  script based on detecting the color of link elements styled with the 'visited'
+  pseudo-class.
+</p>
+
+<p>
+  A user agent must ensure that any content passed to a filter effect has
+  discernible information removed. This includes, but is not limited-to:
+</p>
+
+<ul>
+  <li>visited link styles must not be applied</li>
+  <li>file input should not identify any file names</li>
+  <li>editable content should not highlight dictionary information</li>
+  <li>cross-origin restrictions described below</li>
+</ul>
+
+<h3 id="origin-restrictions">Origin Restrictions</h3>
+
+<p>
+  Input to a filter effect must not include anything as input that would
+  violate cross-origin restrictions. If cross-origin access is required,
+  then the requested content should be explicitly marked with CORS data.
+</p>
+
+<p>
+  This restriction includes:
+</p>
+
+<ul>
+  <li>Any 'iframe' content</li>
+  <li>Any images, either as content or via styling, that are not exposed with CORS</li>
+  <li>Any tainted canvas</li>
+  <li>Any cross-origin content referenced by 'use'</li>
+</ul>
+
+<p>
+  For content that falls under this restriction, it should not be rendered into
+  the input image. For example, a filter effect that is applying to a cross-origin
+  'iframe' element would receive a completely blank input image.
 </p>
 
 <h2 id="RelaxNG">RelaxNG Schema for Filter Effects 1.0</h2>
@@ -6167,7 +6176,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
           </td>
       </tr>
       <tr>
-          <td>texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)</td>
+          <td>texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
           <td>sampler2D</td>
       </tr>
   </table>

@@ -151,11 +151,11 @@
   <p> Although originally designed for use in SVG, filter effects are a set a
    set of operations to apply on an image buffer and therefore can be applied
    to nearly any presentational environment, including CSS. They are
-   triggered by a style instruction (the ‘<code
-   class=property>filter</code>’ property). This specification describes
-   filters in a manner that allows them to be used in content styled by CSS,
-   such as HTML and SVG. It also defines a CSS property value function that
-   produces a CSS &lt;image&gt; value.
+   triggered by a style instruction (the ‘<a href="#effects"><code
+   class=property>filter</code></a>’ property). This specification
+   describes filters in a manner that allows them to be used in content
+   styled by CSS, such as HTML and SVG. It also defines a CSS property value
+   function that produces a CSS &lt;image&gt; value.
 
   <h2 class="no-num no-toc" id=status>Status of This Document</h2>
   <!--begin-status-->
@@ -209,27 +209,19 @@
 
    <li><a href="#definitions"><span class=secno>3. </span>Definitions</a>
 
-   <li><a href="#security"><span class=secno>4. </span>Security</a>
-    <ul class=toc>
-     <li><a href="#timing-attacks"><span class=secno>4.1. </span>Timing
-      Attacks</a>
+   <li><a href="#FilterProperty"><span class=secno>4. </span> The ‘<code
+    class=property>filter</code>’ property </a>
 
-     <li><a href="#origin-restrictions"><span class=secno>4.2. </span>Origin
-      Restrictions</a>
-    </ul>
-
-   <li><a href="#FilterProperty"><span class=secno>5. </span>The <span
-    class=prop-name>‘<code class=property>filter</code>’</span>
-    property</a>
+   <li><a href="#filter-margin-property"><span class=secno>5. </span> The
+    ‘<code class=property>filter-margin-top</code>’, ‘<code
+    class=property>filter-margin-bottom</code>’, ‘<code
+    class=property>filter-margin-left</code>’, ‘<code
+    class=property>filter-margin-right</code>’, and ‘<code
+    class=property>filter-margin</code>’ properties </a>
 
    <li><a href="#ColorInterpolationFiltersProperty"><span class=secno>6.
-    </span>The <span class=prop-name>‘<code
-    class=property>color-interpolation-filters</code>’</span> property</a>
-    <ul class=toc>
-     <li><a href="#filters-in-css"><span class=secno>6.1. </span>How the
-      ‘<code class=property>filter</code>’ property property applies to
-      content formatted with the CSS box model (e.g HTML)</a>
-    </ul>
+    </span> The ‘<code class=property>color-interpolation-filters</code>’
+    property </a>
 
    <li><a href="#FilterFunction"><span class=secno>7. </span>Filter
     Functions</a>
@@ -241,153 +233,158 @@
    <li><a href="#FilterEffectsRegion"><span class=secno>9. </span>Filter
     effects region</a>
 
-   <li><a href="#filter-margin-property"><span class=secno>10. </span> The
-    ‘<code class=property>filter-margin-top</code>’, ‘<code
-    class=property>filter-margin-bottom</code>’, ‘<code
-    class=property>filter-margin-left</code>’, ‘<code
-    class=property>filter-margin-right</code>’, and ‘<code
-    class=property>filter-margin</code>’ properties </a>
-
-   <li><a href="#AccessBackgroundImage"><span class=secno>11.
+   <li><a href="#AccessBackgroundImage"><span class=secno>10.
     </span>Accessing the background image</a>
     <ul class=toc>
-     <li><a href="#AccessBackgroundImageSVG"><span class=secno>11.1.
+     <li><a href="#AccessBackgroundImageSVG"><span class=secno>10.1.
       </span>Accessing the background image in SVG</a>
     </ul>
 
-   <li><a href="#FilterPrimitivesOverview"><span class=secno>12.
+   <li><a href="#FilterPrimitivesOverview"><span class=secno>11.
     </span>Filter primitives overview</a>
     <ul class=toc>
-     <li><a href="#FilterPrimitivesOverviewIntro"><span class=secno>12.1.
+     <li><a href="#FilterPrimitivesOverviewIntro"><span class=secno>11.1.
       </span>Overview</a>
 
-     <li><a href="#CommonAttributes"><span class=secno>12.2. </span>Common
+     <li><a href="#CommonAttributes"><span class=secno>11.2. </span>Common
       attributes</a>
 
-     <li><a href="#FilterPrimitiveSubRegion"><span class=secno>12.3.
+     <li><a href="#FilterPrimitiveSubRegion"><span class=secno>11.3.
       </span>Filter primitive subregion</a>
     </ul>
 
-   <li><a href="#LightSourceDefinitions"><span class=secno>13. </span>Light
+   <li><a href="#LightSourceDefinitions"><span class=secno>12. </span>Light
     source elements and properties</a>
     <ul class=toc>
-     <li><a href="#LightSourceIntro"><span class=secno>13.1.
+     <li><a href="#LightSourceIntro"><span class=secno>12.1.
       </span>Introduction</a>
 
-     <li><a href="#feDistantLightElement"><span class=secno>13.2.
+     <li><a href="#feDistantLightElement"><span class=secno>12.2.
       </span>Light source <span class=element-name>‘<code
       class=property>feDistantLight</code>’</span></a>
 
-     <li><a href="#fePointLightElement"><span class=secno>13.3. </span>Light
+     <li><a href="#fePointLightElement"><span class=secno>12.3. </span>Light
       source <span class=element-name>‘<code
       class=property>fePointLight</code>’</span></a>
 
-     <li><a href="#feSpotLightElement"><span class=secno>13.4. </span>Light
+     <li><a href="#feSpotLightElement"><span class=secno>12.4. </span>Light
       source <span class=element-name>‘<code
       class=property>feSpotLight</code>’</span></a>
 
-     <li><a href="#LightingColorProperty"><span class=secno>13.5. </span>The
+     <li><a href="#LightingColorProperty"><span class=secno>12.5. </span>The
       <span class=prop-name>‘<code
       class=property>lighting-color</code>’</span> property</a>
     </ul>
 
-   <li><a href="#feBlendElement"><span class=secno>14. </span>Filter
+   <li><a href="#feBlendElement"><span class=secno>13. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feBlend</code>’</span></a>
 
-   <li><a href="#feColorMatrixElement"><span class=secno>15. </span>Filter
+   <li><a href="#feColorMatrixElement"><span class=secno>14. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feColorMatrix</code>’</span></a>
 
-   <li><a href="#feComponentTransferElement"><span class=secno>16.
+   <li><a href="#feComponentTransferElement"><span class=secno>15.
     </span>Filter primitive <span class=element-name>‘<code
     class=property>feComponentTransfer</code>’</span></a>
 
-   <li><a href="#feCompositeElement"><span class=secno>17. </span>Filter
+   <li><a href="#feCompositeElement"><span class=secno>16. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feComposite</code>’</span></a>
 
-   <li><a href="#feConvolveMatrixElement"><span class=secno>18. </span>Filter
+   <li><a href="#feConvolveMatrixElement"><span class=secno>17. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feConvolveMatrix</code>’</span></a>
 
-   <li><a href="#feDiffuseLightingElement"><span class=secno>19.
+   <li><a href="#feDiffuseLightingElement"><span class=secno>18.
     </span>Filter primitive <span class=element-name>‘<code
     class=property>feDiffuseLighting</code>’</span></a>
 
-   <li><a href="#feDisplacementMapElement"><span class=secno>20.
+   <li><a href="#feDisplacementMapElement"><span class=secno>19.
     </span>Filter primitive <span class=element-name>‘<code
     class=property>feDisplacementMap</code>’</span></a>
 
-   <li><a href="#feFloodElement"><span class=secno>21. </span>Filter
+   <li><a href="#feFloodElement"><span class=secno>20. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feFlood</code>’</span></a>
 
-   <li><a href="#feGaussianBlurElement"><span class=secno>22. </span>Filter
+   <li><a href="#feGaussianBlurElement"><span class=secno>21. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feGaussianBlur</code>’</span></a>
 
-   <li><a href="#feUnsharpMaskElement"><span class=secno>23. </span>Filter
+   <li><a href="#feUnsharpMaskElement"><span class=secno>22. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feUnsharpMask</code>’</span></a>
 
-   <li><a href="#feImageElement"><span class=secno>24. </span>Filter
+   <li><a href="#feImageElement"><span class=secno>23. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feImage</code>’</span></a>
 
-   <li><a href="#feMergeElement"><span class=secno>25. </span>Filter
+   <li><a href="#feMergeElement"><span class=secno>24. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feMerge</code>’</span></a>
 
-   <li><a href="#feMorphologyElement"><span class=secno>26. </span>Filter
+   <li><a href="#feMorphologyElement"><span class=secno>25. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feMorphology</code>’</span></a>
 
-   <li><a href="#feOffsetElement"><span class=secno>27. </span>Filter
+   <li><a href="#feOffsetElement"><span class=secno>26. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feOffset</code>’</span></a>
 
-   <li><a href="#feSpecularLightingElement"><span class=secno>28.
+   <li><a href="#feSpecularLightingElement"><span class=secno>27.
     </span>Filter primitive <span class=element-name>‘<code
     class=property>feSpecularLighting</code>’</span></a>
 
-   <li><a href="#feTileElement"><span class=secno>29. </span>Filter primitive
+   <li><a href="#feTileElement"><span class=secno>28. </span>Filter primitive
     <span class=element-name>‘<code
     class=property>feTile</code>’</span></a>
 
-   <li><a href="#feTurbulenceElement"><span class=secno>30. </span>Filter
+   <li><a href="#feTurbulenceElement"><span class=secno>29. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feTurbulence</code>’</span></a>
 
-   <li><a href="#feDropShadowElement"><span class=secno>31. </span>Filter
+   <li><a href="#feDropShadowElement"><span class=secno>30. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feDropShadow</code>’</span></a>
 
-   <li><a href="#feDiffuseSpecularElement"><span class=secno>32.
+   <li><a href="#feDiffuseSpecularElement"><span class=secno>31.
     </span>Filter primitive <span class=element-name>‘<code
     class=property>feDiffuseSpecular</code>’</span></a>
 
-   <li><a href="#feCustomElement"><span class=secno>33. </span>Filter
+   <li><a href="#feCustomElement"><span class=secno>32. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feCustom</code>’</span></a>
     <ul class=toc>
-     <li><a href="#fragmentShader-attribute"><span class=secno>33.1.
+     <li><a href="#fragmentShader-attribute"><span class=secno>32.1.
       </span>The ‘<code class=css>fragmentShader attribute</code>’
       attribute</a>
-      <ul class=toc>
-       <li><a href="#processing-model-mix"><span class=secno>33.1.1. </span>
-        Processing model for ‘<code class=css>mix</code>’ function </a>
-      </ul>
 
-     <li><a href="#vertexMesh-attribute"><span class=secno>33.2. </span>The
+     <li><a href="#vertexMesh-attribute"><span class=secno>32.2. </span>The
       ‘<code class=css>vertexMesh attribute</code>’ attribute</a>
 
-     <li><a href="#shader-inputs"><span class=secno>33.3. </span>Shader
+     <li><a href="#shader-inputs"><span class=secno>32.3. </span>Shader
       inputs in filter graph</a>
+
+     <li><a href="#processing-model"><span class=secno>32.4.
+      </span>Processing Model</a>
+      <ul class=toc>
+       <li><a href="#processing-model-mix"><span class=secno>32.4.1. </span>
+        Processing model for ‘<code class=css>mix</code>’ function </a>
+      </ul>
     </ul>
 
-   <li><a href="#FilterCSSImageValue"><span class=secno>34. </span>The filter
+   <li><a href="#FilterCSSImageValue"><span class=secno>33. </span>The filter
     CSS &lt;image&gt; value</a>
+
+   <li><a href="#security"><span class=secno>34. </span>Security</a>
+    <ul class=toc>
+     <li><a href="#timing-attacks"><span class=secno>34.1. </span>Timing
+      Attacks</a>
+
+     <li><a href="#origin-restrictions"><span class=secno>34.2. </span>Origin
+      Restrictions</a>
+    </ul>
 
    <li><a href="#RelaxNG"><span class=secno>35. </span>RelaxNG Schema for
     Filter Effects 1.0</a>
@@ -774,8 +771,9 @@
 
   <p> Note that even though this specification references parts of <a
    href="#ref-svg11">SVG 1.1</a> it does not require an SVG 1.1
-   implementation. <span class=note>Add link to conformance classes
-   here.</span></p>
+   implementation.
+
+  <p class=issue>Add link to conformance classes here.</p>
   <!-- ****************************************************************************** -->
 
   <h2 id=definitions><span class=secno>3. </span>Definitions</h2>
@@ -784,76 +782,70 @@
    this section.
 
   <dl>
-   <dt id=term-null-filter><span class=termDefine>null filter</span>
+   <dt id=term-null-filter><dfn id=null-filter>null filter</dfn>
 
    <dd>
     <p> The null filter output is all transparent black pixels. If applied to
      an element it means that the element (and children if any) becomes
      invisible. Note that it does not affect event processing.</p>
 
-   <dt id=TermTransferFunctionElements><span class=SVG-TermDefine>transfer
-    function elements</span>
+   <dt id=TermTransferFunctionElements><dfn
+    id=transfer-function-elements>transfer function elements</dfn>
 
-   <dd>
-    <p> The set of elements, <a>‘<code
-     class=property>feFuncR</code>’</a>, <a>‘<code
-     class=property>feFuncG</code>’</a>, <a>‘<code
-     class=property>feFuncB</code>’</a>, <a>‘<code
-     class=property>feFuncA</code>’</a>, that define the transfer function
-     for the <a>‘<code class=property>feComponentTransfer</code>’</a>
-     filter primitive.</p>
+   <dd> The set of <a>‘<code class=css>feFuncR element</code>’</a>,
+    <a>‘<code class=css>feFuncG element</code>’</a>, <a>‘<code
+    class=css>feFuncB element</code>’</a>, <a>‘<code class=css>feFuncA
+    element</code>’</a> elements, that define the transfer function for the
+    <a>‘<code class=css>feComponentTransfer element</code>’</a> <span
+    class=term>filter primitive</span>.
 
    <dt id=TermClientBoundingRect><dfn id=bounding-client-rect>bounding client
     rect</dfn>
 
    <dd>
-    <p> The union of all CSS border-boxes for the element if formatted with
-     the CSS box model, as defined by the CSS OM method <a
+    <p> The union of all border boxes for the element that has an associated
+     CSS layout box and is not in the <code>http://www.w3.org/2000/svg</code>
+     namespace and it's descendant elements. Or the object bounding box <a
+     href="#SVG11" rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>, if the
+     element does not have an associated CSS layout box and is in the
+     <code>http://www.w3.org/2000/svg</code> namespace (See <a
      href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
-     [<a href="#ref-CSSOM">CSSOM</a>].</p>
+     [<a href="#ref-CSSOM">CSSOM</a>]).</p>
 
-   <dt id=TermCSSBoundingBox><span class=SVG-TermDefine>CSS bounding
-    box</span>
-
-   <dd>
-    <p> The union of all CSS border-boxes for the element and all it's
-     descendant elements, provided the element is formatted with the CSS box
-     model [<a href="#ref-CSS21">CSS</a>].</p>
-
-   <dt id=TermCurrentUserCoordinateSystem><span class=SVG-TermDefine>current
-    user coordinate system</span>
+   <dt id=TermUserCoordinateSystem><dfn id=local-coordinate-system>local
+    coordinate system</dfn>, <dfn id=user-coordinate-system>user coordinate
+    system</dfn>
 
    <dd>
-    <p> For elements formatted with the CSS box model: the current user
+    <p> In general, a coordinate system defines locations and distances on
+     the current canvas. The current local coordinate system (also user
+     coordinate system) is the coordinate system that is currently active and
+     which is used to define how coordinates and lengths are located and
+     computed, respectively, on the current canvas.</p>
+
+    <p> For elements that have an associated CSS layout box, the current user
      coordinate system has its origin at the top-left corner of the <a
-     href="#TermClientBoundingRect">bounding client rect</a> and one unit
-     equals on CSS px. The viewport for resolving percentage values is
-     defined by the width and height of the <a
-     href="#TermClientBoundingRect">bounding client rect</a>.</p>
+     class=term href="#bounding-client-rect">bounding client rect</a> and one
+     unit equals on CSS px. The viewport for resolving percentage values is
+     defined by the width and height of the <a class=term
+     href="#bounding-client-rect">bounding client rect</a>.</p>
 
-    <p> For elements using SVG layout see <a>user coordinate system</a>.</p>
+    <p> If the element does not have an associated CSS layout box and is in
+     the <code>http://www.w3.org/2000/svg</code> namespace, the current user
+     coordinate system has its origin at the top-left corner of the element's
+     nearest viewport.</p>
 
-   <dt id=TermObjectBoundingBoxUnits><span class=SVG-TermDefine>object
-    bounding box units</span>
+   <dt id=TermObjectBoundingBoxUnits><dfn id=object-bounding-box-units>object
+    bounding box units</dfn>
 
-   <dd> For elements formatted with the CSS box model: the bounding box is
-    defined by <a href="#TermCSSBoundingBox">the CSS bounding box.</a>
-    <p> For elements using SVG layout the bounding box is defined by <a
-     href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">the
-     SVG bounding box</a>.</p>
+   <dd> The <a class=term href="#bounding-client-rect">bounding client
+    rect</a> defines the coordinate system in which to resolve values, as
+    defined in <a>object bounding box units</a>.
+    <p class=issue>Reference to SVG missing?</p>
 
-    <p> For both cases the bounding box defines the coordinate system in
-     which to resolve values, as defined in <a>object bounding box units</a>.
-     </p>
-
-   <dt id=TermFilterPrimitiveReference><span
-    class=SVG-TermDefine>&lt;filter-primitive-reference&gt;</span>
-
-   <dd>
-    <p> A string that identifies a particular filter primitive's output.</p>
-
-   <dt id=TermFilterPrimitiveElements><span class=SVG-TermDefine>filter
-    primitives, filter primitive elements</span>
+   <dt id=TermFilterPrimitiveElements><dfn id=filter-primitives>filter
+    primitives</dfn>, <dfn id=filter-primitive-elements>filter primitive
+    elements</dfn>
 
    <dd>
     <p> The set of elements that control the output of a <a>‘<code
@@ -884,243 +876,391 @@
   </dl>
   <!-- ****************************************************************************** -->
 
-  <h2 id=security><span class=secno>4. </span>Security</h2>
+  <h2 id=FilterProperty><span class=secno>4. </span> The ‘<a
+   href="#effects"><code class=property>filter</code></a>’ property</h2>
 
-  <p class=todo>Should this section be merged with the CSS shaders <a
-   href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#security-considerations">security
-   considerations</a> section?
-
-  <h3 id=timing-attacks><span class=secno>4.1. </span>Timing Attacks</h3>
-
-  <p> Since a filter effect is applying a processing operation on input
-   values, it is vital that no private information leaks from that operation.
-   The same rules for cross-origin restrictions and tainting of data values
-   apply to filtered content. There are a number of extra cases that are
-   called out here.
-
-  <p> A timing attack is a method of obtaining information about content that
-   is otherwise protected, based on studying the amount of time it takes for
-   an operation to occur. For example, rendering is an operation that takes a
-   significant amount of time, and that time depends on the complexity of the
-   drawing operations involved. If, for example, red pixels took longer to
-   draw than green pixels, one might be able to obtain an indication of the
-   proportion of red to green in the element being rendered, even without
-   ever having access to the content of the element. Taking that to its
-   theoretical extreme, an attack may be able to modify content in a way that
-   exposes such variations in timing over a long enough period.
-
-  <p> Filter effects do not add new vulnerabilities to such attacks, but they
-   possibly allow malicious code to be written that accelerates the process.
-   For example, a filter effect might be able to modify input pixel values in
-   a manner that amplifies the differences in rendering. It is essential that
-   a filter effect expose as little private information to the system as
-   possible. One of the well-documented security issues is exposing the
-   user's browsing history to script based on detecting the color of link
-   elements styled with the ‘<code class=property>visited</code>’
-   pseudo-class.
-
-  <p> A user agent must ensure that any content passed to a filter effect has
-   discernible information removed. This includes, but is not limited-to:
-
-  <ul>
-   <li>visited link styles must not be applied
-
-   <li>file input should not identify any file names
-
-   <li>editable content should not highlight dictionary information
-
-   <li>cross-origin restrictions described below
-  </ul>
-
-  <h3 id=origin-restrictions><span class=secno>4.2. </span>Origin
-   Restrictions</h3>
-
-  <p> Input to a filter effect must not include anything as input that would
-   violate cross-origin restrictions. If cross-origin access is required,
-   then the requested content should be explicitly marked with CORS data.
-
-  <p> This restriction includes:
-
-  <ul>
-   <li>Any ‘<code class=property>iframe</code>’ content
-
-   <li>Any images, either as content or via styling, that are not exposed
-    with CORS
-
-   <li>Any tainted canvas
-
-   <li>Any cross-origin content referenced by ‘<code
-    class=property>use</code>’
-  </ul>
-
-  <p> For content that falls under this restriction, it should not be
-   rendered into the input image. For example, a filter effect that is
-   applying to a cross-origin ‘<code class=property>iframe</code>’
-   element would receive a completely blank input image.
-
-  <h2 id=FilterProperty><span class=secno>5. </span>The <span
-   class=prop-name>‘<code class=property>filter</code>’</span> property</h2>
-
-  <p> The description of the <span class=prop-name>‘<code
-   class=property>filter</code>’</span> property is as follows:
+  <p> The description of the ‘<a href="#effects"><code
+   class=property>filter</code></a>’ property is as follows:
 
   <table class=propdef summary="filter property">
    <tbody>
-    <tr valign=baseline>
+    <tr>
+     <td> <em>Name:</em>
+
+     <td> <dfn id=effects>filter</dfn>
+
+    <tr>
      <td><em>Value:</em>  
 
-     <td>none | <a href="#FilterFunction">&lt;filter-function&gt;</a> [ <a
-      href="#FilterFunction">&lt;filter-function&gt;</a> ]*
+     <td>none | <a class=term
+      href="#ltfilter-functiongt">&lt;filter-function&gt;</a> [ <a class=term
+      href="#ltfilter-functiongt">&lt;filter-function&gt;</a> ]*
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Initial:</em>  
 
      <td>none
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Applies to:</em>  
 
      <td>All elements <span class=specissue>In SVG 1.1 it applies only to
       "container elements (except ‘mask’) and graphics elements"</span>
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Inherited:</em>  
 
      <td>no
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Percentages:</em>  
 
      <td>N/A
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Media:</em>  
 
      <td>visual
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Animatable:</em>  
 
      <td>yes
   </table>
 
-  <p> If the value of the <a>‘<code class=css>filter property</code>’</a>
-   property is <span class=prop-value>none</span> then there is no filter
-   effect applied. Otherwise, the list of functions (described <a
+  <p> If the value of the ‘<a href="#effects"><code
+   class=property>filter</code></a>’ property is ‘<code
+   class=css>none</code>’ then there is no filter effect applied.
+   Otherwise, the list of functions (described <a
    href="#FilterFunction">below</a>) are applied in order.
 
-  <h2 id=ColorInterpolationFiltersProperty><span class=secno>6. </span>The
-   <span class=prop-name>‘<code
-   class=property>color-interpolation-filters</code>’</span> property</h2>
+  <p> The application of the ‘<a href="#effects"><code
+   class=property>filter</code></a>’ property to an element formatted with
+   the CSS box model establishes a pseudo-stacking-context the same way that
+   CSS <a href="http://www.w3.org/TR/css3-color/#transparency">‘<code
+   class=property>opacity</code>’</a> does, and all the element's
+   descendants are rendered together as a group with the filter effect
+   applied to the group as a whole.
 
-  <p> The description of the <span class=prop-name>‘<code
-   class=property>color-interpolation-filters</code>’</span> property is as
+  <p> The ‘<a href="#effects"><code class=property>filter</code></a>’
+   property has no effect on the geometry of the target element's CSS boxes,
+   even though ‘<a href="#effects"><code
+   class=property>filter</code></a>’ can cause painting outside of an
+   element's border box.
+
+  <p> The compositing model follows the <a
+   href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
+   model</a> <a href="#SVG11" rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>:
+   first any filter effect is applied, then any clipping, masking and
+   opacity. These effects all apply after any other CSS effects such as
+   ‘<code class=property>border</code>’. As per SVG, the application of
+   ‘<a href="#effects"><code class=property>filter</code></a>’ has no
+   effect on hit-testing.
+
+  <h2 id=filter-margin-property><span class=secno>5. </span> The ‘<a
+   href="#filter-margin-top"><code
+   class=property>filter-margin-top</code></a>’, ‘<a
+   href="#filter-margin-bottom"><code
+   class=property>filter-margin-bottom</code></a>’, ‘<a
+   href="#filter-margin-left"><code
+   class=property>filter-margin-left</code></a>’, ‘<a
+   href="#filter-margin-right"><code
+   class=property>filter-margin-right</code></a>’, and ‘<a
+   href="#filter-margin"><code class=property>filter-margin</code></a>’
+   properties</h2>
+
+  <p> The filter-margin properties define the <a
+   href="#FilterEffectsRegion">filter effect region</a> for <a
+   href="#FilterFunction">filter functions</a> such as the ‘<code
+   class=css>custom()</code>’ function defined in this document. If the
+   filter property references a <a>‘<code class=css>filter
+   element</code>’</a> element, then the filter effect region defined by
+   the element takes precedence over the ‘<a href="#filter-margin"><code
+   class=property>filter-margin</code></a>’ property.
+
+  <p> On a regular <a>‘<code class=css>filter element</code>’</a>
+   element, the <a>‘<code class=css>x attribute</code>’</a>, <a>‘<code
+   class=css>y attribute</code>’</a>, <a>‘<code class=css>width
+   attribute</code>’</a> and <a>‘<code class=css>height
+   attribute</code>’</a> attributes define the <a
+   href="#FilterEffectsRegion">filter effects region</a>.
+
+  <p> The following sections describe the ‘<a
+   href="#filter-margin-top"><code
+   class=property>filter-margin-top</code></a>’, ‘<a
+   href="#filter-margin-left"><code
+   class=property>filter-margin-left</code></a>’, ‘<a
+   href="#filter-margin-bottom"><code
+   class=property>filter-margin-bottom</code></a>’, ‘<a
+   href="#filter-margin-right"><code
+   class=property>filter-margin-right</code></a>’ properties.
+
+  <p> The filter-margin properties are a shorthand mechanism for defining a
+   filter region equivalent to:
+
+  <pre>
+&lt;filter filterUnits="objectBoundingBox" 
+        x="fx(targetBox, [filter-margin-left])"
+        y="fy(targetBox, [filter-margin-top])"
+        width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
+        height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
+    &lt;!-- filter primitives for the filter function --&gt;
+&lt;/filter&gt;
+</pre>
+
+  <p> Where:
+
+  <ul>
+   <li><code id=targetBox>targetBox</code> is the <a class=term
+    href="#bounding-client-rect">bounding client rect</a>
+
+   <li><code>fx(box, left) = - (left / box.width)</code>
+
+   <li><code>fy(box, top) = - (top / box.height)</code>
+
+   <li><code>fw(box, left, right) = ((box.width + left + right) /
+    box.width)</code>
+
+   <li><code>fh(box, top, bottom) = ((box.height + top + bottom) /
+    box.height)</code>
+  </ul>
+
+  <p> Margin properties specify the width of the <a
+   href="#FilterEffectsRegion">filter region</a> of a box. The ‘<a
+   href="#filter-margin"><code class=property>filter-margin</code></a>’
+   shorthand property sets the margin for all four sides while the other
+   margin properties only set their respective side. These properties apply
+   to all elements (which is different from the regular margin properties
+   where vertical margins will not have any effect on non-replaced inline
+   elements).
+
+  <p> The ‘<a href="#filter-margin-top"><code
+   class=property>filter-margin-top</code></a>’, ‘<a
+   href="#filter-margin-bottom"><code
+   class=property>filter-margin-bottom</code></a>’, ‘<a
+   href="#filter-margin-left"><code
+   class=property>filter-margin-left</code></a>’, ‘<a
+   href="#filter-margin-right"><code
+   class=property>filter-margin-right</code></a>’ can take the same values
+   as the ‘<code class=property>margin-top</code>’, ‘<code
+   class=property>margin-bottom</code>’, ‘<code
+   class=property>margin-left</code>’ and ‘<code
+   class=property>margin-right</code>’ properties, respectively. In
+   addition, they can take the ‘<code class=css>auto</code>’ value which
+   is also their default value.
+
+  <p> The ‘<a href="#filter-margin"><code
+   class=property>filter-margin</code></a>’ property can take the same
+   values as the ‘<code class=property>margin</code>’ property and is a
+   shorthand for setting ‘<a href="#filter-margin-top"><code
+   class=property>filter-margin-top</code></a>’, ‘<a
+   href="#filter-margin-right"><code
+   class=property>filter-margin-right</code></a>’, ‘<a
+   href="#filter-margin-bottom"><code
+   class=property>filter-margin-bottom</code></a>’ and ‘<a
+   href="#filter-margin-left"><code
+   class=property>filter-margin-left</code></a>’ at the same place in the
+   stylesheet.
+
+  <p> The following figure illustrates how the various filter-margin
+   properties affect the filter region.
+
+  <div class=figure> <img src="images/filter-region.png" width=300>
+   <p class=caption>The filter region</p>
+  </div>
+
+  <p>The blue border delimit the filter region. The margins are represented
+   by:
+
+  <ul>
+   <li>A: filter-margin-left
+
+   <li>B: filter-margin-right
+
+   <li>C: filter-margin-top
+
+   <li>D: filter-margin-bottom
+  </ul>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td> <dfn id=filter-margin-top>filter-margin-top</dfn>, <dfn
+      id=filter-margin-right>filter-margin-right</dfn>, <dfn
+      id=filter-margin-bottom>filter-margin-bottom</dfn>, <dfn
+      id=filter-margin-left>filter-margin-left</dfn>
+
+    <tr>
+     <th>Value:
+
+     <td><code>&lt;margin-width&gt; | auto</code>
+
+    <tr>
+     <th>Initial
+
+     <td>auto
+
+    <tr>
+     <th>Applies to:
+
+     <td>all elements
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>refer to the dimension of the <a class=term
+      href="#bounding-client-rect">bounding client rect</a>
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>the percentage as specified or the absolute length. A value of auto
+      computes to 10% of the <a class=term
+      href="#bounding-client-rect">bounding client rect</a>
+  </table>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=filter-margin>filter-margin</dfn>
+
+    <tr>
+     <th>Value:
+
+     <td><code>&lt;margin-width&gt;{1,4} | auto</code>
+
+    <tr>
+     <th>Initial
+
+     <td>auto
+
+    <tr>
+     <th>Applies to:
+
+     <td>all elements
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>refer to the dimension of the <a class=term
+      href="#bounding-client-rect">bounding client rect</a>
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>the percentage as specified or the absolute length. A value of auto
+      computes to 10% of the <a class=term
+      href="#bounding-client-rect">bounding client rect</a>
+  </table>
+
+  <h2 id=ColorInterpolationFiltersProperty><span class=secno>6. </span> The
+   ‘<code class=property>color-interpolation-filters</code>’ property</h2>
+
+  <p> The description of the ‘<code
+   class=property>color-interpolation-filters</code>’ property is as
    follows:
 
   <table class=propdef summary="color-interpolation-filters property">
    <tbody>
-    <tr valign=baseline>
+    <tr>
      <td><em>Value:</em>  
 
      <td>auto | sRGB | linearRGB
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Initial:</em>  
 
      <td>linearRGB
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Applies to:</em>  
 
      <td><a href="filters.html#TermFilterPrimitive">filter primitives</a>
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Inherited:</em>  
 
      <td>yes
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Percentages:</em>  
 
      <td>N/A
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Media:</em>  
 
      <td>visual
 
-    <tr valign=baseline>
+    <tr>
      <td><em><a href="animate.html#Animatable">Animatable</a>:</em>  
 
      <td>yes
   </table>
 
   <dl>
-   <dt><span class=prop-value>auto</span>
+   <dt>‘<code class=css>auto</code>’
 
-   <dd>Indicates that the user agent can choose either the <span
-    class=prop-value>sRGB</span> or <span class=prop-value>linearRGB</span>
-    spaces for filter effects color operations. This option indicates that
-    the author doesn't require that color operations occur in a particular
+   <dd>Indicates that the user agent can choose either the ‘<code
+    class=css>sRGB or </code>’linearRGB'‘<code class=css> spaces for
+    filter effects color operations. This option indicates that the author
+    doesn</code>’t require that color operations occur in a particular
     color space.
 
-   <dt><span class=prop-value>sRGB</span>
+   <dt>‘<code class=css>sRGB</code>’
 
    <dd>Indicates that filter effects color operations should occur in the
     sRGB color space.
 
-   <dt><span class=prop-value>linearRGB</span>
+   <dt>‘<code class=css>linearRGB</code>’
 
    <dd>Indicates that filter effects color operations should occur in the
     linearized RGB color space.
   </dl>
 
-  <p>The <a>‘<code class=property>color-interpolation-filters</code>’</a>
+  <p> The ‘<code class=property>color-interpolation-filters</code>’
    property specifies the color space for imaging operations performed via
    filter effects.
 
-  <p>Note that <a>‘<code
-   class=property>color-interpolation-filters</code>’</a> has a different
-   initial value than <a>‘<code
-   class=property>color-interpolation</code>’</a>. <a>‘<code
-   class=property>color-interpolation-filters</code>’</a> has an initial
-   value of <span class=prop-value>linearRGB</span>, whereas <a>‘<code
-   class=property>color-interpolation</code>’</a> has an initial value of
-   <span class=prop-value>sRGB</span>. Thus, in the default case, filter
+  <p class=note> Note that ‘<code
+   class=property>color-interpolation-filters</code>’ has a different
+   initial value than ‘<code class=property>color-interpolation</code>’.
+   ‘<code class=property>color-interpolation-filters</code>’ has an
+   initial value of ‘<code class=css>linearRGB</code>’, where as ‘<code
+   class=property>color-interpolation</code>’ has an initial value of
+   ‘<code class=css>sRGB</code>’. Thus, in the default case, filter
    effects operations occur in the linearRGB color space, whereas all other
    color interpolations occur by default in the sRGB color space.
 
-  <h3 id=filters-in-css><span class=secno>6.1. </span>How the ‘<code
-   class=property>filter</code>’ property property applies to content
-   formatted with the CSS box model (e.g HTML)</h3>
-
-  <p> The application of the <a>‘<code class=css>filter
-   property</code>’</a> property to an element formatted with the CSS box
-   model establishes a pseudo-stacking-context the same way that CSS <a
-   href="http://www.w3.org/TR/css3-color/#transparency">‘<code
-   class=property>opacity</code>’</a> does, and all the element's boxes are
-   rendered together as a group with the filter effect applied to the group
-   as a whole.
-
-  <p> The <a>‘<code class=css>filter property</code>’</a> property has no
-   effect on the geometry of the target element's CSS boxes, even though
-   <a>‘<code class=css>filter property</code>’</a> can cause painting
-   outside of an element's border-box.
-
-  <p> The compositing model follows the <a
-   href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
-   model</a>: first any filter effect is applied, then any clipping, masking
-   and opacity. These effects all apply after any other CSS effects such as
-   ‘<code class=property>border</code>’. As per SVG, the application of
-   <a>‘<code class=css>filter property</code>’</a> has no effect on
-   hit-testing.
-
-  <p><br>
-
   <h2 id=FilterFunction><span class=secno>7. </span>Filter Functions</h2>
 
-  <p> The value of the <a>‘<code class=property>filter</code>’</a>
-   property is a list of &lt;filter-functions&gt; applied in the order
+  <p> The value of the ‘<a href="#effects"><code
+   class=property>filter</code></a>’ property is a list of <dfn
+   id=ltfilter-functiongt>&lt;filter-function&gt;</dfn>s applied in the order
    provided. The individual filter functions are separated by whitespace. The
    set of allowed filter functions is given below.
 
@@ -1129,10 +1269,10 @@
 
    <dd> An <a>IRI reference</a> to a <a>‘<code class=css>filter
     element</code>’</a> element that defines the filter effect. For example
-    "url(commonfilters.xml#large-blur)". If the IRI references a non-existent
-    object or the referenced object is not a <a>‘<code class=css>filter
-    element</code>’</a> element, then the <a>null filter</a> will be
-    applied instead.
+    ‘<code class=css>url(commonfilters.xml#large-blur)</code>’. If the
+    IRI references a non-existent object or the referenced object is not a
+    <a>‘<code class=css>filter element</code>’</a> element, then the
+    <a>null filter</a> will be applied instead.
 
    <dt> grayscale(amount)
 
@@ -1333,12 +1473,12 @@
    element, which can specify an alternate input, but still uses the previous
    output as its <a href="#SourceGraphic">SourceGraphic</a>.
 
-  <h2 id=FilterElement><span class=secno>8. </span>The <span
-   class=element-name>‘<code class=property>filter</code>’</span> element</h2>
+  <h2 id=FilterElement><span class=secno>8. </span>The <a class=element-name
+   href="#effects">‘<code class=property>filter</code>’</a> element</h2>
 
   <div class=element-summary>
-   <div class=element-summary-name> <span class=element-name> ‘filter’
-    </span></div>
+   <div class=element-summary-name> <a class=element-name href="#effects">
+    ‘filter’ </a></div>
 
    <dl>
     <dt> Categories:
@@ -1969,223 +2109,7 @@
    defaults for the filter effects region are <span class=attr-value>x="-10%"
    y="-10%" width="120%" height="120%"</span>.
 
-  <h2 id=filter-margin-property><span class=secno>10. </span> The ‘<a
-   href="#filter-margin-top"><code
-   class=property>filter-margin-top</code></a>’, ‘<a
-   href="#filter-margin-bottom"><code
-   class=property>filter-margin-bottom</code></a>’, ‘<a
-   href="#filter-margin-left"><code
-   class=property>filter-margin-left</code></a>’, ‘<a
-   href="#filter-margin-right"><code
-   class=property>filter-margin-right</code></a>’, and ‘<a
-   href="#filter-margin"><code class=property>filter-margin</code></a>’
-   properties</h2>
-
-  <p> The filter-margin properties define the <a
-   href="#FilterEffectsRegion">filter effect region</a> for <a
-   href="#FilterFunction">filter functions</a> such as the ‘<code
-   class=css>custom()</code>’ function defined in this document. If the
-   filter property references a <a>‘<code class=css>filter
-   element</code>’</a> element, then the filter effect region defined by
-   the element takes precedence over the ‘<a href="#filter-margin"><code
-   class=property>filter-margin</code></a>’ property.
-
-  <p> On a regular <a>‘<code class=css>filter element</code>’</a>
-   element, the <a>‘<code class=css>x attribute</code>’</a>, <a>‘<code
-   class=css>y attribute</code>’</a>, <a>‘<code class=css>width
-   attribute</code>’</a> and <a>‘<code class=css>height
-   attribute</code>’</a> attributes define the <a
-   href="#FilterEffectsRegion">filter effects region</a>.
-
-  <p> The following sections describe the ‘<a
-   href="#filter-margin-top"><code
-   class=property>filter-margin-top</code></a>’, ‘<a
-   href="#filter-margin-left"><code
-   class=property>filter-margin-left</code></a>’, ‘<a
-   href="#filter-margin-bottom"><code
-   class=property>filter-margin-bottom</code></a>’, ‘<a
-   href="#filter-margin-right"><code
-   class=property>filter-margin-right</code></a>’ properties.
-
-  <p> The filter-margin properties are a shorthand mechanism for defining a
-   filter region equivalent to:
-
-  <pre>
-&lt;filter filterUnits="objectBoundingBox" 
-        x="fx(targetBox, [filter-margin-left])"
-        y="fy(targetBox, [filter-margin-top])"
-        width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
-        height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
-    &lt;!-- filter primitives for the filter function --&gt;
-&lt;/filter&gt;
-</pre>
-
-  <p> Where:
-
-  <ul>
-   <li><code id=targetBox>targetBox</code> is the <a class=term
-    href="#bounding-client-rect">bounding client rect</a>
-
-   <li><code>fx(box, left) = - (left / box.width)</code>
-
-   <li><code>fy(box, top) = - (top / box.height)</code>
-
-   <li><code>fw(box, left, right) = ((box.width + left + right) /
-    box.width)</code>
-
-   <li><code>fh(box, top, bottom) = ((box.height + top + bottom) /
-    box.height)</code>
-  </ul>
-
-  <p> Margin properties specify the width of the <a
-   href="#FilterEffectsRegion">filter region</a> of a box. The ‘<a
-   href="#filter-margin"><code class=property>filter-margin</code></a>’
-   shorthand property sets the margin for all four sides while the other
-   margin properties only set their respective side. These properties apply
-   to all elements (which is different from the regular margin properties
-   where vertical margins will not have any effect on non-replaced inline
-   elements).
-
-  <p> The ‘<a href="#filter-margin-top"><code
-   class=property>filter-margin-top</code></a>’, ‘<a
-   href="#filter-margin-bottom"><code
-   class=property>filter-margin-bottom</code></a>’, ‘<a
-   href="#filter-margin-left"><code
-   class=property>filter-margin-left</code></a>’, ‘<a
-   href="#filter-margin-right"><code
-   class=property>filter-margin-right</code></a>’ can take the same values
-   as the ‘<code class=property>margin-top</code>’, ‘<code
-   class=property>margin-bottom</code>’, ‘<code
-   class=property>margin-left</code>’ and ‘<code
-   class=property>margin-right</code>’ properties, respectively. In
-   addition, they can take the ‘<code class=css>auto</code>’ value which
-   is also their default value.
-
-  <p> The ‘<a href="#filter-margin"><code
-   class=property>filter-margin</code></a>’ property can take the same
-   values as the ‘<code class=property>margin</code>’ property and is a
-   shorthand for setting ‘<a href="#filter-margin-top"><code
-   class=property>filter-margin-top</code></a>’, ‘<a
-   href="#filter-margin-right"><code
-   class=property>filter-margin-right</code></a>’, ‘<a
-   href="#filter-margin-bottom"><code
-   class=property>filter-margin-bottom</code></a>’ and ‘<a
-   href="#filter-margin-left"><code
-   class=property>filter-margin-left</code></a>’ at the same place in the
-   stylesheet.
-
-  <p> The following figure illustrates how the various filter-margin
-   properties affect the filter region.
-
-  <div class=figure> <img src="images/filter-region.png" width=300>
-   <p class=caption>The filter region</p>
-  </div>
-
-  <p>The blue border delimit the filter region. The margins are represented
-   by:
-
-  <ul>
-   <li>A: filter-margin-left
-
-   <li>B: filter-margin-right
-
-   <li>C: filter-margin-top
-
-   <li>D: filter-margin-bottom
-  </ul>
-
-  <table class=propdef>
-   <tbody>
-    <tr>
-     <th>Name:
-
-     <td> <dfn id=filter-margin-top>filter-margin-top</dfn>, <dfn
-      id=filter-margin-right>filter-margin-right</dfn>, <dfn
-      id=filter-margin-bottom>filter-margin-bottom</dfn>, <dfn
-      id=filter-margin-left>filter-margin-left</dfn>
-
-    <tr>
-     <th>Value:
-
-     <td><code>&lt;margin-width&gt; | auto</code>
-
-    <tr>
-     <th>Initial
-
-     <td>auto
-
-    <tr>
-     <th>Applies to:
-
-     <td>all elements
-
-    <tr>
-     <th>Inherited:
-
-     <td>no
-
-    <tr>
-     <th>Percentages:
-
-     <td>refer to the dimension of the bound client rect
-
-    <tr>
-     <th>Media:
-
-     <td>visual
-
-    <tr>
-     <th>Computed value:
-
-     <td>the percentage as specified or the absolute length. A value of auto
-      computes to 10% of the bound client rect
-  </table>
-
-  <table class=propdef>
-   <tbody>
-    <tr>
-     <th>Name:
-
-     <td><dfn id=filter-margin>filter-margin</dfn>
-
-    <tr>
-     <th>Value:
-
-     <td><code>&lt;margin-width&gt;{1,4} | auto</code>
-
-    <tr>
-     <th>Initial
-
-     <td>auto
-
-    <tr>
-     <th>Applies to:
-
-     <td>all elements
-
-    <tr>
-     <th>Inherited:
-
-     <td>no
-
-    <tr>
-     <th>Percentages:
-
-     <td>refer to the dimension of the bound client rect
-
-    <tr>
-     <th>Media:
-
-     <td>visual
-
-    <tr>
-     <th>Computed value:
-
-     <td>the percentage as specified or the absolute length. A value of auto
-      computes to 10% of the bound client rect
-  </table>
-
-  <h2 id=AccessBackgroundImage><span class=secno>11. </span>Accessing the
+  <h2 id=AccessBackgroundImage><span class=secno>10. </span>Accessing the
    background image</h2>
 
   <p id=AccessingBackgroundImage>Two possible pseudo input images for filter
@@ -2220,39 +2144,39 @@
 
   <table class=propdef summary="enable-background property">
    <tbody>
-    <tr valign=baseline>
+    <tr>
      <td><em>Value:</em>  
 
      <td>accumulate | new
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Initial:</em>  
 
      <td>accumulate
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Applies to:</em>  
 
      <td>Typically elements that can contain renderable elements. language is
       responsible for defining the applicable set of elements. For SVG:
       <a>container elements</a>
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Inherited:</em>  
 
      <td>no
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Percentages:</em>  
 
      <td>N/A
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Media:</em>  
 
      <td>visual
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Animatable:</em>  
 
      <td>no
@@ -2300,7 +2224,7 @@
    interruption (i.e., no error message) and a transparent black image shall
    be provided in response to the request.
 
-  <h3 id=AccessBackgroundImageSVG><span class=secno>11.1. </span>Accessing
+  <h3 id=AccessBackgroundImageSVG><span class=secno>10.1. </span>Accessing
    the background image in SVG</h3>
 
   <p> This section only applies to the SVG definition of enable-background.
@@ -2503,10 +2427,10 @@
     the blue triangle now appears.
   </ol>
 
-  <h2 id=FilterPrimitivesOverview><span class=secno>12. </span>Filter
+  <h2 id=FilterPrimitivesOverview><span class=secno>11. </span>Filter
    primitives overview</h2>
 
-  <h3 id=FilterPrimitivesOverviewIntro><span class=secno>12.1.
+  <h3 id=FilterPrimitivesOverviewIntro><span class=secno>11.1.
    </span>Overview</h3>
 
   <p> This section describes the various filter primtives that can be
@@ -2554,7 +2478,7 @@
    and to the right, leaving undefined pixels at the top and left. In these
    cases, the undefined pixels are set to transparent black.</span>
 
-  <h3 id=CommonAttributes><span class=secno>12.2. </span>Common attributes</h3>
+  <h3 id=CommonAttributes><span class=secno>11.2. </span>Common attributes</h3>
 
   <p> The following attributes are available for most of the filter
    primitives:
@@ -2622,7 +2546,8 @@
      <p><span class=anim-target>Animatable: yes.</span></p>
 
     <dt id=FilterPrimitiveResultAttribute> <span class=adef>result</span> =
-     "<em><a>&lt;filter-primitive-reference&gt;</a></em>"
+     "<em><a><dfn
+     id=ltfilter-primitive-referencegt>&lt;filter-primitive-reference&gt;</dfn></a></em>"
 
     <dd>
      <p> Assigned name for this <a>filter primitive</a>. If supplied, then
@@ -2635,9 +2560,12 @@
       primitive</a> provides no value for its <a>‘<code
       class=property>in</code>’</a> attribute.</p>
 
-     <p> Note that a <a>&lt;filter-primitive-reference&gt;</a> is not an XML
-      ID; instead, a <a>&lt;filter-primitive-reference&gt;</a> is only
-      meaningful within a given <a>‘<code class=css>filter
+     <p class=issue>Can &lt;filter-primitive-reference&gt; be defined as
+      &lt;author-ident&gt; as in CSS Values and Units?</p>
+
+     <p class=note> Note that a <a>&lt;filter-primitive-reference&gt;</a> is
+      not an XML ID; instead, a <a>&lt;filter-primitive-reference&gt;</a> is
+      only meaningful within a given <a>‘<code class=css>filter
       element</code>’</a> element and thus have only local scope. It is
       legal for the same <a>&lt;filter-primitive-reference&gt;</a> to appear
       multiple times within the same <a>‘<code class=css>filter
@@ -2731,9 +2659,10 @@
        <p> For non-SVG cases <a>FillPaint</a> generates a transparent black
         image.</p>
 
-       <p class=issue> Consider whether this should be e.g the CSS bounding
-        box filled with the current color, or if it makes sense to use the
-        ‘<code class=property>fill</code>’ property for this case too.</p>
+       <p class=issue> Consider whether this should be e.g the <span
+        class=term>bounding client rect filled with the current color, or if
+        it makes sense to use the ‘<code class=property>fill</code>’
+        property for this case too. </span></p>
 
        <p class="note authoring">Note that text is generally painted filled,
         not stroked.</p>
@@ -2756,10 +2685,10 @@
        <p> For non-SVG cases <a>StrokePaint</a> generates a transparent black
         image.</p>
 
-       <p class=issue>Consider whether this should be e.g the CSS bounding
-        box filled with the one of the border colors, or if it makes sense to
-        use the ‘<code class=property>stroke</code>’ property for this
-        case too.</p>
+       <p class=issue>Consider whether this should be e.g the <span
+        class=term>bounding client rect filled with the one of the border
+        colors, or if it makes sense to use the ‘<code
+        class=property>stroke</code>’ property for this case too. </span></p>
 
        <p class="note authoring">Note that text is generally painted filled,
         not stroked.</p>
@@ -2774,7 +2703,7 @@
    </dl>
   </div>
 
-  <h3 id=FilterPrimitiveSubRegion><span class=secno>12.3. </span>Filter
+  <h3 id=FilterPrimitiveSubRegion><span class=secno>11.3. </span>Filter
    primitive subregion</h3>
 
   <p class=todo>Merge <a
@@ -2925,10 +2854,10 @@
     through it.
   </ul>
 
-  <h2 id=LightSourceDefinitions><span class=secno>13. </span>Light source
+  <h2 id=LightSourceDefinitions><span class=secno>12. </span>Light source
    elements and properties</h2>
 
-  <h3 id=LightSourceIntro><span class=secno>13.1. </span>Introduction</h3>
+  <h3 id=LightSourceIntro><span class=secno>12.1. </span>Introduction</h3>
 
   <p> The following sections define the elements that define a light source,
    <a>‘<code class=property>feDistantLight</code>’</a>, <a>‘<code
@@ -2937,7 +2866,7 @@
    class=property>lighting-color</code>’</a>, which defines the color of
    the light.
 
-  <h3 id=feDistantLightElement><span class=secno>13.2. </span>Light source
+  <h3 id=feDistantLightElement><span class=secno>12.2. </span>Light source
    <span class=element-name>‘<code
    class=property>feDistantLight</code>’</span></h3>
 
@@ -3033,7 +2962,7 @@
   <p><img alt="Angles which azimuth and elevation represent" height=360
    src="examples/azimuth-elevation.png" width=480>
 
-  <h3 id=fePointLightElement><span class=secno>13.3. </span>Light source
+  <h3 id=fePointLightElement><span class=secno>12.3. </span>Light source
    <span class=element-name>‘<code
    class=property>fePointLight</code>’</span></h3>
 
@@ -3142,7 +3071,7 @@
    </dl>
   </div>
 
-  <h3 id=feSpotLightElement><span class=secno>13.4. </span>Light source <span
+  <h3 id=feSpotLightElement><span class=secno>12.4. </span>Light source <span
    class=element-name>‘<code class=property>feSpotLight</code>’</span></h3>
 
   <div class=element-summary>
@@ -3328,7 +3257,7 @@
    </dl>
   </div>
 
-  <h3 id=LightingColorProperty><span class=secno>13.5. </span>The <span
+  <h3 id=LightingColorProperty><span class=secno>12.5. </span>The <span
    class=prop-name>‘<code class=property>lighting-color</code>’</span>
    property</h3>
 
@@ -3339,44 +3268,44 @@
 
   <table class=propdef summary="lighting-color property">
    <tbody>
-    <tr valign=baseline>
+    <tr>
      <td><em>Value:</em>  
 
      <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Initial:</em>  
 
      <td>white
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Applies to:</em>  
 
      <td><a>‘<code class=property>feDiffuseLighting</code>’</a> and
       <a>‘<code class=property>feSpecularLighting</code>’</a> elements
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Inherited:</em>  
 
      <td>no
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Percentages:</em>  
 
      <td>N/A
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Media:</em>  
 
      <td>visual
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Animatable:</em>  
 
      <td>yes
   </table>
 
-  <h2 id=feBlendElement><span class=secno>14. </span>Filter primitive <span
+  <h2 id=feBlendElement><span class=secno>13. </span>Filter primitive <span
    class=element-name>‘<code class=property>feBlend</code>’</span></h2>
 
   <div class=element-summary>
@@ -3835,7 +3764,7 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
   <p class=view-as-svg><a href="examples/feBlend.svg">View this example as
    SVG (SVG-enabled browsers only)</a>
 
-  <h2 id=feColorMatrixElement><span class=secno>15. </span>Filter primitive
+  <h2 id=feColorMatrixElement><span class=secno>14. </span>Filter primitive
    <span class=element-name>‘<code
    class=property>feColorMatrix</code>’</span></h2>
 
@@ -4348,7 +4277,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
   <p class=view-as-svg><a href="examples/feColorMatrix.svg">View this example
    as SVG (SVG-enabled browsers only)</a>
 
-  <h2 id=feComponentTransferElement><span class=secno>16. </span>Filter
+  <h2 id=feComponentTransferElement><span class=secno>15. </span>Filter
    primitive <span class=element-name>‘<code
    class=property>feComponentTransfer</code>’</span></h2>
 
@@ -5211,7 +5140,7 @@ A' = <a
   <p class=view-as-svg><a href="examples/feComponentTransfer.svg">View this
    example as SVG (SVG-enabled browsers only)</a>
 
-  <h2 id=feCompositeElement><span class=secno>17. </span>Filter primitive
+  <h2 id=feCompositeElement><span class=secno>16. </span>Filter primitive
    <span class=element-name>‘<code
    class=property>feComposite</code>’</span></h2>
 
@@ -5817,7 +5746,7 @@ A' = <a
   <p class=view-as-svg><a href="examples/feComposite.svg">View this example
    as SVG (SVG-enabled browsers only)</a>
 
-  <h2 id=feConvolveMatrixElement><span class=secno>18. </span>Filter
+  <h2 id=feConvolveMatrixElement><span class=secno>17. </span>Filter
    primitive <span class=element-name>‘<code
    class=property>feConvolveMatrix</code>’</span></h2>
 
@@ -6493,7 +6422,7 @@ Extended by two pixels using "duplicate":
    </dl>
   </div>
 
-  <h2 id=feDiffuseLightingElement><span class=secno>19. </span>Filter
+  <h2 id=feDiffuseLightingElement><span class=secno>18. </span>Filter
    primitive <span class=element-name>‘<code
    class=property>feDiffuseLighting</code>’</span></h2>
 
@@ -7188,7 +7117,7 @@ Extended by two pixels using "duplicate":
    class=property>feSpotLight</code>’</a>. The light color is specified by
    property <a>‘<code class=property>lighting-color</code>’</a>.
 
-  <h2 id=feDisplacementMapElement><span class=secno>20. </span>Filter
+  <h2 id=feDisplacementMapElement><span class=secno>19. </span>Filter
    primitive <span class=element-name>‘<code
    class=property>feDisplacementMap</code>’</span></h2>
 
@@ -7616,7 +7545,7 @@ Extended by two pixels using "duplicate":
    </dl>
   </div>
 
-  <h2 id=feFloodElement><span class=secno>21. </span>Filter primitive <span
+  <h2 id=feFloodElement><span class=secno>20. </span>Filter primitive <span
    class=element-name>‘<code class=property>feFlood</code>’</span></h2>
 
   <div class=element-summary>
@@ -7948,17 +7877,17 @@ Extended by two pixels using "duplicate":
 
   <table class=propdef summary="flood-color property">
    <tbody>
-    <tr valign=baseline>
+    <tr>
      <td><em>Value:</em>  
 
      <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Initial:</em>  
 
      <td>black
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Applies to:</em>  
 
      <td><a href="#feFloodElement"><span class=element-name>‘<code
@@ -7966,22 +7895,22 @@ Extended by two pixels using "duplicate":
       href="#feDropShadowElement"><span class=element-name>‘<code
       class=property>feDropShadow</code>’</span></a> elements
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Inherited:</em>  
 
      <td>no
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Percentages:</em>  
 
      <td>N/A
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Media:</em>  
 
      <td>visual
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Animatable:</em>  
 
      <td>yes
@@ -7994,19 +7923,19 @@ Extended by two pixels using "duplicate":
 
   <table class=propdef summary="flood-opacity property">
    <tbody>
-    <tr valign=baseline>
+    <tr>
      <td><em>Value:</em>  
 
      <td>&lt;opacity-value&gt;
       <p class=issue>Should it be number? What is ‘<code
        class=property>opacity</code>’ doing?
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Initial:</em>  
 
      <td>1
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Applies to:</em>  
 
      <td><a href="#feFloodElement"><span class=element-name>‘<code
@@ -8014,28 +7943,28 @@ Extended by two pixels using "duplicate":
       href="#feDropShadowElement"><span class=element-name>‘<code
       class=property>feDropShadow</code>’</span></a> elements
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Inherited:</em>  
 
      <td>no
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Percentages:</em>  
 
      <td>N/A
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Media:</em>  
 
      <td>visual
 
-    <tr valign=baseline>
+    <tr>
      <td><em>Animatable:</em>  
 
      <td>yes
   </table>
 
-  <h2 id=feGaussianBlurElement><span class=secno>22. </span>Filter primitive
+  <h2 id=feGaussianBlurElement><span class=secno>21. </span>Filter primitive
    <span class=element-name>‘<code
    class=property>feGaussianBlur</code>’</span></h2>
 
@@ -8444,7 +8373,7 @@ Extended by two pixels using "duplicate":
    use of the <a>‘<code class=property>feGaussianBlur</code>’</a> filter
    primitive to create a drop shadow effect.
 
-  <h2 id=feUnsharpMaskElement><span class=secno>23. </span>Filter primitive
+  <h2 id=feUnsharpMaskElement><span class=secno>22. </span>Filter primitive
    <span class=element-name>‘<code
    class=property>feUnsharpMask</code>’</span></h2>
 
@@ -8782,7 +8711,7 @@ Extended by two pixels using "duplicate":
     specifies an optional multiplier for the difference to subtract
   </ul>
 
-  <h2 id=feImageElement><span class=secno>24. </span>Filter primitive <span
+  <h2 id=feImageElement><span class=secno>23. </span>Filter primitive <span
    class=element-name>‘<code class=property>feImage</code>’</span></h2>
 
   <div class=element-summary>
@@ -9244,7 +9173,7 @@ Extended by two pixels using "duplicate":
   <p class=view-as-svg><a href="examples/feImage-01.svg">View this example as
    SVG (SVG-enabled browsers only)</a>
 
-  <h2 id=feMergeElement><span class=secno>25. </span>Filter primitive <span
+  <h2 id=feMergeElement><span class=secno>24. </span>Filter primitive <span
    class=element-name>‘<code class=property>feMerge</code>’</span></h2>
 
   <div class=element-summary>
@@ -9635,7 +9564,7 @@ Extended by two pixels using "duplicate":
    chapter makes use of the <span class=element-name>feMerge</span> filter
    primitive to composite two intermediate filter results together.
 
-  <h2 id=feMorphologyElement><span class=secno>26. </span>Filter primitive
+  <h2 id=feMorphologyElement><span class=secno>25. </span>Filter primitive
    <span class=element-name>‘<code
    class=property>feMorphology</code>’</span></h2>
 
@@ -10057,7 +9986,7 @@ Extended by two pixels using "duplicate":
   <p class=view-as-svg><a href="examples/feMorphology.svg">View this example
    as SVG (SVG-enabled browsers only)</a>
 
-  <h2 id=feOffsetElement><span class=secno>27. </span>Filter primitive <span
+  <h2 id=feOffsetElement><span class=secno>26. </span>Filter primitive <span
    class=element-name>‘<code class=property>feOffset</code>’</span></h2>
 
   <div class=element-summary>
@@ -10420,7 +10349,7 @@ Extended by two pixels using "duplicate":
    use of the <span class=element-name>feOffset</span> filter primitive to
    offset the drop shadow from the original source graphic.
 
-  <h2 id=feSpecularLightingElement><span class=secno>28. </span>Filter
+  <h2 id=feSpecularLightingElement><span class=secno>27. </span>Filter
    primitive <span class=element-name>‘<code
    class=property>feSpecularLighting</code>’</span></h2>
 
@@ -10896,7 +10825,7 @@ Extended by two pixels using "duplicate":
    use of the <span class=element-name>feSpecularLighting</span> filter
    primitive to achieve a highly reflective, 3D glowing effect.
 
-  <h2 id=feTileElement><span class=secno>29. </span>Filter primitive <span
+  <h2 id=feTileElement><span class=secno>28. </span>Filter primitive <span
    class=element-name>‘<code class=property>feTile</code>’</span></h2>
 
   <div class=element-summary>
@@ -11234,7 +11163,7 @@ Extended by two pixels using "duplicate":
 
   <div class=adef-list>  </div>
 
-  <h2 id=feTurbulenceElement><span class=secno>30. </span>Filter primitive
+  <h2 id=feTurbulenceElement><span class=secno>29. </span>Filter primitive
    <span class=element-name>‘<code
    class=property>feTurbulence</code>’</span></h2>
 
@@ -11655,7 +11584,7 @@ double turbulence(int nColorChannel, double *point, double <a
   <p class=view-as-svg><a href="examples/feTurbulence.svg">View this example
    as SVG (SVG-enabled browsers only)</a>
 
-  <h2 id=feDropShadowElement><span class=secno>31. </span>Filter primitive
+  <h2 id=feDropShadowElement><span class=secno>30. </span>Filter primitive
    <span class=element-name>‘<code
    class=property>feDropShadow</code>’</span></h2>
 
@@ -12118,12 +12047,12 @@ double turbulence(int nColorChannel, double *point, double <a
   </div>
 
   <div class=note>
-   <h2 id=feDiffuseSpecularElement><span class=secno>32. </span>Filter
+   <h2 id=feDiffuseSpecularElement><span class=secno>31. </span>Filter
     primitive <span class=element-name>‘<code
     class=property>feDiffuseSpecular</code>’</span></h2>
    The WG is looking at providing a shorthand for diffuse+specular.</div>
 
-  <h2 id=feCustomElement><span class=secno>33. </span>Filter primitive <span
+  <h2 id=feCustomElement><span class=secno>32. </span>Filter primitive <span
    class=element-name>‘<code class=property>feCustom</code>’</span></h2>
 
   <div class=element-summary>
@@ -12238,11 +12167,12 @@ double turbulence(int nColorChannel, double *point, double <a
          &lt;number&gt;{1,4} | <br>
          &lt;array&gt; | <br>
          <a
-         href="http://www.w3.org/TR/css3-3d-transforms/#transform-functions">&lt;transform-function&gt;</a>+
+         href="http://www.w3.org/TR/css3-transforms/#transform-functions">&lt;transform-function&gt;</a>+
          | <br>
          &lt;mat&gt; | <br>
          &lt;color&gt; | <br>
-         texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)
+         texture(&lt;uri&gt; | <a class=term
+         href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>)
 
        <tr>
         <td>&lt;array&gt;
@@ -12259,8 +12189,10 @@ double turbulence(int nColorChannel, double *point, double <a
        <tr>
      </table>
 
-     <p>The data type &lt;filter-primitive-reference&gt; can just be used for
-      the <a href="#shader-inputs">primitive feCustom</a>.</p>
+     <p>The data type <a class=term
+      href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>
+      can just be used for the <a href="#shader-inputs">primitive
+      feCustom</a>.</p>
 
      <p>There are two ways to specify a 4x4 matrix. They differ in <a
       href="#integration-with-css-animations-transitions">how they are
@@ -12302,7 +12234,7 @@ double turbulence(int nColorChannel, double *point, double <a
    </div>
   </div>
 
-  <h3 id=fragmentShader-attribute><span class=secno>33.1. </span>The
+  <h3 id=fragmentShader-attribute><span class=secno>32.1. </span>The
    <a>‘<code class=css>fragmentShader attribute</code>’</a> attribute</h3>
 
   <dl>
@@ -12359,17 +12291,7 @@ double turbulence(int nColorChannel, double *point, double <a
     <p class=issue>backdrop should be the mix color?</p>
   </dl>
 
-  <h4 id=processing-model-mix><span class=secno>33.1.1. </span> Processing
-   model for ‘<code class=css>mix</code>’ function</h4>
-
-  <div class=figure> <img height=726 src="images/mix-fragment-shader.png"
-   width=451>
-   <p class=caption>fragmentShader: processing model for mix</p>
-  </div>
-
-  <p class=todo>Processing model for <code>mix</code> missing.
-
-  <h3 id=vertexMesh-attribute><span class=secno>33.2. </span>The <a>‘<code
+  <h3 id=vertexMesh-attribute><span class=secno>32.2. </span>The <a>‘<code
    class=css>vertexMesh attribute</code>’</a> attribute</h3>
 
   <p> The <a>‘<code class=css>vertexMesh attribute</code>’</a> attribute
@@ -12377,10 +12299,6 @@ double turbulence(int nColorChannel, double *point, double <a
    defines the granularity of vertices in the <a href="#vertex-mesh">shader
    mesh</a>. By default, the vertex mesh is made of two triangles that
    encompass the <a href="#filter-region">filter region</a> area.
-
-  <p class=issue> For feCustom it should be the primitive subregion. For
-   custom() it should be the bounding client rect with extensions of previous
-   filter effects?
 
   <dl>
    <dt>&lt;integer&gt;{0,2}
@@ -12402,34 +12320,52 @@ double turbulence(int nColorChannel, double *point, double <a
     <p> If one of the passed parameters is zero or negative, the UA must
      fallback to the lacuna values.</p>
 
-   <dt>&lt;box&gt; = "border-box | filter-box | content-box | adding-box"
+   <dt>&lt;box&gt; = "filter-box | border-box | padding-box | content-box"
 
-   <dd>
-    <p> The optional &lt;box&gt; parameter defines the box on which the
-     vertex mesh is stretched to. It defaults to the ‘<code
-     class=css>filter-box</code>’ value which is ‘<code
-     class=css>border-box</code>’ with the added filter margins. For
-     elements that do not have padding or borders (e.g., SVG elements), the
-     values ‘<code class=css>padding-box</code>’ and ‘<code
-     class=css>border-box</code>’ are equivalent to ‘<code
-     class=css>content-box</code>’. For SVG elements, the ‘<code
-     class=css>content-box</code>’ is the object bounding box.</p>
+   <dd> The optional &lt;box&gt; parameter defines the box on which the
+    vertex mesh is stretched to.
+    <dl>
+     <dt>filter-box
+
+     <dd> The filter region as defined in <a
+      href="#FilterEffectsRegion">Filter Effects Region</a> or by the ‘<a
+      href="#filter-margin"><code class=property>filter-margin</code></a>’
+      property.
+
+     <dt>border-box
+
+     <dd> The border box as defined in the CSS box model <a href="#CSS2"
+      rel=biblioentry>[CSS2]<!--{{CSS2}}--></a> for elements that have an
+      associated CSS layout box and are not in the http://www.w3.org/2000/svg
+      namespace. Or the stroke bounding box [[SVG2]], if the element does not
+      have an associated CSS layout box and is in the
+      http://www.w3.org/2000/svg namespace.
+
+     <dt>padding-box
+
+     <dd> The padding box as defined in the CSS box model <a href="#CSS2"
+      rel=biblioentry>[CSS2]<!--{{CSS2}}--></a> for elements that have an
+      associated CSS layout box and are not in the http://www.w3.org/2000/svg
+      namespace. Or the object bounding box <a href="#SVG11"
+      rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>, if the element does not
+      have an associated CSS layout box and is in the
+      http://www.w3.org/2000/svg namespace.
+
+     <dt>content-box
+
+     <dd> The content box as defined in the CSS box model <a href="#CSS2"
+      rel=biblioentry>[CSS2]<!--{{CSS2}}--></a> for elements that have an
+      associated CSS layout box and are not in the http://www.w3.org/2000/svg
+      namespace. Or the object bounding box <a href="#SVG11"
+      rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>, if the element does not
+      have an associated CSS layout box and is in the
+      http://www.w3.org/2000/svg namespace.
+    </dl>
 
     <p> The lacuna value is ‘<code class=css>filter-box</code>’.</p>
 
-    <p class=issue> Does it make sense to have the &lt;box&gt; parameter at
-     all? Given the fact that feCustom might just be one effect in a filter
-     chain and the previous result has a different effect region anyway?</p>
-
-    <p class=issue> ‘<code class=css>filter-box</code>’ should be
-     ‘<code class=css>adding-box</code>’ (alias bounding client rect)
-     with added filter margins.</p>
-
-    <p class=issue> Can ‘<code class=css>adding-box</code>’ and bounding
-     client rect be renamed to ‘<code class=css>target box</code>’? This
-     is smaller and easier to use. CSS Shaders already defined this term.</p>
-
-    <p class=issue> Definitions of nearly all boxes are missing.</p>
+    <p class=issue> Is it possible to omit the &lt;box&gt; parameter? It may
+     not include the subregion of previous effects for short hand filters.</p>
 
    <dt>detached | attached
 
@@ -12510,15 +12446,16 @@ double turbulence(int nColorChannel, double *point, double <a
 &lt;/div&gt;</pre>
   </div>
 
-  <h3 id=shader-inputs><span class=secno>33.3. </span>Shader inputs in filter
+  <h3 id=shader-inputs><span class=secno>32.3. </span>Shader inputs in filter
    graph</h3>
 
   <p> When an <a>‘<code class=css>feCustom element</code>’</a> filter
    primitive is used in a filter graph, a ‘<code
-   class=css>texture</code>’ parameter can take a value of
-   &lt;filter-primitive-reference&gt; where
-   &lt;filter-primitive-reference&gt; references the output of another filter
-   primitive.
+   class=css>texture</code>’ parameter can take a value of <a class=term
+   href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>
+   where <a class=term
+   href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>
+   references the output of another filter primitive.
 
   <div class=example>
    <p> The <a>‘<code class=css>feCustom element</code>’</a> filter
@@ -12535,13 +12472,29 @@ double turbulence(int nColorChannel, double *point, double <a
 &lt;/filter&gt;</pre>
   </div>
 
-  <h2 id=FilterCSSImageValue><span class=secno>34. </span>The filter CSS
+  <h3 id=processing-model><span class=secno>32.4. </span>Processing Model</h3>
+
+  <p class=todo> Move the processgin model from <a
+   href="file:///Users/dschulze/Documents/hg/FXTF/custom/index.html#shader-model">CSS
+   Shader</a> to this section.
+
+  <h4 id=processing-model-mix><span class=secno>32.4.1. </span> Processing
+   model for ‘<code class=css>mix</code>’ function</h4>
+
+  <div class=figure> <img height=726 src="images/mix-fragment-shader.png"
+   width=451>
+   <p class=caption>fragmentShader: processing model for mix</p>
+  </div>
+
+  <p class=todo>Processing model for <code>mix</code> missing.
+
+  <h2 id=FilterCSSImageValue><span class=secno>33. </span>The filter CSS
    &lt;image&gt; value</h2>
 
   <p> The filter() function produces a CSS &lt;image&gt; value. It has the
    following syntax:
 
-  <h4 class=no-toc id=filter-syntax><span class=secno>34.0.1. </span>
+  <h4 class=no-toc id=filter-syntax><span class=secno>33.0.1. </span>
    filter() syntax</h4>
 
   <pre class=prod><code><dfn id=ltfilter>&lt;filter></dfn> = filter(
@@ -12551,9 +12504,83 @@ double turbulence(int nColorChannel, double *point, double <a
 </code></pre>
 
   <p> The function takes two parameters. The first is a CSS &lt;image&gt;
-   value. The second is the value of a <span class=prop-name>filter</span>
-   property. The function take the input image parameter and apply the filter
-   rules, returning a processing image.
+   value. The second is the value of a ‘<a href="#effects"><code
+   class=property>filter</code></a>’ property. The function take the input
+   image parameter and apply the filter rules, returning a processing image.
+
+  <h2 id=security><span class=secno>34. </span>Security</h2>
+
+  <p class=todo>Should this section be merged with the CSS shaders <a
+   href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#security-considerations">security
+   considerations</a> section?
+
+  <h3 id=timing-attacks><span class=secno>34.1. </span>Timing Attacks</h3>
+
+  <p> Since a filter effect is applying a processing operation on input
+   values, it is vital that no private information leaks from that operation.
+   The same rules for cross-origin restrictions and tainting of data values
+   apply to filtered content. There are a number of extra cases that are
+   called out here.
+
+  <p> A timing attack is a method of obtaining information about content that
+   is otherwise protected, based on studying the amount of time it takes for
+   an operation to occur. For example, rendering is an operation that takes a
+   significant amount of time, and that time depends on the complexity of the
+   drawing operations involved. If, for example, red pixels took longer to
+   draw than green pixels, one might be able to obtain an indication of the
+   proportion of red to green in the element being rendered, even without
+   ever having access to the content of the element. Taking that to its
+   theoretical extreme, an attack may be able to modify content in a way that
+   exposes such variations in timing over a long enough period.
+
+  <p> Filter effects do not add new vulnerabilities to such attacks, but they
+   possibly allow malicious code to be written that accelerates the process.
+   For example, a filter effect might be able to modify input pixel values in
+   a manner that amplifies the differences in rendering. It is essential that
+   a filter effect expose as little private information to the system as
+   possible. One of the well-documented security issues is exposing the
+   user's browsing history to script based on detecting the color of link
+   elements styled with the ‘<code class=property>visited</code>’
+   pseudo-class.
+
+  <p> A user agent must ensure that any content passed to a filter effect has
+   discernible information removed. This includes, but is not limited-to:
+
+  <ul>
+   <li>visited link styles must not be applied
+
+   <li>file input should not identify any file names
+
+   <li>editable content should not highlight dictionary information
+
+   <li>cross-origin restrictions described below
+  </ul>
+
+  <h3 id=origin-restrictions><span class=secno>34.2. </span>Origin
+   Restrictions</h3>
+
+  <p> Input to a filter effect must not include anything as input that would
+   violate cross-origin restrictions. If cross-origin access is required,
+   then the requested content should be explicitly marked with CORS data.
+
+  <p> This restriction includes:
+
+  <ul>
+   <li>Any ‘<code class=property>iframe</code>’ content
+
+   <li>Any images, either as content or via styling, that are not exposed
+    with CORS
+
+   <li>Any tainted canvas
+
+   <li>Any cross-origin content referenced by ‘<code
+    class=property>use</code>’
+  </ul>
+
+  <p> For content that falls under this restriction, it should not be
+   rendered into the input image. For example, a filter effect that is
+   applying to a cross-origin ‘<code class=property>iframe</code>’
+   element would receive a completely blank input image.
 
   <h2 id=RelaxNG><span class=secno>35. </span>RelaxNG Schema for Filter
    Effects 1.0</h2>
@@ -12582,8 +12609,8 @@ double turbulence(int nColorChannel, double *point, double <a
    href=rng>here</a>.
 
   <h2 id=ShorthandEquivalents><span class=secno>36. </span>Shorthands defined
-   in terms of the <span class=element-name>‘<code
-   class=property>filter</code>’</span> element</h2>
+   in terms of the <a class=element-name href="#effects">‘<code
+   class=property>filter</code>’</a> element</h2>
 
   <p> Below are the equivalents for each of the filter functions expressed in
    terms of the ‘<code class=css>filter element</code>’ element. The
@@ -12942,7 +12969,8 @@ double turbulence(int nColorChannel, double *point, double <a
       <td> mat2, mat3 or mat4
 
      <tr>
-      <td>texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)
+      <td>texture(&lt;uri&gt; | <a class=term
+       href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>)
 
       <td>sampler2D
    </table>
@@ -13021,9 +13049,10 @@ double turbulence(int nColorChannel, double *point, double <a
   <h2 id=integration-with-css-animations-transitions><span class=secno>38.
    </span>Integration with CSS Animations and CSS Transitions</h2>
 
-  <p>The CSS ‘<code class=property>filter</code>’ property is animatable.
-   Interpolation happens between the filter functions only if the ‘<code
-   class=property>filter</code>’ values have the same number of filter
+  <p>The CSS ‘<a href="#effects"><code class=property>filter</code></a>’
+   property is animatable. Interpolation happens between the filter functions
+   only if the ‘<a href="#effects"><code
+   class=property>filter</code></a>’ values have the same number of filter
    functions, and the same functions appearing in the same order.
 
   <h3 id=filter-params-interpolation><span class=secno>38.1.
