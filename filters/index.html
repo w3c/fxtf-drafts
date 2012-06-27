@@ -375,10 +375,6 @@
 
    <li><a href="#shader-processing-model"><span class=secno>33. </span>Shader
     Processing Model</a>
-    <ul class=toc>
-     <li><a href="#processing-model-mix"><span class=secno>33.1. </span>
-      Processing model for ‘<code class=css>mix</code>’ function </a>
-    </ul>
 
    <li><a href="#FilterCSSImageValue"><span class=secno>34. </span>The filter
     CSS &lt;image&gt; value</a>
@@ -12599,25 +12595,51 @@ double turbulence(int nColorChannel, double *point, double <a
    what corresponds to the same pixel coordinate on the output, for example
    when the vertex mesh folds over itself.
 
-  <p>During the rasterization step, the <a>‘<code class=css>feCustom
-   element</code>’</a> primitive invokes the fragment shader for every
-   pixel location inside the vertex mesh to perform per pixel operation and
-   produce the final pixel color at that vertex mesh location. This is the
-   output of step 3. Note that the fragment shader may be called several time
-   for what corresponds to the same pixel coordinate on the output, for
-   example when the vertex mesh folds over itself.
+  <p> CSS fragment shaders have restrictions in comparison to other fragment
+   shader languages (See <a href="">Security section</a> for more
+   information). One restriction is the prohibited usage of conditions based
+   on color values.
 
-  <p>Step 4 shows how this rasterized output is the input to the next step in
-   the filter chain (or graph, since <a>‘<code class=css>filter
-   element</code>’</a> elements can define a graph of filters). If the
-   <a>‘<code class=css>feCustom element</code>’</a> primitive is the last
-   one in the filter chain, then this output is the filtered rendering of the
-   element. Otherwise, the output of the primitive becomes the input to the
-   next filter primitive using it.
+  <p> For this reason the <code>mix</code> function provides basic
+   functionalities for color manipulation within a fragment shader. The
+   processing model of <code>mix</code> is illustrated in the following
+   figure:
 
-  <p>The CSS fragment shaders processing model follows <a
-   href="#FilterProperty">how filters apply to HTML</a> and how the <a
-   href="#FilterEffectsRegion">filter effects region</a> is computed.
+  <div class=figure> <img height=726 src="images/mix-fragment-shader.png"
+   width=451>
+   <p class=caption>fragmentShader: processing model for mix</p>
+  </div>
+
+  <p> Each color value passed to the fragment shader gets multiplied with the
+   ‘<code class=css>css_ColorMatrix</code>’, a predefined fragment shader
+   variable of type &lt;mat4&gt;. The variable is initialized to an identity
+   matrix, but can be set within a fragment shader. The resulting color is
+   the <i>multiplied color</i>.
+
+  <p> ‘<code class=css>css_MixColor</code>’ is a second predefined
+   fragment shader variable of type &lt;vec4&gt;. ‘<code
+   class=css>css_MixColor</code>’ defines the <i>mix color</i> and can be
+   set withing the fragment shader. The <i>multiplied color</i> gets blended
+   as destination with the <i>mix color</i> as source following the blending
+   rules of the Compositing and Blending spec [[compositing]]. The used blend
+   mode depends on the passed &lt;blend-mode&gt; parameter and is ‘<code
+   class=css>normal</code>’ by default. The result of the blending is the
+   <i>blended color</i>.
+
+  <p> The <i>multiplied color</i> and the <i>blended color</i> get composed
+   using the alpha-compositing rules as described in the Compositing and
+   Blending spec [[compositing]]. The used compositing mode is specified by
+   the passed &lt;compositing&gt; paramter and ‘<code
+   class=css>source-over</code>’ by default.
+
+  <p> The last step, <strong>step 4</strong>, shows how this rasterized
+   output is the input to the next step in the filter chain (or graph, since
+   <a>‘<code class=css>filter element</code>’</a> elements can define a
+   graph of filters). If the <a>‘<code class=css>feCustom
+   element</code>’</a> primitive is the last one in the filter chain, then
+   this output is the filtered rendering of the element. Otherwise, the
+   output of the primitive becomes the input to the next filter primitive
+   using it.
 
   <div class=issue id="about_interactivity"> One issue with filter effects is
    the impact on interactivity. Filters can offset the visual rendering of
@@ -12628,16 +12650,6 @@ double turbulence(int nColorChannel, double *point, double <a
    of the offset. This issue is expected to be more acute with vertex shaders
    and the working group should consider a general solution to this issue
    that works for both predefined filter effects and custom ones.</div>
-
-  <h3 id=processing-model-mix><span class=secno>33.1. </span> Processing
-   model for ‘<code class=css>mix</code>’ function</h3>
-
-  <div class=figure> <img height=726 src="images/mix-fragment-shader.png"
-   width=451>
-   <p class=caption>fragmentShader: processing model for mix</p>
-  </div>
-
-  <p class=todo>Processing model for <code>mix</code> missing.
 
   <h2 id=FilterCSSImageValue><span class=secno>34. </span>The filter CSS
    &lt;image&gt; value</h2>

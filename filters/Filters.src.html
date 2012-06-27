@@ -5834,20 +5834,44 @@ class="element-name">'feCustom'</span></h2>
   mesh folds over itself.
 </p>
 
-<p>During the rasterization step, the <a>'feCustom element'</a> primitive invokes the 
-    fragment shader for every pixel location inside the vertex mesh to perform per pixel operation 
-    and produce the final
-    pixel color at that vertex mesh location. This is the output of step 3. Note that the fragment
-    shader may be called several time for what corresponds to the same pixel coordinate on the
-    output, for example when the vertex mesh folds over itself.</p>
-    
-<p>Step 4 shows how this rasterized output is the input to the next step in the filter chain (or graph, since <a>'filter element'</a> elements can define a graph of filters). If the
-    <a>'feCustom element'</a> primitive is the last one in the filter chain, then this output is the
-    filtered rendering of the element. Otherwise, the output of the primitive becomes the
-    input to the next filter primitive using it.</p>
-    
-<p>The CSS fragment shaders processing model follows <a href="#FilterProperty">how filters apply to HTML</a> and how the <a href="#FilterEffectsRegion">filter effects region</a> is computed.</p>
-    
+<p>
+  CSS fragment shaders have restrictions in comparison to other fragment shader languages (See <a href="">Security section</a> for more information).
+  One restriction is the prohibited usage of conditions based on color values.
+</p>
+
+<p>
+  For this reason the <code>mix</code> function provides basic functionalities
+  for color manipulation within a fragment shader. The processing model of <code>mix</code> is illustrated in the following figure:
+</p>
+
+<div class="figure">
+  <img src="images/mix-fragment-shader.png" width="451" height="726"/>
+  <p class="caption">fragmentShader: processing model for mix</p>
+</div>
+
+<p>
+  Each color value passed to the fragment shader gets multiplied with the ''css_ColorMatrix'', a predefined fragment shader variable of type &lt;mat4&gt;.
+  The variable is initialized to an identity matrix, but can be set within a fragment shader. The resulting color is the <i>multiplied color</i>.
+</p>
+
+<p>
+  ''css_MixColor'' is a second predefined fragment shader variable of type &lt;vec4&gt;. ''css_MixColor'' defines the <i>mix color</i> and can be set
+  withing the fragment shader. The <i>multiplied color</i> gets blended as destination with the <i>mix color</i> as source following the blending rules
+  of the Compositing and Blending spec [[compositing]]. The used blend mode depends on the passed &lt;blend-mode&gt; parameter and is ''normal'' by default.
+  The result of the blending is the <i>blended color</i>.
+</p>
+
+<p>
+  The <i>multiplied color</i> and the <i>blended color</i> get composed using the alpha-compositing rules as described in the Compositing and Blending
+  spec [[compositing]]. The used compositing mode is specified by the passed &lt;compositing&gt; paramter and ''source-over'' by default.
+</p>
+
+<p>
+  The last step, <strong>step 4</strong>, shows how this rasterized output is the input to the next step in the filter chain (or graph, since <a>'filter element'</a> elements can define
+  a graph of filters). If the <a>'feCustom element'</a> primitive is the last one in the filter chain, then this output is the filtered rendering of the
+  element. Otherwise, the output of the primitive becomes the input to the next filter primitive using it.
+</p>
+
 <div id="about_interactivity" class="issue">
     One issue with filter effects is the impact on interactivity. Filters can offset the visual rendering
     of content and affect the way users interact with content. For example, the <a>'feOffset element'</a>
@@ -5856,17 +5880,6 @@ class="element-name">'feCustom'</span></h2>
     is expected to be more acute with vertex shaders and the working group should consider a general
     solution to this issue that works for both predefined filter effects and custom ones.
 </div>
-
-<h3 id="processing-model-mix">
-  Processing model for ''mix'' function
-</h3>
-
-<div class="figure">
-  <img src="images/mix-fragment-shader.png" width="451" height="726"/>
-  <p class="caption">fragmentShader: processing model for mix</p>
-</div>
-
-<p class="todo">Processing model for <code>mix</code> missing.</p>
 
 <h2 id="FilterCSSImageValue">The filter CSS &lt;image&gt; value</h2>
 
