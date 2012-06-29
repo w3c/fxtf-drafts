@@ -75,14 +75,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 27 June 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 29 June 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120627/-->
+     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120629/-->
 
     <dt>Latest version:
 
@@ -381,8 +381,9 @@
 
    <li><a href="#security"><span class=secno>35. </span>Security</a>
     <ul class=toc>
-     <li><a href="#timing-attacks"><span class=secno>35.1. </span>Timing
-      Attacks</a>
+     <li><a href="#rendered-content-access-from-fragment-shaders"><span
+      class=secno>35.1. </span>Rendered Content Access from Fragment
+      Shaders</a>
 
      <li><a href="#origin-restrictions"><span class=secno>35.2. </span>Origin
       Restrictions</a>
@@ -436,22 +437,26 @@
      <li><a href="#recommendation"><span class=secno>38.2. </span>Recommended
       shading language</a>
       <ul class=toc>
-       <li><a href="#vertex-attribute-variables"><span class=secno>38.2.1.
+       <li><a href="#fragment-shaders-differences-with-glsl"><span
+        class=secno>38.2.1. </span>Fragment Shaders Differences with GLSL</a>
+        
+
+       <li><a href="#vertex-attribute-variables"><span class=secno>38.2.2.
         </span>Vertex attribute variables</a>
 
-       <li><a href="#shader-uniform-variables"><span class=secno>38.2.2.
+       <li><a href="#shader-uniform-variables"><span class=secno>38.2.3.
         </span>Shader uniform variables</a>
 
-       <li><a href="#varyings"><span class=secno>38.2.3. </span>Varyings</a>
+       <li><a href="#varyings"><span class=secno>38.2.4. </span>Varyings</a>
 
        <li><a href="#other-uniform-variables-the-css-shaders-"><span
-        class=secno>38.2.4. </span>Other uniform variables: the CSS shaders
+        class=secno>38.2.5. </span>Other uniform variables: the CSS shaders
         parameters</a>
 
-       <li><a href="#default-shaders"><span class=secno>38.2.5.
+       <li><a href="#default-shaders"><span class=secno>38.2.6.
         </span>Default shaders</a>
 
-       <li><a href="#texture-access"><span class=secno>38.2.6. </span>Texture
+       <li><a href="#texture-access"><span class=secno>38.2.7. </span>Texture
         access</a>
       </ul>
     </ul>
@@ -12595,10 +12600,10 @@ double turbulence(int nColorChannel, double *point, double <a
    what corresponds to the same pixel coordinate on the output, for example
    when the vertex mesh folds over itself.
 
-  <p> CSS fragment shaders have restrictions in comparison to other fragment
-   shader languages (See <a href="">Security section</a> for more
-   information). One restriction is the prohibited usage of conditions based
-   on color values.
+  <p> CSS fragment shaders have additional restrictions in comparison to
+   other fragment shader languages (See <a href="#security">Security
+   section</a> for more information). One restriction is the prohibited usage
+   of conditions based on color values.
 
   <p> For this reason the <code>mix</code> function provides basic
    functionalities for color manipulation within a fragment shader. The
@@ -12616,24 +12621,24 @@ double turbulence(int nColorChannel, double *point, double <a
    matrix, but can be set within a fragment shader. The resulting color is
    the <i>multiplied color</i>.
 
-  <p> ‘<code class=css>css_MixColor</code>’ is a second predefined
+  <p> ‘<code class=css>css_MixColor</code>’ is a second, predefined
    fragment shader variable of type &lt;vec4&gt;. ‘<code
    class=css>css_MixColor</code>’ defines the <i>mix color</i> and can be
    set withing the fragment shader. The <i>multiplied color</i> gets blended
    as destination with the <i>mix color</i> as source following the blending
-   rules of the Compositing and Blending spec [[compositing]]. The used blend
-   mode depends on the passed &lt;blend-mode&gt; parameter and is ‘<code
-   class=css>normal</code>’ by default. The result of the blending is the
-   <i>blended color</i>.
+   rules of the Compositing and Blending spec [[compositing]]. The applied
+   blend mode depends on the passed &lt;blend-mode&gt; parameter and is
+   ‘<code class=css>normal</code>’ by default. The result of the blending
+   is the <i>blended color</i>.
 
   <p> The <i>multiplied color</i> and the <i>blended color</i> get composed
    using the alpha-compositing rules as described in the Compositing and
-   Blending spec [[compositing]]. The used compositing mode is specified by
-   the passed &lt;compositing&gt; paramter and ‘<code
+   Blending spec [[compositing]]. The applied alpha-compositing mode is
+   specified by the passed &lt;alpha-compositing&gt; paramter and is ‘<code
    class=css>source-over</code>’ by default.
 
-  <p> The last step, <strong>step 4</strong>, shows how this rasterized
-   output is the input to the next step in the filter chain (or graph, since
+  <p> The last step, <strong>step 4</strong>, shows rasterized output. It is
+   the input to the next step in the filter chain (or graph, since
    <a>‘<code class=css>filter element</code>’</a> elements can define a
    graph of filters). If the <a>‘<code class=css>feCustom
    element</code>’</a> primitive is the last one in the filter chain, then
@@ -12673,77 +12678,55 @@ double turbulence(int nColorChannel, double *point, double <a
 
   <h2 id=security><span class=secno>35. </span>Security</h2>
 
-  <p class=todo>Should this section be merged with the CSS shaders <a
-   href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#security-considerations">security
-   considerations</a> section?
+  <h3 id=rendered-content-access-from-fragment-shaders><span
+   class=secno>35.1. </span>Rendered Content Access from Fragment Shaders</h3>
 
-  <h3 id=timing-attacks><span class=secno>35.1. </span>Timing Attacks</h3>
+  <p> Since a <a href="#feCustomElement">custom filter</a> effect is applying
+   a processing operation on input values, it is important that no protected
+   information leaks from that operation.
 
-  <p> Since a filter effect is applying a processing operation on input
-   values, it is vital that no private information leaks from that operation.
-   The same rules for cross-origin restrictions and tainting of data values
-   apply to filtered content. There are a number of extra cases that are
-   called out here.
-
-  <p> A timing attack is a method of obtaining information about content that
-   is otherwise protected, based on studying the amount of time it takes for
-   an operation to occur. For example, rendering is an operation that takes a
-   significant amount of time, and that time depends on the complexity of the
-   drawing operations involved. If, for example, red pixels took longer to
-   draw than green pixels, one might be able to obtain an indication of the
-   proportion of red to green in the element being rendered, even without
-   ever having access to the content of the element. Taking that to its
-   theoretical extreme, an attack may be able to modify content in a way that
-   exposes such variations in timing over a long enough period.
-
-  <p> Filter effects do not add new vulnerabilities to such attacks, but they
-   possibly allow malicious code to be written that accelerates the process.
-   For example, a filter effect might be able to modify input pixel values in
-   a manner that amplifies the differences in rendering. It is essential that
-   a filter effect expose as little private information to the system as
-   possible. One of the well-documented security issues is exposing the
-   user's browsing history to script based on detecting the color of link
-   elements styled with the ‘<code class=property>visited</code>’
-   pseudo-class.
-
-  <p> A user agent must ensure that any content passed to a filter effect has
-   discernible information removed. This includes, but is not limited-to:
-
-  <ul>
-   <li>visited link styles must not be applied
-
-   <li>file input should not identify any file names
-
-   <li>editable content should not highlight dictionary information
-
-   <li>cross-origin restrictions described below
-  </ul>
+  <p> A <a
+   href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of
+   the security issues</a> has led to the requirement that <a href="">vertex
+   shaders</a> and <a href="">fragment shaders</a> do not get access to the
+   rendered content in order to prevent <a
+   href="http://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.
 
   <h3 id=origin-restrictions><span class=secno>35.2. </span>Origin
    Restrictions</h3>
 
   <p> Input to a filter effect must not include anything as input that would
-   violate cross-origin restrictions. If cross-origin access is required,
-   then the requested content should be explicitly marked with CORS data.
+   violate <a href="http://www.w3.org/TR/cors/">same origin restrictions</a>.
+   If cross-origin access is required, then the requested content should be
+   explicitly marked with <a href="http://www.w3.org/TR/cors/#syntax">CORS
+   data</a>.
 
   <p> This restriction includes:
 
   <ul>
-   <li>Any ‘<code class=property>iframe</code>’ content
+   <li>Any <span class=code><a
+    href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">&lt;iframe&gt;</a></span>
+    content
 
    <li>Any images, either as content or via styling, that are not exposed
-    with CORS
+    with <a href="http://www.w3.org/TR/cors/">CORS</a>
 
-   <li>Any tainted canvas
+   <li>Any <a
+    href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted
+    canvas</a>
 
-   <li>Any cross-origin content referenced by ‘<code
-    class=property>use</code>’
+   <li>Any cross-origin content referenced by <span class=code><a
+    href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span>
   </ul>
 
   <p> For content that falls under this restriction, it should not be
    rendered into the input image. For example, a filter effect that is
    applying to a cross-origin ‘<code class=property>iframe</code>’
    element would receive a completely blank input image.
+
+  <div class=issue>It might be better to specify that if a CORS violation is
+   attempted, then the filter is disabled (instead of running the filter with
+   an empty canvas).</div>
 
   <h2 id=RelaxNG><span class=secno>36. </span>RelaxNG Schema for Filter
    Effects 1.0</h2>
@@ -12964,7 +12947,116 @@ double turbulence(int nColorChannel, double *point, double <a
    The implementation could use the mime type of the url or &lt;script&gt;
    element to determine the the shading language.</div>
 
-  <h4 id=vertex-attribute-variables><span class=secno>38.2.1. </span>Vertex
+  <h4 id=fragment-shaders-differences-with-glsl><span class=secno>38.2.1.
+   </span>Fragment Shaders Differences with GLSL</h4>
+
+  <p>A normal GLSL shader requires that the fragment shaders computes a
+   <code>gl_FragColor</code> value which is the color value for the processed
+   fragment (pixel).
+
+  <p>Because of the <a href="#security">security restrictions</a>, fragment
+   shaders are not allowed to access rendered content pixel values directly
+   and therefore. However, fragment shaders in this specification have the
+   option to compute a value that is automatically mixed with the rendered
+   content values (but without ever providing direct access to these values
+   to the shader code).
+
+  <p>In the context of this specification, fragment shaders have the options
+   to compute the following values:
+
+  <ul>
+   <li><code>gl_FragColor</code>. When the fragment shader parameter is a
+    direct reference to a source file, that shader should compute a
+    <code>gl_FragColor</code>. This may be userful, for example, to compute
+    complex patterns.
+
+   <li><code>css_MixColor</code>. When the fragment shader parameter uses the
+    <a href="#fragmentShader-attribute"><code>mix()</code></a> function, then
+    it can compute a <code>css_MixColor</code> value that is composited with
+    the rendered content as explained in the <a
+    href="#shader-processing-model">shaders processing model</a>.
+
+   <li><code>css_ColorMatrix</code>. When the fragment shader parameter uses
+    the <a href="#fragmentShader-attribute"><code>mix()</code></a> function,
+    then it can compute a <code>css_ColorMatrix</code> value that is
+    multiplied with the rendered content as explained in the <a
+    href="#shader-processing-model">shaders processing model</a>.
+  </ul>
+
+  <div class=example>
+   <p>The following example shows a fragment shader which computes a simple
+    solid red color:</p>
+
+   <p>CSS</p>
+
+   <pre>
+#filtered-element {
+    filter: custom(url(simple.vs) url(simple.fs));
+}
+      </pre>
+
+   <p>simple.fs</p>
+
+   <pre>
+void main()
+{  
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}      </pre>
+  </div>
+
+  <div class=example>
+   <p>The following example shows a fragment shader which darkens the
+    rendered content by computing a <code>css_MixColor</code> which is
+    multiplied with the rendered content:</p>
+
+   <p>CSS</p>
+
+   <pre>
+#filtered-element {
+  filter: custom(url(simple.vs) <strong>mix(url(simple2.fs) multiply)</strong>);
+}
+    </pre>
+
+   <p>simple2.fs</p>
+
+   <pre>
+void main()
+{  
+  <strong>css_MixColor</strong> = vec4(0.8, 0.8, 0.8, 1.0);
+}      </pre>
+  </div>
+
+  <div class=example>
+   <p>The following example shows a fragment shader which darkens the
+    rendered content by computing a <code>css_ColorMatrix</code> which varies
+    depending on the texture coordinate:</p>
+
+   <p>CSS</p>
+
+   <pre>
+#filtered-element {
+    filter: custom(url(simple.vs) mix(url(simple3.fs)));
+}
+      </pre>
+
+   <p>simple3.fs</p>
+
+   <pre>
+varying vec2 v_texCoord;
+
+void main()
+{  
+    float x = v_texCoord.x;
+    css_ColorMatrix = mat4(
+        vec4(x, x, x, x), // 1rst column
+        vec4(x, x, x, x), // 2nd column
+        vec4(x, x, x, x), // 3rd column
+        vec4(x, x, x, x), // 4th column
+    );
+}      </pre>
+  </div>
+
+  <h4 id=vertex-attribute-variables><span class=secno>38.2.2. </span>Vertex
    attribute variables</h4>
 
   <p> The following attribute variables are available to the vertex shader.
@@ -13010,7 +13102,7 @@ double turbulence(int nColorChannel, double *point, double <a
    <p class=caption>The a_triangleCoord.z value</p>
   </div>
 
-  <h4 id=shader-uniform-variables><span class=secno>38.2.2. </span>Shader
+  <h4 id=shader-uniform-variables><span class=secno>38.2.3. </span>Shader
    uniform variables</h4>
 
   <p> The following uniform variables are set to specific values by the user
@@ -13026,22 +13118,6 @@ double turbulence(int nColorChannel, double *point, double <a
       matrix</code>’ which the ‘<code class=property>transform</code>’
       property sets, is not passed to the shaders. It is applied to the
       filtered element's rendering.</em>
-
-    <tr>
-     <td><code>uniform sampler2D u_texture</code>
-
-     <td>The input texture. Includes transparent margins for the filter
-      margins.
-
-    <tr>
-     <td><code>uniform sampler2D u_contentTexture</code>
-
-     <td>A texture with the rendering of the filtered element. If the filter
-      is the first in the filter chain, then, this texture is the same as the
-      u_texture uniform. However, if there are preceding filters, this
-      provides the rendering of the original filtered element, whereas
-      u_texture provides the output of the preceding filter in the filter
-      chain (or graph).
 
     <tr>
      <td><code>uniform vec2 u_textureSize</code>
@@ -13069,7 +13145,7 @@ double turbulence(int nColorChannel, double *point, double <a
       of rows.
   </table>
 
-  <h4 id=varyings><span class=secno>38.2.3. </span>Varyings</h4>
+  <h4 id=varyings><span class=secno>38.2.4. </span>Varyings</h4>
 
   <p>When the author provides both a vertex and a fragment shader, there is
    no requirement on the varyings passed from the vertex shader to the
@@ -13083,10 +13159,10 @@ double turbulence(int nColorChannel, double *point, double <a
     <tr>
      <td>varying vec2 v_texCoord;
 
-     <td>The current pixel's texture coordinates (in u_texture).
+     <td>The current pixel's texture coordinates (in the content texture).
   </table>
 
-  <h4 id=other-uniform-variables-the-css-shaders-><span class=secno>38.2.4.
+  <h4 id=other-uniform-variables-the-css-shaders-><span class=secno>38.2.5.
    </span>Other uniform variables: the CSS shaders parameters</h4>
 
   <p>When there parameters are passed to the <code>custom()</code> filter
@@ -13168,7 +13244,7 @@ double turbulence(int nColorChannel, double *point, double <a
    texture()</code> parameter, an additional <code>vec2</code> uniform is
    passed to the shaders with the size of the corresponding texture.
 
-  <h4 id=default-shaders><span class=secno>38.2.5. </span>Default shaders</h4>
+  <h4 id=default-shaders><span class=secno>38.2.6. </span>Default shaders</h4>
 
   <p>If no vertex shader is provided, the default one is as shown below.
 
@@ -13197,15 +13273,14 @@ double turbulence(int nColorChannel, double *point, double <a
    class=idl></code>
    <pre>
   varying vec2 v_texCoord;
-  uniform sampler2D u_texture;
 
   void main()
   {  
-      gl_FragColor = texture2D(u_texture, v_texCoord);  
+      css_MixColor = vec4(1.0, 1.0, 1.0, 1.0); // Full white
   }        </pre>
   </div>
 
-  <h4 id=texture-access><span class=secno>38.2.6. </span>Texture access</h4>
+  <h4 id=texture-access><span class=secno>38.2.7. </span>Texture access</h4>
 
   <p>If shaders access texture values outside the <code>[0, 1]</code> range
    on both axis, the returned value is a fully transluscent black pixel.

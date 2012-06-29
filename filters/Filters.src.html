@@ -5904,61 +5904,27 @@ filter() syntax</h4>
 
 <h2 id="security">Security</h2>
 
-<p class="todo">Should this section be merged with the CSS shaders 
-    <a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#security-considerations">security
-        considerations</a> section?</a>
-        
-<h3 id="timing-attacks">Timing Attacks</h3>
+<h3 id="rendered-content-access-from-fragment-shaders">Rendered Content Access from Fragment Shaders</h3>
 
 <p>
-  Since a filter effect is applying a processing operation on input values, it
-  is vital that no private information leaks from that operation. The same rules
-  for cross-origin restrictions and tainting of data values apply to filtered
-  content. There are a number of extra cases that are called out here.
+  Since a <a href="#feCustomElement">custom filter</a> effect is applying a processing operation on input 
+  values, it is important that no protected information leaks from that operation. 
 </p>
 
 <p>
-  A timing attack is a method of obtaining information about content that is
-  otherwise protected, based on studying the amount of time it takes for an
-  operation to occur. For example, rendering is an operation that takes a
-  significant amount of time, and that time depends on the complexity of the
-  drawing operations involved. If, for example, red pixels took longer to draw
-  than green pixels, one might be able to obtain an indication of the proportion
-  of red to green in the element being rendered, even without ever having access
-  to the content of the element. Taking that to its theoretical extreme, an
-  attack may be able to modify content in a way that exposes such variations in
-  timing over a long enough period.
+  A <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of the security issues</a> has led 
+  to the requirement that <a href="">vertex shaders</a> and <a href="">fragment shaders</a> do not get access 
+  to the rendered content in order to prevent <a href="http://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.
 </p>
 
-<p>
-  Filter effects do not add new vulnerabilities to such attacks, but they
-  possibly allow malicious code to be written that accelerates the process. For
-  example, a filter effect might be able to modify input pixel values in a manner
-  that amplifies the differences in rendering. It is essential that a filter
-  effect expose as little private information to the system as possible. One of
-  the well-documented security issues is exposing the user's browsing history to
-  script based on detecting the color of link elements styled with the 'visited'
-  pseudo-class.
-</p>
-
-<p>
-  A user agent must ensure that any content passed to a filter effect has
-  discernible information removed. This includes, but is not limited-to:
-</p>
-
-<ul>
-  <li>visited link styles must not be applied</li>
-  <li>file input should not identify any file names</li>
-  <li>editable content should not highlight dictionary information</li>
-  <li>cross-origin restrictions described below</li>
-</ul>
 
 <h3 id="origin-restrictions">Origin Restrictions</h3>
 
 <p>
   Input to a filter effect must not include anything as input that would
-  violate cross-origin restrictions. If cross-origin access is required,
-  then the requested content should be explicitly marked with CORS data.
+  violate <a href="http://www.w3.org/TR/cors/">same origin restrictions</a>. 
+  If cross-origin access is required, then the requested content should be explicitly 
+  marked with <a href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
 </p>
 
 <p>
@@ -5966,10 +5932,10 @@ filter() syntax</h4>
 </p>
 
 <ul>
-  <li>Any 'iframe' content</li>
-  <li>Any images, either as content or via styling, that are not exposed with CORS</li>
-  <li>Any tainted canvas</li>
-  <li>Any cross-origin content referenced by 'use'</li>
+  <li>Any <span class="code"><a href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">&lt;iframe&gt;</a></span> content</li>
+  <li>Any images, either as content or via styling, that are not exposed with <a href="http://www.w3.org/TR/cors/">CORS</a></li>
+  <li>Any <a href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted canvas</a></li>
+  <li>Any cross-origin content referenced by <span class="code"><a href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span></li>
 </ul>
 
 <p>
@@ -5977,6 +5943,8 @@ filter() syntax</h4>
   the input image. For example, a filter effect that is applying to a cross-origin
   'iframe' element would receive a completely blank input image.
 </p>
+
+<div class="issue">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
 
 <h2 id="RelaxNG">RelaxNG Schema for Filter Effects 1.0</h2>
 
@@ -6169,6 +6137,98 @@ The RNG is under construction, and only the individual RNG snippets are availabl
       to determine the the shading language.
   </div>
 
+  <h4 id="fragment-shaders-differences-with-glsl">Fragment Shaders Differences with GLSL</h4>
+  
+  <p>A normal GLSL shader requires that the fragment shaders computes a <code>gl_FragColor</code> value which
+     is the color value for the processed fragment (pixel). 
+  </p>
+  
+  <p>Because of the <a href="#security">security restrictions</a>, fragment shaders are not allowed to 
+      access rendered content pixel values directly and therefore. However, fragment shaders in this specification
+      have the option to compute a value that is automatically mixed with the rendered content values (but without
+      ever providing direct access to these values to the shader code).</p>
+      
+  <p>In the context of this specification, fragment shaders have the options to compute the following values:</p>
+  
+  <ul>
+      <li><code>gl_FragColor</code>. When the fragment shader parameter is a direct reference to a source file,
+          that shader should compute a <code>gl_FragColor</code>. This may be userful, for example, to compute
+          complex patterns.</li>
+      <li><code>css_MixColor</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
+          function, then it can compute a <code>css_MixColor</code> value that is composited with the rendered
+          content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
+      <li><code>css_ColorMatrix</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
+              function, then it can compute a <code>css_ColorMatrix</code> value that is multiplied with the rendered
+              content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
+  </ul>
+  
+  <div class="example">
+      <p>The following example shows a fragment shader which computes a simple solid red color:</p>
+      
+      <p>CSS</p>
+      <pre>
+#filtered-element {
+    filter: custom(url(simple.vs) url(simple.fs));
+}
+      </pre>
+      
+      <p>simple.fs</p>
+      <pre>
+void main()
+{  
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}      </pre>
+  </div>
+
+
+<div class="example">
+    <p>The following example shows a fragment shader which darkens the rendered content by 
+       computing a <code>css_MixColor</code> which is multiplied with the rendered content:</p>
+
+    <p>CSS</p>
+    <pre>
+#filtered-element {
+  filter: custom(url(simple.vs) <strong>mix(url(simple2.fs) multiply)</strong>);
+}
+    </pre>
+
+    <p>simple2.fs</p>
+    <pre>
+void main()
+{  
+  <strong>css_MixColor</strong> = vec4(0.8, 0.8, 0.8, 1.0);
+}      </pre>
+</div>
+
+
+  <div class="example">
+      <p>The following example shows a fragment shader which darkens the rendered content by
+         computing a <code>css_ColorMatrix</code> which varies depending on the texture coordinate:</p>
+
+      <p>CSS</p>
+      <pre>
+#filtered-element {
+    filter: custom(url(simple.vs) mix(url(simple3.fs)));
+}
+      </pre>
+
+      <p>simple3.fs</p>
+      <pre>
+varying vec2 v_texCoord;
+
+void main()
+{  
+    float x = v_texCoord.x;
+    css_ColorMatrix = mat4(
+        vec4(x, x, x, x), // 1rst column
+        vec4(x, x, x, x), // 2nd column
+        vec4(x, x, x, x), // 3rd column
+        vec4(x, x, x, x), // 4th column
+    );
+}      </pre>
+  </div>
+
+  
   <h4>Vertex attribute variables</h4>
 
   The following attribute variables are available to the vertex shader.
@@ -6223,17 +6283,6 @@ The RNG is under construction, and only the individual RNG snippets are availabl
               filtered element's rendering.</em></td>
       </tr>
       <tr>
-          <td><code>uniform sampler2D u_texture</code></td>
-          <td>The input texture. Includes transparent margins for the filter margins.</td>
-      </tr>
-      <tr>
-          <td><code>uniform sampler2D u_contentTexture</code></td>
-          <td>A texture with the rendering of the filtered element. If the filter is the first
-              in the filter chain, then, this texture is the same as the u_texture uniform. However,
-              if there are preceding filters, this provides the rendering of the original filtered element,
-              whereas u_texture provides the output of the preceding filter in the filter chain (or graph).</td>
-      </tr>
-      <tr>
           <td><code>uniform vec2 u_textureSize</code></td>
           <td>The input texture's size. Includes the filter margins.</td>
       </tr>
@@ -6263,7 +6312,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   <table class="values-desc">
   <tr>
       <td>varying vec2 v_texCoord;</td>
-      <td>The current pixel's texture coordinates (in u_texture).</td>
+      <td>The current pixel's texture coordinates (in the content texture).</td>
   </tr>
   </table>
 
@@ -6375,11 +6424,10 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   <div id="default-fragment-shader" class="shader example">
           <code class="idl"><pre>
   varying vec2 v_texCoord;
-  uniform sampler2D u_texture;
 
   void main()
   {  
-      gl_FragColor = texture2D(u_texture, v_texCoord);  
+      css_MixColor = vec4(1.0, 1.0, 1.0, 1.0); // Full white
   }        </pre></code>
   </div>
 
