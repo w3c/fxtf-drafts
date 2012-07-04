@@ -257,13 +257,16 @@
 <h2 class="no-num no-toc" id="abstract">Abstract</h2>
 
  <p>
-  Compositing describes how shapes of different elements are 
-  combined into a single image. Conceptually, each element is rendered into 
-  its own buffer and is then merged with its <a href="#backdrop">backdrop</a>. The most widely used 
-  compositing operation is <a href="#src-ver">src-over</a>, and this is used by the <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a> model of 
-  previous versions of SVG, such as SVG 1.0, SVG 1.1, SVG Tiny 1.2, etc.
-  This spec will introduce additional advanced compositing operators that will allow shapes to interact in more complex ways.
-  This spec will also introduce advanced blending modes, which enable the user to control how the colours of two shapes combine in areas where they overlap.
+  Compositing describes how shapes of different elements are combined into a single image. 
+  There are various possible approaches for compositing.
+  Previous versions of SVG used <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a>. In this model, each element is rendered into its own buffer and is then merged with its <a href="#backdrop">backdrop</a> using the Porter Duff <a href="#porterduffcompositingoperators_srcover">src-over</a> operator.
+  
+  This specification will define a new compositing model that expands upon the Simple Alpha Compositing model by offering:
+  <ul>
+  <li>additional Porter Duff compositing operators;</li>
+  <li>advanced blending modes which allow control of how colors mix in the areas where shapes overlap; and</li>
+  <li>compositing groups</li>
+  </ul>
  </p>
  
  <p>
@@ -304,7 +307,7 @@ The second part describes how they are specified in CSS. <br/>
 Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the opacity. This coverage information is used to control the compositing of colors.
 </p>
 <p>
-Blending is the compositing step where the resultant colour of a region where two shapes overlap, is calculated.
+Blending is the compositing step where the resultant color of a region where two shapes overlap, is calculated.
 </p>
 <p>
 Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the <a href="#backdrop">backdrop</a> image using a simplistic formula that has the effect of overlaying the object over the <a href="#backdrop">backdrop</a>. Where the objects overlap and coverage is not complete the color of the <a href="#backdrop">backdrop</a> may show through the object that has just been rendered. 
@@ -586,14 +589,14 @@ The additional compositing operators allow for more complex interactions between
 The operators that applies to an element or group is selected using the <a href="#propdef-alpha-compositing">alpha-compositing</a>property.
 </p>
 <p>
-Porter Duff compositing is based on a model of a pixel in which two shapes (source and destination) may contribute to the final colour of the pixel. The pixel is divided into 4 sub-pixel regions and each region represents a possible combination of source and destination.<br/>
+Porter Duff compositing is based on a model of a pixel in which two shapes (source and destination) may contribute to the final color of the pixel. The pixel is divided into 4 sub-pixel regions and each region represents a possible combination of source and destination.<br/>
 <br />
 The four regions are:
 <dl>
-<dt>Source Only</dt><dd>Where only the source contributes to the pixel colour</dd>
-<dt>Destination only</dt><dd>where only the destination contributes to the pixel colour</dd>
-<dt>Both</dt><dd>Source and Destination – where both the source and destination may combine to define the pixel colour</dd>
-<dt>None</dt><dd>No source or Destination – where neither make a contribution to the final pixel colour</dd>
+<dt>Source Only</dt><dd>Where only the source contributes to the pixel color</dd>
+<dt>Destination only</dt><dd>where only the destination contributes to the pixel color</dd>
+<dt>Both</dt><dd>Source and Destination – where both the source and destination may combine to define the pixel color</dd>
+<dt>None</dt><dd>No source or Destination – where neither make a contribution to the final pixel color</dd>
 </dl>
 
 <p class="note">Destination is synonymous with backdrop. The term destination is used in this section as this is considered the standard when working with Porter Duff compositing. Additionally, the compositing operators use 'dest' in their names.</p>
@@ -601,7 +604,7 @@ The four regions are:
 <div class="figure">
 <p style="text-align:center"><img src="examples/PD_regions.svg"/></p>
 </div>
-The contribution from each region to the final pixel colour is defined by the coverage of the shape at that pixel, and the operator in use.
+The contribution from each region to the final pixel color is defined by the coverage of the shape at that pixel, and the operator in use.
 Coverage is specified in terms of alpha. Full alpha (1) implies full coverage, while zero alpha implies no coverage.
 This means that the area of each region within the sub-pixel is dependent on the coverage of each shape contributing to the pixel.
 The area of each region can be calculated with the following equations:
@@ -652,11 +655,11 @@ The general form of the equation for coverage is:
 <pre>
     αa x Fa + αb x Fb
 </pre>
-and incorporating colour gives the general Porter Duff equation
+and incorporating color gives the general Porter Duff equation
 <pre>
     co = αa x Fa x Ca + αb x Fb x Cb
 </pre>
-Where: co is the output colour pre-multiplied with the output alpha [0 <= co <= 1] αa is the coverage of the source Fa is defined by the operator and controls inclusion of the source Ca is the colour of the source (not multiplied by alpha) αb is the coverage of the dest Fb is defined by the operator and controls inclusion of the dest Cb is the colour of the dest (not multiplied by alpha)
+Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1] αa is the coverage of the source Fa is defined by the operator and controls inclusion of the source Ca is the color of the source (not multiplied by alpha) αb is the coverage of the dest Fb is defined by the operator and controls inclusion of the dest Cb is the color of the dest (not multiplied by alpha)
 <h4 id="porterduffcompositingoperators_clear">Clear</h4>
 <p>No regions are enabled.</p>
 <img src="examples/PD_clr.svg"/>
@@ -792,7 +795,7 @@ Some of the Porter Duff operators are unchanged, because they normally have no e
 Blending is the aspect of compositing that calculates the mixing of colors where the source element and backdrop overlap.
 Blending takes the colors of the source element and mixes them with the <a href="#backdrop">backdrop</a> in areas where the source element and backdrop overlap.
 Conceptually, the colors in the source element are blended in place with the backdrop.
-The opacity of the source element and <a href="#backdrop">backdrop</a> are ignored during blending; it is stricltly a colour based operation.
+The opacity of the source element and <a href="#backdrop">backdrop</a> are ignored during blending; it is stricltly a color based operation.
 After blending, the modified source element is composited with the backdrop.
 In practice, this is usually all performed in one step.
 Note: the blending calcualtions must use non-premultiplied color values.
@@ -1066,7 +1069,7 @@ Creates a color with the saturation of the source color and the hue and luminosi
 
 <h4 id="blendingcolor">'color' blend mode</h4>
 <p>
-Creates a color with the hue and saturation of the source color and the luminosity of the <a href="#backdrop">backdrop</a> color. This preserves the gray levels of the <a href="#backdrop">backdrop</a> and is useful for colouring monochrome images or tinting colour images.
+Creates a color with the hue and saturation of the source color and the luminosity of the <a href="#backdrop">backdrop</a> color. This preserves the gray levels of the <a href="#backdrop">backdrop</a> and is useful for coloring monochrome images or tinting color images.
 <pre>
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
 </pre>
@@ -1189,7 +1192,7 @@ Elements will always composite with <a href="#groupcompositingcliptoself">'clip-
 
 <p>
 Defines the blend mode used when compositing an element onto the page.
-The blend mode defines the formula used to mix colours when shapes overlap.
+The blend mode defines the formula used to mix colors when shapes overlap.
 This behaviour is described in more detail in <a href="#blending">Blending</a>.
   
 <div class="propdef">
