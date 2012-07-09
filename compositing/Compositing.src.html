@@ -567,7 +567,7 @@ In figure 7, the blue and green shapes are in a group that has alpha. When calcu
 
 <h2 id="groups">Compositing Groups</h2>
 <p>
-Compositing groups allow for more control over the interaction of compositing with the backdrop. Groups can be used to specify how a compositing effect
+Compositing groups allow more control over the interaction of compositing with the backdrop. Groups can be used to specify how a compositing effect
 within a group will interact with the content that is already in the scene (the backdrop).
 </p>
 <p>
@@ -600,7 +600,7 @@ The use of <a href="#knockoutgroups">knockout groups</a> changes this definition
 An important behavior of simple alpha compositing is its group invariance. This behaviour is preserved in the more complex model described in this specification.
 Adding or removing grouping with default attributes shall not show visual differences.<br/>
 <pre>so: A + B + C = A + (B + C) = (A + B) + C</pre>
-When adding attributes to the group such as knockout, isolate, blending modes other than normal or Porter-Duff compositing operators other than source-over, groups may no longer be invariant.
+When adding attributes to the group such as knockout, isolate, blending modes other than normal or Porter Duff compositing operators other than source-over, groups may no longer be invariant.
 </p>
 
 <h3 id="isolatedgroups">Isolated Groups</h3>
@@ -611,8 +611,8 @@ In this instance, the initial backdrop is different than the group backdrop. The
 computed color, shape and alpha are composited with it.
 </p>
 
-See <a href="#groupcompositingisolation">'Isolated groups and Porter Duff modes'</a> for a description of the effect of isolated groups on compositing.
-See <a href="#isolationblending">'Effect of group isolation on blending'</a> for a description of the effect of isolated groups on blending.
+See '<a href="#groupcompositingisolation">Isolated groups and Porter Duff modes</a>' for a description of the effect of isolated groups on compositing.
+See '<a href="#isolationblending">Effect of group isolation on blending</a>' for a description of the effect of isolated groups on blending.
 
 <h3 id="knockoutgroups">Knockout Groups</h3>
 <p>
@@ -624,8 +624,8 @@ When calculating the <a href="#backdrop">backdrop</a> for an element inside a kn
 </div>
 <p>
 The above example demonstrates two versions of a group containing three squares (red, green, blue) that are 50% opaque. The group is composited over a grey striped background.<br />
-On the left, the group has knock-out="knock-out". On the right, the group has knock-out="preserve".<br />
-It can be seen that where knock-out="knock-out", each element within the group is only composited with the elements underneath the group.
+On the left, the group has the 'knock-out' property set to 'knock-out'. On the right, the group has the 'knock-out' property set to 'preserve'.<br />
+If the 'knock-out' property has the value 'knock-out', each element within the group is only composited with the elements underneath the group.
 </p>
 
 <h3 id="pagebackdrop">The Page Group</h3>
@@ -651,8 +651,8 @@ which is the color value ultimately displayed by the user agent.
 <h2 id="advancedcompositing">Advanced compositing features</h2>
 <p>
 <a href="#simplealphacompositing">Simple alpha compositing</a> uses the source-over Porter Duff compositing operator. Additional compositing operators exist and may be specified with the <a href="#propdef-alpha-compositing">alpha-compositing property</a>.
-The additional compositing operators allow for more complex interactions between the shapes of elements being composited. The compositing operators are described in <a href="#porterduffcompositingoperators">'The Porter-Duff compositing operators'</a>.
-The operators that applies to an element or group is selected using the <a href="#propdef-alpha-compositing">alpha-compositing</a>property.
+The additional compositing operators allow for more complex interactions between the shapes of elements being composited. The compositing operators are described in <a href="#porterduffcompositingoperators">'The Porter Duff compositing operators'</a>.
+The operators that applies to an element or group is selected using the <a href="#propdef-alpha-compositing">alpha-compositing</a> property.
 </p>
 <p>
 Porter Duff compositing is based on a model of a pixel in which two shapes (source and destination) may contribute to the final color of the pixel. The pixel is divided into 4 sub-pixel regions and each region represents a possible combination of source and destination.<br/>
@@ -694,7 +694,7 @@ The area of each region can be calculated with the following equations:
 </tr>
 </table>
 </div>
-The image in Figure [X] above represents coverage of 0.5 for both source and destination.
+The figure above represents coverage of 0.5 for both source and destination.
 <pre>
 Both = 0.5 x 0.5 = 0.25 
 Source Only = 0.5 (1 – 0.5) = 0.25
@@ -705,7 +705,7 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 Therefore, the area of each region is 25% in this example.
 </p>
 
-<h3 id="porterduffcompositingoperators">The porter-duff Compositing Operators</h3>
+<h3 id="porterduffcompositingoperators">The Porter Duff Compositing Operators</h3>
 <p>
 The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
 <br/>
@@ -822,7 +822,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     αo = αa x (1 - αb) + αb x (1 – αa)
 </pre>
 <h4 id="porterduffcompositingoperators_plus">Plus</h4>
-<p>Plus is an additional operator that is defined in the Porter-Duff paper [3].</p>
+<p>Plus is an additional operator that is defined in the Porter Duff paper [3].</p>
 <pre>
     Fa = 1; Fb = 1
     co = αa x Ca + αb x Cb;
@@ -832,8 +832,10 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
 <h3 id="groupcompositing">Group compositing behavior with Porter Duff modes</h3>
 <h4 id="groupcompositingisolation">Isolated groups and Porter Duff modes</h4>
 <p>
-When compositing the elements within an isolated group, the elements are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the bottom element in the group uses a Porter-Duff compositing operator
-which is dependent on the backdrop, such as dest, source-in, dest-in, dest-out or src-atop, then the result of the composite will be empty. Subsequent elements within the group are composited with the result of the first composite.
+When compositing the elements within an isolated group, the elements are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the bottom element in the group uses a Porter Duff compositing operator
+which is dependent on the backdrop, such as <a href="#porterduffcompositingoperators_dest">dest</a>, <a href="#porterduffcompositingoperators_srcin">source-in</a>, 
+<a href="#porterduffcompositingoperators_destin">dest-in</a>, <a href="#porterduffcompositingoperators_dest_out">dest-out</a> or <a href="#porterduffcompositingoperators_srcatop">src-atop</a>, 
+then the result of the composite will be empty. Subsequent elements within the group are composited with the result of the first composite.
 </p>
 
 <h4 id="groupcompositingknockout">Knockout groups and Porter Duff modes</h4>
@@ -842,15 +844,15 @@ Every element within a knock-out group is composited with the initial backdrop.
 This means, that for every element within the group, the backdrop for the compositing of that element, is the initial backdrop.
 </p><p>
 In the example below, the elements within the group (the circle and the square) are composited using the <a href="#porterduffcompositingoperators_srcatop">src-atop</a> operator, with only the hexagon.
-This has the effect of 'knocking out' the circle, where it is overlapped by the square.<br />
-Additionally, because the src-atop Porter-Duff operator is used, the source shape (either the square or the circle) is only placed where the backdrop exists (the backdrop being the hexagon for both compositing operations within the group).
+This has the effect of "knocking out" the circle, where it is overlapped by the square.<br />
+Additionally, because the src-atop Porter Duff operator is used, the source shape (either the square or the circle) is only placed where the backdrop exists (the backdrop being the hexagon for both compositing operations within the group).
 <div class="example"><img src="examples/pd-knockout.png" /></div>
 </p>
 
 <h4 id="groupcompositingcliptoself">Clip to self behavior</h4>
 <p>
 When compositing, the areas of the composite that may be modified by the compositing operation, must fall within the shape of the element being composited (i.e. where α > 0).
-This is known as 'clip to self' in some graphics libraries.
+This is known as "clip to self" in some graphics libraries.
 The alternative is to not clip the compositing operation at all. The results can be seen below.
 Some of the Porter Duff operators are unchanged, because they normally have no effect outside the source region. The changes can be seen in the clear, src, src-in, dst-in, src-out and dst-atop.
 <div class="figure"><img src="examples/clip-to-self.png" /></div>
@@ -864,7 +866,7 @@ Conceptually, the colors in the source element are blended in place with the bac
 The opacity of the source element and <a href="#backdrop">backdrop</a> are ignored during blending; it is stricltly a color based operation.
 After blending, the modified source element is composited with the backdrop.
 In practice, this is usually all performed in one step.
-Note: the blending calcualtions must use non-premultiplied color values.
+<p class="note">The blending calcualtions must not use pre-multiplied color values.</p>
 </p>
 <p>
 We will describe the "mixing" formula as:
@@ -880,7 +882,6 @@ Cs: the source color<br/>
 The result of the mixing formula must be clamped to the minimum and maximum values of the color range.
 </p>
 <p>
-Compositing, 
 <p class="issue">NA: The following contradicts the earilier paragraph a bit. What it is really showing is the compositing equation for dest-over with the mixing function. It'd be better to use source-over or a general equation.</p>
 However, we can not use this value since this calculation is overlooking the alpha of the <a href="#backdrop">backdrop</a>.
 If the <a href="#backdrop">backdrop</a> is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
@@ -903,7 +904,7 @@ Note how the top rectangle shifts more toward red as the opacity of the <a href=
 </p>
 </div>
 <p>
-The following formula gives the color value in the area where the source and backdrop intersects and then composites with the specified Porter-Duff compositing formula. For simple alpha blending, the formula thus becomes:
+The following formula gives the color value in the area where the source and backdrop intersects and then composites with the specified Porter Duff compositing formula. For simple alpha blending, the formula thus becomes:
 <p class="issue">NA: I think the following formula just uses source over - we need a general version.</p>
 <pre>
 simple alpha compositing:
@@ -917,11 +918,11 @@ now subsitute the result of blending for Ca:
 </p>
 <h3 id="blendingseparable">Separable blend modes</h3>
 <p>
-A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent <a href="#backdrop">backdrop</a> and source colors—that is, if the mixing formula is applied <strong>separately</strong> to each set of corresponding components.
+A blend mode is termed separable if each component of the result color is completely determined by the corresponding components of the constituent <a href="#backdrop">backdrop</a> and source colors — that is, if the mixing formula is applied <strong>separately</strong> to each set of corresponding components.
 </p>
 <p>
 Each of the following blend modes will apply the blending function B(Cb, Cs) on each of the color components.
-For simplicity, all the examples in this chapter use 'src-over' compositing.
+For simplicity, all the examples in this chapter use <a href="#porterduffcompositingoperators_srcover">src-over</a> compositing.
 </p>
 
 <h4 id="blendingnormal">'normal' blend mode</h4>
@@ -1701,7 +1702,7 @@ Please see the <a href="http://www.w3.org/Graphics/fx/wiki/BlendingInCanvas">W3 
 <h3 id="canvascompositingandblending">Specifying the current compositing and blending mode</h3>
 <p>
 <p class="issue">DRAFT.This proposal needs more discussion.</p><br/>
-The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.
+The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter Duff operators.
 To allow blending, we can extend the list with the blending keywords:
 <pre>normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</pre>
 If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the src-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
@@ -1710,7 +1711,7 @@ If a blend mode is specified, the blended image is calculated as specified above
 <span p="issue">or</p>
 </p>
 <p>
-The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter-Duff operators.<br/>
+The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter Duff operators.<br/>
 To allow blending, we can add a new operator 'globalBlendOperation' on the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#2dcontext">2D context</a> with the blending keywords: 
 <pre>
 normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.
