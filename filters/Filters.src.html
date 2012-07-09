@@ -371,11 +371,10 @@
   the explicit conformance criteria are the definitive reference.
 </p>
 
-<p>
-  Note that even though this specification references parts of <a
-  href="#ref-svg11">SVG 1.1</a> it does not require an SVG 1.1
-  implementation. <span class="note">Add link to conformance classes
-  here.</span>
+<p class="note">
+  Note that even though this specification references parts of SVG 1.1 [[!SVG11]] it does not require an SVG 1.1
+  implementation.
+  <p class="issue">Add link to conformance classes here.</p>
 </p>
 
 <!-- ****************************************************************************** -->
@@ -387,69 +386,57 @@
 </p>
 
 <dl>
-  <dt id="term-null-filter"><span
-  class="termDefine">null filter</span></dt>
+  <dt id="term-null-filter"><dfn>null filter</dfn></dt>
   <dd>
     <p>
     The null filter output is all transparent black pixels. If applied to an element it means
   that the element (and children if any) becomes invisible. Note that it does not affect event processing.
     </p>
   </dd>
-  <dt id="TermTransferFunctionElements"><span
-  class="SVG-TermDefine">transfer function elements</span></dt>
+  <dt id="TermTransferFunctionElements"><dfn>transfer function elements</dfn></dt>
   <dd>
-    <p>
-    The set of elements,
-      <a>'feFuncR'</a>, <a>'feFuncG'</a>, <a>'feFuncB'</a>, <a>'feFuncA'</a>, that define the transfer function for the <a>'feComponentTransfer'</a> filter primitive.
-    </p>
+    The set of <a>'feFuncR element'</a>, <a>'feFuncG element'</a>, <a>'feFuncB element'</a>,
+    <a>'feFuncA element'</a> elements, that define the transfer function for the <a>'feComponentTransfer element'</a>
+    <span class="term">filter primitive</span>.
   </dd>
-<dt id="TermClientBoundingRect"><span
-  class="SVG-TermDefine">bounding client rect</span></dt>
+<dt id="TermClientBoundingRect"><dfn>bounding client rect</dfn></dt>
 <dd>
   <p>
-  The union of all CSS border-boxes for the element if formatted with the CSS box model, as defined by the CSS OM method 
-  <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [<a href="#ref-CSSOM">CSSOM</a>].
+    The union of all border boxes for the element that has an associated CSS layout box and is not
+    in the <code>http://www.w3.org/2000/svg</code> namespace and it's descendant elements. Or the
+    object bounding box [[!SVG11]], if the element does not have
+    an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace
+    (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
+    [<a href="#ref-CSSOM">CSSOM</a>]).
   </p>
 </dd>
-<dt id="TermCSSBoundingBox"><span
-  class="SVG-TermDefine">CSS bounding box</span></dt>
+<dt id="TermUserCoordinateSystem"><dfn>local coordinate system</dfn>, <dfn>user coordinate system</dfn></dt>
 <dd>
   <p>
-  The union of all CSS border-boxes for the element and all it's descendant elements, provided the element is formatted with the CSS box model [<a href="#ref-CSS21">CSS</a>].
+    In general, a coordinate system defines locations and distances on the current
+    canvas. The current local coordinate system (also user coordinate system) is the
+    coordinate system that is currently active and which is used to define how
+    coordinates and lengths are located and computed, respectively, on the current
+    canvas.
+  </p>
+  <p>
+    For elements that have an associated CSS layout box, the current user coordinate system has its origin at
+    the top-left corner of the <span class="term">bounding client rect</span> and one unit equals on CSS px.
+    The viewport for resolving percentage values is defined by the width and height of the
+    <span class="term">bounding client rect</span>.
+  </p>
+  <p>
+    If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code>
+    namespace, the current user coordinate system has its origin at the top-left corner of the element's
+    nearest viewport.
   </p>
 </dd>
-<dt id="TermCurrentUserCoordinateSystem"><span
-  class="SVG-TermDefine">current user coordinate system</span></dt>
+<dt id="TermObjectBoundingBoxUnits"><dfn>object bounding box units</dfn></dt>
 <dd>
-  <p>
-  For elements formatted with the CSS box model: the current user coordinate system has its origin at the top-left corner of the 
-  <a href="#TermClientBoundingRect">bounding client rect</a> and one unit equals on CSS px. The viewport for resolving percentage values is defined by the width and height of the
-  <a href="#TermClientBoundingRect">bounding client rect</a>.
-  </p>
-  <p>
-  For elements using SVG layout see <a>user coordinate system</a>.
-  </p>
+  The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a>.
+  <p class="issue">Reference to SVG missing?</p>
 </dd>
-<dt id="TermObjectBoundingBoxUnits"><span
-  class="SVG-TermDefine">object bounding box units</span></dt>
-<dd>
-  For elements formatted with the CSS box model: the bounding box is defined by <a href="#TermCSSBoundingBox">the CSS bounding box.</a> 
-  <p>
-  For elements using SVG layout the bounding box is defined by <a href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">the SVG bounding box</a>. 
-  </p>
-  <p>
-  For both cases the bounding box defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a>.
-  </p>
-</dd>
-<dt id="TermFilterPrimitiveReference"><span
-  class="SVG-TermDefine">&lt;filter-primitive-reference&gt;</span></dt>
-<dd>
-  <p>
-  A string that identifies a particular filter primitive's output.
-  </p>
-</dd>
-<dt id="TermFilterPrimitiveElements"><span
-  class="SVG-TermDefine">filter primitives, filter primitive elements</span></dt>
+<dt id="TermFilterPrimitiveElements"><dfn>filter primitives</dfn>, <dfn>filter primitive elements</dfn></dt>
 <dd>
   <p>
   The set of elements that control the output of a <a>'filter element'</a> element, particularly:  
@@ -478,230 +465,329 @@
     <a>'feCustom'</a>.
     </p>
 </dd>
+<dt id="TermVertexMesh"><dfn>vertex mesh</dfn></dt>
+<dd>
+  The vertex mesh defines the geometry that is processed by the vertex shader.
+</dd>
 </dl>
 
 <!-- ****************************************************************************** -->
 
-<h2 id="security">Security</h2>
-
-<p class="todo">Should this section be merged with the CSS shaders 
-    <a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#security-considerations">security
-        considerations</a> section?</a>
-        
-<h3 id="timing-attacks">Timing Attacks</h3>
+<h2 id="FilterProperty">
+  The 'filter' property
+</h2>
 
 <p>
-  Since a filter effect is applying a processing operation on input values, it
-  is vital that no private information leaks from that operation. The same rules
-  for cross-origin restrictions and tainting of data values apply to filtered
-  content. There are a number of extra cases that are called out here.
+  The description of the 'filter' property is as follows:
 </p>
-
-<p>
-  A timing attack is a method of obtaining information about content that is
-  otherwise protected, based on studying the amount of time it takes for an
-  operation to occur. For example, rendering is an operation that takes a
-  significant amount of time, and that time depends on the complexity of the
-  drawing operations involved. If, for example, red pixels took longer to draw
-  than green pixels, one might be able to obtain an indication of the proportion
-  of red to green in the element being rendered, even without ever having access
-  to the content of the element. Taking that to its theoretical extreme, an
-  attack may be able to modify content in a way that exposes such variations in
-  timing over a long enough period.
-</p>
-
-<p>
-  Filter effects do not add new vulnerabilities to such attacks, but they
-  possibly allow malicious code to be written that accelerates the process. For
-  example, a filter effect might be able to modify input pixel values in a manner
-  that amplifies the differences in rendering. It is essential that a filter
-  effect expose as little private information to the system as possible. One of
-  the well-documented security issues is exposing the user's browsing history to
-  script based on detecting the color of link elements styled with the 'visited'
-  pseudo-class.
-</p>
-
-<p>
-  A user agent must ensure that any content passed to a filter effect has
-  discernible information removed. This includes, but is not limited-to:
-</p>
-
-<ul>
-  <li>visited link styles must not be applied</li>
-  <li>file input should not identify any file names</li>
-  <li>editable content should not highlight dictionary information</li>
-  <li>cross-origin restrictions described below</li>
-</ul>
-
-<h3 id="origin-restrictions">Origin Restrictions</h3>
-
-<p>
-  Input to a filter effect must not include anything as input that would
-  violate cross-origin restrictions. If cross-origin access is required,
-  then the requested content should be explicitly marked with CORS data.
-</p>
-
-<p>
-  This restriction includes:
-</p>
-
-<ul>
-  <li>Any 'iframe' content</li>
-  <li>Any images, either as content or via styling, that are not exposed with CORS</li>
-  <li>Any tainted canvas</li>
-  <li>Any cross-origin content referenced by 'use'</li>
-</ul>
-
-<p>
-  For content that falls under this restriction, it should not be rendered into
-  the input image. For example, a filter effect that is applying to a cross-origin
-  'iframe' element would receive a completely blank input image.
-</p>
-
-<h2 id="FilterProperty">The <span class="prop-name">'filter'</span>
-property</h2>
-
-<p>
-  The description of the <span class="prop-name">'filter'</span> property is
-as follows:</p>
 
 
 <table summary="filter property" class="propdef">
   <tbody>
-    <tr valign="baseline">
-      <td><em>Value:</em>  </td>
-      <td>none | <a href="#FilterFunction">&lt;filter-function&gt;</a> [ <a href="#FilterFunction">&lt;filter-function&gt;</a> ]* </td>
+    <tr>
+      <td>
+        <em>Name:</em>
+      </td>
+      <td>
+        <dfn id="effects">filter</dfn>
+      </td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Initial:</em>  </td>
+    <tr>
+      <th>Value:</th>
+      <td>none | <span class="term">&lt;filter-function&gt;</span> [ <span class="term">&lt;filter-function&gt;</span> ]* </td>
+    </tr>
+    <tr>
+      <th>Initial:</th>
       <td>none</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Applies to:</em>  </td>
+    <tr>
+      <th>Applies to:</th>
       <td>All elements <span class="specissue">In SVG 1.1 it applies only to "container elements (except ‘mask’) and graphics elements"</span></td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Inherited:</em>  </td>
+    <tr>
+      <th>Inherited:</th>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Percentages:</em>  </td>
+    <tr>
+      <th>Percentages:</th>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Media:</em>  </td>
+    <tr>
+      <th>Media:</th>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Animatable:</em>  </td>
+    <tr>
+      <th>Animatable:</th>
       <td>yes</td>
     </tr>
   </tbody>
 </table>
 
 <p>
-  If the value of the <a>'filter property'</a> property is <span class="prop-value">none</span> then there
+  If the value of the 'filter' property is ''none'' then there
   is no filter effect applied. Otherwise, the list of functions (described <a href="#FilterFunction">below</a>)
   are applied in order.
 </p>
 
-<h2 id="ColorInterpolationFiltersProperty">The <span class="prop-name">'color-interpolation-filters'</span>
-property</h2>
+<p>
+  The application of the 'filter' property to an element
+  formatted with the CSS box model establishes a pseudo-stacking-context the same way that CSS
+  <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does,
+  and all the element's descendants are rendered together as a group with the filter
+  effect applied to the group as a whole.
+</p>
 
 <p>
-  The description of the <span class="prop-name">'color-interpolation-filters'</span> property is
-as follows:</p>
+  The 'filter' property has no effect on the geometry of the
+  target element's CSS boxes, even though 'filter' can cause
+  painting outside of an element's border box.
+</p>
+
+<p>
+  The compositing model follows the <a
+  href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
+  model</a> [[!SVG11]]: first any filter effect is applied, then any clipping, masking
+  and opacity. These effects all apply after any other CSS effects such as
+  'border'. As per SVG, the application of 'filter' has no
+  effect on hit-testing.
+</p>
+
+<h2 id="filter-margin-property">
+  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 
+  'filter-margin-right', and 'filter-margin' properties
+</h2>
+
+<p>
+  The filter-margin properties define the <a href="#FilterEffectsRegion">filter effect region</a>
+  for the <a href="#FilterFunction">filter functions</a> 'custom()'.
+  If the filter property references a <a>'filter element'</a> element, then the filter effect
+  region defined by the element takes precedence over the 'filter-margin' property.
+</p>
+    
+<p>
+  On a regular <a>'filter element'</a> element, the <a>'x attribute'</a>, <a>'y attribute'</a>,
+  <a>'width attribute'</a> and <a>'height attribute'</a> attributes define the <a href="#FilterEffectsRegion">filter
+  effects region</a>.
+</p>
+    
+<p>
+  The following sections describe the 'filter-margin-top', 'filter-margin-left', 'filter-margin-bottom',
+  'filter-margin-right' properties.
+</p>
+
+<p>
+  The filter-margin properties are a shorthand mechanism for defining a filter region equivalent to:</p>
+
+<pre>
+&lt;filter filterUnits="objectBoundingBox" 
+        x="fx(targetBox, [filter-margin-left])"
+        y="fy(targetBox, [filter-margin-top])"
+        width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
+        height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
+    &lt;!-- filter primitives for the filter function --&gt;
+&lt;/filter&gt;
+</pre>
+
+<p>
+  Where:
+</p>
+
+<ul>
+    <li><code id="targetBox">targetBox</code> is the <span class="term">bounding client rect</span>
+    <li><code>fx(box, left) = - (left / box.width)</code></li>
+    <li><code>fy(box, top) = - (top / box.height)</code></li>
+    <li><code>fw(box, left, right) = ((box.width + left + right) / box.width)</code></li>
+    <li><code>fh(box, top, bottom) = ((box.height + top + bottom) / box.height)</code></li> 
+</ul>
+
+<p>
+  Margin properties specify the width of the <a href="#FilterEffectsRegion">filter region</a> of a box. The
+  'filter-margin' shorthand property sets the margin for all four sides while the other margin properties
+  only set their respective side. These properties apply to all elements (which is different from the regular
+  margin properties where vertical margins will not have any effect on non-replaced inline elements).
+</p>
+    
+<p>
+  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 'filter-margin-right' can
+  take the same values as the 'margin-top', 'margin-bottom', 'margin-left' and 'margin-right' 
+  properties, respectively. In addition, they can take the ''auto'' value which is also their default value.
+</p>
+    
+<p>
+  The 'filter-margin' property can take the same values as the 'margin' property and is a shorthand
+  for setting 'filter-margin-top', 'filter-margin-right', 'filter-margin-bottom' and 
+  'filter-margin-left' at the same place in the stylesheet.
+</p>
+    
+<p>
+  The following figure illustrates how the various filter-margin properties affect the filter region.
+</p>
+
+<div class="figure">
+  <img src="images/filter-region.png" width="300" />
+  <p class="caption">The filter region</p>
+</div>
+
+<p>The blue border delimit the filter region. The margins are represented by:</p>
+
+<ul>
+  <li>A: filter-margin-left</li>
+  <li>B: filter-margin-right</li>
+  <li>C: filter-margin-top</li>
+  <li>D: filter-margin-bottom</li>
+</ul>
+
+<table class="propdef">
+  <tr>
+    <th>Name:
+    <td>
+      <dfn>filter-margin-top</dfn>, <dfn>filter-margin-right</dfn>, <dfn>filter-margin-bottom</dfn>, <dfn>filter-margin-left</dfn>
+    </td>
+  </tr>
+  <tr>
+    <th>Value:</th>
+    <td><code>&lt;margin-width&gt; | auto</code></td>
+  </tr>
+  <tr>
+    <th>Initial</th>
+    <td>auto</td>
+  </tr>
+  <tr>
+    <th>Applies to:</th>
+    <td>all elements</td>
+  </tr>
+  <tr>
+    <th>Inherited:</th>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Percentages:</th>
+    <td>refer to the dimension of the <span class="term">bounding client rect</span></td>
+  </tr>
+  <tr>
+    <th>Media:</th>
+    <td>visual</td>
+  </tr>
+  <tr>
+    <th>Computed value:</th>
+    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the <span class="term">bounding client rect</span></td>
+  </tr>
+</table>
+
+<table class="propdef">
+  <tr>
+    <th>Name:</th>
+    <td><dfn>filter-margin</dfn></td>
+  </tr>
+  <tr>
+    <th>Value:</th>
+    <td><code>&lt;margin-width&gt;{1,4} | auto</code></td>
+  </tr>
+  <tr>
+    <th>Initial</th>
+    <td>auto</td>
+  </tr>
+  <tr>
+    <th>Applies to:</th>
+    <td>all elements</td>
+  </tr>
+  <tr>
+    <th>Inherited:</th>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Percentages:</th>
+    <td>refer to the dimension of the <span class="term">bounding client rect</span></td>
+  </tr>
+  <tr>
+    <th>Media:</th>
+    <td>visual</td>
+  </tr>
+  <tr>
+    <th>Computed value:</th>
+    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the <span class="term">bounding client rect</span></td>
+  </tr>
+</table>
+
+<h2 id="ColorInterpolationFiltersProperty">
+  The 'color-interpolation-filters' property
+</h2>
+
+<p>
+  The description of the 'color-interpolation-filters' property is as follows:
+</p>
 
 <table summary="color-interpolation-filters property" class="propdef">
-  <tr valign="baseline">
-    <td><em>Value:</em>&nbsp;&nbsp;</td>
+  <tr>
+    <th>Name:</th>
+    <td><dfn>color-interpolation-filters</dfn></td>
+  </tr>
+  <tr>
+    <th>Value:</em>&nbsp;&nbsp;</td>
     <td>auto | sRGB | linearRGB</td>
   </tr>
-  <tr valign="baseline">
-    <td><em>Initial:</em>&nbsp;&nbsp;</td>
+  <tr>
+    <th>Initial:</em>&nbsp;&nbsp;</td>
     <td>linearRGB</td>
   </tr>
-  <tr valign="baseline">
-    <td><em>Applies to:</em>&nbsp;&nbsp;</td>
+  <tr>
+    <th>Applies to:</em>&nbsp;&nbsp;</td>
     <td><a href="filters.html#TermFilterPrimitive">filter
     primitives</a></td>
   </tr>
-  <tr valign="baseline">
-    <td><em>Inherited:</em>&nbsp;&nbsp;</td>
+  <tr>
+    <th>Inherited:</em>&nbsp;&nbsp;</td>
     <td>yes</td>
   </tr>
-  <tr valign="baseline">
-    <td><em>Percentages:</em>&nbsp;&nbsp;</td>
+  <tr>
+    <th>Percentages:</em>&nbsp;&nbsp;</td>
     <td>N/A</td>
   </tr>
-  <tr valign="baseline">
-    <td><em>Media:</em>&nbsp;&nbsp;</td>
+  <tr>
+    <th>Media:</em>&nbsp;&nbsp;</td>
     <td>visual</td>
   </tr>
-  <tr valign="baseline">
-    <td><em><a
+  <tr>
+    <th><a
     href="animate.html#Animatable">Animatable</a>:</em>&nbsp;&nbsp;</td>
     <td>yes</td>
   </tr>
 </table>
 
 <dl>
-  <dt><span class='prop-value'>auto</span></dt>
-  <dd>Indicates that the user agent can choose either the
-  <span class='prop-value'>sRGB</span> or
-  <span class='prop-value'>linearRGB</span> spaces for filter effects color
+  <dt>''auto''</dt>
+  <dd>Indicates that the user agent can choose either the ''sRGB or
+  ''linearRGB'' spaces for filter effects color
   operations. This option indicates that the author doesn't require that color
   operations occur in a particular color space.</dd>
 
-  <dt><span class='prop-value'>sRGB</span></dt>
+  <dt>''sRGB''</dt>
   <dd>Indicates that filter effects color operations should occur in the sRGB
   color space.</dd>
 
-  <dt><span class='prop-value'>linearRGB</span></dt>
+  <dt>''linearRGB''</dt>
   <dd>Indicates that filter effects color operations should occur in the
   linearized RGB color space.</dd>
 </dl>
 
-<p>The <a>'color-interpolation-filters'</a> property specifies the color space
-for imaging operations performed via filter effects.</p>
-
-<p>Note that <a>'color-interpolation-filters'</a> has a different initial
-value than <a>'color-interpolation'</a>. <a>'color-interpolation-filters'</a>
-has an initial value of <span class="prop-value">linearRGB</span>, whereas
-<a>'color-interpolation'</a> has an initial value of
-<span class="prop-value">sRGB</span>.  Thus, in the default case, filter
-effects operations occur in the linearRGB color space, whereas all other color
-interpolations occur by default in the sRGB color space.</p>
-
-
-<h3 id="filters-in-css">How the 'filter' property property applies to content formatted with the CSS box model (e.g HTML)</h3>
 <p>
-  The application of the <a>'filter property'</a> property to an element
-  formatted with the CSS box model establishes a pseudo-stacking-context the same way that CSS
-  <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does,
-  and all the element's boxes are rendered together as a group with the filter
-  effect applied to the group as a whole.
-</p>
-<p>
-  The <a>'filter property'</a> property has no effect on the geometry of the
-  target element's CSS boxes, even though <a>'filter property'</a> can cause
-  painting outside of an element's border-box.
-</p>
-<p>
-  The compositing model follows the <a
-  href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
-  model</a>: first any filter effect is applied, then any clipping, masking
-  and opacity. These effects all apply after any other CSS effects such as
-  'border'. As per SVG, the application of <a>'filter property'</a> has no
-  effect on hit-testing.
+  The 'color-interpolation-filters' property specifies the color space for imaging
+  operations performed via filter effects.
 </p>
 
-<br />
+<p class="note">
+  Note that 'color-interpolation-filters' has a different initial
+  value than 'color-interpolation'. 'color-interpolation-filters' has an initial
+  value of ''linearRGB'', where as 'color-interpolation' has an initial value of
+  ''sRGB''.  Thus, in the default case, filter effects operations occur in the
+  linearRGB color space, whereas all other color interpolations occur by default
+  in the sRGB color space.
+</p>
 
 <h2 id="FilterFunction">Filter Functions</h2>
 
 <p>
-  The value of the <a>'filter'</a> property is a list of &lt;filter-functions&gt;
+  The value of the 'filter' property is a list of <dfn>&lt;filter-function&gt;</dfn>s
   applied in the order provided. The individual filter functions are
   separated by whitespace. The set of allowed filter functions is given
   below.
@@ -714,26 +800,26 @@ interpolations occur by default in the sRGB color space.</p>
   <dd>
     An <a>IRI reference</a>
     to a <a>'filter element'</a> element that defines the
-    filter effect. For example "url(commonfilters.xml#large-blur)". If the IRI references a non-existent object or the referenced  
+    filter effect. For example ''url(commonfilters.xml#large-blur)''. If the IRI references a non-existent object or the referenced  
     object is not a <a>'filter element'</a> element, then the <a>null filter</a> will be applied instead.
   </dd>
 
   <dt>
-    grayscale(amount)
+    grayscale(&lt;number&gt; | &lt;percentage&gt;)
   </dt>
   <dd>
-    Converts the input image to grayscale. The value of 'amount' defines the proportion
+    Converts the input image to grayscale. The passed parameter defines the proportion
     of the conversion. A value of 100% is completely grayscale. A value of 0% leaves the
     input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the 'amount' parameter is missing, a value of 100% is used.
+    If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
   </dd>
 
   <dt>
-    sepia(amount)
+    sepia(&lt;number&gt; | &lt;percentage&gt;)
   </dt>
   <dd>
-    Converts the input image to sepia. The value of 'amount' defines the proportion
+    Converts the input image to sepia. The passed parameter defines the proportion
     of the conversion. A value of 100% is completely sepia. A value of 0 leaves the
     input unchanged. Values between 0% and 100% are linear multipliers on the effect.
     If the 'amount' parameter is missing, a value of 100% is used.
@@ -741,54 +827,54 @@ interpolations occur by default in the sRGB color space.</p>
   </dd>
 
   <dt>
-    saturate(amount)
+    saturate(&lt;number&gt; | &lt;percentage&gt;)
   </dt>
   <dd>
-    Saturates the input image. The value of 'amount' defines the proportion
+    Saturates the input image. The passed parameter defines the proportion
     of the conversion. A value of 0% is completely un-saturated. A value of 100% leaves the
     input unchanged. Other values are linear multipliers on the effect.
     Values of amount over 100% are allowed, providing super-saturated results.
-    If the 'amount' parameter is missing, a value of 100% is used.
+    If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
   </dd>
 
   <dt>
-    hue-rotate(angle)
+    hue-rotate(&lt;angle&gt;)
   </dt>
   <dd>
-    Applies a hue rotation on the input image. The value of 'angle' defines the 
+    Applies a hue rotation on the input image. The passed parameter defines the 
     number of degrees around the color circle the input samples will be adjusted.
-    A value of 0deg leaves the input unchanged. If the 'angle' parameter is missing,
+    A value of 0deg leaves the input unchanged. If the parameter is missing,
     a value of 0deg is used. Implementations should not normalize this value in order
     to allow animations beyond 360deg.
     The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
   </dd>
 
   <dt>
-    invert(amount)
+    invert(&lt;number&gt; | &lt;percentage&gt;)
   </dt>
   <dd>
-    Inverts the samples in the input image. The value of 'amount' defines the proportion
+    Inverts the samples in the input image. The passed parameter defines the proportion
     of the conversion. A value of 100% is completely inverted. A value of 0% leaves the
     input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the 'amount' parameter is missing, a value of 100% is used.
+    If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
   </dd>
 
   <dt>
-    opacity(amount)
+    opacity(&lt;number&gt; | &lt;percentage&gt;)
   </dt>
   <dd>
-    Applies transparency to the samples in the input image. The value of 'amount' defines the proportion
+    Applies transparency to the samples in the input image. The passed parameter defines the proportion
     of the conversion. A value of 0% is completely transparent. A value of 100% leaves the
     input unchanged. Values between 0% and 100% are linear multipliers on the effect.
     This is equivalent to multiplying the input image samples by amount.
-    If the 'amount' parameter is missing, a value of 100% is used.
+    If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
   </dd>
 
   <dt>
-    brightness(amount)
+    brightness(&lt;number&gt; | &lt;percentage&gt;)
   </dt>
   <dd>
     Applies a linear multiplier to input image, making it appear more
@@ -796,27 +882,27 @@ interpolations occur by default in the sRGB color space.</p>
     A value of 0% will create an image that is completely black. A value of 100% leaves the
     input unchanged. Other values are linear multipliers on the effect.
     Values of amount over 100% are allowed, providing brighter results.
-    If the 'amount' parameter is missing, a value of 100% is used.
+    If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
   </dd>
 
   <dt>
-    contrast(amount)
+    contrast(&lt;number&gt; | &lt;percentage&gt;)
   </dt>
   <dd>
     Adjusts the contrast of the input.
     A value of 0% will create an image that is completely black. A value of 100% leaves the
     input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
-    If the 'amount' parameter is missing, a value of 100% is used.
+    If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
   </dd>
 
   <dt>
-    blur(radius)
+    blur(&lt;length&gt;)
   </dt>
   <dd>
     Applies a Gaussian blur to the input image.
-    The value of 'radius' defines the value of the standard deviation to the Gaussian function.
+    The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function.
     If no parameter is provided, then a value 0 is used. The parameter is
     specified a CSS length, but does not accept percentage values.
     The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
@@ -858,7 +944,7 @@ interpolations occur by default in the sRGB color space.</p>
           </tr>
           <tr>
               <td id='#shader-params'><code>&lt;params&gt;</code></td>
-              <td>See the <code>&lt;feCustom&gt;</code>'s <a href='#feCustomParamsAttribute'><code>params</code></a> attribute.</td>
+              <td>See the <a>'feCustom element'</a>'s <a href='#feCustomParamsAttribute'><code>params</code></a> attribute.</td>
           </tr>
       </table>
       
@@ -870,7 +956,7 @@ interpolations occur by default in the sRGB color space.</p>
       
       <p class="issue">It might be clearer to name the <code>custom()</code> function 
           the <code>shader()</code> function instead and introduce an <code>feCustomShader</code>
-          filter primitive instead of <code>feCustom</code>.</p>
+          filter primitive instead of <a>'feCustom element'</a>.</p>
       
   </dd>
 </dl>
@@ -1542,7 +1628,7 @@ follows:</p>
       within the filter definitions represent values in the <a href="#TermCurrentUserCoordinateSystem">current user
       coordinate system</a> in place at the time when the <a>'filter element'</a>
       element is referenced (i.e., the user coordinate system for the element
-      referencing the <a>'filter element'</a> element via a <a>'filter property'</a>
+      referencing the <a>'filter element'</a> element via a 'filter'
       property).<br />
       If <span class='attr-value'>primitiveUnits="objectBoundingBox"</span>, then any length
       values within the filter definitions represent fractions or percentages
@@ -1600,8 +1686,7 @@ element.</p>
 
 <p><a>'filter element'</a> elements are never rendered
 directly; their only usage is as something that can be referenced using the
-<a>'filter property'</a>
-property. The <a>'display'</a> property does not
+'filter' property. The <a>'display'</a> property does not
 apply to the <a>'filter element'</a> element; thus, <a>'filter element'</a> elements are not directly rendered even
 if the <a>'display'</a> property is set to a value
 other than <span class="prop-value">none</span>, and <a>'filter element'</a> elements are available for referencing
@@ -1633,7 +1718,7 @@ effects region:</p>
       <a>'width'</a>, <a>'height'</a> represent values in the current user coordinate
       system in place at the time when the <a>'filter element'</a> element is referenced (i.e., the
       user coordinate system for the element referencing the <a>'filter element'</a>
-      element via a <a>'filter property'</a> property).</p>
+      element via a 'filter' property).</p>
 
       <p>
   If <span class="attr-value">filterUnits="objectBoundingBox"</span>, then <a>'x'</a>, <a>'y'</a>,
@@ -1758,35 +1843,39 @@ which the filter is applied.
 
 <table summary="enable-background property" class="propdef">
   <tbody>
-    <tr valign="baseline">
-      <td><em>Value:</em>  </td>
+    <tr>
+      <th>Name:</th>
+      <td><dfn>enable-background</dfn></td>
+    </tr>
+    <tr>
+      <th>Value:</th>
       <td>accumulate | new</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Initial:</em>  </td>
+    <tr>
+      <th>Initial:</th>
       <td>accumulate</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Applies to:</em>  </td>
+    <tr>
+      <th>Applies to:</th>
       <td>Typically elements that can contain renderable elements. 
         language is responsible for defining the applicable set of
         elements.
         For SVG: <a>container elements</a></td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Inherited:</em>  </td>
+    <tr>
+      <th>Inherited:</th>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Percentages:</em>  </td>
+    <tr>
+      <th>Percentages:</th>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Media:</em>  </td>
+    <tr>
+      <th>Media:</th>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Animatable:</em>  </td>
+    <tr>
+      <th>Animatable:</th>
       <td>no</td>
     </tr>
   </tbody>
@@ -2104,7 +2193,7 @@ primitives:</p>
   </dd>
   <dt id="FilterPrimitiveResultAttribute">
   <span class="adef">result</span> =
-  "<em><a>&lt;filter-primitive-reference&gt;</a></em>"</dt>
+  "<em><a><dfn>&lt;filter-primitive-reference&gt;</dfn></a></em>"</dt>
     <dd><p>
   Assigned name for this <a>filter primitive</a>. If supplied, then graphics
       that result from processing this <a>filter primitive</a> can be referenced by
@@ -2113,7 +2202,8 @@ primitives:</p>
       provided, the output will only be available for re-use as the implicit
       input into the next <a>filter primitive</a> if that <a>filter primitive</a> provides
       no value for its <a>'in'</a> attribute.</p>
-      <p>
+      <p class="issue">Can &lt;filter-primitive-reference&gt; be defined as &lt;author-ident&gt; as in CSS Values and Units?</p>
+      <p class="note">
   Note that a <a>&lt;filter-primitive-reference&gt;</a> is not an XML
       ID; instead, a <a>&lt;filter-primitive-reference&gt;</a> is only
       meaningful within a given <a>'filter element'</a> element and thus have only
@@ -2198,7 +2288,7 @@ primitives:</p>
   For non-SVG cases <a>FillPaint</a> generates a transparent black image.
       </p>
       <p class="issue">
-        Consider whether this should be e.g the CSS bounding box filled with the current color, or if it makes sense to use the 'fill' property for this case too.
+        Consider whether this should be e.g the <span class="term">bounding client rect</spam> filled with the current color, or if it makes sense to use the 'fill' property for this case too.
       </p>
       <p class="note authoring">Note that text is generally painted filled, not stroked.</p>
       <p>
@@ -2217,7 +2307,7 @@ primitives:</p>
       <p>
   For non-SVG cases <a>StrokePaint</a> generates a transparent black image. 
       </p>
-      <p class="issue">Consider whether this should be e.g the CSS bounding box filled with the one of the border colors, or if it makes sense to use the 'stroke' property for this case too.
+      <p class="issue">Consider whether this should be e.g the <span class="term">bounding client rect</spam> filled with the one of the border colors, or if it makes sense to use the 'stroke' property for this case too.
       </p>
       <p class="note authoring">Note that text is generally painted filled, not stroked.</p>
         <p>
@@ -2236,8 +2326,9 @@ primitives:</p>
 
 <h3 id="FilterPrimitiveSubRegion">Filter primitive subregion</h3>
 
-<p class="todo">Merge <a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/custom/index.html#shader-model">CSS shaders processing model</a> with
-    this section or the filter regions section.</p>
+<p class="todo">
+  Define filter primitive subregion for shorthands. E.g. the outout bounds of the previous filter functions, extended by affected area of current filter function.
+</p>
     
 <p>
 All <a>filter primitives</a> have attributes <a>'x'</a>, <a>'y'</a>,
@@ -2356,7 +2447,7 @@ The lower left rect shows an <a>'feMerge'</a> that merges <a>SourceGraphic</a> w
 <p>
   The following sections define the elements that define a light source, <a>'feDistantLight'</a>, 
 <a>'fePointLight'</a> and <a>'feSpotLight'</a>,
-and property <a>'lighting-color'</a>, which defines the color of the
+and property 'lighting-color', which defines the color of the
 light.</p>
 
 <h3 id="feDistantLightElement">Light source <span class="element-name">'feDistantLight'</span></h3>
@@ -2498,41 +2589,45 @@ light.</p>
 </dl>
 </div>
 
-<h3 id="LightingColorProperty">The <span class="prop-name">'lighting-color'</span> property</h3>
+<h3 id="LightingColorProperty">The 'lighting-color' property</h3>
 
 <p>
-  The <a>'lighting-color'</a> property defines the
-color of the light source for <a>filter primitives</a> <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a>.</p>
+  The 'lighting-color' property defines the
+color of the light source for <span class="term">filter primitives</span> <a>'feDiffuseLighting element'</a> and <a>'feSpecularLighting element'</a>.</p>
 
 <table summary="lighting-color property" class="propdef">
   <tbody>
-    <tr valign="baseline">
-      <td><em>Value:</em>  </td>
+    <tr>
+      <th>Name:</th>
+      <td><dfn>lighting-color</dfn></td>
+    </tr>
+    <tr>
+      <th>Value:</th>
       <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Initial:</em>  </td>
+    <tr>
+      <th>Initial:</th>
       <td>white</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Applies to:</em>  </td>
+    <tr>
+      <th>Applies to:</th>
       <td><a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a>
       elements</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Inherited:</em>  </td>
+    <tr>
+      <th>Inherited:</th>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Percentages:</em>  </td>
+    <tr>
+      <th>Percentages:</th>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Media:</em>  </td>
+    <tr>
+      <th>Media:</th>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Animatable:</em>  </td>
+    <tr>
+      <th>Animatable:</th>
       <td>yes</td>
     </tr>
   </tbody>
@@ -4116,96 +4211,105 @@ class="element-name">'feFlood'</span></h2>
                 <ul class="no-bullets"><li><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateElement"><span class="element-name">‘animate’</span></a></li><li><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateColorElement"><span class="element-name">‘animateColor’</span></a></li><li><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#SetElement"><span class="element-name">‘set’</span></a></li></ul></dd><dt>Attributes:</dt><dd><ul class="no-bullets"><li><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermCoreAttributes">core attributes</a><span class="expanding"> — <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#IDAttribute"><span class="attr-name">‘id’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLBaseAttribute"><span class="attr-name">‘xml:base’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLLangAttribute"><span class="attr-name">‘xml:lang’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLSpaceAttribute"><span class="attr-name">‘xml:space’</span></a></span></li><li><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermPresentationAttribute">presentation attributes</a><span class="expanding"> — <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#AlignmentBaselineProperty"><span class="attr-name" title="Presentation attribute for property ‘alignment-baseline’">‘alignment-baseline’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#BaselineShiftProperty"><span class="attr-name" title="Presentation attribute for property ‘baseline-shift’">‘baseline-shift’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipProperty"><span class="attr-name" title="Presentation attribute for property ‘clip’">‘clip’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipPathProperty"><span class="attr-name" title="Presentation attribute for property ‘clip-path’">‘clip-path’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipRuleProperty"><span class="attr-name" title="Presentation attribute for property ‘clip-rule’">‘clip-rule’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProperty"><span class="attr-name" title="Presentation attribute for property ‘color’">‘color’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorInterpolationProperty"><span class="attr-name" title="Presentation attribute for property ‘color-interpolation’">‘color-interpolation’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorInterpolationFiltersProperty"><span class="attr-name" title="Presentation attribute for property ‘color-interpolation-filters’">‘color-interpolation-filters’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProfileProperty"><span class="attr-name" title="Presentation attribute for property ‘color-profile’">‘color-profile’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorRenderingProperty"><span class="attr-name" title="Presentation attribute for property ‘color-rendering’">‘color-rendering’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#CursorProperty"><span class="attr-name" title="Presentation attribute for property ‘cursor’">‘cursor’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DirectionProperty"><span class="attr-name" title="Presentation attribute for property ‘direction’">‘direction’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty"><span class="attr-name" title="Presentation attribute for property ‘display’">‘display’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty"><span class="attr-name" title="Presentation attribute for property ‘dominant-baseline’">‘dominant-baseline’</span></a>, <a href="#EnableBackgroundProperty"><span class="attr-name" title="Presentation attribute for property ‘enable-background’">‘enable-background’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty"><span class="attr-name" title="Presentation attribute for property ‘fill’">‘fill’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillOpacityProperty"><span class="attr-name" title="Presentation attribute for property ‘fill-opacity’">‘fill-opacity’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty"><span class="attr-name" title="Presentation attribute for property ‘fill-rule’">‘fill-rule’</span></a>, <a href="#FilterProperty"><span class="attr-name" title="Presentation attribute for property ‘filter’">‘filter’</span></a>, <a href="#FloodColorProperty"><span class="attr-name" title="Presentation attribute for property ‘flood-color’">‘flood-color’</span></a>, <a href="#FloodOpacityProperty"><span class="attr-name" title="Presentation attribute for property ‘flood-opacity’">‘flood-opacity’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontFamilyProperty"><span class="attr-name" title="Presentation attribute for property ‘font-family’">‘font-family’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeProperty"><span class="attr-name" title="Presentation attribute for property ‘font-size’">‘font-size’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeAdjustProperty"><span class="attr-name" title="Presentation attribute for property ‘font-size-adjust’">‘font-size-adjust’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStretchProperty"><span class="attr-name" title="Presentation attribute for property ‘font-stretch’">‘font-stretch’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStyleProperty"><span class="attr-name" title="Presentation attribute for property ‘font-style’">‘font-style’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontVariantProperty"><span class="attr-name" title="Presentation attribute for property ‘font-variant’">‘font-variant’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontWeightProperty"><span class="attr-name" title="Presentation attribute for property ‘font-weight’">‘font-weight’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationHorizontalProperty"><span class="attr-name" title="Presentation attribute for property ‘glyph-orientation-horizontal’">‘glyph-orientation-horizontal’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationVerticalProperty"><span class="attr-name" title="Presentation attribute for property ‘glyph-orientation-vertical’">‘glyph-orientation-vertical’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty"><span class="attr-name" title="Presentation attribute for property ‘image-rendering’">‘image-rendering’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty"><span class="attr-name" title="Presentation attribute for property ‘kerning’">‘kerning’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty"><span class="attr-name" title="Presentation attribute for property ‘letter-spacing’">‘letter-spacing’</span></a>, <a href="#LightingColorProperty"><span class="attr-name" title="Presentation attribute for property ‘lighting-color’">‘lighting-color’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerEndProperty"><span class="attr-name" title="Presentation attribute for property ‘marker-end’">‘marker-end’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerMidProperty"><span class="attr-name" title="Presentation attribute for property ‘marker-mid’">‘marker-mid’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerStartProperty"><span class="attr-name" title="Presentation attribute for property ‘marker-start’">‘marker-start’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#MaskProperty"><span class="attr-name" title="Presentation attribute for property ‘mask’">‘mask’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OpacityProperty"><span class="attr-name" title="Presentation attribute for property ‘opacity’">‘opacity’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OverflowProperty"><span class="attr-name" title="Presentation attribute for property ‘overflow’">‘overflow’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#PointerEventsProperty"><span class="attr-name" title="Presentation attribute for property ‘pointer-events’">‘pointer-events’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ShapeRenderingProperty"><span class="attr-name" title="Presentation attribute for property ‘shape-rendering’">‘shape-rendering’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopColorProperty"><span class="attr-name" title="Presentation attribute for property ‘stop-color’">‘stop-color’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopOpacityProperty"><span class="attr-name" title="Presentation attribute for property ‘stop-opacity’">‘stop-opacity’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke’">‘stroke’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDasharrayProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke-dasharray’">‘stroke-dasharray’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDashoffsetProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke-dashoffset’">‘stroke-dashoffset’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinecapProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke-linecap’">‘stroke-linecap’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinejoinProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke-linejoin’">‘stroke-linejoin’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeMiterlimitProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke-miterlimit’">‘stroke-miterlimit’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeOpacityProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke-opacity’">‘stroke-opacity’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeWidthProperty"><span class="attr-name" title="Presentation attribute for property ‘stroke-width’">‘stroke-width’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextAnchorProperty"><span class="attr-name" title="Presentation attribute for property ‘text-anchor’">‘text-anchor’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextDecorationProperty"><span class="attr-name" title="Presentation attribute for property ‘text-decoration’">‘text-decoration’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#TextRenderingProperty"><span class="attr-name" title="Presentation attribute for property ‘text-rendering’">‘text-rendering’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#UnicodeBidiProperty"><span class="attr-name" title="Presentation attribute for property ‘unicode-bidi’">‘unicode-bidi’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#VisibilityProperty"><span class="attr-name" title="Presentation attribute for property ‘visibility’">‘visibility’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WordSpacingProperty"><span class="attr-name" title="Presentation attribute for property ‘word-spacing’">‘word-spacing’</span></a>, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WritingModeProperty"><span class="attr-name" title="Presentation attribute for property ‘writing-mode’">‘writing-mode’</span></a></span></li><li><a href="intro.html#TermFilterPrimitiveAttributes">filter primitive attributes</a><span class="expanding"> — <a href="#FilterPrimitiveXAttribute"><span class="attr-name">‘x’</span></a>, <a href="#FilterPrimitiveYAttribute"><span class="attr-name">‘y’</span></a>, <a href="#FilterPrimitiveWidthAttribute"><span class="attr-name">‘width’</span></a>, <a href="#FilterPrimitiveHeightAttribute"><span class="attr-name">‘height’</span></a>, <a href="#FilterPrimitiveResultAttribute"><span class="attr-name">‘result’</span></a></span></li><li><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#ClassAttribute"><span class="attr-name">‘class’</span></a></li><li><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#StyleAttribute"><span class="attr-name">‘style’</span></a></li></ul></dd><dt>DOM Interfaces:</dt><dd><ul class="no-bullets"><li><a class="idlinterface" href="#InterfaceSVGFEFloodElement">SVGFEFloodElement</a></li></ul></dd></dl></div>
 <p>
   This filter primitive creates a rectangle filled with the color and
-opacity values from properties <span class="prop-name">'flood-color'</span>
-and <span class="prop-name">'flood-opacity'</span>. The rectangle is as large
+opacity values from properties 'flood-color'
+and 'flood-opacity'. The rectangle is as large
 as the <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>
-established by the <span class="element-name">'feFlood'</span> element.</p>
+established by the <a>'feFlood element'</a> element.</p>
 
 <div class="adef-list">
   </div>
 
+<h3 id="flood-color-property"> The 'flood-color' property</h3>
+
 <p>
-  The <span class="prop-name">'flood-color'</span> property indicates what
+  The 'flood-color' property indicates what
 color to use to flood the current <a href="#FilterPrimitiveSubRegion">filter
-primitive subregion</a>. The keyword <span
-class="attr-value">currentColor</span> and ICC colors can be specified in the
-same manner as within a &lt;paint&gt; specification for the <span
-class="prop-name">'fill'</span> and <span class="prop-name">'stroke'</span>
+primitive subregion</a>. The keyword ''currentColor'' and ICC colors can be specified in the
+same manner as within a &lt;paint&gt; specification for the 'fill' and 'stroke'
 properties.</p>
 
 <table summary="flood-color property" class="propdef">
   <tbody>
-    <tr valign="baseline">
-      <td><em>Value:</em>  </td>
+    <tr>
+      <td>Name:</td>
+      <td><dfn>flood-color</dfn></td>
+    </tr>
+    <tr>
+      <th>Value:</th>
       <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Initial:</em>  </td>
+    <tr>
+      <th>Initial:</th>
       <td>black</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Applies to:</em>  </td>
+    <tr>
+      <th>Applies to:</th>
       <td><a href="#feFloodElement"><span
         class="element-name">'feFlood'</span></a> and <a
         href="#feDropShadowElement"><span
         class="element-name">'feDropShadow'</span></a> elements</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Inherited:</em>  </td>
+    <tr>
+      <th>Inherited:</th>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Percentages:</em>  </td>
+    <tr>
+      <th>Percentages:</th>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Media:</em>  </td>
+    <tr>
+      <th>Media:</th>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Animatable:</em>  </td>
+    <tr>
+      <th>Animatable:</th>
       <td>yes</td>
     </tr>
   </tbody>
 </table>
 
+<h3 id="flood-color-property">The 'flood-opacity' property</h3>
+
 <p>
-  The <span class="prop-name">'flood-opacity'</span> property defines the
+  The 'flood-opacity' property defines the
 opacity value to use across the entire <a
 href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.</p>
 
 <table summary="flood-opacity property" class="propdef">
   <tbody>
-    <tr valign="baseline">
-      <td><em>Value:</em>  </td>
-      <td>&lt;opacity-value&gt;
-        <p class="issue">Should it be number? What is 'opacity' doing?</p></td>
+    <tr>
+      <th>Name:</th>
+      <td><dfn>flood-opacity</dfn></td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Initial:</em>  </td>
+    <tr>
+      <th>Value:</th>
+      <td>&lt;number&gt; | &lt;percentage&gt;</td>
+    </tr>
+    <tr>
+      <th>Initial:</th>
       <td>1</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Applies to:</em>  </td>
+    <tr>
+      <th>Applies to:</th>
       <td><a href="#feFloodElement"><span
         class="element-name">'feFlood'</span></a> and <a
         href="#feDropShadowElement"><span
         class="element-name">'feDropShadow'</span></a> elements</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Inherited:</em>  </td>
+    <tr>
+      <th>Inherited:</th>
       <td>no</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Percentages:</em>  </td>
+    <tr>
+      <th>Percentages:</th>
       <td>N/A</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Media:</em>  </td>
+    <tr>
+      <th>Media:</th>
       <td>visual</td>
     </tr>
-    <tr valign="baseline">
-      <td><em>Animatable:</em>  </td>
+    <tr>
+      <th>Animatable:</th>
       <td>yes</td>
     </tr>
   </tbody>
@@ -5342,7 +5446,7 @@ class="element-name">'feCustom'</span></h2>
     <div>
         <dl>
             <dt id="feCustomVertexShaderAttribute">vertexShader: <code>&lt;uri&gt;</code></dt>
-            <dd>The shader referenced by &lt;uri&gt; provides the implementation for the <code>feCustom</code>
+            <dd>The shader referenced by &lt;uri&gt; provides the implementation for the <a>'feCustom element'</a>
                 vertex shader. If the 
                 shader cannot be retrieved, or if the shader cannot be loaded or compiled because it contains erroneous code, the shader is a <a href="#default-shaders">pass through</a>. Otherwise, the vertex shader is invoked for all the vertex mesh vertices. 
                 </dd>
@@ -5373,10 +5477,10 @@ class="element-name">'feCustom'</span></h2>
                         <td>[ true | false ]{1,4} | <br />
                             &lt;number&gt;{1,4} | <br/>
                             &lt;array&gt; | <br />
-                            <a href="http://www.w3.org/TR/css3-3d-transforms/#transform-functions">&lt;transform-function&gt;</a>+ | <br />
+                            <a href="http://www.w3.org/TR/css3-transforms/#transform-functions">&lt;transform-function&gt;</a>+ | <br />
                             &lt;mat&gt; | <br />
                             &lt;color&gt; | <br />
-                            texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)</td>
+                            texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
                     </tr>
                     <tr>
                         <td>&lt;array&gt;</td>
@@ -5392,7 +5496,7 @@ class="element-name">'feCustom'</span></h2>
                     <tr></tr>
                 </table>
 
-                <p>The data type &lt;filter-primitive-reference&gt; can just be used for the <a href="#shader-inputs">primitive feCustom</a>.</p>
+                <p>The data type <span class="term">&lt;filter-primitive-reference&gt;</span> can just be used for the <a href="#shader-inputs">primitive feCustom</a>.</p>
                 
                 <p>There are two ways to specify a 4x4 matrix. They differ in 
                     <a href="#integration-with-css-animations-transitions">how 
@@ -5428,7 +5532,7 @@ class="element-name">'feCustom'</span></h2>
 }</pre></code>
         </div>
     </div>
-    <h3 id="fragmentShader-attribute">The <a>'fragmentShader attribute'</a> attribute</h3>
+    <h3 id="fragmentShader-attribute">The <a>'fragmentShader'</a> attribute</h3>
 
     <dl>
       <dt>&lt;uri&gt;</dt>
@@ -5484,28 +5588,14 @@ class="element-name">'feCustom'</span></h2>
       </dd>
     </dl>
 
-    <h4 id="processing-model-mix">
-      Processing model for ''mix'' function
-    </h4>
-
-    <div class="figure">
-      <img src="images/mix-fragment-shader.png" width="451" height="726"/>
-      <p class="caption">fragmentShader: processing model for mix</p>
-    </div>
-
-    <p class="todo">Processing model for <code>mix</code> missing.</p>
-
+    <p>The lacuna value for 'fragmentShader' is <code>mix(<a href="#default-shaders">&lt;default-fragment-shader&gt;</a> multiply)</code>.</p>
+    
     <h3 id="vertexMesh-attribute">The <a>'vertexMesh attribute'</a> attribute</h3>
 
     <p>
       The <a>'vertexMesh attribute'</a> attribute of the <a>'feCustom element'</a> element defines the granularity
       of vertices in the <a href="#vertex-mesh">shader mesh</a>. By default, the vertex mesh is made of two triangles
       that encompass the <a href="#filter-region">filter region</a> area.
-    </p>
-
-    <p class="issue">
-      For feCustom it should be the primitive subregion. For custom() it should be the bounding client rect with
-      extensions of previous filter effects?
     </p>
 
     <dl>
@@ -5528,36 +5618,42 @@ class="element-name">'feCustom'</span></h2>
           If one of the passed parameters is zero or negative, the UA must fallback to the lacuna values.
         </p>
       </dd>
-      <dt>&lt;box&gt; = "border-box | filter-box | content-box | adding-box"</dt>
+      <dt>&lt;box&gt; = "filter-box | border-box | padding-box | content-box"</dt>
       <dd>
-        <p>
-          The optional &lt;box&gt; parameter defines the box on which the vertex mesh is stretched to.
-          It defaults to the ''filter-box'' value which is ''border-box'' with the added filter margins. 
-          For elements that do not have padding or borders (e.g., SVG elements), the values ''padding-box''
-          and ''border-box'' are equivalent to ''content-box''. For SVG elements, the ''content-box'' is 
-          the object bounding box.
-        </p>
+        The optional &lt;box&gt; parameter defines the box on which the vertex mesh is stretched to.
+        <dl>
+          <dt>filter-box</dt>
+          <dd>
+            The <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
+          </dd>
+          <dt>border-box</dt>
+          <dd>
+            The border box as defined in the CSS box model [[!CSS21]] for elements that have an associated CSS
+            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the stroke bounding box
+            [[SVG2]], if the element does not have an associated CSS layout box and is in the
+            http://www.w3.org/2000/svg namespace.
+          </dd>
+          <dt>padding-box</dt>
+          <dd>
+            The padding box as defined in the CSS box model [[!CSS21]] for elements that have an associated CSS
+            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the object bounding box
+            [[!SVG11]], if the element does not have an associated CSS layout box and is in the
+            http://www.w3.org/2000/svg namespace.
+          </dd>
+          <dt>content-box</dt>
+          <dd>
+            The content box as defined in the CSS box model [[!CSS21]] for elements that have an associated CSS
+            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the object bounding box
+            [[!SVG11]], if the element does not have an associated CSS layout box and is in the
+            http://www.w3.org/2000/svg namespace.
+          </dd>
+        </dl>
 
         <p>
           The lacuna value is ''filter-box''.
         </p>
         <p class="issue">
-          Does it make sense to have the &lt;box&gt; parameter at all? Given the fact that
-          feCustom might just be one effect in a filter chain and the previous result has a different
-          effect region anyway?
-        </p>
-
-        <p class="issue">
-          ''filter-box'' should be ''adding-box'' (alias bounding client rect) with added filter margins.
-        </p>
-
-        <p class="issue">
-          Can ''adding-box'' and bounding client rect be renamed to ''target box''? This is smaller and
-          easier to use. CSS Shaders already defined this term.
-        </p>
-
-        <p class="issue">
-          Definitions of nearly all boxes are missing.
+          Are padding-box or content-box needed? Can border-box be the bounding client rect?
         </p>
       </dd>
       <dt>detached | attached</dt>
@@ -5595,9 +5691,9 @@ class="element-name">'feCustom'</span></h2>
     <p class="issue">Reference to discussion missing.</p>
 
     <div class="figure" id="vertexMesh56">
-      <img src="images/shader-mesh-property.png" width="300" />
+      <object data="images/shader-concept.svg#granular-mesh" style="width:372px; height:252px"></object> 
       <p class="caption">
-        The figure illustrates how a <a>'vertexMesh attribute'</a> value of '5 6' adds vertices passed to the vertex shader.
+        The figure illustrates how a <a>'vertexMesh attribute'</a> value of '6 6' adds vertices passed to the vertex shader.
         The red vertices are the default ones and the gray vertices are resulting from the <a>'vertexMesh attribute'</a> value.
       </p>
     </div>
@@ -5605,8 +5701,8 @@ class="element-name">'feCustom'</span></h2>
     <div class="example">
       <p>
         The following example applies a vertex shader ('distort.vs') to elements with class 'distorted'.
-        The vertex shader will operate on a mesh that has 5 lines and 4 columns (because there are 4 additional
-        lines and 3 additional columns).
+        The vertex shader will operate on a mesh that has 5 lines and 5 columns (because there are 4 additional
+        lines and 4 additional columns).
       </p>
 
       <pre>
@@ -5647,7 +5743,7 @@ class="element-name">'feCustom'</span></h2>
 
 <p>
   When an <a>'feCustom element'</a> filter primitive is used in a filter graph, a ''texture'' parameter 
-  can take a value of &lt;filter-primitive-reference&gt; where &lt;filter-primitive-reference&gt;
+  can take a value of <span class="term">&lt;filter-primitive-reference&gt;</span> where <span class="term">&lt;filter-primitive-reference&gt;</span>
   references the output of another filter primitive.
 </p>
 
@@ -5668,6 +5764,125 @@ class="element-name">'feCustom'</span></h2>
 </div>
 
 
+<h2 id="shader-processing-model">Shader Processing Model</h2>
+
+<p>This section illustrates the shader processing model as it applies to an element whose unfiltered rendering is shown in the figure <a href="#unfiltered-input">below</a>.</p>
+
+<div class="figure" id="unfiltered-input">
+  <object type="image/svg+xml" data="images/shader-concept.svg#image" style="width:372px; height:252px"></object>
+  <p class="caption">Element before applying shaders</p>
+</div>
+
+<p>
+  Prior to the shader processing, the input of the filter primitive gets rendered into an offscreen image (the source texture). The offscreen size and 
+  position is controlled by the <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
+</p>
+
+<div class="figure">
+  <object type="image/svg+xml" data="images/shader-concept.svg#image-raster" style="width:372px; height:252px"></object>
+  <p class="caption">Source texture created by rendering<br />the element offscreen and adding filter primitive margins</p>
+</div>
+
+<p>An <a>'feCustom element'</a> element or a <code>custom()</code> filter function defines a custom filter primitive. The following figure illustrates its model.</p>
+
+<div class="figure">
+  <object type="image/svg+xml" data="images/shader-concept.svg#processing-model" style="width:800px; height:334px"></object>
+  <p class="caption">The shader processing model</p>
+</div>
+
+<p>
+  In a <strong>first step</strong> the source texture is used on a <span class="term">vertex mesh</spam>. By default, the vertex mesh has the position and size of the
+  <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. In the following
+  figure, the red markers represent the default vertices in the default vertex mesh. The diagonal line illustrate how the vertices define two triangles.
+</p>
+
+<div class="figure">
+  <object data="images/shader-concept.svg#image-default-mesh" style="width:372px; height:252px"></object> 
+  <p class="caption">The default vertex mesh and its default vertices</p>
+</div>
+
+<p>
+  The <a>‘vertexMesh attribute’</a> attribute on the <a>'feCustom element'</a> element
+  and the &lt;vertex-mesh&gt; parameter on the <code>custom()</code> filter function give more granularity controll over the vertex mesh.
+</p>
+
+<div class="figure">
+  <object data="images/shader-concept.svg#image-granular-mesh" style="width:372px; height:252px"></object> 
+  <p class="caption">A finer, custom vertex mesh</p>
+</div>
+
+<p>
+  In a <strong>second step</strong>, the <span class="term">vertex mesh</spam> gets processesed through the vertex shader, which produces a set of transformed vertices.
+  These transformed vertices are the output as shown in the figure below.
+</p>
+
+<div class="figure">
+  <object type="image/svg+xml" data="images/shader-concept.svg#vertices-shader" style="width:372px; height:252px"></object>
+  <p class="caption">Transformed vertices after applying the vertex shader</p>
+</div>
+
+<p>
+  The <strong>third step</strong> is the rasterization step. The filter primitive invokes the fragment shader for every pixel location inside the vertex mesh to perform
+  per pixel operation and produce the final pixel color at that vertex mesh location.
+</p>
+
+<div class="figure">
+  <object type="image/svg+xml" data="images/shader-concept.svg#image-shader" style="width:372px; height:252px"></object>
+  <p class="caption">Transformed vertices after applying the vertex shader</p>
+</div>
+
+<p class="note">
+  Note that the fragment shader may be called several time for what corresponds to the same pixel coordinate on the output, for example when the vertex
+  mesh folds over itself.
+</p>
+
+<p>
+  CSS fragment shaders have additional restrictions in comparison to other fragment shader languages (See <a href="#security">Security section</a> for more information).
+  One restriction is the prohibited usage of conditions based on color values.
+</p>
+
+<p>
+  For this reason the <code>mix</code> function provides basic functionalities
+  for color manipulation within a fragment shader. The processing model of <code>mix</code> is illustrated in the following figure:
+</p>
+
+<div class="figure">
+  <img src="images/mix-fragment-shader.png" width="451" height="726"/>
+  <p class="caption">fragmentShader: processing model for mix</p>
+</div>
+
+<p>
+  Each color value passed to the fragment shader gets multiplied with the ''css_ColorMatrix'', a predefined fragment shader variable of type &lt;mat4&gt;.
+  The variable is initialized to an identity matrix, but can be set within a fragment shader. The resulting color is the <i>multiplied color</i>.
+</p>
+
+<p>
+  ''css_MixColor'' is a second, predefined fragment shader variable of type &lt;vec4&gt;. ''css_MixColor'' defines the <i>mix color</i> and can be set
+  withing the fragment shader. The <i>multiplied color</i> gets blended as destination with the <i>mix color</i> as source following the blending rules
+  of the Compositing and Blending spec [[compositing]]. The applied blend mode depends on the passed &lt;blend-mode&gt; parameter and is ''normal'' by default.
+  The result of the blending is the <i>blended color</i>.
+</p>
+
+<p>
+  The <i>multiplied color</i> and the <i>blended color</i> get composed using the alpha-compositing rules as described in the Compositing and Blending
+  spec [[compositing]]. The applied alpha-compositing mode is specified by the passed &lt;alpha-compositing&gt; paramter and is ''source-over'' by default.
+</p>
+
+<p>
+  The last step, <strong>step 4</strong>, shows rasterized output. It is the input to the next step in the filter chain (or graph, since <a>'filter element'</a>
+  elements can define a graph of filters). If the <a>'feCustom element'</a> primitive is the last one in the filter chain, then this output is the filtered 
+  rendering of the element. Otherwise, the output of the primitive becomes the input to the next filter primitive using it.
+</p>
+
+<div id="about_interactivity" class="issue">
+    One issue with filter effects is the impact on interactivity. Filters can offset the visual rendering
+    of content and affect the way users interact with content. For example, the <a>'feOffset element'</a>
+    element moves the element's rendering by a given offset, which biases the interaction: the end user
+    may click on an element and actually hit a different one because of the offset. This issue
+    is expected to be more acute with vertex shaders and the working group should consider a general
+    solution to this issue that works for both predefined filter effects and custom ones.
+</div>
+
 <h2 id="FilterCSSImageValue">The filter CSS &lt;image&gt; value</h2>
 
 <p>
@@ -5685,9 +5900,53 @@ filter() syntax</h4>
 
 <p>
   The function takes two parameters. The first is a CSS &lt;image&gt; value. The second
-  is the value of a <span class="prop-name">filter</span> property. The function take the
+  is the value of a 'filter' property. The function take the
   input image parameter and apply the filter rules, returning a processing image.
 </p>
+
+<h2 id="security">Security</h2>
+
+<h3 id="rendered-content-access-from-fragment-shaders">Rendered Content Access from Fragment Shaders</h3>
+
+<p>
+  Since a <a href="#feCustomElement">custom filter</a> effect is applying a processing operation on input 
+  values, it is important that no protected information leaks from that operation. 
+</p>
+
+<p>
+  A <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of the security issues</a> has led 
+  to the requirement that <a href="">vertex shaders</a> and <a href="">fragment shaders</a> do not get access 
+  to the rendered content in order to prevent <a href="http://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.
+</p>
+
+
+<h3 id="origin-restrictions">Origin Restrictions</h3>
+
+<p>
+  Input to a filter effect must not include anything as input that would
+  violate <a href="http://www.w3.org/TR/cors/">same origin restrictions</a>. 
+  If cross-origin access is required, then the requested content should be explicitly 
+  marked with <a href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
+</p>
+
+<p>
+  This restriction includes:
+</p>
+
+<ul>
+  <li>Any <span class="code"><a href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">&lt;iframe&gt;</a></span> content</li>
+  <li>Any images, either as content or via styling, that are not exposed with <a href="http://www.w3.org/TR/cors/">CORS</a></li>
+  <li>Any <a href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted canvas</a></li>
+  <li>Any cross-origin content referenced by <span class="code"><a href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span></li>
+</ul>
+
+<p>
+  For content that falls under this restriction, it should not be rendered into
+  the input image. For example, a filter effect that is applying to a cross-origin
+  'iframe' element would receive a completely blank input image.
+</p>
+
+<div class="issue">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
 
 <h2 id="RelaxNG">RelaxNG Schema for Filter Effects 1.0</h2>
 
@@ -5828,9 +6087,9 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   &lt;/filter&gt;
   </pre>
 
-  <div class="note">It might be clearer to name the <code>custom()</code> function 
+  <div class="issue">It might be clearer to name the <code>custom()</code> function 
       the <code>shader()</code> function instead and introduce an <code>feCustomShader</code>
-      filter primitive instead of <code>feCustom</code>.</div>
+      filter primitive instead of <a>'feCustom element'</a>.</div>
 
 
   <h2 id="shading-language">Shading language</h2>
@@ -5880,6 +6139,98 @@ The RNG is under construction, and only the individual RNG snippets are availabl
       to determine the the shading language.
   </div>
 
+  <h4 id="fragment-shaders-differences-with-glsl">Fragment Shaders Differences with GLSL</h4>
+  
+  <p>A normal GLSL shader requires that the fragment shaders computes a <code>gl_FragColor</code> value which
+     is the color value for the processed fragment (pixel). 
+  </p>
+  
+  <p>Because of the <a href="#security">security restrictions</a>, fragment shaders are not allowed to 
+      access rendered content pixel values directly and therefore. However, fragment shaders in this specification
+      have the option to compute a value that is automatically mixed with the rendered content values (but without
+      ever providing direct access to these values to the shader code).</p>
+      
+  <p>In the context of this specification, fragment shaders have the options to compute the following values:</p>
+  
+  <ul>
+      <li><code>gl_FragColor</code>. When the fragment shader parameter is a direct reference to a source file,
+          that shader should compute a <code>gl_FragColor</code>. This may be userful, for example, to compute
+          complex patterns.</li>
+      <li><code>css_MixColor</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
+          function, then it can compute a <code>css_MixColor</code> value that is composited with the rendered
+          content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
+      <li><code>css_ColorMatrix</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
+              function, then it can compute a <code>css_ColorMatrix</code> value that is multiplied with the rendered
+              content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
+  </ul>
+  
+  <div class="example">
+      <p>The following example shows a fragment shader which computes a simple solid red color:</p>
+      
+      <p>CSS</p>
+      <pre>
+#filtered-element {
+    filter: custom(url(simple.vs) url(simple.fs));
+}
+      </pre>
+      
+      <p>simple.fs</p>
+      <pre>
+void main()
+{  
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}      </pre>
+  </div>
+
+
+<div class="example">
+    <p>The following example shows a fragment shader which darkens the rendered content by 
+       computing a <code>css_MixColor</code> which is multiplied with the rendered content:</p>
+
+    <p>CSS</p>
+    <pre>
+#filtered-element {
+  filter: custom(url(simple.vs) <strong>mix(url(simple2.fs) multiply)</strong>);
+}
+    </pre>
+
+    <p>simple2.fs</p>
+    <pre>
+void main()
+{  
+  <strong>css_MixColor</strong> = vec4(0.8, 0.8, 0.8, 1.0);
+}      </pre>
+</div>
+
+
+  <div class="example">
+      <p>The following example shows a fragment shader which darkens the rendered content by
+         computing a <code>css_ColorMatrix</code> which varies depending on the texture coordinate:</p>
+
+      <p>CSS</p>
+      <pre>
+#filtered-element {
+    filter: custom(url(simple.vs) mix(url(simple3.fs)));
+}
+      </pre>
+
+      <p>simple3.fs</p>
+      <pre>
+varying vec2 v_texCoord;
+
+void main()
+{  
+    float x = v_texCoord.x;
+    css_ColorMatrix = mat4(
+        vec4(x, x, x, x), // 1rst column
+        vec4(x, x, x, x), // 2nd column
+        vec4(x, x, x, x), // 3rd column
+        vec4(x, x, x, x), // 4th column
+    );
+}      </pre>
+  </div>
+
+  
   <h4>Vertex attribute variables</h4>
 
   The following attribute variables are available to the vertex shader.
@@ -5934,17 +6285,6 @@ The RNG is under construction, and only the individual RNG snippets are availabl
               filtered element's rendering.</em></td>
       </tr>
       <tr>
-          <td><code>uniform sampler2D u_texture</code></td>
-          <td>The input texture. Includes transparent margins for the filter margins.</td>
-      </tr>
-      <tr>
-          <td><code>uniform sampler2D u_contentTexture</code></td>
-          <td>A texture with the rendering of the filtered element. If the filter is the first
-              in the filter chain, then, this texture is the same as the u_texture uniform. However,
-              if there are preceding filters, this provides the rendering of the original filtered element,
-              whereas u_texture provides the output of the preceding filter in the filter chain (or graph).</td>
-      </tr>
-      <tr>
           <td><code>uniform vec2 u_textureSize</code></td>
           <td>The input texture's size. Includes the filter margins.</td>
       </tr>
@@ -5974,14 +6314,14 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   <table class="values-desc">
   <tr>
       <td>varying vec2 v_texCoord;</td>
-      <td>The current pixel's texture coordinates (in u_texture).</td>
+      <td>The current pixel's texture coordinates (in the content texture).</td>
   </tr>
   </table>
 
   <h4>Other uniform variables: the CSS shaders parameters</h4>
 
   <p>When there parameters are passed to the <code>custom()</code> filter function or the 
-      <code>feCustom</code> filter primitive, the user agent pass uniforms of the corresponding name and
+      <a>'feCustom element'</a> filter primitive, the user agent pass uniforms of the corresponding name and
       type to the shaders.</p>
 
   <p>The following table shows the mapping between CSS shader parameters and uniform types.</p>
@@ -6025,7 +6365,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
           </td>
       </tr>
       <tr>
-          <td>texture(&lt;uri&gt; | &lt;filter-primitive-reference&gt;)</td>
+          <td>texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
           <td>sampler2D</td>
       </tr>
   </table>
@@ -6086,11 +6426,10 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   <div id="default-fragment-shader" class="shader example">
           <code class="idl"><pre>
   varying vec2 v_texCoord;
-  uniform sampler2D u_texture;
 
   void main()
   {  
-      gl_FragColor = texture2D(u_texture, v_texCoord);  
+      css_MixColor = vec4(1.0, 1.0, 1.0, 1.0); // Full white
   }        </pre></code>
   </div>
 
@@ -6112,7 +6451,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
 
   <p>To interpolate between <a href="#shader-params"><code>params</code></a> values in a
       <code>custom()</code> filter function or between 
-      <code>&lt;feCustom&gt;</code>
+      <a>'feCustom element'</a>
       <a href="#feCustomParamsAttribute">'params'</a> attribute values, the user
       agent should interpolate between each of the <strong><a href="#param-def">[param-def]</a></strong> values
       according to its type. List of values need to be of the same length. Matrices need to be of the same
@@ -7249,15 +7588,11 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
 <dt id="__svg__SVGFEDropShadowElement__stdDeviationX"><b>stdDeviationX</b><span class="idl-type-parenthetical"> (readonly <a class="idlinterface" href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedNumber">SVGAnimatedNumber</a>)</span></dt><dd> </dd>
 <dt id="__svg__SVGFEDropShadowElement__stdDeviationY"><b>stdDeviationY</b><span class="idl-type-parenthetical"> (readonly <a class="idlinterface" href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedNumber">SVGAnimatedNumber</a>)</span></dt><dd> </dd></dl></dd></dl>
 
+<h2>References</h2>
 
-<h2 id="references1">References</h2>
-<h3 id="normref">Normative References</h3>
+<h3 class="no-num">Normative references</h3>
+<!--normative-->
 <dl>
-  <dt id="ref-CSS21"><strong class="normref">[CSS21]</strong></dt>
-    <dd><strong>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</strong>, 
-    Bert Bos, Tantek Çelik, Ian Hickson, Håkon Wium Lie, eds.,
-    W3C, 23 April 2009, (Candidate Recommendation) </dd>
-
   <dt id="ref-NVDL"><strong class="normref">[NVDL]</strong></dt>
     <dd><strong>Document Schema Definition Languages (DSDL) — Part 4:
       Namespace-based Validation Dispatching Language — NVDL. ISO/IEC FCD
@@ -7296,11 +7631,6 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
       See also <a
       href="http://www.w3.org/TR/2005/NOTE-xml11schema10-20050511/">Processing
       XML 1.1 documents with XML Schema 1.0 processors</a>. </dd>
-  <dt id="ref-svg11"><strong class="normref">[SVG11]</strong></dt>
-    <dd><strong>Scalable Vector Graphics (SVG) 1.1 Specification</strong>,
-      Dean Jackson editor, W3C, 14 January 2003 (Recommendation). See <a
-      href="http://www.w3.org/TR/2003/REC-SVG11-20030114/">http://www.w3.org/TR/2003/REC-SVG11-20030114/</a>
-    </dd>
   <dt id="ref-svgt12"><strong class="normref">[SVGT12]</strong></dt>
     <dd><strong>Scalable Vector Graphics (SVG) Tiny 1.2 Specification</strong>,
       Dean Jackson editor, W3C, 22 December 2008 (Recommendation). See <a
@@ -7308,7 +7638,8 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
     </dd>
 </dl>
 
-<h3 id="informref">Informative References</h3>
+<h3 class="no-num">Other references</h3>
+<!--informative-->
 <dl>
   <dt id="ref-html5"><strong class="informref">[HTML5]</strong></dt>
     <dd><strong>HTML5</strong>, Ian Hickson editor, Google,
@@ -7316,5 +7647,38 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
       href="http://www.w3.org/TR/2008/WD-html5-20080610/">http://www.w3.org/TR/2008/WD-html5-20080610/</a>
     </dd>
 </dl>
+
+<h2 class="no-num">Property index</h2>
+<!-- properties -->
+
+
+
+<h2 class="no-num" id="index">Index</h2>
+<!--index-->
+
 </body>
 </html>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-declaration:"~/SGML/HTML4.decl"
+sgml-default-doctype-name:"html"
+sgml-minimize-attributes:t
+sgml-nofill-elements:("pre" "style" "br")
+sgml-live-element-indicator:t
+sgml-omittag:nil
+sgml-shorttag:nil
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-always-quote-attributes:t
+sgml-indent-step:nil
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->
+
+
