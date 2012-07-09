@@ -259,8 +259,9 @@
  <p>
   Compositing describes how shapes of different elements are combined into a single image. 
   There are various possible approaches for compositing.
-  Previous versions of SVG used <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a>. In this model, each element is rendered into its own buffer and is then merged with its <a href="#backdrop">backdrop</a> using the Porter Duff <a href="#porterduffcompositingoperators_srcover">src-over</a> operator.
-  
+  Previous versions of SVG used <a href="http://www.w3.org/TR/SVGTiny12/painting.html#CompositingSimpleAlpha">Simple Alpha Compositing</a>.
+  In this model, each element is rendered into its own buffer and is then merged with its <a href="#backdrop">backdrop</a> using the Porter Duff <a href="#porterduffcompositingoperators_srcover">src-over</a> operator.
+
   This specification will define a new compositing model that expands upon the Simple Alpha Compositing model by offering:
   <ul>
   <li>additional Porter Duff compositing operators;</li>
@@ -270,10 +271,6 @@
  </p>
  
  <p>
-  Blending describes how colors are "blended"
-  together. Typically, the color of an element and the color of its <a href="#backdrop">backdrop</a>
-  are combined to create a new color. This new color replaces the old color
-  and is then composited with the <a href="#backdrop">backdrop</a> using the specified compositing mode.
 </p>
 
 <h2 class="no-num no-toc" id="status">Status of This Document</h2>
@@ -288,105 +285,113 @@
 
 <h2 id="introduction">Introduction</h2>
 <p>
-At the basic level, compositing describes how shapes interact while blending describes how colors interact.
-Both idioms take a rendered version of the current element (ie a shape or a group) and mix it with the <a href="#backdrop">backdrop</a>.
+The first part of this document will describe the algorithms of Porter Duff compositing and blending.
+The second part describes the properties used to control the compositing in CSS. <br/>
+<span class="issue">The keywords in the definition section will most likely transition to their respective specifications.</span>
 </p>
 
+<h3 id="whatiscompositing">What is compositing</h3>
 <p>
-</p>
-
+Compositing is the combining of a graphic element with its backdrop.
 <p>
-The first part of this document will describe the algorithms of compositing and blending.
-<strong>Note: This document is not written for a particular model; instead it provides a generic model for blending and compositing.</strong><br/>
-The second part describes how they are specified in CSS. <br/>
-<span class="issue">The keywords in thedefinition section will most likely transition to their respective specifications.</span>
-</p>
-
-<h2 id="whatiscompositing">What is compositing</h2>
-<p>
-Compositing is the process by which graphical objects are combined. Alpha compositing uses the alpha values, or channel (bit mask) to represent the coverage of each pixel. The alpha channel is often said to represent the opacity. This coverage information is used to control the compositing of colors.
+The figure below, gives a basic example of compositing. The graphic element, a ... in this case, is overlaid on top of the backdrop to produce a composite image.
+Where the graphic element is opaque, it obscures the backdrop and where the graphic element is partially transparent, some of the backdrop can be seen through.
+<span class="issue">Add a pretty picture. I'm thinking a house with a window that is transparent overlaid on a mountain scene.</span>
 </p>
 <p>
-Blending is the compositing step where the resultant color of a region where two shapes overlap, is calculated.
+In the model described in this specification there are two steps to the overall compositing operation - <a href="#advancedcompositing">Porter Duff compositing</a> and <a href="blending">blending</a>.
+Porter Duff compositing takes into account the overall shape of the graphic element and its opacity, as well as the opacity and shape of the backdrop, and 
+determines where the backdrop is visible, where the graphic element is visible and where one is visible through the other.
+The blending step determines how the colors from the graphic element and the backdrop interact.
 </p>
 <p>
-Simple alpha compositing, like that found by default in SVG 1.1 and in GDI+ and many other graphics engines, composites each object onto the <a href="#backdrop">backdrop</a> image using a simplistic formula that has the effect of overlaying the object over the <a href="#backdrop">backdrop</a>. Where the objects overlap and coverage is not complete the color of the <a href="#backdrop">backdrop</a> may show through the object that has just been rendered. 
+Typically, the blending step is performed first, followed by the PD compositing step.
+In the blending step, the resultant color from the mix of the element and the the <a href="#backdrop">backdrop</a> is calculated. The graphic element's color is replaced with this resultant color.
+The graphic element is then composited with the <a href="#backdrop">backdrop</a> using the specified compositing operator.
+</p>
+<p>
+Shape is defined by the mathematical description of the shape. Shape either exists at a particular point or it does not. There are no gradations.
+Opacity is described using an alpha value, stored alongside the color value for each particular point. The alpha value is between 0 and 1, inclusive.
+ A value of 0 means that the pixel has no coverage at that point, and is therefore
+transparent; i.e. there is no color contribution from any geometry because the geometry does not overlap this pixel. A value of 1 means that the pixel is fully opaque; the geometry completely overlaps the pixel.
+</p>
 </p>
 
 <h3 id="simplealphacompositing">simple alpha compositing</h3>
 <p>
-In computer graphics, alpha compositing is the process of combining an image with a <a href="#backdrop">backdrop</a> to give the appearance of partial or full transparency. 
-For each pixel, an alpha value is stored alongside the color value. The alpha value is between 0 and 1, inclusive.  A value of 0 means that the pixel has no coverage at that point, and is therefore
-transparent; i.e. there is no color contribution from any geometry because the geometry does not overlap this pixel. A value of 1 means that the pixel is fully opaque; the geometry completely overlaps the pixel.
+The simple alpha compositing model used in previous versions of SVG allowed for the illusion of partial or full transparency.
+While this specification provides the author the choice of many Porter Duff compositing operators and many blending modes, the simple alpha compositing 
+    model forced a single Porter Duff compositing operator and a single blend mode.
 </p>
 
 <p>
-The multiplication of the color (Ca) and alpha (αa) gives the pixel value. This is also called the <code>pre-multiplied value</code>.
+The formula for simple alpha compositing is
+<pre>
+co = Ca x αa + Cb x αb x (1 - αa)
+</pre>
+Where 
+<br/>
+co: the pixel value after compositing<br/>
+Ca: the color value of the graphic element being composited<br/>
+αa: the alpha value of the graphic element being composited<br />
+Cb: the pixel value of the <a href="#backdrop">backdrop</a><br/>
+αb: the alpha value of the <a href="#backdrop">backdrop</a><br/>
+<span class="note">
+All values are between 0 and 1 inclusive.<br/>
+The use of capitals denotes a composite value. For colors this will typically be a triplet containing values for the red, green and blue channel.
+</span>
+<p>
+The pixel value after compositing (co) is given by adding the contributions from the graphic element [Ca x αa] and the backdrop [Cb x αb x (1 - αa)].
+For both the graphic element and the backdrop, the color values are multiplied by the alpha to determine the amount of color that contributes.
+With zero alpha meaning that the color does not contribute and partial alpha means that some percentage of the color contributes.
+The contribution of the backdrop is further reduced based on the opacity of the graphic element. 
+Conceptually, (1 - αa) of the backdrop shows through the graphic element, meaning that if the graphic element is fully opaque (αa=1) then no backdrop shows through.
+</p>
+
+<p>
+The simple alpha compositing formula listed above gives a resultant color which is the result of the 
+weighted average of the backdrop color and graphic element color, with the weighting determined by the backdrop and
+graphic element alphas.<br />
+The resultant alpha value of the composite is simply the sum of the contributed alpha of the composited elements.
+The formula for the resultant alpha of the composite is
+<pre>
+αo = αa + αb x (1 - αa)
+</pre>
+Where 
+<br/>
+αo: the alpha value of the composite<br/>
+αa: the alpha value of the graphic element being composited<br />
+αb: the alpha value of the <a href="#backdrop">backdrop</a><br/>
+</p>
+
+<p>
+Often, it can be more efficient to store a <code>pre-multiplied value</code> for the color and opacity.
+The pre-multiplied value is given by
 <pre>
 ca = Ca x αa
 </pre>
 with 
 <br/>
-ca: the pixel value<br/>
+ca: the pre-multiplied value<br/>
 Ca: the color value<br/>
 αa: the alpha value
 </p>
 <p>
-Conceptually, "alpha" means "allow (1 - α) from behind to show". Thus, to determine the pixel value after compositing, take the foreground pixel and add (1 - α) of the <a href="#backdrop">backdrop</a> pixel.
+Thus the formula for simple alpha compositing using pre-multplied values becomes
 <pre>
-co = ca + cb x (1 - αa)
+co = ca + Cb x αb x (1 - αa)
 </pre>
-with 
-<br/>
-co: the pixel value after compositing<br/>
-ca: the pixel value of the shape being composited<br/>
-cb: the pixel value of the <a href="#backdrop">backdrop</a><br/>
-αa: the alpha value of the shape being composited
 </p>
-
-<p style="text-align:center"><img src="examples/group_alpha.svg"/>
-<br/>
-Figure 1
 </p>
 
 <p>
-It can be useful to calcluate the alpha value of a pixel, independent of any color information.
-<span class="issue">The following example uses groups before they are introduced. A simpler example would suffice.</span>
-For example in figure 1, shape 2 and 3 are partially transparent. They are composited together because they are in a <a href="#groupalpha">group</a>. This group is then composited on top of shape1. Note how the alpha of shape 2 and 3 is still in effect and is letting the shape 1 show through. Without knowing αa of the group, we would not be able to calculate this.<br/>
-Luckily, the alpha value is determined the same way as the pixel value:<br/>take the alpha of the shape and add (1-alpha) of the <a href="#backdrop">backdrop</a>. So:
-<pre>
-αo = αa + αb x (1 - αa)
-</pre>
-with 
-<br/>
-αo: the alpha after compositing<br/>
-αa: the alpha of the shape<br/>
-αb: the alpha of the <a href="#backdrop">backdrop</a>
-</p>
-<p>
-To determine the color of a pre-multiplied value, independent of the alpha, reverse the formula for pre-multiplied alpha:
+To extract the color component of a pre-multiplied value, the formula is reversed:
 <pre>
 Co = co / αo
 </pre>
-Substituting co with the simple alpha compositing formula, gives an equation, in which non color values (not pre-multiplied values) may be used.
-<pre>
-Co = 1/αo x (Ca x αa + Cb x αb x (1 - αa))
-</pre>
-with 
-<br/>
-αo: the alpha after compositing<br/>
-Co: the color after compositing<br/>
-Ca: the color of the shape<br/>
-Cb: the color of the <a href="#backdrop">backdrop</a><br/>
-αa: the alpha of the shape<br/>
-αb: the alpha of the <a href="#backdrop">backdrop</a>
 </p>
 
 <h3 id="simplealphacompositingexamples">Examples of simple alpha compositing</h3>
-<p>
-Next we will run through a couple of scenarios that show how alpha compositing works.
-</p>
-
 <div class="example">
 <p style="text-align:center"><img src="examples/simple_box.svg"/>
 <br/>
@@ -394,7 +399,19 @@ Figure 1
 </p>
 <p>
 Figure 1 describes the most basic case. It consists of 1 shape that is filled with a solid color (α = 1).
-The shape is composited with an empty background. The empty background has no effect on the appearance of the shape.
+The shape is composited with an empty background. The empty background has no effect on the resultant composite.
+<pre>
+
+Ca = RGB(1,0,0)
+αa = 1
+Cb = RGB(0,0,0)
+αb = 0
+
+co = Ca x αa + Cb x αb x (1 - αa)
+co = RGB(1,0,0) x 1 + RGB(0,0,0) x 0 x (1 - 1)
+co = RGB(1,0,0) x 1
+co = RGB(1,0,0)
+</pre>
 </p>
 </div>
 
@@ -404,17 +421,34 @@ The shape is composited with an empty background. The empty background has no ef
 Figure 2
 </p>
 <p>
-Figure 2 is a more complex example. There is no transparency, but the 2 shapes intersect one another.
+Figure 2 is a more complex example. There is no transparency, but the 2 shapes intersect.
 </p>
 <p>
 Applying the compositing formula in the area of intersection, gives:
 <pre>
-αo = 1 + 1 x (1 - 1) = 1
-co = RGB(0, 0, 255) x 1 + RGB(255, 0, 0) x 1 x (1 - 1)
-co = RGB(0, 0, 255)
-Co = 1/1 * RGB(0, 0, 255) = RGB(0, 0, 255)
-</pre>
+Ca = RGB(0,0,1)
+αa = 1
+Cb = RGB(1,0,0)
+αb = 1
 
+co = Ca x αa + Cb x αb x (1 - αa)
+co = RGB(0,0,1) x 1 + RGB(1,0,0) x 1 x (1 - 1)
+co = RGB(0,0,1) x 1 + RGB(1,0,0) x 1 x 0
+co = RGB(0,0,1) x 1
+co = RGB(0,0,1)
+</pre>
+Calculating the alpha of the resultant composite
+<pre>
+αo = αa + αb x (1 - αa)
+αo = 1 + 1 x (1 - 1)
+αo = 1
+</pre>
+Calculating the color component of the resultant composite
+<pre>
+Co = co / αo
+Co = RGB(0, 0, 1) / 1
+Co = RGB(0, 0, 1)
+</pre>
 </p>
 </div>
 
@@ -429,11 +463,27 @@ Figure 3 shows an example where the shape has some transparency, but the <a href
 <p>
 Applying the compositing formula in the area of intersection, gives:
 <pre>
-αo = .5 + 1 x (1 - .5) = 1
-co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * 1 * (1 - .5)
-co = RGB(0, 0, 127) + RGB(127, 0, 0)
-co = RGB(127, 0, 127)
-Co = 1/1 * RGB(127, 0, 127) = RGB(127, 0, 127)
+Ca = RGB(0,0,1)
+αa = 0.5
+Cb = RGB(1,0,0)
+αb = 1
+
+co = Ca x αa + Cb x αb x (1 - αa)
+co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 1 x (1 - 0.5)
+co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 0.5
+co = RGB(0.5,0,0.5)
+</pre>
+Calculating the alpha of the resultant composite
+<pre>
+αo = αa + αb x (1 - αa)
+αo = 0.5 + 1 x (1 - 0.5)
+αo = 1
+</pre>
+Calculating the color component of the resultant composite
+<pre>
+Co = co / αo
+Co = RGB(0.5, 0, 0.5) / 1
+Co = RGB(0.5, 0, 0.5)
 </pre>
 </p>
 </div>
@@ -449,11 +499,27 @@ Figure 4 shows an example where both the shape and the <a href="#backdrop">backd
 <p>
 Applying the compositing formula in the area of intersection, gives:
 <pre>
-αo = .5 + .5 x (1 - .5) = .75
-co = RGB(0, 0, 255) * .5 + RGB(255, 0, 0) * .5 * (1 - .5)
-co = RGB(0, 0, 127) + RGB(127, 0, 0)
-co = RGB(63, 0, 127)
-Co = 1/.75 * RGB(63, 0, 127) = RGB(84, 0, 169)
+Ca = RGB(0,0,1)
+αa = 0.5
+Cb = RGB(1,0,0)
+αb = 0.5
+
+co = Ca x αa + Cb x αb x (1 - αa)
+co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 0.5 x (1 - 0.5)
+co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 0.25
+co = RGB(0.25, 0, 0.5)
+</pre>
+Calculating the alpha of the resultant composite
+<pre>
+αo = αa + αb x (1 - αa)
+αo = 0.5 + 0.5 x (1 - 0.5)
+αo = 0.75
+</pre>
+Calculating the color component of the resultant composite
+<pre>
+Co = co / αo
+Co = RGB(0.25, 0, 0.5) / 0.75
+Co = RGB(0.33, 0, 0.66)
 </pre>
 </p>
 </div>
