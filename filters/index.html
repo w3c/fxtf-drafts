@@ -75,14 +75,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 29 June 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 July 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120629/-->
+     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120720/-->
 
     <dt>Latest version:
 
@@ -12323,24 +12323,20 @@ double turbulence(int nColorChannel, double *point, double <a
        predefined blend modes and it's appropriate blend mode keyword (See
        [[COMPOSITING]]).</p>
 
-      <p> The lacuna value is ‘<code class=css>normal</code>’.</p>
-
      <dt>&lt;alpha-compositing&gt;
 
      <dd>
       <p> Each pixel can be composed with its backdrop by using one of the
        predefined alpha-compositing operators and it's appropriate
        alpha-compositing keyword (See [[COMPOSITING]]).</p>
-
-      <p> The lacuna value is ‘<code class=css>source-over</code>’.</p>
     </dl>
 
     <p class=issue>backdrop should be the mix color?</p>
   </dl>
 
-  <p>The lacuna value for ‘<code class=property>fragmentShader</code>’ is
-   <code>mix(<a href="#default-shaders">&lt;default-fragment-shader&gt;</a>
-   multiply)</code>.
+  <p> The lacuna value for ‘<code class=property>fragmentShader</code>’
+   is ‘<code class=css>mix(&lt;default-fragment-shader&gt; multiply
+   source-over)</code>’.
 
   <h3 id=vertexMesh-attribute><span class=secno>32.2. </span>The <a>‘<code
    class=css>vertexMesh attribute</code>’</a> attribute</h3>
@@ -12362,7 +12358,7 @@ double turbulence(int nColorChannel, double *point, double <a
      (top-left, top-right, bottom-right, bottom-left). If the second
      parameter is not provided, it takes a value equal to the first. A value
      of ‘<code class=css><em>n m</em></code>’ results in a vertex mesh
-     that has <em>n</em> rows and <em>m</em> columns. This results in a total
+     that has <em>n</em> columns and <em>m</em> rows. This results in a total
      of <em>(n + 1) * (m + 1)</em> vertices as illustrated in the <a
      href="#vertexMesh56">figure below</a>.</p>
 
@@ -12461,13 +12457,13 @@ double turbulence(int nColorChannel, double *point, double <a
    <p> The following example applies a vertex shader (‘<code
     class=css>distort.vs</code>’) to elements with class ‘<code
     class=property>distorted</code>’. The vertex shader will operate on a
-    mesh that has 5 lines and 5 columns (because there are 4 additional lines
-    and 4 additional columns).</p>
+    mesh that has 6 lines and 6 columns (because there are 5 additional lines
+    and 5 additional columns).</p>
 
    <pre>
 &lt;style&gt;
 .distorted {
-    filter: custom(url(distort.vs), 4 3);
+    filter: custom(url(distort.vs), 6 6);
 }
 &lt;/style&gt;
 
@@ -12488,7 +12484,7 @@ double turbulence(int nColorChannel, double *point, double <a
 ...
 
 &lt;filter id="distort"&gt;
-    &lt;feCustom vertexShader="url(distort.vs)" vertexMesh="4 3" /&gt;
+    &lt;feCustom vertexShader="url(distort.vs)" vertexMesh="6 6" /&gt;
 &lt;/filter&gt;
 
 &lt;div class="distorted"&gt;
@@ -12604,6 +12600,10 @@ double turbulence(int nColorChannel, double *point, double <a
    what corresponds to the same pixel coordinate on the output, for example
    when the vertex mesh folds over itself.
 
+  <p class=issue> There is no guarantee which shader gets applied first.
+   Because the depth buffer is used there's no guarantee that blending will
+   happen.
+
   <p> CSS fragment shaders have additional restrictions in comparison to
    other fragment shader languages (See <a href="#security">Security
    section</a> for more information). One restriction is the prohibited usage
@@ -12628,7 +12628,7 @@ double turbulence(int nColorChannel, double *point, double <a
   <p> ‘<code class=css>css_MixColor</code>’ is a second, predefined
    fragment shader variable of type &lt;vec4&gt;. ‘<code
    class=css>css_MixColor</code>’ defines the <i>mix color</i> and can be
-   set withing the fragment shader. The <i>multiplied color</i> gets blended
+   set within the fragment shader. The <i>multiplied color</i> gets blended
    as destination with the <i>mix color</i> as source following the blending
    rules of the Compositing and Blending spec [[compositing]]. The applied
    blend mode depends on the passed &lt;blend-mode&gt; parameter and is

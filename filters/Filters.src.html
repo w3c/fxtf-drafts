@@ -5567,10 +5567,6 @@ class="element-name">'feCustom'</span></h2>
               Each pixel can be blended with its backdrop by using one of the predefined blend modes and it's
               appropriate blend mode keyword (See [[COMPOSITING]]).
             </p>
-
-            <p>
-              The lacuna value is ''normal''.
-            </p>
           </dd>
           <dt>&lt;alpha-compositing&gt;</dt>
           <dd>
@@ -5578,17 +5574,16 @@ class="element-name">'feCustom'</span></h2>
               Each pixel can be composed with its backdrop by using one of the predefined alpha-compositing
               operators and it's appropriate alpha-compositing keyword (See [[COMPOSITING]]).
             </p>
-
-            <p>
-              The lacuna value is ''source-over''.
-            </p>
           </dd>
+
         </dl>
         <p class="issue">backdrop should be the mix color?</p>
       </dd>
     </dl>
 
-    <p>The lacuna value for 'fragmentShader' is <code>mix(<a href="#default-shaders">&lt;default-fragment-shader&gt;</a> multiply)</code>.</p>
+    <p>
+      The lacuna value for 'fragmentShader' is ''mix(&lt;default-fragment-shader&gt; multiply source-over)''.
+    </p>
     
     <h3 id="vertexMesh-attribute">The <a>'vertexMesh attribute'</a> attribute</h3>
 
@@ -5606,7 +5601,7 @@ class="element-name">'feCustom'</span></h2>
           that will make the vertex mesh. With the initial value of ''1 1'' there is a single row and a single column,
           resulting in a four-vertices mesh (top-left, top-right, bottom-right, bottom-left). If the second parameter
           is not provided, it takes a value equal to the first. A value of ''<em>n m</em>'' results in a vertex mesh that
-          has <em>n</em> rows and <em>m</em> columns. This results in a total of <em>(n + 1) * (m + 1)</em> vertices as
+          has <em>n</em> columns and <em>m</em> rows. This results in a total of <em>(n + 1) * (m + 1)</em> vertices as
           illustrated in the <a href="#vertexMesh56">figure below</a>.
         </p>
 
@@ -5701,14 +5696,14 @@ class="element-name">'feCustom'</span></h2>
     <div class="example">
       <p>
         The following example applies a vertex shader ('distort.vs') to elements with class 'distorted'.
-        The vertex shader will operate on a mesh that has 5 lines and 5 columns (because there are 4 additional
-        lines and 4 additional columns).
+        The vertex shader will operate on a mesh that has 6 lines and 6 columns (because there are 5 additional
+        lines and 5 additional columns).
       </p>
 
       <pre>
 &lt;style&gt;
 .distorted {
-    filter: custom(url(distort.vs), 4 3);
+    filter: custom(url(distort.vs), 6 6);
 }
 &lt;/style&gt;
 
@@ -5731,7 +5726,7 @@ class="element-name">'feCustom'</span></h2>
 ...
 
 &lt;filter id="distort"&gt;
-    &lt;feCustom vertexShader="url(distort.vs)" vertexMesh="4 3" /&gt;
+    &lt;feCustom vertexShader="url(distort.vs)" vertexMesh="6 6" /&gt;
 &lt;/filter&gt;
 
 &lt;div class="distorted"&gt;
@@ -5836,6 +5831,11 @@ class="element-name">'feCustom'</span></h2>
   mesh folds over itself.
 </p>
 
+<p class="issue">
+  There is no guarantee which shader gets applied first. Because the depth buffer is used there's no guarantee that
+  blending will happen.
+</p>
+
 <p>
   CSS fragment shaders have additional restrictions in comparison to other fragment shader languages (See <a href="#security">Security section</a> for more information).
   One restriction is the prohibited usage of conditions based on color values.
@@ -5858,7 +5858,7 @@ class="element-name">'feCustom'</span></h2>
 
 <p>
   ''css_MixColor'' is a second, predefined fragment shader variable of type &lt;vec4&gt;. ''css_MixColor'' defines the <i>mix color</i> and can be set
-  withing the fragment shader. The <i>multiplied color</i> gets blended as destination with the <i>mix color</i> as source following the blending rules
+  within the fragment shader. The <i>multiplied color</i> gets blended as destination with the <i>mix color</i> as source following the blending rules
   of the Compositing and Blending spec [[compositing]]. The applied blend mode depends on the passed &lt;blend-mode&gt; parameter and is ''normal'' by default.
   The result of the blending is the <i>blended color</i>.
 </p>
