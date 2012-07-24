@@ -577,9 +577,6 @@
    Duff compositing and blending. The second part describes the properties
    used to control the compositing in CSS. <br>
 
-  <p class=issue>The keywords in the definition section will most likely
-   transition to their respective specifications.
-
   <h3 id=whatiscompositing><span class=secno>1.1. </span>What is compositing</h3>
 
   <p> Compositing is the combining of a graphic element with its backdrop.
@@ -865,21 +862,8 @@ Co = αa x Fa x Ca + αb x Fb x Cb
   <h2 id=backdrop><span class=secno>3. </span>Backdrop calculation</h2>
 
   <p> The backdrop is the content behind the element and is what the element
-   is composited with.
-
-  <p> The backdrop is the result of compositing all previous elements.
-
-  <p class=issue>NA: Too conversational, and not really explaining what the
-   following examples show. Backdrop should include the empty areas as well
-   as the shape? To fix.
-
-  <p>If you think it through a little more, it seems that there would be a
-   complication if parent groups have opacity, non-default blending or
-   non-default compositing modes<br>
-   However, since these operators are applied after the group contents are
-   calculated, it turns out that they can be ignored when calculating the
-   backdrop. So, for an element that is a member of a group that has opacity,
-   the opacity should be ignored when calculating the backdrop.
+   is composited with. This means that the backdrop is the result of
+   compositing all previous elements.
 
   <h3 id=backdropexamples><span class=secno>3.1. </span>Examples of backdrop
    calculation</h3>
@@ -901,18 +885,6 @@ Co = αa x Fa x Ca + αb x Fb x Cb
    <p> In figure 6, the shape in the backdrop has an alpha value. The alpha
     value of the backdrop shape is preserved when the backdrop is calculated.
     </p>
-  </div>
-
-  <div class=example>
-   <p style="text-align:center"><img src="examples/group_alpha_backdrop.svg">
-    <br>
-    Figure 7</p>
-
-   <p> In figure 7, the blue and green shapes are in a group that has alpha.
-    When calculating the backdrop for the blue shape, the red and green
-    shapes are combined with simple alpha compositing and the group alpha is
-    ignored. If the group had blending, compositing or filtering, those would
-    also be ignored.</p>
   </div>
 
   <h2 id=groups><span class=secno>4. </span>Compositing Groups</h2>
@@ -1456,9 +1428,6 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    Porter Duff compositing formula. For simple alpha blending, the formula
    thus becomes:
 
-  <p class=issue>NA: I think the following formula just uses source over - we
-   need a general version.
-
   <pre>
 simple alpha compositing:
 	co = ca + cb x (1 - αa)
@@ -1874,9 +1843,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Applies to:</em>  
 
-        <td>All elements. In SVG, it applies only to container elements
-         (except ‘<code class=property>mask</code>’) and graphics
-         elements
+        <td>All elements. In SVG, it applies to svg, g, use, image, path,
+         rect, circle, ellipse, line, polyline, polygon, text, tspan, and
+         marker.
 
        <tr valign=baseline>
         <td><em>Inherited:</em>  
@@ -1952,9 +1921,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Applies to:</em>  
 
-        <td>All elements. In SVG, it applies only to container elements
-         (except ‘<code class=property>mask</code>’) and graphics
-         elements
+        <td>All elements. In SVG, it applies to svg, g, use, image, path,
+         rect, circle, ellipse, line, polyline, polygon, text, tspan, and
+         marker.
 
        <tr valign=baseline>
         <td><em>Inherited:</em>  
@@ -2119,14 +2088,9 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h3 id=cssbackgroundsyntax><span class=secno>7.3. </span>Specifying
    blending and compositing in the element background</h3>
 
-  <p>
-
-  <p class=issue>DRAFT.This proposal needs more discussion.
-
-  <p><br>
-   An author might want to specify the blending of multiple backgrounds of an
-   element. The <a href="#background">background</a> compositing and blending
-   is always treated as an isolated group.
+  <p> An author might want to specify the blending of multiple backgrounds of
+   an element. The <a href="#background">background</a> compositing and
+   blending is always treated as an isolated group.
 
   <h4 id=background-alpha-compositing><span class=secno>7.3.1. </span>The
    <span class=prop-name>‘<code
@@ -2256,12 +2220,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=prop-name>‘<code
    class=property>box-shadow-blend-mode</code>’</span> property</h4>
 
-  <p>
-
-  <p class=issue>DRAFT.This proposal needs more discussion.
-
-  <p><br>
-   Sets the blend mode of the box shadow.<br>
+  <p> Sets the blend mode of the box shadow.<br>
    <span class=p>Also needs to be added to the shorthand.</span>
 
   <p><br>
@@ -2391,12 +2350,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=prop-name>‘<code
    class=property>foreground-blend-mode</code>’</span> property</h4>
 
-  <p>
-
-  <p class=issue>DRAFT.This proposal needs more discussion.
-
-  <p><br>
-   Sets the blend mode of the text or nested elements.<br>
+  <p> Sets the blend mode of the text or nested elements.<br>
 
   <p class=issue>Also needs to be added to the shorthand.
 
@@ -2459,10 +2413,6 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h4 id=background-alpha-compositing><span class=secno>7.3.6.
    </span>Alternate proposal</h4>
 
-  <p class=issue>DRAFT.This proposal needs more discussion.
-
-  <p><br>
-
   <p> To cut down on the number of new keywords, we could extend blend-mode
    to take the following additional parameters:
 
@@ -2490,20 +2440,12 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h4 id=borders-issue><span class=secno>7.3.7. </span>blending and
    compositing on borders</h4>
 
-  <p>
-
-  <p class=issue>DRAFT.This proposal needs more discussion.
-
-  <p><br>
-   Is there a need to target this part of the element?
+  <p> Is there a need to target this part of the element?
 
   <h2 id=canvascompositingandblending><span class=secno>8. </span>Specifying
    Compositing and Blending in Canvas</h2>
 
-  <p class=issue>DRAFT.This proposal needs more discussion.
-
-  <p><br>
-   Please see the <a
+  <p>Please see the <a
    href="http://www.w3.org/Graphics/fx/wiki/BlendingInCanvas">W3 wiki</a>.
    <!--
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
