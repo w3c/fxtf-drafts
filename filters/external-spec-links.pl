@@ -85,7 +85,6 @@ sub readdefs {
     $elementAttributes{$name} = { };
 
     if ($attrs =~ /attributecategories=['"](.*?)['"]/) {
-      print "feBlend cats: ", join(' ', $1), "\n" if $name eq 'feBlend';
       my @cats = split(/,\s*/, $1);
       for my $cat (@cats) {
         for my $catattr (keys %{$elementCategoryAttributes{$cat}}) {
