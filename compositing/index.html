@@ -219,7 +219,7 @@
 
    <h1>Compositing and Blending 1.0</h1>
 
-   <h2 class="no-num no-toc" id=july-2012>24 July 2012</h2>
+   <h2 class="no-num no-toc" id=july-2012>25 July 2012</h2>
 
    <dl>
     <dt>This version:
@@ -629,31 +629,28 @@
   <p> The formula for simple alpha compositing is
 
   <pre>
-co = Ca x αa + Cb x αb x (1 - αa)
+co = Cs x αs + Cb x αb x (1 - αs)
 </pre>
 
   <p>Where <br>
    co: the pixel value after compositing<br>
-   Ca: the color value of the graphic element being composited<br>
-   αa: the alpha value of the graphic element being composited<br>
+   Cs: the color value of the source graphic element being composited<br>
+   αs: the alpha value of the source graphic element being composited<br>
    Cb: the pixel value of the <a href="#backdrop">backdrop</a><br>
    αb: the alpha value of the <a href="#backdrop">backdrop</a><br>
 
   <p class=note> All values are between 0 and 1 inclusive.<br>
-   The use of capitals denotes a composite value. For colors this will
-   typically be a triplet containing values for the red, green and blue
-   channel.
 
   <p> The pixel value after compositing (co) is given by adding the
-   contributions from the graphic element [Ca x αa] and the backdrop [Cb x
-   αb x (1 - αa)]. For both the graphic element and the backdrop, the color
-   values are multiplied by the alpha to determine the amount of color that
-   contributes. With zero alpha meaning that the color does not contribute
-   and partial alpha means that some percentage of the color contributes. The
-   contribution of the backdrop is further reduced based on the opacity of
-   the graphic element. Conceptually, (1 - αa) of the backdrop shows through
-   the graphic element, meaning that if the graphic element is fully opaque
-   (αa=1) then no backdrop shows through.
+   contributions from the source graphic element [Cs x αs] and the backdrop
+   [Cb x αb x (1 - αs)]. For both the graphic element and the backdrop, the
+   color values are multiplied by the alpha to determine the amount of color
+   that contributes. With zero alpha meaning that the color does not
+   contribute and partial alpha means that some percentage of the color
+   contributes. The contribution of the backdrop is further reduced based on
+   the opacity of the graphic element. Conceptually, (1 - αs) of the
+   backdrop shows through the graphic element, meaning that if the graphic
+   element is fully opaque (αs=1) then no backdrop shows through.
 
   <p> The simple alpha compositing formula listed above gives a resultant
    color which is the result of the weighted average of the backdrop color
@@ -664,12 +661,12 @@ co = Ca x αa + Cb x αb x (1 - αa)
    resultant alpha of the composite is
 
   <pre>
-αo = αa + αb x (1 - αa)
+αo = αs + αb x (1 - αs)
 </pre>
 
   <p>Where <br>
    αo: the alpha value of the composite<br>
-   αa: the alpha value of the graphic element being composited<br>
+   αs: the alpha value of the graphic element being composited<br>
    αb: the alpha value of the <a href="#backdrop">backdrop</a><br>
 
   <p> Often, it can be more efficient to store a <code>pre-multiplied
@@ -677,19 +674,19 @@ co = Ca x αa + Cb x αb x (1 - αa)
    by
 
   <pre>
-ca = Ca x αa
+cs = Cs x αs
 </pre>
 
   <p>with <br>
-   ca: the pre-multiplied value<br>
-   Ca: the color value<br>
-   αa: the alpha value
+   cs: the pre-multiplied value<br>
+   Cs: the color value<br>
+   αs: the alpha value
 
   <p> Thus the formula for simple alpha compositing using pre-multplied
    values becomes
 
   <pre>
-co = ca + Cb x αb x (1 - αa)
+co = cs + Cb x αb x (1 - αs)
 </pre>
 
   <p> To extract the color component of a pre-multiplied value, the formula
@@ -713,12 +710,12 @@ Co = co / αo
 
    <pre>
 
-Ca = RGB(1,0,0)
-αa = 1
+Cs = RGB(1,0,0)
+αs = 1
 Cb = RGB(0,0,0)
 αb = 0
 
-co = Ca x αa + Cb x αb x (1 - αa)
+co = Cs x αs + Cb x αb x (1 - αs)
 co = RGB(1,0,0) x 1 + RGB(0,0,0) x 0 x (1 - 1)
 co = RGB(1,0,0) x 1
 co = RGB(1,0,0)
@@ -735,12 +732,12 @@ co = RGB(1,0,0)
    <p> Applying the compositing formula in the area of intersection, gives:
 
    <pre>
-Ca = RGB(0,0,1)
-αa = 1
+Cs = RGB(0,0,1)
+αs = 1
 Cb = RGB(1,0,0)
 αb = 1
 
-co = Ca x αa + Cb x αb x (1 - αa)
+co = Cs x αs + Cb x αb x (1 - αs)
 co = RGB(0,0,1) x 1 + RGB(1,0,0) x 1 x (1 - 1)
 co = RGB(0,0,1) x 1 + RGB(1,0,0) x 1 x 0
 co = RGB(0,0,1) x 1
@@ -748,7 +745,7 @@ co = RGB(0,0,1)
 </pre>
    Calculating the alpha of the resultant composite
    <pre>
-αo = αa + αb x (1 - αa)
+αo = αs + αb x (1 - αs)
 αo = 1 + 1 x (1 - 1)
 αo = 1
 </pre>
@@ -771,19 +768,19 @@ Co = RGB(0, 0, 1)
    <p> Applying the compositing formula in the area of intersection, gives:
 
    <pre>
-Ca = RGB(0,0,1)
-αa = 0.5
+Cs = RGB(0,0,1)
+αs = 0.5
 Cb = RGB(1,0,0)
 αb = 1
 
-co = Ca x αa + Cb x αb x (1 - αa)
+co = Cs x αs + Cb x αb x (1 - αs)
 co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 1 x (1 - 0.5)
 co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 0.5
 co = RGB(0.5,0,0.5)
 </pre>
    Calculating the alpha of the resultant composite
    <pre>
-αo = αa + αb x (1 - αa)
+αo = αs + αb x (1 - αs)
 αo = 0.5 + 1 x (1 - 0.5)
 αo = 1
 </pre>
@@ -806,19 +803,19 @@ Co = RGB(0.5, 0, 0.5)
    <p> Applying the compositing formula in the area of intersection, gives:
 
    <pre>
-Ca = RGB(0,0,1)
-αa = 0.5
+Cs = RGB(0,0,1)
+αs = 0.5
 Cb = RGB(1,0,0)
 αb = 0.5
 
-co = Ca x αa + Cb x αb x (1 - αa)
+co = Cs x αs + Cb x αb x (1 - αs)
 co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 0.5 x (1 - 0.5)
 co = RGB(0,0,1) x 0.5 + RGB(1,0,0) x 0.25
 co = RGB(0.25, 0, 0.5)
 </pre>
    Calculating the alpha of the resultant composite
    <pre>
-αo = αa + αb x (1 - αa)
+αo = αs + αb x (1 - αs)
 αo = 0.5 + 0.5 x (1 - 0.5)
 αo = 0.75
 </pre>
@@ -841,19 +838,19 @@ Co = RGB(0.33, 0, 0.66)
   <p> Apply the blend in place
 
   <pre>
-Ca = (1 - αb) x Ca + αb x B(Cb, Cs)
+Cs = (1 - αb) x Cs + αb x B(Cb, Cs)
 </pre>
 
   <p> Composite
 
   <pre>
-Co = αa x Fa x Ca + αb x Fb x Cb
+Co = αs x Fa x Cs + αb x Fb x Cb
 </pre>
 
   <p>Where:<br>
-   <strong>Ca</strong>: is the source color<br>
+   <strong>Cs</strong>: is the source color<br>
    <strong>Cb</strong>: is the backdrop color<br>
-   <strong>αa</strong>: is the source alpha<br>
+   <strong>αs</strong>: is the source alpha<br>
    <strong>αb</strong>: is the backdrop alpha<br>
    <strong>B(Cb, Cs)</strong>: is the mixing function<br>
    <strong>Fa</strong>: is defined by the Porter Duff operator in use<br>
@@ -1065,22 +1062,22 @@ co = RGB(255, 127, 127)
      <tr>
       <th>Both
 
-      <th>αa x αb
+      <th>αs x αb
 
      <tr>
       <th>Source only
 
-      <th>αa(1 – αb)
+      <th>αs(1 – αb)
 
      <tr>
       <th>Destination only
 
-      <th>αb(1 – αa)
+      <th>αb(1 – αs)
 
      <tr>
       <th>None
 
-      <th>(1 – αa)(1 – αb)
+      <th>(1 – αs)(1 – αb)
    </table>
   </div>
 
@@ -1111,32 +1108,32 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    each shape can be seen to be expressed as a fraction of the total coverage
    of the output. For example, in source over, the possible contribution of
    source is full (1) and the possible contribution of destination is
-   whatever is remaining (1 – αa). This is modified by the coverage of
+   whatever is remaining (1 – αs). This is modified by the coverage of
    source and destination to give the equation for the final coverage of the
    pixel:
 
   <pre>
-    αo = αa x 1 + αb x (1 – αa)
+    αo = αs x 1 + αb x (1 – αs)
 </pre>
 
-  <p>The fractional terms Fa (1 in this example) and Fb (1 – αa in this
+  <p>The fractional terms Fa (1 in this example) and Fb (1 – αs in this
    example) are defined for each operator and specify the fraction of the
    shapes that may contribute to the final pixel value. The general form of
    the equation for coverage is:
 
   <pre>
-    αa x Fa + αb x Fb
+    αs x Fa + αb x Fb
 </pre>
 
   <p>and incorporating color gives the general Porter Duff equation
 
   <pre>
-    co = αa x Fa x Ca + αb x Fb x Cb
+    co = αs x Fa x Cs + αb x Fb x Cb
 </pre>
 
   <p>Where: co is the output color pre-multiplied with the output alpha [0 <=
-   co <= 1] αa is the coverage of the source Fa is defined by the operator
-   and controls inclusion of the source Ca is the color of the source (not
+   co <= 1] αs is the coverage of the source Fa is defined by the operator
+   and controls inclusion of the source Cs is the color of the source (not
    multiplied by alpha) αb is the coverage of the dest Fb is defined by the
    operator and controls inclusion of the dest Cb is the color of the dest
    (not multiplied by alpha)
@@ -1163,8 +1160,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <pre>
     Fa = 1; Fb = 0
-    co = αa x Ca
-    αo = αa
+    co = αs x Cs
+    αo = αs
 </pre>
 
   <h4 id="porterduffcompositingoperators_dst"><span class=secno>5.1.3.
@@ -1188,9 +1185,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p><img src="examples/PD_src-over.svg">
 
   <pre>
-    Fa = 1; Fb = 1 – αa
-    co = αa x Ca + αb x Cb x (1 – αa)
-    αo = αa + αb x (1 – αa)
+    Fa = 1; Fb = 1 – αs
+    co = αs x Cs + αb x Cb x (1 – αs)
+    αo = αs + αb x (1 – αs)
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstover"><span class=secno>5.1.5.
@@ -1202,8 +1199,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <pre>
     Fa = 1 – αb; Fb = 1
-    co = αa x Ca x (1 – αb) + αb x Cb
-    αo = αa x (1 – αb) + αb
+    co = αs x Cs x (1 – αb) + αb x Cb
+    αo = αs x (1 – αb) + αb
 </pre>
 
   <h4 id="porterduffcompositingoperators_srcin"><span class=secno>5.1.6.
@@ -1215,8 +1212,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <pre>
     Fa = αb; Fb = 0
-    co = αa x Ca x αb
-    αo = αa x αb
+    co = αs x Cs x αb
+    αo = αs x αb
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstin"><span class=secno>5.1.7.
@@ -1227,8 +1224,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p><img src="examples/PD_dst-in.svg">
 
   <pre>
-    Fa = 0 Fb = αa
-    co = αb x Cb x αa αo = αb x αa
+    Fa = 0 Fb = αs
+    co = αb x Cb x αs αo = αb x αs
 </pre>
 
   <h4 id="porterduffcompositingoperators_srcout"><span class=secno>5.1.8.
@@ -1240,8 +1237,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <pre>
     Fa = 1 – αb; Fb = 0
-    co = αa x Ca x (1 – αb)
-    αo = αa x (1 – αb)
+    co = αs x Cs x (1 – αb)
+    αo = αs x (1 – αb)
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstout"><span class=secno>5.1.9.
@@ -1252,9 +1249,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p><img src="examples/PD_dst-out.svg">
 
   <pre>
-    Fa = 0; Fb = 1 – αa
-    co = αb x Cb x (1 – αa)
-    αo = αb x (1 – αa)
+    Fa = 0; Fb = 1 – αs
+    co = αb x Cb x (1 – αs)
+    αo = αb x (1 – αs)
 </pre>
 
   <h4 id="porterduffcompositingoperators_srcatop"><span class=secno>5.1.10.
@@ -1266,9 +1263,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p><img src="examples/PD_src-atop.svg">
 
   <pre>
-    Fa = αb; Fb = 1 – αa
-    co = αa x Ca x αb + αb x Cb x (1 – αa)
-    αo = αa x αb + αb x (1 – αa)
+    Fa = αb; Fb = 1 – αs
+    co = αs x Cs x αb + αb x Cb x (1 – αs)
+    αo = αs x αb + αb x (1 – αs)
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstatop"><span class=secno>5.1.11.
@@ -1280,9 +1277,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    elsewhere.
 
   <pre>
-    Fa = 1 - αb; Fb = αa
-    co = αa x Ca x (1 - αb) + αb x Cb x αa
-    αo = αa x (1 - αb) + αb x αa
+    Fa = 1 - αb; Fb = αs
+    co = αs x Cs x (1 - αb) + αb x Cb x αs
+    αo = αs x (1 - αb) + αb x αs
 </pre>
 
   <h4 id="porterduffcompositingoperators_xor"><span class=secno>5.1.12.
@@ -1293,9 +1290,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p><img src="examples/PD_xor.svg">
 
   <pre>
-    Fa = 1 - αb; Fb = 1 – αa
-    co = αa x Ca x (1 - αb) + αb x Cb x (1 – αa)
-    αo = αa x (1 - αb) + αb x (1 – αa)
+    Fa = 1 - αb; Fb = 1 – αs
+    co = αs x Cs x (1 - αb) + αb x Cb x (1 – αs)
+    αo = αs x (1 - αb) + αb x (1 – αs)
 </pre>
 
   <h4 id="porterduffcompositingoperators_plus"><span class=secno>5.1.13.
@@ -1306,8 +1303,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <pre>
     Fa = 1; Fb = 1
-    co = αa x Ca + αb x Cb;
-    αo = αa + αb
+    co = αs x Cs + αb x Cb;
+    αo = αs + αb
 </pre>
 
   <h3 id=groupcompositing><span class=secno>5.2. </span>Group compositing
@@ -1421,12 +1418,12 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <pre>
 simple alpha compositing:
-	co = ca + cb x (1 - αa)
+	co = cs + cb x (1 - αs)
 written as non-premultiplied:
-	αo x Co = αa x Ca + (1 - αa) x αb x Cb
-now subsitute the result of blending for Ca:
-    αo x Co = αa x ((1 - αb) x Cs + αb x B(Cb, Cs)) + (1 - αa) x αb x Cb
-            = αa x (1 - αb) x Cs + αa x αb x B(Cb, Cs) + (1 - αa) x αb x Cb
+	αo x Co = αs x Cs + (1 - αs) x αb x Cb
+now subsitute the result of blending for Cs:
+    αo x Co = αs x ((1 - αb) x Cs + αb x B(Cb, Cs)) + (1 - αs) x αb x Cb
+            = αs x (1 - αb) x Cs + αs x αb x B(Cb, Cs) + (1 - αs) x αb x Cb
 </pre>
 
   <h3 id=blendingseparable><span class=secno>6.1. </span>Separable blend
