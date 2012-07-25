@@ -873,13 +873,12 @@ Some of the Porter Duff operators are unchanged, because they normally have no e
 Blending is the aspect of compositing that calculates the mixing of colors where the source element and backdrop overlap.
 Blending takes the colors of the source element and mixes them with the <a href="#backdrop">backdrop</a> in areas where the source element and backdrop overlap.
 Conceptually, the colors in the source element are blended in place with the backdrop.
-The opacity of the source element and <a href="#backdrop">backdrop</a> are ignored during blending; it is stricltly a color based operation.
 After blending, the modified source element is composited with the backdrop.
 In practice, this is usually all performed in one step.
 <p class="note">The blending calcualtions must not use pre-multiplied color values.</p>
 </p>
 <p>
-We will describe the "mixing" formula as:
+The "mixing" formula is defined as:
 <pre>
 	Cm = B(Cb, Cs)
 </pre>
@@ -892,9 +891,9 @@ Cs: the source color<br/>
 The result of the mixing formula must be clamped to the minimum and maximum values of the color range.
 </p>
 <p>
-<p class="issue">NA: The following contradicts the earilier paragraph a bit. What it is really showing is the compositing equation for dest-over with the mixing function. It'd be better to use source-over or a general equation.</p>
-However, we can not use this value since this calculation is overlooking the alpha of the <a href="#backdrop">backdrop</a>.
-If the <a href="#backdrop">backdrop</a> is not opaque, the result of the blend function should be mixed with the original color of the source element. The value of the new color now becomes:
+The result of the mixing function is modulated by the backdrop alpha. A fully opaque backdrop allows the mixing function to be fully realised.
+A transparent backdrop will cause the final result to be a weighted average between the source color and mixed color with the weight controlled by the backdrop alpha.
+The value of the new color  becomes:
 <pre>
 	Cr = (1 - αb) x Cs + αb x B(Cb, Cs)
 </pre>
@@ -1082,7 +1081,7 @@ Produces an effect similar to that of the Difference mode but lower in contrast.
 <p>
 Nonseparable blend modes consider all color components in combination as opposed to the seperable ones that look at each component individually.<br/>
 All of these blend modes conceptually entail the following steps:<br/>
-a) Convert the <a href="#backdrop">backdrop</a> and source colors from the blending color space to an intermediate HSL (hue-saturation-luminosity) representation.<br/>
+a) Convert the <a href="#backdrop">backdrop</a> and source colors from the blending color space to an intermediate hue-saturation-luminosity representation.<br/>
 b) Create a new color from some combination of hue, saturation, and luminosity components selected from the <a href="#backdrop">backdrop</a> and source colors.<br/>
 c) Convert the result back to the original color space.<br/>
 </p>
