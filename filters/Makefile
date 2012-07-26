@@ -23,7 +23,7 @@
 # ...where "foo" and "bar" are your W3C username and password.
 
 SOURCEFILE=Filters.src.html
-LINKEDFILE=Filters.linked.html
+LINKEDFILE=.Filters.linked.html
 OUTPUTFILE=index.html
 EXTERNALLINKS=perl external-spec-links.pl
 PROCESSCGI=http://cgi.w3.org/member-bin/process.cgi
@@ -40,8 +40,8 @@ W3C_CSS_DIR=~/work/W3C/cvs/dev.w3.org/csswg/css3-shaders
 
 all: $(OUTPUTFILE) 
 
-$(LINKEDFILE): $(SOURCEFILE)
-	$(EXTERNALLINKS) "$<" > "$(LINKEDFILE)"
+.%.linked.html : %.src.html
+	$(EXTERNALLINKS) "$<" > "$@"
 
 $(OUTPUTFILE): $(LINKEDFILE)
 ifeq (,$(PUBDATE))

@@ -1,6 +1,17 @@
 #!/usr/bin/perl -w
 
+# An exceptionally hacky script that performs the same kind of automatic
+# linking of <a> elements that is done for the SVG specifications, based
+# on the definitions*.xml files in this directory.
+#
+# (Warning: regular expression based munging of XML ahead.)
+
 use strict;
+
+sub loaddefs {
+  readdefs('definitions-SVG11.xml', 'http://www.w3.org/TR/2011/REC-SVG11-20110816/');
+  readdefs('definitions-filters.xml', '');
+}
 
 sub readfile {
   my $fh;
@@ -46,7 +57,7 @@ sub readdefs {
 
   my $defs = readfile($fn);
 
-  while ($defs =~ /<attributecategory\s(.*?)(?:\/>|>(.*?)<\/attributecategory>)/gs) {
+  while ($defs =~ s/<attributecategory\s(.*?)(?:\/>|>(.*?)<\/attributecategory>)//s) {
     my $attrs = $1;
     my $children = $2;
 
@@ -70,7 +81,7 @@ sub readdefs {
     }
   }
 
-  while ($defs =~ /<element\s(.*?)(?:\/>|>(.*?)<\/element>)/gs) {
+  while ($defs =~ s/<element\s(.*?)(?:\/>|>(.*?)<\/element>)//s) {
     my $attrs = $1;
     my $children = $2;
 
@@ -108,7 +119,16 @@ sub readdefs {
     }
   }
 
-  while ($defs =~ /<property\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\s*\/>/gs) {
+  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+elements=['"](.*?)['"]\s+href=['"](.*?)['"]\s*\/>//s) {
+    my $attrName = $1;
+    my $attrHref = $3;
+    my @elements = split(/,\s*/, $2);
+    for my $element (@elements) {
+      $elementAttributes{$element}{$attrName} = $attrHref;
+    }
+  }
+
+  while ($defs =~ s/<property\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\s*\/>//s) {
     $properties{$1} = "$base$2";
   }
 }
@@ -150,7 +170,7 @@ sub link {
   return "<span class='xxx'>$text</span>";
 }
 
-readdefs('definitions-SVG11.xml', 'http://www.w3.org/TR/2011/REC-SVG11-20110816/');
+loaddefs();
 
 $html =~ s{<a>(.*?)<\/a>}{&link($1)}egs;
 
