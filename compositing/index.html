@@ -226,7 +226,7 @@
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-compositing-20120725/-->
+     <!--http://www.w3.org/TR/2012/WD-compositing-20120726/-->
 
     <dt>Latest version:
 
@@ -278,9 +278,9 @@
    Alpha Compositing</a>. In this model, each element is rendered into its
    own buffer and is then merged with its <a href="#backdrop">backdrop</a>
    using the Porter Duff <a
-   href="#porterduffcompositingoperators_srcover">src-over</a> operator. This
-   specification will define a new compositing model that expands upon the
-   Simple Alpha Compositing model by offering:
+   href="#porterduffcompositingoperators_srcover">source-over</a> operator.
+   This specification will define a new compositing model that expands upon
+   the Simple Alpha Compositing model by offering:
 
   <ul>
    <li>additional Porter Duff compositing operators;
@@ -385,31 +385,31 @@
         class=secno>5.1.2. </span>Source</a>
 
        <li><a href="#porterduffcompositingoperators_dst"><span
-        class=secno>5.1.3. </span>Dest</a>
+        class=secno>5.1.3. </span>Destination</a>
 
        <li><a href="#porterduffcompositingoperators_srcover"><span
         class=secno>5.1.4. </span>Source Over</a>
 
        <li><a href="#porterduffcompositingoperators_dstover"><span
-        class=secno>5.1.5. </span>Dest Over</a>
+        class=secno>5.1.5. </span>Destination Over</a>
 
        <li><a href="#porterduffcompositingoperators_srcin"><span
         class=secno>5.1.6. </span>Source In</a>
 
        <li><a href="#porterduffcompositingoperators_dstin"><span
-        class=secno>5.1.7. </span>Dest In</a>
+        class=secno>5.1.7. </span>Destination In</a>
 
        <li><a href="#porterduffcompositingoperators_srcout"><span
         class=secno>5.1.8. </span>Source Out</a>
 
        <li><a href="#porterduffcompositingoperators_dstout"><span
-        class=secno>5.1.9. </span>Dest Out</a>
+        class=secno>5.1.9. </span>Destination Out</a>
 
        <li><a href="#porterduffcompositingoperators_srcatop"><span
-        class=secno>5.1.10. </span>Src Atop</a>
+        class=secno>5.1.10. </span>Source Atop</a>
 
        <li><a href="#porterduffcompositingoperators_dstatop"><span
-        class=secno>5.1.11. </span>Dest Atop</a>
+        class=secno>5.1.11. </span>Destination Atop</a>
 
        <li><a href="#porterduffcompositingoperators_xor"><span
         class=secno>5.1.12. </span>XOR</a>
@@ -1042,7 +1042,7 @@ co = RGB(255, 127, 127)
   <p class=note>Destination is synonymous with backdrop. The term destination
    is used in this section as this is considered the standard when working
    with Porter Duff compositing. Additionally, the compositing operators use
-   ‘<code class=property>dest</code>’ in their names.
+   ‘<code class=property>destination</code>’ in their names.
 
   <div class=figure>
    <p style="text-align:center"><img src="examples/PD_regions.svg"></p>
@@ -1134,9 +1134,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p>Where: co is the output color pre-multiplied with the output alpha [0 <=
    co <= 1] αs is the coverage of the source Fa is defined by the operator
    and controls inclusion of the source Cs is the color of the source (not
-   multiplied by alpha) αb is the coverage of the dest Fb is defined by the
-   operator and controls inclusion of the dest Cb is the color of the dest
-   (not multiplied by alpha)
+   multiplied by alpha) αb is the coverage of the destination Fb is defined
+   by the operator and controls inclusion of the destination Cb is the color
+   of the destination (not multiplied by alpha)
 
   <h4 id="porterduffcompositingoperators_clear"><span class=secno>5.1.1.
    </span>Clear</h4>
@@ -1165,9 +1165,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_dst"><span class=secno>5.1.3.
-   </span>Dest</h4>
+   </span>Destination</h4>
 
-  <p>Only the dest will be present.
+  <p>Only the destination will be present.
 
   <p><img src="examples/PD_dst.svg">
 
@@ -1180,9 +1180,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <h4 id="porterduffcompositingoperators_srcover"><span class=secno>5.1.4.
    </span>Source Over</h4>
 
-  <p>Source is placed over the dest
+  <p>Source is placed over the destination
 
-  <p><img src="examples/PD_src-over.svg">
+  <p><img src="examples/PD_source-over.svg">
 
   <pre>
     Fa = 1; Fb = 1 – αs
@@ -1191,11 +1191,11 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstover"><span class=secno>5.1.5.
-   </span>Dest Over</h4>
+   </span>Destination Over</h4>
 
-  <p>Dest is placed over the source.
+  <p>Destination is placed over the source.
 
-  <p><img src="examples/PD_dst-over.svg">
+  <p><img src="examples/PD_destination-over.svg">
 
   <pre>
     Fa = 1 – αb; Fb = 1
@@ -1206,7 +1206,7 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <h4 id="porterduffcompositingoperators_srcin"><span class=secno>5.1.6.
    </span>Source In</h4>
 
-  <p><img src="examples/PD_src-in.svg">
+  <p><img src="examples/PD_source-in.svg">
 
   <p>The source that overlaps the destination, replaces the destination.
 
@@ -1217,11 +1217,11 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstin"><span class=secno>5.1.7.
-   </span>Dest In</h4>
+   </span>Destination In</h4>
 
   <p>Destination which overlaps the source, replaces the source.
 
-  <p><img src="examples/PD_dst-in.svg">
+  <p><img src="examples/PD_destination-in.svg">
 
   <pre>
     Fa = 0 Fb = αs
@@ -1233,7 +1233,7 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <p>Source is placed, where it falls outside of the destination.
 
-  <p><img src="examples/PD_src-out.svg">
+  <p><img src="examples/PD_source-out.svg">
 
   <pre>
     Fa = 1 – αb; Fb = 0
@@ -1242,11 +1242,11 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstout"><span class=secno>5.1.9.
-   </span>Dest Out</h4>
+   </span>Destination Out</h4>
 
   <p>Destination is placed, where it falls outside of the source.
 
-  <p><img src="examples/PD_dst-out.svg">
+  <p><img src="examples/PD_destination-out.svg">
 
   <pre>
     Fa = 0; Fb = 1 – αs
@@ -1255,12 +1255,12 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_srcatop"><span class=secno>5.1.10.
-   </span>Src Atop</h4>
+   </span>Source Atop</h4>
 
   <p>Source which overlaps the destination, replaces the destination.
    Destination is placed elsewhere.
 
-  <p><img src="examples/PD_src-atop.svg">
+  <p><img src="examples/PD_source-atop.svg">
 
   <pre>
     Fa = αb; Fb = 1 – αs
@@ -1269,12 +1269,12 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_dstatop"><span class=secno>5.1.11.
-   </span>Dest Atop</h4>
+   </span>Destination Atop</h4>
 
-  <p><img src="examples/PD_dst-atop.svg">
+  <p><img src="examples/PD_destination-atop.svg">
 
-  <p>Dest which overlaps the source replaces the source. Source is placed
-   elsewhere.
+  <p>Destination which overlaps the source replaces the source. Source is
+   placed elsewhere.
 
   <pre>
     Fa = 1 - αb; Fb = αs
@@ -1317,11 +1317,11 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the
    bottom element in the group uses a Porter Duff compositing operator which
    is dependent on the backdrop, such as <a
-   href="#porterduffcompositingoperators_dest">dest</a>, <a
+   href="#porterduffcompositingoperators_dest">destination</a>, <a
    href="#porterduffcompositingoperators_srcin">source-in</a>, <a
-   href="#porterduffcompositingoperators_destin">dest-in</a>, <a
-   href="#porterduffcompositingoperators_dest_out">dest-out</a> or <a
-   href="#porterduffcompositingoperators_srcatop">src-atop</a>, then the
+   href="#porterduffcompositingoperators_destin">destination-in</a>, <a
+   href="#porterduffcompositingoperators_dest_out">destination-out</a> or <a
+   href="#porterduffcompositingoperators_srcatop">source-atop</a>, then the
    result of the composite will be empty. Subsequent elements within the
    group are composited with the result of the first composite.
 
@@ -1334,10 +1334,10 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <p> In the example below, the elements within the group (the circle and the
    square) are composited using the <a
-   href="#porterduffcompositingoperators_srcatop">src-atop</a> operator, with
-   only the hexagon. This has the effect of "knocking out" the circle, where
-   it is overlapped by the square.<br>
-   Additionally, because the src-atop Porter Duff operator is used, the
+   href="#porterduffcompositingoperators_srcatop">source-atop</a> operator,
+   with only the hexagon. This has the effect of "knocking out" the circle,
+   where it is overlapped by the square.<br>
+   Additionally, because the source-atop Porter Duff operator is used, the
    source shape (either the square or the circle) is only placed where the
    backdrop exists (the backdrop being the hexagon for both compositing
    operations within the group).
@@ -1353,8 +1353,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    graphics libraries. The alternative is to not clip the compositing
    operation at all. The results can be seen below. Some of the Porter Duff
    operators are unchanged, because they normally have no effect outside the
-   source region. The changes can be seen in the clear, src, src-in, dst-in,
-   src-out and dst-atop.
+   source region. The changes can be seen in the clear, source, source-in,
+   destination-in, source-out and destination-atop.
 
   <div class=figure><img src="examples/clip-to-self.png"></div>
 
@@ -1438,7 +1438,8 @@ now subsitute the result of blending for Cs:
   <p> Each of the following blend modes will apply the blending function
    B(Cb, Cs) on each of the color components. For simplicity, all the
    examples in this chapter use <a
-   href="#porterduffcompositingoperators_srcover">src-over</a> compositing.
+   href="#porterduffcompositingoperators_srcover">source-over</a>
+   compositing.
 
   <h4 id=blendingnormal><span class=secno>6.1.1. </span>‘<code
    class=property>normal</code>’ blend mode</h4>
@@ -1820,13 +1821,14 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> clear | src | dst | src-over | dst-over | src-in | dst-in |
-         src-out | dst-out | src-atop | dst-atop | xor | plus
+        <td> clear | source | destination | source-over | destination-over |
+         source-in | destination-in | source-out | destination-out |
+         source-atop | destination-atop | xor | plus
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>src-over
+        <td>source-over
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2106,7 +2108,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>src-over
+        <td>source-over
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2137,7 +2139,7 @@ components having the minimum, middle, and maximum values upon entry to the func
   </div>
 
   <pre>
-	compositing-style = clear | src | dst | src-over | dst-over | src-in | dst-in | src-out | dst-out | src-atop | dst-atop | xor | plus 
+	compositing-style = clear | source | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | plus 
 </pre>
 
   <p> Background images will always composite with each other with <a
@@ -2444,7 +2446,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter Duff operators.
 To allow blending, we can extend the list with the blending keywords:
 <pre>normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</pre>
-If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the src-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
+If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the source-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
 </p>
 <p>
 <span p="issue">or</p>
@@ -2463,7 +2465,7 @@ Blending is done first, followed by compositing.<br/>
 <p>
 <span p="issue">DRAFT.This proposal needs more discussion.</p><br/>
 Introduce 2 new keywords that allow compositing and blending on the shadow color:<br/>
-shadow-alpha-compositing would set the compositing mode of the shadow (the default would be 'src-over'/'normal')<br/>
+shadow-alpha-compositing would set the compositing mode of the shadow (the default would be 'source-over'/'normal')<br/>
 shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
 </p>
 -->
