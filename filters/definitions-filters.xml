@@ -19,6 +19,19 @@
   </element>
 
   <element
+      name='feCustom'
+      href='#feCustomElement'
+      contentmodel='anyof'
+      elements='animate, set'
+      attributecategories='core, style, presentation, filter primitive'
+      interfaces='SVGFECustomElement'>
+    <attribute name='vertexShader' href='#feCustomVertexShaderAttribute' animatable='yes'/>
+    <attribute name='fragmentShader' href='#feCustomFragmentShaderAttribute' animatable='yes'/>
+    <attribute name='vertexMesh' href='#feCustomVertexMeshAttribute' animatable='yes'/>
+    <attribute name='params' href='#feCustomParamsAttribute' animatable='yes'/>
+  </element>
+
+  <element
       name='feColorMatrix'
       href='#feColorMatrixElement'
       contentmodel='anyof'
@@ -110,6 +123,19 @@
       interfaces='SVGFEDistantLightElement'>
     <attribute name='azimuth' href='#feDistantLightAzimuthAttribute' animatable='yes'/>
     <attribute name='elevation' href='#feDistantLightElevationAttribute' animatable='yes'/>
+  </element>
+
+    <element
+      name='feDropShadow'
+      href='#feDropShadowElement'
+      contentmodel='anyof'
+      elements='animate, set'
+      attributecategories='core, style, presentation, filter primitive'
+      attributes='in'
+      interfaces='SVGFEDropShadowElement'>
+    <attribute name='stdDeviation' href='#feDropShadowStdDeviationAttribute' animatable='yes'/>
+    <attribute name='dx' href='#feDropShadowDxAttribute' animatable='yes'/>
+    <attribute name='dy' href='#feDropShadowDyAttribute' animatable='yes'/>
   </element>
 
   <element
@@ -282,6 +308,18 @@
   </element>
 
   <element
+      name='feUnsharpMask'
+      href='#feUnsharpMaskElement'
+      contentmodel='anyof'
+      elements='animate, set'
+      attributecategories='core, style, presentation, filter primitive'
+      interfaces='SVGFETurbulenceElement'>
+    <attribute name='amount' href='#feUnsharpMaskAmountAttribute' animatable='yes'/>
+    <attribute name='threshold' href='#feUnsharpMaskThresholdAttribute' animatable='yes'/>
+    <attribute name='stdDeviation' href='#feUnsharpMaskStdDeviationAttribute' animatable='yes'/>
+  </element>
+
+  <element
       name='filter'
       href='#FilterElement'
       contentmodel='anyof'
@@ -302,14 +340,14 @@
 
   <!-- ... element categories ............................................ -->
 
-  <elementcategory name='filter primitive' href='#TermFilterPrimitiveElement' elements='feBlend, feFlood, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feGaussianBlur, feImage, feMerge, feMorphology, feOffset, feSpecularLighting, feTile, feTurbulence'/>
+  <elementcategory name='filter primitive' href='#TermFilterPrimitiveElement' elements='feBlend, feFlood, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feCustom, feDiffuseLighting, feDisplacementMap, feDropShadow, feGaussianBlur, feImage, feMerge, feMorphology, feOffset, feSpecularLighting, feTile, feTurbulence, feUnsharpMask'/>
   <elementcategory name='light source' href='#TermLightSourceElement' elements='feDistantLight, fePointLight, feSpotLight'/>
   <elementcategory name='transfer function' href='#TermTransferFunctionElement' elements='feFuncR, feFuncG, feFuncB, feFuncA'/>
 
   <!-- ... attributes common to multiple elements ........................ -->
 
-  <!-- attribute common to most filter primitives (all except feFlood feImage feMerge feTurbulence) -->
-  <attribute name='in' elements='feBlend, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feGaussianBlur, feMorphology, feOffset, feSpecularLighting, feTile' href='#FilterPrimitiveInAttribute' animatable='yes'/>
+  <!-- attribute common to most filter primitives (all except feFlood feImage feMerge feTurbulence feCustom) -->
+  <attribute name='in' elements='feBlend, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feDropShadow, feDiffuseLighting, feDisplacementMap, feGaussianBlur, feMorphology, feOffset, feSpecularLighting, feTile, feUnsharpMask' href='#FilterPrimitiveInAttribute' animatable='yes'/>
 
   <!-- ... attribute categories .......................................... -->
 
@@ -349,6 +387,7 @@
   <interface name='SVGFilterElement' href='#InterfaceSVGFilterElement'/>
   <interface name='SVGFilterPrimitiveStandardAttributes' href='#InterfaceSVGFilterPrimitiveStandardAttributes'/>
   <interface name='SVGFEBlendElement' href='#InterfaceSVGFEBlendElement'/>
+  <interface name='SVGFECustomElement' href='#InterfaceSVGFECustomElement'/>
   <interface name='SVGFEColorMatrixElement' href='#InterfaceSVGFEColorMatrixElement'/>
   <interface name='SVGFEComponentTransferElement' href='#InterfaceSVGFEComponentTransferElement'/>
   <interface name='SVGComponentTransferFunctionElement' href='#InterfaceSVGComponentTransferFunctionElement'/>
@@ -360,6 +399,7 @@
   <interface name='SVGFEConvolveMatrixElement' href='#InterfaceSVGFEConvolveMatrixElement'/>
   <interface name='SVGFEDiffuseLightingElement' href='#InterfaceSVGFEDiffuseLightingElement'/>
   <interface name='SVGFEDistantLightElement' href='#InterfaceSVGFEDistantLightElement'/>
+  <interface name='SVGFEDropShadowElement' href='#InterfaceSVGFEDropShadowElement'/>
   <interface name='SVGFEPointLightElement' href='#InterfaceSVGFEPointLightElement'/>
   <interface name='SVGFESpotLightElement' href='#InterfaceSVGFESpotLightElement'/>
   <interface name='SVGFEDisplacementMapElement' href='#InterfaceSVGFEDisplacementMapElement'/>
@@ -373,6 +413,7 @@
   <interface name='SVGFESpecularLightingElement' href='#InterfaceSVGFESpecularLightingElement'/>
   <interface name='SVGFETileElement' href='#InterfaceSVGFETileElement'/>
   <interface name='SVGFETurbulenceElement' href='#InterfaceSVGFETurbulenceElement'/>
+  <interface name='SVGFEUnsharpMaskElement' href='#InterfaceSVGFEUnsharpMaskElement'/>
 
   <!-- ... terms (these will be generated later) .......................... -->
   <term name='filter primitive' href='#TermFilterPrimitiveElement'/>
