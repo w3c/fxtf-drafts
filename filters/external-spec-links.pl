@@ -329,7 +329,11 @@ sub elementSummary {
 
   my $cats = join(', ', map { "<a href='$elementCategories{$_}{href}'>$_ element</a>" }
                         sort keys(%{$elements{$name}{categories}}));
-  $cats = 'None.' if $cats eq '';
+  if ($cats eq '') {
+    $cats = 'None.';
+  } else {
+    $cats =~ s/^([^>]*>)([a-z])/$1\U$2/;
+  }
 
   my $model = 'Empty.';
   if (defined $elements{$name}{contentmodel}) {
