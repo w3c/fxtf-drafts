@@ -57,6 +57,7 @@ my %properties;
 my %interfaces;
 my %attributes;
 my %terms;
+my %commonAttributes;
 
 sub readdefs {
   my $fn = shift;
@@ -190,7 +191,6 @@ sub readdefs {
     $attributes{$attrName}{""} = $attrHref;
   }
 
-  my %commonAttributes = ();
   while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\/>//s) {
     my $attrName = $1;
     my $attrHref = "$base$2";
@@ -298,7 +298,7 @@ sub link {
       print STDERR "unknown attribute '$attrname' on element '$eltname'\n";
       return "<span class='xxx'>$text</span>";
     }
-    return "<a class='attr-name' href='$elements{$eltname}{attributes}{$attrname}'>'$eltname'</a>";
+    return "<a class='attr-name' href='$elements{$eltname}{attributes}{$attrname}'>'$attrname'</a>";
   } elsif ($text =~ /^<(.*)>$/) {
     my $symname = $1;
     unless (defined $terms{"<$symname>"}) {
@@ -360,7 +360,7 @@ sub elementSummary {
       for my $cat (@{$elements{$name}{elementcategories}}) {
         $model .= "<li><a href='$elementCategories{$cat}{href}'>$cat</a> <span class=expanding> — ";
         $model .= join(', ', map { "<a href='$elements{$_}{href}'><span class=element-name>‘$_’</span></a>" }
-                             sort keys(%{$elementCategories{$cat}{elements}}));
+                             @{$elementCategories{$cat}{elements}});
         $model .= '</span></li>';
       }
       for my $elementName (@{$elements{$name}{elements}}) {
@@ -388,9 +388,14 @@ sub elementSummary {
         @others = @{$attributeCategories{$cat}{attributesOrder}};
       }
     }
-    for my $attr (@others,
-                  @{$elements{$name}{attributesCommon}},
-                  @{$elements{$name}{attributesSpecific}}) {
+    for my $attr (@others) {
+      $attributes .= "<li><a href='$elements{$name}{attributes}{$attr}'><span class=attr-name>‘$attr’</span></a></li>";
+    }
+    for my $attr (@{$elements{$name}{attributesCommon}}) {
+      my $href = $elements{$name}{attributes}{$attr} || $commonAttributes{$attr};
+      $attributes .= "<li><a href='$href'><span class=attr-name>‘$attr’</span></a></li>";
+    }
+    for my $attr (@{$elements{$name}{attributesSpecific}}) {
       $attributes .= "<li><a href='$elements{$name}{attributes}{$attr}'><span class=attr-name>‘$attr’</span></a></li>";
     }
   }
