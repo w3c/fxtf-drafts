@@ -75,14 +75,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 27 July 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 28 July 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120727/-->
+     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120728/-->
 
     <dt>Latest version:
 
@@ -151,7 +151,7 @@
   <p> Although originally designed for use in SVG, filter effects are a set a
    set of operations to apply on an image buffer and therefore can be applied
    to nearly any presentational environment, including CSS. They are
-   triggered by a style instruction (the ‘<a href="#effects"><code
+   triggered by a style instruction (the ‘<a href="#filter"><code
    class=property>filter</code></a>’ property). This specification
    describes filters in a manner that allows them to be used in content
    styled by CSS, such as HTML and SVG. It also defines a CSS property value
@@ -921,9 +921,9 @@
   <!-- ****************************************************************************** -->
 
   <h2 id=FilterProperty><span class=secno>4. </span> The ‘<a
-   href="#effects"><code class=property>filter</code></a>’ property</h2>
+   href="#filter"><code class=property>filter</code></a>’ property</h2>
 
-  <p> The description of the ‘<a href="#effects"><code
+  <p> The description of the ‘<a href="#filter"><code
    class=property>filter</code></a>’ property is as follows:
 
   <table class=propdef summary="filter property">
@@ -972,13 +972,13 @@
      <td>yes
   </table>
 
-  <p> If the value of the ‘<a href="#effects"><code
+  <p> If the value of the ‘<a href="#filter"><code
    class=property>filter</code></a>’ property is ‘<code
    class=css>none</code>’ then there is no filter effect applied.
    Otherwise, the list of functions (described <a
    href="#FilterFunction">below</a>) are applied in order.
 
-  <p> The application of the ‘<a href="#effects"><code
+  <p> The application of the ‘<a href="#filter"><code
    class=property>filter</code></a>’ property to an element formatted with
    the CSS box model establishes a pseudo-stacking-context the same way that
    CSS <a href="http://www.w3.org/TR/css3-color/#transparency">‘<code
@@ -986,11 +986,10 @@
    descendants are rendered together as a group with the filter effect
    applied to the group as a whole.
 
-  <p> The ‘<a href="#effects"><code class=property>filter</code></a>’
+  <p> The ‘<a href="#filter"><code class=property>filter</code></a>’
    property has no effect on the geometry of the target element's CSS boxes,
-   even though ‘<a href="#effects"><code
-   class=property>filter</code></a>’ can cause painting outside of an
-   element's border box.
+   even though ‘<a href="#filter"><code class=property>filter</code></a>’
+   can cause painting outside of an element's border box.
 
   <p> The compositing model follows the <a
    href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
@@ -998,7 +997,7 @@
    first any filter effect is applied, then any clipping, masking and
    opacity. These effects all apply after any other CSS effects such as
    ‘<code class=property>border</code>’. As per SVG, the application of
-   ‘<a href="#effects"><code class=property>filter</code></a>’ has no
+   ‘<a href="#filter"><code class=property>filter</code></a>’ has no
    effect on hit-testing.
 
   <h2 id=filter-margin-property><span class=secno>5. </span> The ‘<a
@@ -1025,14 +1024,13 @@
 
   <p> On a regular <a class=element-name href="#FilterElement">‘<code
    class=property>filter</code>’</a> element, the <a class=attr-name
-   href="#FilterElementXAttribute">‘<code
-   class=property>filter</code>’</a>, <a class=attr-name
-   href="#FilterElementYAttribute">‘<code
-   class=property>filter</code>’</a>, <a class=attr-name
+   href="#FilterElementXAttribute">‘<code class=property>x</code>’</a>,
+   <a class=attr-name href="#FilterElementYAttribute">‘<code
+   class=property>y</code>’</a>, <a class=attr-name
    href="#FilterElementWidthAttribute">‘<code
-   class=property>filter</code>’</a> and <a class=attr-name
+   class=property>width</code>’</a> and <a class=attr-name
    href="#FilterElementHeightAttribute">‘<code
-   class=property>filter</code>’</a> attributes define the <a
+   class=property>height</code>’</a> attributes define the <a
    href="#FilterEffectsRegion">filter effects region</a>.
 
   <p> The following sections describe the ‘<a
@@ -1317,7 +1315,7 @@
 
   <h2 id=FilterFunction><span class=secno>7. </span>Filter Functions</h2>
 
-  <p> The value of the ‘<a href="#effects"><code
+  <p> The value of the ‘<a href="#filter"><code
    class=property>filter</code></a>’ property is a list of <dfn
    id=ltfilter-functiongt>&lt;filter-function&gt;</dfn>s applied in the order
    provided. The individual filter functions are separated by whitespace. The
@@ -1535,383 +1533,277 @@
    href="#SourceGraphic">SourceGraphic</a>.
 
   <h2 id=FilterElement><span class=secno>8. </span>The <a class=element-name
-   href="#effects">‘<code class=property>filter</code>’</a> element</h2>
+   href="#filter">‘<code class=property>filter</code>’</a> element</h2>
 
-  <div class=element-summary>
-   <div class=element-summary-name> <a class=element-name href="#effects">
-    ‘filter’ </a></div>
+  <table class=propdef summary="filter element">
+   <tbody>
+    <tr>
+     <th>Name:
 
-   <dl>
-    <dt> Categories:
+     <td><dfn id=filter>filter</dfn>
 
-    <dd> None
+    <tr>
+     <th>Categories:
 
-    <dt> Content model:
+     <td>None.
 
-    <dd> Any number of the following elements, in any order:
-     <ul class=no-bullets>
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermDescriptiveElement">
-       descriptive elements</a> <span class=expanding> — <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DescElement">
-       <span class=element-name> ‘desc’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/metadata.html#MetadataElement">
-       <span class=element-name> ‘metadata’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#TitleElement">
-       <span class=element-name> ‘title’ </span> </a> </span>
+    <tr>
+     <th>Content model:
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermFilterPrimitiveElement">
-       filter primitive elements</a> <span class=expanding> — <a
-       href="#feBlendElement"> <span class=element-name> ‘feBlend’
-       </span> </a> , <a href="#feColorMatrixElement"> <span
-       class=element-name> ‘feColorMatrix’ </span> </a> , <a
-       href="#feComponentTransferElement"> <span class=element-name>
-       ‘feComponentTransfer’ </span> </a> , <a
-       href="#feCompositeElement"> <span class=element-name>
-       ‘feComposite’ </span> </a> , <a href="#feConvolveMatrixElement">
-       <span class=element-name> ‘feConvolveMatrix’ </span> </a> , <a
-       href="#feDiffuseLightingElement"> <span class=element-name>
-       ‘feDiffuseLighting’ </span> </a> , <a
-       href="#feDisplacementMapElement"> <span class=element-name>
-       ‘feDisplacementMap’ </span> </a> , <a href="#feFloodElement">
-       <span class=element-name> ‘feFlood’ </span> </a> , <a
-       href="#feGaussianBlurElement"> <span class=element-name>
-       ‘feGaussianBlur’ </span> </a> , <a href="#feImageElement"> <span
-       class=element-name> ‘feImage’ </span> </a> , <a
-       href="#feMergeElement"> <span class=element-name> ‘feMerge’
-       </span> </a> , <a href="#feMorphologyElement"> <span
-       class=element-name> ‘feMorphology’ </span> </a> , <a
-       href="#feOffsetElement"> <span class=element-name> ‘feOffset’
-       </span> </a> , <a href="#feSpecularLightingElement"> <span
-       class=element-name> ‘feSpecularLighting’ </span> </a> , <a
-       href="#feTileElement"> <span class=element-name> ‘feTile’ </span>
-       </a> , <a href="#feTurbulenceElement"> <span class=element-name>
-       ‘feTurbulence’ </span> </a> </span>
+     <td>Any number of the following elements, in any order:
+      <ul class=no-bullets>
+       <li><a href="intro.html#TermDescriptiveElement">descriptive</a> <span
+        class=expanding> — <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DescElement"><span
+        class=element-name>‘desc’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#TitleElement"><span
+        class=element-name>‘title’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/metadata.html#MetadataElement"><span
+        class=element-name>‘metadata’</span></a></span>
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateElement">
-       <span class=element-name> ‘animate’ </span> </a>
+       <li><a href="#TermFilterPrimitiveElement">filter primitive</a> <span
+        class=expanding> — <a href="#feBlendElement"><span
+        class=element-name>‘feBlend’</span></a>, <a
+        href="#feFloodElement"><span
+        class=element-name>‘feFlood’</span></a>, <a
+        href="#feColorMatrixElement"><span
+        class=element-name>‘feColorMatrix’</span></a>, <a
+        href="#feComponentTransferElement"><span
+        class=element-name>‘feComponentTransfer’</span></a>, <a
+        href="#feCompositeElement"><span
+        class=element-name>‘feComposite’</span></a>, <a
+        href="#feConvolveMatrixElement"><span
+        class=element-name>‘feConvolveMatrix’</span></a>, <a
+        href="#feCustomElement"><span
+        class=element-name>‘feCustom’</span></a>, <a
+        href="#feDiffuseLightingElement"><span
+        class=element-name>‘feDiffuseLighting’</span></a>, <a
+        href="#feDisplacementMapElement"><span
+        class=element-name>‘feDisplacementMap’</span></a>, <a
+        href="#feDropShadowElement"><span
+        class=element-name>‘feDropShadow’</span></a>, <a
+        href="#feGaussianBlurElement"><span
+        class=element-name>‘feGaussianBlur’</span></a>, <a
+        href="#feImageElement"><span
+        class=element-name>‘feImage’</span></a>, <a
+        href="#feMergeElement"><span
+        class=element-name>‘feMerge’</span></a>, <a
+        href="#feMorphologyElement"><span
+        class=element-name>‘feMorphology’</span></a>, <a
+        href="#feOffsetElement"><span
+        class=element-name>‘feOffset’</span></a>, <a
+        href="#feSpecularLightingElement"><span
+        class=element-name>‘feSpecularLighting’</span></a>, <a
+        href="#feTileElement"><span
+        class=element-name>‘feTile’</span></a>, <a
+        href="#feTurbulenceElement"><span
+        class=element-name>‘feTurbulence’</span></a>, <a
+        href="#feUnsharpMaskElement"><span
+        class=element-name>‘feUnsharpMask’</span></a></span>
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#SetElement">
-       <span class=element-name> ‘set’ </span> </a>
-     </ul>
+       <li><a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateElement"><span
+        class=element-name>‘animate’</span></a>
 
-    <dt> Attributes:
+       <li><a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#SetElement"><span
+        class=element-name>‘set’</span></a>
+      </ul>
 
-    <dd>
-     <ul class=no-bullets>
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermCoreAttributes">
-       core attributes</a> <span class=expanding> — <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#IDAttribute">
-       <span class=attr-name> ‘id’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLBaseAttribute">
-       <span class=attr-name> ‘xml:base’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLLangAttribute">
-       <span class=attr-name> ‘xml:lang’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLSpaceAttribute">
-       <span class=attr-name> ‘xml:space’ </span> </a> </span>
+    <tr>
+     <th>Attributes:
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermPresentationAttribute">
-       presentation attributes</a> <span class=expanding> — <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#AlignmentBaselineProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘alignment-baseline’">
-       ‘alignment-baseline’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#BaselineShiftProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘baseline-shift’">
-       ‘baseline-shift’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘clip’"> ‘clip’
-       </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipPathProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘clip-path’">
-       ‘clip-path’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipRuleProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘clip-rule’">
-       ‘clip-rule’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘color’"> ‘color’
-       </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorInterpolationProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘color-interpolation’">
-       ‘color-interpolation’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorInterpolationFiltersProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘color-interpolation-filters’">
-       ‘color-interpolation-filters’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProfileProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘color-profile’">
-       ‘color-profile’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorRenderingProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘color-rendering’">
-       ‘color-rendering’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#CursorProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘cursor’"> ‘cursor’
-       </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DirectionProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘direction’">
-       ‘direction’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘display’">
-       ‘display’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘dominant-baseline’">
-       ‘dominant-baseline’ </span> </a> , <a
-       href="#EnableBackgroundProperty"> <span class=attr-name
-       title="Presentation attribute for property ‘enable-background’">
-       ‘enable-background’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘fill’"> ‘fill’
-       </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillOpacityProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘fill-opacity’">
-       ‘fill-opacity’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘fill-rule’">
-       ‘fill-rule’ </span> </a> , <a href="#FilterProperty"> <span
-       class=attr-name
-       title="Presentation attribute for property ‘filter’"> ‘filter’
-       </span> </a> , <a href="#FloodColorProperty"> <span class=attr-name
-       title="Presentation attribute for property ‘flood-color’">
-       ‘flood-color’ </span> </a> , <a href="#FloodOpacityProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘flood-opacity’">
-       ‘flood-opacity’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontFamilyProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘font-family’">
-       ‘font-family’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘font-size’">
-       ‘font-size’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeAdjustProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘font-size-adjust’">
-       ‘font-size-adjust’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStretchProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘font-stretch’">
-       ‘font-stretch’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStyleProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘font-style’">
-       ‘font-style’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontVariantProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘font-variant’">
-       ‘font-variant’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontWeightProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘font-weight’">
-       ‘font-weight’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationHorizontalProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘glyph-orientation-horizontal’">
-       ‘glyph-orientation-horizontal’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationVerticalProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘glyph-orientation-vertical’">
-       ‘glyph-orientation-vertical’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘image-rendering’">
-       ‘image-rendering’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘kerning’">
-       ‘kerning’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘letter-spacing’">
-       ‘letter-spacing’ </span> </a> , <a href="#LightingColorProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘lighting-color’">
-       ‘lighting-color’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerEndProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘marker-end’">
-       ‘marker-end’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerMidProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘marker-mid’">
-       ‘marker-mid’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerStartProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘marker-start’">
-       ‘marker-start’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#MaskProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘mask’"> ‘mask’
-       </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OpacityProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘opacity’">
-       ‘opacity’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OverflowProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘overflow’">
-       ‘overflow’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#PointerEventsProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘pointer-events’">
-       ‘pointer-events’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ShapeRenderingProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘shape-rendering’">
-       ‘shape-rendering’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopColorProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stop-color’">
-       ‘stop-color’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopOpacityProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stop-opacity’">
-       ‘stop-opacity’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke’"> ‘stroke’
-       </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDasharrayProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke-dasharray’">
-       ‘stroke-dasharray’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDashoffsetProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke-dashoffset’">
-       ‘stroke-dashoffset’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinecapProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke-linecap’">
-       ‘stroke-linecap’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinejoinProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke-linejoin’">
-       ‘stroke-linejoin’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeMiterlimitProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke-miterlimit’">
-       ‘stroke-miterlimit’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeOpacityProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke-opacity’">
-       ‘stroke-opacity’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeWidthProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘stroke-width’">
-       ‘stroke-width’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextAnchorProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘text-anchor’">
-       ‘text-anchor’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextDecorationProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘text-decoration’">
-       ‘text-decoration’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#TextRenderingProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘text-rendering’">
-       ‘text-rendering’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#UnicodeBidiProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘unicode-bidi’">
-       ‘unicode-bidi’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#VisibilityProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘visibility’">
-       ‘visibility’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WordSpacingProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘word-spacing’">
-       ‘word-spacing’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WritingModeProperty">
-       <span class=attr-name
-       title="Presentation attribute for property ‘writing-mode’">
-       ‘writing-mode’ </span> </a> </span>
+     <td>
+      <ul class=no-bullets>
+       <li><a href="intro.html#TermCoreAttributes">core attributes</a><span
+        class=expanding> — <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#IDAttribute"><span
+        class=attr-name>‘id’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLBaseAttribute"><span
+        class=attr-name>‘xml:base’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLLangAttribute"><span
+        class=attr-name>‘xml:lang’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#XMLSpaceAttribute"><span
+        class=attr-name>‘xml:space’</span></a></span>
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermXLinkAttributes">
-       xlink attributes</a> <span class=expanding> — <a
-       href="#FilterElementHrefAttribute"> <span class=attr-name>
-       ‘xlink:href’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkShowAttribute">
-       <span class=attr-name> ‘xlink:show’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkActuateAttribute">
-       <span class=attr-name> ‘xlink:actuate’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkTypeAttribute">
-       <span class=attr-name> ‘xlink:type’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkRoleAttribute">
-       <span class=attr-name> ‘xlink:role’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkArcRoleAttribute">
-       <span class=attr-name> ‘xlink:arcrole’ </span> </a> , <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkTitleAttribute">
-       <span class=attr-name> ‘xlink:title’ </span> </a> </span>
+       <li><a href="intro.html#TermPresentationAttribute">presentation
+        attributes</a><span class=expanding> — <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#AlignmentBaselineProperty"><span
+        class=attr-name>‘alignment-baseline’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#BaselineShiftProperty"><span
+        class=attr-name>‘baseline-shift’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipProperty"><span
+        class=attr-name>‘clip’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipPathProperty"><span
+        class=attr-name>‘clip-path’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipRuleProperty"><span
+        class=attr-name>‘clip-rule’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProperty"><span
+        class=attr-name>‘color’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorInterpolationProperty"><span
+        class=attr-name>‘color-interpolation’</span></a>, <a
+        href="#ColorInterpolationFiltersProperty"><span
+        class=attr-name>‘color-interpolation-filters’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProfileProperty"><span
+        class=attr-name>‘color-profile’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ColorRenderingProperty"><span
+        class=attr-name>‘color-rendering’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#CursorProperty"><span
+        class=attr-name>‘cursor’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DirectionProperty"><span
+        class=attr-name>‘direction’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty"><span
+        class=attr-name>‘display’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty"><span
+        class=attr-name>‘dominant-baseline’</span></a>, <a
+        href="#EnableBackgroundProperty"><span
+        class=attr-name>‘enable-background’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty"><span
+        class=attr-name>‘fill’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillOpacityProperty"><span
+        class=attr-name>‘fill-opacity’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty"><span
+        class=attr-name>‘fill-rule’</span></a>, <a
+        href="#FilterProperty"><span class=attr-name>‘filter’</span></a>,
+        <a href="#FloodColorProperty"><span
+        class=attr-name>‘flood-color’</span></a>, <a
+        href="#FloodOpacityProperty"><span
+        class=attr-name>‘flood-opacity’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontProperty"><span
+        class=attr-name>‘font’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontFamilyProperty"><span
+        class=attr-name>‘font-family’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeProperty"><span
+        class=attr-name>‘font-size’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontSizeAdjustProperty"><span
+        class=attr-name>‘font-size-adjust’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStretchProperty"><span
+        class=attr-name>‘font-stretch’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontStyleProperty"><span
+        class=attr-name>‘font-style’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontVariantProperty"><span
+        class=attr-name>‘font-variant’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#FontWeightProperty"><span
+        class=attr-name>‘font-weight’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationHorizontalProperty"><span
+        class=attr-name>‘glyph-orientation-horizontal’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#GlyphOrientationVerticalProperty"><span
+        class=attr-name>‘glyph-orientation-vertical’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty"><span
+        class=attr-name>‘image-rendering’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty"><span
+        class=attr-name>‘kerning’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty"><span
+        class=attr-name>‘letter-spacing’</span></a>, <a
+        href="#LightingColorProperty"><span
+        class=attr-name>‘lighting-color’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerProperty"><span
+        class=attr-name>‘marker’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerEndProperty"><span
+        class=attr-name>‘marker-end’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerMidProperty"><span
+        class=attr-name>‘marker-mid’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerStartProperty"><span
+        class=attr-name>‘marker-start’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#MaskProperty"><span
+        class=attr-name>‘mask’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OpacityProperty"><span
+        class=attr-name>‘opacity’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#OverflowProperty"><span
+        class=attr-name>‘overflow’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#PointerEventsProperty"><span
+        class=attr-name>‘pointer-events’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ShapeRenderingProperty"><span
+        class=attr-name>‘shape-rendering’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopColorProperty"><span
+        class=attr-name>‘stop-color’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#StopOpacityProperty"><span
+        class=attr-name>‘stop-opacity’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeProperty"><span
+        class=attr-name>‘stroke’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDasharrayProperty"><span
+        class=attr-name>‘stroke-dasharray’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeDashoffsetProperty"><span
+        class=attr-name>‘stroke-dashoffset’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinecapProperty"><span
+        class=attr-name>‘stroke-linecap’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeLinejoinProperty"><span
+        class=attr-name>‘stroke-linejoin’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeMiterlimitProperty"><span
+        class=attr-name>‘stroke-miterlimit’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeOpacityProperty"><span
+        class=attr-name>‘stroke-opacity’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#StrokeWidthProperty"><span
+        class=attr-name>‘stroke-width’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextAnchorProperty"><span
+        class=attr-name>‘text-anchor’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextDecorationProperty"><span
+        class=attr-name>‘text-decoration’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#TextRenderingProperty"><span
+        class=attr-name>‘text-rendering’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#UnicodeBidiProperty"><span
+        class=attr-name>‘unicode-bidi’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#VisibilityProperty"><span
+        class=attr-name>‘visibility’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WordSpacingProperty"><span
+        class=attr-name>‘word-spacing’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#WritingModeProperty"><span
+        class=attr-name>‘writing-mode’</span></a></span>
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#ClassAttribute">
-       <span class=attr-name> ‘class’ </span> </a>
+       <li><a href="intro.html#TermXLinkAttributes">xlink attributes</a><span
+        class=expanding> — <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkTypeAttribute"><span
+        class=attr-name>‘xlink:type’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkRoleAttribute"><span
+        class=attr-name>‘xlink:role’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkArcRoleAttribute"><span
+        class=attr-name>‘xlink:arcrole’</span></a>, <a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#XLinkTitleAttribute"><span
+        class=attr-name>‘xlink:title’</span></a></span>
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#StyleAttribute">
-       <span class=attr-name> ‘style’ </span> </a>
+       <li><a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#ClassAttribute"><span
+        class=attr-name>‘class’</span></a>
 
-      <li> <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute">
-       <span class=attr-name> ‘externalResourcesRequired’ </span> </a>
+       <li><a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#StyleAttribute"><span
+        class=attr-name>‘style’</span></a>
 
-      <li> <a href="#FilterElementXAttribute"> <span class=attr-name> ‘x’
-       </span> </a>
+       <li><a
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute"><span
+        class=attr-name>‘externalResourcesRequired’</span></a>
 
-      <li> <a href="#FilterElementYAttribute"> <span class=attr-name> ‘y’
-       </span> </a>
+       <li><a href="#FilterElementXAttribute"><span
+        class=attr-name>‘x’</span></a>
 
-      <li> <a href="#FilterElementWidthAttribute"> <span class=attr-name>
-       ‘width’ </span> </a>
+       <li><a href="#FilterElementYAttribute"><span
+        class=attr-name>‘y’</span></a>
 
-      <li> <a href="#FilterElementHeightAttribute"> <span class=attr-name>
-       ‘height’ </span> </a>
+       <li><a href="#FilterElementWidthAttribute"><span
+        class=attr-name>‘width’</span></a>
 
-      <li> <a href="#FilterElementFilterResAttribute"> <span class=attr-name>
-       ‘filterRes’ </span> </a>
+       <li><a href="#FilterElementHeightAttribute"><span
+        class=attr-name>‘height’</span></a>
 
-      <li> <a href="#FilterElementFilterUnitsAttribute"> <span
-       class=attr-name> ‘filterUnits’ </span> </a>
+       <li><a href="#FilterElementFilterResAttribute"><span
+        class=attr-name>‘filterRes’</span></a>
 
-      <li> <a href="#FilterElementPrimitiveUnitsAttribute"> <span
-       class=attr-name> ‘primitiveUnits’ </span> </a>
+       <li><a href="#FilterElementFilterUnitsAttribute"><span
+        class=attr-name>‘filterUnits’</span></a>
 
-      <li> <a href="#FilterElementHrefAttribute"> <span class=attr-name>
-       ‘xlink:href’ </span> </a>
-     </ul>
+       <li><a href="#FilterElementPrimitiveUnitsAttribute"><span
+        class=attr-name>‘primitiveUnits’</span></a>
 
-    <dt> DOM Interfaces:
+       <li><a href="#FilterElementHrefAttribute"><span
+        class=attr-name>‘xlink:href’</span></a>
+      </ul>
 
-    <dd>
-     <ul class=no-bullets>
-      <li> <a class=idlinterface href="#InterfaceSVGFilterElement">
-       SVGFilterElement</a>
-     </ul>
-   </dl>
-  </div>
+    <tr>
+     <th>DOM Interfaces:
+
+     <td><a class=idlinterface
+      href="#InterfaceSVGFilterElement">SVGFilterElement</a>
+  </table>
 
   <p> The description of the <a class=element-name
    href="#FilterElement">‘<code class=property>filter</code>’</a> element
@@ -1943,7 +1835,7 @@
      element is referenced (i.e., the user coordinate system for the element
      referencing the <a class=element-name href="#FilterElement">‘<code
      class=property>filter</code>’</a> element via a ‘<a
-     href="#effects"><code class=property>filter</code></a>’ property).<br>
+     href="#filter"><code class=property>filter</code></a>’ property).<br>
      If <span class=attr-value>primitiveUnits="objectBoundingBox"</span>,
      then any length values within the filter definitions represent fractions
      or percentages of the bounding box on the referencing element (see <a
@@ -1952,12 +1844,13 @@
      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber">&lt;number-optional-number&gt;</a>
      value this number is expanded out before the <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> computation takes place. <br>
+     class=property>primitiveUnits</code>’</a> computation takes place.
+     <br>
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> is <span
+     class=property>primitiveUnits</code>’</a> is <span
      class=attr-value>userSpaceOnUse</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
 
@@ -2029,18 +1922,18 @@
   <p><a class=element-name href="#FilterElement">‘<code
    class=property>filter</code>’</a> elements are never rendered directly;
    their only usage is as something that can be referenced using the ‘<a
-   href="#effects"><code class=property>filter</code></a>’ property. The <a
-   class=property href="HASH(0x7fadcb85d160)">‘<code
+   href="#filter"><code class=property>filter</code></a>’ property. The <a
+   class=property href="HASH(0x7fde2a05c2c0)">‘<code
    class=property>display</code>’</a> property does not apply to the <a
    class=element-name href="#FilterElement">‘<code
    class=property>filter</code>’</a> element; thus, <a class=element-name
    href="#FilterElement">‘<code class=property>filter</code>’</a>
    elements are not directly rendered even if the <a class=property
-   href="HASH(0x7fadcb85d160)">‘<code class=property>display</code>’</a>
+   href="HASH(0x7fde2a05c2c0)">‘<code class=property>display</code>’</a>
    property is set to a value other than <span class=prop-value>none</span>,
    and <a class=element-name href="#FilterElement">‘<code
    class=property>filter</code>’</a> elements are available for referencing
-   even when the <a class=property href="HASH(0x7fadcb85d160)">‘<code
+   even when the <a class=property href="HASH(0x7fde2a05c2c0)">‘<code
    class=property>display</code>’</a> property on the <a class=element-name
    href="#FilterElement">‘<code class=property>filter</code>’</a> element
    or any of its ancestors is set to <span class=prop-value>none</span>.
@@ -2066,40 +1959,37 @@
 
    <dd>
     <p> Defines the coordinate system for attributes <a class=attr-name
-     href="#FilterElementXAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
-     href="#FilterElementYAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
+     href="#FilterElementXAttribute">‘<code class=property>x</code>’</a>,
+     <a class=attr-name href="#FilterElementYAttribute">‘<code
+     class=property>y</code>’</a>, <a class=attr-name
      href="#FilterElementWidthAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
+     class=property>width</code>’</a>, <a class=attr-name
      href="#FilterElementHeightAttribute">‘<code
-     class=property>filter</code>’</a>.</p>
+     class=property>height</code>’</a>.</p>
 
     <p> If <span class=attr-value>filterUnits="userSpaceOnUse"</span>, <a
      class=attr-name href="#FilterElementXAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
-     href="#FilterElementYAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
-     href="#FilterElementWidthAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
+     class=property>x</code>’</a>, <a class=attr-name
+     href="#FilterElementYAttribute">‘<code class=property>y</code>’</a>,
+     <a class=attr-name href="#FilterElementWidthAttribute">‘<code
+     class=property>width</code>’</a>, <a class=attr-name
      href="#FilterElementHeightAttribute">‘<code
-     class=property>filter</code>’</a> represent values in the current user
+     class=property>height</code>’</a> represent values in the current user
      coordinate system in place at the time when the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element is referenced (i.e., the user coordinate system for the element
      referencing the <a class=element-name href="#FilterElement">‘<code
      class=property>filter</code>’</a> element via a ‘<a
-     href="#effects"><code class=property>filter</code></a>’ property).</p>
+     href="#filter"><code class=property>filter</code></a>’ property).</p>
 
     <p> If <span class=attr-value>filterUnits="objectBoundingBox"</span>,
      then <a class=attr-name href="#FilterElementXAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
-     href="#FilterElementYAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
-     href="#FilterElementWidthAttribute">‘<code
-     class=property>filter</code>’</a>, <a class=attr-name
+     class=property>x</code>’</a>, <a class=attr-name
+     href="#FilterElementYAttribute">‘<code class=property>y</code>’</a>,
+     <a class=attr-name href="#FilterElementWidthAttribute">‘<code
+     class=property>width</code>’</a>, <a class=attr-name
      href="#FilterElementHeightAttribute">‘<code
-     class=property>filter</code>’</a> represent fractions or percentages
+     class=property>height</code>’</a> represent fractions or percentages
      of the bounding box on the referencing element (see <a
      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#ObjectBoundingBoxUnits">object
      bounding box units</a>).</p>
@@ -2114,14 +2004,13 @@
     <p><span class=anim-target>Animatable: yes.</span></p>
 
    <dt id=FilterRegionXYWidthHeightAttributes><a class=attr-name
-    href="#FilterElementXAttribute">‘<code
-    class=property>filter</code>’</a>, <a class=attr-name
-    href="#FilterElementYAttribute">‘<code
-    class=property>filter</code>’</a>, <a class=attr-name
+    href="#FilterElementXAttribute">‘<code class=property>x</code>’</a>,
+    <a class=attr-name href="#FilterElementYAttribute">‘<code
+    class=property>y</code>’</a>, <a class=attr-name
     href="#FilterElementWidthAttribute">‘<code
-    class=property>filter</code>’</a>, <a class=attr-name
+    class=property>width</code>’</a>, <a class=attr-name
     href="#FilterElementHeightAttribute">‘<code
-    class=property>filter</code>’</a>
+    class=property>height</code>’</a>
 
    <dd>
     <p> These attributes define a rectangular region on the canvas to which
@@ -2130,7 +2019,7 @@
     <p> The amount of memory and processing time required to apply the filter
      are related to the size of this rectangle and the <a class=attr-name
      href="#FilterElementFilterResAttribute">‘<code
-     class=property>filter</code>’</a> attribute of the filter.</p>
+     class=property>filterRes</code>’</a> attribute of the filter.</p>
 
     <p> The coordinate system for these attributes depends on the value for
      attribute <a class=attr-name
@@ -2147,39 +2036,37 @@
      class=property>feGaussianBlur</code>’</a> filter primitive with a very
      large <a class=attr-name
      href="#feGaussianBlurStdDeviationAttribute">‘<code
-     class=property>feGaussianBlur</code>’</a>), parts of the effect will
-     get clipped.</p>
+     class=property>stdDeviation</code>’</a>), parts of the effect will get
+     clipped.</p>
 
     <p> The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name
-     href="#FilterElementXAttribute">‘<code
-     class=property>filter</code>’</a> and <a class=attr-name
-     href="#FilterElementYAttribute">‘<code
-     class=property>filter</code>’</a> is <span
-     class=attr-value>-10%</span>.</p>
+     href="#FilterElementXAttribute">‘<code class=property>x</code>’</a>
+     and <a class=attr-name href="#FilterElementYAttribute">‘<code
+     class=property>y</code>’</a> is <span class=attr-value>-10%</span>.</p>
 
     <p> The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name
      href="#FilterElementWidthAttribute">‘<code
-     class=property>filter</code>’</a> and <a class=attr-name
+     class=property>width</code>’</a> and <a class=attr-name
      href="#FilterElementHeightAttribute">‘<code
-     class=property>filter</code>’</a> is <span
+     class=property>height</code>’</a> is <span
      class=attr-value>120%</span>.</p>
 
     <p> Negative or zero values for <a class=attr-name
      href="#FilterElementWidthAttribute">‘<code
-     class=property>filter</code>’</a> or <a class=attr-name
+     class=property>width</code>’</a> or <a class=attr-name
      href="#FilterElementHeightAttribute">‘<code
-     class=property>filter</code>’</a> disable rendering of the element
+     class=property>height</code>’</a> disable rendering of the element
      which referenced the filter.</p>
 
     <p><span class=anim-target>Animatable: yes.</span></p>
 
    <dt id=FilterRegionFilterRes><a class=attr-name
     href="#FilterElementFilterResAttribute">‘<code
-    class=property>filter</code>’</a>
+    class=property>filterRes</code>’</a>
 
    <dd>
     <p> Defines the width and height of the intermediate images in pixels. If
@@ -2220,13 +2107,14 @@
    rotating or skewing the user coordinate system. Explicit values for
    attribute <a class=attr-name
    href="#FilterElementFilterResAttribute">‘<code
-   class=property>filter</code>’</a> can either help or harm performance.
-   If <a class=attr-name href="#FilterElementFilterResAttribute">‘<code
-   class=property>filter</code>’</a> is smaller than the automatic (i.e.,
-   default) filter resolution, then filter effect might have faster
+   class=property>filterRes</code>’</a> can either help or harm
+   performance. If <a class=attr-name
+   href="#FilterElementFilterResAttribute">‘<code
+   class=property>filterRes</code>’</a> is smaller than the automatic
+   (i.e., default) filter resolution, then filter effect might have faster
    performance (usually at the expense of quality). If <a class=attr-name
    href="#FilterElementFilterResAttribute">‘<code
-   class=property>filter</code>’</a> is larger than the automatic (i.e.,
+   class=property>filterRes</code>’</a> is larger than the automatic (i.e.,
    default) filter resolution, then filter effects performance will usually
    be slower.
 
@@ -2236,15 +2124,14 @@
    href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox">bounding
    box</a> on a given object. For these purposes, it is possible to provide
    negative percentage values for <a class=attr-name
-   href="#FilterElementXAttribute">‘<code
-   class=property>filter</code>’</a>, <a class=attr-name
-   href="#FilterElementYAttribute">‘<code
-   class=property>filter</code>’</a> and percentages values greater than
-   <span class=attr-value>100%</span> for <a class=attr-name
+   href="#FilterElementXAttribute">‘<code class=property>x</code>’</a>,
+   <a class=attr-name href="#FilterElementYAttribute">‘<code
+   class=property>y</code>’</a> and percentages values greater than <span
+   class=attr-value>100%</span> for <a class=attr-name
    href="#FilterElementWidthAttribute">‘<code
-   class=property>filter</code>’</a>, <a class=attr-name
+   class=property>width</code>’</a>, <a class=attr-name
    href="#FilterElementHeightAttribute">‘<code
-   class=property>filter</code>’</a>. This, for example, is why the
+   class=property>height</code>’</a>. This, for example, is why the
    defaults for the filter effects region are <span class=attr-value>x="-10%"
    y="-10%" width="120%" height="120%"</span>.
 
@@ -2283,7 +2170,7 @@
    order traversal previous to the element to which the filter is applied.
 
   <p> The property which enables access to the background image is <a
-   class=property href="HASH(0x7fadcb8609c8)">‘<code
+   class=property href="HASH(0x7fde2a05fb28)">‘<code
    class=property>enable-background</code>’</a>:
 
   <table class=propdef summary="enable-background property">
@@ -2332,7 +2219,7 @@
      <td>no
   </table>
 
-  <p><a class=property href="HASH(0x7fadcb8609c8)">‘<code
+  <p><a class=property href="HASH(0x7fde2a05fb28)">‘<code
    class=property>enable-background</code>’</a> is only applicable to <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
    elements</a> and specifies how the <a
@@ -2619,31 +2506,31 @@
   <p id=filtersColorSpace>The color space in which a particular <a
    href="#TermFilterPrimitiveElement">filter primitive</a> performs its
    operations is determined by the value of property <a class=property
-   href="HASH(0x7fadcb8609f8)">‘<code
+   href="HASH(0x7fde2a05fb58)">‘<code
    class=property>color-interpolation-filters</code>’</a> on the given <a
    href="#TermFilterPrimitiveElement">filter primitive</a>. A different
-   property, <a class=property href="HASH(0x7fadcb85e368)">‘<code
+   property, <a class=property href="HASH(0x7fde2a05c470)">‘<code
    class=property>color-interpolation</code>’</a> determines the color
    space for other color operations. Because these two properties have
    different initial values (<a class=property
-   href="HASH(0x7fadcb8609f8)">‘<code
+   href="HASH(0x7fde2a05fb58)">‘<code
    class=property>color-interpolation-filters</code>’</a> has an initial
    value of <span class=prop-value>linearRGB</span> whereas <a class=property
-   href="HASH(0x7fadcb85e368)">‘<code
+   href="HASH(0x7fde2a05c470)">‘<code
    class=property>color-interpolation</code>’</a> has an initial value of
    <span class=prop-value>sRGB</span>), in some cases to achieve certain
    results (e.g., when coordinating gradient interpolation with a filtering
    operation) it will be necessary to explicitly set <a class=property
-   href="HASH(0x7fadcb85e368)">‘<code
+   href="HASH(0x7fde2a05c470)">‘<code
    class=property>color-interpolation</code>’</a> to <span
    class=prop-value>linearRGB</span> or <a class=property
-   href="HASH(0x7fadcb8609f8)">‘<code
+   href="HASH(0x7fde2a05fb58)">‘<code
    class=property>color-interpolation-filters</code>’</a> to <span
    class=prop-value>sRGB</span> on particular elements. Note that the
    examples below do not explicitly set either <a class=property
-   href="HASH(0x7fadcb85e368)">‘<code
+   href="HASH(0x7fde2a05c470)">‘<code
    class=property>color-interpolation</code>’</a> or <a class=property
-   href="HASH(0x7fadcb8609f8)">‘<code
+   href="HASH(0x7fde2a05fb58)">‘<code
    class=property>color-interpolation-filters</code>’</a>, so the initial
    values for these properties apply to the examples.
 
@@ -2792,7 +2679,7 @@
      <p> Identifies input for the given filter primitive. The value can be
       either one of six keywords or can be a string which matches a previous
       <a class=attr-name href="#FilterPrimitiveResultAttribute">‘<code
-      class=property>feBlend</code>’</a> attribute value within the same <a
+      class=property>result</code>’</a> attribute value within the same <a
       class=element-name href="#FilterElement">‘<code
       class=property>filter</code>’</a> element. If no value is provided
       and this is the first <a href="#TermFilterPrimitiveElement">filter
@@ -2811,7 +2698,7 @@
       <a href="#TermFilterPrimitiveElement">filter primitive</a> with the
       given value for attribute <a class=attr-name
       href="#FilterPrimitiveResultAttribute">‘<code
-      class=property>feBlend</code>’</a>. Forward references to results are
+      class=property>result</code>’</a>. Forward references to results are
       not allowed, and will be treated as if no result was specified.</p>
 
      <p> Definitions for the six keywords:</p>
@@ -2901,7 +2788,7 @@
         stroked</i>.</p>
 
        <p> For svg this keyword represents the value of the <a class=property
-        href="HASH(0x7fadcb85c7d0)">‘<code
+        href="HASH(0x7fde2a05b930)">‘<code
         class=property>stroke</code>’</a> on the target element for the
         filter effect.</p>
 
@@ -2936,39 +2823,36 @@
 
   <p> All <a href="#TermFilterPrimitiveElement">filter primitives</a> have
    attributes <a class=attr-name href="#FilterPrimitiveXAttribute">‘<code
-   class=property>feBlend</code>’</a>, <a class=attr-name
-   href="#FilterPrimitiveYAttribute">‘<code
-   class=property>feBlend</code>’</a>, <a class=attr-name
-   href="#FilterPrimitiveWidthAttribute">‘<code
-   class=property>feBlend</code>’</a> and <a class=attr-name
+   class=property>x</code>’</a>, <a class=attr-name
+   href="#FilterPrimitiveYAttribute">‘<code class=property>y</code>’</a>,
+   <a class=attr-name href="#FilterPrimitiveWidthAttribute">‘<code
+   class=property>width</code>’</a> and <a class=attr-name
    href="#FilterPrimitiveHeightAttribute">‘<code
-   class=property>feBlend</code>’</a> which together identify a subregion
+   class=property>height</code>’</a> which together identify a subregion
    which restricts calculation and rendering of the given <a
    href="#TermFilterPrimitiveElement">filter primitive</a>. The <a
    class=attr-name href="#FilterPrimitiveXAttribute">‘<code
-   class=property>feBlend</code>’</a>, <a class=attr-name
-   href="#FilterPrimitiveYAttribute">‘<code
-   class=property>feBlend</code>’</a>, <a class=attr-name
-   href="#FilterPrimitiveWidthAttribute">‘<code
-   class=property>feBlend</code>’</a> and <a class=attr-name
+   class=property>x</code>’</a>, <a class=attr-name
+   href="#FilterPrimitiveYAttribute">‘<code class=property>y</code>’</a>,
+   <a class=attr-name href="#FilterPrimitiveWidthAttribute">‘<code
+   class=property>width</code>’</a> and <a class=attr-name
    href="#FilterPrimitiveHeightAttribute">‘<code
-   class=property>feBlend</code>’</a> attributes are defined according to
+   class=property>height</code>’</a> attributes are defined according to
    the same rules as other <a href="#TermFilterPrimitiveElement">filter
    primitives</a>‘<code class=css> coordinate and length attributes and
    thus represent values in the coordinate system established by attribute <a
    class=attr-name
-   href="#FilterElementPrimitiveUnitsAttribute"></a></code>’filter' on the
-   <a class=element-name href="#FilterElement">‘<code
+   href="#FilterElementPrimitiveUnitsAttribute"></a></code>’primitiveUnits'
+   on the <a class=element-name href="#FilterElement">‘<code
    class=property>filter</code>’</a> element.
 
   <p><a class=attr-name href="#FilterPrimitiveXAttribute">‘<code
-   class=property>feBlend</code>’</a>, <a class=attr-name
-   href="#FilterPrimitiveYAttribute">‘<code
-   class=property>feBlend</code>’</a>, <a class=attr-name
-   href="#FilterPrimitiveWidthAttribute">‘<code
-   class=property>feBlend</code>’</a> and <a class=attr-name
+   class=property>x</code>’</a>, <a class=attr-name
+   href="#FilterPrimitiveYAttribute">‘<code class=property>y</code>’</a>,
+   <a class=attr-name href="#FilterPrimitiveWidthAttribute">‘<code
+   class=property>width</code>’</a> and <a class=attr-name
    href="#FilterPrimitiveHeightAttribute">‘<code
-   class=property>feBlend</code>’</a> default to the union (i.e., tightest
+   class=property>height</code>’</a> default to the union (i.e., tightest
    fitting bounding box) of the subregions defined for all referenced nodes.
    If there are no referenced nodes (e.g., for <a class=element-name
    href="#feImageElement">‘<code class=property>feImage</code>’</a> or <a
@@ -3298,14 +3182,13 @@
     <dd>X location for the light source in the coordinate system established
      by attribute <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a
+     class=property>primitiveUnits</code>’</a> on the <a
      href="#FilterElement"><span class=element-name>‘<code
      class=property>filter</code>’</span></a> element.<br>
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name href="#fePointLightXAttribute">‘<code
-     class=property>fePointLight</code>’</a> is <span
-     class=attr-value>0</span>.<br>
+     class=property>x</code>’</a> is <span class=attr-value>0</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=fePointLightYAttribute><span class=adef>y</span> = "<em><a
@@ -3314,14 +3197,13 @@
     <dd>Y location for the light source in the coordinate system established
      by attribute <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element.<br>
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name href="#fePointLightYAttribute">‘<code
-     class=property>fePointLight</code>’</a> is <span
-     class=attr-value>0</span>.<br>
+     class=property>y</code>’</a> is <span class=attr-value>0</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=fePointLightZAttribute><span class=adef>z</span> = "<em><a
@@ -3330,7 +3212,7 @@
     <dd>Z location for the light source in the coordinate system established
      by attribute <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element, assuming that, in the <a
      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#InitialCoordinateSystem">initial
@@ -3342,8 +3224,7 @@
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name href="#fePointLightZAttribute">‘<code
-     class=property>fePointLight</code>’</a> is <span
-     class=attr-value>0</span>.<br>
+     class=property>z</code>’</a> is <span class=attr-value>0</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
    </dl>
   </div>
@@ -3436,14 +3317,13 @@
     <dd>X location for the light source in the coordinate system established
      by attribute <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element.<br>
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name href="#feSpotLightXAttribute">‘<code
-     class=property>feSpotLight</code>’</a> is <span
-     class=attr-value>0</span>.<br>
+     class=property>x</code>’</a> is <span class=attr-value>0</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=feSpotLightYAttribute><span class=adef>y</span> = "<em><a
@@ -3452,14 +3332,13 @@
     <dd>Y location for the light source in the coordinate system established
      by attribute <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element.<br>
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name href="#feSpotLightYAttribute">‘<code
-     class=property>feSpotLight</code>’</a> is <span
-     class=attr-value>0</span>.<br>
+     class=property>y</code>’</a> is <span class=attr-value>0</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=feSpotLightZAttribute><span class=adef>z</span> = "<em><a
@@ -3468,7 +3347,7 @@
     <dd>Z location for the light source in the coordinate system established
      by attribute <a class=attr-name
      href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element, assuming that, in the <a
      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#InitialCoordinateSystem">initial
@@ -3480,8 +3359,7 @@
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name href="#feSpotLightZAttribute">‘<code
-     class=property>feSpotLight</code>’</a> is <span
-     class=attr-value>0</span>.<br>
+     class=property>z</code>’</a> is <span class=attr-value>0</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=feSpotLightPointsAtXAttribute><span class=adef>pointsAtX</span> =
@@ -3490,7 +3368,7 @@
 
     <dd>X location in the coordinate system established by attribute <a
      class=attr-name href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element of the point at which the light source is pointing.<br>
      The <a
@@ -3507,7 +3385,7 @@
 
     <dd>Y location in the coordinate system established by attribute <a
      class=attr-name href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element of the point at which the light source is pointing.<br>
      The <a
@@ -3524,7 +3402,7 @@
 
     <dd>Z location in the coordinate system established by the attribute <a
      class=attr-name href="#FilterElementPrimitiveUnitsAttribute">‘<code
-     class=property>filter</code>’</a> on the <a class=element-name
+     class=property>primitiveUnits</code>’</a> on the <a class=element-name
      href="#FilterElement">‘<code class=property>filter</code>’</a>
      element of the point at which the light source is pointing, assuming
      that, in the <a
@@ -3551,7 +3429,7 @@
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name
      href="#feSpotLightSpecularExponentAttribute">‘<code
-     class=property>feSpotLight</code>’</a> is <span
+     class=property>specularExponent</code>’</a> is <span
      class=attr-value>1</span>.<br>
      <span class=anim-target>Animatable: yes.</span>
 
@@ -4239,7 +4117,7 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name
      href="#feColorMatrixTypeAttribute">‘<code
-     class=property>feColorMatrix</code>’</a> is <span
+     class=property>type</code>’</a> is <span
      class=attr-value>matrix</span>. <br>
      <span class=anim-target>Animatable: yes.</span>
 
@@ -4326,7 +4204,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
      If the attribute is not specified, then the default behavior depends on
      the value of attribute <a class=attr-name
      href="#feColorMatrixTypeAttribute">‘<code
-     class=property>feColorMatrix</code>’</a>. If <span
+     class=property>type</code>’</a>. If <span
      class=attr-value>type="matrix"</span>, then this attribute defaults to
      the identity matrix. If <span class=attr-value>type="saturate"</span>,
      then this attribute defaults to the value <span
@@ -4671,7 +4549,7 @@ A' = <a
     those <a href="#TermTransferFunctionElement">transfer function
     elements</a> were specified with their <a class=attr-name
     href="#feComponentTransferTypeAttribute">‘<code
-    class=property>feFuncR</code>’</a> attributes set to <span
+    class=property>type</code>’</a> attributes set to <span
     class=attr-value>‘<code class=property>identity</code>’</span>.
   </ul>
 
@@ -5065,7 +4943,7 @@ A' = <a
          href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
          value</a> for <a class=attr-name
          href="#feComponentTransferSlopeAttribute">‘<code
-         class=property>feFuncR</code>’</a> is <span
+         class=property>slope</code>’</a> is <span
          class=attr-value>1</span>.<br>
          <span class=anim-target>Animatable: yes.</span>
 
@@ -5121,7 +4999,7 @@ A' = <a
          href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
          value</a> for <a class=attr-name
          href="#feComponentTransferOffsetAttribute">‘<code
-         class=property>feFuncR</code>’</a> is <span
+         class=property>offset</code>’</a> is <span
          class=attr-value>0</span>.<br>
          <span class=anim-target>Animatable: yes.</span>
        </dl>
@@ -5451,8 +5329,8 @@ A' = <a
         animatable=yes class=attr-name
         href="#FilterPrimitiveInAttribute">‘<code
         class=property>in</code>’</a> and <a class=attr-name
-        href="#feCompositeIn2Attribute">‘<code
-        class=property>feComposite</code>’</a> respectively
+        href="#feCompositeIn2Attribute">‘<code class=css>in2</code>’</a>
+        respectively
 
        <li> <code>k1, k2, k3</code> and <code>k4</code> indicate the values
         of the attributes with the same name
@@ -5478,7 +5356,7 @@ A' = <a
          href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
          value</a> for <a class=attr-name
          href="#feCompositeOperatorAttribute">‘<code
-         class=property>feComposite</code>’</a> is <span
+         class=property>operator</code>’</a> is <span
          class=attr-value>over</span>. <br>
          <span class=anim-target>Animatable: yes.</span>
 
@@ -6069,48 +5947,48 @@ A' = <a
        resolution-independent results, an explicit value should be provided
        for either the <a class=attr-name
        href="#FilterElementFilterResAttribute">‘<code
-       class=property>filter</code>’</a> attribute on the <a
+       class=property>filterRes</code>’</a> attribute on the <a
        class=element-name href="#FilterElement">‘<code
        class=property>filter</code>’</a> element and/or attribute <a
        class=attr-name
        href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-       class=property>feConvolveMatrix</code>’</a>.</p>
+       class=property>kernelUnitLength</code>’</a>.</p>
 
       <p><a class=attr-name
        href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-       class=property>feConvolveMatrix</code>’</a>, in combination with the
+       class=property>kernelUnitLength</code>’</a>, in combination with the
        other attributes, defines an implicit pixel grid in the filter effects
        coordinate system (i.e., the coordinate system established by the <a
        class=attr-name href="#FilterElementPrimitiveUnitsAttribute">‘<code
-       class=property>filter</code>’</a> attribute). If the pixel grid
-       established by <a class=attr-name
+       class=property>primitiveUnits</code>’</a> attribute). If the pixel
+       grid established by <a class=attr-name
        href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-       class=property>feConvolveMatrix</code>’</a> is not scaled to match
+       class=property>kernelUnitLength</code>’</a> is not scaled to match
        the pixel grid established by attribute <a class=attr-name
        href="#FilterElementFilterResAttribute">‘<code
-       class=property>filter</code>’</a> (implicitly or explicitly), then
-       the input image will be temporarily rescaled to match its pixels with
-       <a class=attr-name
+       class=property>filterRes</code>’</a> (implicitly or explicitly),
+       then the input image will be temporarily rescaled to match its pixels
+       with <a class=attr-name
        href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-       class=property>feConvolveMatrix</code>’</a>. The convolution happens
+       class=property>kernelUnitLength</code>’</a>. The convolution happens
        on the resampled image. After applying the convolution, the image is
        resampled back to the original resolution.</p>
 
       <p> When the image must be resampled to match the coordinate system
        defined by <a class=attr-name
        href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-       class=property>feConvolveMatrix</code>’</a> prior to convolution, or
+       class=property>kernelUnitLength</code>’</a> prior to convolution, or
        resampled to match the device coordinate system after convolution, it
        is recommended that high quality viewers make use of appropriate
        interpolation techniques, for example bilinear or bicubic. Depending
        on the speed of the available interpolents, this choice may be
-       affected by the <a class=property href="HASH(0x7fadcb85cc08)">‘<code
+       affected by the <a class=property href="HASH(0x7fde2a05bd68)">‘<code
        class=property>image-rendering</code>’</a> property setting. Note
        that implementations might choose approaches that minimize or
        eliminate resampling when not necessary to produce proper results,
        such as when the document is zoomed out such that <a class=attr-name
        href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-       class=property>feConvolveMatrix</code>’</a> is considerably smaller
+       class=property>kernelUnitLength</code>’</a> is considerably smaller
        than a device pixel.</p>
 
       <div class=adef-list>
@@ -6295,25 +6173,25 @@ Extended by two pixels using "duplicate":
          distance in current filter units (i.e., units as determined by the
          value of attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a>) between successive columns and
-         rows, respectively, in the <a class=attr-name
+         class=property>primitiveUnits</code>’</a>) between successive
+         columns and rows, respectively, in the <a class=attr-name
          href="#feConvolveMatrixElementKernelMatrixAttribute">‘<code
          class=property>kernelMatrix</code>’</a>. By specifying value(s)
          for <a class=attr-name
          href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-         class=property>feConvolveMatrix</code>’</a>, the kernel becomes
+         class=property>kernelUnitLength</code>’</a>, the kernel becomes
          defined in a scalable, abstract coordinate system. If <a
          class=attr-name
          href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-         class=property>feConvolveMatrix</code>’</a> is not specified, the
+         class=property>kernelUnitLength</code>’</a> is not specified, the
          default value is one pixel in the offscreen bitmap, which is a
          pixel-based coordinate system, and thus potentially not scalable.
          For some level of consistency across display media and user agents,
          it is necessary that a value be provided for at least one of <a
          class=attr-name href="#FilterElementFilterResAttribute">‘<code
-         class=property>filter</code>’</a> and <a class=attr-name
+         class=property>filterRes</code>’</a> and <a class=attr-name
          href="#feConvolveMatrixElementKernelUnitLengthAttribute">‘<code
-         class=property>feConvolveMatrix</code>’</a>. In some
+         class=property>kernelUnitLength</code>’</a>. In some
          implementations, the most consistent results and the fastest
          performance will be achieved if the pixel grid of the temporary
          offscreen images aligns with the pixel grid of the kernel.<br>
@@ -6608,31 +6486,30 @@ Extended by two pixels using "duplicate":
        resolution-independent results, an explicit value should be provided
        for either the <a class=attr-name
        href="#FilterElementFilterResAttribute">‘<code
-       class=property>filter</code>’</a> attribute on the <a
+       class=property>filterRes</code>’</a> attribute on the <a
        class=element-name href="#FilterElement">‘<code
        class=property>filter</code>’</a> element and/or attribute <a
        class=attr-name
        href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
-       class=property>feDiffuseLighting</code>’</a>.</p>
+       class=property>kernelUnitLength</code>’</a>.</p>
 
       <p><a class=attr-name
        href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
-       class=property>feDiffuseLighting</code>’</a>, in combination with
-       the other attributes, defines an implicit pixel grid in the filter
-       effects coordinate system (i.e., the coordinate system established by
-       the <a class=attr-name
-       href="#FilterElementPrimitiveUnitsAttribute">‘<code
-       class=property>filter</code>’</a> attribute). If the pixel grid
-       established by <a class=attr-name
+       class=property>kernelUnitLength</code>’</a>, in combination with the
+       other attributes, defines an implicit pixel grid in the filter effects
+       coordinate system (i.e., the coordinate system established by the <a
+       class=attr-name href="#FilterElementPrimitiveUnitsAttribute">‘<code
+       class=property>primitiveUnits</code>’</a> attribute). If the pixel
+       grid established by <a class=attr-name
        href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
-       class=property>feDiffuseLighting</code>’</a> is not scaled to match
+       class=property>kernelUnitLength</code>’</a> is not scaled to match
        the pixel grid established by attribute <a class=attr-name
        href="#FilterElementFilterResAttribute">‘<code
-       class=property>filter</code>’</a> (implicitly or explicitly), then
-       the input image will be temporarily rescaled to match its pixels with
-       <a class=attr-name
+       class=property>filterRes</code>’</a> (implicitly or explicitly),
+       then the input image will be temporarily rescaled to match its pixels
+       with <a class=attr-name
        href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
-       class=property>feDiffuseLighting</code>’</a>. The 3x3 filters are
+       class=property>kernelUnitLength</code>’</a>. The 3x3 filters are
        applied to the resampled image. After applying the filter, the image
        is resampled back to its original resolution.</p>
 
@@ -6642,13 +6519,13 @@ Extended by two pixels using "duplicate":
        appropriate interpolation techniques, for example bilinear or
        bicubic.</span> Depending on the speed of the available interpolents,
        this choice may be affected by the <a class=property
-       href="HASH(0x7fadcb85cc08)">‘<code
+       href="HASH(0x7fde2a05bd68)">‘<code
        class=property>image-rendering</code>’</a> property setting. Note
        that implementations might choose approaches that minimize or
        eliminate resampling when not necessary to produce proper results,
        such as when the document is zoomed out such that <a class=attr-name
        href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
-       class=property>feDiffuseLighting</code>’</a> is considerably smaller
+       class=property>kernelUnitLength</code>’</a> is considerably smaller
        than a device pixel.</p>
 
       <p> For the formulas that follow, the
@@ -6719,7 +6596,7 @@ Extended by two pixels using "duplicate":
        slope of the surface at that point. These deltas are determined by the
        value (explicit or implicit) of attribute <a class=attr-name
        href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
-       class=property>feDiffuseLighting</code>’</a>.</p>
+       class=property>kernelUnitLength</code>’</a>.</p>
 
       <table border=1 summary="feDiffuseLighting formulas">
        <colgroup><col width="33.3%"><col width="33.3%"><col width="*"></colgroup>
@@ -6907,7 +6784,7 @@ Extended by two pixels using "duplicate":
       <p> If L.S is positive, no light is present. (L<sub>r</sub> =
        L<sub>g</sub> = L<sub>b</sub> = 0). If <a class=attr-name
        href="#feSpotLightLimitingConeAngleAttribute">‘<code
-       class=property>feSpotLight</code>’</a> is specified, -L.S &lt;
+       class=property>limitingConeAngle</code>’</a> is specified, -L.S &lt;
        cos(limitingConeAngle) also indicates that no light is present.</p>
 
       <div class=adef-list>
@@ -6943,7 +6820,7 @@ Extended by two pixels using "duplicate":
          distance in current filter units (i.e., units as determined by the
          value of attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a>) for <code>dx</code> and
+         class=property>primitiveUnits</code>’</a>) for <code>dx</code> and
          <code>dy</code>, respectively, in the <a
          href="#SurfaceNormalCalculations">surface normal calculation
          formulas</a>. By specifying value(s) for <span
@@ -6958,12 +6835,12 @@ Extended by two pixels using "duplicate":
          across display media and user agents, it is necessary that a value
          be provided for at least one of <a class=attr-name
          href="#FilterElementFilterResAttribute">‘<code
-         class=property>filter</code>’</a> and <span
+         class=property>filterRes</code>’</a> and <span
          class=attr-name>kernelUnitLength</span>. Discussion of intermediate
          images are in the <a href="#Introduction">Introduction</a> and in
          the description of attribute <a class=attr-name
          href="#FilterElementFilterResAttribute">‘<code
-         class=property>filter</code>’</a>.<br>
+         class=property>filterRes</code>’</a>.<br>
          If a negative or zero value is specified the default value will be
          used instead. <br>
          <span class=anim-target>Animatable: yes.</span>
@@ -6977,7 +6854,7 @@ Extended by two pixels using "duplicate":
        class=property>fePointLight</code>’</a> or <a class=element-name
        href="#feSpotLightElement">‘<code
        class=property>feSpotLight</code>’</a>. The light color is specified
-       by property <a class=property href="HASH(0x7fadcb85cf38)">‘<code
+       by property <a class=property href="HASH(0x7fde2a05c098)">‘<code
        class=property>lighting-color</code>’</a>.</p>
 
       <h2 id=feDisplacementMapElement><span class=secno>19. </span>Filter
@@ -7198,8 +7075,8 @@ Extended by two pixels using "duplicate":
 
       <p> This filter primitive uses the pixels values from the image from <a
        class=attr-name href="#feDisplacementMapIn2Attribute">‘<code
-       class=property>feDisplacementMap</code>’</a> to spatially displace
-       the image from <a animatable=yes class=attr-name
+       class=css>in2</code>’</a> to spatially displace the image from <a
+       animatable=yes class=attr-name
        href="#FilterPrimitiveInAttribute">‘<code
        class=property>in</code>’</a>. This is the transformation to be
        performed:</p>
@@ -7213,43 +7090,43 @@ Extended by two pixels using "duplicate":
        XC(x,y) and YC(x,y) are the component values of the channel designated
        by the <a class=attr-name
        href="#feDisplacementMapXChannelSelectorAttribute">‘<code
-       class=property>feDisplacementMap</code>’</a> and <a class=attr-name
+       class=property>xChannelSelector</code>’</a> and <a class=attr-name
        href="#feDisplacementMapYChannelSelectorAttribute">‘<code
-       class=property>feDisplacementMap</code>’</a>. For example, to use
-       the R component of <a class=attr-name
+       class=property>yChannelSelector</code>’</a>. For example, to use the
+       R component of <a class=attr-name
        href="#feDisplacementMapIn2Attribute">‘<code
-       class=property>feDisplacementMap</code>’</a> to control displacement
-       in x and the G component of Image2 to control displacement in y, set
-       <a class=attr-name
+       class=css>in2</code>’</a> to control displacement in x and the G
+       component of Image2 to control displacement in y, set <a
+       class=attr-name
        href="#feDisplacementMapXChannelSelectorAttribute">‘<code
-       class=property>feDisplacementMap</code>’</a> to <span
+       class=property>xChannelSelector</code>’</a> to <span
        class=attr-value>"R"</span> and <a class=attr-name
        href="#feDisplacementMapYChannelSelectorAttribute">‘<code
-       class=property>feDisplacementMap</code>’</a> to <span
+       class=property>yChannelSelector</code>’</a> to <span
        class=attr-value>"G"</span>.</p>
 
       <p> The displacement map, <a class=attr-name
        href="#feDisplacementMapIn2Attribute">‘<code
-       class=property>feDisplacementMap</code>’</a>, defines the inverse of
-       the mapping performed.</p>
+       class=css>in2</code>’</a>, defines the inverse of the mapping
+       performed.</p>
 
       <p> The input image in is to remain premultiplied for this filter
        primitive. The calculations using the pixel values from <a
        class=attr-name href="#feDisplacementMapIn2Attribute">‘<code
-       class=property>feDisplacementMap</code>’</a> are performed using
-       non-premultiplied color values. If the image from <a class=attr-name
+       class=css>in2</code>’</a> are performed using non-premultiplied
+       color values. If the image from <a class=attr-name
        href="#feDisplacementMapIn2Attribute">‘<code
-       class=property>feDisplacementMap</code>’</a> consists of
-       premultiplied color values, those values are automatically converted
-       into non-premultiplied color values before performing this operation.</p>
+       class=css>in2</code>’</a> consists of premultiplied color values,
+       those values are automatically converted into non-premultiplied color
+       values before performing this operation.</p>
 
       <p> This filter can have arbitrary non-localized effect on the input
        which might require substantial buffering in the processing pipeline.
        However with this formulation, any intermediate buffering needs can be
        determined by <a class=attr-name
        href="#feDisplacementMapScaleAttribute">‘<code
-       class=property>feDisplacementMap</code>’</a> which represents the
-       maximum range of displacement in either x or y.</p>
+       class=property>scale</code>’</a> which represents the maximum range
+       of displacement in either x or y.</p>
 
       <p> When applying this filter, the source pixel location will often lie
        between several source pixels. In this case it is recommended that
@@ -7257,15 +7134,15 @@ Extended by two pixels using "duplicate":
        for example bilinear or bicubic, rather than simply selecting the
        nearest source pixel. Depending on the speed of the available
        interpolents, this choice may be affected by the <a class=property
-       href="HASH(0x7fadcb85cc08)">‘<code
+       href="HASH(0x7fde2a05bd68)">‘<code
        class=property>image-rendering</code>’</a> property setting.</p>
 
-      <p> The <a class=property href="HASH(0x7fadcb8609f8)">‘<code
+      <p> The <a class=property href="HASH(0x7fde2a05fb58)">‘<code
        class=property>color-interpolation-filters</code>’</a> property only
        applies to the <a class=attr-name
        href="#feDisplacementMapIn2Attribute">‘<code
-       class=property>feDisplacementMap</code>’</a> source image and does
-       not apply to the <a animatable=yes class=attr-name
+       class=css>in2</code>’</a> source image and does not apply to the <a
+       animatable=yes class=attr-name
        href="#FilterPrimitiveInAttribute">‘<code
        class=property>in</code>’</a> source image. The <a animatable=yes
        class=attr-name href="#FilterPrimitiveInAttribute">‘<code
@@ -7283,9 +7160,9 @@ Extended by two pixels using "duplicate":
         <dd>Displacement scale factor. The amount is expressed in the
          coordinate system established by attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a> on the <a class=element-name
-         href="#FilterElement">‘<code class=property>filter</code>’</a>
-         element.<br>
+         class=property>primitiveUnits</code>’</a> on the <a
+         class=element-name href="#FilterElement">‘<code
+         class=property>filter</code>’</a> element.<br>
          When the value of this attribute is <span class=attr-value>0</span>,
          this operation has no effect on the source image.<br>
 
@@ -7293,7 +7170,7 @@ Extended by two pixels using "duplicate":
           href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
           value</a> for <a class=attr-name
           href="#feDisplacementMapScaleAttribute">‘<code
-          class=property>feDisplacementMap</code>’</a> is <span
+          class=property>scale</code>’</a> is <span
           class=attr-value>0</span>.</p>
          <span class=anim-target>Animatable: yes.</span>
 
@@ -7302,14 +7179,14 @@ Extended by two pixels using "duplicate":
 
         <dd>Indicates which channel from <a class=attr-name
          href="#feDisplacementMapIn2Attribute">‘<code
-         class=property>feDisplacementMap</code>’</a> to use to displace
-         the pixels in <a animatable=yes class=attr-name
+         class=css>in2</code>’</a> to use to displace the pixels in <a
+         animatable=yes class=attr-name
          href="#FilterPrimitiveInAttribute">‘<code
          class=property>in</code>’</a> along the x-axis. The <a
          href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
          value</a> for <a class=attr-name
          href="#feDisplacementMapXChannelSelectorAttribute">‘<code
-         class=property>feDisplacementMap</code>’</a> is <span
+         class=property>xChannelSelector</code>’</a> is <span
          class=attr-value>A</span>. <br>
          <span class=anim-target>Animatable: yes.</span>
 
@@ -7318,14 +7195,14 @@ Extended by two pixels using "duplicate":
 
         <dd>Indicates which channel from <a class=attr-name
          href="#feDisplacementMapIn2Attribute">‘<code
-         class=property>feDisplacementMap</code>’</a> to use to displace
-         the pixels in <a animatable=yes class=attr-name
+         class=css>in2</code>’</a> to use to displace the pixels in <a
+         animatable=yes class=attr-name
          href="#FilterPrimitiveInAttribute">‘<code
          class=property>in</code>’</a> along the y-axis. The <a
          href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
          value</a> for <a class=attr-name
          href="#feDisplacementMapYChannelSelectorAttribute">‘<code
-         class=property>feDisplacementMap</code>’</a> is <span
+         class=property>yChannelSelector</code>’</a> is <span
          class=attr-value>A</span>. <br>
          <span class=anim-target>Animatable: yes.</span>
 
@@ -7907,7 +7784,7 @@ Extended by two pixels using "duplicate":
        deviation in the x direction and ‘<code class=property>t</code>’
        being the standard deviation in the y direction, as specified by <a
        class=attr-name href="#feGaussianBlurStdDeviationAttribute">‘<code
-       class=property>feGaussianBlur</code>’</a>.</p>
+       class=property>stdDeviation</code>’</a>.</p>
 
       <p> The value of <span class=xxx>‘<code
        class=property>stdDeviation</code>’</span> can be either one or two
@@ -7965,7 +7842,7 @@ Extended by two pixels using "duplicate":
          value along the x-axis of the coordinate system established by
          attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a> on the <a
+         class=property>primitiveUnits</code>’</a> on the <a
          href="#FilterElement"><span class=element-name>‘<code
          class=property>filter</code>’</span></a> element. The second value
          represents a standard deviation in Y. If one number is provided,
@@ -8217,18 +8094,18 @@ Extended by two pixels using "duplicate":
       <ul>
        <li>the <a class=attr-name
         href="#feUnsharpMaskStdDeviationAttribute">‘<code
-        class=property>feUnsharpMask</code>’</a> attribute controls how
-        much to blur the input image
+        class=property>stdDeviation</code>’</a> attribute controls how much
+        to blur the input image
 
        <li>the <a class=attr-name
         href="#feUnsharpMaskThresholdAttribute">‘<code
-        class=property>feUnsharpMask</code>’</a> attribute can be used for
+        class=property>threshold</code>’</a> attribute can be used for
         controlling when the difference should not be subtracted
 
        <li>the <a class=attr-name
         href="#feUnsharpMaskAmountAttribute">‘<code
-        class=property>feUnsharpMask</code>’</a> attribute specifies an
-        optional multiplier for the difference to subtract
+        class=property>amount</code>’</a> attribute specifies an optional
+        multiplier for the difference to subtract
       </ul>
 
       <h2 id=feImageElement><span class=secno>23. </span>Filter primitive <a
@@ -8439,10 +8316,12 @@ Extended by two pixels using "duplicate":
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#StyleAttribute"><span
             class=attr-name>‘style’</span></a>
 
-           <li><a href=""><span
+           <li><a
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute"><span
             class=attr-name>‘externalResourcesRequired’</span></a>
 
-           <li><a href=""><span
+           <li><a animatable=yes
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#PreserveAspectRatioAttribute"><span
             class=attr-name>‘preserveAspectRatio’</span></a>
 
            <li><a href="#feImageElementHrefAttribute"><span
@@ -8475,7 +8354,7 @@ Extended by two pixels using "duplicate":
        class=property>use</code>’</span> element. In either case, the
        current user coordinate system depends on the value of attribute <a
        class=attr-name href="#FilterElementPrimitiveUnitsAttribute">‘<code
-       class=property>filter</code>’</a> on the <a
+       class=property>primitiveUnits</code>’</a> on the <a
        href="#FilterElement"><span class=element-name>‘<code
        class=property>filter</code>’</span></a> element. The processing of
        the <span class=attr-name>preserveAspectRatio</span> attribute on the
@@ -8541,10 +8420,10 @@ Extended by two pixels using "duplicate":
         size that will fit in the box consistent with preserving the aspect
         ratio. This box is then shifted by the given <a class=attr-name
         href="#FilterPrimitiveXAttribute">‘<code
-        class=property>feImage</code>’</a> and <a class=attr-name
+        class=property>x</code>’</a> and <a class=attr-name
         href="#FilterPrimitiveYAttribute">‘<code
-        class=property>feImage</code>’</a> values relative to the viewport
-        the object is in.
+        class=property>y</code>’</a> values relative to the viewport the
+        object is in.
       </ul>
 
       <pre class=xml>&lt;svg width="600" height="250" viewBox="0 0 600 250"
@@ -9086,7 +8965,7 @@ Extended by two pixels using "duplicate":
         <dd>A keyword indicating whether to erode (i.e., thin) or dilate
          (fatten) the source graphic. The lacuna value for <a class=attr-name
          href="#feMorphologyOperatorAttribute">‘<code
-         class=property>feMorphology</code>’</a> is <span
+         class=property>operator</code>’</a> is <span
          class=attr-value>erode</span>. <br>
          <span class=anim-target>Animatable: yes.</span>
 
@@ -9101,7 +8980,7 @@ Extended by two pixels using "duplicate":
          that value is used for both X and Y. The values are in the
          coordinate system established by attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a> on the <a
+         class=property>primitiveUnits</code>’</a> on the <a
          href="#FilterElement"><span class=element-name>‘<code
          class=property>filter</code>’</span></a> element.<br>
          A negative or zero value disables the effect of the given filter
@@ -9397,9 +9276,9 @@ Extended by two pixels using "duplicate":
          offset amount is expressed in the coordinate system established by
          attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a> on the <a class=element-name
-         href="#FilterElement">‘<code class=property>filter</code>’</a>
-         element.<br>
+         class=property>primitiveUnits</code>’</a> on the <a
+         class=element-name href="#FilterElement">‘<code
+         class=property>filter</code>’</a> element.<br>
          If the attribute is not specified, then the effect is as if a value
          of <span class=attr-value>0</span> were specified.<br>
          <span class=anim-target>Animatable: yes.</span>
@@ -9411,7 +9290,7 @@ Extended by two pixels using "duplicate":
          offset amount is expressed in the coordinate system established by
          attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a> on the <a
+         class=property>primitiveUnits</code>’</a> on the <a
          href="#FilterElement"><span class=element-name>‘<code
          class=property>filter</code>’</span></a> element.<br>
          If the attribute is not specified, then the effect is as if a value
@@ -9750,7 +9629,7 @@ Extended by two pixels using "duplicate":
          distance in current filter units (i.e., units as determined by the
          value of attribute <a class=attr-name
          href="#FilterElementPrimitiveUnitsAttribute">‘<code
-         class=property>filter</code>’</a>) for <code>dx</code> and
+         class=property>primitiveUnits</code>’</a>) for <code>dx</code> and
          <code>dy</code>, respectively, in the <a
          href="#SurfaceNormalCalculations">surface normal calculation
          formulas</a>. By specifying value(s) for <span
@@ -9769,7 +9648,7 @@ Extended by two pixels using "duplicate":
          images are in the <a href="#Introduction">Introduction</a> and in
          the description of attribute <a class=attr-name
          href="#FilterElementFilterResAttribute">‘<code
-         class=property>filter</code>’</a>.<br>
+         class=property>filterRes</code>’</a>.<br>
          If a negative or zero value is specified the default value will be
          used instead. <br>
          <span class=anim-target>Animatable: yes.</span>
@@ -9784,7 +9663,7 @@ Extended by two pixels using "duplicate":
        href="#feDistantLightElement">‘<code
        class=property>feDistantLight</code>’</a>. The light color is
        specified by property <a class=property
-       href="HASH(0x7fadcb85cf38)">‘<code
+       href="HASH(0x7fde2a05c098)">‘<code
        class=property>lighting-color</code>’</a>.</p>
 
       <p><a href="#AnExample">The example</a> at the start of this chapter
@@ -10287,7 +10166,7 @@ Extended by two pixels using "duplicate":
 
       <p> The generated color and alpha values are in the color space
        determined by the <a class=property
-       href="HASH(0x7fadcb8609f8)">‘<code
+       href="HASH(0x7fde2a05fb58)">‘<code
        class=property>color-interpolation-filters</code>’</a> property:</p>
 
       <pre
@@ -10603,7 +10482,7 @@ double turbulence(int nColorChannel, double *point, double <a
           href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
           value</a> for <a class=attr-name
           href="#feTurbulenceTypeAttribute">‘<code
-          class=property>feTurbulence</code>’</a> is <span
+          class=property>type</code>’</a> is <span
           class=attr-value>turbulence</span>.</span></p>
 
          <p><span class=anim-target>Animatable: yes.</span></p>
@@ -10934,7 +10813,7 @@ double turbulence(int nColorChannel, double *point, double <a
         href="#feDropShadowElement">‘<code
         class=property>feDropShadow</code>’</a> filter primitive and the <a
         class=attr-name href="#feDropShadowStdDeviationAttribute">‘<code
-        class=property>feDropShadow</code>’</a> on the <a
+        class=property>stdDeviation</code>’</a> on the <a
         class=element-name href="#feDropShadowElement">‘<code
         class=property>feDropShadow</code>’</a> and do processing as if the
         following <a class=element-name
@@ -10946,9 +10825,9 @@ double turbulence(int nColorChannel, double *point, double <a
 
        <li>Offset the result of step 1 by <a class=attr-name
         href="#feDropShadowDxAttribute">‘<code
-        class=property>feDropShadow</code>’</a> and <a class=attr-name
+        class=property>dx</code>’</a> and <a class=attr-name
         href="#feDropShadowDyAttribute">‘<code
-        class=property>feDropShadow</code>’</a> as specified on the <a
+        class=property>dy</code>’</a> as specified on the <a
         class=element-name href="#feDropShadowElement">‘<code
         class=property>feDropShadow</code>’</a> element, equivalent to
         applying an <a class=element-name href="#feOffsetElement">‘<code
@@ -10959,9 +10838,9 @@ double turbulence(int nColorChannel, double *point, double <a
 
        <li>Do processing as if an <a class=element-name
         href="#feFloodElement">‘<code class=property>feFlood</code>’</a>
-        element with <a class=property href="HASH(0x7fadcb85d0a0)">‘<code
+        element with <a class=property href="HASH(0x7fde2a05c200)">‘<code
         class=property>flood-color</code>’</a> and <a class=property
-        href="HASH(0x7fadcb85cf80)">‘<code
+        href="HASH(0x7fde2a05c0e0)">‘<code
         class=property>flood-opacity</code>’</a> as specified on the <a
         class=element-name href="#feDropShadowElement">‘<code
         class=property>feDropShadow</code>’</a> was applied:
@@ -11023,12 +10902,11 @@ double turbulence(int nColorChannel, double *point, double <a
           href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
           value</a> for <a class=attr-name
           href="#feDropShadowDxAttribute">‘<code
-          class=property>feDropShadow</code>’</a> is <span
-          class=attr-value>2</span>.</p>
+          class=property>dx</code>’</a> is <span class=attr-value>2</span>.</p>
 
          <p> This attribute is then forwarded to the <a class=attr-name
           href="#feOffsetDxAttribute">‘<code
-          class=property>feOffset</code>’</a> attribute of the internal <a
+          class=property>dx</code>’</a> attribute of the internal <a
           class=element-name href="#feOffsetElement">‘<code
           class=property>feOffset</code>’</a> element.</p>
 
@@ -11044,12 +10922,12 @@ double turbulence(int nColorChannel, double *point, double <a
           href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
           value</a> for <a class=attr-name
           href="#feDropShadowDyAttribute">‘<code
-          class=property>feDropShadow</code>’</a> is <span
-          class=attr-value>2</span>.</p>
+          class=property>dy</code>’</a> is <span class=attr-value>2</span>.
+          </p>
 
          <p> This attribute is then forwarded to the <a class=attr-name
           href="#feOffsetDyAttribute">‘<code
-          class=property>feOffset</code>’</a> attribute of the internal <a
+          class=property>dy</code>’</a> attribute of the internal <a
           class=element-name href="#feOffsetElement">‘<code
           class=property>feOffset</code>’</a> element.</p>
 
@@ -11067,14 +10945,13 @@ double turbulence(int nColorChannel, double *point, double <a
           href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
           value</a> for <a class=attr-name
           href="#feDropShadowStdDeviationAttribute">‘<code
-          class=property>feDropShadow</code>’</a> is <span
+          class=property>stdDeviation</code>’</a> is <span
           class=attr-value>2</span>.</p>
 
          <p> This attribute is then forwarded to the <a class=attr-name
           href="#feGaussianBlurStdDeviationAttribute">‘<code
-          class=property>feGaussianBlur</code>’</a> attribute of the
-          internal <a class=element-name
-          href="#feGaussianBlurElement">‘<code
+          class=property>stdDeviation</code>’</a> attribute of the internal
+          <a class=element-name href="#feGaussianBlurElement">‘<code
           class=property>feGaussianBlur</code>’</a> element.</p>
 
          <p><span class=anim-target>Animatable: yes.</span></p>
@@ -11695,7 +11572,7 @@ double turbulence(int nColorChannel, double *point, double <a
 </code></pre>
 
       <p> The function takes two parameters. The first is a CSS &lt;image&gt;
-       value. The second is the value of a ‘<a href="#effects"><code
+       value. The second is the value of a ‘<a href="#filter"><code
        class=property>filter</code></a>’ property. The function take the
        input image parameter and apply the filter rules, returning a
        processing image.</p>
@@ -11779,7 +11656,7 @@ double turbulence(int nColorChannel, double *point, double <a
        href=rng>here</a>.</p>
 
       <h2 id=ShorthandEquivalents><span class=secno>37. </span>Shorthands
-       defined in terms of the <a class=element-name href="#effects">‘<code
+       defined in terms of the <a class=element-name href="#filter">‘<code
        class=property>filter</code>’</a> element</h2>
 
       <p> Below are the equivalents for each of the filter functions
@@ -12319,10 +12196,10 @@ void main()
        class=secno>39. </span>Integration with CSS Animations and CSS
        Transitions</h2>
 
-      <p>The CSS ‘<a href="#effects"><code
+      <p>The CSS ‘<a href="#filter"><code
        class=property>filter</code></a>’ property is animatable.
        Interpolation happens between the filter functions only if the ‘<a
-       href="#effects"><code class=property>filter</code></a>’ values have
+       href="#filter"><code class=property>filter</code></a>’ values have
        the same number of filter functions, and the same functions appearing
        in the same order.</p>
 
@@ -16046,7 +15923,54 @@ void main()
          <td>SVGFETurbulenceElement
 
         <tr>
-         <th><a class=property href="#effects">filter</a>
+         <th><a class=property href="#filter">filter</a>
+
+         <td>None.
+
+         <td>Any number of the following elements, in any order: descriptive
+          — ‘desc’, ‘title’, ‘metadata’ filter primitive —
+          ‘feBlend’, ‘feFlood’, ‘feColorMatrix’,
+          ‘feComponentTransfer’, ‘feComposite’,
+          ‘feConvolveMatrix’, ‘feCustom’, ‘feDiffuseLighting’,
+          ‘feDisplacementMap’, ‘feDropShadow’, ‘feGaussianBlur’,
+          ‘feImage’, ‘feMerge’, ‘feMorphology’, ‘feOffset’,
+          ‘feSpecularLighting’, ‘feTile’, ‘feTurbulence’,
+          ‘feUnsharpMask’ ‘animate’ ‘set’
+
+         <td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’,
+          ‘xml:space’ presentation attributes —
+          ‘alignment-baseline’, ‘baseline-shift’, ‘clip’,
+          ‘clip-path’, ‘clip-rule’, ‘color’,
+          ‘color-interpolation’, ‘color-interpolation-filters’,
+          ‘color-profile’, ‘color-rendering’, ‘cursor’,
+          ‘direction’, ‘display’, ‘dominant-baseline’,
+          ‘enable-background’, ‘fill’, ‘fill-opacity’,
+          ‘fill-rule’, ‘filter’, ‘flood-color’,
+          ‘flood-opacity’, ‘font’, ‘font-family’,
+          ‘font-size’, ‘font-size-adjust’, ‘font-stretch’,
+          ‘font-style’, ‘font-variant’, ‘font-weight’,
+          ‘glyph-orientation-horizontal’,
+          ‘glyph-orientation-vertical’, ‘image-rendering’,
+          ‘kerning’, ‘letter-spacing’, ‘lighting-color’,
+          ‘marker’, ‘marker-end’, ‘marker-mid’,
+          ‘marker-start’, ‘mask’, ‘opacity’, ‘overflow’,
+          ‘pointer-events’, ‘shape-rendering’, ‘stop-color’,
+          ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’,
+          ‘stroke-dashoffset’, ‘stroke-linecap’,
+          ‘stroke-linejoin’, ‘stroke-miterlimit’,
+          ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’,
+          ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’,
+          ‘visibility’, ‘word-spacing’, ‘writing-mode’ xlink
+          attributes — ‘xlink:type’, ‘xlink:role’,
+          ‘xlink:arcrole’, ‘xlink:title’ ‘class’ ‘style’
+          ‘externalResourcesRequired’ ‘x’ ‘y’ ‘width’
+          ‘height’ ‘filterRes’ ‘filterUnits’ ‘primitiveUnits’
+          ‘xlink:href’
+
+         <td>SVGFilterElement
+
+        <tr>
+         <th><a class=property href="#filter">filter</a>
 
          <td>none | &lt;filter-function&gt; [ &lt;filter-function&gt; ]*
 
@@ -16229,7 +16153,8 @@ void main()
        <li>feUnsharpMask, <a href="#feunsharpmask"
         title=feUnsharpMask><strong>22.</strong></a>
 
-       <li>filter, <a href="#effects" title=filter><strong>4.</strong></a>
+       <li>filter, <a href="#effects" title=filter><strong>4.</strong></a>,
+        <a href="#filter" title=filter><strong>8.</strong></a>
 
        <li>&lt;filter>, <a href="#ltfilter"
         title="&lt;filter>"><strong>34.0.1.</strong></a>
