@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">30 July 2012</h2>
+<h2 class="no-num no-toc">31 July 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -769,7 +769,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
 </pre>
 <h4 id="porterduffcompositingoperators_dstover">Destination Over</h4>
 <p>Destination is placed over the source.</p>
-<img src="examples/PD_dest-over.svg"/>
+<img src="examples/PD_dst-over.svg"/>
 <pre>
     Fa = 1 – αb; Fb = 1
     co = αs x Cs x (1 – αb) + αb x Cb
@@ -1173,22 +1173,14 @@ In both instances, the result of the group composite is composited onto the land
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
 <p>
 If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> and that of all of its children will revert to 'flat'.<br/>
-The application of non-default blending or compositing to an element formatted with the CSS box model also establishes a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index will not honor the depth of elements outside of the group.
+The application of non-default blending or compositing to an element formatted with the CSS box model also establishes a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index will not honor the depth of elements outside of the group.<br/>
+Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> is considered a group. HTML elements themselves do not create groups.
 </p>
-<p class="issue">The following definition needs to be elaborated</p>
+<p>If content uses CSS filters, they will be applied before blending and compositing.</p>
+<h3 id="csscompositingrules">Behavior specific to SVG</h3>
 <p>
-Order: first filtering is applied, followed by blending and then compositing.
-</p>
-<p class="issue">The following definition is incorrect and will be rewritten based on the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a></p>
-<p>
-Conceptually all HTML elements are part of a group that consists of the following sub groups, each containing a single element.
-In stacking order:
-<ol>
-<li>the box shadow</li>
-<li>the background layers</li>
-<li>the text shadow</li>
-<li>the text and nested elements</li>
-</ol>
+In SVG, every element will create a group.<br/>
+Most implementations can optimize this by not treating elements with default arguments as groups.
 </p>
 <h3 id="csscompositingkeyword">Properties</h3>
 <h4 id="alpha-compositing">The <span class="prop-name">'alpha-compositing'</span> property</h4>
@@ -1313,7 +1305,7 @@ This behaviour is described in more detail in <a href="#isolatedgroups">Isolated
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
-            <td>All HTML elements. In SVG, it applies to all container elements except 'mask'</span></td>
+            <td>All HTML elements. In SVG, it applies to all container elements except <a href="http://www.w3.org/TR/SVG/masking.html#Masking">'mask'</a></span></td>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
@@ -1337,7 +1329,9 @@ This behaviour is described in more detail in <a href="#isolatedgroups">Isolated
 </dl>
 </div>
 <p>
-For an individual layer 'isolation' is always 'isolate'. This means that the content of a layer always establishes its own context. For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content in other layers or the content that is underneath.
+For an individual layer 'isolation' is always 'isolate'. This means that the content of a layer always establishes its own context. For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content in other layers or the content that is underneath.</p>
+<p>
+In SVG, <a href="http://www.w3.org/TR/SVG/masking.html#Masking">'mask'</a> always creates an isolated group.
 </p>
 
 <h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
@@ -1444,7 +1438,7 @@ as follows:</p>
 	compositing-style = clear | source | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | plus 
 </pre>
 <p>
-Background images will always composite with each other with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'false'.
+Background images will always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'false'.
 </p>
 
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
