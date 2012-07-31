@@ -219,14 +219,14 @@
 
    <h1>Compositing and Blending 1.0</h1>
 
-   <h2 class="no-num no-toc" id=july-2012>25 July 2012</h2>
+   <h2 class="no-num no-toc" id=july-2012>30 July 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-compositing-20120730/-->
+     <!--http://www.w3.org/TR/2012/WD-compositing-20120731/-->
 
     <dt>Latest version:
 
@@ -338,7 +338,7 @@
    <li><a href="#introduction"><span class=secno>1. </span>Introduction</a>
     <ul class=toc>
      <li><a href="#whatiscompositing"><span class=secno>1.1. </span>What is
-      compositing</a>
+      compositing?</a>
 
      <li><a href="#simplealphacompositing"><span class=secno>1.2.
       </span>simple alpha compositing</a>
@@ -577,7 +577,7 @@
    Duff compositing and blending. The second part describes the properties
    used to control the compositing in CSS. <br>
 
-  <h3 id=whatiscompositing><span class=secno>1.1. </span>What is compositing</h3>
+  <h3 id=whatiscompositing><span class=secno>1.1. </span>What is compositing?</h3>
 
   <p> Compositing is the combining of a graphic element with its backdrop.
 
@@ -686,7 +686,7 @@ cs = Cs x αs
    values becomes
 
   <pre>
-co = cs + Cb x αb x (1 - αs)
+co = cs + cb x (1 - αs)
 </pre>
 
   <p> To extract the color component of a pre-multiplied value, the formula
@@ -1774,19 +1774,27 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <p> If an element specifies non-default blending, compositing or <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
-   class=property>opacity</code>’</a>, its renderstyle and that of all of
-   its children will revert to ‘<code class=property>flat</code>’.<br>
+   class=property>opacity</code>’</a>, its <a
+   href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a>
+   and that of all of its children will revert to ‘<code
+   class=property>flat</code>’.<br>
    The application of non-default blending or compositing to an element
    formatted with the CSS box model also establishes a <a
-   href="http://www.w3.org/TR/CSS21/zindex.html">pseudo-stacking-context</a>
-   the same way that CSS <a
+   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the
+   same way that CSS <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a> does. One of the consequences is that
    elements with z-index will not honor the depth of elements outside of the
    group.
 
+  <p class=issue>The following definition needs to be elaborated
+
   <p> Order: first filtering is applied, followed by blending and then
    compositing.
+
+  <p class=issue>The following definition is incorrect and will be rewritten
+   based on the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking
+   context</a>
 
   <p> Conceptually all HTML elements are part of a group that consists of the
    following sub groups, each containing a single element. In stacking order:
@@ -1858,7 +1866,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>
@@ -1936,7 +1944,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>
@@ -1999,7 +2007,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>
@@ -2070,7 +2078,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
    Note that knockout applies to blending as well as compositing. The end
@@ -2136,7 +2144,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>
@@ -2200,7 +2208,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>
@@ -2263,7 +2271,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>
@@ -2330,7 +2338,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>
@@ -2364,7 +2372,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td>blend-style [, blend-style]*
+        <td>blend-style
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -2394,7 +2402,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Animatable:</em>  
 
-        <td>yes
+        <td>no
      </table>
    </dl>
   </div>

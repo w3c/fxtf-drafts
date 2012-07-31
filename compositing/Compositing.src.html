@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">25 July 2012</h2>
+<h2 class="no-num no-toc">30 July 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -289,7 +289,7 @@ The first part of this document will describe the algorithms of Porter Duff comp
 The second part describes the properties used to control the compositing in CSS. <br/>
 </p>
 
-<h3 id="whatiscompositing">What is compositing</h3>
+<h3 id="whatiscompositing">What is compositing?</h3>
 <p>
 Compositing is the combining of a graphic element with its backdrop.
 <p>
@@ -377,7 +377,7 @@ Cs: the color value<br/>
 <p>
 Thus the formula for simple alpha compositing using pre-multplied values becomes
 <pre>
-co = cs + Cb x αb x (1 - αs)
+co = cs + cb x (1 - αs)
 </pre>
 </p>
 </p>
@@ -1172,12 +1172,14 @@ In both instances, the result of the group composite is composited onto the land
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="csscompositingrules">Behavior specific to CSS</h3>
 <p>
-If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its renderstyle and that of all of its children will revert to 'flat'.<br/>
-The application of non-default blending or compositing to an element formatted with the CSS box model also establishes a <a href="http://www.w3.org/TR/CSS21/zindex.html">pseudo-stacking-context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index will not honor the depth of elements outside of the group.
+If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> and that of all of its children will revert to 'flat'.<br/>
+The application of non-default blending or compositing to an element formatted with the CSS box model also establishes a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index will not honor the depth of elements outside of the group.
 </p>
+<p class="issue">The following definition needs to be elaborated</p>
 <p>
 Order: first filtering is applied, followed by blending and then compositing.
 </p>
+<p class="issue">The following definition is incorrect and will be rewritten based on the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a></p>
 <p>
 Conceptually all HTML elements are part of a group that consists of the following sub groups, each containing a single element.
 In stacking order:
@@ -1227,7 +1229,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1278,7 +1280,7 @@ This behaviour is described in more detail in <a href="#blending">Blending</a>.
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1327,7 +1329,7 @@ This behaviour is described in more detail in <a href="#isolatedgroups">Isolated
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1378,7 +1380,7 @@ This behavior of this keyword is described in more detail in <a href="#knockoutg
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1431,7 +1433,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1484,7 +1486,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1535,7 +1537,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1587,7 +1589,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
@@ -1614,7 +1616,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td>blend-style [, blend-style]*</td>
+            <td>blend-style</td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1638,7 +1640,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
-            <td>yes</td>
+            <td>no</td>
           </tr>
         </tbody>
       </table>
