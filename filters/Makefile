@@ -23,7 +23,9 @@
 # ...where "foo" and "bar" are your W3C username and password.
 
 SOURCEFILE=Filters.src.html
+LINKEDFILE=.Filters.linked.html
 OUTPUTFILE=index.html
+EXTERNALLINKS=perl external-spec-links.pl
 PROCESSCGI=http://cgi.w3.org/member-bin/process.cgi
 CURL=curl
 CURLFLAGS=
@@ -38,7 +40,10 @@ W3C_CSS_DIR=~/work/W3C/cvs/dev.w3.org/csswg/css3-shaders
 
 all: $(OUTPUTFILE) 
 
-$(OUTPUTFILE): $(SOURCEFILE)
+.%.linked.html : %.src.html
+	$(EXTERNALLINKS) "$<" > "$@"
+
+$(OUTPUTFILE): $(LINKEDFILE)
 ifeq (,$(PUBDATE))
 	$(CURL) $(CURLFLAGS) -K ~/.curl-w3.org -F file="@$<" -o "$@" -F group=FX -F output=html -F shortname=filter -F method=file $(PROCESSCGI)
 else
