@@ -4930,7 +4930,7 @@ class="element-name">'feCustom'</span></h2>
         The <a href="#security">security model</a> disallows any color value based conditions for the
         fragment shader. Authors may use the ''mix'' function for a basic control of compositing
         and color managment within a fragment shader. The processing model for ''mix'' is
-        provided <a href="#processing-model-mix">below</a>.
+        provided <a href="#shader-processing-model">below</a>.
         <dl>
           <dt>&lt;uri&gt;</dt>
           <dd>
@@ -4943,20 +4943,19 @@ class="element-name">'feCustom'</span></h2>
           <dt>&lt;blend-mode&gt;</dt>
           <dd>
             <p>
-              Each pixel can be blended with its backdrop by using one of the predefined blend modes and it's
+              Each pixel is blended with the <a href="#shader-processing-model"><i>mix color</i></a> by using one of the predefined blend modes and it's
               appropriate blend mode keyword (See [[COMPOSITING]]).
             </p>
           </dd>
           <dt>&lt;alpha-compositing&gt;</dt>
           <dd>
             <p>
-              Each pixel can be composed with its backdrop by using one of the predefined alpha-compositing
+              Each pixel is composed with the <a href="#shader-processing-model"><i>mix color</i></a> by using one of the predefined alpha-compositing
               operators and it's appropriate alpha-compositing keyword (See [[COMPOSITING]]).
             </p>
           </dd>
 
         </dl>
-        <p class="issue">backdrop should be the mix color?</p>
       </dd>
     </dl>
 
@@ -5118,30 +5117,35 @@ class="element-name">'feCustom'</span></h2>
 <p>
   When an <a>'feCustom element'</a> filter primitive is used in a filter graph, a ''texture'' parameter 
   can take a value of <span class="term">&lt;filter-primitive-reference&gt;</span> where <span class="term">&lt;filter-primitive-reference&gt;</span>
-  references the result of a previous filter primitive in the same filter graph. This result is used as a texture and must be CORS verified. 
-</p>
-
-<p class="issue">
-  The wording needs more tweaks. It must be verified that the texture does not include rendered content directly (like for SourceGraphic) or indireclty by inheriting the rendererd content from a previous primitive.
+  references the result of a previous filter primitive in the same filter graph. This result is used as a texture and must fulfill the <a href="#rendered-content-access-from-fragment-shaders">security requirments</a>. 
 </p>
 
 <div class="example">
-  <p class="issue">
-    This example does not fullfill the requirements above and is invalid. It needs to be replaced by a valid example.
+  <p>
+    The <a>'feCustom element'</a> filter primitive in the following examples requests the resulting texture of the previous filter primitive <a>'feTurbulence element'</a>. This texture gets passed to
+    the shader with the parameter name ''tex''.
   </p>
 
+  <pre>
+&lt;filter&gt;
+    &lt;feTurbulence type="fractalNoise" baseFrequency="0.4"
+        numOctaves="4" result="turbulence" /&gt;
+    &lt;feCustom fragmentShader="url(complex.fs)"
+        params="tex texture(turbulence)" /&gt;
+&lt;/filter&gt;</pre>
+</div>
+
+<div class="example">
   <p>
-    The <a>'feCustom element'</a> filter primitive references the previous filter primitives ''blur''
-    and ''turbulence''.
+    The <a>'feCustom element'</a> filter primitive in the following examples requests the resulting texture of the previous filter primitive <a>'feGaussianBlur element'</a>.
+    This primitive has access to rendered content, therefore the custom filter primitive must fall back to a <a href="#default-shaders">pass through</a>.
   </p>
 
   <pre>
 &lt;filter&gt;
     &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
-    &lt;feTurbulence type="fractalNoise" baseFrequency="0.4"
-        numOctaves="4" result="turbulence" /&gt;
     &lt;feCustom fragmentShader="url(complex.fs)"
-        params="tex1 texture(blur), tex2 texture(turbulence)" /&gt;
+        params="tex texture(blur)" /&gt;
 &lt;/filter&gt;</pre>
 </div>
 
@@ -5249,7 +5253,7 @@ class="element-name">'feCustom'</span></h2>
 </p>
 
 <p>
-  The last step, <strong>step 4</strong>, shows rasterized output. If the <a>'feCustom element'</a> primitive is the last primitive in the filter chain,
+  The last step, <strong>step 4</strong>, shows rasterized output. If the custom filter primitive is the last primitive in the filter chain,
   then this output is the filtered rendering of the element. Otherwise, the output of the primitive becomes the input to the next filter primitive using it.
 </p>
 
@@ -5288,14 +5292,18 @@ filter() syntax</h4>
 <h3 id="rendered-content-access-from-fragment-shaders">Rendered Content Access from Fragment Shaders</h3>
 
 <p>
-  Since a <a href="#feCustomElement">custom filter</a> effect is applying a processing operation on input 
+  Since a <a href="#feCustomElement">custom filter primitive</a> is applying a processing operation on input 
   values, it is important that no protected information leaks from that operation. 
 </p>
 
 <p>
   A <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of the security issues</a> has led 
-  to the requirement that <a href="">vertex shaders</a> and <a href="">fragment shaders</a> do not get access 
+  to the requirement that vertex shaders and fragment shaders do not get access 
   to the rendered content in order to prevent <a href="http://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.
+</p>
+
+<p>
+  If a custom filter primitive does not fulfill these requirements, the primitive is a <a href="#default-shaders">pass through</a>.
 </p>
 
 
@@ -5525,7 +5533,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   </p>
   
   <p>Because of the <a href="#security">security restrictions</a>, fragment shaders are not allowed to 
-      access rendered content pixel values directly and therefore. However, fragment shaders in this specification
+      access rendered content pixel values directly. However, fragment shaders in this specification
       have the option to compute a value that is automatically mixed with the rendered content values (but without
       ever providing direct access to these values to the shader code).</p>
       
