@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">31 July 2012</h2>
+<h2 class="no-num no-toc">2 August 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -606,7 +606,7 @@ The use of <a href="#knockoutgroups">knockout groups</a> changes this definition
 
 <h3 id="groupinvariance">Group invariance</h3>
 <p>
-An important behavior of simple alpha compositing is its group invariance. This behaviour is preserved in the more complex model described in this specification.
+An important behavior of simple alpha compositing is its group invariance. This behavior is preserved in the more complex model described in this specification.
 Adding or removing grouping with default attributes shall not show visual differences.<br/>
 <pre>so: A + B + C = A + (B + C) = (A + B) + C</pre>
 When adding attributes to the group such as knockout, isolate, blending modes other than normal or Porter Duff compositing operators other than source-over, groups may no longer be invariant.
@@ -1182,10 +1182,13 @@ Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html
 In SVG, every element will create a group.<br/>
 Most implementations can optimize this by not treating elements with default arguments as groups.
 </p>
+
 <h3 id="csscompositingkeyword">Properties</h3>
 <h4 id="alpha-compositing">The <span class="prop-name">'alpha-compositing'</span> property</h4>
 <p>
-  The description of the <span class="prop-name">'alpha-compositing'</span> property is
+Defines the compositing mode used when compositing an element onto a page or group.<br/>
+This behavior is described in more detail in <a href="#advancedcompositing">Advanced compositing features</a>.<br/>
+The description of the <span class="prop-name">'alpha-compositing'</span> property is
 as follows:</p>
 
 <div class="propdef">
@@ -1236,8 +1239,8 @@ Elements will always composite with <a href="#groupcompositingcliptoself">'clip-
 
 <p>
 Defines the blend mode used when compositing an element onto the page.
-The blend mode defines the formula used to mix colors when shapes overlap.
-This behaviour is described in more detail in <a href="#blending">Blending</a>.
+The blend mode defines the formula used to mix colors when shapes overlap.<br/>
+This behavior is described in more detail in <a href="#blending">Blending</a>.
   
 <div class="propdef">
 <dl>
@@ -1283,9 +1286,9 @@ This behaviour is described in more detail in <a href="#blending">Blending</a>.
 <h4 id="enable-background">The <span class="prop-name">'isolation'</span> property</h4>
 <p>
 Defines whether a group is isolated or not.<br />
-When a group is isolated, the elements within the group are composited onto an empty backdrop, prior to the group being composited onto the page.<br />
-The default behaviour is for groups to be non-isolated. In this case, the elements within the group are composited onto a backdrop made up of everything underneath the group. The group is then composited onto the page.<br />
-This behaviour is described in more detail in <a href="#isolatedgroups">Isolated Gropus</a>.
+When a group is isolated, the group's elements will not look at content outside that group when calculating the backdrop.<br />
+The default behavior is for groups to be non-isolated. <br/>
+This behavior is described in more detail in <a href="#isolatedgroups">Isolated Gropus</a>.
 </p>
 
 <div class="propdef">
@@ -1329,17 +1332,17 @@ This behaviour is described in more detail in <a href="#isolatedgroups">Isolated
 </dl>
 </div>
 <p>
-For an individual layer 'isolation' is always 'isolate'. This means that the content of a layer always establishes its own context. For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with the content in other layers or the content that is underneath.</p>
+In CSS, the 'isolation' property of an &lt;img&gt; or a background image is always 'isolate'. For instance, if you link to an SVG file through the 'img' tag, the content of that SVG will not blend with its backdrop.</p>
 <p>
 In SVG, <a href="http://www.w3.org/TR/SVG/masking.html#Masking">'mask'</a> always creates an isolated group.
 </p>
 
 <h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
 <p>
-Defines whether a group is a knock-out group.
-When knock-out="knock-out", the group is a knock-out group. The elements within the group are always composited onto the <a href="#initialbackdrop">initial backdrop</a>. This effectively 'knocks out' any element from within the group that is already drawn.
-When knock-out="preserve", the group is not a knock-out group. Elements within the group are composited onto one another, with the first element in the group being composited onto the <a href="#initialbackdrop">initial backdrop</a>.
-This behavior of this keyword is described in more detail in <a href="#knockoutgroups">Knockout Groups</a>.
+Defines whether a group is a knock-out group.<br/>
+When a group is set to 'knock-out', the elements within the group only composite and blend with elements outside that group. This effectively 'knocks out' any element from within the group that is already drawn. The end result is as if every shape composites with a 'clear' operation (with clip-to-self enabled) first before it blends and composites.<br/>
+When 'knock-out' is set to 'preserve', the group is not a knock-out group and its elements composite normally.<br/>
+The behavior of this keyword is described in more detail in <a href="#knockoutgroups">Knockout Groups</a>.
 
 <div class="propdef">
 <dl>
@@ -1380,7 +1383,6 @@ This behavior of this keyword is described in more detail in <a href="#knockoutg
       </table>
     </dd>
 </dl>
-Note that knockout applies to blending as well as compositing. The end result is if every shape composites with a 'clear' operation (with clip-to-self enabled) before it blends and composites.
 </div>
 
 <h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
