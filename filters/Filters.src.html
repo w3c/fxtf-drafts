@@ -326,32 +326,32 @@
 </table>
 <ol>
   <li>
-    Filter primitive <code>feGaussianBlur</code> takes input <a>SourceAlpha</a>,
+    Filter primitive <a>'feGaussianBlur'</a> takes input <a>'SourceAlpha'</a>,
     which is the alpha channel of the source graphic. The result is stored in a
     temporary buffer named "blur". Note that "blur" is used as input to both
     filter primitives 2 and 3.
   </li>
   <li>
-    Filter primitive <code>feOffset</code> takes buffer "blur", shifts the result in
+    Filter primitive <a>'feOffset'</a> takes buffer "blur", shifts the result in
     a positive direction in both x and y, and creates a new buffer named
     "offsetBlur". The effect is that of a drop shadow.
   </li>
   <li>
-    Filter primitive <code>feSpecularLighting</code>, uses buffer "blur" as a model
+    Filter primitive <a>'feSpecularLighting'</a>, uses buffer "blur" as a model
     of a surface elevation and generates a lighting effect from a single point
     source. The result is stored in buffer "specOut".
   </li>
   <li>
-    Filter primitive <code>feComposite</code> masks out the result of filter
+    Filter primitive <a>'feComposite'</a> masks out the result of filter
     primitive 3 by the original source graphics alpha channel so that the
     intermediate result is no bigger than the original source graphic.
   </li>
   <li>
-    Filter primitive <code>feComposite</code> composites the result of the specular
+    Filter primitive <a>'feComposite'</a> composites the result of the specular
     lighting with the original source graphic.
   </li>
   <li>
-    Filter primitive <code>feMerge</code> composites two layers together. The lower
+    Filter primitive <a>'feMerge'</a> composites two layers together. The lower
     layer consists of the drop shadow result from filter primitive 2. The upper
     layer consists of the specular lighting result from filter primitive 5.
   </li>
@@ -410,31 +410,34 @@
     [<a href="#ref-CSSOM">CSSOM</a>]).
   </p>
 </dd>
-<dt id="TermUserCoordinateSystem"><dfn>local coordinate system</dfn>, <dfn>user coordinate system</dfn></dt>
+<dt id="TermLocalCoordinateSystem"><dfn>local coordinate system</dfn></dt>
 <dd>
   <p>
     In general, a coordinate system defines locations and distances on the current
     canvas. The current local coordinate system (also user coordinate system) is the
     coordinate system that is currently active and which is used to define how
     coordinates and lengths are located and computed, respectively, on the current
-    canvas.
+    canvas [[CSS3-TRANSFORMS]].
   </p>
   <p>
     For elements that have an associated CSS layout box, the current user coordinate system has its origin at
-    the top-left corner of the <span class="term">bounding client rect</span> and one unit equals on CSS px.
+    the top-left corner of the <span class="term">bounding client rect</span> and one unit equals one CSS pixel.
     The viewport for resolving percentage values is defined by the width and height of the
     <span class="term">bounding client rect</span>.
   </p>
   <p>
     If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code>
-    namespace, the current user coordinate system has its origin at the top-left corner of the element's
+    namespace, the current local coordinate system has its origin at the top-left corner of the element's
     nearest viewport.
   </p>
 </dd>
+<dt id="TermUserCoordinateSystem"><dfn>user coordinate system</dfn></dt>
+<dd>
+  See definition of <span class="term">local coordinate system</span>.
+</dd>
 <dt id="TermObjectBoundingBoxUnits"><dfn>object bounding box units</dfn></dt>
 <dd>
-  The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a>.
-  <p class="issue">Reference to SVG missing?</p>
+  The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a> [[!SVG11]].
 </dd>
 <dt id="TermFilterPrimitiveElements"><dfn>filter primitives</dfn>, <dfn>filter primitive elements</dfn></dt>
 <dd>
@@ -631,10 +634,10 @@
 <p>The blue border delimit the filter region. The margins are represented by:</p>
 
 <ul>
-  <li>A: filter-margin-left</li>
-  <li>B: filter-margin-right</li>
-  <li>C: filter-margin-top</li>
-  <li>D: filter-margin-bottom</li>
+  <li>A: 'filter-margin-left'</li>
+  <li>B: 'filter-margin-right'</li>
+  <li>C: 'filter-margin-top'</li>
+  <li>D: 'filter-margin-bottom'</li>
 </ul>
 
 <table class="propdef">
@@ -801,7 +804,7 @@
     An <a>IRI reference</a>
     to a <a>'filter element'</a> element that defines the
     filter effect. For example ''url(commonfilters.xml#large-blur)''. If the IRI references a non-existent object or the referenced  
-    object is not a <a>'filter element'</a> element, then the <a>null filter</a> will be applied instead.
+    object is not a <a>'filter element'</a> element, then the <span class="term">null filter</term> will be applied instead.
   </dd>
 
   <dt>
@@ -822,7 +825,7 @@
     Converts the input image to sepia. The passed parameter defines the proportion
     of the conversion. A value of 100% is completely sepia. A value of 0 leaves the
     input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the 'amount' parameter is missing, a value of 100% is used.
+    If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
   </dd>
 
@@ -992,7 +995,7 @@
   The first function in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as
   the input image. Subsequent operations take the output from the 
   previous function as the input image. The exception is the function
-  that references a 'filter element' element, which can specify an
+  that references a <a>'filter element'</a> element, which can specify an
   alternate input, but still uses the previous output as its
   <a href="#SourceGraphic">SourceGraphic</a>.
 </p>
@@ -1017,10 +1020,10 @@ follows:</p>
   class="adef">primitiveUnits</span> = "<em>userSpaceOnUse</em> |
   <em>objectBoundingBox</em>"</dt>
     <dd>Specifies the coordinate system for the various length values within
-      the <a>filter primitives</a> and for the attributes that define the <a>filter primitive subregion</a>.<br />
+      the <span class="term">filter primitives</span> and for the attributes that define the <a>filter primitive subregion</a>.<br />
       If <span class='attr-value'>primitiveUnits="userSpaceOnUse"</span>, any length values
-      within the filter definitions represent values in the <a href="#TermCurrentUserCoordinateSystem">current user
-      coordinate system</a> in place at the time when the <a>'filter element'</a>
+      within the filter definitions represent values in the current <span class="term">user
+      coordinate system</span> in place at the time when the <a>'filter element'</a>
       element is referenced (i.e., the user coordinate system for the element
       referencing the <a>'filter element'</a> element via a 'filter'
       property).<br />
@@ -1233,7 +1236,7 @@ which the filter is applied.
 
 <p>
   The property which enables access to the background image is
-<a>'enable-background'</a>:</p>
+'enable-background':</p>
 
 <table summary="enable-background property" class="propdef">
   <tbody>
@@ -1275,7 +1278,7 @@ which the filter is applied.
   </tbody>
 </table>
 
-<p><a>'enable-background'</a> is only
+<p>'enable-background' is only
   applicable to <a>container elements</a>
   and specifies how the <a>SVG user agent</a> manages the accumulation
   of the background image.</p>
@@ -1297,7 +1300,7 @@ which the filter is applied.
 initial/default value) depends on context:</p>
 <ul>
   <li>If an ancestor <a>container element</a>
-    element has a property value of <span class="attr-value">'enable-background:new'</span>, then all
+    element has a property value of ''enable-background: new'', then all
     renderable child elements of the current <a>container element</a>
     element are rendered both onto the parent <a>container element</a>
     element's background image canvas and onto the target device.</li>
@@ -1311,7 +1314,7 @@ initial/default value) depends on context:</p>
   If a filter effect specifies either the <a>BackgroundImage</a> or the 
   <a>BackgroundAlpha</a> pseudo input images and no
 ancestor <a>container element</a>
- element has a property value of <span class="attr-value">'enable-background:new'</span>, then the background
+ element has a property value of ''enable-background: new'', then the background
 image request is technically in error. Processing will proceed without
 interruption (i.e., no error message) and a transparent black image shall be
 provided in response to the request.</p>
@@ -1325,14 +1328,12 @@ provided in response to the request.</p>
 ancestors A<sub>1</sub> (its immediate parent), A<sub>2</sub>, etc. (Note:
 A<sub>0</sub> is E.) Each ancestor A<sub>i</sub> will have a corresponding
 temporary background image offscreen buffer BUF<sub>i</sub>. The contents of
-the <em>background image</em> available to a <a href="#FilterElement"><span
-class="element-name">'filter'</span></a> referenced by E is defined as
-follows:</p>
+the <em>background image</em> available to a <a>'filter element'</a>
+referenced by E is defined as follows:</p>
 <ul>
   <li>Find the element A<sub>i</sub> with the smallest subscript i (including
-    A<sub>0</sub>=E) for which the <a href="#EnableBackgroundProperty"><span
-    class="prop-name">'enable-background'</span></a> property has the value
-    <span class="prop-value">new</span>. (Note: if there is no such ancestor
+    A<sub>0</sub>=E) for which the 'enable-background' property has the value
+    ''new''. (Note: if there is no such ancestor
     element, then there is no background image available to E, in which case
     a transparent black image will be used as E's background image.)</li>
   <li>For each A<sub>i</sub> (from i=n to 1), initialize BUF<sub>i</sub> to
@@ -1346,8 +1347,8 @@ follows:</p>
     (Note that for the case of A<sub>0</sub>=E, the graphical contents of E
     are not rendered into BUF<sub>1</sub> and thus are not part of the
     background image available to E. Instead, the graphical contents of E are
-    available via the <a href="#SourceGraphic">SourceGraphic</a> and <a
-    href="#SourceAlpha">SourceAlpha</a> pseudo input images.)</li>
+    available via the <a href="#SourceGraphic">SourceGraphic</a> and
+    <a>'SourceAlpha'</a> pseudo input images.)</li>
   <li>Then, for each A<sub>i</sub> (from i=1 to n-1), composite
     BUF<sub>i</sub> into BUF<sub>i+1</sub>.</li>
   <li>The accumulated result (i.e., BUF<sub>n</sub>) represents the
@@ -1522,14 +1523,12 @@ operations is determined by the value of property <a>'color-interpolation-filter
 primitive</a>. A different property, <a>'color-interpolation'</a> determines the color space for
 other color operations. Because these two properties have different initial
 values (<a>'color-interpolation-filters'</a> has an
-initial value of <span class="prop-value">linearRGB</span> whereas <a>'color-interpolation'</a> has an initial value of <span class="prop-value">sRGB</span>), in some cases to achieve certain results
+initial value of <span class="prop-value">linearRGB</span> whereas <a>'color-interpolation'</a> has an initial value of ''sRGB''), in some cases to achieve certain results
 (e.g., when coordinating gradient interpolation with a filtering operation)
-it will be necessary to explicitly set <a>'color-interpolation'</a> to <span
-class="prop-value">linearRGB</span> or <a>'color-interpolation-filters'</a> to <span
-class="prop-value">sRGB</span> on particular elements. Note that the examples
-below do not explicitly set either <a>'color-interpolation'</a> or <a>'color-interpolation-filters'</a>, so the initial values for these properties apply to the examples.</p>
+it will be necessary to explicitly set <a>'color-interpolation'</a> to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples
+below do not explicitly set either <a>'color-interpolation'</a> or 'color-interpolation-filters', so the initial values for these properties apply to the examples.</p>
 
-<p><span class="requirement" id="assert_undefinedPixels">Sometimes <a>filter primitives</a> result in undefined pixels. For example,
+<p><span class="requirement" id="assert_undefinedPixels">Sometimes <span class="term">filter primitives</span> result in undefined pixels. For example,
 filter primitive <a>'feOffset'</a> can shift an image down and to the
 right, leaving undefined pixels at the top and left. In these cases, the
 undefined pixels are set to transparent black.</span></p>
@@ -5289,7 +5288,7 @@ filter() syntax</h4>
 
 <h2 id="security">Security</h2>
 
-<h3 id="rendered-content-access-from-fragment-shaders">Rendered Content Access from Fragment Shaders</h3>
+<h3 id="rendered-content-access-from-fragment-shaders">Rendered Content Access in custom filter primitives</h3>
 
 <p>
   Since a <a href="#feCustomElement">custom filter primitive</a> is applying a processing operation on input 
