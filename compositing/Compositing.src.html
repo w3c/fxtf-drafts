@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">2 August 2012</h2>
+<h2 class="no-num no-toc">3 August 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -743,7 +743,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = 0
     αo = 0
 </pre>
-<h4 id="porterduffcompositingoperators_src">Source</h4>
+<h4 id="porterduffcompositingoperators_src">Copy</h4>
 <p>Only the source will be present.</p>
 <img src="examples/PD_src.svg"/>
 <pre>
@@ -830,8 +830,8 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs x (1 - αb) + αb x Cb x (1 – αs)
     αo = αs x (1 - αb) + αb x (1 – αs)
 </pre>
-<h4 id="porterduffcompositingoperators_plus">Plus</h4>
-<p>Plus is an additional operator that is defined in the Porter Duff paper [3].</p>
+<h4 id="porterduffcompositingoperators_plus">Lighter</h4>
+<p>Display the sum of the source image and destination image. It is defined in the Porter Duff paper [3] as the 'plus' operator.</p>
 <pre>
     Fa = 1; Fb = 1
     co = αs x Cs + αb x Cb;
@@ -1200,7 +1200,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> clear | source | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | plus</td>
+            <td> clear | copy | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | lighter</td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1437,7 +1437,7 @@ as follows:</p>
 </dl>
 </div>
 <pre>
-	compositing-style = clear | source | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | plus 
+	compositing-style = clear | copy | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | lighter 
 </pre>
 <p>
 Background images will always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'false'.

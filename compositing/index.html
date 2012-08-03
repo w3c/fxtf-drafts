@@ -219,14 +219,14 @@
 
    <h1>Compositing and Blending 1.0</h1>
 
-   <h2 class="no-num no-toc" id=august-2012>2 August 2012</h2>
+   <h2 class="no-num no-toc" id=august-2012>3 August 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-compositing-20120802/-->
+     <!--http://www.w3.org/TR/2012/WD-compositing-20120803/-->
 
     <dt>Latest version:
 
@@ -382,7 +382,7 @@
         class=secno>5.1.1. </span>Clear</a>
 
        <li><a href="#porterduffcompositingoperators_src"><span
-        class=secno>5.1.2. </span>Source</a>
+        class=secno>5.1.2. </span>Copy</a>
 
        <li><a href="#porterduffcompositingoperators_dst"><span
         class=secno>5.1.3. </span>Destination</a>
@@ -415,7 +415,7 @@
         class=secno>5.1.12. </span>XOR</a>
 
        <li><a href="#porterduffcompositingoperators_plus"><span
-        class=secno>5.1.13. </span>Plus</a>
+        class=secno>5.1.13. </span>Lighter</a>
       </ul>
 
      <li><a href="#groupcompositing"><span class=secno>5.2. </span>Group
@@ -1155,7 +1155,7 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_src"><span class=secno>5.1.2.
-   </span>Source</h4>
+   </span>Copy</h4>
 
   <p>Only the source will be present.
 
@@ -1299,10 +1299,11 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
   <h4 id="porterduffcompositingoperators_plus"><span class=secno>5.1.13.
-   </span>Plus</h4>
+   </span>Lighter</h4>
 
-  <p>Plus is an additional operator that is defined in the Porter Duff paper
-   [3].
+  <p>Display the sum of the source image and destination image. It is defined
+   in the Porter Duff paper [3] as the ‘<code class=property>plus</code>’
+   operator.
 
   <pre>
     Fa = 1; Fb = 1
@@ -1829,9 +1830,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> clear | source | destination | source-over | destination-over |
+        <td> clear | copy | destination | source-over | destination-over |
          source-in | destination-in | source-out | destination-out |
-         source-atop | destination-atop | xor | plus
+         source-atop | destination-atop | xor | lighter
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -2148,7 +2149,7 @@ components having the minimum, middle, and maximum values upon entry to the func
   </div>
 
   <pre>
-	compositing-style = clear | source | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | plus 
+	compositing-style = clear | copy | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | lighter 
 </pre>
 
   <p> Background images will always composite with <a
