@@ -1507,7 +1507,7 @@ to achieve a particular filter effect.</p>
 <p>
   Unless otherwise stated, all image filters operate on premultiplied RGBA
 samples. Filters which work more naturally on non-premultiplied data
-(<a>'feColorMatrix'</a> and <a>'feComponentTransfer'</a>) will temporarily undo and redo
+(<a>'feColorMatrix'</a>, <a>'feCustom'</a> and <a>'feComponentTransfer'</a>) will temporarily undo and redo
 premultiplication as specified. All raster effect filtering operations take 1
 to N input RGBA images, additional attributes as parameters, and produce a
 single output RGBA image.</p>
@@ -4820,6 +4820,8 @@ class="element-name">'feCustom'</span></h2>
             </dd>
         </dl>
     </div>
+
+    <p>The calculations are performed on non-premultiplied color values. If the input graphics consists of premultiplied color values, those values are automatically converted into non-premultiplied color values for this operation.</p>
     
     <div>
         <dl>
@@ -4959,7 +4961,7 @@ class="element-name">'feCustom'</span></h2>
     </dl>
 
     <p>
-      The lacuna value for 'fragmentShader' is ''mix(&lt;default-fragment-shader&gt; normal source-over)''.
+      The lacuna value for 'fragmentShader' is ''mix(&lt;default-fragment-shader&gt; normal source-atop)''.
     </p>
     
     <h3 id="vertexMesh-attribute">The <span class="attr-name">‘vertexMesh’</a> attribute</h3>
@@ -5240,10 +5242,11 @@ class="element-name">'feCustom'</span></h2>
   Each color value passed to the fragment shader gets multiplied with the <i>color matrix</i>, a predefined fragment shader variable that represents a
   4x4 matrix. The matrix is initialized to an identity matrix, but can be set by a fragment shader. The resulting color is the <i>multiplied color</i>.
 </p>
+<p class="issue">Note that color matrices usually operate on 5x4 values, where the last column defines an offset that is added to the color value. The WG may consider to turn the current 4x4 matrix into a 5x4 matrix.</p>
 
 <p>
-  The <i>mix color</i> is a second, predefined fragment shader variable and represents a <var>&lt;color&gt;</var> value. The <i>mix color</i> can be set
-  by the fragment shader. The ''RGB'' channels of the <i>multiplied color</i> get blended with the ''RGB'' channels of hte <i>mix color</i> with the <i>multiplied color</i> as destination and the <i>mix color</i> as source [[!compositing]]. The applied blend mode depends on the passed &lt;blend-mode&gt; parameter which is ''normal'' by default. The result of the blending and the opacity of the <i>mix color</i> define the <i>blended color</i>.
+  The <i>mix color</i> is a second, predefined fragment shader variable and represents an ''RGBA'' <var>&lt;color&gt;</var> value. The <i>mix color</i> can be set
+  by the fragment shader. If not specified, the default value is transparent black. The ''RGB'' channels of the <i>multiplied color</i> get blended with the ''RGB'' channels of the <i>mix color</i> with the <i>multiplied color</i> as destination and the <i>mix color</i> as source [[!compositing]]. The applied blend mode depends on the passed &lt;blend-mode&gt; parameter which is ''normal'' by default. The result of the blending and the opacity of the <i>mix color</i> define the <i>blended color</i>.
 </p>
 
 <p>
