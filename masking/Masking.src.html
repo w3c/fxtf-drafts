@@ -722,6 +722,74 @@ images”</a> for how 'mask-image' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
+<h2 id="the-mask-origin">The 'mask-origin' property</h2>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-origin</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;box&gt;</var>
+        [ , <var>&lt;box&gt;</var> ]*
+    <tr>
+      <th>Initial:
+      <td>padding-box
+    <tr>
+      <th>Applies to:
+      <td>all elements
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified
+    <tr>
+      <th>Animatable:
+      <td>no
+</table>
+
+<p>For elements rendered as a single box, specifies the
+<dfn id="mask-positioning-area">mask positioning area</dfn>.
+For elements rendered as multiple boxes (e.g., inline boxes on several
+lines, boxes on several pages) specifies which boxes 'box-decoration-break'
+operates on to determine the mask positioning area(s).
+
+<dl>
+  <dt><dfn title="''padding-box''!!'mask-origin' value">
+      ''padding-box''</dfn>
+  <dd>The position is relative to the padding box. (For single boxes
+    ''0 0'' is the upper left corner of the padding edge,
+    ''100% 100%'' is the lower right corner.)
+  <dt><dfn title="''border-box''!!'mask-origin' value">
+      ''border-box''</dfn>
+  <dd>The position is relative to the border box.
+  <dt><dfn>''content-box''</dfn>
+  <dd>The position is relative to the content box.
+</dl>
+
+<p>If the 'mask-attachment' value for this image is
+''fixed'', then this property has no effect: in this case the
+mask positioning area is the
+<a href="http://www.w3.org/TR/CSS21/visudet.html#containing-block-details">initial containing block</a> [[!CSS21]].
+
+<p class="note">Note that if 'mask-clip' is ''padding-box'',
+'mask-origin' is ''border-box'', 'mask-position' is
+''top left'' (the initial value), and the element has a
+non-zero border, then the top and left of the mask image will be
+clipped.
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-image' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
 <h2 id="mask-property">The 'mask' property</h2>
 
 <table class="propdef">

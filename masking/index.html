@@ -150,22 +150,25 @@
       class=property>mask-clip</code>’ property</a>
     </ul>
 
-   <li><a href="#mask-property"><span class=secno>9. </span>The ‘<code
+   <li><a href="#the-mask-origin"><span class=secno>9. </span>The ‘<code
+    class=property>mask-origin</code>’ property</a>
+
+   <li><a href="#mask-property"><span class=secno>10. </span>The ‘<code
     class=property>mask</code>’ property</a>
     <ul class=toc>
-     <li><a href="#MaskSources"><span class=secno>9.1. </span>Mask source
+     <li><a href="#MaskSources"><span class=secno>10.1. </span>Mask source
       content</a>
       <ul class=toc>
-       <li><a href="#MaskValues"><span class=secno>9.1.1. </span>Calculating
+       <li><a href="#MaskValues"><span class=secno>10.1.1. </span>Calculating
         mask values</a>
       </ul>
     </ul>
 
-   <li><a href="#MaskElement"><span class=secno>10. </span>The <span
+   <li><a href="#MaskElement"><span class=secno>11. </span>The <span
     class=element-name>‘<code class=property>mask</code>’</span> element
     </a>
     <ul class=toc>
-     <li><a href="#DirectMaskSource"><span class=secno>10.1. </span>Directly
+     <li><a href="#DirectMaskSource"><span class=secno>11.1. </span>Directly
       referencing a mask source</a>
     </ul>
 
@@ -1005,15 +1008,115 @@ body {
 
   <p class=note>Note that SVG elements without an associated CSS layout box
    don't have a ‘<code class=css>border-box</code>’ or ‘<code
-   class=css>padding-box</code>’ and ‘<code
-   class=css>content-box</code>’ is used as mask painting area instead.
+   class=css>padding-box</code>’ and ‘<a href="#content-box0"><code
+   class=css>content-box</code></a>’ is used as mask painting area instead.
+   
 
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=mask-property><span class=secno>9. </span>The ‘<a
+  <h2 id=the-mask-origin><span class=secno>9. </span>The ‘<code
+   class=property>mask-origin</code>’ property</h2>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=background-origin>background-origin</dfn>
+
+    <tr>
+     <th><a href="#values">Value</a>:
+
+     <td><a href="#ltboxgt"><var>&lt;box&gt;</var></a> [ , <a
+      href="#ltboxgt"><var>&lt;box&gt;</var></a> ]*
+
+    <tr>
+     <th>Initial:
+
+     <td>padding-box
+
+    <tr>
+     <th>Applies to:
+
+     <td>all elements
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>N/A
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>as specified
+
+    <tr>
+     <th>Animatable:
+
+     <td>no
+  </table>
+
+  <p>For elements rendered as a single box, specifies the <dfn
+   id=mask-positioning-area>mask positioning area</dfn>. For elements
+   rendered as multiple boxes (e.g., inline boxes on several lines, boxes on
+   several pages) specifies which boxes ‘<code
+   class=property>box-decoration-break</code>’ operates on to determine the
+   mask positioning area(s).
+
+  <dl>
+   <dt><dfn id=padding-box0 title="''padding-box''!!'mask-origin' value">
+    ‘<code class=css>padding-box</code>’</dfn>
+
+   <dd>The position is relative to the padding box. (For single boxes
+    ‘<code class=css>0 0</code>’ is the upper left corner of the padding
+    edge, ‘<code class=css>100% 100%</code>’ is the lower right corner.)
+
+   <dt><dfn id=border-box0 title="''border-box''!!'mask-origin' value">
+    ‘<code class=css>border-box</code>’</dfn>
+
+   <dd>The position is relative to the border box.
+
+   <dt><dfn id=content-box0>‘<code class=css>content-box</code>’</dfn>
+
+   <dd>The position is relative to the content box.
+  </dl>
+
+  <p>If the ‘<a href="#mask-attachment"><code
+   class=property>mask-attachment</code></a>’ value for this image is ‘<a
+   href="#fixed0"><code class=css>fixed</code></a>’, then this property has
+   no effect: in this case the mask positioning area is the <a
+   href="http://www.w3.org/TR/CSS21/visudet.html#containing-block-details">initial
+   containing block</a> <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
+
+  <p class=note>Note that if ‘<a href="#mask-clip"><code
+   class=property>mask-clip</code></a>’ is ‘<code
+   class=css>padding-box</code>’, ‘<code
+   class=property>mask-origin</code>’ is ‘<code
+   class=css>border-box</code>’, ‘<a href="#mask-position"><code
+   class=property>mask-position</code></a>’ is ‘<code class=css>top
+   left</code>’ (the initial value), and the element has a non-zero border,
+   then the top and left of the mask image will be clipped.
+
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
+  <h2 id=mask-property><span class=secno>10. </span>The ‘<a
    href="#mask"><code class=property>mask</code></a>’ property</h2>
 
   <table class=propdef>
@@ -1165,7 +1268,7 @@ body {
    class=property>mask</code>’</a> property is <span
    class=prop-value>‘<code class=property>none</code>’</span>.
 
-  <h3 id=MaskSources><span class=secno>9.1. </span>Mask source content</h3>
+  <h3 id=MaskSources><span class=secno>10.1. </span>Mask source content</h3>
 
   <p> The content and behavior of a mask can be defined using a <a
    class=element-name href=MaskElement>‘<code
@@ -1174,7 +1277,7 @@ body {
    property can refer directly to a graphics element or file to use as the
    mask source.
 
-  <h4 id=MaskValues><span class=secno>9.1.1. </span>Calculating mask values</h4>
+  <h4 id=MaskValues><span class=secno>10.1.1. </span>Calculating mask values</h4>
 
   <p class=note> The ability to use the alpha of a mask source as the mask
    values is new in SVG 2. In SVG 1.1 masks always use the luminance of the
@@ -1251,7 +1354,7 @@ body {
    were no mask but instead the alpha channel of the given object were
    multiplied with the mask's resulting mask values.
 
-  <h2 id=MaskElement><span class=secno>10. </span>The <a class=element-name
+  <h2 id=MaskElement><span class=secno>11. </span>The <a class=element-name
    href="#mask">‘<code class=property>mask</code>’</a> element</h2>
 
   <table class=propdef summary="mask element">
@@ -1789,7 +1892,7 @@ body {
    href=MaskElement>‘<code class=property>mask</code>’</a> element or any
    of its ancestors is set to <span class=prop-value>none</span>.</p>
 
-  <h3 id=DirectMaskSource><span class=secno>10.1. </span>Directly referencing
+  <h3 id=DirectMaskSource><span class=secno>11.1. </span>Directly referencing
    a mask source</h3>
 
   <p class=note> The ability to reference non-<a class=element-name
@@ -2026,11 +2129,18 @@ body {
     href="#ltattachmentgt" title="&lt;attachment&gt;"><strong>7.</strong></a>
     
 
+   <li>background-origin, <a href="#background-origin"
+    title=background-origin><strong>9.</strong></a>
+
    <li>‘<code class=css>border-box</code>’
     <ul>
      <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
       value, <a href="#border-box"
       title="''border-box'', 'mask-clip' value"><strong>8.1.</strong></a>
+
+     <li>‘<code class=property>mask-origin</code>’ value, <a
+      href="#border-box0"
+      title="''border-box'', 'mask-origin' value"><strong>9.</strong></a>
     </ul>
 
    <li>‘<code class=css>bottom</code>’
@@ -2053,7 +2163,8 @@ body {
       title="''center'', 'mask-position' value"><strong>8.</strong></a>
     </ul>
 
-   <li>‘<code class=css>content-box</code>’
+   <li>‘<a href="#content-box0"><code class=css>content-box</code></a>’,
+    <a href="#content-box0" title="''content-box''"><strong>9.</strong></a>
     <ul>
      <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
       value, <a href="#content-box"
@@ -2080,8 +2191,8 @@ body {
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="local coordinate system"><strong>4.</strong></a>
 
-   <li>mask, <a href="#MaskProperty" title=mask><strong>9.</strong></a>, <a
-    href="#mask" title=mask><strong>10.</strong></a>
+   <li>mask, <a href="#MaskProperty" title=mask><strong>10.</strong></a>, <a
+    href="#mask" title=mask><strong>11.</strong></a>
 
    <li>mask-attachment, <a href="#mask-attachment"
     title=mask-attachment><strong>7.</strong></a>
@@ -2111,6 +2222,9 @@ body {
    <li>mask-position, <a href="#mask-position"
     title=mask-position><strong>8.</strong></a>
 
+   <li>mask positioning area, <a href="#mask-positioning-area"
+    title="mask positioning area"><strong>9.</strong></a>
+
    <li>mask-repeat, <a href="#mask-repeat"
     title=mask-repeat><strong>6.</strong></a>
 
@@ -2129,6 +2243,10 @@ body {
      <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
       value, <a href="#padding-box"
       title="''padding-box'', 'mask-clip' value"><strong>8.1.</strong></a>
+
+     <li>‘<code class=property>mask-origin</code>’ value, <a
+      href="#padding-box0"
+      title="''padding-box'', 'mask-origin' value"><strong>9.</strong></a>
     </ul>
 
    <li><a href="#ltpositiongt"><var>&lt;position&gt;</var></a>, <a
@@ -2212,6 +2330,21 @@ body {
      <th>Media
 
    <tbody>
+    <tr>
+     <th><a class=property href="#background-origin">background-origin</a>
+
+     <td>&lt;box&gt; [ , &lt;box&gt; ]*
+
+     <td>padding-box
+
+     <td>all elements
+
+     <td>no
+
+     <td>N/A
+
+     <td>visual
+
     <tr>
      <th><a class=property href="#mask-attachment">mask-attachment</a>
 
