@@ -181,8 +181,8 @@ Table of contents</h2>
       <td><dfn>mask-image</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var>&lt;mask-image&gt;</var>
-      [ , <var>&lt;mask-image&gt;</var> ]*
+      <td><var>&lt;mask-source&gt;</var>
+      [ , <var>&lt;mask-source&gt;</var> ]*
     <tr>
       <th>Initial:
       <td>none
@@ -211,14 +211,49 @@ are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
 Where
 
-<pre class=prod><dfn><var>&lt;mask-image&gt;</var></dfn> = <var>&lt;image&gt;</var> | none</pre>
+<pre class=prod><dfn><var>&lt;mask-source&gt;</var></dfn> = <var>&lt;FuncIRI&gt;</var> | <var>&lt;image&gt;</var> | child | select(<var>&lt;compound-selector&gt;</var>) | none</pre>
 
-<p>A value of ''none''
-counts as an image layer but does not mask the element. An image that is empty
-(zero width or zero height), that
-fails to download, or that cannot be displayed (e.g., because it is
-not in a supported image format) clips the whole element and it's conten
-(as if the element gets not drawn).
+<dl>
+  <dt>
+    <a>&lt;FuncIRI&gt;</a>
+  </dt>
+  <dd>
+    An <a>IRI reference</a>
+    to a <a>'mask element'</a> element that defines the
+    filter effect. For example ''url(commonmasks.xml#mask)''.
+  </dd>
+  <dt>
+    <a>&lt;image&gt;</a>
+  </dt>
+  <dd>
+    A 2D image. (See [[!CSS3-IMAGES]].)
+  </dd>
+  <dt>child</dt>
+  <dd>
+    A keyword to indicate that the last child <a>'mask element'</a>
+    element should be used as the mask source. It is equivalent to
+    ''select(mask:last-of-type)''.</dd>
+  <dt>
+    select(<var><a href="types.html#DataTypeCompoundSelector">&lt;compound-selector&gt;</a>)</var>
+  </dt>
+  <dd>A <a>&lt;compound-selector&gt;</a> scoped at the element to which the
+    'mask' property is applied specifying the
+    element to use as the mask source.
+    As a result, only children of the target element may be used for the mask
+    source.
+  </dd>
+  <dt>
+    none
+  </dt>
+  <dd>
+    A value of ''none'' counts as an image layer but does not mask the element.
+  </dd>
+</dl>
+
+<p>An mask source that is empty
+(<var>&lt;image&gt;</var> with zero width or zero height), that
+fails to download, is non-existent or that cannot be displayed (e.g., because it is
+not in a supported image format) gets ignored. No masking is applied.
 
 <p>See the section <a href="#layering">“Layering multiple mask
 images”</a> for how 'mask-image' interacts with other
@@ -361,7 +396,7 @@ body {
 </div>
 
 <p>See the section <a href="#layering">“Layering multiple mask
-images”</a> for how 'mask-image' interacts with other
+images”</a> for how 'mask-repeat' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
@@ -468,7 +503,7 @@ h1 {
 </div>
 
 <p>See the section <a href="#layering">“Layering multiple mask
-images”</a> for how 'mask-image' interacts with other
+images”</a> for how 'mask-attachment' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
@@ -656,11 +691,11 @@ bottom and 3em from the right:
 </div>
 
 <p>See the section <a href="#layering">“Layering multiple mask
-images”</a> for how 'mask-image' interacts with other
+images”</a> for how 'mask-position' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
-<h3 id="the-mask-clip">The 'mask-clip' property</h3>
+<h2 id="the-mask-clip">The 'mask-clip' property</h2>
 
 <table class="propdef">
     <tr>
@@ -718,7 +753,7 @@ The syntax of the property is given with
 <p class=note>Note that SVG elements without an associated CSS layout box don't have a ''border-box'' or ''padding-box'' and ''content-box'' is used as mask painting area instead.
 
 <p>See the section <a href="#layering">“Layering multiple mask
-images”</a> for how 'mask-image' interacts with other
+images”</a> for how 'mask-clip' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
@@ -737,7 +772,7 @@ layer.
       <td>padding-box
     <tr>
       <th>Applies to:
-      <td>all elements
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
     <tr>
       <th>Inherited:
       <td>no
@@ -786,7 +821,283 @@ non-zero border, then the top and left of the mask image will be
 clipped.
 
 <p>See the section <a href="#layering">“Layering multiple mask
-images”</a> for how 'mask-image' interacts with other
+images”</a> for how 'mask-origin' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
+
+<h2 id="the-mask-size">The 'mask-size' property</h3>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-size</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;mask-size&gt;</var> [ , <var>&lt;mask-size&gt;</var> ]*
+    <tr>
+      <th>Initial:
+      <td>auto
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>see text
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified, but with lengths made absolute
+    <tr>
+      <th>Animatable:
+      <td>yes except keyword values
+</table>
+
+<p>Specifies the size of the mask images. Where
+
+<pre class=prod><dfn><var>&lt;mask-size&gt;</var></dfn> = [ <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | auto ]{1,2} | cover | contain</pre>
+
+<p>Values have the following meanings:
+
+<dl>
+  <dt><dfn>''contain''</dfn></dt>
+  <dd>Scale the image, while preserving its intrinsic aspect ratio
+    (if any), to the largest size such that both its width and its
+    height can fit inside the <span class=index>mask
+    positioning area.</span></dd>
+
+  <dt><dfn>''cover''</dfn></dt>
+  <dd>Scale the image, while preserving its intrinsic aspect ratio
+    (if any), to the smallest size such that both its width and its
+    height can completely cover the mask positioning area.</dd>
+
+  <dt>[ <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>
+  | <dfn title="''auto''!!'mask-size' value">auto</dfn> ]{1,2}</dt>
+  <dd>
+    <p>The first value gives the width of the corresponding image,
+    the second value its height. If only one value is given the second
+    is assumed to be ''auto''.
+
+    <p>A percentage is relative to the background positioning area.
+
+    <p>An ''auto'' value for one dimension is resolved by using the
+    image's intrinsic ratio and the size of the other dimension, or
+    failing that, using the image's intrinsic size, or failing that,
+    treating it as 100%.
+
+    <p>If both values are ''auto'' then the intrinsic width and/or
+    height of the image should be used, if any, the missing dimension
+    (if any) behaving as ''auto'' as described above. If the image has
+    neither an intrinsic width nor an intrinsic height, its size is
+    determined as for ''contain''.
+
+    <p>Negative values are not allowed.
+  </dd>
+</dl>
+
+<div class="example">
+<p>Here are some examples. The first example stretches the mask
+image independently in both dimensions to completely cover the content
+area:
+
+<pre>
+div {
+    mask-image: url(plasma.png);
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    mask-origin: content-box }
+</pre>
+
+<p>The second example stretches the image so that exactly two copies
+fit horizontally. The aspect ratio is preserved:
+
+<pre>
+p {
+    mask-image: url(tubes.png);
+    mask-size: 50% auto;
+    mask-origin: border-box }
+</pre>
+
+<p>This example forces the mask image to be 15 by 15 pixels:
+
+<pre>
+para {
+    mask-size: 15px 15px;
+    mask-image: url(tile.png)}
+</pre>
+
+<p>This example uses the image's intrinsic size. Note that this is the
+only possible behavior in CSS level&nbsp;1 and 2.
+
+<pre>
+body {
+    mask-size: auto;            /* default */
+    mask-image: url(flower.png) }
+</pre>
+
+<p>The following example rounds the height of the image to 33.3%, up
+from the specified value of 30%. At 30%, three images would fit
+entirely and a fourth only partially. After rounding, three images
+fit. The width of the image is 20% of the mask area width and is
+not rounded.
+
+<pre>
+p {
+    mask-image: url(chain.png);
+    mask-repeat: no-repeat round;
+    mask-size: 20% 30% }
+</pre>
+</div>
+
+<p>If 'mask-repeat' is ''round'' for one (or both) dimensions,
+there is a second step. The UA must scale the image in that dimension
+(or both dimensions) so that it fits a whole number of times in
+the mask positioning area. In the case of the width (height is
+analogous):
+
+<blockquote>
+  <p>If <var>X</var> &ne; 0 is the width of the image after step one
+  and <var>W</var> is the width of the mask positioning area,
+  then the rounded width
+  <var>X'</var> = <var>W</var> / round(<var>W</var> / <var>X</var>)
+  where round() is a function that returns the nearest natural number
+  (integer greater than zero).
+</blockquote>
+
+<p>If 'mask-repeat' is ''round'' for one dimension only and if
+'mask-size' is ''auto'' for the other dimension, then there is a third
+step: that other dimension is scaled so that the original aspect ratio
+is restored.
+
+<div class=example>
+<p>In this example the mask image is shown at its intrinsic size:
+
+<pre>
+div {
+  mask-image: url(image1.png);
+  mask-repeat: repeat;         /* default */
+  mask-size: auto }            /* default */
+</pre>
+
+<p>In the following example, the mask is shown with a width of
+3em and its height is scaled proportionally to keep the original
+aspect ratio:
+
+<pre>
+div {
+  mask-image: url(image2.png);
+  mask-repeat: repeat;         /* default */
+  mask-size: 3em }             /* = '3em auto' */
+</pre>
+
+<p>In the following example, the mask is shown with a width of
+approximately 3em: scaled so that it fits a whole number of times in
+the width of the mask. The height is scaled proportionally to
+keep the original aspect ratio:
+
+<pre>
+div {
+  mask-image: url(image3.png);
+  mask-repeat: round repeat;
+  mask-size: 3em auto }
+</pre>
+
+<p>In the following example, the mask image is shown with a
+width of 3em and a height that is either the height corresponding to
+that width at the original aspect ratio or slightly less:
+
+<pre>
+div {
+  mask-image: url(image4.png);
+  mask-repeat: repeat round;
+  mask-size: 3em auto }
+</pre>
+
+<p>In the following example, the mask image is shown with a
+height of approximately 4em: scaled slightly so that it fits a whole
+number of times in the mask height. The width is the approximately
+the width that correspond to a 4em height at the original aspect ratio:
+scaled slightly so that it fits a whole number of times in the mask
+width.
+
+<pre>
+div {
+  mask-image: url(image5.png);
+  mask-repeat: round;
+  mask-size: auto 4em }
+</pre>
+</div>
+
+<p>If the mask image's width or height resolves to zero, this
+causes the image not to be displayed. (The effect is the same as
+if it had been a transparent image.)
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-size' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
+<h2 id="the-mask-type">The 'mask-type' property</h3>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-type</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td>&lt;mask-type&gt;
+    <tr>
+      <th>Initial:
+      <td>auto
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified
+    <tr>
+      <th>Animatable:
+      <td>yes except keyword values
+</table>
+
+<p>The mask type determines which of the methods described in <a
+href="#MaskValues">Calculating mask values</a> should be used for calculating
+mask values from the mask source. Where
+
+<pre class=prod><dfn><var>&lt;mask-type&gt;</var></dfn> = luminance | alpha | auto</pre>
+
+<p>Values have the following meanings:
+
+<dl>
+  <dt><dfn>''luminance''</dfn></dt>
+  <dd>Indicates that the luminance values of the mask source should be used as the mask values.</dd>
+
+  <dt><dfn>''alpha''</dfn></dt>
+  <dd>Indicates that the alpha values of the mask source should be used as the mask values.</dd>
+
+  <dt><dfn>''auto''</dfn></dt>
+  <dd>If the mask source is a <a>'mask element'</a> element, the method used for calculating the
+    mask values is determined by the 'maskType' attribute on the <a>'mask element'</a> element.
+    Otherwise, the alpha values of the mask source should be used as the mask values.
+    <p class=issue>Should the default be ''luminance'' instead?</dd>
+</dl>
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-type' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
@@ -799,12 +1110,11 @@ layer.
   </tr>
   <tr>
     <th>Value:</th>
-    <td>[ <a>&lt;mask-source&gt;</a> [ luminance | alpha | auto ]? ]
-        | none </td>
+    <td>&lt;mask-layer&gt; [, &lt;mask-layer&gt;]* &lt;mask-type&gt;?</td>
   </tr>
   <tr>
     <th>Initial:</th>
-    <td>none</td>
+    <td>see individual properties</td>
   </tr>
   <tr>
     <th>Applies to:</th>
@@ -816,7 +1126,7 @@ layer.
   </tr>
   <tr>
     <th>Percentages:</th>
-    <td>N/A</td>
+    <td>see individual properties</td>
   </tr>
   <tr>
     <th>Media:</th>
@@ -824,98 +1134,16 @@ layer.
   </tr>
   <tr>
     <th>Computed&#160;value:</th>
-    <td>A <a>&lt;mask-source&gt;</a> followed by a mask type
-      (one of <span class="prop-value">luminance</span>,
-              <span class="prop-value">alpha</span>, or
-              <span class="prop-value">auto</span>),
-        or otherwise the keyword <span class="prop-value">none</span>.</td>
+    <td>see individual properties</td>
   </tr>
   <tr>
     <th><a>Animatable</a>:</th>
-    <td>yes</td>
+    <td>see individual properties</td>
   </tr>
 </table>
-<p>Where:</p>
-<dl>
-  <dt id="DataTypeMaskSource"><span class="prop-value">&lt;mask-source&gt;</span> =</dt>
-  <dd>
-    <a>&lt;funciri&gt;</a> | child | select(<a>&lt;compound-selector&gt;</a>)
-  </dd>
-</dl>
+<p>Where</p>
 
-<div class="issue">
-  We are currently investigating allowing a CSS 4 &lt;image&gt; here.
-</div>
-
-<p>
-The meaning of the different <a>&lt;mask-source&gt;</a> values is as follows:
-</p>
-
-<dl>
-  <dt><span class="prop-value"><a href="types.html#DataTypeFuncIRI">&lt;funciri&gt;</a></span></dt>
-  <dd>An <a>IRI reference</a> to another graphical object which will be used
-  as the mask source.</dd>
-  <dt><span class="prop-value">child</span></dt>
-  <dd>A keyword to indicate that the last child <a>'mask element'</a>
-  element should be used as the mask source. It is equivalent to
-  <span class="prop-value">select(mask:last-of-type)</span>.</dd>
-  <dt><span class="prop-value">select (<a href="types.html#DataTypeCompoundSelector">&lt;compound-selector&gt;</a>)</span></dt>
-  <dd>A <a>&lt;compound-selector&gt;</a> scoped at the element to which the
-    'mask' property is applied specifying the
-    element to use as the mask source.
-    As a result, only children of the target element may be used for the mask
-    source.
-  </dd>
-</dl>
-
-<p>
-If a <a>&lt;mask-source&gt;</a> is provided, a mask type may also be specified.
-The mask type determines which of the methods described in <a
-href="#MaskValues">Calculating mask values</a> should be used for calculating
-mask values from the mask source.
-</p>
-
-<p>
-If a <a>&lt;mask-source&gt;</a> is provided without a mask type, the value <span class="prop-value">auto</span> is used.
-</p>
-
-<p>
-If a mask type other than ''auto'' is specified
-and the <a>&lt;mask-source&gt;</a> refers to a <a>'mask element'</a> element
-with a <a>'mask/maskType'</a> attribute, the mask type specified on the 'mask'
-property takes precedence.
-</p>
-
-<p>The possible values for the mask type are as follows:</p>
-
-<dl>
-  <dt><span class="prop-value">luminance</span></dt>
-  <dd>
-  Indicates that the luminance values of the mask source should be used as the
-  mask values.
-  </dd>
-  <dt><span class="prop-value">alpha</span></dt>
-  <dd>
-  Indicates that the alpha values of the mask source should be used as the mask
-  values.
-  </dd>
-  <dt><span class="prop-value">auto</span></dt>
-  <dd>
-  If the mask source is a <a>'mask element'</a> element, the method used for
-  calculating the mask values is determined by the <a>'mask/maskType'</a>
-  attribute on the <a>'mask element'</a> element.
-  Otherwise, the alpha values of the mask source should be used as the 
-  mask values.
-  <p class="issue">
-    Should the default be <span class="prop-value">luminance</span> instead?
-  </p>
-  </dd>
-</dl>
-
-<p>
-  The <a>lacuna value</a> for the <span class="property">'mask'</span> property
-  is <span class="prop-value">'none'</span>.
-</p>
+<pre class=prod><dfn><var>&lt;mask-layer&gt;</var></dfn> = &lt;mask-source&gt; || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
 
 <h3 id="MaskSources">Mask source content</h3>
 
