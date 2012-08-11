@@ -173,6 +173,555 @@ Table of contents</h2>
 </dd>
 </dl>
 
+<h2 id="the-mask-image">The 'mask-image' property</h2>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-image</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;mask-image&gt;</var>
+      [ , <var>&lt;mask-image&gt;</var> ]*
+    <tr>
+      <th>Initial:
+      <td>none
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified, but with URIs made absolute
+    <tr>
+      <th>Animatable:
+      <td>no
+</table>
+
+<p>This property sets the mask image(s) of an element. Images
+are drawn with the first specified one on top (closest to the user)
+and each subsequent image behind the previous one.
+Where
+
+<pre class=prod><dfn><var>&lt;mask-image&gt;</var></dfn> = <var>&lt;image&gt;</var> | none</pre>
+
+<p>A value of ''none''
+counts as an image layer but does not mask the element. An image that is empty
+(zero width or zero height), that
+fails to download, or that cannot be displayed (e.g., because it is
+not in a supported image format) clips the whole element and it's conten
+(as if the element gets not drawn).
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-image' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
+<p class="note"><a href="http://www.w3.org/TR/media-frags/#naming-space">Media fragments</a>
+can be used to use a portion of an image as a mask. The
+<a href="http://www.w3.org/TR/css3-images/">CSS Images</a> module
+will provide fallback syntax for image formats and include additional
+controls for image display.
+
+<div class="example">
+<p>Some examples specifying mask images:</p>
+<pre>
+body { mask-image: linear-gradient(black 0%, transparent 100%) }
+p { mask-image: none }
+div { mask-image: url(tl.png), url(tr.png) }
+</pre>
+</div>
+
+<h2 id="the-mask-repeat">The 'mask-repeat' property</h3>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-repeat</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;repeat-style&gt;</var> [ , <var>&lt;repeat-style&gt;</var> ]*
+    <tr>
+      <th>Initial:
+      <td>repeat
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>A list, each item consisting of:
+        two keywords, one per dimension
+    <tr>
+      <th>Animatable:
+      <td>no
+</table>
+
+<p>Specifies how mask images are tiled after they have been
+<a href="#the-mask-size">sized</a> and <a href="#the-mask-position">positioned</a>.
+Where
+<pre class=prod><dfn><var>&lt;repeat-style&gt;</var></dfn> = repeat-x | repeat-y | [repeat | space | round | no-repeat]{1,2}</pre>
+
+<p>Single values for <var>&lt;repeat-style&gt;</var> have the following
+meanings:
+
+<dl>
+  <dt><dfn>''repeat-x''</dfn>
+  <dd>
+  Computes to ''repeat no-repeat''.
+
+  <dt><dfn>''repeat-y''</dfn>
+  <dd>
+  Computes to ''no-repeat repeat''.
+
+  <dt>''repeat''
+  <dd>
+  Computes to ''repeat repeat''.
+
+  <dt>''space''
+  <dd>
+  Computes to ''space space''
+
+  <dt>''round''
+  <dd>
+  Computes to ''round round''
+
+  <dt>''no-repeat''
+  <dd>
+  Computes to ''no-repeat no-repeat''
+</dl>
+
+<p>If a <var>&lt;repeat-style&gt;</var> value has two keywords, the first
+one is for the horizontal direction, the second for the vertical one,
+as follows:
+
+<dl>
+  <dt><dfn title="''repeat''!!'mask-repeat' value">''repeat''</dfn>
+  <dd>
+  The image is repeated in this direction as often as needed to cover
+  the <span class=index>mask painting area</span>.
+
+  <dt><dfn title="''space''!!'mask-repeat' value">''space''</dfn>
+  <dd>
+  The image is repeated as often as will fit within the
+  <span class=index>mask painting area</span> without being
+  clipped and then the images are spaced out to fill the area. The
+  first and last images touch the edges of the area. If the <span
+  class=index>mask painting area</span> is larger than the mask positioning area, then
+  the pattern repeats to fill the mask painting area.
+  The value of 'mask-position' for this direction
+  is ignored, unless there is not enough space for two copies of the
+  image in this direction, in which case only one image is placed and
+  'mask-position' determines its position in this
+  direction.
+
+  <dt><dfn title="''round''!!'mask-repeat' value">''round''</dfn>
+  <dd>
+  The image is repeated as often as will fit within the
+  <span class=index>mask painting area.</span> If it doesn't
+  fit a whole number of times, it is rescaled so that it does.
+  See the formula under 'mask-size'. If the <span
+  class=index>mask painting area</span> is larger than the mask positioning area, then
+  the pattern repeats to fill the mask painting area.
+
+  <dt><dfn title="''no-repeat''!!'mask-repeat' value">''no-repeat''</dfn>
+  <dd>
+  The image is placed once and not repeated in this direction.
+</dl>
+
+<p>Unless one of the two keywords is ''no-repeat'', the
+whole mask painting area will be tiled, i.e., not just one
+vertical strip and one horizontal strip.
+
+<div class="example">
+<p style="display:none">Example(s):
+<pre>
+body {
+  mask: url("pendant.png");
+  mask-repeat: repeat-y;
+  mask-position: center;
+}
+</pre>
+</div>
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-image' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
+<h2 id="the-mask-attachment">The 'mask-attachment' property</h2>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-attachment</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;attachment&gt;</var> [ , <var>&lt;attachment&gt;</var> ]*
+    <tr>
+      <th>Initial:
+      <td>scroll
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified
+    <tr>
+      <th>Animatable:
+      <td>no
+</table>
+
+<p class=issue>The support for 'mask-attachment' may be removed for SVG.
+
+<p>If mask images are specified, this property specifies whether
+they are fixed with regard to the <em class="index">viewport</em>
+(<dfn>''fixed''</dfn>) or scroll along with the element (<dfn>''scroll''</dfn>)
+or its contents (<dfn>''local''</dfn>). The property's value is given as
+a comma-separated list of &lt;attachment&gt; keywords where
+
+<pre class=prod><dfn><var>&lt;attachment&gt;</var></dfn> = scroll | fixed | local</pre>
+
+<dl>
+  <dt><dfn>fixed</dfn></dt>
+    <dd>The mask is fixed with regard to the viewport. In paged
+      media where there is no viewport, a ''fixed'' background is fixed
+      with respect to the <a href="http://www.w3.org/TR/CSS21/page.html#page-box">page box</a>
+      and therefore replicated on every page.
+      <span class="note">Note that there is only one viewport per view.
+      Even if an element has a scrolling mechanism (see  the 'overflow'
+      property [[!CSS21]]), a ''fixed'' background doesn't move with the
+      element.</span>
+  <dt><dfn>local</dfn></dt>
+    <dd>The mask is fixed with regard to the element's contents:
+      if the element has a scrolling mechanism, the mask scrolls
+      with the element's contents.
+      <p class=issue>Maybe dropped later</dd>
+  <dt><dfn>scroll</dfn></dt>
+    <dd>The mask is fixed with regard to the element itself and
+      does not scroll with its contents. (It is effectively attached
+      to the element's border.)</dd>
+</dl>
+
+<p>Even if the image is fixed, it is still only visible when it is in
+the <em class=index>mask painting area</em> of the element.
+
+<div class="example">
+<p>This example creates an infinite vertical band that remains
+“glued” to the viewport when the element is scrolled.
+
+<pre>
+body {
+  mask: url("pendant.gif");
+  mask-repeat: repeat-y;
+  mask-attachment: fixed;
+}
+</pre>
+</div>
+
+<p>User agents that do not support ''fixed'' masks (for
+example due to limitations of the hardware platform) should ignore
+declarations with the keyword ''fixed''.
+
+<div class="example">
+<p>Example for browsers that ignore the keyword ''fixed''.
+
+<pre>
+body {
+   /* For all UAs: */
+   mask: white url(paper.png) scroll;
+   /* For UAs that do fixed backgrounds: */
+   mask: white url(ledger.png) fixed;
+}
+h1 {
+   /* For all UAs: */
+   mask: silver;
+   /* For UAs that do fixed backgrounds: */
+   mask: url(stripe.png) fixed, white url(ledger.png) fixed;
+}
+</pre>
+</div>
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-image' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
+<h2 id="the-mask-position">The 'mask-position' property</h2>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-position</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+
+      <td><var>&lt;position&gt;</var>
+        [ , <var>&lt;position&gt;</var> ]*
+    <tr>
+      <th>Initial:
+      <td>0% 0%
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>refer to size of <span class=index>mask painting area</span> <em>minus</em> size of mask image; see text
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>A list, each item consisting of:
+        two keywords representing the origin and two offsets from that
+        origin, each given as an absolute length (if given a &lt;length&gt;),
+        otherwise as a percentage.
+    <tr>
+      <th>Animatable:
+      <td>yes
+</table>
+
+<p>If mask images have been specified, this property specifies
+their initial position (after any <a href="#the-mask-size">resizing</a>)
+within their corresponding <span class=index>mask painting area</span>.
+
+<p>Where
+<pre class=prod><dfn><var>&lt;position&gt;</var></dfn> = [
+  [ left | center | right | top | bottom | <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]
+|
+  [ left | center | right | <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]
+  [ top | center | bottom | <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]
+|
+  [ center | [ left | right ] [ <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]? ] &amp;&amp;
+  [ center | [ top | bottom ] [ <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]? ]
+]</pre>
+
+<p>If only one value is specified, the second value is assumed to be
+''center''. If two values are given, a length or percentage as the first
+value represents the horizontal position (or offset) and a length or
+percentage as the second value represents the vertical position (or
+offset). <var>&lt;percentage&gt;</var> and <var>&lt;length&gt;</var>
+values here represent an offset of the top left corner
+of the mask image from the top left corner of the <span class=index>mask painting area</span>.
+
+<p class="note">Note that a pair of keywords can be reordered while
+a combination of keyword and length or percentage cannot. 
+So ''center left'' is valid while ''50% left'' is not.
+
+<p>If three or four values are given, then
+each <var>&lt;percentage&gt;</var> or<var>&lt;length&gt;</var>
+represents an offset and must be preceded by a keyword,
+which specifies from which edge the offset is given. For example,
+''mask-position: bottom 10px right 20px'' represents a
+''10px'' vertical offset up from the bottom edge and a
+''20px'' horizontal offset leftward from the right edge. If
+three values are given, the missing offset is assumed to be zero.
+
+<p>Positive values represent an offset <em>inward</em> from the edge of
+the mask painting area. Negative values represent an offset
+<em>outward</em> from the edge of the mask painting area.
+
+<div class="example">
+  <p>The following declarations give the stated (horizontal, vertical)
+    offsets from the top left corner:</p>
+  <pre>
+ mask-position: left 10px top 15px;   /* 10px, 15px */
+ mask-position: left      top     ;   /*  0px,  0px */
+ mask-position:      10px     15px;   /* 10px, 15px */
+ mask-position: left          15px;   /*  0px, 15px */
+ mask-position:      10px top     ;   /* 10px,  0px */
+ mask-position: left      top 15px;   /*  0px, 15px */
+ mask-position: left 10px top     ;   /* 10px,  0px */</pre>
+</div>
+
+<dl>
+  <dt><var>&lt;percentage&gt;</var>
+
+  <dd><p>A percentage for the horizontal offset is relative to (<var>width of
+    mask painting area</var> - <var>width of mask image</var>).
+    A percentage for the vertical offset is relative to (<var>height
+    of mask painting area</var> - <var>height of mask image</var>), where the
+    size of the image is the size given by 'mask-size'.
+    <div class=example>
+      <p>For example, with a value pair of ''0% 0%'', the upper left
+      corner of the image is aligned with the upper left corner of, usually,
+      the box's padding edge. A value pair of ''100% 100%'' places
+      the lower right corner of the image in the lower right corner of the
+      area. With a value pair of ''75% 50%'', the point 75% across
+      and 50% down the image is to be placed at the point 75% across and 50%
+      down the area.
+      <div class="figure">
+      <p><img alt="Diagram of image position within element" src="bg-pos.png">
+      <p class="caption">Diagram of the meaning of ''mask-position: 75% 50%''.
+      </div>
+    </div>
+
+  <dt><var>&lt;length&gt;</var>
+
+  <dd>A length value gives a fixed length as the offset. For example, with a
+    value pair of ''2cm 1cm'', the upper left corner of the image
+    is placed 2cm to the right and 1cm below the upper left corner of the
+    mask painting area.
+
+  <dt><dfn title="''top''!!'mask-position' value">''top''</dfn>
+
+  <dd>Computes to ''0%'' for the vertical position if one or two
+    values are given, otherwise specifies the top edge as the origin for the
+    next offset.
+
+  <dt><dfn title="''right''!!'mask-position' value">''right''</dfn>
+
+  <dd>Computes to ''100%'' for the horizontal position if one or two
+    values are given, otherwise specifies the right edge as the origin
+    for the next offset.
+
+  <dt><dfn title="''bottom''!!'mask-position' value">''bottom''</dfn>
+
+  <dd>Computes to ''100%'' for the vertical position if one or two
+    values are given, otherwise specifies the bottom edge as the origin
+    for the next offset.
+
+  <dt><dfn title="''left''!!'mask-position' value">''left''</dfn>
+
+  <dd>Computes to ''0%'' for the horizontal position if one or two
+    values are given, otherwise specifies the left edge as the origin
+    for the next offset.
+
+  <dt><dfn title="''center''!!'mask-position' value">''center''</dfn>
+
+  <dd>Computes to ''50%'' (''left 50%'') for the
+    horizontal position if the horizontal position is not otherwise
+    specified, or ''50%'' (''top 50%'') for the vertical position if
+    it is.
+</dl>
+
+<div class="example">
+  <p>The following 'mask' shorthand declarations use keywords
+  to set 'mask-position' to the stated percentage values.</p>
+  <pre>
+body { mask: url("banner.jpeg") right top }    /* 100%   0% */
+body { mask: url("banner.jpeg") top center }   /*  50%   0% */
+body { mask: url("banner.jpeg") center }       /*  50%  50% */
+body { mask: url("banner.jpeg") bottom }       /*  50% 100% */
+</pre>
+</div>
+
+<div class="example">
+  <p>In the example below, the (single) image is placed in the lower-right
+  corner of the viewport.
+  <pre>
+body {
+  mask-image: url("logo.png");
+  mask-attachment: fixed;
+  mask-position: 100% 100%;
+  mask-repeat: no-repeat;
+}
+</pre>
+</div>
+
+<div class=example>
+<p>Mask positions can also be relative to other corners than the
+top left. E.g., the following puts the background image 10px from the
+bottom and 3em from the right:
+
+<pre>mask-position: right 3em bottom 10px</pre>
+</div>
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-image' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
+<h3 id="the-mask-clip">The 'mask-clip' property</h3>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-clip</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;box&gt;</var> [ , <var>&lt;box&gt;</var> ]*
+    <tr>
+      <th>Initial:
+      <td>border-box
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified
+    <tr>
+      <th>Animatable:
+      <td>no
+</table>
+
+<p>Determines the <dfn id="mask-painting-area">mask painting area</dfn>,
+which determines the area that is affected by the mask.
+The syntax of the property is given with
+
+<pre class=prod><dfn><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box</pre>
+
+<p>Values have the following meanings:
+
+<dl>
+  <dt><dfn title="''border-box''!!'mask-clip' value">
+      ''border-box''</dfn></dt>
+  <dd>The mask is rectricted to (clipped to) the
+    <span>border box.</span>
+  <dt><dfn title="''padding-box''!!'mask-clip' value">
+      ''padding-box''</dfn></dt>
+  <dd>The mask is rectricted to (clipped to) the
+    <span>padding box.</span>
+  <dt><dfn title="''content-box''!!'mask-clip' value">
+      ''content-box''</dfn></dt>
+  <dd>The mask is rectricted to (clipped to) the
+    <span>content box.</span>
+</dl>
+
+<p class=note>Note that SVG elements without an associated CSS layout box don't have a ''border-box'' or ''padding-box'' and ''content-box'' is used as mask painting area instead.
+
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-image' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
 <h2 id="mask-property">The 'mask' property</h2>
 
 <table class="propdef">

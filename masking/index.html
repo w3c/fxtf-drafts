@@ -134,22 +134,38 @@
 
    <li><a href="#definitions"><span class=secno>4. </span>Definitions</a>
 
-   <li><a href="#mask-property"><span class=secno>5. </span>The ‘<code
+   <li><a href="#the-mask-image"><span class=secno>5. </span>The ‘<code
+    class=property>mask-image</code>’ property</a>
+
+   <li><a href="#the-mask-repeat"><span class=secno>6. </span>The ‘<code
+    class=property>mask-repeat</code>’ property </a>
+
+   <li><a href="#the-mask-attachment"><span class=secno>7. </span>The
+    ‘<code class=property>mask-attachment</code>’ property</a>
+
+   <li><a href="#the-mask-position"><span class=secno>8. </span>The ‘<code
+    class=property>mask-position</code>’ property</a>
+    <ul class=toc>
+     <li><a href="#the-mask-clip"><span class=secno>8.1. </span>The ‘<code
+      class=property>mask-clip</code>’ property</a>
+    </ul>
+
+   <li><a href="#mask-property"><span class=secno>9. </span>The ‘<code
     class=property>mask</code>’ property</a>
     <ul class=toc>
-     <li><a href="#MaskSources"><span class=secno>5.1. </span>Mask source
+     <li><a href="#MaskSources"><span class=secno>9.1. </span>Mask source
       content</a>
       <ul class=toc>
-       <li><a href="#MaskValues"><span class=secno>5.1.1. </span>Calculating
+       <li><a href="#MaskValues"><span class=secno>9.1.1. </span>Calculating
         mask values</a>
       </ul>
     </ul>
 
-   <li><a href="#MaskElement"><span class=secno>6. </span>The <span
+   <li><a href="#MaskElement"><span class=secno>10. </span>The <span
     class=element-name>‘<code class=property>mask</code>’</span> element
     </a>
     <ul class=toc>
-     <li><a href="#DirectMaskSource"><span class=secno>6.1. </span>Directly
+     <li><a href="#DirectMaskSource"><span class=secno>10.1. </span>Directly
       referencing a mask source</a>
     </ul>
 
@@ -273,7 +289,731 @@
     rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>.
   </dl>
 
-  <h2 id=mask-property><span class=secno>5. </span>The ‘<a
+  <h2 id=the-mask-image><span class=secno>5. </span>The ‘<a
+   href="#mask-image"><code class=property>mask-image</code></a>’ property</h2>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=mask-image>mask-image</dfn>
+
+    <tr>
+     <th><a href="#values">Value</a>:
+
+     <td><a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> [ , <a
+      href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> ]*
+
+    <tr>
+     <th>Initial:
+
+     <td>none
+
+    <tr>
+     <th>Applies to:
+
+     <td>All elements. In SVG, it applies to <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
+      elements</a> and <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+      elements</a>
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>N/A
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>as specified, but with URIs made absolute
+
+    <tr>
+     <th>Animatable:
+
+     <td>no
+  </table>
+
+  <p>This property sets the mask image(s) of an element. Images are drawn
+   with the first specified one on top (closest to the user) and each
+   subsequent image behind the previous one. Where
+
+  <pre class=prod><dfn
+   id=ltmask-imagegt><var>&lt;mask-image&gt;</var></dfn> = <var>&lt;image&gt;</var> | none</pre>
+
+  <p>A value of ‘<code class=css>none</code>’ counts as an image layer
+   but does not mask the element. An image that is empty (zero width or zero
+   height), that fails to download, or that cannot be displayed (e.g.,
+   because it is not in a supported image format) clips the whole element and
+   it's conten (as if the element gets not drawn).
+
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
+  <p class=note><a
+   href="http://www.w3.org/TR/media-frags/#naming-space">Media fragments</a>
+   can be used to use a portion of an image as a mask. The <a
+   href="http://www.w3.org/TR/css3-images/">CSS Images</a> module will
+   provide fallback syntax for image formats and include additional controls
+   for image display.
+
+  <div class=example>
+   <p>Some examples specifying mask images:</p>
+
+   <pre>
+body { mask-image: linear-gradient(black 0%, transparent 100%) }
+p { mask-image: none }
+div { mask-image: url(tl.png), url(tr.png) }
+</pre>
+  </div>
+
+  <h2 id=the-mask-repeat><span class=secno>6. </span>The ‘<a
+   href="#mask-repeat"><code class=property>mask-repeat</code></a>’
+   property</h2>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=mask-repeat>mask-repeat</dfn>
+
+    <tr>
+     <th><a href="#values">Value</a>:
+
+     <td><a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a> [ ,
+      <a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a> ]*
+
+    <tr>
+     <th>Initial:
+
+     <td>repeat
+
+    <tr>
+     <th>Applies to:
+
+     <td>All elements. In SVG, it applies to <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
+      elements</a> and <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+      elements</a>
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>N/A
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>A list, each item consisting of: two keywords, one per dimension
+
+    <tr>
+     <th>Animatable:
+
+     <td>no
+  </table>
+
+  <p>Specifies how mask images are tiled after they have been <a
+   href="#the-mask-size">sized</a> and <a
+   href="#the-mask-position">positioned</a>. Where
+
+  <pre class=prod><dfn
+   id=ltrepeat-stylegt><var>&lt;repeat-style&gt;</var></dfn> = repeat-x | repeat-y | [repeat | space | round | no-repeat]{1,2}</pre>
+
+  <p>Single values for <a
+   href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a> have the
+   following meanings:
+
+  <dl>
+   <dt><dfn id=repeat-x>‘<code class=css>repeat-x</code>’</dfn>
+
+   <dd> Computes to ‘<code class=css>repeat no-repeat</code>’.
+
+   <dt><dfn id=repeat-y>‘<code class=css>repeat-y</code>’</dfn>
+
+   <dd> Computes to ‘<code class=css>no-repeat repeat</code>’.
+
+   <dt>‘<code class=css>repeat</code>’
+
+   <dd> Computes to ‘<code class=css>repeat repeat</code>’.
+
+   <dt>‘<code class=css>space</code>’
+
+   <dd> Computes to ‘<code class=css>space space</code>’
+
+   <dt>‘<code class=css>round</code>’
+
+   <dd> Computes to ‘<code class=css>round round</code>’
+
+   <dt>‘<code class=css>no-repeat</code>’
+
+   <dd> Computes to ‘<code class=css>no-repeat no-repeat</code>’
+  </dl>
+
+  <p>If a <a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a>
+   value has two keywords, the first one is for the horizontal direction, the
+   second for the vertical one, as follows:
+
+  <dl>
+   <dt><dfn id=repeat title="''repeat''!!'mask-repeat' value">‘<code
+    class=css>repeat</code>’</dfn>
+
+   <dd> The image is repeated in this direction as often as needed to cover
+    the <a class=index href="#mask-painting-area" id=mask-painting-area0>mask
+    painting area</a>.
+
+   <dt><dfn id=space title="''space''!!'mask-repeat' value">‘<code
+    class=css>space</code>’</dfn>
+
+   <dd> The image is repeated as often as will fit within the <a class=index
+    href="#mask-painting-area" id=mask-painting-area1>mask painting area</a>
+    without being clipped and then the images are spaced out to fill the
+    area. The first and last images touch the edges of the area. If the <a
+    class=index href="#mask-painting-area" id=mask-painting-area2>mask
+    painting area</a> is larger than the mask positioning area, then the
+    pattern repeats to fill the mask painting area. The value of ‘<a
+    href="#mask-position"><code class=property>mask-position</code></a>’
+    for this direction is ignored, unless there is not enough space for two
+    copies of the image in this direction, in which case only one image is
+    placed and ‘<a href="#mask-position"><code
+    class=property>mask-position</code></a>’ determines its position in
+    this direction.
+
+   <dt><dfn id=round title="''round''!!'mask-repeat' value">‘<code
+    class=css>round</code>’</dfn>
+
+   <dd> The image is repeated as often as will fit within the <a class=index
+    href="#mask-painting-area" id=mask-painting-area.>mask painting area.</a>
+    If it doesn't fit a whole number of times, it is rescaled so that it
+    does. See the formula under ‘<code class=property>mask-size</code>’.
+    If the <a class=index href="#mask-painting-area"
+    id=mask-painting-area3>mask painting area</a> is larger than the mask
+    positioning area, then the pattern repeats to fill the mask painting
+    area.
+
+   <dt><dfn id=no-repeat title="''no-repeat''!!'mask-repeat' value">‘<code
+    class=css>no-repeat</code>’</dfn>
+
+   <dd> The image is placed once and not repeated in this direction.
+  </dl>
+
+  <p>Unless one of the two keywords is ‘<code
+   class=css>no-repeat</code>’, the whole mask painting area will be tiled,
+   i.e., not just one vertical strip and one horizontal strip.
+
+  <div class=example>
+   <p style="display:none">Example(s):
+
+   <pre>
+body {
+  mask: url("pendant.png");
+  mask-repeat: repeat-y;
+  mask-position: center;
+}
+</pre>
+  </div>
+
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
+  <h2 id=the-mask-attachment><span class=secno>7. </span>The ‘<a
+   href="#mask-attachment"><code class=property>mask-attachment</code></a>’
+   property</h2>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=mask-attachment>mask-attachment</dfn>
+
+    <tr>
+     <th><a href="#values">Value</a>:
+
+     <td><a href="#ltattachmentgt"><var>&lt;attachment&gt;</var></a> [ , <a
+      href="#ltattachmentgt"><var>&lt;attachment&gt;</var></a> ]*
+
+    <tr>
+     <th>Initial:
+
+     <td>scroll
+
+    <tr>
+     <th>Applies to:
+
+     <td>All elements. In SVG, it applies to <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
+      elements</a> and <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+      elements</a>
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>N/A
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>as specified
+
+    <tr>
+     <th>Animatable:
+
+     <td>no
+  </table>
+
+  <p class=issue>The support for ‘<a href="#mask-attachment"><code
+   class=property>mask-attachment</code></a>’ may be removed for SVG.
+
+  <p>If mask images are specified, this property specifies whether they are
+   fixed with regard to the <em class=index id=viewport>viewport</em> (<dfn
+   id=fixed>‘<code class=css>fixed</code>’</dfn>) or scroll along with
+   the element (<dfn id=scroll>‘<code class=css>scroll</code>’</dfn>) or
+   its contents (<dfn id=local>‘<code class=css>local</code>’</dfn>). The
+   property's value is given as a comma-separated list of &lt;attachment&gt;
+   keywords where
+
+  <pre class=prod><dfn
+   id=ltattachmentgt><var>&lt;attachment&gt;</var></dfn> = scroll | fixed | local</pre>
+
+  <dl>
+   <dt><dfn id=fixed0>fixed</dfn>
+
+   <dd>The mask is fixed with regard to the viewport. In paged media where
+    there is no viewport, a ‘<a href="#fixed0"><code
+    class=css>fixed</code></a>’ background is fixed with respect to the <a
+    href="http://www.w3.org/TR/CSS21/page.html#page-box">page box</a> and
+    therefore replicated on every page. <span class=note>Note that there is
+    only one viewport per view. Even if an element has a scrolling mechanism
+    (see the ‘<code class=property>overflow</code>’ property <a
+    href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>), a ‘<a
+    href="#fixed0"><code class=css>fixed</code></a>’ background doesn't
+    move with the element.</span>
+
+   <dt><dfn id=local0>local</dfn>
+
+   <dd>The mask is fixed with regard to the element's contents: if the
+    element has a scrolling mechanism, the mask scrolls with the element's
+    contents.
+    <p class=issue>Maybe dropped later
+
+   <dt><dfn id=scroll0>scroll</dfn>
+
+   <dd>The mask is fixed with regard to the element itself and does not
+    scroll with its contents. (It is effectively attached to the element's
+    border.)
+  </dl>
+
+  <p>Even if the image is fixed, it is still only visible when it is in the
+   <a href="#mask-painting-area"><em class=index id=mask-painting-area4>mask
+   painting area</em></a> of the element.
+
+  <div class=example>
+   <p>This example creates an infinite vertical band that remains “glued”
+    to the viewport when the element is scrolled.
+
+   <pre>
+body {
+  mask: url("pendant.gif");
+  mask-repeat: repeat-y;
+  mask-attachment: fixed;
+}
+</pre>
+  </div>
+
+  <p>User agents that do not support ‘<a href="#fixed0"><code
+   class=css>fixed</code></a>’ masks (for example due to limitations of the
+   hardware platform) should ignore declarations with the keyword ‘<a
+   href="#fixed0"><code class=css>fixed</code></a>’.
+
+  <div class=example>
+   <p>Example for browsers that ignore the keyword ‘<a href="#fixed0"><code
+    class=css>fixed</code></a>’.
+
+   <pre>
+body {
+   /* For all UAs: */
+   mask: white url(paper.png) scroll;
+   /* For UAs that do fixed backgrounds: */
+   mask: white url(ledger.png) fixed;
+}
+h1 {
+   /* For all UAs: */
+   mask: silver;
+   /* For UAs that do fixed backgrounds: */
+   mask: url(stripe.png) fixed, white url(ledger.png) fixed;
+}
+</pre>
+  </div>
+
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
+  <h2 id=the-mask-position><span class=secno>8. </span>The ‘<a
+   href="#mask-position"><code class=property>mask-position</code></a>’
+   property</h2>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=mask-position>mask-position</dfn>
+
+    <tr>
+     <th><a href="#values">Value</a>:
+
+     <td><a href="#ltpositiongt"><var>&lt;position&gt;</var></a> [ , <a
+      href="#ltpositiongt"><var>&lt;position&gt;</var></a> ]*
+
+    <tr>
+     <th>Initial:
+
+     <td>0% 0%
+
+    <tr>
+     <th>Applies to:
+
+     <td>All elements. In SVG, it applies to <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
+      elements</a> and <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+      elements</a>
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>refer to size of <a class=index href="#mask-painting-area"
+      id=mask-painting-area5>mask painting area</a> <em>minus</em> size of
+      mask image; see text
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>A list, each item consisting of: two keywords representing the
+      origin and two offsets from that origin, each given as an absolute
+      length (if given a &lt;length&gt;), otherwise as a percentage.
+
+    <tr>
+     <th>Animatable:
+
+     <td>yes
+  </table>
+
+  <p>If mask images have been specified, this property specifies their
+   initial position (after any <a href="#the-mask-size">resizing</a>) within
+   their corresponding <a class=index href="#mask-painting-area"
+   id=mask-painting-area6>mask painting area</a>.
+
+  <p>Where
+
+  <pre class=prod><dfn id=ltpositiongt><var>&lt;position&gt;</var></dfn> = [
+  [ left | center | right | top | bottom | <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]
+|
+  [ left | center | right | <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]
+  [ top | center | bottom | <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]
+|
+  [ center | [ left | right ] [ <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]? ] &amp;&amp;
+  [ center | [ top | bottom ] [ <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]? ]
+]</pre>
+
+  <p>If only one value is specified, the second value is assumed to be
+   ‘<code class=css>center</code>’. If two values are given, a length or
+   percentage as the first value represents the horizontal position (or
+   offset) and a length or percentage as the second value represents the
+   vertical position (or offset). <var>&lt;percentage&gt;</var> and
+   <var>&lt;length&gt;</var> values here represent an offset of the top left
+   corner of the mask image from the top left corner of the <a class=index
+   href="#mask-painting-area" id=mask-painting-area7>mask painting area</a>.
+
+  <p class=note>Note that a pair of keywords can be reordered while a
+   combination of keyword and length or percentage cannot. So ‘<code
+   class=css>center left</code>’ is valid while ‘<code class=css>50%
+   left</code>’ is not.
+
+  <p>If three or four values are given, then each
+   <var>&lt;percentage&gt;</var> or<var>&lt;length&gt;</var> represents an
+   offset and must be preceded by a keyword, which specifies from which edge
+   the offset is given. For example, ‘<code class=css>mask-position: bottom
+   10px right 20px</code>’ represents a ‘<code class=css>10px</code>’
+   vertical offset up from the bottom edge and a ‘<code
+   class=css>20px</code>’ horizontal offset leftward from the right edge.
+   If three values are given, the missing offset is assumed to be zero.
+
+  <p>Positive values represent an offset <em>inward</em> from the edge of the
+   mask painting area. Negative values represent an offset <em>outward</em>
+   from the edge of the mask painting area.
+
+  <div class=example>
+   <p>The following declarations give the stated (horizontal, vertical)
+    offsets from the top left corner:</p>
+
+   <pre>
+ mask-position: left 10px top 15px;   /* 10px, 15px */
+ mask-position: left      top     ;   /*  0px,  0px */
+ mask-position:      10px     15px;   /* 10px, 15px */
+ mask-position: left          15px;   /*  0px, 15px */
+ mask-position:      10px top     ;   /* 10px,  0px */
+ mask-position: left      top 15px;   /*  0px, 15px */
+ mask-position: left 10px top     ;   /* 10px,  0px */</pre>
+  </div>
+
+  <dl>
+   <dt><var>&lt;percentage&gt;</var>
+
+   <dd>
+    <p>A percentage for the horizontal offset is relative to (<var>width of
+     mask painting area</var> - <var>width of mask image</var>). A percentage
+     for the vertical offset is relative to (<var>height of mask painting
+     area</var> - <var>height of mask image</var>), where the size of the
+     image is the size given by ‘<code class=property>mask-size</code>’.
+
+    <div class=example>
+     <p>For example, with a value pair of ‘<code class=css>0% 0%</code>’,
+      the upper left corner of the image is aligned with the upper left
+      corner of, usually, the box's padding edge. A value pair of ‘<code
+      class=css>100% 100%</code>’ places the lower right corner of the
+      image in the lower right corner of the area. With a value pair of
+      ‘<code class=css>75% 50%</code>’, the point 75% across and 50% down
+      the image is to be placed at the point 75% across and 50% down the
+      area.
+
+     <div class=figure>
+      <p><img alt="Diagram of image position within element" src=bg-pos.png>
+
+      <p class=caption>Diagram of the meaning of ‘<code
+       class=css>mask-position: 75% 50%</code>’.
+     </div>
+    </div>
+
+   <dt><var>&lt;length&gt;</var>
+
+   <dd>A length value gives a fixed length as the offset. For example, with a
+    value pair of ‘<code class=css>2cm 1cm</code>’, the upper left corner
+    of the image is placed 2cm to the right and 1cm below the upper left
+    corner of the mask painting area.
+
+   <dt><dfn id=top title="''top''!!'mask-position' value">‘<code
+    class=css>top</code>’</dfn>
+
+   <dd>Computes to ‘<code class=css>0%</code>’ for the vertical position
+    if one or two values are given, otherwise specifies the top edge as the
+    origin for the next offset.
+
+   <dt><dfn id=right title="''right''!!'mask-position' value">‘<code
+    class=css>right</code>’</dfn>
+
+   <dd>Computes to ‘<code class=css>100%</code>’ for the horizontal
+    position if one or two values are given, otherwise specifies the right
+    edge as the origin for the next offset.
+
+   <dt><dfn id=bottom title="''bottom''!!'mask-position' value">‘<code
+    class=css>bottom</code>’</dfn>
+
+   <dd>Computes to ‘<code class=css>100%</code>’ for the vertical
+    position if one or two values are given, otherwise specifies the bottom
+    edge as the origin for the next offset.
+
+   <dt><dfn id=left title="''left''!!'mask-position' value">‘<code
+    class=css>left</code>’</dfn>
+
+   <dd>Computes to ‘<code class=css>0%</code>’ for the horizontal
+    position if one or two values are given, otherwise specifies the left
+    edge as the origin for the next offset.
+
+   <dt><dfn id=center title="''center''!!'mask-position' value">‘<code
+    class=css>center</code>’</dfn>
+
+   <dd>Computes to ‘<code class=css>50%</code>’ (‘<code class=css>left
+    50%</code>’) for the horizontal position if the horizontal position is
+    not otherwise specified, or ‘<code class=css>50%</code>’ (‘<code
+    class=css>top 50%</code>’) for the vertical position if it is.
+  </dl>
+
+  <div class=example>
+   <p>The following ‘<a href="#mask"><code
+    class=property>mask</code></a>’ shorthand declarations use keywords to
+    set ‘<a href="#mask-position"><code
+    class=property>mask-position</code></a>’ to the stated percentage
+    values.</p>
+
+   <pre>
+body { mask: url("banner.jpeg") right top }    /* 100%   0% */
+body { mask: url("banner.jpeg") top center }   /*  50%   0% */
+body { mask: url("banner.jpeg") center }       /*  50%  50% */
+body { mask: url("banner.jpeg") bottom }       /*  50% 100% */
+</pre>
+  </div>
+
+  <div class=example>
+   <p>In the example below, the (single) image is placed in the lower-right
+    corner of the viewport.
+
+   <pre>
+body {
+  mask-image: url("logo.png");
+  mask-attachment: fixed;
+  mask-position: 100% 100%;
+  mask-repeat: no-repeat;
+}
+</pre>
+  </div>
+
+  <div class=example>
+   <p>Mask positions can also be relative to other corners than the top left.
+    E.g., the following puts the background image 10px from the bottom and
+    3em from the right:
+
+   <pre>mask-position: right 3em bottom 10px</pre>
+  </div>
+
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
+  <h3 id=the-mask-clip><span class=secno>8.1. </span>The ‘<a
+   href="#mask-clip"><code class=property>mask-clip</code></a>’ property</h3>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=mask-clip>mask-clip</dfn>
+
+    <tr>
+     <th><a href="#values">Value</a>:
+
+     <td><a href="#ltboxgt"><var>&lt;box&gt;</var></a> [ , <a
+      href="#ltboxgt"><var>&lt;box&gt;</var></a> ]*
+
+    <tr>
+     <th>Initial:
+
+     <td>border-box
+
+    <tr>
+     <th>Applies to:
+
+     <td>All elements. In SVG, it applies to <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
+      elements</a> and <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+      elements</a>
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>N/A
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>as specified
+
+    <tr>
+     <th>Animatable:
+
+     <td>no
+  </table>
+
+  <p>Determines the <dfn id=mask-painting-area>mask painting area</dfn>,
+   which determines the area that is affected by the mask. The syntax of the
+   property is given with
+
+  <pre class=prod><dfn
+   id=ltboxgt><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box</pre>
+
+  <p>Values have the following meanings:
+
+  <dl>
+   <dt><dfn id=border-box title="''border-box''!!'mask-clip' value"> ‘<code
+    class=css>border-box</code>’</dfn>
+
+   <dd>The mask is rectricted to (clipped to) the <span>border box.</span>
+
+   <dt><dfn id=padding-box title="''padding-box''!!'mask-clip' value">
+    ‘<code class=css>padding-box</code>’</dfn>
+
+   <dd>The mask is rectricted to (clipped to) the <span>padding box.</span>
+
+   <dt><dfn id=content-box title="''content-box''!!'mask-clip' value">
+    ‘<code class=css>content-box</code>’</dfn>
+
+   <dd>The mask is rectricted to (clipped to) the <span>content box.</span>
+  </dl>
+
+  <p class=note>Note that SVG elements without an associated CSS layout box
+   don't have a ‘<code class=css>border-box</code>’ or ‘<code
+   class=css>padding-box</code>’ and ‘<code
+   class=css>content-box</code>’ is used as mask painting area instead.
+
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
+  <h2 id=mask-property><span class=secno>9. </span>The ‘<a
    href="#mask"><code class=property>mask</code></a>’ property</h2>
 
   <table class=propdef>
@@ -425,7 +1165,7 @@
    class=property>mask</code>’</a> property is <span
    class=prop-value>‘<code class=property>none</code>’</span>.
 
-  <h3 id=MaskSources><span class=secno>5.1. </span>Mask source content</h3>
+  <h3 id=MaskSources><span class=secno>9.1. </span>Mask source content</h3>
 
   <p> The content and behavior of a mask can be defined using a <a
    class=element-name href=MaskElement>‘<code
@@ -434,7 +1174,7 @@
    property can refer directly to a graphics element or file to use as the
    mask source.
 
-  <h4 id=MaskValues><span class=secno>5.1.1. </span>Calculating mask values</h4>
+  <h4 id=MaskValues><span class=secno>9.1.1. </span>Calculating mask values</h4>
 
   <p class=note> The ability to use the alpha of a mask source as the mask
    values is new in SVG 2. In SVG 1.1 masks always use the luminance of the
@@ -511,7 +1251,7 @@
    were no mask but instead the alpha channel of the given object were
    multiplied with the mask's resulting mask values.
 
-  <h2 id=MaskElement><span class=secno>6. </span>The <a class=element-name
+  <h2 id=MaskElement><span class=secno>10. </span>The <a class=element-name
    href="#mask">‘<code class=property>mask</code>’</a> element</h2>
 
   <table class=propdef summary="mask element">
@@ -1049,7 +1789,7 @@
    href=MaskElement>‘<code class=property>mask</code>’</a> element or any
    of its ancestors is set to <span class=prop-value>none</span>.</p>
 
-  <h3 id=DirectMaskSource><span class=secno>6.1. </span>Directly referencing
+  <h3 id=DirectMaskSource><span class=secno>10.1. </span>Directly referencing
    a mask source</h3>
 
   <p class=note> The ability to reference non-<a class=element-name
@@ -1282,20 +2022,172 @@
   <!--begin-index-->
 
   <ul class=indexlist>
+   <li><a href="#ltattachmentgt"><var>&lt;attachment&gt;</var></a>, <a
+    href="#ltattachmentgt" title="&lt;attachment&gt;"><strong>7.</strong></a>
+    
+
+   <li>‘<code class=css>border-box</code>’
+    <ul>
+     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
+      value, <a href="#border-box"
+      title="''border-box'', 'mask-clip' value"><strong>8.1.</strong></a>
+    </ul>
+
+   <li>‘<code class=css>bottom</code>’
+    <ul>
+     <li>‘<a href="#mask-position"><code
+      class=property>mask-position</code></a>’ value, <a href="#bottom"
+      title="''bottom'', 'mask-position' value"><strong>8.</strong></a>
+    </ul>
+
    <li>bounding client rect, <a href="#bounding-client-rect"
     title="bounding client rect"><strong>4.</strong></a>
+
+   <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
+    title="&lt;box&gt;"><strong>8.1.</strong></a>
+
+   <li>‘<code class=css>center</code>’
+    <ul>
+     <li>‘<a href="#mask-position"><code
+      class=property>mask-position</code></a>’ value, <a href="#center"
+      title="''center'', 'mask-position' value"><strong>8.</strong></a>
+    </ul>
+
+   <li>‘<code class=css>content-box</code>’
+    <ul>
+     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
+      value, <a href="#content-box"
+      title="''content-box'', 'mask-clip' value"><strong>8.1.</strong></a>
+    </ul>
+
+   <li>fixed, <a href="#fixed0" title=fixed><strong>7.</strong></a>
+
+   <li>‘<a href="#fixed0"><code class=css>fixed</code></a>’, <a
+    href="#fixed" title="''fixed''"><strong>7.</strong></a>
+
+   <li>‘<code class=css>left</code>’
+    <ul>
+     <li>‘<a href="#mask-position"><code
+      class=property>mask-position</code></a>’ value, <a href="#left"
+      title="''left'', 'mask-position' value"><strong>8.</strong></a>
+    </ul>
+
+   <li>local, <a href="#local0" title=local><strong>7.</strong></a>
+
+   <li>‘<a href="#local0"><code class=css>local</code></a>’, <a
+    href="#local" title="''local''"><strong>7.</strong></a>
 
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="local coordinate system"><strong>4.</strong></a>
 
-   <li>mask, <a href="#MaskProperty" title=mask><strong>5.</strong></a>, <a
-    href="#mask" title=mask><strong>6.</strong></a>
+   <li>mask, <a href="#MaskProperty" title=mask><strong>9.</strong></a>, <a
+    href="#mask" title=mask><strong>10.</strong></a>
+
+   <li>mask-attachment, <a href="#mask-attachment"
+    title=mask-attachment><strong>7.</strong></a>
+
+   <li>mask-clip, <a href="#mask-clip"
+    title=mask-clip><strong>8.1.</strong></a>
+
+   <li><a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>, <a
+    href="#ltmask-imagegt" title="&lt;mask-image&gt;"><strong>5.</strong></a>
+    
+
+   <li>mask-image, <a href="#mask-image"
+    title=mask-image><strong>5.</strong></a>
+
+   <li>mask painting area, <a href="#mask-painting-area"
+    title="mask painting area"><strong>8.1.</strong></a>, <a
+    href="#mask-painting-area." title="mask painting area.">6.</a>, <a
+    href="#mask-painting-area0" title="mask painting area">6.</a>, <a
+    href="#mask-painting-area1" title="mask painting area">6.</a>, <a
+    href="#mask-painting-area2" title="mask painting area">6.</a>, <a
+    href="#mask-painting-area3" title="mask painting area">6.</a>, <a
+    href="#mask-painting-area4" title="mask painting area">7.</a>, <a
+    href="#mask-painting-area5" title="mask painting area">8.</a>, <a
+    href="#mask-painting-area6" title="mask painting area">8.</a>, <a
+    href="#mask-painting-area7" title="mask painting area">8.</a>
+
+   <li>mask-position, <a href="#mask-position"
+    title=mask-position><strong>8.</strong></a>
+
+   <li>mask-repeat, <a href="#mask-repeat"
+    title=mask-repeat><strong>6.</strong></a>
+
+   <li>‘<code class=css>no-repeat</code>’
+    <ul>
+     <li>‘<a href="#mask-repeat"><code
+      class=property>mask-repeat</code></a>’ value, <a href="#no-repeat"
+      title="''no-repeat'', 'mask-repeat' value"><strong>6.</strong></a>
+    </ul>
 
    <li>object bounding box units, <a href="#object-bounding-box-units"
     title="object bounding box units"><strong>4.</strong></a>
 
+   <li>‘<code class=css>padding-box</code>’
+    <ul>
+     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
+      value, <a href="#padding-box"
+      title="''padding-box'', 'mask-clip' value"><strong>8.1.</strong></a>
+    </ul>
+
+   <li><a href="#ltpositiongt"><var>&lt;position&gt;</var></a>, <a
+    href="#ltpositiongt" title="&lt;position&gt;"><strong>8.</strong></a>
+
+   <li>‘<code class=css>repeat</code>’
+    <ul>
+     <li>‘<a href="#mask-repeat"><code
+      class=property>mask-repeat</code></a>’ value, <a href="#repeat"
+      title="''repeat'', 'mask-repeat' value"><strong>6.</strong></a>
+    </ul>
+
+   <li><a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a>, <a
+    href="#ltrepeat-stylegt"
+    title="&lt;repeat-style&gt;"><strong>6.</strong></a>
+
+   <li>‘<a href="#repeat-x"><code class=css>repeat-x</code></a>’, <a
+    href="#repeat-x" title="''repeat-x''"><strong>6.</strong></a>
+
+   <li>‘<a href="#repeat-y"><code class=css>repeat-y</code></a>’, <a
+    href="#repeat-y" title="''repeat-y''"><strong>6.</strong></a>
+
+   <li>‘<code class=css>right</code>’
+    <ul>
+     <li>‘<a href="#mask-position"><code
+      class=property>mask-position</code></a>’ value, <a href="#right"
+      title="''right'', 'mask-position' value"><strong>8.</strong></a>
+    </ul>
+
+   <li>‘<code class=css>round</code>’
+    <ul>
+     <li>‘<a href="#mask-repeat"><code
+      class=property>mask-repeat</code></a>’ value, <a href="#round"
+      title="''round'', 'mask-repeat' value"><strong>6.</strong></a>
+    </ul>
+
+   <li>scroll, <a href="#scroll0" title=scroll><strong>7.</strong></a>
+
+   <li>‘<a href="#scroll0"><code class=css>scroll</code></a>’, <a
+    href="#scroll" title="''scroll''"><strong>7.</strong></a>
+
+   <li>‘<code class=css>space</code>’
+    <ul>
+     <li>‘<a href="#mask-repeat"><code
+      class=property>mask-repeat</code></a>’ value, <a href="#space"
+      title="''space'', 'mask-repeat' value"><strong>6.</strong></a>
+    </ul>
+
+   <li>‘<code class=css>top</code>’
+    <ul>
+     <li>‘<a href="#mask-position"><code
+      class=property>mask-position</code></a>’ value, <a href="#top"
+      title="''top'', 'mask-position' value"><strong>8.</strong></a>
+    </ul>
+
    <li>user coordinate system, <a href="#user-coordinate-system"
     title="user coordinate system"><strong>4.</strong></a>
+
+   <li>viewport, <a href="#viewport" title=viewport>7.</a>
   </ul>
   <!--end-index-->
 
@@ -1320,6 +2212,87 @@
      <th>Media
 
    <tbody>
+    <tr>
+     <th><a class=property href="#mask-attachment">mask-attachment</a>
+
+     <td>&lt;attachment&gt; [ , &lt;attachment&gt; ]*
+
+     <td>scroll
+
+     <td>All elements. In SVG, it applies to container elements and graphics
+      elements
+
+     <td>no
+
+     <td>N/A
+
+     <td>visual
+
+    <tr>
+     <th><a class=property href="#mask-clip">mask-clip</a>
+
+     <td>&lt;box&gt; [ , &lt;box&gt; ]*
+
+     <td>border-box
+
+     <td>All elements. In SVG, it applies to container elements and graphics
+      elements
+
+     <td>no
+
+     <td>N/A
+
+     <td>visual
+
+    <tr>
+     <th><a class=property href="#mask-image">mask-image</a>
+
+     <td>&lt;mask-image&gt; [ , &lt;mask-image&gt; ]*
+
+     <td>none
+
+     <td>All elements. In SVG, it applies to container elements and graphics
+      elements
+
+     <td>no
+
+     <td>N/A
+
+     <td>visual
+
+    <tr>
+     <th><a class=property href="#mask-position">mask-position</a>
+
+     <td>&lt;position&gt; [ , &lt;position&gt; ]*
+
+     <td>0% 0%
+
+     <td>All elements. In SVG, it applies to container elements and graphics
+      elements
+
+     <td>no
+
+     <td>refer to size of mask painting area minus size of mask image; see
+      text
+
+     <td>visual
+
+    <tr>
+     <th><a class=property href="#mask-repeat">mask-repeat</a>
+
+     <td>&lt;repeat-style&gt; [ , &lt;repeat-style&gt; ]*
+
+     <td>repeat
+
+     <td>All elements. In SVG, it applies to container elements and graphics
+      elements
+
+     <td>no
+
+     <td>N/A
+
+     <td>visual
+
     <tr>
      <th><a class=property href="#mask">mask</a>
 
