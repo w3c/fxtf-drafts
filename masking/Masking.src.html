@@ -173,6 +173,7 @@ Table of contents</h2>
 </dd>
 </dl>
 
+<h2 id="layering">Layering Multiple Mask Images</h2>
 <h2 id="the-mask-image">The 'mask-image' property</h2>
 
 <table class="propdef">
@@ -181,8 +182,8 @@ Table of contents</h2>
       <td><dfn>mask-image</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var>&lt;mask-source&gt;</var>
-      [ , <var>&lt;mask-source&gt;</var> ]*
+      <td><var>&lt;mask-image&gt;</var>
+      [ , <var>&lt;mask-image&gt;</var> ]*
     <tr>
       <th>Initial:
       <td>none
@@ -211,47 +212,21 @@ are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
 Where
 
-<pre class=prod><dfn><var>&lt;mask-source&gt;</var></dfn> = <var>&lt;FuncIRI&gt;</var> | <var>&lt;image&gt;</var> | child | select(<var>&lt;compound-selector&gt;</var>) | none</pre>
+<pre class=prod><dfn><var>&lt;mask-image&gt;</var></dfn> = <var>&lt;image&gt;</var> | none</pre>
 
 <dl>
-  <dt>
-    <a>&lt;FuncIRI&gt;</a>
-  </dt>
-  <dd>
-    An <a>IRI reference</a>
-    to a <a>'mask element'</a> element that defines the
-    filter effect. For example ''url(commonmasks.xml#mask)''.
-  </dd>
-  <dt>
-    <a>&lt;image&gt;</a>
-  </dt>
+  <dt><dfn>''<a>&lt;image&gt;</a>''</dfn></dt>
   <dd>
     A 2D image. (See [[!CSS3-IMAGES]].)
   </dd>
-  <dt>child</dt>
-  <dd>
-    A keyword to indicate that the last child <a>'mask element'</a>
-    element should be used as the mask source. It is equivalent to
-    ''select(mask:last-of-type)''.</dd>
-  <dt>
-    select(<var><a href="types.html#DataTypeCompoundSelector">&lt;compound-selector&gt;</a>)</var>
-  </dt>
-  <dd>A <a>&lt;compound-selector&gt;</a> scoped at the element to which the
-    'mask' property is applied specifying the
-    element to use as the mask source.
-    As a result, only children of the target element may be used for the mask
-    source.
-  </dd>
-  <dt>
-    none
-  </dt>
+  <dt><dfn>''none''</dfn></dt>
   <dd>
     A value of ''none'' counts as an image layer but does not mask the element.
   </dd>
 </dl>
 
-<p>An mask source that is empty
-(<var>&lt;image&gt;</var> with zero width or zero height), that
+<p>A mask image that is empty
+(zero width or zero height), that
 fails to download, is non-existent or that cannot be displayed (e.g., because it is
 not in a supported image format) gets ignored. No masking is applied.
 
@@ -448,10 +423,10 @@ a comma-separated list of &lt;attachment&gt; keywords where
       media where there is no viewport, a ''fixed'' background is fixed
       with respect to the <a href="http://www.w3.org/TR/CSS21/page.html#page-box">page box</a>
       and therefore replicated on every page.
-      <span class="note">Note that there is only one viewport per view.
+      <p class="note">Note that there is only one viewport per view.
       Even if an element has a scrolling mechanism (see  the 'overflow'
       property [[!CSS21]]), a ''fixed'' background doesn't move with the
-      element.</span>
+      element.
   <dt><dfn>local</dfn></dt>
     <dd>The mask is fixed with regard to the element's contents:
       if the element has a scrolling mechanism, the mask scrolls
@@ -1050,7 +1025,7 @@ layer.
       <td><dfn>mask-type</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td>&lt;mask-type&gt;
+      <td><var>&lt;mask-type&gt;</var>
     <tr>
       <th>Initial:
       <td>auto
@@ -1076,7 +1051,7 @@ layer.
 
 <p>The mask type determines which of the methods described in <a
 href="#MaskValues">Calculating mask values</a> should be used for calculating
-mask values from the mask source. Where
+mask values from the mask source / the layer of mask images. Where
 
 <pre class=prod><dfn><var>&lt;mask-type&gt;</var></dfn> = luminance | alpha | auto</pre>
 
@@ -1110,7 +1085,7 @@ layer.
   </tr>
   <tr>
     <th>Value:</th>
-    <td>&lt;mask-layer&gt; [, &lt;mask-layer&gt;]* &lt;mask-type&gt;?</td>
+    <td><var>&lt;mask-source&gt;</var> | [ <var>&lt;mask-layer&gt;</var> [, <var>&lt;mask-layer&gt;</var> ]* ] <var>&lt;mask-type&gt;</var>?</td>
   </tr>
   <tr>
     <th>Initial:</th>
@@ -1143,7 +1118,34 @@ layer.
 </table>
 <p>Where</p>
 
-<pre class=prod><dfn><var>&lt;mask-layer&gt;</var></dfn> = &lt;mask-source&gt; || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
+<pre class=prod><dfn><var>&lt;mask-layer&gt;</var></dfn> = &lt;mask-image&gt; || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
+
+<pre class=prod><dfn><var>&lt;mask-source&gt;</var></dfn> = <var>&lt;FuncIRI&gt;</var> |  child | select(<var>&lt;compound-selector&gt;</var>)</pre>
+
+<dl>
+  <dt>
+    <dfn>''<a>&lt;FuncIRI&gt;</a>''</dfn>
+  </dt>
+  <dd>
+    An <a>IRI reference</a>
+    to a <a>'mask element'</a> element that defines the
+    filter effect. For example ''url(commonmasks.xml#mask)''.
+  </dd>
+  <dt><dfn>''child''</dfn></dt>
+  <dd>
+    A keyword to indicate that the last child <a>'mask element'</a>
+    element should be used as the mask source. It is equivalent to
+    ''select(mask:last-of-type)''.</dd>
+  <dt><dfn>''select(<var><a href="types.html#DataTypeCompoundSelector">&lt;compound-selector&gt;</a></var>)''</dfn></dt>
+  <dd>A <var><a>&lt;compound-selector&gt;</a></var> scoped at the element to which the
+    'mask' property is applied specifying the
+    element to use as the mask source.
+    As a result, only children of the target element may be used for the mask
+    source.
+  </dd>
+</dl>
+
+<p>An invalid or non-existent mask source gets ignored. No masking is applied.
 
 <h3 id="MaskSources">Mask source content</h3>
 

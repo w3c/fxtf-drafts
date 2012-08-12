@@ -31,14 +31,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 11 August 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 12 August 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20120811/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20120812/-->
 
     <dt>Latest version:
 
@@ -134,46 +134,49 @@
 
    <li><a href="#definitions"><span class=secno>4. </span>Definitions</a>
 
-   <li><a href="#the-mask-image"><span class=secno>5. </span>The ‘<code
+   <li><a href="#layering"><span class=secno>5. </span>Layering Multiple Mask
+    Images</a>
+
+   <li><a href="#the-mask-image"><span class=secno>6. </span>The ‘<code
     class=property>mask-image</code>’ property</a>
 
-   <li><a href="#the-mask-repeat"><span class=secno>6. </span>The ‘<code
+   <li><a href="#the-mask-repeat"><span class=secno>7. </span>The ‘<code
     class=property>mask-repeat</code>’ property </a>
 
-   <li><a href="#the-mask-attachment"><span class=secno>7. </span>The
+   <li><a href="#the-mask-attachment"><span class=secno>8. </span>The
     ‘<code class=property>mask-attachment</code>’ property</a>
 
-   <li><a href="#the-mask-position"><span class=secno>8. </span>The ‘<code
+   <li><a href="#the-mask-position"><span class=secno>9. </span>The ‘<code
     class=property>mask-position</code>’ property</a>
 
-   <li><a href="#the-mask-clip"><span class=secno>9. </span>The ‘<code
+   <li><a href="#the-mask-clip"><span class=secno>10. </span>The ‘<code
     class=property>mask-clip</code>’ property</a>
 
-   <li><a href="#the-mask-origin"><span class=secno>10. </span>The ‘<code
+   <li><a href="#the-mask-origin"><span class=secno>11. </span>The ‘<code
     class=property>mask-origin</code>’ property</a>
 
-   <li><a href="#the-mask-size"><span class=secno>11. </span>The ‘<code
+   <li><a href="#the-mask-size"><span class=secno>12. </span>The ‘<code
     class=property>mask-size</code>’ property </a>
 
-   <li><a href="#the-mask-type"><span class=secno>12. </span>The ‘<code
+   <li><a href="#the-mask-type"><span class=secno>13. </span>The ‘<code
     class=property>mask-type</code>’ property </a>
 
-   <li><a href="#mask-property"><span class=secno>13. </span>The ‘<code
+   <li><a href="#mask-property"><span class=secno>14. </span>The ‘<code
     class=property>mask</code>’ property</a>
     <ul class=toc>
-     <li><a href="#MaskSources"><span class=secno>13.1. </span>Mask source
+     <li><a href="#MaskSources"><span class=secno>14.1. </span>Mask source
       content</a>
       <ul class=toc>
-       <li><a href="#MaskValues"><span class=secno>13.1.1. </span>Calculating
+       <li><a href="#MaskValues"><span class=secno>14.1.1. </span>Calculating
         mask values</a>
       </ul>
     </ul>
 
-   <li><a href="#MaskElement"><span class=secno>14. </span>The <span
+   <li><a href="#MaskElement"><span class=secno>15. </span>The <span
     class=element-name>‘<code class=property>mask</code>’</span> element
     </a>
     <ul class=toc>
-     <li><a href="#DirectMaskSource"><span class=secno>14.1. </span>Directly
+     <li><a href="#DirectMaskSource"><span class=secno>15.1. </span>Directly
       referencing a mask source</a>
     </ul>
 
@@ -297,7 +300,9 @@
     rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>.
   </dl>
 
-  <h2 id=the-mask-image><span class=secno>5. </span>The ‘<a
+  <h2 id=layering><span class=secno>5. </span>Layering Multiple Mask Images</h2>
+
+  <h2 id=the-mask-image><span class=secno>6. </span>The ‘<a
    href="#mask-image"><code class=property>mask-image</code></a>’ property</h2>
 
   <table class=propdef>
@@ -310,8 +315,8 @@
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td><a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> [ , <a
-      href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> ]*
+     <td><a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> [ , <a
+      href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> ]*
 
     <tr>
      <th>Initial:
@@ -358,51 +363,25 @@
    subsequent image behind the previous one. Where
 
   <pre class=prod><dfn
-   id=ltmask-sourcegt><var>&lt;mask-source&gt;</var></dfn> = <var>&lt;FuncIRI&gt;</var> | <var>&lt;image&gt;</var> | child | select(<var>&lt;compound-selector&gt;</var>) | none</pre>
+   id=ltmask-imagegt><var>&lt;mask-image&gt;</var></dfn> = <a
+   href="#ltimagegt"><var>&lt;image&gt;</var></a> | none</pre>
 
   <dl>
-   <dt> <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a>
-    
-
-   <dd> An <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
-    reference</a> to a <a class=element-name href=MaskElement>‘<code
-    class=property>mask</code>’</a> element that defines the filter effect.
-    For example ‘<code class=css>url(commonmasks.xml#mask)</code>’.
-
-   <dt> <span class=xxx>&lt;image&gt;</span>
+   <dt><dfn id=ltimagegt>‘<code class=css><span
+    class=xxx>&lt;image&gt;</span></code>’</dfn>
 
    <dd> A 2D image. (See <a href="#CSS3-IMAGES"
     rel=biblioentry>[CSS3-IMAGES]<!--{{!CSS3-IMAGES}}--></a>.)
 
-   <dt>child
+   <dt><dfn id=none>‘<code class=css>none</code>’</dfn>
 
-   <dd> A keyword to indicate that the last child <a class=element-name
-    href=MaskElement>‘<code class=property>mask</code>’</a> element
-    should be used as the mask source. It is equivalent to ‘<code
-    class=css>select(mask:last-of-type)</code>’.
-
-   <dt> select(<var><a
-    href="types.html#DataTypeCompoundSelector">&lt;compound-selector&gt;</a>)</var>
-    
-
-   <dd>A <span class=xxx>&lt;compound-selector&gt;</span> scoped at the
-    element to which the ‘<a href="#mask"><code
-    class=property>mask</code></a>’ property is applied specifying the
-    element to use as the mask source. As a result, only children of the
-    target element may be used for the mask source.
-
-   <dt> none
-
-   <dd> A value of ‘<code class=css>none</code>’ counts as an image layer
-    but does not mask the element.
+   <dd> A value of ‘<a href="#none"><code class=css>none</code></a>’
+    counts as an image layer but does not mask the element.
   </dl>
 
-  <p>An mask source that is empty (<var>&lt;image&gt;</var> with zero width
-   or zero height), that fails to download, is non-existent or that cannot be
-   displayed (e.g., because it is not in a supported image format) gets
-   ignored. No masking is applied.
+  <p>A mask image that is empty (zero width or zero height), that fails to
+   download, is non-existent or that cannot be displayed (e.g., because it is
+   not in a supported image format) gets ignored. No masking is applied.
 
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-image"><code
@@ -426,7 +405,7 @@ div { mask-image: url(tl.png), url(tr.png) }
 </pre>
   </div>
 
-  <h2 id=the-mask-repeat><span class=secno>6. </span>The ‘<a
+  <h2 id=the-mask-repeat><span class=secno>7. </span>The ‘<a
    href="#mask-repeat"><code class=property>mask-repeat</code></a>’
    property</h2>
 
@@ -588,7 +567,7 @@ body {
    class=property>mask-repeat</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=the-mask-attachment><span class=secno>7. </span>The ‘<a
+  <h2 id=the-mask-attachment><span class=secno>8. </span>The ‘<a
    href="#mask-attachment"><code class=property>mask-attachment</code></a>’
    property</h2>
 
@@ -666,12 +645,13 @@ body {
     there is no viewport, a ‘<a href="#fixed0"><code
     class=css>fixed</code></a>’ background is fixed with respect to the <a
     href="http://www.w3.org/TR/CSS21/page.html#page-box">page box</a> and
-    therefore replicated on every page. <span class=note>Note that there is
-    only one viewport per view. Even if an element has a scrolling mechanism
-    (see the ‘<code class=property>overflow</code>’ property <a
-    href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>), a ‘<a
-    href="#fixed0"><code class=css>fixed</code></a>’ background doesn't
-    move with the element.</span>
+    therefore replicated on every page.
+    <p class=note>Note that there is only one viewport per view. Even if an
+     element has a scrolling mechanism (see the ‘<code
+     class=property>overflow</code>’ property <a href="#CSS21"
+     rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>), a ‘<a
+     href="#fixed0"><code class=css>fixed</code></a>’ background doesn't
+     move with the element.
 
    <dt><dfn id=local0>local</dfn>
 
@@ -734,7 +714,7 @@ h1 {
    class=property>mask-attachment</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=the-mask-position><span class=secno>8. </span>The ‘<a
+  <h2 id=the-mask-position><span class=secno>9. </span>The ‘<a
    href="#mask-position"><code class=property>mask-position</code></a>’
    property</h2>
 
@@ -968,7 +948,7 @@ body {
    class=property>mask-position</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=the-mask-clip><span class=secno>9. </span>The ‘<a
+  <h2 id=the-mask-clip><span class=secno>10. </span>The ‘<a
    href="#mask-clip"><code class=property>mask-clip</code></a>’ property</h2>
 
   <table class=propdef>
@@ -1061,7 +1041,7 @@ body {
    class=property>mask-clip</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=the-mask-origin><span class=secno>10. </span>The ‘<a
+  <h2 id=the-mask-origin><span class=secno>11. </span>The ‘<a
    href="#mask-origin"><code class=property>mask-origin</code></a>’
    property</h2>
 
@@ -1165,7 +1145,7 @@ body {
    class=property>mask-origin</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=the-mask-size><span class=secno>11. </span>The ‘<a
+  <h2 id=the-mask-size><span class=secno>12. </span>The ‘<a
    href="#mask-size"><code class=property>mask-size</code></a>’ property</h2>
 
   <table class=propdef>
@@ -1409,7 +1389,7 @@ div {
    class=property>mask-size</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=the-mask-type><span class=secno>12. </span>The ‘<a
+  <h2 id=the-mask-type><span class=secno>13. </span>The ‘<a
    href="#mask-type"><code class=property>mask-type</code></a>’ property</h2>
 
   <table class=propdef>
@@ -1422,7 +1402,7 @@ div {
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td>&lt;mask-type&gt;
+     <td><a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>
 
     <tr>
      <th>Initial:
@@ -1466,7 +1446,8 @@ div {
 
   <p>The mask type determines which of the methods described in <a
    href="#MaskValues">Calculating mask values</a> should be used for
-   calculating mask values from the mask source. Where
+   calculating mask values from the mask source / the layer of mask images.
+   Where
 
   <pre class=prod><dfn
    id=ltmask-typegt><var>&lt;mask-type&gt;</var></dfn> = luminance | alpha | auto</pre>
@@ -1502,7 +1483,7 @@ div {
    class=property>mask-type</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <h2 id=mask-property><span class=secno>13. </span>The ‘<a
+  <h2 id=mask-property><span class=secno>14. </span>The ‘<a
    href="#mask"><code class=property>mask</code></a>’ property</h2>
 
   <table class=propdef>
@@ -1515,7 +1496,10 @@ div {
     <tr>
      <th>Value:
 
-     <td>&lt;mask-layer&gt; [, &lt;mask-layer&gt;]* &lt;mask-type&gt;?
+     <td><a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> | [ <a
+      href="#ltmask-layergt"><var>&lt;mask-layer&gt;</var></a> [, <a
+      href="#ltmask-layergt"><var>&lt;mask-layer&gt;</var></a> ]* ] <a
+      href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>?
 
     <tr>
      <th>Initial:
@@ -1560,9 +1544,43 @@ div {
   <p>Where
 
   <pre class=prod><dfn
-   id=ltmask-layergt><var>&lt;mask-layer&gt;</var></dfn> = &lt;mask-source&gt; || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
+   id=ltmask-layergt><var>&lt;mask-layer&gt;</var></dfn> = &lt;mask-image&gt; || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
 
-  <h3 id=MaskSources><span class=secno>13.1. </span>Mask source content</h3>
+  <pre class=prod><dfn
+   id=ltmask-sourcegt><var>&lt;mask-source&gt;</var></dfn> = <var>&lt;FuncIRI&gt;</var> |  child | select(<var>&lt;compound-selector&gt;</var>)</pre>
+
+  <dl>
+   <dt> <dfn id=ltfuncirigt>‘<code class=css><a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a></code>’</dfn>
+    
+
+   <dd> An <a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
+    reference</a> to a <a class=element-name href=MaskElement>‘<code
+    class=property>mask</code>’</a> element that defines the filter effect.
+    For example ‘<code class=css>url(commonmasks.xml#mask)</code>’.
+
+   <dt><dfn id=child>‘<code class=css>child</code>’</dfn>
+
+   <dd> A keyword to indicate that the last child <a class=element-name
+    href=MaskElement>‘<code class=property>mask</code>’</a> element
+    should be used as the mask source. It is equivalent to ‘<code
+    class=css>select(mask:last-of-type)</code>’.
+
+   <dt><dfn id=selectltcompound-selectorgt>‘<code class=css>select(<var><a
+    href="types.html#DataTypeCompoundSelector">&lt;compound-selector&gt;</a></var>)</code>’</dfn>
+
+   <dd>A <var><span class=xxx>&lt;compound-selector&gt;</span></var> scoped
+    at the element to which the ‘<a href="#mask"><code
+    class=property>mask</code></a>’ property is applied specifying the
+    element to use as the mask source. As a result, only children of the
+    target element may be used for the mask source.
+  </dl>
+
+  <p>An invalid or non-existent mask source gets ignored. No masking is
+   applied.
+
+  <h3 id=MaskSources><span class=secno>14.1. </span>Mask source content</h3>
 
   <p> The content and behavior of a mask can be defined using a <a
    class=element-name href=MaskElement>‘<code
@@ -1571,7 +1589,7 @@ div {
    property can refer directly to a graphics element or file to use as the
    mask source.
 
-  <h4 id=MaskValues><span class=secno>13.1.1. </span>Calculating mask values</h4>
+  <h4 id=MaskValues><span class=secno>14.1.1. </span>Calculating mask values</h4>
 
   <p class=note> The ability to use the alpha of a mask source as the mask
    values is new in SVG 2. In SVG 1.1 masks always use the luminance of the
@@ -1648,7 +1666,7 @@ div {
    were no mask but instead the alpha channel of the given object were
    multiplied with the mask's resulting mask values.
 
-  <h2 id=MaskElement><span class=secno>14. </span>The <a class=element-name
+  <h2 id=MaskElement><span class=secno>15. </span>The <a class=element-name
    href="#mask">‘<code class=property>mask</code>’</a> element</h2>
 
   <table class=propdef summary="mask element">
@@ -2180,14 +2198,15 @@ div {
    href=MaskElement>‘<code class=property>mask</code>’</a> elements are
    not directly rendered even if the ‘<code
    class=property>display</code>’ property is set to a value other than
-   ‘<code class=property>none</code>’, and <a class=element-name
-   href=MaskElement>‘<code class=property>mask</code>’</a> elements are
-   available for referencing even when the ‘<code
-   class=property>display</code>’ property on the <a class=element-name
-   href=MaskElement>‘<code class=property>mask</code>’</a> element or any
-   of its ancestors is set to <span class=prop-value>none</span>.</p>
+   ‘<a href="#none"><code class=property>none</code></a>’, and <a
+   class=element-name href=MaskElement>‘<code
+   class=property>mask</code>’</a> elements are available for referencing
+   even when the ‘<code class=property>display</code>’ property on the <a
+   class=element-name href=MaskElement>‘<code
+   class=property>mask</code>’</a> element or any of its ancestors is set
+   to <a class=prop-value href="#none">none</a>.</p>
 
-  <h3 id=DirectMaskSource><span class=secno>14.1. </span>Directly referencing
+  <h3 id=DirectMaskSource><span class=secno>15.1. </span>Directly referencing
    a mask source</h3>
 
   <p class=note> The ability to reference non-<a class=element-name
@@ -2431,150 +2450,167 @@ div {
 
   <ul class=indexlist>
    <li>‘<a href="#alpha"><code class=css>alpha</code></a>’, <a
-    href="#alpha" title="''alpha''"><strong>12.</strong></a>
+    href="#alpha" title="''alpha''"><strong>13.</strong></a>
 
    <li><a href="#ltattachmentgt"><var>&lt;attachment&gt;</var></a>, <a
-    href="#ltattachmentgt" title="&lt;attachment&gt;"><strong>7.</strong></a>
+    href="#ltattachmentgt" title="&lt;attachment&gt;"><strong>8.</strong></a>
     
 
    <li>‘<a href="#auto0"><code class=css>auto</code></a>’, <a
-    href="#auto0" title="''auto''"><strong>12.</strong></a>
+    href="#auto0" title="''auto''"><strong>13.</strong></a>
     <ul>
      <li>‘<a href="#mask-size"><code class=property>mask-size</code></a>’
       value, <a href="#auto"
-      title="''auto'', 'mask-size' value"><strong>11.</strong></a>
+      title="''auto'', 'mask-size' value"><strong>12.</strong></a>
     </ul>
 
    <li>‘<code class=css>border-box</code>’
     <ul>
      <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
       value, <a href="#border-box"
-      title="''border-box'', 'mask-clip' value"><strong>9.</strong></a>
+      title="''border-box'', 'mask-clip' value"><strong>10.</strong></a>
 
      <li>‘<a href="#mask-origin"><code
       class=property>mask-origin</code></a>’ value, <a href="#border-box0"
-      title="''border-box'', 'mask-origin' value"><strong>10.</strong></a>
+      title="''border-box'', 'mask-origin' value"><strong>11.</strong></a>
     </ul>
 
    <li>‘<code class=css>bottom</code>’
     <ul>
      <li>‘<a href="#mask-position"><code
       class=property>mask-position</code></a>’ value, <a href="#bottom"
-      title="''bottom'', 'mask-position' value"><strong>8.</strong></a>
+      title="''bottom'', 'mask-position' value"><strong>9.</strong></a>
     </ul>
 
    <li>bounding client rect, <a href="#bounding-client-rect"
     title="bounding client rect"><strong>4.</strong></a>
 
    <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
-    title="&lt;box&gt;"><strong>9.</strong></a>
+    title="&lt;box&gt;"><strong>10.</strong></a>
 
    <li>‘<code class=css>center</code>’
     <ul>
      <li>‘<a href="#mask-position"><code
       class=property>mask-position</code></a>’ value, <a href="#center"
-      title="''center'', 'mask-position' value"><strong>8.</strong></a>
+      title="''center'', 'mask-position' value"><strong>9.</strong></a>
     </ul>
 
+   <li>‘<a href="#child"><code class=css>child</code></a>’, <a
+    href="#child" title="''child''"><strong>14.</strong></a>
+
    <li>‘<a href="#contain"><code class=css>contain</code></a>’, <a
-    href="#contain" title="''contain''"><strong>11.</strong></a>
+    href="#contain" title="''contain''"><strong>12.</strong></a>
 
    <li>‘<a href="#content-box0"><code class=css>content-box</code></a>’,
-    <a href="#content-box0" title="''content-box''"><strong>10.</strong></a>
+    <a href="#content-box0" title="''content-box''"><strong>11.</strong></a>
     <ul>
      <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
       value, <a href="#content-box"
-      title="''content-box'', 'mask-clip' value"><strong>9.</strong></a>
+      title="''content-box'', 'mask-clip' value"><strong>10.</strong></a>
     </ul>
 
    <li>‘<a href="#cover"><code class=css>cover</code></a>’, <a
-    href="#cover" title="''cover''"><strong>11.</strong></a>
+    href="#cover" title="''cover''"><strong>12.</strong></a>
 
-   <li>fixed, <a href="#fixed0" title=fixed><strong>7.</strong></a>
+   <li>fixed, <a href="#fixed0" title=fixed><strong>8.</strong></a>
 
    <li>‘<a href="#fixed0"><code class=css>fixed</code></a>’, <a
-    href="#fixed" title="''fixed''"><strong>7.</strong></a>
+    href="#fixed" title="''fixed''"><strong>8.</strong></a>
+
+   <li>‘<code class=css>&lt;FuncIRI&gt;</code>’, <a href="#ltfuncirigt"
+    title="''&lt;FuncIRI&gt;''"><strong>14.</strong></a>
+
+   <li>‘<a href="#ltimagegt"><code class=css><span
+    class=xxx>&lt;image&gt;</span></code></a>’, <a href="#ltimagegt"
+    title="''&lt;image&gt;''"><strong>6.</strong></a>
 
    <li>‘<code class=css>left</code>’
     <ul>
      <li>‘<a href="#mask-position"><code
       class=property>mask-position</code></a>’ value, <a href="#left"
-      title="''left'', 'mask-position' value"><strong>8.</strong></a>
+      title="''left'', 'mask-position' value"><strong>9.</strong></a>
     </ul>
 
-   <li>local, <a href="#local0" title=local><strong>7.</strong></a>
+   <li>local, <a href="#local0" title=local><strong>8.</strong></a>
 
    <li>‘<a href="#local0"><code class=css>local</code></a>’, <a
-    href="#local" title="''local''"><strong>7.</strong></a>
+    href="#local" title="''local''"><strong>8.</strong></a>
 
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="local coordinate system"><strong>4.</strong></a>
 
    <li>‘<a href="#luminance"><code class=css>luminance</code></a>’, <a
-    href="#luminance" title="''luminance''"><strong>12.</strong></a>
+    href="#luminance" title="''luminance''"><strong>13.</strong></a>
 
-   <li>mask, <a href="#MaskProperty" title=mask><strong>13.</strong></a>, <a
-    href="#mask" title=mask><strong>14.</strong></a>
+   <li>mask, <a href="#MaskProperty" title=mask><strong>14.</strong></a>, <a
+    href="#mask" title=mask><strong>15.</strong></a>
 
    <li>mask-attachment, <a href="#mask-attachment"
-    title=mask-attachment><strong>7.</strong></a>
+    title=mask-attachment><strong>8.</strong></a>
 
    <li>mask-clip, <a href="#mask-clip"
-    title=mask-clip><strong>9.</strong></a>
+    title=mask-clip><strong>10.</strong></a>
+
+   <li><a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>, <a
+    href="#ltmask-imagegt" title="&lt;mask-image&gt;"><strong>6.</strong></a>
+    
 
    <li>mask-image, <a href="#mask-image"
-    title=mask-image><strong>5.</strong></a>
+    title=mask-image><strong>6.</strong></a>
 
    <li><a href="#ltmask-layergt"><var>&lt;mask-layer&gt;</var></a>, <a
     href="#ltmask-layergt"
-    title="&lt;mask-layer&gt;"><strong>13.</strong></a>
+    title="&lt;mask-layer&gt;"><strong>14.</strong></a>
 
    <li>mask-origin, <a href="#mask-origin"
-    title=mask-origin><strong>10.</strong></a>
+    title=mask-origin><strong>11.</strong></a>
 
    <li>mask painting area, <a href="#mask-painting-area"
-    title="mask painting area"><strong>9.</strong></a>, <a
-    href="#mask-painting-area." title="mask painting area.">6.</a>, <a
-    href="#mask-painting-area0" title="mask painting area">6.</a>, <a
-    href="#mask-painting-area1" title="mask painting area">6.</a>, <a
-    href="#mask-painting-area2" title="mask painting area">6.</a>, <a
-    href="#mask-painting-area3" title="mask painting area">6.</a>, <a
-    href="#mask-painting-area4" title="mask painting area">7.</a>, <a
-    href="#mask-painting-area5" title="mask painting area">8.</a>, <a
-    href="#mask-painting-area6" title="mask painting area">8.</a>, <a
-    href="#mask-painting-area7" title="mask painting area">8.</a>
+    title="mask painting area"><strong>10.</strong></a>, <a
+    href="#mask-painting-area." title="mask painting area.">7.</a>, <a
+    href="#mask-painting-area0" title="mask painting area">7.</a>, <a
+    href="#mask-painting-area1" title="mask painting area">7.</a>, <a
+    href="#mask-painting-area2" title="mask painting area">7.</a>, <a
+    href="#mask-painting-area3" title="mask painting area">7.</a>, <a
+    href="#mask-painting-area4" title="mask painting area">8.</a>, <a
+    href="#mask-painting-area5" title="mask painting area">9.</a>, <a
+    href="#mask-painting-area6" title="mask painting area">9.</a>, <a
+    href="#mask-painting-area7" title="mask painting area">9.</a>
 
    <li>mask-position, <a href="#mask-position"
-    title=mask-position><strong>8.</strong></a>
+    title=mask-position><strong>9.</strong></a>
 
    <li>mask positioning area, <a href="#mask-positioning-area"
-    title="mask positioning area"><strong>10.</strong></a>, <a
-    href="#mask-positioning-area." title="mask positioning area.">11.</a>
+    title="mask positioning area"><strong>11.</strong></a>, <a
+    href="#mask-positioning-area." title="mask positioning area.">12.</a>
 
    <li>mask-repeat, <a href="#mask-repeat"
-    title=mask-repeat><strong>6.</strong></a>
+    title=mask-repeat><strong>7.</strong></a>
 
    <li><a href="#ltmask-sizegt"><var>&lt;mask-size&gt;</var></a>, <a
-    href="#ltmask-sizegt" title="&lt;mask-size&gt;"><strong>11.</strong></a>
+    href="#ltmask-sizegt" title="&lt;mask-size&gt;"><strong>12.</strong></a>
 
    <li>mask-size, <a href="#mask-size"
-    title=mask-size><strong>11.</strong></a>
+    title=mask-size><strong>12.</strong></a>
 
    <li><a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a>, <a
     href="#ltmask-sourcegt"
-    title="&lt;mask-source&gt;"><strong>5.</strong></a>
+    title="&lt;mask-source&gt;"><strong>14.</strong></a>
 
    <li><a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>, <a
-    href="#ltmask-typegt" title="&lt;mask-type&gt;"><strong>12.</strong></a>
+    href="#ltmask-typegt" title="&lt;mask-type&gt;"><strong>13.</strong></a>
 
    <li>mask-type, <a href="#mask-type"
-    title=mask-type><strong>12.</strong></a>
+    title=mask-type><strong>13.</strong></a>
+
+   <li>‘<a href="#none"><code class=css>none</code></a>’, <a href="#none"
+    title="''none''"><strong>6.</strong></a>
 
    <li>‘<code class=css>no-repeat</code>’
     <ul>
      <li>‘<a href="#mask-repeat"><code
       class=property>mask-repeat</code></a>’ value, <a href="#no-repeat"
-      title="''no-repeat'', 'mask-repeat' value"><strong>6.</strong></a>
+      title="''no-repeat'', 'mask-repeat' value"><strong>7.</strong></a>
     </ul>
 
    <li>object bounding box units, <a href="#object-bounding-box-units"
@@ -2584,70 +2620,75 @@ div {
     <ul>
      <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
       value, <a href="#padding-box"
-      title="''padding-box'', 'mask-clip' value"><strong>9.</strong></a>
+      title="''padding-box'', 'mask-clip' value"><strong>10.</strong></a>
 
      <li>‘<a href="#mask-origin"><code
       class=property>mask-origin</code></a>’ value, <a href="#padding-box0"
-      title="''padding-box'', 'mask-origin' value"><strong>10.</strong></a>
+      title="''padding-box'', 'mask-origin' value"><strong>11.</strong></a>
     </ul>
 
    <li><a href="#ltpositiongt"><var>&lt;position&gt;</var></a>, <a
-    href="#ltpositiongt" title="&lt;position&gt;"><strong>8.</strong></a>
+    href="#ltpositiongt" title="&lt;position&gt;"><strong>9.</strong></a>
 
    <li>‘<code class=css>repeat</code>’
     <ul>
      <li>‘<a href="#mask-repeat"><code
       class=property>mask-repeat</code></a>’ value, <a href="#repeat"
-      title="''repeat'', 'mask-repeat' value"><strong>6.</strong></a>
+      title="''repeat'', 'mask-repeat' value"><strong>7.</strong></a>
     </ul>
 
    <li><a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a>, <a
     href="#ltrepeat-stylegt"
-    title="&lt;repeat-style&gt;"><strong>6.</strong></a>
+    title="&lt;repeat-style&gt;"><strong>7.</strong></a>
 
    <li>‘<a href="#repeat-x"><code class=css>repeat-x</code></a>’, <a
-    href="#repeat-x" title="''repeat-x''"><strong>6.</strong></a>
+    href="#repeat-x" title="''repeat-x''"><strong>7.</strong></a>
 
    <li>‘<a href="#repeat-y"><code class=css>repeat-y</code></a>’, <a
-    href="#repeat-y" title="''repeat-y''"><strong>6.</strong></a>
+    href="#repeat-y" title="''repeat-y''"><strong>7.</strong></a>
 
    <li>‘<code class=css>right</code>’
     <ul>
      <li>‘<a href="#mask-position"><code
       class=property>mask-position</code></a>’ value, <a href="#right"
-      title="''right'', 'mask-position' value"><strong>8.</strong></a>
+      title="''right'', 'mask-position' value"><strong>9.</strong></a>
     </ul>
 
    <li>‘<code class=css>round</code>’
     <ul>
      <li>‘<a href="#mask-repeat"><code
       class=property>mask-repeat</code></a>’ value, <a href="#round"
-      title="''round'', 'mask-repeat' value"><strong>6.</strong></a>
+      title="''round'', 'mask-repeat' value"><strong>7.</strong></a>
     </ul>
 
-   <li>scroll, <a href="#scroll0" title=scroll><strong>7.</strong></a>
+   <li>scroll, <a href="#scroll0" title=scroll><strong>8.</strong></a>
 
    <li>‘<a href="#scroll0"><code class=css>scroll</code></a>’, <a
-    href="#scroll" title="''scroll''"><strong>7.</strong></a>
+    href="#scroll" title="''scroll''"><strong>8.</strong></a>
+
+   <li>‘<code
+    class=css>select(<var>&lt;compound-selector&gt;</var>)</code>’, <a
+    href="#selectltcompound-selectorgt"
+    title="''select(&lt;compound-selector&gt;)''"><strong>14.</strong></a>
 
    <li>‘<code class=css>space</code>’
     <ul>
      <li>‘<a href="#mask-repeat"><code
       class=property>mask-repeat</code></a>’ value, <a href="#space"
-      title="''space'', 'mask-repeat' value"><strong>6.</strong></a>
+      title="''space'', 'mask-repeat' value"><strong>7.</strong></a>
     </ul>
 
    <li>‘<code class=css>top</code>’
     <ul>
      <li>‘<a href="#mask-position"><code
       class=property>mask-position</code></a>’ value, <a href="#top"
-      title="''top'', 'mask-position' value"><strong>8.</strong></a>
+      title="''top'', 'mask-position' value"><strong>9.</strong></a>
     </ul>
 
    <li>user coordinate system, <a href="#user-coordinate-system"
     title="user coordinate system"><strong>4.</strong></a>
 
-   <li>viewport, <a href="#viewport" title=viewport>7.</a>
+   <li>viewport, <a href="#viewport" title=viewport>8.</a>
   </ul>
   <!--end-index-->
 
@@ -2707,7 +2748,7 @@ div {
     <tr>
      <th><a class=property href="#mask-image">mask-image</a>
 
-     <td>&lt;mask-source&gt; [ , &lt;mask-source&gt; ]*
+     <td>&lt;mask-image&gt; [ , &lt;mask-image&gt; ]*
 
      <td>none
 
@@ -2788,7 +2829,8 @@ div {
     <tr>
      <th><a class=property href="#mask">mask</a>
 
-     <td>&lt;mask-layer&gt; [, &lt;mask-layer&gt;]* &lt;mask-type&gt;?
+     <td>&lt;mask-source&gt; | [ &lt;mask-layer&gt; [, &lt;mask-layer&gt; ]*
+      ] &lt;mask-type&gt;?
 
      <td>see individual properties
 
