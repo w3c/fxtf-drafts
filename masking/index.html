@@ -81,7 +81,12 @@
 
   <h2 class="no-num no-toc" id=abstract>Abstract</h2>
 
-  <p class=todo> Needs to be written.
+  <p>CSS Masking describes how to use another graphical element or image as a
+   lumniance or alpha mask. Typically, rendering an element via CSS or SVG
+   can conceptually described as if the element, including its children, are
+   drawn into a buffer (such as a raster image) and then that buffer is
+   composited into the elements parent. Luminance or alpha masks influence
+   the transperency of this buffer before the compositing stage.
 
   <h2 class="no-num no-toc" id=status>Status of this document</h2>
   <!--begin-status-->
@@ -127,15 +132,22 @@
   <ul class=toc>
    <li><a href="#intro"><span class=secno>1. </span> Introduction </a>
 
-   <li><a href="#placement"><span class=secno>2. </span> Module interactions
-    </a>
+   <li><a href="#placement"><span class=secno>2. </span>Module
+    interactions</a>
 
-   <li><a href="#values"><span class=secno>3. </span> Values </a>
+   <li><a href="#values"><span class=secno>3. </span>Values</a>
 
    <li><a href="#definitions"><span class=secno>4. </span>Definitions</a>
 
-   <li><a href="#layering"><span class=secno>5. </span>Layering Multiple Mask
-    Images</a>
+   <li><a href="#the-masking-rendering-model"><span class=secno>5. </span>The
+    Masking Rendering Model</a>
+    <ul class=toc>
+     <li><a href="#layering"><span class=secno>5.1. </span>Layering Multiple
+      Mask Images</a>
+
+     <li><a href="#MaskValues"><span class=secno>5.2. </span>Calculating mask
+      values</a>
+    </ul>
 
    <li><a href="#the-mask-image"><span class=secno>6. </span>The ‘<code
     class=property>mask-image</code>’ property</a>
@@ -163,14 +175,6 @@
 
    <li><a href="#mask-property"><span class=secno>14. </span>The ‘<code
     class=property>mask</code>’ property</a>
-    <ul class=toc>
-     <li><a href="#MaskSources"><span class=secno>14.1. </span>Mask source
-      content</a>
-      <ul class=toc>
-       <li><a href="#MaskValues"><span class=secno>14.1.1. </span>Calculating
-        mask values</a>
-      </ul>
-    </ul>
 
    <li><a href="#MaskElement"><span class=secno>15. </span>The <span
     class=element-name>‘<code class=property>mask</code>’</span> element
@@ -223,16 +227,12 @@
    <p><a href="images/masking/mask01.svg">View this example</a> as SVG</p>
   </div>
 
-  <h2 id=placement><span class=secno>2. </span> Module interactions</h2>
+  <h2 id=placement><span class=secno>2. </span>Module interactions</h2>
 
-  <p class=todo> Needs to be written.
-
-  <h2 id=values><span class=secno>3. </span> Values</h2>
-
-  <p>This module defines a set of CSS properties that affect the visual
-   rendering of elements to which those properties are applied; these effects
-   are applied after elements have been sized and positioned according to the
-   <a href="http://www.w3.org/TR/CSS2/visuren.html"
+  <p>This specification defines a set of CSS properties that affect the
+   visual rendering of elements to which those properties are applied; these
+   effects are applied after elements have been sized and positioned
+   according to the <a href="http://www.w3.org/TR/CSS2/visuren.html"
    title="Visual formatting model">Visual formatting model</a> from <a
    href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Some values of
    these properties result in the creation of a <a
@@ -240,6 +240,25 @@
    title="Visual formatting model">containing block</a>, and/or the creation
    of a <a href="http://www.w3.org/TR/CSS2/visuren.html#z-index"
    title="Visual formatting model">stacking context</a>.
+
+  <p>Defintions of CSS properties and values in this specification comply
+   with CSS Backgrounds and Borders <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{CSS3BG}}--></a>.
+
+  <h2 id=values><span class=secno>3. </span>Values</h2>
+
+  <p>This specification follows the <a
+   href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
+   definition conventions</a> from <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
+   this specification are defined in CSS Level 2 Revision 1 <a
+   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
+
+  <p>In addition to the property-specific values listed in their definitions,
+   all properties defined in this specification also accept the <a
+   href="http://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a>
+   keyword as their property value. For readability it has not been repeated
+   explicitly.
 
   <h2 id=definitions><span class=secno>4. </span>Definitions</h2>
 
@@ -300,7 +319,150 @@
     rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>.
   </dl>
 
-  <h2 id=layering><span class=secno>5. </span>Layering Multiple Mask Images</h2>
+  <h2 id=the-masking-rendering-model><span class=secno>5. </span>The Masking
+   Rendering Model</h2>
+
+  <p>The application of the ‘<a href="#mask"><code
+   class=property>mask</code></a>’ or ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ properties to an element formatted
+   with the CSS box model establishes a pseudo-stacking-context the same way
+   that CSS ‘<code class=property>opacity</code>’ does, and all the
+   element's descendants are rendered together as a group with the masking
+   applied to the group as a whole.
+
+  <p>The ‘<a href="#mask"><code class=property>mask</code></a>’ and ‘<a
+   href="#mask-image"><code class=property>mask-image</code></a>’
+   properties have no effect on the geometry of the target element's CSS
+   boxes.
+
+  <p>The compositing model follows the SVG compositing model <a href="#SVG11"
+   rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>: first any filter effect is
+   applied, then any clipping, masking and opacity. These effects all apply
+   after any other CSS effects such as ‘<code
+   class=property>border</code>’. As per SVG, the application of ‘<a
+   href="#mask"><code class=property>mask</code></a>’ or ‘<a
+   href="#mask-image"><code class=property>mask-image</code></a>’ has no
+   effect on hit-testing.
+
+  <h3 id=layering><span class=secno>5.1. </span>Layering Multiple Mask Images</h3>
+
+  <p>The mask of a box can have multiple <span class=index
+   id=layers>layers</span>. The number of layers is determined by the number
+   of comma-separated values in the ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ property. Note that a value of
+   ‘<a href="#none"><code class=property>none</code></a>’ still creates a
+   layer.
+
+  <p>Each of the images is sized, positioned, and tiled according to the
+   corresponding value in the other mask properties. The lists are matched up
+   from the first value: excess values at the end are not used. If a property
+   doesn't have enough comma-separated values to match the number of layers,
+   the <span>UA</span> must calculate its used value by repeating the list of
+   values until there are enough.
+
+  <div class=example>
+   <p>For example, this set of declarations:
+
+   <pre>
+mask-image: url(flower.png), url(ball.png), url(grass.png);
+mask-position: center center, 20% 80%, top left, bottom right;
+mask-origin: border-box, content-box;
+mask-repeat: no-repeat;
+</pre>
+
+   <p>has exactly the same effect as this set with the extra position dropped
+    and the missing values for ‘<a href="#mask-origin"><code
+    class=property>mask-origin</code></a>’ and ‘<a
+    href="#mask-repeat"><code class=property>mask-repeat</code></a>’ filled
+    in (emphasized for clarity):
+
+   <pre>
+mask-image: url(flower.png), url(ball.png), url(grass1.png);
+mask-position: center center, 20% 80%, top left;
+mask-origin: border-box, content-box<strong>, border-box</strong>;
+mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
+</pre>
+  </div>
+
+  <p>The first image in the list is the layer closest to the user, the next
+   one is painted behind the first, and so on.
+
+  <h3 id=MaskValues><span class=secno>5.2. </span>Calculating mask values</h3>
+
+  <p class=note> The ability to use the alpha of a mask source as the mask
+   values is new in SVG 2. In SVG 1.1 masks always use the luminance of the
+   mask source as the mask values.
+
+  <p> A mask source may be interpreted using one of two different methods
+   with regards to calculating the mask values that will be multiplied with
+   the target alpha values.
+
+  <p> The first and simplest method of calculating the mask values is to use
+   the alpha channel of the mask source. In this case the mask value at a
+   given point is simply the value of the alpha channel at that point. The
+   color channels do not contribute to the mask value.
+
+  <p> The second method of calculating the mask values is to use the
+   luminance of the mask source. In this case the mask value at a given point
+   is computed from the color channel values and alpha channel value using
+   the following procedure.
+
+  <ol>
+   <li>Compute a luminance value from the color channel values.
+    <ul>
+     <li> If the computed value of ‘<code
+      class=property>color-interpolation</code>’ on the <a
+      class=element-name href=MaskElement>‘<code
+      class=property>mask</code>’</a> element is ‘<code
+      class=property>linearRGB</code>’, convert the original image color
+      values (potentially in the sRGB color space) to the linear RGB color
+      space (see <a href="painting.html#RenderingProperties">Rendering
+      properties</a>).
+
+     <li>Then, using non-premultiplied RGB color values, apply the
+      luminance-to-alpha coefficients (as defined in the <a
+      class=element-name
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#feColorMatrixElement">‘<code
+      class=property>feColorMatrix</code>’</a> filter primitive
+      [[filter-effects]]) to convert the RGB color values to luminance
+      values.
+    </ul>
+
+   <li>Multiply the computed luminance value by the corresponding alpha value
+    to produce the mask value.
+  </ol>
+
+  <p>Regardless of the method used, the procedure for calculating mask values
+   assumes the content of the mask is a four-channel RGBA graphics object.
+   For other types of graphics objects, special handling is required as
+   follows.
+
+  <p>For a three-channel RGB graphics object that is used in a mask (e.g.,
+   when referencing a three-channel image file), the effect is as if the
+   object were converted into a four-channel RGBA image with the alpha
+   channel uniformly set to 1.
+
+  <p>For a single-channel image that is used in a mask (e.g., when
+   referencing a single-channel grayscale image file), the effect is as if
+   the object were converted into a four-channel RGBA image, where the single
+   channel from the referenced object is used to compute the three color
+   channels and the alpha channel is uniformly set to 1. Note that when
+   referencing a grayscale image file, the transfer curve relating the
+   encoded grayscale values to linear light values must be taken into account
+   when computing the color channels.
+
+  <p class=note>Note that SVG <a class=element-name
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
+   class=property>path</code>’</a>s, shapes (e.g., <a class=element-name
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement">‘<code
+   class=property>circle</code>’</a>) and <a class=element-name
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
+   class=property>text</code>’</a> are all treated as four-channel RGBA
+   images for the purposes of masking operations.
+
+  <p>The effect of a mask is identical to what would have happened if there
+   were no mask but instead the alpha channel of the given object were
+   multiplied with the mask's resulting mask values.
 
   <h2 id=the-mask-image><span class=secno>6. </span>The ‘<a
    href="#mask-image"><code class=property>mask-image</code></a>’ property</h2>
@@ -658,7 +820,6 @@ body {
    <dd>The mask is fixed with regard to the element's contents: if the
     element has a scrolling mechanism, the mask scrolls with the element's
     contents.
-    <p class=issue>Maybe dropped later
 
    <dt><dfn id=scroll0>scroll</dfn>
 
@@ -1140,6 +1301,12 @@ body {
    left</code>’ (the initial value), and the element has a non-zero border,
    then the top and left of the mask image will be clipped.
 
+  <p class=note>Note that SVG elements without an associated CSS layout box
+   don't have a ‘<code class=css>border-box</code>’ or ‘<code
+   class=css>padding-box</code>’ and ‘<a href="#content-box0"><code
+   class=css>content-box</code></a>’ is used as mask positioning area
+   instead.
+
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-origin"><code
    class=property>mask-origin</code></a>’ interacts with other
@@ -1577,94 +1744,8 @@ div {
     target element may be used for the mask source.
   </dl>
 
-  <p>An invalid or non-existent mask source gets ignored. No masking is
+  <p>An invalid or non-existent mask source gets ignored and no masking is
    applied.
-
-  <h3 id=MaskSources><span class=secno>14.1. </span>Mask source content</h3>
-
-  <p> The content and behavior of a mask can be defined using a <a
-   class=element-name href=MaskElement>‘<code
-   class=property>mask</code>’</a> element. Alternatively, for many simple
-   uses, the ‘<a href="#mask"><code class=property>mask</code></a>’
-   property can refer directly to a graphics element or file to use as the
-   mask source.
-
-  <h4 id=MaskValues><span class=secno>14.1.1. </span>Calculating mask values</h4>
-
-  <p class=note> The ability to use the alpha of a mask source as the mask
-   values is new in SVG 2. In SVG 1.1 masks always use the luminance of the
-   mask source as the mask values.
-
-  <p> A mask source may be interpreted using one of two different methods
-   with regards to calculating the mask values that will be multiplied with
-   the target alpha values.
-
-  <p> The first and simplest method of calculating the mask values is to use
-   the alpha channel of the mask source. In this case the mask value at a
-   given point is simply the value of the alpha channel at that point. The
-   color channels do not contribute to the mask value.
-
-  <p> The second method of calculating the mask values is to use the
-   luminance of the mask source. In this case the mask value at a given point
-   is computed from the color channel values and alpha channel value using
-   the following procedure.
-
-  <ol>
-   <li>Compute a luminance value from the color channel values.
-    <ul>
-     <li> If the computed value of ‘<code
-      class=property>color-interpolation</code>’ on the <a
-      class=element-name href=MaskElement>‘<code
-      class=property>mask</code>’</a> element is ‘<code
-      class=property>linearRGB</code>’, convert the original image color
-      values (potentially in the sRGB color space) to the linear RGB color
-      space (see <a href="painting.html#RenderingProperties">Rendering
-      properties</a>).
-
-     <li>Then, using non-premultiplied RGB color values, apply the
-      luminance-to-alpha coefficients (as defined in the <a
-      class=element-name
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#feColorMatrixElement">‘<code
-      class=property>feColorMatrix</code>’</a> filter primitive
-      [[filter-effects]]) to convert the RGB color values to luminance
-      values.
-    </ul>
-
-   <li>Multiply the computed luminance value by the corresponding alpha value
-    to produce the mask value.
-  </ol>
-
-  <p>Regardless of the method used, the procedure for calculating mask values
-   assumes the content of the mask is a four-channel RGBA graphics object.
-   For other types of graphics objects, special handling is required as
-   follows.
-
-  <p>For a three-channel RGB graphics object that is used in a mask (e.g.,
-   when referencing a three-channel image file), the effect is as if the
-   object were converted into a four-channel RGBA image with the alpha
-   channel uniformly set to 1.
-
-  <p>For a single-channel image that is used in a mask (e.g., when
-   referencing a single-channel grayscale image file), the effect is as if
-   the object were converted into a four-channel RGBA image, where the single
-   channel from the referenced object is used to compute the three color
-   channels and the alpha channel is uniformly set to 1. Note that when
-   referencing a grayscale image file, the transfer curve relating the
-   encoded grayscale values to linear light values must be taken into account
-   when computing the color channels.
-
-  <p class=note>Note that SVG <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
-   class=property>path</code>’</a>s, shapes (e.g., <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement">‘<code
-   class=property>circle</code>’</a>) and <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
-   class=property>text</code>’</a> are all treated as four-channel RGBA
-   images for the purposes of masking operations.
-
-  <p>The effect of a mask is identical to what would have happened if there
-   were no mask but instead the alpha channel of the given object were
-   multiplied with the mask's resulting mask values.
 
   <h2 id=MaskElement><span class=secno>15. </span>The <a class=element-name
    href="#mask">‘<code class=property>mask</code>’</a> element</h2>
@@ -2154,9 +2235,8 @@ div {
      class=property>width</code>’</a> and <a class=attr-name
      href="#MaskElementHeightAttribute">‘<code
      class=property>height</code>’</a>.<br>
-     A negative value is an error (see <a
-     href="implnote.html#ErrorProcessing">Error processing</a>). A value of
-     zero disables rendering of the element.<br>
+     A negative value or a value of zero disables rendering of the
+     element.<br>
      If the attribute is not specified, the effect is as if a value of <span
      class=attr-value>‘<code class=css>120%</code>’</span> were
      specified.<br>
@@ -2168,9 +2248,8 @@ div {
      href="types.html#DataTypeLength">&lt;length&gt;</a></span>"
 
     <dd>The height of the largest possible offscreen buffer.<br>
-     A negative value is an error (see <a
-     href="implnote.html#ErrorProcessing">Error processing</a>). A value of
-     zero disables rendering of the element.<br>
+     A negative value or a value of zero disables rendering of the
+     element.<br>
      If the attribute is not specified, the effect is as if a value of <span
      class=attr-value>‘<code class=css>120%</code>’</span> were
      specified.<br>
@@ -2209,6 +2288,9 @@ div {
   <h3 id=DirectMaskSource><span class=secno>15.1. </span>Directly referencing
    a mask source</h3>
 
+  <p class=issue> The section gets possibly removed, since it duplicates
+   functionality of CSS4 Images and the <code>element()</code> function.</p>
+
   <p class=note> The ability to reference non-<a class=element-name
    href=MaskElement>‘<code class=property>mask</code>’</a> content is new
    in SVG 2.</p>
@@ -2240,10 +2322,6 @@ div {
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement">‘<code
     class=property>image</code>’</a> element.
   </ul>
-
-  <p class=issue> The ability to directly target other SVG elements may be
-   replaced by use of CSS 4 Images Values and the <code>element()</code>
-   syntax to achieve the same effect.</p>
 
   <p> The effect of referring directly to content as a mask source depends on
    the type of the source content.</p>
@@ -2442,6 +2520,16 @@ div {
     href="http://www.w3.org/TR/2012/WD-css3-transforms-20120403/">http://www.w3.org/TR/2012/WD-css3-transforms-20120403/</a>
     </dd>
    <!---->
+
+   <dt id=CSS3BG>[CSS3BG]
+
+   <dd>Bert Bos; Elika J. Etemad; Brad Kemper. <a
+    href="http://www.w3.org/TR/2012/CR-css3-background-20120417/"><cite>CSS
+    Backgrounds and Borders Module Level 3.</cite></a> 17 April 2012. W3C
+    Candidate Recommendation. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2012/CR-css3-background-20120417/">http://www.w3.org/TR/2012/CR-css3-background-20120417/</a>
+    </dd>
+   <!---->
   </dl>
   <!--end-informative-->
 
@@ -2523,6 +2611,8 @@ div {
    <li>‘<a href="#ltimagegt"><code class=css><span
     class=xxx>&lt;image&gt;</span></code></a>’, <a href="#ltimagegt"
     title="''&lt;image&gt;''"><strong>6.</strong></a>
+
+   <li>layers, <a href="#layers" title=layers>5.1.</a>
 
    <li>‘<code class=css>left</code>’
     <ul>
