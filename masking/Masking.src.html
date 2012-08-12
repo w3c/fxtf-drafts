@@ -81,15 +81,17 @@ Table of contents</h2>
 </p>
 
 <p>
-  A mask is applied using the 'mask' property.
-  The mask source may be defined using a <a>'mask element'</a> element.
-  Alternatively, for many simple uses, the 'mask' property may
-  refer directly to graphical elements or images to be used as the mask source
-  content forgoing the need for an explicit <a>'mask element'</a> element.
+  A mask is applied using the 'mask' or 'mask-image' property.
+  The mask source may be defined using a <a>'mask element'</a> element referenced
+  by the 'mask' property.
+  Alternatively, for many simple uses, the 'mask-image' property may
+  refer directly to graphical elements or images to be used as mask
+  forgoing the need for an explicit <a>'mask element'</a> element. The
+  'mask' property is also a shorthand for other masking properties.
 </p>
 
 <p>
-  The effect of applying a mask is as if the mask source elements are
+  The effect of applying a mask is as if the mask images or mask source elements are
   rendered into an offscreen image which has been initialized to transparent
   black.
   The graphical object to which the mask is applied
@@ -170,9 +172,22 @@ Table of contents</h2>
 <dd>
   The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a> [[!SVG11]].
 </dd>
+<dt id="TermMask"><dfn>mask</dfn></dt>
+<dd>
+  An offscreen image which has been initialized to transparent
+  black.
+  The graphical object to which the mask is applied
+  will be painted onto the background through the
+  mask, thus completely or partially masking out parts of the graphical
+  object.
+</dd>
+<dt id="TermMask"><dfn>mask source</dfn></dt>
+<dd>
+  A mask defined by a <a>'mask element'</a> element.
+</dd>
 </dl>
 
-<h2>The Masking Rendering Model</h2>
+<h2>The Mask Rendering Model</h2>
 
 <p>The application of the 'mask' or 'mask-image' properties to an element formatted with the CSS box model establishes a pseudo-stacking-context the same way that CSS 'opacity' does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
 
@@ -216,19 +231,13 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
 </div>
 
 <p>The first image in the list is the layer closest to the user,
-the next one is painted behind the first, and so on.
+the next one is painted behind the first, and so on. All mask images
+are combined by compositing on the <span class=index>mask</span>.
 
 <h3 id="MaskValues">Calculating mask values</h3>
 
-<p class="note">
-The ability to use the alpha of a mask source as the mask values is new
-in SVG 2.
-In SVG 1.1 masks always use the luminance of the mask source as the mask
-values.
-</p>
-
 <p>
-A mask source may be interpreted using one of two different methods with regards
+A mask may be interpreted using one of two different methods with regards
 to calculating the mask values that will be multiplied with the target alpha
 values.
 </p>
@@ -285,8 +294,8 @@ referencing a grayscale image file, the transfer curve relating the
 encoded grayscale values to linear light values must be taken into
 account when computing the color channels.</p>
 
-<p class="note">Note that SVG <a>'path'</a>s, shapes (e.g., <a>'circle'</a>) and
-<a>'text'</a> are all treated as four-channel RGBA images for the purposes
+<p class="note">Note that SVG <a>graphics elements</a> (e.g., <a>'circle'</a> or <a>'text'</a>)
+are all treated as four-channel RGBA images for the purposes
 of masking operations.</p>
 
 <p>The effect of a mask is identical to what would have happened if
@@ -1177,15 +1186,15 @@ mask values from the mask source / the layer of mask images. Where
 
 <dl>
   <dt><dfn>''luminance''</dfn></dt>
-  <dd>Indicates that the luminance values of the mask source should be used as the mask values.</dd>
+  <dd>Indicates that the luminance values of the mask should be used.</dd>
 
   <dt><dfn>''alpha''</dfn></dt>
-  <dd>Indicates that the alpha values of the mask source should be used as the mask values.</dd>
+  <dd>Indicates that the alpha values of the mask should be used.</dd>
 
   <dt><dfn>''auto''</dfn></dt>
-  <dd>If the mask source is a <a>'mask element'</a> element, the method used for calculating the
+  <dd>If the mask references a <a>'mask element'</a> element, the method used for calculating the
     mask values is determined by the 'maskType' attribute on the <a>'mask element'</a> element.
-    Otherwise, the alpha values of the mask source should be used as the mask values.
+    Otherwise, the alpha values of the mask should be used.
     <p class=issue>Should the default be ''luminance'' instead?</dd>
 </dl>
 

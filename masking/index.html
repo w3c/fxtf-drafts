@@ -139,8 +139,8 @@
 
    <li><a href="#definitions"><span class=secno>4. </span>Definitions</a>
 
-   <li><a href="#the-masking-rendering-model"><span class=secno>5. </span>The
-    Masking Rendering Model</a>
+   <li><a href="#the-mask-rendering-model"><span class=secno>5. </span>The
+    Mask Rendering Model</a>
     <ul class=toc>
      <li><a href="#layering"><span class=secno>5.1. </span>Layering Multiple
       Mask Images</a>
@@ -205,20 +205,24 @@
    object into the background.
 
   <p> A mask is applied using the ‘<a href="#mask"><code
-   class=property>mask</code></a>’ property. The mask source may be defined
-   using a <a class=element-name href=MaskElement>‘<code
-   class=property>mask</code>’</a> element. Alternatively, for many simple
-   uses, the ‘<a href="#mask"><code class=property>mask</code></a>’
-   property may refer directly to graphical elements or images to be used as
-   the mask source content forgoing the need for an explicit <a
-   class=element-name href=MaskElement>‘<code
-   class=property>mask</code>’</a> element.
+   class=property>mask</code></a>’ or ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ property. The mask source may be
+   defined using a <a class=element-name href=MaskElement>‘<code
+   class=property>mask</code>’</a> element referenced by the ‘<a
+   href="#mask"><code class=property>mask</code></a>’ property.
+   Alternatively, for many simple uses, the ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ property may refer directly to
+   graphical elements or images to be used as mask forgoing the need for an
+   explicit <a class=element-name href=MaskElement>‘<code
+   class=property>mask</code>’</a> element. The ‘<a href="#mask"><code
+   class=property>mask</code></a>’ property is also a shorthand for other
+   masking properties.
 
-  <p> The effect of applying a mask is as if the mask source elements are
-   rendered into an offscreen image which has been initialized to transparent
-   black. The graphical object to which the mask is applied will be painted
-   onto the background through the mask, thus completely or partially masking
-   out parts of the graphical object.
+  <p> The effect of applying a mask is as if the mask images or mask source
+   elements are rendered into an offscreen image which has been initialized
+   to transparent black. The graphical object to which the mask is applied
+   will be painted onto the background through the mask, thus completely or
+   partially masking out parts of the graphical object.
 
   <div class=example>
    <p> Following example uses an image to mask a rectangle.</p>
@@ -317,9 +321,21 @@
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#ObjectBoundingBoxUnits">object
     bounding box units</a> <a href="#SVG11"
     rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>.
+
+   <dt id=TermMask><dfn id=mask0>mask</dfn>
+
+   <dd> An offscreen image which has been initialized to transparent black.
+    The graphical object to which the mask is applied will be painted onto
+    the background through the mask, thus completely or partially masking out
+    parts of the graphical object.
+
+   <dt id=TermMask><dfn id=mask-source>mask source</dfn>
+
+   <dd> A mask defined by a <a class=element-name href=MaskElement>‘<code
+    class=property>mask</code>’</a> element.
   </dl>
 
-  <h2 id=the-masking-rendering-model><span class=secno>5. </span>The Masking
+  <h2 id=the-mask-rendering-model><span class=secno>5. </span>The Mask
    Rendering Model</h2>
 
   <p>The application of the ‘<a href="#mask"><code
@@ -385,17 +401,14 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
   </div>
 
   <p>The first image in the list is the layer closest to the user, the next
-   one is painted behind the first, and so on.
+   one is painted behind the first, and so on. All mask images are combined
+   by compositing on the <a class=index href="#mask" id=mask1>mask</a>.
 
   <h3 id=MaskValues><span class=secno>5.2. </span>Calculating mask values</h3>
 
-  <p class=note> The ability to use the alpha of a mask source as the mask
-   values is new in SVG 2. In SVG 1.1 masks always use the luminance of the
-   mask source as the mask values.
-
-  <p> A mask source may be interpreted using one of two different methods
-   with regards to calculating the mask values that will be multiplied with
-   the target alpha values.
+  <p> A mask may be interpreted using one of two different methods with
+   regards to calculating the mask values that will be multiplied with the
+   target alpha values.
 
   <p> The first and simplest method of calculating the mask values is to use
    the alpha channel of the mask source. In this case the mask value at a
@@ -451,13 +464,13 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
    encoded grayscale values to linear light values must be taken into account
    when computing the color channels.
 
-  <p class=note>Note that SVG <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
-   class=property>path</code>’</a>s, shapes (e.g., <a class=element-name
+  <p class=note>Note that SVG <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+   elements</a> (e.g., <a class=element-name
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement">‘<code
-   class=property>circle</code>’</a>) and <a class=element-name
+   class=property>circle</code>’</a> or <a class=element-name
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
-   class=property>text</code>’</a> are all treated as four-channel RGBA
+   class=property>text</code>’</a>) are all treated as four-channel RGBA
    images for the purposes of masking operations.
 
   <p>The effect of a mask is identical to what would have happened if there
@@ -1617,23 +1630,20 @@ div {
   <dl>
    <dt><dfn id=luminance>‘<code class=css>luminance</code>’</dfn>
 
-   <dd>Indicates that the luminance values of the mask source should be used
-    as the mask values.
+   <dd>Indicates that the luminance values of the mask should be used.
 
    <dt><dfn id=alpha>‘<code class=css>alpha</code>’</dfn>
 
-   <dd>Indicates that the alpha values of the mask source should be used as
-    the mask values.
+   <dd>Indicates that the alpha values of the mask should be used.
 
    <dt><dfn id=auto0>‘<code class=css>auto</code>’</dfn>
 
-   <dd>If the mask source is a <a class=element-name
+   <dd>If the mask references a <a class=element-name
     href=MaskElement>‘<code class=property>mask</code>’</a> element, the
     method used for calculating the mask values is determined by the ‘<code
     class=property>maskType</code>’ attribute on the <a class=element-name
     href=MaskElement>‘<code class=property>mask</code>’</a> element.
-    Otherwise, the alpha values of the mask source should be used as the mask
-    values.
+    Otherwise, the alpha values of the mask should be used.
     <p class=issue>Should the default be ‘<a href="#luminance"><code
      class=css>luminance</code></a>’ instead?
   </dl>
@@ -2625,7 +2635,8 @@ div {
     href="#luminance" title="''luminance''"><strong>13.</strong></a>
 
    <li>mask, <a href="#MaskProperty" title=mask><strong>14.</strong></a>, <a
-    href="#mask" title=mask><strong>15.</strong></a>
+    href="#mask" title=mask><strong>15.</strong></a>, <a href="#mask0"
+    title=mask><strong>4.</strong></a>, <a href="#mask1" title=mask>5.1.</a>
 
    <li>mask-attachment, <a href="#mask-attachment"
     title=mask-attachment><strong>8.</strong></a>
@@ -2678,6 +2689,9 @@ div {
    <li><a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a>, <a
     href="#ltmask-sourcegt"
     title="&lt;mask-source&gt;"><strong>14.</strong></a>
+
+   <li>mask source, <a href="#mask-source"
+    title="mask source"><strong>4.</strong></a>
 
    <li><a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>, <a
     href="#ltmask-typegt" title="&lt;mask-type&gt;"><strong>13.</strong></a>
