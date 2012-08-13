@@ -1498,18 +1498,7 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
 
 <h2>Mask Box Image</h2>
 
-<div class=todo>
-<p>Descriptions of the following 'mask-box-image' properties follow:</p>
-<ul>
-<li>mask-box-image-source</li>
-<li>mask-box-image-size</li>
-<li>mask-box-image-outset</li>
-<li>mask-box-image-repeat</li>
-<li>mask-box-image-slice</li>
-<li>mask-box-image-width</li>
-<li>mask-box-image</li>
-</ul>
-</div>
+<p class=todo>Descriptions of the general model missing.</p>
 
 <h3 id="the-mask-box-image-source">The 'mask-box-image-source' property</h3>
 
@@ -1543,6 +1532,9 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <td>no
 </table>
 
+<p>Specifies an image to be used as mask. If the value is ''none'' or if the image cannot be displayed
+(or the property doesn't apply), the content won't get masked.
+
 <h3 id="the-mask-box-image-slice">The 'mask-box-image-slice' property</h3>
 
 <table class=propdef>
@@ -1554,7 +1546,7 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <td>[<var>&lt;number&gt;</var> | <var>&lt;percentage&gt;</var>]{1,4} &amp;&amp; fill?
   <tr>
     <th>Initial:
-    <td>100%
+    <td>0 fill
   <tr>
     <th>Applies to:
     <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>.
@@ -1575,6 +1567,59 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <td>no
 </table>
 
+<p>This property specifies inward offsets from the top, right, bottom,
+and left edges of the mask image, dividing it into nine regions: four corners,
+four edges and a middle.
+The middle image part is discarded (treated as fully transparent black)
+unless the ''fill'' keyword is present.
+
+<p>When four values are specified, they set the offsets on the top,
+right, bottom and left sides in that order. If the left is missing, it is
+the same as the right; if the bottom is missing, it is the same as the top;
+if the right is missing, it is the same as the top.
+
+<dl>
+  <dt><var>&lt;percentage&gt;</var>
+  <dd>Percentages are relative to the size of the mask image: the width
+    of the image for the horizontal offsets, the height for vertical
+    offsets.
+
+  <dt><var>&lt;number&gt;</var>
+  <dd>Numbers represent pixels in the mask image (if the image is a raster
+    image) or vector coordinates (if the image is a vector image).
+
+  <dt><dfn id="mask-box-image-slice-fill">''fill''</dfn>
+  <dd>The ''fill'' keyword, if present, causes the middle part of
+    the mask image to be preserved. (By default it is discarded,
+    i.e., treated as transparent black.)
+</dl>
+
+<p>Negative values are not allowed and values bigger than the size
+of the image are interpreted as ''100%''.
+
+<p>The regions given by the 'mask-box-image-slice' values may overlap.
+However if the sum of the right and left widths is equal to or
+greater than the width of the image, the images for the top and
+bottom edge and the middle part are empty, which has the same effect
+as if a nonempty transparent image had been specified for those
+parts. Analogously for the top and bottom values.
+
+<p>If the image must be sized to determine the slices (for example,
+for SVG images with no intrinsic size), then it is sized as for an
+auto-sized background, using the <i>mask box image area</i> as the
+<i>default object size</i> in place of the <i>mask positioning
+area</i>.
+
+<div class=example>
+<div class=figure>
+  <p><img src="images/slice.png" alt="Diagram: two horizontal cuts and two
+  vertical cuts through an image">
+
+  <p class=caption>Diagram illustrating the cuts corresponding to the
+  value ''25% 30% 12% 20%''
+</div>
+</div>
+
 <h3 id="the-mask-box-image-width">The 'mask-box-image-width' property</h3>
 
 <table class=propdef>
@@ -1586,7 +1631,7 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <td>[ <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>&lt;number&gt;</var> | auto ]{1,4}
   <tr>
     <th>Initial:
-    <td>1
+    <td>auto
   <tr>
     <th>Applies to:
     <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>.
@@ -1606,6 +1651,52 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <th>Animatable:
     <td>no
 </table>
+
+<p>The mask image is drawn inside an area called the
+<em>mask box image area</em>. This is an area whose boundaries
+by default correspond to the mask box, see 'mask-box-image-outset'.
+
+<p>The four values of 'mask-box-image-width' specify offsets that are used
+to divide the mask box image area into nine parts. They represent inward
+distances from the the top, right, bottom, and left sides of the
+area, respectively. If the left width is missing, it is the same as the right;
+if the bottom is missing, it is the same as the top; if the right is missing,
+it is the same as the top. Values have the following meanings:</p>
+
+<dl>
+  <dt><var>&lt;percentage&gt;</var>
+  <dd>Percentages refer to the size of the mask box image area: the width of the
+    area for horizontal offsets, the height for vertical offsets.
+
+  <dt><var>&lt;number&gt;</var>
+  <dd>Numbers represent multiples of the corresponding computed
+    <a href="#the-border-width">border-width</a>.
+
+  <dt><dfn title="''auto''!!'mask-box-image-width' value">''auto''</dfn>
+  <dd>If ''auto'' is specified then the mask box image width is the
+    intrinsic width or height (whichever is applicable) of the
+    corresponding image slice (see 'mask-box-image-slice'). If the image
+    does not have the required intrinsic dimension then the
+    corresponding <a
+    href="#the-border-width">border-width</a> is used
+    instead.
+</dl>
+<p class=issue>Number values are possibly not relative to 'border-width'. Needs to be verified.
+
+
+<p>Negative values are not allowed for any 'mask-box-image-width' values.
+
+<p>If two opposite 'mask-box-image-width' offsets are large enough that
+they overlap, then the used values of all 'mask-box-image-width' offsets
+are proportionally reduced until they no longer overlap. In mathematical
+notation: Given <var>L<sub>width</sub></var> as the width of the mask box
+image area, <var>L<sub>height</sub></var> as its height, and
+<var>W<sub><var>side</var></sub></var> as the mask image width offset
+for the <var>side</var> side, let <var>f</var> =
+min(<var>L<sub>width</sub></var>/(<var>W<sub>left</sub></var>+<var>W<sub>right</sub></var>),
+<var>L<sub>height</sub></var>/(<var>W<sub>top</sub></var>+<var>W<sub>bottom</sub></var>)).
+If <var>f</var> &lt; 1, then all <var>W</var> are reduced by multiplying
+them by <var>f</var>.
 
 <h3 id="the-mask-box-image-outset">The 'mask-box-image-outset' property</h3>
 
@@ -1639,6 +1730,27 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <td>no
 </table>
 
+<p>The values specify the amount by which the <dfn>mask box image
+area</dfn> extends beyond the border box.
+If it has four values, they set the outsets on the top, right, bottom and
+left sides in that order. If the left is missing, it is the same as the right;
+if the bottom is missing, it is the same as the top; if the right is missing,
+it is the same as the top.
+
+<p>As with 'mask-box-image-width', a &lt;number&gt; represents a multiple of the
+corresponding <a href="#the-border-width">border-width</a>.
+Negative values are not allowed for any of the 'mask-box-image-outset' values.
+
+<p class=issue>Number values are possibly not relative to 'border-width'. Needs to be verified.
+
+<p>Portions of the mask image that are rendered outside the border
+box do not trigger scrolling. Also such portions are invisible to mouse
+events and do not capture such events on behalf of the element.</p>
+
+<p class=note>Note that, even though they never cause a scrolling
+mechanism, outset images may still be clipped by an ancestor or by the
+viewport.
+
 <h3 id="the-mask-box-image-repeat">The 'mask-box-image-repeat' property</h3>
 
 <table class=propdef>
@@ -1670,6 +1782,27 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <th>Animatable:
     <td>no
 </table>
+
+<p>This property specifies how the images for the sides and the middle
+part of the mask image are scaled and tiled. The first keyword applies
+to the horizontal sides, the second to the vertical ones.
+If the second keyword is absent, it is assumed to be the same as the first.
+Values have the following meanings:
+
+<dl>
+  <dt><dfn>''stretch''</dfn></dt>
+  <dd>The image is stretched to fill the area.
+  <dt><dfn title="''repeat''!!'mask-box-image-repeat' value">''repeat''</dfn></dt>
+  <dd>The image is tiled (repeated) to fill the area.
+  <dt><dfn title="''round''!!'mask-box-image-repeat' value">''round''</dfn></dt>
+  <dd>The image is tiled (repeated) to fill the area. If it does not
+    fill the area with a whole number of tiles, the image is rescaled
+    so that it does.
+  <dt><dfn title="''space''!!'mask-box-image-repeat' value">''space''</dfn></dt>
+  <dd>The image is tiled (repeated) to fill the area. If it does not
+    fill the area with a whole number of tiles, the extra space is
+    distributed around the tiles.
+</dl>
 
 <h3 id="the-mask-box-image">The 'mask-box-image' property</h3>
 
@@ -1706,6 +1839,12 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
     <th>Animatable:
     <td>See individual properties
 </table>
+
+<p>This is a shorthand property for setting 'mask-box-image-source',
+'mask-box-image-slice', 'mask-box-image-width', 'mask-box-image-outset' and
+'mask-box-image-repeat'. Omitted values are set to their initial values.
+
+<p class=issue>Drawing operation description missing (processeing model).
 
 <h2>Clipping paths</h2>
 

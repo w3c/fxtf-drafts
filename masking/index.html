@@ -2435,26 +2435,7 @@ div {
 
   <h2 id=mask-box-image><span class=secno>7. </span>Mask Box Image</h2>
 
-  <div class=todo>
-   <p>Descriptions of the following ‘<a href="#mask-box-image0"><code
-    class=property>mask-box-image</code></a>’ properties follow:</p>
-
-   <ul>
-    <li>mask-box-image-source
-
-    <li>mask-box-image-size
-
-    <li>mask-box-image-outset
-
-    <li>mask-box-image-repeat
-
-    <li>mask-box-image-slice
-
-    <li>mask-box-image-width
-
-    <li>mask-box-image
-   </ul>
-  </div>
+  <p class=todo>Descriptions of the general model missing.
 
   <h3 id=the-mask-box-image-source><span class=secno>7.1. </span>The ‘<a
    href="#mask-box-image-source"><code
@@ -2513,6 +2494,10 @@ div {
      <td>no
   </table>
 
+  <p>Specifies an image to be used as mask. If the value is ‘<a
+   href="#none"><code class=css>none</code></a>’ or if the image cannot be
+   displayed (or the property doesn't apply), the content won't get masked.
+
   <h3 id=the-mask-box-image-slice><span class=secno>7.2. </span>The ‘<a
    href="#mask-box-image-slice"><code
    class=property>mask-box-image-slice</code></a>’ property</h3>
@@ -2533,7 +2518,7 @@ div {
     <tr>
      <th>Initial:
 
-     <td>100%
+     <td>0 fill
 
     <tr>
      <th>Applies to:
@@ -2570,6 +2555,66 @@ div {
      <td>no
   </table>
 
+  <p>This property specifies inward offsets from the top, right, bottom, and
+   left edges of the mask image, dividing it into nine regions: four corners,
+   four edges and a middle. The middle image part is discarded (treated as
+   fully transparent black) unless the ‘<a
+   href="#mask-box-image-slice-fill"><code class=css>fill</code></a>’
+   keyword is present.
+
+  <p>When four values are specified, they set the offsets on the top, right,
+   bottom and left sides in that order. If the left is missing, it is the
+   same as the right; if the bottom is missing, it is the same as the top; if
+   the right is missing, it is the same as the top.
+
+  <dl>
+   <dt><var>&lt;percentage&gt;</var>
+
+   <dd>Percentages are relative to the size of the mask image: the width of
+    the image for the horizontal offsets, the height for vertical offsets.
+
+   <dt><var>&lt;number&gt;</var>
+
+   <dd>Numbers represent pixels in the mask image (if the image is a raster
+    image) or vector coordinates (if the image is a vector image).
+
+   <dt><dfn id=mask-box-image-slice-fill>‘<code
+    class=css>fill</code>’</dfn>
+
+   <dd>The ‘<a href="#mask-box-image-slice-fill"><code
+    class=css>fill</code></a>’ keyword, if present, causes the middle part
+    of the mask image to be preserved. (By default it is discarded, i.e.,
+    treated as transparent black.)
+  </dl>
+
+  <p>Negative values are not allowed and values bigger than the size of the
+   image are interpreted as ‘<code class=css>100%</code>’.
+
+  <p>The regions given by the ‘<a href="#mask-box-image-slice"><code
+   class=property>mask-box-image-slice</code></a>’ values may overlap.
+   However if the sum of the right and left widths is equal to or greater
+   than the width of the image, the images for the top and bottom edge and
+   the middle part are empty, which has the same effect as if a nonempty
+   transparent image had been specified for those parts. Analogously for the
+   top and bottom values.
+
+  <p>If the image must be sized to determine the slices (for example, for SVG
+   images with no intrinsic size), then it is sized as for an auto-sized
+   background, using the <a href="#mask-box-image-area"><i>mask box image
+   area</i></a> as the <i>default object size</i> in place of the <a
+   href="#mask-positioning-area"><i>mask positioning area</i></a>.
+
+  <div class=example>
+   <div class=figure>
+    <p><img
+     alt="Diagram: two horizontal cuts and two   vertical cuts through an image"
+     src="images/slice.png">
+
+    <p class=caption>Diagram illustrating the cuts corresponding to the value
+     ‘<code class=css>25% 30% 12% 20%</code>’
+   </div>
+  </div>
+
   <h3 id=the-mask-box-image-width><span class=secno>7.3. </span>The ‘<a
    href="#mask-box-image-width"><code
    class=property>mask-box-image-width</code></a>’ property</h3>
@@ -2590,7 +2635,7 @@ div {
     <tr>
      <th>Initial:
 
-     <td>1
+     <td>auto
 
     <tr>
      <th>Applies to:
@@ -2609,7 +2654,8 @@ div {
     <tr>
      <th>Percentages:
 
-     <td>Relative to width/height of the <em>mask box image area</em>
+     <td>Relative to width/height of the <a
+      href="#mask-box-image-area"><em>mask box image area</em></a>
 
     <tr>
      <th>Media:
@@ -2627,6 +2673,65 @@ div {
 
      <td>no
   </table>
+
+  <p>The mask image is drawn inside an area called the <a
+   href="#mask-box-image-area"><em>mask box image area</em></a>. This is an
+   area whose boundaries by default correspond to the mask box, see ‘<a
+   href="#mask-box-image-outset"><code
+   class=property>mask-box-image-outset</code></a>’.
+
+  <p>The four values of ‘<a href="#mask-box-image-width"><code
+   class=property>mask-box-image-width</code></a>’ specify offsets that are
+   used to divide the mask box image area into nine parts. They represent
+   inward distances from the the top, right, bottom, and left sides of the
+   area, respectively. If the left width is missing, it is the same as the
+   right; if the bottom is missing, it is the same as the top; if the right
+   is missing, it is the same as the top. Values have the following meanings:
+
+  <dl>
+   <dt><var>&lt;percentage&gt;</var>
+
+   <dd>Percentages refer to the size of the mask box image area: the width of
+    the area for horizontal offsets, the height for vertical offsets.
+
+   <dt><var>&lt;number&gt;</var>
+
+   <dd>Numbers represent multiples of the corresponding computed <a
+    href="#the-border-width">border-width</a>.
+
+   <dt><dfn id=auto1 title="''auto''!!'mask-box-image-width' value">‘<code
+    class=css>auto</code>’</dfn>
+
+   <dd>If ‘<a href="#auto0"><code class=css>auto</code></a>’ is specified
+    then the mask box image width is the intrinsic width or height (whichever
+    is applicable) of the corresponding image slice (see ‘<a
+    href="#mask-box-image-slice"><code
+    class=property>mask-box-image-slice</code></a>’). If the image does not
+    have the required intrinsic dimension then the corresponding <a
+    href="#the-border-width">border-width</a> is used instead.
+  </dl>
+
+  <p class=issue>Number values are possibly not relative to ‘<code
+   class=property>border-width</code>’. Needs to be verified.
+
+  <p>Negative values are not allowed for any ‘<a
+   href="#mask-box-image-width"><code
+   class=property>mask-box-image-width</code></a>’ values.
+
+  <p>If two opposite ‘<a href="#mask-box-image-width"><code
+   class=property>mask-box-image-width</code></a>’ offsets are large enough
+   that they overlap, then the used values of all ‘<a
+   href="#mask-box-image-width"><code
+   class=property>mask-box-image-width</code></a>’ offsets are
+   proportionally reduced until they no longer overlap. In mathematical
+   notation: Given <var>L<sub>width</sub></var> as the width of the mask box
+   image area, <var>L<sub>height</sub></var> as its height, and
+   <var>W<sub><var>side</var></sub></var> as the mask image width offset for
+   the <var>side</var> side, let <var>f</var> =
+   min(<var>L<sub>width</sub></var>/(<var>W<sub>left</sub></var>+<var>W<sub>right</sub></var>),
+   <var>L<sub>height</sub></var>/(<var>W<sub>top</sub></var>+<var>W<sub>bottom</sub></var>)).
+   If <var>f</var> &lt; 1, then all <var>W</var> are reduced by multiplying
+   them by <var>f</var>.
 
   <h3 id=the-mask-box-image-outset><span class=secno>7.4. </span>The ‘<a
    href="#mask-box-image-outset"><code
@@ -2685,6 +2790,31 @@ div {
      <td>no
   </table>
 
+  <p>The values specify the amount by which the <dfn
+   id=mask-box-image-area>mask box image area</dfn> extends beyond the border
+   box. If it has four values, they set the outsets on the top, right, bottom
+   and left sides in that order. If the left is missing, it is the same as
+   the right; if the bottom is missing, it is the same as the top; if the
+   right is missing, it is the same as the top.
+
+  <p>As with ‘<a href="#mask-box-image-width"><code
+   class=property>mask-box-image-width</code></a>’, a &lt;number&gt;
+   represents a multiple of the corresponding <a
+   href="#the-border-width">border-width</a>. Negative values are not allowed
+   for any of the ‘<a href="#mask-box-image-outset"><code
+   class=property>mask-box-image-outset</code></a>’ values.
+
+  <p class=issue>Number values are possibly not relative to ‘<code
+   class=property>border-width</code>’. Needs to be verified.
+
+  <p>Portions of the mask image that are rendered outside the border box do
+   not trigger scrolling. Also such portions are invisible to mouse events
+   and do not capture such events on behalf of the element.
+
+  <p class=note>Note that, even though they never cause a scrolling
+   mechanism, outset images may still be clipped by an ancestor or by the
+   viewport.
+
   <h3 id=the-mask-box-image-repeat><span class=secno>7.5. </span>The ‘<a
    href="#mask-box-image-repeat"><code
    class=property>mask-box-image-repeat</code></a>’ property</h3>
@@ -2740,6 +2870,40 @@ div {
 
      <td>no
   </table>
+
+  <p>This property specifies how the images for the sides and the middle part
+   of the mask image are scaled and tiled. The first keyword applies to the
+   horizontal sides, the second to the vertical ones. If the second keyword
+   is absent, it is assumed to be the same as the first. Values have the
+   following meanings:
+
+  <dl>
+   <dt><dfn id=stretch>‘<code class=css>stretch</code>’</dfn>
+
+   <dd>The image is stretched to fill the area.
+
+   <dt><dfn id=repeat0
+    title="''repeat''!!'mask-box-image-repeat' value">‘<code
+    class=css>repeat</code>’</dfn>
+
+   <dd>The image is tiled (repeated) to fill the area.
+
+   <dt><dfn id=round0
+    title="''round''!!'mask-box-image-repeat' value">‘<code
+    class=css>round</code>’</dfn>
+
+   <dd>The image is tiled (repeated) to fill the area. If it does not fill
+    the area with a whole number of tiles, the image is rescaled so that it
+    does.
+
+   <dt><dfn id=space0
+    title="''space''!!'mask-box-image-repeat' value">‘<code
+    class=css>space</code>’</dfn>
+
+   <dd>The image is tiled (repeated) to fill the area. If it does not fill
+    the area with a whole number of tiles, the extra space is distributed
+    around the tiles.
+  </dl>
 
   <h3 id=the-mask-box-image><span class=secno>7.6. </span>The ‘<a
    href="#mask-box-image0"><code class=property>mask-box-image</code></a>’
@@ -2803,6 +2967,21 @@ div {
 
      <td>See individual properties
   </table>
+
+  <p>This is a shorthand property for setting ‘<a
+   href="#mask-box-image-source"><code
+   class=property>mask-box-image-source</code></a>’, ‘<a
+   href="#mask-box-image-slice"><code
+   class=property>mask-box-image-slice</code></a>’, ‘<a
+   href="#mask-box-image-width"><code
+   class=property>mask-box-image-width</code></a>’, ‘<a
+   href="#mask-box-image-outset"><code
+   class=property>mask-box-image-outset</code></a>’ and ‘<a
+   href="#mask-box-image-repeat"><code
+   class=property>mask-box-image-repeat</code></a>’. Omitted values are set
+   to their initial values.
+
+  <p class=issue>Drawing operation description missing (processeing model).
 
   <h2 id=clipping-paths><span class=secno>8. </span>Clipping paths</h2>
 
@@ -3265,7 +3444,7 @@ div {
      user coordinate system for the element referencing the <a
      class=element-name href="#ClipPathElement">‘<code
      class=property>clipPath</code>’</a> element via the <a class=property
-     href="HASH(0x7f9359848220)">‘<code
+     href="HASH(0x7f95c9848178)">‘<code
      class=property>clip-path</code>’</a> property).<br>
      If <span class=attr-value>clipPathUnits="objectBoundingBox"</span>, then
      the user coordinate system for the contents of the <a class=element-name
@@ -3293,9 +3472,9 @@ div {
   <p><a class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> elements are never rendered
    directly; their only usage is as something that can be referenced using
-   the <a class=property href="HASH(0x7f9359848220)">‘<code
+   the <a class=property href="HASH(0x7f95c9848178)">‘<code
    class=property>clip-path</code>’</a> property. The <a class=property
-   href="HASH(0x7f9359847ed8)">‘<code class=property>display</code>’</a>
+   href="HASH(0x7f95c9847e30)">‘<code class=property>display</code>’</a>
    property does not apply to the <a class=element-name
    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
    element; thus, <a class=element-name href="#ClipPathElement">‘<code
@@ -3305,7 +3484,7 @@ div {
    class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> elements are available for
    referencing even when the <a class=property
-   href="HASH(0x7f9359847ed8)">‘<code class=property>display</code>’</a>
+   href="HASH(0x7f95c9847e30)">‘<code class=property>display</code>’</a>
    property on the <a class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> element or any of its ancestors is
    set to <a class=prop-value href="#none">none</a>.
@@ -3337,7 +3516,8 @@ div {
    must be ignored.</a>
 
   <p>The raw geometry of each child element exclusive of rendering properties
-   such as ‘<code class=property>fill</code>’, ‘<code
+   such as ‘<a href="#mask-box-image-slice-fill"><code
+   class=property>fill</code></a>’, ‘<code
    class=property>stroke</code>’, ‘<code
    class=property>stroke-width</code>’ within a <a>‘<code
    class=property>clipPath</code>’ conceptually defines a 1-bit mask (with
@@ -3544,6 +3724,12 @@ div {
    <li>‘<a href="#auto0"><code class=css>auto</code></a>’, <a
     href="#auto0" title="''auto''"><strong>6.8.</strong></a>
     <ul>
+     <li>‘<a href="#mask-box-image-width"><code
+      class=property>mask-box-image-width</code></a>’ value, <a
+      href="#auto1"
+      title="''auto'', 'mask-box-image-width' value"><strong>7.3.</strong></a>
+      
+
      <li>‘<a href="#mask-size"><code class=property>mask-size</code></a>’
       value, <a href="#auto"
       title="''auto'', 'mask-size' value"><strong>6.7.</strong></a>
@@ -3619,6 +3805,10 @@ div {
    <li>‘<a href="#evenodd"><code class=css>evenodd</code></a>’, <a
     href="#evenodd" title="''evenodd''"><strong>8.2.</strong></a>
 
+   <li>‘<a href="#mask-box-image-slice-fill"><code
+    class=css>fill</code></a>’, <a href="#mask-box-image-slice-fill"
+    title="''fill''"><strong>7.2.</strong></a>
+
    <li>fixed, <a href="#fixed0" title=fixed><strong>6.3.</strong></a>
 
    <li>‘<a href="#fixed0"><code class=css>fixed</code></a>’, <a
@@ -3656,6 +3846,9 @@ div {
 
    <li>mask-box-image, <a href="#mask-box-image0"
     title=mask-box-image><strong>7.6.</strong></a>
+
+   <li>mask box image area, <a href="#mask-box-image-area"
+    title="mask box image area"><strong>7.4.</strong></a>
 
    <li>mask-box-image-outset, <a href="#mask-box-image-outset"
     title=mask-box-image-outset><strong>7.4.</strong></a>
@@ -3762,6 +3955,12 @@ div {
 
    <li>‘<code class=css>repeat</code>’
     <ul>
+     <li>‘<a href="#mask-box-image-repeat"><code
+      class=property>mask-box-image-repeat</code></a>’ value, <a
+      href="#repeat0"
+      title="''repeat'', 'mask-box-image-repeat' value"><strong>7.5.</strong></a>
+      
+
      <li>‘<a href="#mask-repeat"><code
       class=property>mask-repeat</code></a>’ value, <a href="#repeat"
       title="''repeat'', 'mask-repeat' value"><strong>6.2.</strong></a>
@@ -3786,6 +3985,12 @@ div {
 
    <li>‘<code class=css>round</code>’
     <ul>
+     <li>‘<a href="#mask-box-image-repeat"><code
+      class=property>mask-box-image-repeat</code></a>’ value, <a
+      href="#round0"
+      title="''round'', 'mask-box-image-repeat' value"><strong>7.5.</strong></a>
+      
+
      <li>‘<a href="#mask-repeat"><code
       class=property>mask-repeat</code></a>’ value, <a href="#round"
       title="''round'', 'mask-repeat' value"><strong>6.2.</strong></a>
@@ -3798,10 +4003,19 @@ div {
 
    <li>‘<code class=css>space</code>’
     <ul>
+     <li>‘<a href="#mask-box-image-repeat"><code
+      class=property>mask-box-image-repeat</code></a>’ value, <a
+      href="#space0"
+      title="''space'', 'mask-box-image-repeat' value"><strong>7.5.</strong></a>
+      
+
      <li>‘<a href="#mask-repeat"><code
       class=property>mask-repeat</code></a>’ value, <a href="#space"
       title="''space'', 'mask-repeat' value"><strong>6.2.</strong></a>
     </ul>
+
+   <li>‘<a href="#stretch"><code class=css>stretch</code></a>’, <a
+    href="#stretch" title="''stretch''"><strong>7.5.</strong></a>
 
    <li>‘<code class=css>top</code>’
     <ul>
@@ -3940,7 +4154,7 @@ div {
 
      <td>[&lt;number&gt; | &lt;percentage&gt;]{1,4} &amp;&amp; fill?
 
-     <td>100%
+     <td>0 fill
 
      <td>All elements. In SVG, it applies to container elements and graphics
       elements.
@@ -3994,7 +4208,7 @@ div {
 
      <td>[ &lt;length&gt; | &lt;percentage&gt; | &lt;number&gt; | auto ]{1,4}
 
-     <td>1
+     <td>auto
 
      <td>All elements. In SVG, it applies to container elements and graphics
       elements.
