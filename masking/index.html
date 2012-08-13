@@ -1743,8 +1743,8 @@ div {
    id=ltmask-sourcegt><var>&lt;mask-source&gt;</var></dfn> = <var>&lt;FuncIRI&gt;</var> |  child | select(<var>&lt;compound-selector&gt;</var>)</pre>
 
   <dl>
-   <dt> <dfn id=ltfuncirigt>‘<code class=css><a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a></code>’</dfn>
+   <dt> <a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a>
     
 
    <dd> An <a
@@ -1769,6 +1769,35 @@ div {
     element to use as the mask source. As a result, only children of the
     target element may be used for the mask source.
   </dl>
+
+  <div class=issue>
+   <p> Need to define the parsing here since <a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a>
+    and <a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> overlap.</p>
+
+   <p> Basically the process is that when there is a <code>url()</code>
+    component:</p>
+
+   <ol>
+    <li>If the IRI contains a ‘<code class=css>#</code>’, look up the
+     target.
+     <ol>
+      <li>If the target is a <a class=element-name href=MaskElement>‘<code
+       class=property>mask</code>’</a> element, follow the process outlined
+       for <a href="#MaskElement">‘<code class=property>mask</code>’</a>
+       elements.
+
+      <li>If the target is an SVG <a href=pservers.html>paint server</a>
+       element, follow the process outlined for <a href="#SVGPaintServer">SVG
+       paint server mask sources</a>.
+
+      <li>Otherwise, the mask source is invalid.
+     </ol>
+
+    <li>Otherwise, process as a <a class=xxx
+     href="#mask-image">mask-image</a>
+   </ol>
+  </div>
 
   <p>An invalid or non-existent mask source gets ignored and no masking is
    applied.
@@ -2516,9 +2545,6 @@ div {
 
    <li>‘<a href="#fixed0"><code class=css>fixed</code></a>’, <a
     href="#fixed" title="''fixed''"><strong>8.</strong></a>
-
-   <li>‘<code class=css>&lt;FuncIRI&gt;</code>’, <a href="#ltfuncirigt"
-    title="''&lt;FuncIRI&gt;''"><strong>14.</strong></a>
 
    <li>‘<a href="#ltimagegt"><code class=css><span
     class=xxx>&lt;image&gt;</span></code></a>’, <a href="#ltimagegt"

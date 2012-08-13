@@ -1271,7 +1271,7 @@ layer.
 
 <dl>
   <dt>
-    <dfn>''<a>&lt;FuncIRI&gt;</a>''</dfn>
+    <a>&lt;FuncIRI&gt;</a>
   </dt>
   <dd>
     An <a>IRI reference</a>
@@ -1291,6 +1291,29 @@ layer.
     source.
   </dd>
 </dl>
+
+<div class="issue">
+  <p>
+    Need to define the parsing here since <a>&lt;FuncIRI&gt;</a> and
+    <var>&lt;mask-image&gt;</var> overlap.
+  </p>
+  <p>
+    Basically the process is that when there is a <code>url()</code> component:
+  </p>
+  <ol>
+    <li>If the IRI contains a '#', look up the target.
+      <ol>
+        <li>If the target is a <a>'mask element'</a> element, follow the process
+            outlined for <a href="#MaskElement">'mask'</a> elements.</li>
+        <li>If the target is an SVG <a href="pservers.html">paint server</a>
+            element, follow the process outlined for <a
+            href="#SVGPaintServer">SVG paint server mask sources</a>.</li>
+        <li>Otherwise, the mask source is invalid.</li>
+      </ol>
+    </li>
+    <li>Otherwise, process as a <a>mask-image</a></li>
+  </ol>
+</div>
 
 <p>An invalid or non-existent mask source gets ignored and no masking is applied.
 
@@ -1466,8 +1489,8 @@ steps were performed:
       class="attr-value">'userSpaceOnUse'</span>.</li>
   <li>Let the dimensions of the mask 
       (<a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a>,
-      and <a>'mask/height'</a>) match the dimensions of the <a>decorated
-      bounding box</a> of the mask target.</li>
+      and <a>'mask/height'</a>) match the dimensions of the
+      <a>decorated bounding box</a> of the mask target.</li>
   <li>Let the <a>'mask/maskContentUnits'</a> attribute be <span
       class="attr-value">'objectBoundingBox'</span>.</li>
   <li>Create a new <a>'rect'</a> element as a child of the newly
