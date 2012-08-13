@@ -1265,9 +1265,11 @@ layer.
 </table>
 <p>Where</p>
 
-<pre class=prod><dfn><var>&lt;mask-layer&gt;</var></dfn> = &lt;mask-image&gt; || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
+<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-image&gt;</var> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
 
-<pre class=prod><dfn><var>&lt;mask-source&gt;</var></dfn> = <var>&lt;FuncIRI&gt;</var> |  child | select(<var>&lt;compound-selector&gt;</var>)</pre>
+<pre class=prod><dfn>&lt;mask-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | child | <var>&lt;child-selector&gt;</var></pre>
+
+<pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(&lt;compound-selector&gt;#)</pre>
 
 <dl>
   <dt>
@@ -1275,21 +1277,26 @@ layer.
   </dt>
   <dd>
     An <a>IRI reference</a>
-    to a <a>'mask element'</a> element that defines the
-    filter effect. For example ''url(commonmasks.xml#mask)''.
+    to a <a>'mask element'</a> element or SVG <a>paint server</a> element that
+    defines the mask content effect. For example ''url(commonmasks.xml#mask)''.
   </dd>
   <dt><dfn>''child''</dfn></dt>
   <dd>
     A keyword to indicate that the last child <a>'mask element'</a>
     element should be used as the mask source. It is equivalent to
     ''select(mask:last-of-type)''.</dd>
-  <dt><dfn>''select(<var><a href="types.html#DataTypeCompoundSelector">&lt;compound-selector&gt;</a></var>)''</dfn></dt>
-  <dd>A <var><a>&lt;compound-selector&gt;</a></var> scoped at the element to which the
-    'mask' property is applied specifying the
-    element to use as the mask source.
-    As a result, only children of the target element may be used for the mask
-    source.
+  <dt><dfn>&lt;child-selector&gt;</dfn></dt>
+  <dd>
+    A comma-separated list of <a>compound selector</a>s scoped at the element to
+    which the 'mask' property is applied.
+    The first matching element in <a>tree order</a> as a result of evaluating
+    the list of selectors is taken as the mask source.
+    If there are no matching elements the mask source is invalid.
   </dd>
+  <dt><dfn>&lt;compound-selector&gt;</dfn></dt>
+  <dd>
+    A <a>compound selector</a> as defined in [[SELECTORS4]].
+  <dd>
 </dl>
 
 <div class="issue">
