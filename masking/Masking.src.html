@@ -1449,138 +1449,35 @@ elements are available for referencing even when the 'display' property
 on the <a>'mask element'</a> element or any of its ancestors is set to
 <span class="prop-value">none</span>.</p>
 
-<h3 id="DirectMaskSource">Directly referencing a mask source</h3>
-
-<p class="issue">
-  The section gets possibly removed, since it duplicates functionality of
-  CSS4 Images and the <code>element()</code> function.
-</p>
-
-<p class="note">
-The ability to reference non-<a>'mask element'</a> content is new in SVG 2.
-</p>
+<h2 id="SVGPaintServer">SVG Paint Servers as Mask Sources</h2>
 
 <p>
-In some cases the <a>'mask element'</a> element used to wrap mask source content
-is superfluous and it is more convenient to directly refer to the content to be
-used as a mask source instead.
-For example, when the the mask source is a raster image applied only once it is
-more convenient to refer directly to the image than first wrapping it in
-a <a>'mask element'</a> element.
+Besides an SVG <a>'mask element'</a> element, the 'mask' property may
+also refer to an SVG <a href="pservers.html">paint server</a> element such as
+a <a>'linearGradient'</a> element or <a>'pattern'</a> element.
+When the mask source is an SVG paint server, the effect is as if the following
+steps were performed:
 </p>
 
-<p>
-Besides a <a>'mask element'</a> element, the 'mask' property may
-refer the following types of mask source content:
-</p>
-
-<ul>
-  <li>a <a href="pservers.html">paint server</a> element,</li>
-  <li>any other element that is permitted as a child of the <a>'mask
-      element'</a> element,</li>
-  <li>an <a>'svg'</a> element or external SVG document,</li>
-  <li>any raster image file supported by the <a>'image'</a> element.</li>
-</ul>
-
-<p>
-The effect of referring directly to content as a mask source depends on the
-type of the source content.
-</p>
-
-<dl>
-  <dt>
-    When the mask source content is a <a href="pservers.html">paint
-    server</a> element,
-  </dt>
-  <dd>
-    <p>
-    The effect is as if the following steps were performed:
-    </p>
-    <ol>
-      <li>Create a new <a>'mask element'</a> element as a sibling of the
-          paint server element.</li>
-      <li>Let the <a>'mask/maskUnits'</a> attribute be <span
-          class="attr-value">'userSpaceOnUse'</span>.</li>
-      <li>Let the dimensions of the mask 
-          (<a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a>, and <a>'mask/height'</a>)
-          match the dimensions of the <a>decorated bounding box</a> of the mask
-          target.</li>
-      <li>Let the <a>'mask/maskContentUnits'</a> attribute be <span
-          class="attr-value">'objectBoundingBox'</span>.</li>
-      <li>Create a new <a>'rect'</a> element as a child of the newly
-          created <a>'mask element'</a> element.</li>
-      <li>Let both the width and the height of the <a>'rect'</a> element be
-          <span class="attr-value">'100%'</span>.</li>
-      <li>Let the <a>'fill'</a> property of the <a>'rect'</a> element
-          refer to the paint server element.</li>
-      <li>Use the newly created <a>'mask element'</a> as the mask source.</li>
-    </ol>
-  </dd>
-  <dt>
-    When the mask source content is any other permitted SVG element
-    (including an SVG element in an external document),
-  </dt>
-  <dd>
-    <p>
-    The effect is as if the following steps were performed:
-    </p>
-    <ol>
-      <li>Create a new <a>'mask element'</a> element as a sibling of the
-          source element.</li>
-      <li>Let the <a>'mask/maskUnits'</a> attribute be <span
-          class="attr-value">'userSpaceOnUse'</span>.</li>
-      <li>Let the dimensions of the mask 
-          (<a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a>, and <a>'mask/height'</a>)
-          match the dimensions of the <a>decorated bounding box</a> of the mask
-          target.</li>
-      <li>Deep clone the source element and append it as a child of the newly
-          created <a>'mask element'</a> element.</li>
-      <li>Use the newly created <a>'mask element'</a> as the mask source.</li>
-    </ol>
-    <p>
-    One important result of this procedure is that the rendering of the
-    source content is unaffected by being referenced as a mask source.
-    </p>
-  </dd>
-  <dt>
-    When the mask source content is an external image resource (e.g. a raster
-    image file or an external SVG document),
-  </dt>
-  <dd>
-    The image is rendered into the mask buffer at 0,0 in the current user
-    coordinate space in place at the time when the 'mask'
-    property is applied.
-    The dimensions of the image is established by following the
-    <a href="http://www.w3.org/TR/css3-images/#object-negotiation">
-    CSS&#x21CB;Object Negotation algorithm</a> defined in 
-    [<a href="refs.html#ref-CSS3IMAGES">CSS3IMAGES</a>].
-    The dimensions of the mask are set to match the dimensions of the image.
-  </dd>
-  <dt>
-    Otherwise,
-  </dt>
-  <dd>
-    The type of source content is unsupported and the 'mask'
-    property is considered to have an unsupported value.
-  </dd>
-</dl>
-
-<p>
-Despite the ability to refer to mask source content directly, the <a>'mask
-element'</a> element still has many uses including the following:
-</p>
-
-<ul>
-  <li>To prevent the mask source content from rendering</li>
-  <li>To specify the bounds of the masking region</li>
-  <li>To make the coordinate system of the mask source content relative to the
-      bounds of the mask target (by setting
-      <a>'mask/maskContentUnits'</a> to
-      <span class="attr-value">'objectBoundingBox'</span>)
-  </li>
-  <li>To add a level of semantic richness to the document by differentiating
-      mask source content from other graphical content</li>
-</ul>
+<ol>
+  <li>Create a new <a>'mask element'</a> element as a sibling of the
+      paint server element.</li>
+  <li>Let the <a>'mask/maskUnits'</a> attribute be <span
+      class="attr-value">'userSpaceOnUse'</span>.</li>
+  <li>Let the dimensions of the mask 
+      (<a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a>,
+      and <a>'mask/height'</a>) match the dimensions of the <a>decorated
+      bounding box</a> of the mask target.</li>
+  <li>Let the <a>'mask/maskContentUnits'</a> attribute be <span
+      class="attr-value">'objectBoundingBox'</span>.</li>
+  <li>Create a new <a>'rect'</a> element as a child of the newly
+      created <a>'mask element'</a> element.</li>
+  <li>Let both the width and the height of the <a>'rect'</a> element be
+      <span class="attr-value">'100%'</span>.</li>
+  <li>Let the <a>'fill'</a> property of the <a>'rect'</a> element
+      refer to the paint server element.</li>
+  <li>Use the newly created <a>'mask element'</a> as the mask source.</li>
+</ol>
 
 </edit:with>
 

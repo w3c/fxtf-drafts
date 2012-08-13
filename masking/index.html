@@ -31,14 +31,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 12 August 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 13 August 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20120812/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20120813/-->
 
     <dt>Latest version:
 
@@ -179,10 +179,9 @@
    <li><a href="#MaskElement"><span class=secno>15. </span>The <span
     class=element-name>‘<code class=property>mask</code>’</span> element
     </a>
-    <ul class=toc>
-     <li><a href="#DirectMaskSource"><span class=secno>15.1. </span>Directly
-      referencing a mask source</a>
-    </ul>
+
+   <li><a href="#SVGPaintServer"><span class=secno>16. </span>SVG Paint
+    Servers as Mask Sources</a>
 
    <li class=no-num><a href="#references"> References</a>
     <ul class=toc>
@@ -2312,181 +2311,67 @@ div {
    class=property>mask</code>’</a> element or any of its ancestors is set
    to <a class=prop-value href="#none">none</a>.</p>
 
-  <h3 id=DirectMaskSource><span class=secno>15.1. </span>Directly referencing
-   a mask source</h3>
+  <h2 id=SVGPaintServer><span class=secno>16. </span>SVG Paint Servers as
+   Mask Sources</h2>
 
-  <p class=issue> The section gets possibly removed, since it duplicates
-   functionality of CSS4 Images and the <code>element()</code> function.</p>
-
-  <p class=note> The ability to reference non-<a class=element-name
-   href=MaskElement>‘<code class=property>mask</code>’</a> content is new
-   in SVG 2.</p>
-
-  <p> In some cases the <a class=element-name href=MaskElement>‘<code
-   class=property>mask</code>’</a> element used to wrap mask source content
-   is superfluous and it is more convenient to directly refer to the content
-   to be used as a mask source instead. For example, when the the mask source
-   is a raster image applied only once it is more convenient to refer
-   directly to the image than first wrapping it in a <a class=element-name
-   href=MaskElement>‘<code class=property>mask</code>’</a> element.</p>
-
-  <p> Besides a <a class=element-name href=MaskElement>‘<code
+  <p> Besides an SVG <a class=element-name href=MaskElement>‘<code
    class=property>mask</code>’</a> element, the ‘<a href="#mask"><code
-   class=property>mask</code></a>’ property may refer the following types
-   of mask source content:</p>
+   class=property>mask</code></a>’ property may also refer to an SVG <a
+   href=pservers.html>paint server</a> element such as a <a
+   class=element-name
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#LinearGradientElement">‘<code
+   class=property>linearGradient</code>’</a> element or <a
+   class=element-name
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement">‘<code
+   class=property>pattern</code>’</a> element. When the mask source is an
+   SVG paint server, the effect is as if the following steps were performed:</p>
 
-  <ul>
-   <li>a <a href=pservers.html>paint server</a> element,
+  <ol>
+   <li>Create a new <a class=element-name href=MaskElement>‘<code
+    class=property>mask</code>’</a> element as a sibling of the paint
+    server element.
 
-   <li>any other element that is permitted as a child of the <span
-    class=xxx>‘<code class=css>mask element</code>’</span> element,
+   <li>Let the <a class=attr-name
+    href="#MaskElementMaskUnitsAttribute">‘<code
+    class=property>maskUnits</code>’</a> attribute be <span
+    class=attr-value>‘<code class=property>userSpaceOnUse</code>’</span>.
 
-   <li>an <a class=element-name
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#SVGElement">‘<code
-    class=property>svg</code>’</a> element or external SVG document,
+   <li>Let the dimensions of the mask (<a class=attr-name
+    href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>, <a
+    class=attr-name href="#MaskElementYAttribute">‘<code
+    class=property>y</code>’</a>, <a class=attr-name
+    href="#MaskElementWidthAttribute">‘<code
+    class=property>width</code>’</a>, and <a class=attr-name
+    href="#MaskElementHeightAttribute">‘<code
+    class=property>height</code>’</a>) match the dimensions of the <span
+    class=xxx>decorated bounding box</span> of the mask target.
 
-   <li>any raster image file supported by the <a class=element-name
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement">‘<code
-    class=property>image</code>’</a> element.
-  </ul>
-
-  <p> The effect of referring directly to content as a mask source depends on
-   the type of the source content.</p>
-
-  <dl>
-   <dt> When the mask source content is a <a href=pservers.html>paint
-    server</a> element,
-
-   <dd>
-    <p> The effect is as if the following steps were performed:</p>
-
-    <ol>
-     <li>Create a new <a class=element-name href=MaskElement>‘<code
-      class=property>mask</code>’</a> element as a sibling of the paint
-      server element.
-
-     <li>Let the <a class=attr-name
-      href="#MaskElementMaskUnitsAttribute">‘<code
-      class=property>maskUnits</code>’</a> attribute be <span
-      class=attr-value>‘<code
-      class=property>userSpaceOnUse</code>’</span>.
-
-     <li>Let the dimensions of the mask (<a class=attr-name
-      href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>,
-      <a class=attr-name href="#MaskElementYAttribute">‘<code
-      class=property>y</code>’</a>, <a class=attr-name
-      href="#MaskElementWidthAttribute">‘<code
-      class=property>width</code>’</a>, and <a class=attr-name
-      href="#MaskElementHeightAttribute">‘<code
-      class=property>height</code>’</a>) match the dimensions of the <span
-      class=xxx>decorated bounding box</span> of the mask target.
-
-     <li>Let the <a class=attr-name
-      href="#MaskElementMaskContentUnitsAttribute">‘<code
-      class=property>maskContentUnits</code>’</a> attribute be <span
-      class=attr-value>‘<code
-      class=property>objectBoundingBox</code>’</span>.
-
-     <li>Create a new <a class=element-name
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement">‘<code
-      class=property>rect</code>’</a> element as a child of the newly
-      created <a class=element-name href=MaskElement>‘<code
-      class=property>mask</code>’</a> element.
-
-     <li>Let both the width and the height of the <a class=element-name
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement">‘<code
-      class=property>rect</code>’</a> element be <span
-      class=attr-value>‘<code class=css>100%</code>’</span>.
-
-     <li>Let the <a class=attr-name
-      href="animate.html#FillAttribute">‘<code
-      class=property>fill</code>’</a> property of the <a class=element-name
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement">‘<code
-      class=property>rect</code>’</a> element refer to the paint server
-      element.
-
-     <li>Use the newly created <a class=element-name
-      href=MaskElement>‘<code class=property>mask</code>’</a> as the mask
-      source.
-    </ol>
-
-   <dt> When the mask source content is any other permitted SVG element
-    (including an SVG element in an external document),
-
-   <dd>
-    <p> The effect is as if the following steps were performed:</p>
-
-    <ol>
-     <li>Create a new <a class=element-name href=MaskElement>‘<code
-      class=property>mask</code>’</a> element as a sibling of the source
-      element.
-
-     <li>Let the <a class=attr-name
-      href="#MaskElementMaskUnitsAttribute">‘<code
-      class=property>maskUnits</code>’</a> attribute be <span
-      class=attr-value>‘<code
-      class=property>userSpaceOnUse</code>’</span>.
-
-     <li>Let the dimensions of the mask (<a class=attr-name
-      href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>,
-      <a class=attr-name href="#MaskElementYAttribute">‘<code
-      class=property>y</code>’</a>, <a class=attr-name
-      href="#MaskElementWidthAttribute">‘<code
-      class=property>width</code>’</a>, and <a class=attr-name
-      href="#MaskElementHeightAttribute">‘<code
-      class=property>height</code>’</a>) match the dimensions of the <span
-      class=xxx>decorated bounding box</span> of the mask target.
-
-     <li>Deep clone the source element and append it as a child of the newly
-      created <a class=element-name href=MaskElement>‘<code
-      class=property>mask</code>’</a> element.
-
-     <li>Use the newly created <a class=element-name
-      href=MaskElement>‘<code class=property>mask</code>’</a> as the mask
-      source.
-    </ol>
-
-    <p> One important result of this procedure is that the rendering of the
-     source content is unaffected by being referenced as a mask source.</p>
-
-   <dt> When the mask source content is an external image resource (e.g. a
-    raster image file or an external SVG document),
-
-   <dd> The image is rendered into the mask buffer at 0,0 in the current user
-    coordinate space in place at the time when the ‘<a href="#mask"><code
-    class=property>mask</code></a>’ property is applied. The dimensions of
-    the image is established by following the <a
-    href="http://www.w3.org/TR/css3-images/#object-negotiation"> CSS⇋Object
-    Negotation algorithm</a> defined in [<a
-    href="refs.html#ref-CSS3IMAGES">CSS3IMAGES</a>]. The dimensions of the
-    mask are set to match the dimensions of the image.
-
-   <dt> Otherwise,
-
-   <dd> The type of source content is unsupported and the ‘<a
-    href="#mask"><code class=property>mask</code></a>’ property is
-    considered to have an unsupported value.
-  </dl>
-
-  <p> Despite the ability to refer to mask source content directly, the <span
-   class=xxx>‘<code class=css>mask element</code>’</span> element still
-   has many uses including the following:</p>
-
-  <ul>
-   <li>To prevent the mask source content from rendering
-
-   <li>To specify the bounds of the masking region
-
-   <li>To make the coordinate system of the mask source content relative to
-    the bounds of the mask target (by setting <a class=attr-name
+   <li>Let the <a class=attr-name
     href="#MaskElementMaskContentUnitsAttribute">‘<code
-    class=property>maskContentUnits</code>’</a> to <span
+    class=property>maskContentUnits</code>’</a> attribute be <span
     class=attr-value>‘<code
-    class=property>objectBoundingBox</code>’</span>)
+    class=property>objectBoundingBox</code>’</span>.
 
-   <li>To add a level of semantic richness to the document by differentiating
-    mask source content from other graphical content
-  </ul>
+   <li>Create a new <a class=element-name
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement">‘<code
+    class=property>rect</code>’</a> element as a child of the newly created
+    <a class=element-name href=MaskElement>‘<code
+    class=property>mask</code>’</a> element.
+
+   <li>Let both the width and the height of the <a class=element-name
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement">‘<code
+    class=property>rect</code>’</a> element be <span
+    class=attr-value>‘<code class=css>100%</code>’</span>.
+
+   <li>Let the <a class=attr-name href="animate.html#FillAttribute">‘<code
+    class=property>fill</code>’</a> property of the <a class=element-name
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement">‘<code
+    class=property>rect</code>’</a> element refer to the paint server
+    element.
+
+   <li>Use the newly created <a class=element-name href=MaskElement>‘<code
+    class=property>mask</code>’</a> as the mask source.
+  </ol>
   </edit:elementsummary></edit:with>
   <h2 class=no-num id=references> References</h2>
 
