@@ -185,6 +185,14 @@ Table of contents</h2>
 <dd>
   A mask defined by a <a>'mask element'</a> element.
 </dd>
+<dt id="TermClippingPath">clipping path</dt>
+<dd>
+  A combination of the SVG elements <a>'path'</a>, <a>'text'</a>
+  and <a>basic shapes</a> which serve as the
+  outline of a (in the absence of anti-aliasing) 1-bit <a href="#TermMask">mask</a>,
+  where everything on the "inside" of the outline is allowed to
+  show through but everything on the outside is masked out. See 'clip-path'.
+</dd>
 </dl>
 
 <h2>The Mask Rendering Model</h2>
@@ -232,7 +240,7 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
 
 <p>The first image in the list is the layer closest to the user,
 the next one is painted behind the first, and so on. All mask images
-are combined by compositing on the <span class=index>mask</span>.
+are combined by compositing on the <a href="#TermMask">mask</a>.
 
 <h3 id="MaskValues">Calculating mask values</h3>
 
@@ -1341,10 +1349,6 @@ property takes precedence.
 
 <!--elementsummary mask-->
 
-<edit:with element='mask'>
-
-<edit:elementsummary name='mask'/>
-
     <div class="adef-list">
       <p><em>Attribute definitions:</em></p>
       <dl>
@@ -1496,37 +1500,260 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
 
 <p class=todo>Add defintion for 'mask-box-image' properties here.</p>
 
-<h2 id="SVGPaintServer">SVG Paint Servers as Mask Sources</h2>
+<h2>Clipping paths</h2>
 
-<p>
-Besides an SVG <a>'mask element'</a> element, the 'mask' property may
-also refer to an SVG <a>paint server</a> element such as
-a <a>'linearGradient'</a> element or <a>'pattern'</a> element.
-When the mask source is an SVG paint server, the effect is as if the following
-steps were performed:
-</p>
+<p class=issue>Note that this feature is on risc and may get dropped in a future version.</p>
 
-<ol>
-  <li>Create a new <a>'mask element'</a> element as a sibling of the
-      paint server element.</li>
-  <li>Let the <a>'mask/maskUnits'</a> attribute be <span
-      class="attr-value">'userSpaceOnUse'</span>.</li>
-  <li>Let the dimensions of the mask 
-      (<a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a>,
-      and <a>'mask/height'</a>) match the dimensions of the
-      <a>decorated bounding box</a> of the mask target.</li>
-  <li>Let the <a>'mask/maskContentUnits'</a> attribute be <span
-      class="attr-value">'objectBoundingBox'</span>.</li>
-  <li>Create a new <a>'rect'</a> element as a child of the newly
-      created <a>'mask element'</a> element.</li>
-  <li>Let both the width and the height of the <a>'rect'</a> element be
-      <span class="attr-value">'100%'</span>.</li>
-  <li>Let the <a>'fill'</a> property of the <a>'rect'</a> element
-      refer to the paint server element.</li>
-  <li>Use the newly created <a>'mask element'</a> as the mask source.</li>
-</ol>
+<p>The clipping path restricts the region to which paint can be applied. Conceptually, any parts of the drawing that lie outside of the region bounded by the currently active clipping path are not drawn. A clipping path can be thought of as a mask wherein those pixels outside the clipping path are black with an alpha value of zero and those pixels inside the clipping path are white with an alpha value of one (with the possible exception of anti-aliasing along the edge of the silhouette).
 
-</edit:with>
+<h3 id="the-clip-path">The 'clip-path' property</h3>
+<table class="propdef">
+  <tr>
+    <th>Name:</th>
+    <td><dfn>clip-path</dfn></td>
+  </tr>
+  <tr>
+    <th>Value:</th>
+    <td><a>&lt;funciri&gt;</a> | none</td>
+  </tr>
+  <tr>
+    <th>Initial:</th>
+    <td>none</td>
+  </tr>
+  <tr>
+    <th>Applies to:</th>
+    <td>All elements. SVG <a>container elements</a>, <a>graphics elements</a>
+    and <a>'clipPath'</a></td>
+  </tr>
+  <tr>
+    <th>Inherited:</th>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Percentages:</th>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <th>Media:</th>
+    <td>visual</td>
+  </tr>
+  <tr>
+    <th>Computed&#160;value:</th>
+    <td>as specified, but with <a>&lt;funciri&gt;</a> values made absolute</td>
+  </tr>
+  <tr>
+    <th><a>Animatable</a>:</th>
+    <td>yes</td>
+  </tr>
+</table>
+
+<dl>
+  <dt><span class="prop-value"><a href="types.html#DataTypeFuncIRI">&lt;funciri&gt;</a></span></dt>
+  <dd>An <a>IRI reference</a> to another graphical object within the same SVG
+  document fragment which will be used as the clipping path. If the
+  <a>IRI reference</a> is not valid (e.g it points to an object that doesn't
+  exist or the object is not a <a>'clipPath'</a> element) the 'clip-path'
+  property must be treated as if it hadn't been specified.</dd>
+</dl>
+
+<p class=note>Note that a future version of this specification may allow basic shapes as value. (See [[CSS3-EXCLUSIONS]].)
+
+<h3 id="the-clip-rule">The 'clip-rule' property</h3>
+
+<table class="propdef">
+  <tr>
+    <th>Name:</th>
+    <td><dfn>clip-rule</dfn></td>
+  </tr>
+  <tr>
+    <th>Value:</th>
+    <td>nonzero | evenodd</td>
+  </tr>
+  <tr>
+    <th>Initial:</th>
+    <td>nonzero</td>
+  </tr>
+  <tr>
+    <th>Applies to:</th>
+    <td><a>graphics elements</a> within a <a>'clipPath'</a> element</td>
+  </tr>
+  <tr>
+    <th>Inherited:</th>
+    <td>yes</td>
+  </tr>
+  <tr>
+    <th>Percentages:</th>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <th>Media:</th>
+    <td>visual</td>
+  </tr>
+  <tr>
+    <th>Computed&#160;value:</th>
+    <td>as specified</td>
+  </tr>
+  <tr>
+    <th><a>Animatable</a>:</th>
+    <td>yes</td>
+  </tr>
+</table>
+
+<dl>
+  <dt><dfn>''nonzero''</dfn></dt>
+  <dd>See description of 'fill-rule' property [[SVG11]].</dd>
+
+  <dt><dfn>''evenodd''</dfn></dt>
+  <dd>See description of 'fill-rule' property [[SVG11]].</dd>
+</dl>
+
+<p>The 'clip-rule' property only applies to graphics elements that are
+contained within a <a>'clipPath'</a> element.
+
+<div class=example>
+The following fragment of code
+will cause an evenodd clipping rule to be applied to the clipping path because
+'clip-rule' is specified on the <a>'path'</a> element that defines the
+clipping shape:</p>
+
+<pre>
+&lt;g clip-rule="nonzero"&gt;
+  &lt;clipPath id="MyClip"&gt;
+    &lt;path d="..." clip-rule="evenodd" /&gt;
+  &lt;/clipPath&gt;
+  &lt;rect clip-path="url(#MyClip)" ... /&gt;
+&lt;/g&gt;
+</pre>
+
+<p>whereas the following fragment of code will <em>not</em> cause an
+evenodd clipping rule to be applied because the 'clip-rule' is
+specified on the referencing element, not on the object defining the
+clipping shape:</p>
+
+<pre>
+&lt;g clip-rule="nonzero"&gt;
+  &lt;clipPath id="MyClip"&gt;
+    &lt;path d="..." /&gt;
+  &lt;/clipPath&gt;
+  &lt;rect clip-path="url(#MyClip)" clip-rule="evenodd" ... /&gt;
+&lt;/g&gt;
+</pre>
+</div>
+
+<h3 id="ClipPathElement">The <a>'clipPath element'</a> element</h3> 
+
+<!--elementsummary clipPath-->
+
+<div class="adef-list">
+  <p><em>Attribute definitions:</em></p>
+  <dl>
+    <dt id="ClipPathElementClipPathUnitsAttribute"><span
+    class="adef">clipPathUnits</span> =
+    "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"</dt>
+    <dd>Defines the coordinate system for the contents of the
+    <a>'clipPath'</a>.<br />
+     If <span class="attr-value">clipPathUnits="userSpaceOnUse"</span>,
+    the contents of the <a>'clipPath'</a> represent values in
+    the current user coordinate system in place at the time
+    when the <a>'clipPath'</a>
+    element is referenced (i.e., the user coordinate system for
+    the element referencing the <a>'clipPath'</a> element via the
+    <a>'clip-path'</a> property).<br />
+     If <span class="attr-value">clipPathUnits="objectBoundingBox"</span>,
+    then the user coordinate system for the contents of the
+    <a>'clipPath'</a> element is established using the bounding box of
+    the element to which the clipping path is applied (see <a
+    href="coords.html#ObjectBoundingBox">Object bounding box
+    units</a>).<br />
+     If attribute <a>'clipPathUnits'</a>
+    is not specified, then the effect is as if a value of <span
+    class="attr-value">'userSpaceOnUse'</span> were
+    specified.<br />
+     <span class="anim-target"><a
+    href="animate.html#Animatable">Animatable</a>:
+    yes.</span></dd>
+  </dl>
+</div>
+
+<p><a href="styling.html#SVGStylingProperties">Properties</a> inherit into the
+<a>'clipPath'</a> element from its ancestors; properties do <em>not</em>
+inherit from the element referencing the <a>'clipPath'</a> element.</p>
+
+<p><a>'clipPath'</a> elements are never rendered directly; their only usage is
+as something that can be referenced using the <a>'clip-path'</a> property. The
+<a>'display'</a> property does not apply to the <a>'clipPath'</a> element;
+thus, <a>'clipPath'</a> elements are not directly rendered even if the
+'display' property is set to a value other than
+<span class="prop-value">none</span>, and <a>'clipPath'</a> elements are
+available for referencing even when the <a>'display'</a> property on the
+<a>'clipPath'</a> element or any of its ancestors is set to
+<span class="prop-value">none</span>.</p>
+
+<p>A <a>'clipPath'</a> element can contain <a>'path'</a> elements,
+<a>'text'</a> elements, <a>basic shapes</a> (such as
+<a>'circle'</a>) or a <a>'use'</a> element. If a <a>'use'</a> element is a
+child of a <a>'clipPath'</a> element, it must directly reference
+<a>'path'</a>, <a>'text'</a> or <a>basic shape</a> elements.
+Indirect references are an error and the <a>'clipPath'<a> element must be ignored.</p>
+
+<p>The raw geometry of each child element exclusive of rendering properties
+such as 'fill', 'stroke', 'stroke-width' within a
+<a>'clipPath'</a> conceptually defines a 1-bit mask (with the possible
+exception of anti-aliasing along the edge of the geometry) which represents
+the silhouette of the graphics associated with that element. Anything outside
+the outline of the object is masked out. If a child element is 
+made invisible by 'display' or 'visibility' it does not contribute
+to the clipping path. When the <a>'clipPath'</a> element
+contains multiple child elements, the silhouettes of the child elements are
+logically OR'd together to create a single silhouette which is then used to
+restrict the region onto which paint can be applied. Thus, a point is inside
+the clipping path if it is inside any of the children of the
+<a>'clipPath'</a>.</p>
+
+<p>For a given graphics element, the actual clipping path used
+will be the intersection of the clipping path specified by its
+'clip-path' property (if any) with any clipping paths on its
+ancestors, as specified by the 'clip-path' property on the
+ancestor elements, or by the 'overflow' property on ancestor
+<a href="coords.html#ElementsThatEstablishViewports">elements
+which establish a new viewport</a>.</p>
+
+<p>A couple of notes:</p>
+
+<ul>
+  <li>The <a>'clipPath'</a> element itself and its child elements do
+  <em>not</em> inherit clipping paths from the ancestors of the
+  <a>'clipPath'</a> element.</li>
+
+  <li>The <a>'clipPath'</a> element or any of its children can specify
+  property 'clip-path'.<br /> If a valid 'clip-path' reference
+  is placed on a <a>'clipPath'</a> element, the resulting clipping path is the
+  intersection of the contents of the <a>'clipPath'</a> element with the
+  referenced clipping path.<br />
+  If a valid 'clip-path' reference is placed on one of the children of
+  a <a>'clipPath'</a> element, then the given child element is clipped by the
+  referenced clipping path before OR'ing the silhouette of the child element
+  with the silhouettes of the other child elements.</li>
+
+  <li>An empty clipping path will completely clip away the element that had the
+  'clip-path' property applied.</li>
+</ul>
+
+<h3 id="clipPath-geometry">Clipping paths, geometry, and pointer events</h3>
+
+<p>A clipping path is conceptually equivalent to a custom viewport for
+the referencing element.  Thus, it affects the rendering of an element,
+but not the element's inherent geometry. The <span class=index>bounding client rect</span> of a clipped
+element (that is, an element which references a <a>'clipPath'</a>
+element via a 'clip-path' property, or a child of the 
+referencing element) must remain the same as if it were not clipped.</p>
+
+<p>By default, <a href="interact.html#PointerEventsProperty">pointer events</a>
+must not be dispatched on the clipped (non-visible) regions of a shape.  For
+example, a circle with a radius of 10 which is clipped to a circle with a radius
+of 5 will not receive <span class="event-name">'click'</span> events outside the
+smaller radius. Later versions of this specification may define new properties to enable
+fine-grained control over the interactions between hit testing and clipping.</p>
 
 <h2 class=no-num id="references">
 References</h2>
