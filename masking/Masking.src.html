@@ -197,7 +197,7 @@ Table of contents</h2>
 
 <h2>The Mask Rendering Model</h2>
 
-<p>The application of the 'mask' or 'mask-image' properties to an element formatted with the CSS box model establishes a pseudo-stacking-context the same way that CSS 'opacity' does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
+<p>The application of the 'mask' or 'mask-image' properties to an element formatted with the CSS box model establishes a stacking context the same way that CSS 'opacity' does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
 
 <p>The 'mask' and 'mask-image' properties have no effect on the geometry of the target element's CSS boxes.
 
@@ -273,7 +273,7 @@ In this case the mask value at a given point is computed from the color channel 
     </li>
     <li>Then, using non-premultiplied RGB color values, apply the
     luminance-to-alpha coefficients (as defined in the <a>'feColorMatrix'</a>
-    filter primitive [[filter-effects]]) to convert the RGB color values to luminance
+    filter primitive [[!FILTER-EFFECTS]]) to convert the RGB color values to luminance
     values.
     </li>
   </ul>
@@ -1498,7 +1498,214 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
 
 <h2>Mask Box Image</h2>
 
-<p class=todo>Add defintion for 'mask-box-image' properties here.</p>
+<div class=todo>
+<p>Descriptions of the following 'mask-box-image' properties follow:</p>
+<ul>
+<li>mask-box-image-source</li>
+<li>mask-box-image-size</li>
+<li>mask-box-image-outset</li>
+<li>mask-box-image-repeat</li>
+<li>mask-box-image-slice</li>
+<li>mask-box-image-width</li>
+<li>mask-box-image</li>
+</ul>
+</div>
+
+<h3 id="the-mask-box-image-source">The 'mask-box-image-source' property</h3>
+
+<table class=propdef>
+  <tr>
+    <th>Name:
+    <td><dfn>mask-box-image-source</dfn>
+  <tr>
+    <th><a href="#values">Value</a>:
+    <td><var>&lt;mask-image&gt;</var>
+  <tr>
+    <th>Initial:
+    <td>none
+  <tr>
+    <th>Applies to:
+    <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>.
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>N/A
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>''none'' or the image with its URI made absolute
+  <tr>
+    <th>Animatable:
+    <td>no
+</table>
+
+<h3 id="the-mask-box-image-slice">The 'mask-box-image-slice' property</h3>
+
+<table class=propdef>
+  <tr>
+    <th>Name:
+    <td><dfn>mask-box-image-slice</dfn>
+  <tr>
+    <th><a href="#values">Value</a>:
+    <td>[<var>&lt;number&gt;</var> | <var>&lt;percentage&gt;</var>]{1,4} &amp;&amp; fill?
+  <tr>
+    <th>Initial:
+    <td>100%
+  <tr>
+    <th>Applies to:
+    <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>.
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>refer to size of the border image
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>as specified
+  <tr>
+    <th>Animatable:
+    <td>no
+</table>
+
+<h3 id="the-mask-box-image-width">The 'mask-box-image-width' property</h3>
+
+<table class=propdef>
+  <tr>
+    <th>Name:
+    <td><dfn>mask-box-image-width</dfn>
+  <tr>
+    <th><a href="#values">Value</a>:
+    <td>[ <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>&lt;number&gt;</var> | auto ]{1,4}
+  <tr>
+    <th>Initial:
+    <td>1
+  <tr>
+    <th>Applies to:
+    <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>.
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>Relative to width/height of the <em>mask box image area</em>
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>all <var>&lt;length&gt;</var>s made absolute, otherwise as specified
+  <tr>
+    <th>Animatable:
+    <td>no
+</table>
+
+<h3 id="the-mask-box-image-outset">The 'mask-box-image-outset' property</h3>
+
+<table class=propdef>
+  <tr>
+    <th>Name:
+    <td><dfn>mask-box-image-outset</dfn>
+  <tr>
+    <th><a href="#values">Value</a>:
+    <td>[ <var>&lt;length&gt;</var> | <var>&lt;number&gt;</var> ]{1,4}
+  <tr>
+    <th>Initial:
+    <td>0
+  <tr>
+    <th>Applies to:
+    <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>.
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>N/A
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>all <var>&lt;length&gt;</var>s made absolute, otherwise as specified
+  <tr>
+    <th>Animatable:
+    <td>no
+</table>
+
+<h3 id="the-mask-box-image-repeat">The 'mask-box-image-repeat' property</h3>
+
+<table class=propdef>
+  <tr>
+    <th>Name:
+    <td><dfn>mask-box-image-repeat</dfn>
+  <tr>
+    <th><a href="#values">Value</a>:
+    <td>[ stretch | repeat | round | space ]{1,2}
+  <tr>
+    <th>Initial:
+    <td>stretch
+  <tr>
+    <th>Applies to:
+    <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>.
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>N/A
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>as specified
+  <tr>
+    <th>Animatable:
+    <td>no
+</table>
+
+<h3 id="the-mask-box-image">The 'mask-box-image' property</h3>
+
+<table class=propdef>
+  <tr>
+    <th>Name:
+    <td><dfn>mask-box-image</dfn>
+  <tr>
+    <th><a href="#values">Value</a>:
+    <td>   <var>&lt;'mask-box-image-source'&gt;</var>
+        || <var>&lt;'mask-box-image-slice'&gt;</var>
+           [ / <var>&lt;'mask-box-image-width'&gt;</var> |
+             / <var>&lt;'mask-box-image-width'&gt;</var>? / <var>&lt;'mask-box-image-outset'&gt;</var> ]?
+        || <var>&lt;'mask-box-image-repeat'&gt;</var>
+  <tr>
+    <th>Initial:
+    <td>See individual properties
+  <tr>
+    <th>Applies to:
+    <td>See individual properties
+  <tr>
+    <th>Inherited:
+    <td>no
+  <tr>
+    <th>Percentages:
+    <td>N/A
+  <tr>
+    <th>Media:
+    <td>visual
+  <tr>
+    <th>Computed value:
+    <td>See individual properties
+  <tr>
+    <th>Animatable:
+    <td>See individual properties
+</table>
 
 <h2>Clipping paths</h2>
 
