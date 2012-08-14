@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">3 August 2012</h2>
+<h2 class="no-num no-toc">14 August 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -787,8 +787,9 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
 <p>Destination which overlaps the source, replaces the source.</p>
 <img src="examples/PD_dst-in.svg"/>
 <pre>
-    Fa = 0 Fb = αs
-    co = αb x Cb x αs αo = αb x αs
+    Fa = 0; Fb = αs
+    co = αb x Cb x αs 
+    αo = αb x αs
 </pre>
 <h4 id="porterduffcompositingoperators_srcout">Source Out</h4>
 <p>Source is placed, where it falls outside of the destination.</p>
@@ -934,7 +935,7 @@ For simplicity, all the examples in this chapter use <a href="#porterduffcomposi
 
 <h4 id="blendingnormal">'normal' blend mode</h4>
 <p>
-This is the default attribute which specifies no blending. The blending formula simply select the source color.
+This is the default attribute which specifies no blending. The blending formula simply selects the source color.
 <pre>
     B(Cb, Cs) = Cs
 </pre>
@@ -1180,7 +1181,8 @@ Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html
 <h3 id="csscompositingrules">Behavior specific to SVG</h3>
 <p>
 In SVG, every element will create a group.<br/>
-Most implementations can optimize this by not treating elements with default arguments as groups.
+Most implementations can optimize this by not treating elements with default arguments as groups.<br/>
+The compositing model follows the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing</a> model: first any filter effect is applied, then any clipping, masking,  blending and compositing
 </p>
 
 <h3 id="csscompositingkeyword">Properties</h3>
@@ -1743,24 +1745,7 @@ If this rule is not followed, an attacker could mount a timing attack.
     <br/>The <a href="http://www.w3.org/TR/SVGCompositing/">latest edition of SVG Compositing</a> is available at
     http://www.w3.org/TR/SVGCompositing/.
   </dd>
-  <dt id="ref-RNG"><strong class="normref">[RelaxNG]</strong></dt>
-    <dd><strong>Document Schema Definition Languages (DSDL) — Part 2:
-      Regular grammar- based validation — RELAX NG. ISO/IEC FDIS
-      19757-2:2002(E)</strong>, J. Clark, <span class="ruby"><span
-      xml:lang="ja" lang="ja" class="rb">村田 真</span> <span
-      class="rp">(</span><span class="rt"><span
-      class="familyname">Murata</span> M.</span><span
-      class="rp">)</span></span>, eds., 12 December 2002. See <a
-      href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf</a>
-    </dd>
-  <dt id="ref-Schema2"><strong class="normref">[Schema2]</strong></dt>
-    <dd><strong>XML Schema Part 2: Datatypes Second Edition</strong>, P.
-      Biron, A. Malhotra, eds. W3C, 28 October 2004 (Recommendation). Latest
-      version available at <a
-      href="http://www.w3.org/TR/xmlschema-2/">http://www.w3.org/TR/xmlschema-2/</a>.
-      See also <a
-      href="http://www.w3.org/TR/2005/NOTE-xml11schema10-20050511/">Processing
-      XML 1.1 documents with XML Schema 1.0 processors</a>. </dd>
+
   <dt id="ref-svg11"><strong class="normref">[SVG11]</strong></dt>
     <dd><strong>Scalable Vector Graphics (SVG) 1.1 Specification</strong>,
       Dean Jackson editor, W3C, 14 January 2003 (Recommendation). See <a
@@ -1771,6 +1756,10 @@ If this rule is not followed, an attacker could mount a timing attack.
       Dean Jackson editor, W3C, 22 December 2008 (Recommendation). See <a
       href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/">http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/</a>
     </dd>
+  <dt id="ref-svgt12"><strong class="normref">[FILTER-EFFECTS]</strong></dt>
+    <dd><strong>Filter Effects 1.0 Specification</strong>,
+      TBD
+    </dd>    
 </dl>
 <h3 id="informref">Informative References</h3>
 <dl>
