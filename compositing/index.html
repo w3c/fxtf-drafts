@@ -226,7 +226,7 @@
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-compositing-20120814/-->
+     <!--http://www.w3.org/TR/2012/WD-compositing-20120815/-->
 
     <dt>Latest version:
 
@@ -497,10 +497,10 @@
    <li><a href="#csscompositingandblending"><span class=secno>7.
     </span>Specifying Compositing and Blending in CSS </a>
     <ul class=toc>
-     <li><a href="#csscompositingrules"><span class=secno>7.1.
+     <li><a href="#csscompositingrules_CSS"><span class=secno>7.1.
       </span>Behavior specific to CSS</a>
 
-     <li><a href="#csscompositingrules"><span class=secno>7.2.
+     <li><a href="#csscompositingrules_SVG"><span class=secno>7.2.
       </span>Behavior specific to SVG</a>
 
      <li><a href="#csscompositingkeyword"><span class=secno>7.3.
@@ -548,8 +548,8 @@
         <span class=prop-name>‘<code
         class=property>foreground-blend-mode</code>’</span> property</a>
 
-       <li><a href="#background-alpha-compositing"><span class=secno>7.4.6.
-        </span>Alternate proposal</a>
+       <li><a href="#background-alpha-compositing-v2"><span
+        class=secno>7.4.6. </span>Alternate proposal</a>
 
        <li><a href="#borders-issue"><span class=secno>7.4.7. </span>blending
         and compositing on borders</a>
@@ -703,7 +703,9 @@ Co = co / αo
    </span>Examples of simple alpha compositing</h3>
 
   <div class=example>
-   <p style="text-align:center"><img src="examples/simple_box.svg"> <br>
+   <p style="text-align:center"><img
+    alt="Simple box showing alpha compositing" src="examples/simple_box.svg">
+    <br>
     Figure 1</p>
 
    <p> Figure 1 describes the most basic case. It consists of 1 shape that is
@@ -726,7 +728,8 @@ co = RGB(1,0,0)
   </div>
 
   <div class=example>
-   <p style="text-align:center"><img src="examples/two_box.svg"> <br>
+   <p style="text-align:center"><img alt="simple shape"
+    src="examples/two_box.svg"> <br>
     Figure 2</p>
 
    <p> Figure 2 is a more complex example. There is no transparency, but the
@@ -761,8 +764,9 @@ Co = RGB(0, 0, 1)
   </div>
 
   <div class=example>
-   <p style="text-align:center"><img src="examples/two_box_transparency.svg">
-    <br>
+   <p style="text-align:center"><img
+    alt="interaction of a solid box with a transparent box on top"
+    src="examples/two_box_transparency.svg"> <br>
     Figure 3</p>
 
    <p> Figure 3 shows an example where the shape has some transparency, but
@@ -796,7 +800,7 @@ Co = RGB(0.5, 0, 0.5)
   </div>
 
   <div class=example>
-   <p style="text-align:center"><img
+   <p style="text-align:center"><img alt="interaction of 2 transparent boxes"
     src="examples/two_box_transparency_both.svg"> <br>
     Figure 4</p>
 
@@ -869,7 +873,9 @@ Co = αs x Fa x Cs + αb x Fb x Cb
    calculation</h3>
 
   <div class=example>
-   <p style="text-align:center"><img src="examples/simple_backdrop.svg"> <br>
+   <p style="text-align:center"><img
+    alt="example of a simple backdrop calculation"
+    src="examples/simple_backdrop.svg"> <br>
     Figure 5</p>
 
    <p> Figure 5 has 2 simple shapes. The backdrop for the blue shape includes
@@ -878,7 +884,7 @@ Co = αs x Fa x Cs + αb x Fb x Cb
   </div>
 
   <div class=example>
-   <p style="text-align:center"><img
+   <p style="text-align:center"><img alt="example of a backdrop with alpha"
     src="examples/simple_backdrop_alpha.svg"> <br>
     Figure 6</p>
 
@@ -963,7 +969,8 @@ Co = αs x Fa x Cs + αb x Fb x Cb
    in the backdrop.
 
   <div class=example>
-   <p style="text-align:center"><img src="examples/knockout.png"></p>
+   <p style="text-align:center"><img alt="example of a knockout group"
+    src="examples/knockout.png"></p>
   </div>
 
   <p> The above example demonstrates two versions of a group containing three
@@ -1048,7 +1055,9 @@ co = RGB(255, 127, 127)
    ‘<code class=property>destination</code>’ in their names.
 
   <div class=figure>
-   <p style="text-align:center"><img src="examples/PD_regions.svg"></p>
+   <p style="text-align:center"><img
+    alt="overview of the regions affected by porter duff"
+    src="examples/PD_regions.svg"></p>
   </div>
 
   <p>The contribution from each region to the final pixel color is defined by
@@ -1146,7 +1155,7 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
 
   <p>No regions are enabled.
 
-  <p><img src="examples/PD_clr.svg">
+  <p><img alt="example of porter duff clear" src="examples/PD_clr.svg">
 
   <pre>
     Fa = 0; Fb = 0
@@ -1154,7 +1163,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = 0
 </pre>
 
-  <h4 id="porterduffcompositingoperators_src"><span class=secno>5.1.2.
+  <h4 alt="example of porter duff copy"
+   id="porterduffcompositingoperators_src"><span class=secno>5.1.2.
    </span>Copy</h4>
 
   <p>Only the source will be present.
@@ -1167,7 +1177,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs
 </pre>
 
-  <h4 id="porterduffcompositingoperators_dst"><span class=secno>5.1.3.
+  <h4 alt="example of porter duff destination"
+   id="porterduffcompositingoperators_dst"><span class=secno>5.1.3.
    </span>Destination</h4>
 
   <p>Only the destination will be present.
@@ -1180,7 +1191,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αb
 </pre>
 
-  <h4 id="porterduffcompositingoperators_srcover"><span class=secno>5.1.4.
+  <h4 alt="example of porter duff source over"
+   id="porterduffcompositingoperators_srcover"><span class=secno>5.1.4.
    </span>Source Over</h4>
 
   <p>Source is placed over the destination
@@ -1193,7 +1205,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs + αb x (1 – αs)
 </pre>
 
-  <h4 id="porterduffcompositingoperators_dstover"><span class=secno>5.1.5.
+  <h4 alt="example of porter duff destination over"
+   id="porterduffcompositingoperators_dstover"><span class=secno>5.1.5.
    </span>Destination Over</h4>
 
   <p>Destination is placed over the source.
@@ -1206,7 +1219,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs x (1 – αb) + αb
 </pre>
 
-  <h4 id="porterduffcompositingoperators_srcin"><span class=secno>5.1.6.
+  <h4 alt="example of porter duff source in"
+   id="porterduffcompositingoperators_srcin"><span class=secno>5.1.6.
    </span>Source In</h4>
 
   <p><img src="examples/PD_src-in.svg">
@@ -1219,7 +1233,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs x αb
 </pre>
 
-  <h4 id="porterduffcompositingoperators_dstin"><span class=secno>5.1.7.
+  <h4 alt="example of porter duff destination in "
+   id="porterduffcompositingoperators_dstin"><span class=secno>5.1.7.
    </span>Destination In</h4>
 
   <p>Destination which overlaps the source, replaces the source.
@@ -1232,7 +1247,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αb x αs
 </pre>
 
-  <h4 id="porterduffcompositingoperators_srcout"><span class=secno>5.1.8.
+  <h4 alt="example of porter duff source out"
+   id="porterduffcompositingoperators_srcout"><span class=secno>5.1.8.
    </span>Source Out</h4>
 
   <p>Source is placed, where it falls outside of the destination.
@@ -1245,7 +1261,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs x (1 – αb)
 </pre>
 
-  <h4 id="porterduffcompositingoperators_dstout"><span class=secno>5.1.9.
+  <h4 alt="example of porter duff destination out"
+   id="porterduffcompositingoperators_dstout"><span class=secno>5.1.9.
    </span>Destination Out</h4>
 
   <p>Destination is placed, where it falls outside of the source.
@@ -1258,7 +1275,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αb x (1 – αs)
 </pre>
 
-  <h4 id="porterduffcompositingoperators_srcatop"><span class=secno>5.1.10.
+  <h4 alt="example of porter duff source atop"
+   id="porterduffcompositingoperators_srcatop"><span class=secno>5.1.10.
    </span>Source Atop</h4>
 
   <p>Source which overlaps the destination, replaces the destination.
@@ -1272,7 +1290,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs x αb + αb x (1 – αs)
 </pre>
 
-  <h4 id="porterduffcompositingoperators_dstatop"><span class=secno>5.1.11.
+  <h4 alt="example of porter duff destination atop"
+   id="porterduffcompositingoperators_dstatop"><span class=secno>5.1.11.
    </span>Destination Atop</h4>
 
   <p><img src="examples/PD_dst-atop.svg">
@@ -1286,7 +1305,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs x (1 - αb) + αb x αs
 </pre>
 
-  <h4 id="porterduffcompositingoperators_xor"><span class=secno>5.1.12.
+  <h4 alt="example of porter duff xor"
+   id="porterduffcompositingoperators_xor"><span class=secno>5.1.12.
    </span>XOR</h4>
 
   <p>The non-overlapping regions of source and destination are combined.
@@ -1299,7 +1319,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     αo = αs x (1 - αb) + αb x (1 – αs)
 </pre>
 
-  <h4 id="porterduffcompositingoperators_plus"><span class=secno>5.1.13.
+  <h4 alt="example of porter duff lighter"
+   id="porterduffcompositingoperators_plus"><span class=secno>5.1.13.
    </span>Lighter</h4>
 
   <p>Display the sum of the source image and destination image. It is defined
@@ -1347,7 +1368,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    backdrop exists (the backdrop being the hexagon for both compositing
    operations within the group).
 
-  <div class=example><img src="examples/pd-knockout.png"></div>
+  <div class=example><img alt="example of knockout with porter duff"
+   src="examples/pd-knockout.png"></div>
 
   <h4 id=groupcompositingcliptoself><span class=secno>5.2.3. </span>Clip to
    self behavior</h4>
@@ -1361,7 +1383,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    source region. The changes can be seen in the clear, source, source-in,
    destination-in, source-out and destination-atop.
 
-  <div class=figure><img src="examples/clip-to-self.png"></div>
+  <div class=figure><img alt="example of clip to self with porter duff"
+   src="examples/clip-to-self.png"></div>
 
   <h2 id=blending><span class=secno>6. </span>Blending</h2>
 
@@ -1408,7 +1431,8 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    Cb: the <a href="#backdrop">backdrop</a> color<br>
    αb: the <a href="#backdrop">backdrop</a> alpha<br>
 
-  <div class=example> <img src="examples/blend_background_opacity.svg">
+  <div class=example> <img alt="example of blending with opacity"
+   src="examples/blend_background_opacity.svg">
    <p> This example has a red rectangle with a blending mode that is placed
     on top of a set of green rectangles that have different levels of
     opacity.<br>
@@ -1456,7 +1480,7 @@ now subsitute the result of blending for Cs:
     B(Cb, Cs) = Cs
 </pre>
 
-  <p><img src="examples/normal.png">
+  <p><img alt="example of normal blending" src="examples/normal.png">
 
   <h4 id=blendingmultiply><span class=secno>6.1.2. </span>‘<code
    class=property>multiply</code>’ blend mode</h4>
@@ -1472,7 +1496,7 @@ now subsitute the result of blending for Cs:
     B(Cb, Cs) = Cb x Cs
 </pre>
 
-  <p><img src="examples/multiply.png">
+  <p><img alt="example of multiply blending" src="examples/multiply.png">
 
   <h4 id=blendingscreen><span class=secno>6.1.3. </span>‘<code
    class=property>screen</code>’ blend mode</h4>
@@ -1491,7 +1515,7 @@ now subsitute the result of blending for Cs:
               = Cb + Cs -(Cb x Cs)
 </pre>
 
-  <p><img src="examples/screen.png">
+  <p><img alt="example of screen blending" src="examples/screen.png">
 
   <h4 id=blendingoverlay><span class=secno>6.1.4. </span>‘<code
    class=property>overlay</code>’ blend mode</h4>
@@ -1513,7 +1537,7 @@ now subsitute the result of blending for Cs:
    class=property>hardlight</code>’ blend mode. See the definition of
    ‘<code class=property>hardlight</code>’ for the formula.
 
-  <p><img src="examples/overlay.png">
+  <p><img alt="example of overlay blending" src="examples/overlay.png">
 
   <h4 id=blendingdarken><span class=secno>6.1.5. </span>‘<code
    class=property>darken</code>’ blend mode</h4>
@@ -1528,7 +1552,7 @@ now subsitute the result of blending for Cs:
     B(Cb, Cs) = min(Cb, Cs)
 </pre>
 
-  <p><img src="examples/darken.png">
+  <p><img alt="example of darken blending" src="examples/darken.png">
 
   <h4 id=blendinglighten><span class=secno>6.1.6. </span>‘<code
    class=property>lighten</code>’ blend mode</h4>
@@ -1543,7 +1567,7 @@ now subsitute the result of blending for Cs:
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
 
-  <p><img src="examples/lighten.png">
+  <p><img alt="example of lighten blending" src="examples/lighten.png">
 
   <h4 id=blendingcolordodge><span class=secno>6.1.7. </span>‘<code
    class=property>color-dodge</code>’ blend mode</h4>
@@ -1558,7 +1582,8 @@ now subsitute the result of blending for Cs:
         B(Cb, Cs) = 1	
 </pre>
 
-  <p><img src="examples/colordodge.png">
+  <p><img alt="example of color dodge blending"
+   src="examples/colordodge.png">
 
   <h4 id=blendingcolorburn><span class=secno>6.1.8. </span>‘<code
    class=property>color-burn</code>’ blend mode</h4>
@@ -1573,7 +1598,7 @@ now subsitute the result of blending for Cs:
         B(Cb, Cs) = 0	
 </pre>
 
-  <p><img src="examples/colorburn.png">
+  <p><img alt="example of color burn blending" src="examples/colorburn.png">
 
   <h4 id=blendinghardlight><span class=secno>6.1.9. </span>‘<code
    class=property>hard-light</code>’ blend mode</h4>
@@ -1592,7 +1617,7 @@ now subsitute the result of blending for Cs:
   <p>See the definition of ‘<code class=property>multiply</code>’ and
    ‘<code class=property>screen</code>’ for their formulas.
 
-  <p><img src="examples/hardlight.png">
+  <p><img alt="example of hard light blending" src="examples/hardlight.png">
 
   <h4 id=blendingsoftlight><span class=secno>6.1.10. </span>‘<code
    class=property>soft-light</code>’ blend mode</h4>
@@ -1613,7 +1638,7 @@ with
         D(Cb) = sqrt(Cb)
 </pre>
 
-  <p><img src="examples/softlight.png">
+  <p><img alt="example of soft light blending" src="examples/softlight.png">
 
   <h4 id=blendingdifference><span class=secno>6.1.11. </span>‘<code
    class=property>difference</code>’ blend mode</h4>
@@ -1628,7 +1653,8 @@ with
     B(Cb, Cs) = | Cb - Cs |
 </pre>
 
-  <p><img src="examples/difference.png">
+  <p><img alt="example of difference blending" src="examples/difference.png">
+   
 
   <h4 id=blendingexclusion><span class=secno>6.1.12. </span>‘<code
    class=property>exclusion</code>’ blend mode</h4>
@@ -1641,7 +1667,7 @@ with
     B(Cb, Cs) = Cb + Cs - 2 x Cb x Cs
 </pre>
 
-  <p><img src="examples/exclusion.png">
+  <p><img alt="example of exclusion blending" src="examples/exclusion.png">
 
   <h3 id=blendingnonseparable><span class=secno>6.2. </span>Non-separable
    blend modes</h3>
@@ -1708,7 +1734,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 	B(Cb, Cs) = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
 </pre>
 
-  <p><img src="examples/hue.png">
+  <p><img alt="example of hue blending" src="examples/hue.png">
 
   <h4 id=blendingsaturation><span class=secno>6.2.2. </span>‘<code
    class=property>saturation</code>’ blend mode</h4>
@@ -1722,7 +1748,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 	B(Cb, Cs) = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
 </pre>
 
-  <p><img src="examples/saturation.png">
+  <p><img alt="example of saturation blending" src="examples/saturation.png">
+   
 
   <h4 id=blendingcolor><span class=secno>6.2.3. </span>‘<code
    class=property>color</code>’ blend mode</h4>
@@ -1736,7 +1763,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
 </pre>
 
-  <p><img src="examples/color.png">
+  <p><img alt="example of color blending" src="examples/color.png">
 
   <h4 id=blendingluminosity><span class=secno>6.2.4. </span>‘<code
    class=property>luminosity</code>’ blend mode</h4>
@@ -1749,7 +1776,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 	B(Cb, Cs) = SetLum(Cb, Lum(Cs))
 </pre>
 
-  <p><img src="examples/luminosity.png">
+  <p><img alt="example of luminosity blending" src="examples/luminosity.png">
+   
 
   <h3 id=isolationblending><span class=secno>6.3. </span>Effect of group
    isolation on blending</h3>
@@ -1769,13 +1797,14 @@ components having the minimum, middle, and maximum values upon entry to the func
    the land and sky using the normal blend-mode (the default blend-mode
    applied to the group).
 
-  <div class=example><img src="examples/isolate_blend_example.png"></div>
+  <div class=example><img alt="example of isolated group blending"
+   src="examples/isolate_blend_example.png"></div>
 
   <h2 id=csscompositingandblending><span class=secno>7. </span>Specifying
    Compositing and Blending in CSS</h2>
 
-  <h3 id=csscompositingrules><span class=secno>7.1. </span>Behavior specific
-   to CSS</h3>
+  <h3 id="csscompositingrules_CSS"><span class=secno>7.1. </span>Behavior
+   specific to CSS</h3>
 
   <p> If an element specifies non-default blending, compositing or <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
@@ -1798,8 +1827,8 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p>If content uses CSS filters, they will be applied before blending and
    compositing.
 
-  <h3 id=csscompositingrules><span class=secno>7.2. </span>Behavior specific
-   to SVG</h3>
+  <h3 id="csscompositingrules_SVG"><span class=secno>7.2. </span>Behavior
+   specific to SVG</h3>
 
   <p> In SVG, every element will create a group.<br>
    Most implementations can optimize this by not treating elements with
@@ -2172,7 +2201,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <div class=propdef>
    <dl>
-    <dt id=propdef-blend-mode><span class="propdef-title prop-name">‘<code
+    <dt id=propdef-blend-mode-background><span
+     class="propdef-title prop-name">‘<code
      class=property>background-blend-mode</code>’</span>
 
     <dd>
@@ -2235,7 +2265,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <div class=propdef>
    <dl>
-    <dt id=propdef-blend-mode><span class="propdef-title prop-name">‘<code
+    <dt id=propdef-blend-mode-shadow><span
+     class="propdef-title prop-name">‘<code
      class=property>box-shadow-blend-mode</code>’</span>
 
     <dd>
@@ -2302,7 +2333,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <div class=propdef>
    <dl>
-    <dt id=propdef-blend-mode><span class="propdef-title prop-name">‘<code
+    <dt id=propdef-blend-mode-text-shadow><span
+     class="propdef-title prop-name">‘<code
      class=property>text-shadow-blend-mode</code>’</span>
 
     <dd>
@@ -2366,7 +2398,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <div class=propdef>
    <dl>
-    <dt id=propdef-blend-mode><span class="propdef-title prop-name">‘<code
+    <dt id=propdef-blend-mode-foreground><span
+     class="propdef-title prop-name">‘<code
      class=property>foreground-blend-mode</code>’</span>
 
     <dd>
@@ -2415,7 +2448,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=background-alpha-compositing><span class=secno>7.4.6.
+  <h4 id=background-alpha-compositing-v2><span class=secno>7.4.6.
    </span>Alternate proposal</h4>
 
   <p> To cut down on the number of new keywords, we could extend blend-mode
@@ -2552,7 +2585,7 @@ shadow-blend-mode would set the blend operation on the shadow (the default is 'n
     href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/">http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/</a>
     
 
-   <dt id=ref-svgt12><strong class=normref>[FILTER-EFFECTS]</strong>
+   <dt id=ref-filters10><strong class=normref>[FILTER-EFFECTS]</strong>
 
    <dd><strong>Filter Effects 1.0 Specification</strong>, TBD
   </dl>

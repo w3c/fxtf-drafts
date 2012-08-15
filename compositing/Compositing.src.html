@@ -391,7 +391,7 @@ Co = co / αo
 
 <h3 id="simplealphacompositingexamples">Examples of simple alpha compositing</h3>
 <div class="example">
-<p style="text-align:center"><img src="examples/simple_box.svg"/>
+<p style="text-align:center"><img src="examples/simple_box.svg" alt="Simple box showing alpha compositing"/>
 <br/>
 Figure 1
 </p>
@@ -414,7 +414,7 @@ co = RGB(1,0,0)
 </div>
 
 <div class="example">
-<p style="text-align:center"><img src="examples/two_box.svg"/>
+<p style="text-align:center"><img src="examples/two_box.svg" alt="simple shape"/>
 <br/>
 Figure 2
 </p>
@@ -451,7 +451,7 @@ Co = RGB(0, 0, 1)
 </div>
 
 <div class="example">
-<p style="text-align:center"><img src="examples/two_box_transparency.svg"/>
+<p style="text-align:center"><img src="examples/two_box_transparency.svg" alt="interaction of a solid box with a transparent box on top"/>
 <br/>
 Figure 3
 </p>
@@ -487,7 +487,7 @@ Co = RGB(0.5, 0, 0.5)
 </div>
 
 <div class="example">
-<p style="text-align:center"><img src="examples/two_box_transparency_both.svg"/>
+<p style="text-align:center"><img src="examples/two_box_transparency_both.svg" alt="interaction of 2 transparent boxes"/>
 <br/>
 Figure 4
 </p>
@@ -555,7 +555,7 @@ This means that the backdrop is the result of compositing all previous elements.
 
 <h3 id="backdropexamples">Examples of backdrop calculation</h3>
 <div class="example">
-<p style="text-align:center"><img src="examples/simple_backdrop.svg"/>
+<p style="text-align:center"><img src="examples/simple_backdrop.svg" alt="example of a simple backdrop calculation"/>
 <br/>
 Figure 5
 </p>
@@ -565,7 +565,7 @@ The dotted line shows the area that is examined during compositing of the blue s
 </p>
 </div>
 <div class="example">
-<p style="text-align:center"><img src="examples/simple_backdrop_alpha.svg"/>
+<p style="text-align:center"><img src="examples/simple_backdrop_alpha.svg" alt="example of a backdrop with alpha"/>
 <br/>
 Figure 6
 </p>
@@ -629,7 +629,7 @@ In a knockout group, each individual element shall be composited with the initia
 When calculating the <a href="#backdrop">backdrop</a> for an element inside a knockout group, the elements of the group are ignored. Instead, only the elements that are behind the knockout group are included in the backdrop.
 </p>
 <div class="example">
-<p style="text-align:center"><img src="examples/knockout.png"/></p>
+<p style="text-align:center"><img src="examples/knockout.png" alt="example of a knockout group"/></p>
 </div>
 <p>
 The above example demonstrates two versions of a group containing three squares (red, green, blue) that are 50% opaque. The group is composited over a grey striped background.<br />
@@ -677,7 +677,7 @@ The four regions are:
 <p class="note">Destination is synonymous with backdrop. The term destination is used in this section as this is considered the standard when working with Porter Duff compositing. Additionally, the compositing operators use 'destination' in their names.</p>
 
 <div class="figure">
-<p style="text-align:center"><img src="examples/PD_regions.svg"/></p>
+<p style="text-align:center"><img src="examples/PD_regions.svg" alt="overview of the regions affected by porter duff"/></p>
 </div>
 The contribution from each region to the final pixel color is defined by the coverage of the shape at that pixel, and the operator in use.
 Coverage is specified in terms of alpha. Full alpha (1) implies full coverage, while zero alpha implies no coverage.
@@ -737,13 +737,13 @@ and incorporating color gives the general Porter Duff equation
 Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1] αs is the coverage of the source Fa is defined by the operator and controls inclusion of the source Cs is the color of the source (not multiplied by alpha) αb is the coverage of the destination Fb is defined by the operator and controls inclusion of the destination Cb is the color of the destination (not multiplied by alpha)
 <h4 id="porterduffcompositingoperators_clear">Clear</h4>
 <p>No regions are enabled.</p>
-<img src="examples/PD_clr.svg"/>
+<img src="examples/PD_clr.svg" alt="example of porter duff clear"/>
 <pre>
     Fa = 0; Fb = 0
     co = 0
     αo = 0
 </pre>
-<h4 id="porterduffcompositingoperators_src">Copy</h4>
+<h4 id="porterduffcompositingoperators_src" alt="example of porter duff copy">Copy</h4>
 <p>Only the source will be present.</p>
 <img src="examples/PD_src.svg"/>
 <pre>
@@ -751,7 +751,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs
     αo = αs
 </pre>
-<h4 id="porterduffcompositingoperators_dst">Destination</h4>
+<h4 id="porterduffcompositingoperators_dst" alt="example of porter duff destination">Destination</h4>
 <p>Only the destination will be present.</p>
 <img src="examples/PD_dst.svg"/>
 <pre>
@@ -759,7 +759,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αb x Cb
     αo = αb
 </pre>
-<h4 id="porterduffcompositingoperators_srcover">Source Over</h4>
+<h4 id="porterduffcompositingoperators_srcover" alt="example of porter duff source over">Source Over</h4>
 <p>Source is placed over the destination</p>
 <img src="examples/PD_src-over.svg"/>
 <pre>
@@ -767,7 +767,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs + αb x Cb x (1 – αs)
     αo = αs + αb x (1 – αs)
 </pre>
-<h4 id="porterduffcompositingoperators_dstover">Destination Over</h4>
+<h4 id="porterduffcompositingoperators_dstover" alt="example of porter duff destination over">Destination Over</h4>
 <p>Destination is placed over the source.</p>
 <img src="examples/PD_dst-over.svg"/>
 <pre>
@@ -775,7 +775,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs x (1 – αb) + αb x Cb
     αo = αs x (1 – αb) + αb
 </pre>
-<h4 id="porterduffcompositingoperators_srcin">Source In</h4>
+<h4 id="porterduffcompositingoperators_srcin" alt="example of porter duff source in">Source In</h4>
 <img src="examples/PD_src-in.svg"/>
 <p>The source that overlaps the destination, replaces the destination.</p>
 <pre>
@@ -783,7 +783,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs x αb
     αo = αs x αb
 </pre>
-<h4 id="porterduffcompositingoperators_dstin">Destination In</h4>
+<h4 id="porterduffcompositingoperators_dstin" alt="example of porter duff destination in ">Destination In</h4>
 <p>Destination which overlaps the source, replaces the source.</p>
 <img src="examples/PD_dst-in.svg"/>
 <pre>
@@ -791,7 +791,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αb x Cb x αs 
     αo = αb x αs
 </pre>
-<h4 id="porterduffcompositingoperators_srcout">Source Out</h4>
+<h4 id="porterduffcompositingoperators_srcout" alt="example of porter duff source out">Source Out</h4>
 <p>Source is placed, where it falls outside of the destination.</p>
 <img src="examples/PD_src-out.svg"/>
 <pre>
@@ -799,7 +799,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs x (1 – αb)
     αo = αs x (1 – αb)
 </pre>
-<h4 id="porterduffcompositingoperators_dstout">Destination Out</h4>
+<h4 id="porterduffcompositingoperators_dstout" alt="example of porter duff destination out">Destination Out</h4>
 <p>Destination is placed, where it falls outside of the source.</p>
 <img src="examples/PD_dst-out.svg"/>
 <pre>
@@ -807,7 +807,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αb x Cb x (1 – αs)
     αo = αb x (1 – αs)
 </pre>
-<h4 id="porterduffcompositingoperators_srcatop">Source Atop</h4>
+<h4 id="porterduffcompositingoperators_srcatop" alt="example of porter duff source atop">Source Atop</h4>
 <p>Source which overlaps the destination, replaces the destination. Destination is placed elsewhere.</p>
 <img src="examples/PD_src-atop.svg"/>
 <pre>
@@ -815,7 +815,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs x αb + αb x Cb x (1 – αs)
     αo = αs x αb + αb x (1 – αs)
 </pre>
-<h4 id="porterduffcompositingoperators_dstatop">Destination Atop</h4>
+<h4 id="porterduffcompositingoperators_dstatop" alt="example of porter duff destination atop">Destination Atop</h4>
 <img src="examples/PD_dst-atop.svg"/>
 <p>Destination which overlaps the source replaces the source. Source is placed elsewhere.</p>
 <pre>
@@ -823,7 +823,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs x (1 - αb) + αb x Cb x αs
     αo = αs x (1 - αb) + αb x αs
 </pre>
-<h4 id="porterduffcompositingoperators_xor">XOR</h4>
+<h4 id="porterduffcompositingoperators_xor" alt="example of porter duff xor">XOR</h4>
 <p>The non-overlapping regions of source and destination are combined.</p>
 <img src="examples/PD_xor.svg"/>
 <pre>
@@ -831,7 +831,7 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
     co = αs x Cs x (1 - αb) + αb x Cb x (1 – αs)
     αo = αs x (1 - αb) + αb x (1 – αs)
 </pre>
-<h4 id="porterduffcompositingoperators_plus">Lighter</h4>
+<h4 id="porterduffcompositingoperators_plus" alt="example of porter duff lighter">Lighter</h4>
 <p>Display the sum of the source image and destination image. It is defined in the Porter Duff paper [3] as the 'plus' operator.</p>
 <pre>
     Fa = 1; Fb = 1
@@ -856,7 +856,7 @@ This means, that for every element within the group, the backdrop for the compos
 In the example below, the elements within the group (the circle and the square) are composited using the <a href="#porterduffcompositingoperators_srcatop">source-atop</a> operator, with only the hexagon.
 This has the effect of "knocking out" the circle, where it is overlapped by the square.<br />
 Additionally, because the source-atop Porter Duff operator is used, the source shape (either the square or the circle) is only placed where the backdrop exists (the backdrop being the hexagon for both compositing operations within the group).
-<div class="example"><img src="examples/pd-knockout.png" /></div>
+<div class="example"><img src="examples/pd-knockout.png" alt="example of knockout with porter duff"/></div>
 </p>
 
 <h4 id="groupcompositingcliptoself">Clip to self behavior</h4>
@@ -865,7 +865,7 @@ When compositing, the areas of the composite that may be modified by the composi
 This is known as "clip to self" in some graphics libraries.
 The alternative is to not clip the compositing operation at all. The results can be seen below.
 Some of the Porter Duff operators are unchanged, because they normally have no effect outside the source region. The changes can be seen in the clear, source, source-in, destination-in, source-out and destination-atop.
-<div class="figure"><img src="examples/clip-to-self.png" /></div>
+<div class="figure"><img src="examples/clip-to-self.png" alt="example of clip to self with porter duff"/></div>
 </p>
 
 <h2 id="blending">Blending</h2>
@@ -906,7 +906,7 @@ Cb: the <a href="#backdrop">backdrop</a> color<br/>
 αb: the <a href="#backdrop">backdrop</a> alpha<br/>
 </p>
 <div class="example">
-<img src="examples/blend_background_opacity.svg"/>
+<img src="examples/blend_background_opacity.svg" alt="example of blending with opacity"/>
 <p>
 This example has a red rectangle with a blending mode that is placed on top of a set of green rectangles that have different levels of opacity.<br/>
 Note how the top rectangle shifts more toward red as the opacity of the <a href="#backdrop">backdrop</a> lowers.
@@ -939,7 +939,7 @@ This is the default attribute which specifies no blending. The blending formula 
 <pre>
     B(Cb, Cs) = Cs
 </pre>
-<img src="examples/normal.png"/>
+<img src="examples/normal.png" alt="example of normal blending"/>
 </p>
 
 <h4 id="blendingmultiply">'multiply' blend mode</h4>
@@ -952,7 +952,7 @@ The resultant color is always at least as dark as either the source or destinati
     B(Cb, Cs) = Cb x Cs
 </pre>
 </p>
-<img src="examples/multiply.png"/>
+<img src="examples/multiply.png" alt="example of multiply blending"/>
 
 <h4 id="blendingscreen">'screen' blend mode</h4>
 <p>
@@ -965,7 +965,7 @@ The result color is always at least as light as either of the two constituent co
               = Cb + Cs -(Cb x Cs)
 </pre>
 </p>
-<img src="examples/screen.png"/>
+<img src="examples/screen.png" alt="example of screen blending"/>
 
 <h4 id="blendingoverlay">'overlay' blend mode</h4>
 <p>
@@ -978,7 +978,7 @@ Source colors overlay the <a href="#backdrop">backdrop</a> while preserving its 
 </pre>
 Overlay is the inverse of the 'hardlight' blend mode. See the definition of 'hardlight' for the formula.
 </p>
-<img src="examples/overlay.png"/>
+<img src="examples/overlay.png" alt="example of overlay blending"/>
 
 <h4 id="blendingdarken">'darken' blend mode</h4>
 <p>
@@ -989,7 +989,7 @@ The <a href="#backdrop">backdrop</a> is replaced with the source where the sourc
     B(Cb, Cs) = min(Cb, Cs)
 </pre>
 </p>
-<img src="examples/darken.png"/>
+<img src="examples/darken.png" alt="example of darken blending"/>
 
 <h4 id="blendinglighten">'lighten' blend mode</h4>
 <p>
@@ -1000,7 +1000,7 @@ The <a href="#backdrop">backdrop</a> is replaced with the source where the sourc
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
 </p>
-<img src="examples/lighten.png"/>
+<img src="examples/lighten.png" alt="example of lighten blending"/>
 
 <h4 id="blendingcolordodge">'color-dodge' blend mode</h4>
 <p>
@@ -1012,7 +1012,7 @@ Brightens the <a href="#backdrop">backdrop</a> color to reflect the source color
         B(Cb, Cs) = 1	
 </pre>
 </p>
-<img src="examples/colordodge.png"/>
+<img src="examples/colordodge.png" alt="example of color dodge blending"/>
 
 <h4 id="blendingcolorburn">'color-burn' blend mode</h4>
 <p>
@@ -1024,7 +1024,7 @@ Darkens the <a href="#backdrop">backdrop</a> color to reflect the source color. 
         B(Cb, Cs) = 0	
 </pre>
 </p>
-<img src="examples/colorburn.png"/>
+<img src="examples/colorburn.png" alt="example of color burn blending"/>
 
 <h4 id="blendinghardlight">'hard-light' blend mode</h4>
 <p>
@@ -1037,7 +1037,7 @@ Multiplies or screens the colors, depending on the source color value. The effec
 </pre>
 See the definition of 'multiply' and 'screen' for their formulas.
 </p>
-<img src="examples/hardlight.png"/>
+<img src="examples/hardlight.png" alt="example of hard light blending"/>
 
 <h4 id="blendingsoftlight">'soft-light' blend mode</h4>
 <p>
@@ -1054,7 +1054,7 @@ with
         D(Cb) = sqrt(Cb)
 </pre>
 </p>
-<img src="examples/softlight.png"/>
+<img src="examples/softlight.png" alt="example of soft light blending"/>
 
 <h4 id="blendingdifference">'difference' blend mode</h4>
 <p>
@@ -1066,7 +1066,7 @@ Painting with white inverts the <a href="#backdrop">backdrop</a> color; painting
     B(Cb, Cs) = | Cb - Cs |
 </pre>
 </p>
-<img src="examples/difference.png"/>
+<img src="examples/difference.png" alt="example of difference blending"/>
 
 <h4 id="blendingexclusion">'exclusion' blend mode</h4>
 <p>
@@ -1075,7 +1075,7 @@ Produces an effect similar to that of the Difference mode but lower in contrast.
     B(Cb, Cs) = Cb + Cs - 2 x Cb x Cs
 </pre>
 </p>
-<img src="examples/exclusion.png"/>
+<img src="examples/exclusion.png" alt="example of exclusion blending"/>
 
 <h3 id="blendingnonseparable">Non-separable blend modes</h3>
 <p>
@@ -1131,7 +1131,7 @@ Creates a color with the hue of the source color and the saturation and luminosi
 	B(Cb, Cs) = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
 </pre>
 </p>
-<img src="examples/hue.png"/>
+<img src="examples/hue.png" alt="example of hue blending"/>
 
 <h4 id="blendingsaturation">'saturation' blend mode</h4>
 <p>
@@ -1140,7 +1140,7 @@ Creates a color with the saturation of the source color and the hue and luminosi
 	B(Cb, Cs) = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
 </pre>
 </p>
-<img src="examples/saturation.png"/>
+<img src="examples/saturation.png" alt="example of saturation blending"/>
 
 <h4 id="blendingcolor">'color' blend mode</h4>
 <p>
@@ -1149,7 +1149,7 @@ Creates a color with the hue and saturation of the source color and the luminosi
 	B(Cb, Cs) = SetLum(Cs, Lum(Cb))
 </pre>
 </p>
-<img src="examples/color.png"/>
+<img src="examples/color.png" alt="example of color blending"/>
 
 <h4 id="blendingluminosity">'luminosity' blend mode</h4>
 <p>
@@ -1158,7 +1158,7 @@ Creates a color with the luminosity of the source color and the hue and saturati
 	B(Cb, Cs) = SetLum(Cb, Lum(Cs))
 </pre>
 </p>
-<img src="examples/luminosity.png"/>
+<img src="examples/luminosity.png" alt="example of luminosity blending"/>
 
 <h3 id="isolationblending">Effect of group isolation on blending</h3>
 <p>
@@ -1167,18 +1167,18 @@ The aeroplane on the left is a normal group, the aeroplane on the right is an <a
 In the isolated group, the elements within the group are composited onto an empty initial backdrop, this stops the elements within the group multiplying with the backdrop.<br />
 In the normal group, the elements within the group are composited onto the initial backdrop containing the land and sky. Therefore the elements of the aeroplane multiply with the land and sky.<br />
 In both instances, the result of the group composite is composited onto the land and sky using the normal blend-mode (the default blend-mode applied to the group).
-<div class="example"><img src="examples/isolate_blend_example.png"/></div>
+<div class="example"><img src="examples/isolate_blend_example.png" alt="example of isolated group blending"/></div>
 </p>
 
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
-<h3 id="csscompositingrules">Behavior specific to CSS</h3>
+<h3 id="csscompositingrules_CSS">Behavior specific to CSS</h3>
 <p>
 If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> and that of all of its children will revert to 'flat'.<br/>
 The application of non-default blending or compositing to an element formatted with the CSS box model also establishes a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index will not honor the depth of elements outside of the group.<br/>
 Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> is considered a group. HTML elements themselves do not create groups.
 </p>
 <p>If content uses CSS filters, they will be applied before blending and compositing.</p>
-<h3 id="csscompositingrules">Behavior specific to SVG</h3>
+<h3 id="csscompositingrules_SVG">Behavior specific to SVG</h3>
 <p>
 In SVG, every element will create a group.<br/>
 Most implementations can optimize this by not treating elements with default arguments as groups.<br/>
@@ -1453,7 +1453,7 @@ as follows:</p>
 
 <div class="propdef">
 <dl>
-  <dt id='propdef-blend-mode'><span class='propdef-title prop-name'>'background-blend-mode'</span></dt>
+  <dt id='propdef-blend-mode-background'><span class='propdef-title prop-name'>'background-blend-mode'</span></dt>
     <dd>
       <table summary="background-blend-mode property" class="propinfo" cellspacing="0"
       cellpadding="0">
@@ -1504,7 +1504,7 @@ as follows:</p>
 
 <div class="propdef">
 <dl>
-  <dt id='propdef-blend-mode'><span class='propdef-title prop-name'>'box-shadow-blend-mode'</span></dt>
+  <dt id='propdef-blend-mode-shadow'><span class='propdef-title prop-name'>'box-shadow-blend-mode'</span></dt>
     <dd>
       <table summary="box-shadow-blend-mode property" class="propinfo" cellspacing="0"
       cellpadding="0">
@@ -1556,7 +1556,7 @@ as follows:</p>
 
 <div class="propdef">
 <dl>
-  <dt id='propdef-blend-mode'><span class='propdef-title prop-name'>'text-shadow-blend-mode'</span></dt>
+  <dt id='propdef-blend-mode-text-shadow'><span class='propdef-title prop-name'>'text-shadow-blend-mode'</span></dt>
     <dd>
       <table summary="text-shadow-blend-mode property" class="propinfo" cellspacing="0"
       cellpadding="0">
@@ -1607,7 +1607,7 @@ as follows:</p>
 
 <div class="propdef">
 <dl>
-  <dt id='propdef-blend-mode'><span class='propdef-title prop-name'>'foreground-blend-mode'</span></dt>
+  <dt id='propdef-blend-mode-foreground'><span class='propdef-title prop-name'>'foreground-blend-mode'</span></dt>
     <dd>
       <table summary="foreground-blend-mode property" class="propinfo" cellspacing="0"
       cellpadding="0">
@@ -1650,7 +1650,7 @@ as follows:</p>
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-<h4 id="background-alpha-compositing">Alternate proposal</h4>
+<h4 id="background-alpha-compositing-v2">Alternate proposal</h4>
 <p>
 To cut down on the number of new keywords, we could extend blend-mode to take the following additional parameters:
 <dl>
@@ -1756,7 +1756,7 @@ If this rule is not followed, an attacker could mount a timing attack.
       Dean Jackson editor, W3C, 22 December 2008 (Recommendation). See <a
       href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/">http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/</a>
     </dd>
-  <dt id="ref-svgt12"><strong class="normref">[FILTER-EFFECTS]</strong></dt>
+  <dt id="ref-filters10"><strong class="normref">[FILTER-EFFECTS]</strong></dt>
     <dd><strong>Filter Effects 1.0 Specification</strong>,
       TBD
     </dd>    
