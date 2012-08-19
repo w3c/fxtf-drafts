@@ -260,7 +260,7 @@ sub link {
         return "<a class='attr-name' href='$href'>'$name'</a>";
       }
     } elsif (defined $properties{$name}) {
-      return "<a class='property' href='$properties{$name}'>'$name'</a>";
+      return "<a class='property' href='$properties{$name}{href}'>'$name'</a>";
     }
     print STDERR "unknown element, attribute or property '$1'\n";
     return "<span class='xxx'>$text</span>";
@@ -290,7 +290,7 @@ sub link {
       print STDERR "unknown element '$1'\n";
       return "<span class='xxx'>$text</span>";
     }
-    return "<a class='property' href='$properties{$name}'>'$name'</a>";
+    return "<a class='property' href='$properties{$name}{href}'>'$name'</a>";
   } elsif ($text =~ /^'([^ ]*)\/([^ ]*)'$/) {
     my $eltname = $1;
     my $attrname = $2;
