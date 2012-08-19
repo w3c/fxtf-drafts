@@ -212,7 +212,7 @@ sub readdefs {
 
   while ($defs =~ s/<elementcategory\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\s+elements=['"](.*?)['"]\/>//s) {
     my $cat = $1;
-    my $href = $2;
+    my $href = "$base$2";
     $elementCategories{$cat} = {
       href => $href,
       elements => [split(/,\s*/, $3)]
