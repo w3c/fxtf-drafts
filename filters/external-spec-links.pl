@@ -180,7 +180,7 @@ sub readdefs {
     }
   }
 
-  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+elements=['"](.*?)['"]\s+href=['"](.*?)['"]\s*\/>//s) {
+  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+elements=['"](.*?)['"]\s+href=['"](.*?)['"].*?\/>//s) {
     my $attrName = $1;
     my $attrHref = "$base$3";
     my @elements = split(/,\s*/, $2);
@@ -191,7 +191,7 @@ sub readdefs {
     $attributes{$attrName}{""} = $attrHref;
   }
 
-  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\/>//s) {
+  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+href=['"](.*?)['"].*?\/>//s) {
     my $attrName = $1;
     my $attrHref = "$base$2";
 
