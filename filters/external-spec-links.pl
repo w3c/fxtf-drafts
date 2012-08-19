@@ -102,7 +102,7 @@ sub readdefs {
         push(@{$attributeCategories{$name}{attributesOrder}}, $attrName);
 
         $attributes{$attrName} = { } unless defined $attributes{$attrName};
-        $attributes{$attrName}{""} = $attrHref;
+        $attributes{$attrName}{""} = "$base$attrHref";
       }
     }
   }
