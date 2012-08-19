@@ -77,7 +77,7 @@ sub readdefs {
     $attributeCategories{$name}{attributesOrder} = [];
 
     if ($attrs =~ /href=['"](.*?)['"]/) {
-      $attributeCategories{$name}{href} = $1;
+      $attributeCategories{$name}{href} = "$base$1";
     }
 
 #    if ($attrs =~ /presentationattributes=['"](.*?)['"]/) {
