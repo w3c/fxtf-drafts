@@ -195,7 +195,7 @@ Table of contents</h2>
 
 <h2>The Mask Rendering Model</h2>
 
-<p>The application of the 'mask' or 'mask-image' properties to an element formatted with the CSS box model establishes a stacking context the same way that CSS 'opacity' does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
+<p>The application of the 'clip-path, 'mask' or 'mask-image' properties to an element formatted with the CSS box model establishes a stacking context the same way that CSS 'opacity' does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
 
 <p>The 'mask' and 'mask-image' properties have no effect on the geometry of the target element's CSS boxes.
 
@@ -1278,13 +1278,13 @@ layer.
 
 <pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-image&gt;</var> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
 
-<pre class=prod><dfn>&lt;mask-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | child | <var>&lt;child-selector&gt;</var></pre>
+<pre class=prod><dfn>&lt;mask-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var></pre>
 
 <pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(&lt;compound-selector&gt;#)</pre>
 
 <dl>
   <dt>
-    <a>&lt;FuncIRI&gt;</a>
+    <dfn>'&lt;FuncIRI&gt;'</dfn>
   </dt>
   <dd>
     An <a>IRI reference</a>
@@ -1296,7 +1296,7 @@ layer.
     A keyword to indicate that the last child <a>'mask element'</a>
     element should be used as the mask source. It is equivalent to
     ''select(mask:last-of-type)''.</dd>
-  <dt><dfn>&lt;child-selector&gt;</dfn></dt>
+  <dt><dfn>'&lt;child-selector&gt;'</dfn></dt>
   <dd>
     A comma-separated list of <a>compound selector</a>s scoped at the element to
     which the 'mask' property is applied.
@@ -1304,7 +1304,7 @@ layer.
     a result of evaluating the list of selectors is taken as the mask source.
     If there are no matching elements the mask source is invalid.
   </dd>
-  <dt><dfn>&lt;compound-selector&gt;</dfn></dt>
+  <dt><dfn>'&lt;compound-selector&gt;'</dfn></dt>
   <dd>
     A <a>compound selector</a> as defined in [[!SELECTORS4]].
   <dd>
@@ -1875,7 +1875,7 @@ Values have the following meanings:
   </tr>
   <tr>
     <th>Value:</th>
-    <td><a>&lt;funciri&gt;</a> | none</td>
+    <td><var>&lt;shape&gt;</var> | <var>&lt;clip-source&gt;</var> | none</td>
   </tr>
   <tr>
     <th>Initial:</th>
@@ -1892,7 +1892,7 @@ Values have the following meanings:
   </tr>
   <tr>
     <th>Percentages:</th>
-    <td>N/A</td>
+    <td>as specified</td>
   </tr>
   <tr>
     <th>Media:</th>
@@ -1908,16 +1908,16 @@ Values have the following meanings:
   </tr>
 </table>
 
-<dl>
-  <dt><span class="prop-value"><a href="types.html#DataTypeFuncIRI">&lt;funciri&gt;</a></span></dt>
-  <dd>An <a>IRI reference</a> to another graphical object within the same SVG
-  document fragment which will be used as the clipping path. If the
-  <a>IRI reference</a> is not valid (e.g it points to an object that doesn't
-  exist or the object is not a <a>'clipPath'</a> element) the 'clip-path'
-  property must be treated as if it hadn't been specified.</dd>
-</dl>
+<pre class=prod><dfn>&lt;clip-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var></pre>
 
-<p class=note>Note that a future version of this specification may allow basic shapes as value. (See [[CSS3-EXCLUSIONS]].)
+<dl>
+  <dt>
+    <dfn>'&lt;shape&gt;'</dfn>
+  </dt>
+  <dd>
+    A basic shape function as defined in CSS3 Exclusions. Percentage values are resolved against the <span class=index>bounding client rect</span>. (See [[CSS3-EXCLUSIONS]].)
+  </dd>
+</dl>
 
 <h3 id="the-clip-rule">The 'clip-rule' property</h3>
 

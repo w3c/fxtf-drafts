@@ -31,14 +31,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 16 August 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 August 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20120816/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20120820/-->
 
     <dt>Latest version:
 
@@ -395,8 +395,8 @@
   <h2 id=the-mask-rendering-model><span class=secno>5. </span>The Mask
    Rendering Model</h2>
 
-  <p>The application of the ‘<a href="#mask"><code
-   class=property>mask</code></a>’ or ‘<a href="#mask-image"><code
+  <p>The application of the ‘<a href="#clip-path"><code
+   class=css>clip-path, </code></a>’mask' or ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ properties to an element formatted
    with the CSS box model establishes a stacking context the same way that
    CSS ‘<code class=property>opacity</code>’ does, and all the element's
@@ -1805,17 +1805,17 @@ div {
   <pre class=prod><dfn id=ltmask-layergt>&lt;mask-layer&gt;</dfn> = <a
    href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
 
-  <pre class=prod><dfn
-   id=ltmask-sourcegt>&lt;mask-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | child | <a
+  <pre class=prod><dfn id=ltmask-sourcegt>&lt;mask-source&gt;</dfn> = <a
+   href="#ltfuncirigt"><var>&lt;FuncIRI&gt;</var></a> | <a
+   href="#child"><var>child</var></a> | <a
    href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a></pre>
 
   <pre class=prod><dfn
    id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(&lt;compound-selector&gt;#)</pre>
 
   <dl>
-   <dt> <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a>
-    
+   <dt> <dfn id=ltfuncirigt>‘<code
+    class=css>&lt;FuncIRI&gt;</code>’</dfn>
 
    <dd> An <a
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
@@ -1832,7 +1832,8 @@ div {
     should be used as the mask source. It is equivalent to ‘<code
     class=css>select(mask:last-of-type)</code>’.
 
-   <dt><dfn id=ltchild-selectorgt0>&lt;child-selector&gt;</dfn>
+   <dt><dfn id=ltchild-selectorgt0>‘<code
+    class=css>&lt;child-selector&gt;</code>’</dfn>
 
    <dd> A comma-separated list of <a
     href="http://dev.w3.org/csswg/selectors4/#compound">compound
@@ -1845,7 +1846,8 @@ div {
     list of selectors is taken as the mask source. If there are no matching
     elements the mask source is invalid.
 
-   <dt><dfn id=ltcompound-selectorgt>&lt;compound-selector&gt;</dfn>
+   <dt><dfn id=ltcompound-selectorgt>‘<code
+    class=css>&lt;compound-selector&gt;</code>’</dfn>
 
    <dd> A <a href="http://dev.w3.org/csswg/selectors4/#compound">compound
     selector</a> as defined in <a href="#SELECTORS4"
@@ -3033,7 +3035,8 @@ div {
     <tr>
      <th>Value:
 
-     <td><span class=xxx>&lt;funciri&gt;</span> | none
+     <td><a href="#ltshapegt"><var>&lt;shape&gt;</var></a> | <a
+      href="#ltclip-sourcegt"><var>&lt;clip-source&gt;</var></a> | none
 
     <tr>
      <th>Initial:
@@ -3058,7 +3061,7 @@ div {
     <tr>
      <th>Percentages:
 
-     <td>N/A
+     <td>as specified
 
     <tr>
      <th>Media:
@@ -3068,8 +3071,8 @@ div {
     <tr>
      <th>Computed value:
 
-     <td>as specified, but with <span class=xxx>&lt;funciri&gt;</span> values
-      made absolute
+     <td>as specified, but with <a class=xxx
+      href="#ltfuncirigt">&lt;funciri&gt;</a> values made absolute
 
     <tr>
      <th><span class=xxx>Animatable</span>:
@@ -3077,26 +3080,20 @@ div {
      <td>yes
   </table>
 
+  <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
+   href="#ltfuncirigt"><var>&lt;FuncIRI&gt;</var></a> | <a
+   href="#child"><var>child</var></a> | <a
+   href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a></pre>
+
   <dl>
-   <dt><span class=prop-value><a
-    href="types.html#DataTypeFuncIRI">&lt;funciri&gt;</a></span>
+   <dt> <dfn id=ltshapegt>‘<code class=css>&lt;shape&gt;</code>’</dfn>
 
-   <dd>An <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
-    reference</a> to another graphical object within the same SVG document
-    fragment which will be used as the clipping path. If the <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
-    reference</a> is not valid (e.g it points to an object that doesn't exist
-    or the object is not a <a class=element-name
-    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-    element) the ‘<a href="#clip-path"><code
-    class=property>clip-path</code></a>’ property must be treated as if it
-    hadn't been specified.
+   <dd> A basic shape function as defined in CSS3 Exclusions. Percentage
+    values are resolved against the <a class=index
+    href="#bounding-client-rect" id=bounding-client-rect0>bounding client
+    rect</a>. (See <a href="#CSS3-EXCLUSIONS"
+    rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{CSS3-EXCLUSIONS}}--></a>.)
   </dl>
-
-  <p class=note>Note that a future version of this specification may allow
-   basic shapes as value. (See <a href="#CSS3-EXCLUSIONS"
-   rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{CSS3-EXCLUSIONS}}--></a>.)
 
   <h3 id=the-clip-rule><span class=secno>8.2. </span>The ‘<a
    href="#clip-rule"><code class=property>clip-rule</code></a>’ property</h3>
@@ -3468,7 +3465,7 @@ div {
      user coordinate system for the element referencing the <a
      class=element-name href="#ClipPathElement">‘<code
      class=property>clipPath</code>’</a> element via the <a class=property
-     href="HASH(0x7f964a048178)">‘<code
+     href="HASH(0x7ff0b1048118)">‘<code
      class=property>clip-path</code>’</a> property).<br>
      If <span class=attr-value>clipPathUnits="objectBoundingBox"</span>, then
      the user coordinate system for the contents of the <a class=element-name
@@ -3496,9 +3493,9 @@ div {
   <p><a class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> elements are never rendered
    directly; their only usage is as something that can be referenced using
-   the <a class=property href="HASH(0x7f964a048178)">‘<code
+   the <a class=property href="HASH(0x7ff0b1048118)">‘<code
    class=property>clip-path</code>’</a> property. The <a class=property
-   href="HASH(0x7f964a047e30)">‘<code class=property>display</code>’</a>
+   href="HASH(0x7ff0b1047dd0)">‘<code class=property>display</code>’</a>
    property does not apply to the <a class=element-name
    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
    element; thus, <a class=element-name href="#ClipPathElement">‘<code
@@ -3508,7 +3505,7 @@ div {
    class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> elements are available for
    referencing even when the <a class=property
-   href="HASH(0x7f964a047e30)">‘<code class=property>display</code>’</a>
+   href="HASH(0x7ff0b1047dd0)">‘<code class=property>display</code>’</a>
    property on the <a class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> element or any of its ancestors is
    set to <a class=prop-value href="#none">none</a>.
@@ -3609,7 +3606,7 @@ div {
   <p>A clipping path is conceptually equivalent to a custom viewport for the
    referencing element. Thus, it affects the rendering of an element, but not
    the element's inherent geometry. The <a class=index
-   href="#bounding-client-rect" id=bounding-client-rect0>bounding client
+   href="#bounding-client-rect" id=bounding-client-rect1>bounding client
    rect</a> of a clipped element (that is, an element which references a <a
    class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> element via a ‘<a
@@ -3779,7 +3776,8 @@ div {
 
    <li>bounding client rect, <a href="#bounding-client-rect"
     title="bounding client rect"><strong>4.</strong></a>, <a
-    href="#bounding-client-rect0" title="bounding client rect">8.4.</a>
+    href="#bounding-client-rect0" title="bounding client rect">8.1.</a>, <a
+    href="#bounding-client-rect1" title="bounding client rect">8.4.</a>
 
    <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
     title="&lt;box&gt;"><strong>6.5.</strong></a>
@@ -3795,9 +3793,12 @@ div {
     href="#child" title="''child''"><strong>6.9.</strong></a>
 
    <li>&lt;child-selector&gt;, <a href="#ltchild-selectorgt"
-    title="&lt;child-selector&gt;"><strong>6.9.</strong></a>, <a
-    href="#ltchild-selectorgt0"
     title="&lt;child-selector&gt;"><strong>6.9.</strong></a>
+
+   <li>‘<a href="#ltchild-selectorgt0"><code
+    class=css>&lt;child-selector&gt;</code></a>’, <a
+    href="#ltchild-selectorgt0"
+    title="'&lt;child-selector&gt;'"><strong>6.9.</strong></a>
 
    <li>clipPath, <a href="#clippath" title=clipPath><strong>8.3.</strong></a>
     
@@ -3808,8 +3809,13 @@ div {
    <li>clip-rule, <a href="#clip-rule"
     title=clip-rule><strong>8.2.</strong></a>
 
-   <li>&lt;compound-selector&gt;, <a href="#ltcompound-selectorgt"
-    title="&lt;compound-selector&gt;"><strong>6.9.</strong></a>
+   <li>&lt;clip-source&gt;, <a href="#ltclip-sourcegt"
+    title="&lt;clip-source&gt;"><strong>8.1.</strong></a>
+
+   <li>‘<a href="#ltcompound-selectorgt"><code
+    class=css>&lt;compound-selector&gt;</code></a>’, <a
+    href="#ltcompound-selectorgt"
+    title="'&lt;compound-selector&gt;'"><strong>6.9.</strong></a>
 
    <li>‘<a href="#contain"><code class=css>contain</code></a>’, <a
     href="#contain" title="''contain''"><strong>6.7.</strong></a>
@@ -3837,6 +3843,10 @@ div {
 
    <li>‘<a href="#fixed0"><code class=css>fixed</code></a>’, <a
     href="#fixed" title="''fixed''"><strong>6.3.</strong></a>
+
+   <li>‘<a href="#ltfuncirigt"><code
+    class=css>&lt;FuncIRI&gt;</code></a>’, <a href="#ltfuncirigt"
+    title="'&lt;FuncIRI&gt;'"><strong>6.9.</strong></a>
 
    <li>&lt;image&gt;, <a href="#ltimagegt"
     title="&lt;image&gt;"><strong>6.1.</strong></a>
@@ -4025,6 +4035,9 @@ div {
    <li>‘<a href="#scroll0"><code class=css>scroll</code></a>’, <a
     href="#scroll" title="''scroll''"><strong>6.3.</strong></a>
 
+   <li>‘<a href="#ltshapegt"><code class=css>&lt;shape&gt;</code></a>’,
+    <a href="#ltshapegt" title="'&lt;shape&gt;'"><strong>8.1.</strong></a>
+
    <li>‘<code class=css>space</code>’
     <ul>
      <li>‘<a href="#mask-box-image-repeat"><code
@@ -4079,7 +4092,7 @@ div {
     <tr>
      <th><a class=property href="#clip-path">clip-path</a>
 
-     <td>&lt;funciri&gt; | none
+     <td>&lt;shape&gt; | &lt;clip-source&gt; | none
 
      <td>none
 
@@ -4088,7 +4101,7 @@ div {
 
      <td>no
 
-     <td>N/A
+     <td>as specified
 
      <td>visual
 
