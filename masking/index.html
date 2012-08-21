@@ -31,14 +31,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 August 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 21 August 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20120820/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20120821/-->
 
     <dt>Latest version:
 
@@ -2443,23 +2443,42 @@ div {
 
   <h2 id=mask-box-image><span class=secno>7. </span>Mask Box Image</h2>
 
-  <p class=todo>Descriptions of the general model missing.
+  <p> With ‘<a href="#mask-box-image0"><code
+   class=property>mask-box-image</code></a>’ a mask can be splitted into
+   nine pieces: four corners, four edges and the middle piece as demonstrated
+   in the figure below.
+
+  <div class=figure> <img alt="pieces of a mask box image"
+   src="images/mask-box-image-mask.svg" width=240>
+   <p class=caption> Pieces of a mask box image.</p>
+
+   <p class=issue>Images should be replaced by a PNG that does not use
+    &lt;mask&gt;</p>
+  </div>
+
+  <p> These pieces may be sliced, scaled and stretched in various ways to fit
+   the size of the <span class=index id=mask-image-area>mask image
+   area</span>.
 
   <div class=example>
+   <p> The mask image in the following example gets splitted into four
+    corners with the dimension of 75 pixels, four edges and the middle piece
+    that get stretched and scaled.</p>
+
    <div class=figure> <img alt="Example for 'mask-box-image'" height=240
     src="images/mask-box-image.svg" width=720>
-    <p class=caption>Example for ‘<a href="#mask-box-image0"><code
+    <p class=caption> Example for ‘<a href="#mask-box-image0"><code
      class=property>mask-box-image</code></a>’. The object on the left is
      the object to mask. The second image is the alpha mask and the last
      image the masked object.</p>
-
-    <p class=issue>Image should be replaced by a PNG that does not use
-     &lt;mask&gt;</p>
    </div>
 
    <pre>
-#img {
-  mask-box-image: url(mask.png) 25 stretch;
+div {
+  background: linear-gradient(bottom, #F27BAA 0%, #FCC8AD 100%);
+  mask-box-image-slice: 25 fill;
+  mask-box-image-repeat: stretch;
+  mask-box-image-source: url(mask.png);
 }</pre>
   </div>
 
@@ -3069,7 +3088,7 @@ div {
      <td>visual
 
     <tr>
-     <th>Computed value:
+     <th>Computed value:
 
      <td>as specified, but with <a class=xxx
       href="#ltfuncirigt">&lt;funciri&gt;</a> values made absolute
@@ -3092,7 +3111,7 @@ div {
     values are resolved against the <a class=index
     href="#bounding-client-rect" id=bounding-client-rect0>bounding client
     rect</a>. (See <a href="#CSS3-EXCLUSIONS"
-    rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{CSS3-EXCLUSIONS}}--></a>.)
+    rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>.)
   </dl>
 
   <h3 id=the-clip-rule><span class=secno>8.2. </span>The ‘<a
@@ -3465,7 +3484,7 @@ div {
      user coordinate system for the element referencing the <a
      class=element-name href="#ClipPathElement">‘<code
      class=property>clipPath</code>’</a> element via the <a class=property
-     href="HASH(0x7ff0b1048118)">‘<code
+     href="HASH(0x7fd7c2848118)">‘<code
      class=property>clip-path</code>’</a> property).<br>
      If <span class=attr-value>clipPathUnits="objectBoundingBox"</span>, then
      the user coordinate system for the contents of the <a class=element-name
@@ -3493,9 +3512,9 @@ div {
   <p><a class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> elements are never rendered
    directly; their only usage is as something that can be referenced using
-   the <a class=property href="HASH(0x7ff0b1048118)">‘<code
+   the <a class=property href="HASH(0x7fd7c2848118)">‘<code
    class=property>clip-path</code>’</a> property. The <a class=property
-   href="HASH(0x7ff0b1047dd0)">‘<code class=property>display</code>’</a>
+   href="HASH(0x7fd7c2847dd0)">‘<code class=property>display</code>’</a>
    property does not apply to the <a class=element-name
    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
    element; thus, <a class=element-name href="#ClipPathElement">‘<code
@@ -3505,7 +3524,7 @@ div {
    class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> elements are available for
    referencing even when the <a class=property
-   href="HASH(0x7ff0b1047dd0)">‘<code class=property>display</code>’</a>
+   href="HASH(0x7fd7c2847dd0)">‘<code class=property>display</code>’</a>
    property on the <a class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> element or any of its ancestors is
    set to <a class=prop-value href="#none">none</a>.
@@ -3643,6 +3662,16 @@ div {
     </dd>
    <!---->
 
+   <dt id=CSS3-EXCLUSIONS>[CSS3-EXCLUSIONS]
+
+   <dd>Vincent Hardy; Rossen Atanassov; Alan Stearns. <a
+    href="http://www.w3.org/TR/2012/WD-css3-exclusions-20120503/"><cite>CSS
+    Exclusions and Shapes Module Level 3.</cite></a> 3 May 2012. W3C Working
+    Draft. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2012/WD-css3-exclusions-20120503/">http://www.w3.org/TR/2012/WD-css3-exclusions-20120503/</a>
+    </dd>
+   <!---->
+
    <dt id=CSS3-IMAGES>[CSS3-IMAGES]
 
    <dd>Elika J. Etemad; Tab Atkins Jr. <a
@@ -3698,16 +3727,6 @@ div {
   <dl class=bibliography>
    <dt style="display: none"><!-- keeps the doc valid if the DL is empty -->
     <!---->
-
-   <dt id=CSS3-EXCLUSIONS>[CSS3-EXCLUSIONS]
-
-   <dd>Vincent Hardy; Rossen Atanassov; Alan Stearns. <a
-    href="http://www.w3.org/TR/2012/WD-css3-exclusions-20120503/"><cite>CSS
-    Exclusions and Shapes Module Level 3.</cite></a> 3 May 2012. W3C Working
-    Draft. (Work in progress.) URL: <a
-    href="http://www.w3.org/TR/2012/WD-css3-exclusions-20120503/">http://www.w3.org/TR/2012/WD-css3-exclusions-20120503/</a>
-    </dd>
-   <!---->
 
    <dt id=CSS3-TRANSFORMS>[CSS3-TRANSFORMS]
 
@@ -3907,6 +3926,9 @@ div {
 
    <li>mask-image, <a href="#mask-image"
     title=mask-image><strong>6.1.</strong></a>
+
+   <li>mask image area, <a href="#mask-image-area"
+    title="mask image area">7.</a>
 
    <li>&lt;mask-layer&gt;, <a href="#ltmask-layergt"
     title="&lt;mask-layer&gt;"><strong>6.9.</strong></a>

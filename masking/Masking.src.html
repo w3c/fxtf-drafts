@@ -1501,17 +1501,42 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
 
 <h2>Mask Box Image</h2>
 
-<p class=todo>Descriptions of the general model missing.</p>
+<p>
+  With 'mask-box-image' a mask can be splitted into nine pieces: four corners, four edges and the middle piece as demonstrated in the figure below.
+</p>
+
+<div class=figure>
+  <img src="images/mask-box-image-mask.svg" alt="pieces of a mask box image" width="240">
+  <p class=caption>
+    Pieces of a mask box image.
+  </p>
+  <p class=issue>Images should be replaced by a PNG that does not use &lt;mask&gt;</p>
+</div>
+
+
+
+<p>
+  These pieces may be sliced, scaled and stretched in various ways to fit the size of the <span class=index>mask image area</span>.
+</p>
 
 <div class=example>
+  <p>
+    The mask image in the following example gets splitted into four corners with the dimension of 75 pixels, four edges and the middle piece that get stretched and scaled.
+  </p>
+
   <div class=figure>
     <img src="images/mask-box-image.svg" alt="Example for 'mask-box-image'" width="720" height="240">
-    <p class=caption>Example for 'mask-box-image'. The object on the left is the object to mask. The second image is the alpha mask and the last image the masked object.</p>
-    <p class=issue>Image should be replaced by a PNG that does not use &lt;mask&gt;</p>
+    <p class=caption>
+      Example for 'mask-box-image'. The object on the left is the object to mask. The second image is the alpha mask and the last image the masked object.
+    </p>
   </div>
+
   <pre>
-#img {
-  mask-box-image: url(mask.png) 25 stretch;
+div {
+  background: linear-gradient(bottom, #F27BAA 0%, #FCC8AD 100%);
+  mask-box-image-slice: 25 fill;
+  mask-box-image-repeat: stretch;
+  mask-box-image-source: url(mask.png);
 }</pre>
 </div>
 
@@ -1899,7 +1924,7 @@ Values have the following meanings:
     <td>visual</td>
   </tr>
   <tr>
-    <th>Computed&#160;value:</th>
+    <th>Computed value:</th>
     <td>as specified, but with <a>&lt;funciri&gt;</a> values made absolute</td>
   </tr>
   <tr>
@@ -1915,7 +1940,7 @@ Values have the following meanings:
     <dfn>'&lt;shape&gt;'</dfn>
   </dt>
   <dd>
-    A basic shape function as defined in CSS3 Exclusions. Percentage values are resolved against the <span class=index>bounding client rect</span>. (See [[CSS3-EXCLUSIONS]].)
+    A basic shape function as defined in CSS3 Exclusions. Percentage values are resolved against the <span class=index>bounding client rect</span>. (See [[!CSS3-EXCLUSIONS]].)
   </dd>
 </dl>
 
