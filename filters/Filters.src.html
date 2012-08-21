@@ -448,8 +448,6 @@
 <dd>
   <p>
   The set of elements that control the output of a <a>'filter element'</a> element, particularly:  
-    <a>'feDistantLight'</a>, 
-    <a>'fePointLight'</a>, 
     <a>'feSpotLight'</a>,
     <a>'feBlend'</a>,
     <a>'feColorMatrix'</a>,
@@ -473,6 +471,17 @@
     <a>'feCustom'</a>.
     </p>
 </dd>
+<dt id="TermLightSourceElement"><dfn>light sources</dfn></dt>
+<dd>
+  <p>
+    The following elements are light sources: <a>'feDistantLight'</a>, 
+    <a>'fePointLight'</a>, <a>'feSpotLight'</a>.
+  </p>
+</dd>
+<dd id="TermFilterPrimitiveAttributes"><dfn>filter primitive attributes</dfn></dd>
+<dt>
+  All <span>filter primitives</span> share 'x', 'y', 'width' and 'height' as filter primitive attributes.
+</dt>
 <dt id="TermVertexMesh"><dfn>vertex mesh</dfn></dt>
 <dd>
   The vertex mesh defines the geometry that is processed by the vertex shader.
@@ -1851,7 +1860,7 @@ The lower left rect shows an <a>'feMerge'</a> that merges <a>SourceGraphic</a> w
 <h3 id="LightSourceIntro">Introduction</h3>
 
 <p>
-  The following sections define the elements that define a <dfn id="TermLightSourceElement">light source</dfn>, <a>'feDistantLight'</a>, 
+  The following sections define the elements that define a <span class=index>light source</span>, <a>'feDistantLight'</a>, 
 <a>'fePointLight'</a> and <a>'feSpotLight'</a>,
 and property 'lighting-color', which defines the color of the
 light.</p>
@@ -5002,7 +5011,7 @@ class="element-name">'feCustom'</span></h2>
     <p>
       The <a>'vertexMesh attribute'</a> attribute of the <a>'feCustom element'</a> element defines the granularity
       of vertices in the <a href="#vertex-mesh">shader mesh</a>. By default, the vertex mesh is made of two triangles
-      that encompass the <a href="#filter-region">filter region</a> area.
+      that encompass the <a href="#FilterEffectsRegion">filter region</a> area.
     </p>
 
     <dl>
@@ -5523,7 +5532,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
       <li><a href="http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf">OpenGL ES Shading Language</a> (also known as GLSL ES) from <a href="http://www.khronos.org/registry/webgl/specs/latest/#refsGLES20GLSL">WebGL</a></li>
       <li><a href="http://msdn.microsoft.com/en-us/library/bb509635(v=VS.85).aspx">HLSL Shading Language</a></li>
       <li><a href="http://www.adobe.com/content/dam/Adobe/en/devnet/pixelbender/pdfs/pixelbender_reference.pdf">Adobe's Pixel Bender language</a></li>
-      <li><a href="http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Conceptual/CoreImaging/ci_custom_filters/ci_custom_filters.html%23//apple_ref/doc/uid/TP30001185-CH207-TPXREF101">Apple's CoreImage Filters</a></li>
+      <li><a href="http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Conceptual/CoreImaging/ci_custom_filters/ci_custom_filters.html">Apple's CoreImage Filters</a></li>
   </ul>
 
   <h3 id="recommendation">Recommended shading language</h3>
@@ -5669,7 +5678,7 @@ void main()
       </tr>
       <tr>
           <td><code>attribute vec2 a_meshCoord;</code></td>
-          <td>The vertex's coordinate in the <a href="#mesh-box">mesh box</a>. 
+          <td>The vertex's coordinate in the <a href="#vertexMesh-attribute">mesh box</a>. 
               Coordinates are in the [0, 1] range on both axis.</td>
       </tr>
       <tr>
@@ -5712,7 +5721,7 @@ void main()
       </tr>
       <tr>
           <td><code>uniform vec4 u_meshBox</code></td>
-          <td>The mesh box position and size in the <a href="#filter-box">filter box</a> coordinate
+          <td>The mesh box position and size in the <a href="#FilterEffectsRegion">filter box</a> coordinate
               system. For example, if the mesh box is the filter box, the value will be (-0.5, -0.5, 1, 1).</td>
       </tr>
       <tr>
@@ -5939,7 +5948,7 @@ The interfaces below will be made available in a IDL file for an upcoming draft.
  in that order. The range of each color component is 0..255. The
  intent is that this is compatible with the HTML5 [<a href="#ref-html5">HTML5</a>] 
  canvas interfaces, in particular see 
- <a href="http://www.w3.org/TR/html5/the-canvas.html#imagedata">ImageData</a>.
+ <a href="http://www.w3.org/TR/html5/the-canvas-element.html#the-canvas-element">ImageData</a>.
 </div></dd></dl></dd></dl>
 
 <h3 id="InterfaceSVGFilterElement">Interface SVGFilterElement</h3>

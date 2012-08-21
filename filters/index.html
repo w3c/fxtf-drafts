@@ -75,14 +75,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 August 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 21 August 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120820/-->
+     <!--http://www.w3.org/TR/2012/WD-filter-effects-20120821/-->
 
     <dt>Latest version:
 
@@ -888,11 +888,7 @@
     <p> The set of elements that control the output of a <a
      class=element-name href="#FilterElement">‘<code
      class=property>filter</code>’</a> element, particularly: <a
-     class=element-name href="#feDistantLightElement">‘<code
-     class=property>feDistantLight</code>’</a>, <a class=element-name
-     href="#fePointLightElement">‘<code
-     class=property>fePointLight</code>’</a>, <a class=element-name
-     href="#feSpotLightElement">‘<code
+     class=element-name href="#feSpotLightElement">‘<code
      class=property>feSpotLight</code>’</a>, <a class=element-name
      href="#feBlendElement">‘<code class=property>feBlend</code>’</a>, <a
      class=element-name href="#feColorMatrixElement">‘<code
@@ -927,6 +923,25 @@
      href="#feUnsharpMaskElement">‘<code
      class=property>feUnsharpMask</code>’</a>, <a class=element-name
      href="#feCustomElement">‘<code class=property>feCustom</code>’</a>.</p>
+
+   <dt id=TermLightSourceElement><dfn id=light-sources>light sources</dfn>
+
+   <dd>
+    <p> The following elements are light sources: <a class=element-name
+     href="#feDistantLightElement">‘<code
+     class=property>feDistantLight</code>’</a>, <a class=element-name
+     href="#fePointLightElement">‘<code
+     class=property>fePointLight</code>’</a>, <a class=element-name
+     href="#feSpotLightElement">‘<code
+     class=property>feSpotLight</code>’</a>.</p>
+
+   <dd id=TermFilterPrimitiveAttributes><dfn
+    id=filter-primitive-attributes>filter primitive attributes</dfn>
+
+   <dt> All <a href="#filter-primitives">filter primitives</a> share ‘<code
+    class=property>x</code>’, ‘<code class=property>y</code>’, ‘<code
+    class=property>width</code>’ and ‘<code
+    class=property>height</code>’ as filter primitive attributes.
 
    <dt id=TermVertexMesh><dfn id=vertex-mesh>vertex mesh</dfn>
 
@@ -3026,8 +3041,8 @@
 
   <h3 id=LightSourceIntro><span class=secno>12.1. </span>Introduction</h3>
 
-  <p> The following sections define the elements that define a <dfn
-   id=TermLightSourceElement>light source</dfn>, <a class=element-name
+  <p> The following sections define the elements that define a <span
+   class=index id=light-source>light source</span>, <a class=element-name
    href="#feDistantLightElement">‘<code
    class=property>feDistantLight</code>’</a>, <a class=element-name
    href="#fePointLightElement">‘<code
@@ -11386,7 +11401,7 @@ double turbulence(int nColorChannel, double *point, double <a
        class=property>feCustom</code>’</a> element defines the granularity
        of vertices in the <a href="#vertex-mesh">shader mesh</a>. By default,
        the vertex mesh is made of two triangles that encompass the <a
-       href="#filter-region">filter region</a> area.</p>
+       href="#FilterEffectsRegion">filter region</a> area.</p>
 
       <dl>
        <dt>&lt;integer&gt;{0,2}
@@ -11984,7 +11999,7 @@ double turbulence(int nColorChannel, double *point, double <a
         Pixel Bender language</a>
 
        <li><a
-        href="http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Conceptual/CoreImaging/ci_custom_filters/ci_custom_filters.html%23//apple_ref/doc/uid/TP30001185-CH207-TPXREF101">Apple's
+        href="http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Conceptual/CoreImaging/ci_custom_filters/ci_custom_filters.html">Apple's
         CoreImage Filters</a>
       </ul>
 
@@ -12171,8 +12186,9 @@ void main()
         <tr>
          <td><code>attribute vec2 a_meshCoord;</code>
 
-         <td>The vertex's coordinate in the <a href="#mesh-box">mesh box</a>.
-          Coordinates are in the [0, 1] range on both axis.
+         <td>The vertex's coordinate in the <a
+          href="#vertexMesh-attribute">mesh box</a>. Coordinates are in the
+          [0, 1] range on both axis.
 
         <tr>
          <td><code>attribute vec3 a_triangleCoord;</code>
@@ -12221,9 +12237,9 @@ void main()
          <td><code>uniform vec4 u_meshBox</code>
 
          <td>The mesh box position and size in the <a
-          href="#filter-box">filter box</a> coordinate system. For example,
-          if the mesh box is the filter box, the value will be (-0.5, -0.5,
-          1, 1).
+          href="#FilterEffectsRegion">filter box</a> coordinate system. For
+          example, if the mesh box is the filter box, the value will be
+          (-0.5, -0.5, 1, 1).
 
         <tr>
          <td><code>uniform vec2 u_tileSize</code>
@@ -12501,7 +12517,7 @@ void main()
            The range of each color component is 0..255. The intent is that
            this is compatible with the HTML5 [<a href="#ref-html5">HTML5</a>]
            canvas interfaces, in particular see <a
-           href="http://www.w3.org/TR/html5/the-canvas.html#imagedata">ImageData</a>.
+           href="http://www.w3.org/TR/html5/the-canvas-element.html#the-canvas-element">ImageData</a>.
            </div>
         </dl>
       </dl>
@@ -15957,6 +15973,10 @@ void main()
        <li>filter-margin-top, <a href="#filter-margin-top"
         title=filter-margin-top><strong>5.</strong></a>
 
+       <li>filter primitive attributes, <a
+        href="#filter-primitive-attributes"
+        title="filter primitive attributes"><strong>3.</strong></a>
+
        <li>filter primitive elements, <a href="#filter-primitive-elements"
         title="filter primitive elements"><strong>3.</strong></a>
 
@@ -15977,8 +15997,11 @@ void main()
        <li>lighting-color, <a href="#lighting-color"
         title=lighting-color><strong>12.5.</strong></a>
 
-       <li>light source, <a href="#TermLightSourceElement"
-        title="light source"><strong>12.1.</strong></a>
+       <li>light source, <a href="#light-source"
+        title="light source">12.1.</a>
+
+       <li>light sources, <a href="#light-sources"
+        title="light sources"><strong>3.</strong></a>
 
        <li>local coordinate system, <a href="#local-coordinate-system"
         title="local coordinate system"><strong>3.</strong></a>
