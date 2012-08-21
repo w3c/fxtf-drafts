@@ -77,7 +77,7 @@ sub readdefs {
     $attributeCategories{$name}{attributesOrder} = [];
 
     if ($attrs =~ /href=['"](.*?)['"]/) {
-      $attributeCategories{$name}{href} = $1;
+      $attributeCategories{$name}{href} = "$base$1";
     }
 
 #    if ($attrs =~ /presentationattributes=['"](.*?)['"]/) {
@@ -102,7 +102,7 @@ sub readdefs {
         push(@{$attributeCategories{$name}{attributesOrder}}, $attrName);
 
         $attributes{$attrName} = { } unless defined $attributes{$attrName};
-        $attributes{$attrName}{""} = $attrHref;
+        $attributes{$attrName}{""} = "$base$attrHref";
       }
     }
   }
@@ -180,7 +180,7 @@ sub readdefs {
     }
   }
 
-  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+elements=['"](.*?)['"]\s+href=['"](.*?)['"]\s*\/>//s) {
+  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+elements=['"](.*?)['"]\s+href=['"](.*?)['"].*?\/>//s) {
     my $attrName = $1;
     my $attrHref = "$base$3";
     my @elements = split(/,\s*/, $2);
@@ -191,7 +191,7 @@ sub readdefs {
     $attributes{$attrName}{""} = $attrHref;
   }
 
-  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\/>//s) {
+  while ($defs =~ s/<attribute\s+name=['"](.*?)['"]\s+href=['"](.*?)['"].*?\/>//s) {
     my $attrName = $1;
     my $attrHref = "$base$2";
 
@@ -212,7 +212,7 @@ sub readdefs {
 
   while ($defs =~ s/<elementcategory\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\s+elements=['"](.*?)['"]\/>//s) {
     my $cat = $1;
-    my $href = $2;
+    my $href = "$base$2";
     $elementCategories{$cat} = {
       href => $href,
       elements => [split(/,\s*/, $3)]
@@ -260,7 +260,7 @@ sub link {
         return "<a class='attr-name' href='$href'>'$name'</a>";
       }
     } elsif (defined $properties{$name}) {
-      return "<a class='property' href='$properties{$name}'>'$name'</a>";
+      return "<a class='property' href='$properties{$name}{href}'>'$name'</a>";
     }
     print STDERR "unknown element, attribute or property '$1'\n";
     return "<span class='xxx'>$text</span>";
@@ -290,7 +290,7 @@ sub link {
       print STDERR "unknown element '$1'\n";
       return "<span class='xxx'>$text</span>";
     }
-    return "<a class='property' href='$properties{$name}'>'$name'</a>";
+    return "<a class='property' href='$properties{$name}{href}'>'$name'</a>";
   } elsif ($text =~ /^'([^ ]*)\/([^ ]*)'$/) {
     my $eltname = $1;
     my $attrname = $2;
