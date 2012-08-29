@@ -529,113 +529,6 @@ images”</a> for how 'mask-repeat' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
-<h3 id="the-mask-attachment">The 'mask-attachment' property</h3>
-
-<table class="propdef">
-    <tr>
-      <th>Name:
-      <td><dfn>mask-attachment</dfn>
-    <tr>
-      <th><a href="#values">Value</a>:
-      <td><var>&lt;attachment&gt;</var>#
-    <tr>
-      <th>Initial:
-      <td>scroll
-    <tr>
-      <th>Applies to:
-      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
-    <tr>
-      <th>Inherited:
-      <td>no
-    <tr>
-      <th>Percentages:
-      <td>N/A
-    <tr>
-      <th>Media:
-      <td>visual
-    <tr>
-      <th>Computed value:
-      <td>as specified
-    <tr>
-      <th>Animatable:
-      <td>no
-</table>
-
-<p class=issue>The relevance of this feature needs to be prooved.
-The support for 'mask-attachment' may be removed for SVG.
-
-<p>If mask images are specified, this property specifies whether
-they are fixed with regard to the <em class="index">viewport</em>
-(<dfn>''fixed''</dfn>) or scroll along with the element (<dfn>''scroll''</dfn>)
-or its contents (<dfn>''local''</dfn>). The property's value is given as
-a comma-separated list of &lt;attachment&gt; keywords where
-
-<pre class=prod><dfn><var>&lt;attachment&gt;</var></dfn> = scroll | fixed | local</pre>
-
-<dl>
-  <dt><dfn>fixed</dfn></dt>
-    <dd>The mask is fixed with regard to the viewport. In paged
-      media where there is no viewport, a ''fixed'' background is fixed
-      with respect to the <a href="http://www.w3.org/TR/CSS21/page.html#page-box">page box</a>
-      and therefore replicated on every page.
-      <p class="note">Note that there is only one viewport per view.
-      Even if an element has a scrolling mechanism (see  the 'overflow'
-      property [[!CSS21]]), a ''fixed'' background doesn't move with the
-      element.
-  <dt><dfn>local</dfn></dt>
-    <dd>The mask is fixed with regard to the element's contents:
-      if the element has a scrolling mechanism, the mask scrolls
-      with the element's contents.
-  <dt><dfn>scroll</dfn></dt>
-    <dd>The mask is fixed with regard to the element itself and
-      does not scroll with its contents. (It is effectively attached
-      to the element's border.)</dd>
-</dl>
-
-<p>Even if the image is fixed, it is still only visible when it is in
-the <em class=index>mask painting area</em> of the element.
-
-<div class="example">
-<p>This example creates an infinite vertical band that remains
-“glued” to the viewport when the element is scrolled.
-
-<pre>
-body {
-  mask: url("pendant.gif");
-  mask-repeat: repeat-y;
-  mask-attachment: fixed;
-}
-</pre>
-</div>
-
-<p>User agents that do not support ''fixed'' masks (for
-example due to limitations of the hardware platform) should ignore
-declarations with the keyword ''fixed''.
-
-<div class="example">
-<p>Example for browsers that ignore the keyword ''fixed''.
-
-<pre>
-body {
-   /* For all UAs: */
-   mask: white url(paper.png) scroll;
-   /* For UAs that do fixed backgrounds: */
-   mask: white url(ledger.png) fixed;
-}
-h1 {
-   /* For all UAs: */
-   mask: silver;
-   /* For UAs that do fixed backgrounds: */
-   mask: url(stripe.png) fixed, white url(ledger.png) fixed;
-}
-</pre>
-</div>
-
-<p>See the section <a href="#layering">“Layering multiple mask
-images”</a> for how 'mask-attachment' interacts with other
-comma-separated mask properties to form each mask image
-layer.
-
 <h3 id="the-mask-position">The 'mask-position' property</h3>
 
 <table class="propdef">
@@ -803,7 +696,6 @@ body { mask: url("banner.jpeg") bottom }       /*  50% 100% */
   <pre>
 body {
   mask-image: url("logo.png");
-  mask-attachment: fixed;
   mask-position: 100% 100%;
   mask-repeat: no-repeat;
 }
@@ -855,7 +747,7 @@ layer.
       <td>no
 </table>
 
-<p class=issue>The relevance of this feature needs to be prooved.</p>
+<p class=issue>Right now the 'mask-clip' property always clips overflowing content. Another keyword could either disable clipping or allow to extend the clipping area to the boundary of all descendant elements.</p>
 
 <p>Determines the <dfn id="mask-painting-area">mask painting area</dfn>,
 which determines the area that is affected by the mask.
@@ -880,7 +772,7 @@ The syntax of the property is given with
     <span>content box.</span>
 </dl>
 
-<p class=note>Note that SVG elements without an associated CSS layout box don't have a ''border-box'' or ''padding-box'' and ''content-box'' is used as mask painting area instead.
+<p class=note>Note that SVG elements without an associated CSS layout box don't have a ''border-box'' or ''padding-box''. ''content-box'' is used as mask painting area instead.
 
 <p>See the section <a href="#layering">“Layering multiple mask
 images”</a> for how 'mask-clip' interacts with other
@@ -919,8 +811,6 @@ layer.
       <td>no
 </table>
 
-<p class=issue>The relevance of this feature needs to be prooved.</p>
-
 <p>For elements rendered as a single box, specifies the
 <dfn id="mask-positioning-area">mask positioning area</dfn>.
 For elements rendered as multiple boxes (e.g., inline boxes on several
@@ -939,11 +829,6 @@ operates on to determine the mask positioning area(s).
   <dt><dfn>''content-box''</dfn>
   <dd>The position is relative to the content box.
 </dl>
-
-<p>If the 'mask-attachment' value for this image is
-''fixed'', then this property has no effect: in this case the
-mask positioning area is the
-<a href="http://www.w3.org/TR/CSS21/visudet.html#containing-block-details">initial containing block</a> [[!CSS21]].
 
 <p class="note">Note that if 'mask-clip' is ''padding-box'',
 'mask-origin' is ''border-box'', 'mask-position' is
@@ -1276,7 +1161,7 @@ layer.
 </table>
 <p>Where</p>
 
-<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-image&gt;</var> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}</pre>
+<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-image&gt;</var> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;box&gt;{1,2}</pre>
 
 <pre class=prod><dfn>&lt;mask-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var></pre>
 
@@ -1875,8 +1760,6 @@ Values have the following meanings:
 
 <h2>Clipping paths</h2>
 
-<p class=issue>Note that this feature is on risc and may get dropped in a future version.</p>
-
 <p>The clipping path restricts the region to which paint can be applied. Conceptually, any parts of the drawing that lie outside of the region bounded by the currently active clipping path are not drawn. A clipping path can be thought of as a mask wherein those pixels outside the clipping path are black with an alpha value of zero and those pixels inside the clipping path are white with an alpha value of one (with the possible exception of anti-aliasing along the edge of the silhouette).
 
 <h3 id="the-clip-path">The 'clip-path' property</h3>
@@ -1912,7 +1795,7 @@ Values have the following meanings:
   </tr>
   <tr>
     <th>Computed value:</th>
-    <td>as specified, but with <a>&lt;funciri&gt;</a> values made absolute</td>
+    <td>as specified, but with <a>&lt;FuncIRI&gt;</a> values made absolute</td>
   </tr>
   <tr>
     <th><a>Animatable</a>:</th>
@@ -1930,6 +1813,8 @@ Values have the following meanings:
     A basic shape function as defined in CSS3 Exclusions. Percentage values are resolved against the <span class=index>bounding client rect</span>. (See [[!CSS3-EXCLUSIONS]].)
   </dd>
 </dl>
+
+<p class=issue>There is a proposal to let 'clip' shadow 'clip-path' or the other way around. 'clip' would apply to all HTML elements for basic shapes from the CSS Exclusion spec and &lt;clip-source&gt;, but just to absolute positioned elements for ''rect()''.
 
 <h3 id="the-clip-rule">The 'clip-rule' property</h3>
 
