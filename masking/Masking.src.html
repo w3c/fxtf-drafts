@@ -350,7 +350,7 @@ are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
 Where
 
-<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = <var>&lt;image&gt;</var> | none</pre>
+<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = [<var>&lt;image&gt;</var> | none] <var>&lt;mask-type&gt;</var></pre>
 
 <dl>
   <dt><dfn>&lt;image&gt;</dfn></dt>
@@ -360,6 +360,13 @@ Where
   <dt><dfn>''none''</dfn></dt>
   <dd>
     A value of ''none'' counts as an image layer but does not mask the element.
+  </dd>
+  <dt><var>&lt;mask-type&gt;</var></dt>
+  <dd>
+    A value of ''luminance'' indicates that the image layer is used as luminance mask. A value of ''alpha'' indicates
+    that the image layer is used as luminance mask. The initial value ''auto'' is calculated as ''alpha''. A value of
+    ''auto'' does not contribute to the computed style.
+    (See definition of <var>&lt;mask-type&gt;</var>).
   </dd>
 </dl>
 
@@ -765,18 +772,20 @@ The syntax of the property is given with
   <dt><dfn title="''border-box''!!'mask-clip' value">
       ''border-box''</dfn></dt>
   <dd>The mask is rectricted to (clipped to) the
-    <span>border box.</span>
+    <span>border box</span> respectively <span>painting box</span> for objects without associated layout box.
   <dt><dfn title="''padding-box''!!'mask-clip' value">
       ''padding-box''</dfn></dt>
   <dd>The mask is rectricted to (clipped to) the
     <span>padding box.</span>
   <dt><dfn title="''content-box''!!'mask-clip' value">
-      ''content-box''</dfn></dt>
+      ''content-box''</dfn></dt> respectively object bounding box [[!SVG11]] for objects without associated layout box.
   <dd>The mask is rectricted to (clipped to) the
     <span>content box.</span>
 </dl>
 
-<p class=note>Note that SVG elements without an associated CSS layout box don't have a ''border-box'' or ''padding-box''. ''content-box'' is used as mask painting area instead.
+<p class="note">Note that there is no corresponding box for
+''padding-box'' on objects without associated layout box
+and ''content-box'' is choosen instead.</p>
 
 <p>See the section <a href="#layering">“Layering multiple mask
 images”</a> for how 'mask-clip' interacts with other
@@ -829,18 +838,20 @@ operates on to determine the mask positioning area(s).
     ''100% 100%'' is the lower right corner.)
   <dt><dfn title="''border-box''!!'mask-origin' value">
       ''border-box''</dfn>
-  <dd>The position is relative to the border box.
+  <dd>The position is relative to the border box respectively <span>painting box</span> for objects without associated layout box.
   <dt><dfn>''content-box''</dfn>
-  <dd>The position is relative to the content box.
+  <dd>The position is relative to the content box respectively object bounding box [[!SVG11]] for objects without associated layout box.
 </dl>
+
+<p class="note">Note that there is no corresponding box for
+''padding-box'' on objects without associated layout box
+and ''content-box'' is choosen instead.</p>
 
 <p class="note">Note that if 'mask-clip' is ''padding-box'',
 'mask-origin' is ''border-box'', 'mask-position' is
 ''top left'' (the initial value), and the element has a
 non-zero border, then the top and left of the mask image will be
 clipped.
-
-<p class=note>Note that SVG elements without an associated CSS layout box don't have a ''border-box'' or ''padding-box'' and ''content-box'' is used as mask positioning area instead.
 
 <p>See the section <a href="#layering">“Layering multiple mask
 images”</a> for how 'mask-origin' interacts with other
@@ -1064,65 +1075,6 @@ images”</a> for how 'mask-size' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
-<h3 id="the-mask-type">The 'mask-type' property</h3>
-
-<table class="propdef">
-    <tr>
-      <th>Name:
-      <td><dfn>mask-type</dfn>
-    <tr>
-      <th><a href="#values">Value</a>:
-      <td><var>&lt;mask-type&gt;</var>
-    <tr>
-      <th>Initial:
-      <td>auto
-    <tr>
-      <th>Applies to:
-      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
-    <tr>
-      <th>Inherited:
-      <td>no
-    <tr>
-      <th>Percentages:
-      <td>N/A
-    <tr>
-      <th>Media:
-      <td>visual
-    <tr>
-      <th>Computed value:
-      <td>as specified
-    <tr>
-      <th>Animatable:
-      <td>yes except keyword values
-</table>
-
-<p>The mask type determines which of the methods described in <a
-href="#MaskValues">Calculating mask values</a> should be used for calculating
-mask values from the mask source / the layer of mask images. Where
-
-<pre class=prod><dfn><var>&lt;mask-type&gt;</var></dfn> = luminance | alpha | auto</pre>
-
-<p>Values have the following meanings:
-
-<dl>
-  <dt><dfn>''luminance''</dfn></dt>
-  <dd>Indicates that the luminance values of the mask should be used.</dd>
-
-  <dt><dfn>''alpha''</dfn></dt>
-  <dd>Indicates that the alpha values of the mask should be used.</dd>
-
-  <dt><dfn>''auto''</dfn></dt>
-  <dd>If the mask references a <a>'mask element'</a> element, the method used for calculating the
-    mask values is determined by the 'maskType' attribute on the <a>'mask element'</a> element.
-    Otherwise, the alpha values of the mask should be used.
-    <p class=issue>Should the default be ''luminance'' instead?</dd>
-</dl>
-
-<p>See the section <a href="#layering">“Layering multiple mask
-images”</a> for how 'mask-type' interacts with other
-comma-separated mask properties to form each mask image
-layer.
-
 <h3 id="mask-property">The 'mask' property</h3>
 
 <table class="propdef">
@@ -1132,7 +1084,7 @@ layer.
   </tr>
   <tr>
     <th>Value:</th>
-    <td>[ <var>&lt;mask-source&gt;</var> | <var>&lt;mask-layer&gt;</var># ] <var>&lt;mask-type&gt;</var>?</td>
+    <td><var>&lt;mask-source&gt;</var> | <var>&lt;mask-layer&gt;</var>#</td>
   </tr>
   <tr>
     <th>Initial:</th>
@@ -1222,6 +1174,8 @@ layer.
   </ol>
 </div>
 
+<p class=issue>Make clear that the individual properties for the short hand just apply on 'mask-image'</p>
+
 <p>
 If no <var>&lt;mask-type&gt;</var> is provided, the value <span
 class="prop-value">auto</span> is used.
@@ -1236,6 +1190,52 @@ property takes precedence.
 </p>
 
 <p>An invalid or non-existent mask source is ignored and no masking is applied.
+
+<h3 id="the-mask-type">The 'mask-type' property</h3>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-type</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;mask-type&gt;</var>
+    <tr>
+      <th>Initial:
+      <td>luminance
+    <tr>
+      <th>Applies to:
+      <td><a>'mask element'</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified
+    <tr>
+      <th>Animatable:
+      <td>yes except keyword values
+</table>
+
+<p>The mask type determines if the content of the <a>'mask element'</a> is used as luminance mask or alpha mask. Where
+
+<pre class=prod><dfn><var>&lt;mask-type&gt;</var></dfn> = luminance | alpha</pre>
+
+<p>Values have the following meanings:
+
+<dl>
+  <dt><dfn>''luminance''</dfn></dt>
+  <dd>Indicates that the luminance values of the mask should be used.</dd>
+
+  <dt><dfn>''alpha''</dfn></dt>
+  <dd>Indicates that the alpha values of the mask should be used.</dd>
+</dl>
 
 <h3 id="MaskElement">The <span class="element-name">'mask'</span> element</h3>
 
