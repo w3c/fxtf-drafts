@@ -9,11 +9,11 @@
   <link href="http://purl.org/dc/terms/" rel=schema.DC>
   <meta content="CSS Masking" name=DC.title>
   <meta content=text name=DC.type>
-  <meta content=2012-09-17 name=DC.issued>
+  <meta content=2012-09-19 name=DC.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=DC.creator>
   <meta content=W3C name=DC.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20120917/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20120919/"
    name=DC.identifier>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
    rel=DC.rights>
@@ -43,7 +43,7 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 17 September
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 19 September
     2012</h2>
 
    <dl>
@@ -51,7 +51,7 @@
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20120917/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20120919/-->
 
     <dt>Latest version:
 
@@ -609,7 +609,7 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
   <pre class=prod><var><dfn
    id=ltmask-imagegt>&lt;mask-image&gt;</dfn></var> = [<a
    href="#ltimagegt"><var>&lt;image&gt;</var></a> | none] <a
-   href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a></pre>
+   href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>?</pre>
 
   <dl>
    <dt><dfn id=ltimagegt>&lt;image&gt;</dfn>
@@ -625,14 +625,12 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
    <dt><a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>
 
    <dd> A value of ‘<a href="#luminance"><code
-    class=css>luminance</code></a>’ indicates that the image layer is used
-    as luminance mask. A value of ‘<a href="#alpha"><code
-    class=css>alpha</code></a>’ indicates that the image layer is used as
-    luminance mask. The initial value ‘<code class=css>auto</code>’ is
-    calculated as ‘<a href="#alpha"><code class=css>alpha</code></a>’. A
-    value of ‘<code class=css>auto</code>’ does not contribute to the
-    computed style. (See definition of <a
-    href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>).
+    class=css>luminance</code></a>’ indicates that the luminance values of
+    the mask image should be used as the mask values. No value or a value of
+    ‘<a href="#alpha"><code class=css>alpha</code></a>’ indicates that
+    the alpha values of the mask image should be used as the mask values.
+    (See definition of <a
+    href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>.)
   </dl>
 
   <p>A mask image that is empty (zero width or zero height), that fails to
@@ -1177,6 +1175,10 @@ body {
    and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
    is choosen instead.
 
+  <p class=issue>The SVG WG considers to add a value ‘<code
+   class=css>filter-box</code>’. The dimension of this box needs to be
+   defined by Filter Effects.
+
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-clip"><code
    class=property>mask-clip</code></a>’ interacts with other
@@ -1285,6 +1287,10 @@ body {
    images”</a> for how ‘<a href="#mask-origin"><code
    class=property>mask-origin</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
+
+  <p class=issue>The SVG WG considers to add a value ‘<code
+   class=css>filter-box</code>’. The dimension of this box needs to be
+   defined by Filter Effects.
 
   <h3 id=the-mask-size><span class=secno>6.6. </span>The ‘<a
    href="#mask-size"><code class=property>mask-size</code></a>’ property</h3>
@@ -2961,6 +2967,10 @@ div {
     rect</a>. (See <a href="#CSS3-EXCLUSIONS"
     rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>.)
   </dl>
+
+  <p class=issue>For SVG percentage values might be resolved according to the
+   painted bounding box and not bounding client rect (alias object bounding
+   box).
 
   <p class=issue>There is a proposal to let ‘<code
    class=property>clip</code>’ shadow ‘<a href="#clip-path"><code

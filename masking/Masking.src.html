@@ -350,7 +350,7 @@ are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
 Where
 
-<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = [<var>&lt;image&gt;</var> | none] <var>&lt;mask-type&gt;</var></pre>
+<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = [<var>&lt;image&gt;</var> | none] <var>&lt;mask-type&gt;</var>?</pre>
 
 <dl>
   <dt><dfn>&lt;image&gt;</dfn></dt>
@@ -363,10 +363,9 @@ Where
   </dd>
   <dt><var>&lt;mask-type&gt;</var></dt>
   <dd>
-    A value of ''luminance'' indicates that the image layer is used as luminance mask. A value of ''alpha'' indicates
-    that the image layer is used as luminance mask. The initial value ''auto'' is calculated as ''alpha''. A value of
-    ''auto'' does not contribute to the computed style.
-    (See definition of <var>&lt;mask-type&gt;</var>).
+    A value of ''luminance'' indicates that the luminance values of the mask image should be used as the mask values.
+    No value or a value of ''alpha'' indicates that the alpha values of the mask image should be used as the mask
+    values. (See definition of <var>&lt;mask-type&gt;</var>.)
   </dd>
 </dl>
 
@@ -787,6 +786,9 @@ The syntax of the property is given with
 ''padding-box'' on objects without associated layout box
 and ''content-box'' is choosen instead.</p>
 
+<p class="issue">The SVG WG considers to add a value ''filter-box''. The dimension of this box needs to be defined by Filter
+Effects.</p>
+
 <p>See the section <a href="#layering">“Layering multiple mask
 images”</a> for how 'mask-clip' interacts with other
 comma-separated mask properties to form each mask image
@@ -858,6 +860,8 @@ images”</a> for how 'mask-origin' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
+<p class="issue">The SVG WG considers to add a value ''filter-box''. The dimension of this box needs to be defined by Filter
+Effects.</p>
 
 <h3 id="the-mask-size">The 'mask-size' property</h3>
 
@@ -1817,6 +1821,8 @@ Values have the following meanings:
     A basic shape function as defined in CSS3 Exclusions. Percentage values are resolved against the <span class=index>bounding client rect</span>. (See [[!CSS3-EXCLUSIONS]].)
   </dd>
 </dl>
+
+<p class=issue>For SVG percentage values might be resolved according to the painted bounding box and not bounding client rect (alias object bounding box).</p> 
 
 <p class=issue>There is a proposal to let 'clip' shadow 'clip-path' or the other way around. 'clip' would apply to all HTML elements for basic shapes from the CSS Exclusion spec and &lt;clip-source&gt;, but just to absolute positioned elements for ''rect()''.
 
