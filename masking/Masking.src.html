@@ -348,9 +348,9 @@ were multiplied with the mask's resulting mask values.</p>
 <p>This property sets the mask image(s) of an element. Images
 are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
-Where
+Where:
 
-<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = [<var>&lt;image&gt;</var> | none] <var>&lt;mask-type&gt;</var>?</pre>
+<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = [<var>&lt;image&gt;</var> | none] [ alpha | luminance ]?</pre>
 
 <dl>
   <dt><dfn>&lt;image&gt;</dfn></dt>
@@ -361,13 +361,24 @@ Where
   <dd>
     A value of ''none'' counts as an image layer but does not mask the element.
   </dd>
-  <dt><var>&lt;mask-type&gt;</var></dt>
+  <dt><dfn>''alpha''</dfn></dt>
   <dd>
-    A value of ''luminance'' indicates that the luminance values of the mask image should be used as the mask values.
-    No value or a value of ''alpha'' indicates that the alpha values of the mask image should be used as the mask
-    values. (See definition of <var>&lt;mask-type&gt;</var>.)
+    A value of ''alpha'' indicates that the alpha values of the mask
+    image should be used as the mask values.
+    See <a href="#MaskValues">Calculating mask values</a>.</p>
+  </dd>
+  <dt><dfn>''luminance''</dfn></dt>
+  <dd>
+    A value of ''luminance'' indicates that the luminance values of the mask
+    image should be used as the mask values.
+    See <a href="#MaskValues">Calculating mask values</a>.</p>
   </dd>
 </dl>
+
+<p>
+If neither ''luminance'' or ''alpha'' is specified, a value of ''alpha'' is
+used.
+</p>
 
 <p>A mask image that is empty
 (zero width or zero height), that
@@ -519,8 +530,7 @@ body {
   <pre>
 body {
   background-color: blue;
-  mask-image: url(dot-mask.png);
-  mask-type: luminance;
+  mask-image: url(dot-mask.png) luminance;
   mask-repeat: space;
 }
 </pre>
@@ -1180,19 +1190,6 @@ layer.
 
 <p class=issue>Make clear that the individual properties for the short hand just apply on 'mask-image'</p>
 
-<p>
-If no <var>&lt;mask-type&gt;</var> is provided, the value <span
-class="prop-value">auto</span> is used.
-</p>
-
-<p>
-If a <var>&lt;mask-type&gt;</var> other than <span
-class="prop-value">auto</span> is specified and the
-<var>&lt;mask-source&gt;</var> refers to a <a>'mask element'</a> element with
-a <a>'mask/maskType'</a> attribute, the mask type specified on the 'mask'
-property takes precedence.
-</p>
-
 <p>An invalid or non-existent mask source is ignored and no masking is applied.
 
 <h3 id="the-mask-type">The 'mask-type' property</h3>
@@ -1203,7 +1200,7 @@ property takes precedence.
       <td><dfn>mask-type</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var>&lt;mask-type&gt;</var>
+      <td>luminance | alpha</var>
     <tr>
       <th>Initial:
       <td>luminance
@@ -1227,9 +1224,9 @@ property takes precedence.
       <td>yes except keyword values
 </table>
 
-<p>The mask type determines if the content of the <a>'mask element'</a> is used as luminance mask or alpha mask. Where
-
-<pre class=prod><dfn><var>&lt;mask-type&gt;</var></dfn> = luminance | alpha</pre>
+<p>The 'mask-type' property defines whether the content of the
+<a>'mask element'</a> is treated as as luminance mask or alpha mask, as
+described in <a href="#MaskValues">Calculating mask values</a>.</p>
 
 <p>Values have the following meanings:
 
@@ -1300,27 +1297,6 @@ property takes precedence.
         specified.<br />
          <span class="anim-target">Animatable:
         yes.</span></dd>
-        <dt id="MaskElementMaskTypeAttribute"><span
-        class="adef">maskType</span> =
-        "<em>luminance</em> | <em>alpha</em>"</dt>
-        <dd>
-         Defines the procedure used for calculating mask values from the
-        contents of the mask as described in <a href="#MaskValues">Calculating
-        mask values</a>.
-        <br />
-        If attribute <a>'mask/maskType'</a> is not specified,
-        then the effect is as if a value of <span
-        class="attr-value">'luminance'</span> were
-        specified.<br />
-         <span class="anim-target">Animatable:
-        yes.</span>
-        <div class="annotation">
-          Although authors may find <span class="attr-value">'alpha'</span> more
-          intuitive, the default value is <span
-          class="attr-value">'luminance'</span> to provide backwards
-          compatibility with SVG 1.1.
-        </div>
-        </dd>
         <dt id="MaskElementXAttribute"><span
         class="adef">x</span> = "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"</dt>
         <dd>The x-axis coordinate of one corner of the rectangle

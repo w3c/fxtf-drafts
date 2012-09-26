@@ -9,11 +9,11 @@
   <link href="http://purl.org/dc/terms/" rel=schema.DC>
   <meta content="CSS Masking" name=DC.title>
   <meta content=text name=DC.type>
-  <meta content=2012-09-19 name=DC.issued>
+  <meta content=2012-09-26 name=DC.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=DC.creator>
   <meta content=W3C name=DC.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20120919/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20120926/"
    name=DC.identifier>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
    rel=DC.rights>
@@ -43,7 +43,7 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 19 September
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 26 September
     2012</h2>
 
    <dl>
@@ -51,7 +51,7 @@
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20120919/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20120926/-->
 
     <dt>Latest version:
 
@@ -604,12 +604,11 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
 
   <p>This property sets the mask image(s) of an element. Images are drawn
    with the first specified one on top (closest to the user) and each
-   subsequent image behind the previous one. Where
+   subsequent image behind the previous one. Where:
 
   <pre class=prod><var><dfn
    id=ltmask-imagegt>&lt;mask-image&gt;</dfn></var> = [<a
-   href="#ltimagegt"><var>&lt;image&gt;</var></a> | none] <a
-   href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>?</pre>
+   href="#ltimagegt"><var>&lt;image&gt;</var></a> | none] [ alpha | luminance ]?</pre>
 
   <dl>
    <dt><dfn id=ltimagegt>&lt;image&gt;</dfn>
@@ -622,16 +621,24 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
    <dd> A value of ‘<a href="#none"><code class=css>none</code></a>’
     counts as an image layer but does not mask the element.
 
-   <dt><a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>
+   <dt><dfn id=alpha>‘<code class=css>alpha</code>’</dfn>
 
-   <dd> A value of ‘<a href="#luminance"><code
+   <dd> A value of ‘<a href="#alpha0"><code class=css>alpha</code></a>’
+    indicates that the alpha values of the mask image should be used as the
+    mask values. See <a href="#MaskValues">Calculating mask values</a>.
+
+   <dt><dfn id=luminance>‘<code class=css>luminance</code>’</dfn>
+
+   <dd> A value of ‘<a href="#luminance0"><code
     class=css>luminance</code></a>’ indicates that the luminance values of
-    the mask image should be used as the mask values. No value or a value of
-    ‘<a href="#alpha"><code class=css>alpha</code></a>’ indicates that
-    the alpha values of the mask image should be used as the mask values.
-    (See definition of <a
-    href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>.)
+    the mask image should be used as the mask values. See <a
+    href="#MaskValues">Calculating mask values</a>.
   </dl>
+
+  <p> If neither ‘<a href="#luminance0"><code
+   class=css>luminance</code></a>’ or ‘<a href="#alpha0"><code
+   class=css>alpha</code></a>’ is specified, a value of ‘<a
+   href="#alpha0"><code class=css>alpha</code></a>’ is used.
 
   <p>A mask image that is empty (zero width or zero height), that fails to
    download, is non-existent or that cannot be displayed (e.g., because it is
@@ -1681,18 +1688,6 @@ div {
    just apply on ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’
 
-  <p> If no <a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a> is
-   provided, the value <span class=prop-value>auto</span> is used.
-
-  <p> If a <a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a> other
-   than <span class=prop-value>auto</span> is specified and the <a
-   href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> refers to a <a
-   class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element with a <span class=xxx>‘<code
-   class=css>mask/maskType</code>’</span> attribute, the mask type
-   specified on the ‘<a href="#mask"><code
-   class=property>mask</code></a>’ property takes precedence.
-
   <p>An invalid or non-existent mask source is ignored and no masking is
    applied.
 
@@ -1709,7 +1704,7 @@ div {
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td><a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>
+     <td>luminance | alpha
 
     <tr>
      <th>Initial:
@@ -1748,21 +1743,20 @@ div {
      <td>yes except keyword values
   </table>
 
-  <p>The mask type determines if the content of the <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> is used as
-   luminance mask or alpha mask. Where
-
-  <pre class=prod><dfn
-   id=ltmask-typegt><var>&lt;mask-type&gt;</var></dfn> = luminance | alpha</pre>
+  <p>The ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
+   property defines whether the content of the <a class=element-name
+   href="#MaskElement">‘<code class=property>mask</code>’</a> is treated
+   as as luminance mask or alpha mask, as described in <a
+   href="#MaskValues">Calculating mask values</a>.
 
   <p>Values have the following meanings:
 
   <dl>
-   <dt><dfn id=luminance>‘<code class=css>luminance</code>’</dfn>
+   <dt><dfn id=luminance0>‘<code class=css>luminance</code>’</dfn>
 
    <dd>Indicates that the luminance values of the mask should be used.
 
-   <dt><dfn id=alpha>‘<code class=css>alpha</code>’</dfn>
+   <dt><dfn id=alpha0>‘<code class=css>alpha</code>’</dfn>
 
    <dd>Indicates that the alpha values of the mask should be used.
   </dl>
@@ -2190,25 +2184,6 @@ div {
      effect is as if a value of <span class=attr-value>‘<code
      class=property>userSpaceOnUse</code>’</span> were specified.<br>
      <span class=anim-target>Animatable: yes.</span>
-
-    <dt id=MaskElementMaskTypeAttribute><span class=adef>maskType</span> =
-     "<a href="#luminance"><em>luminance</em></a> | <a
-     href="#alpha"><em>alpha</em></a>"
-
-    <dd> Defines the procedure used for calculating mask values from the
-     contents of the mask as described in <a href="#MaskValues">Calculating
-     mask values</a>. <br>
-     If attribute <span class=xxx>‘<code
-     class=css>mask/maskType</code>’</span> is not specified, then the
-     effect is as if a value of <a class=attr-value
-     href="#luminance">‘<code class=property>luminance</code>’</a> were
-     specified.<br>
-     <span class=anim-target>Animatable: yes.</span>
-     <div class=annotation> Although authors may find <a class=attr-value
-      href="#alpha">‘<code class=property>alpha</code>’</a> more
-      intuitive, the default value is <a class=attr-value
-      href="#luminance">‘<code class=property>luminance</code>’</a> to
-      provide backwards compatibility with SVG 1.1.</div>
 
     <dt id=MaskElementXAttribute><span class=adef>x</span> =
      "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"
@@ -3624,8 +3599,9 @@ div {
   <!--begin-index-->
 
   <ul class=indexlist>
-   <li>‘<a href="#alpha"><code class=css>alpha</code></a>’, <a
-    href="#alpha" title="''alpha''"><strong>6.8.</strong></a>
+   <li>‘<a href="#alpha0"><code class=css>alpha</code></a>’, <a
+    href="#alpha" title="''alpha''"><strong>6.1.</strong></a>, <a
+    href="#alpha0" title="''alpha''"><strong>6.8.</strong></a>
 
    <li>‘<code class=css>auto</code>’
     <ul>
@@ -3740,8 +3716,9 @@ div {
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="local coordinate system"><strong>4.</strong></a>
 
-   <li>‘<a href="#luminance"><code class=css>luminance</code></a>’, <a
-    href="#luminance" title="''luminance''"><strong>6.8.</strong></a>
+   <li>‘<a href="#luminance0"><code class=css>luminance</code></a>’, <a
+    href="#luminance" title="''luminance''"><strong>6.1.</strong></a>, <a
+    href="#luminance0" title="''luminance''"><strong>6.8.</strong></a>
 
    <li>mask, <a href="#MaskProperty" title=mask><strong>6.7.</strong></a>, <a
     href="#mask" title=mask><strong>6.9.</strong></a>, <a href="#mask0"
@@ -3819,9 +3796,6 @@ div {
 
    <li>mask source, <a href="#mask-source"
     title="mask source"><strong>4.</strong></a>
-
-   <li><a href="#ltmask-typegt"><var>&lt;mask-type&gt;</var></a>, <a
-    href="#ltmask-typegt" title="&lt;mask-type&gt;"><strong>6.8.</strong></a>
 
    <li>mask-type, <a href="#mask-type"
     title=mask-type><strong>6.8.</strong></a>
@@ -4232,7 +4206,7 @@ div {
     <tr>
      <th><a class=property href="#mask-type">mask-type</a>
 
-     <td>&lt;mask-type&gt;
+     <td>luminance | alpha
 
      <td>luminance
 
