@@ -2,11 +2,23 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang=en>
- <head profile="http://www.w3.org/2006/03/hcard">
+ <head
+  profile="http://dublincore.org/documents/2008/08/04/dc-html/ http://www.w3.org/2006/03/hcard">
   <title>Compositing and Blending 1.0</title>
+
+  <link href="http://purl.org/dc/terms/" rel=schema.DC>
+  <meta content="Compositing and Blending 1.0" name=DC.title>
+  <meta content=text name=DC.type>
+  <meta content=2012-09-26 name=DC.issued>
+  <meta content="Rik Cabanier" name=DC.creator>
+  <meta content="Nikos Andronikos" name=DC.creator>
+  <meta content=W3C name=DC.publisher>
+  <meta content="http://www.w3.org/TR/2012/ED-compositing-20120926/"
+   name=DC.identifier>
+  <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
+   rel=DC.rights>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
-
   <style type="text/css">
   
   /* Alternate stylesheet fonts are here because in some browsers (Opera 11.5) */
@@ -208,9 +220,9 @@
           }
        </style>
   <link href="https://www.w3.org/StyleSheets/TR/W3C-ED.css" rel=stylesheet
-  type="text/css">
+   type="text/css">
   <link href="style/alternate-spec-style.css" id=st rel=stylesheet
-  title="alternate spec style" type="text/css">
+   title="alternate spec style" type="text/css">
 
  <body>
   <div class=head id=div-head> <!--begin-logo-->
@@ -219,20 +231,19 @@
 
    <h1>Compositing and Blending 1.0</h1>
 
-   <h2 class="no-num no-toc" id=august-2012>14 August 2012</h2>
+   <h2 class="no-num no-toc" id=september-2012>26 September 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-compositing-20120815/-->
+     <!--http://www.w3.org/TR/2012/WD-compositing-20120926/-->
 
     <dt>Latest version:
 
     <dd> <a
      href="http://www.w3.org/TR/compositing/">http://www.w3.org/TR/compositing/</a>
-     
 
     <dt>Editors:
 
@@ -514,9 +525,9 @@
         class=prop-name>‘<code class=property>blend-mode</code>’</span>
         property</a>
 
-       <li><a href="#enable-background"><span class=secno>7.3.3. </span>The
-        <span class=prop-name>‘<code
-        class=property>isolation</code>’</span> property</a>
+       <li><a href="#isolation"><span class=secno>7.3.3. </span>The <span
+        class=prop-name>‘<code class=property>isolation</code>’</span>
+        property</a>
 
        <li><a href="#knock-out"><span class=secno>7.3.4. </span>The <span
         class=prop-name>‘<code class=property>knock-out</code>’</span>
@@ -547,12 +558,6 @@
        <li><a href="#text-blend-mode"><span class=secno>7.4.5. </span>The
         <span class=prop-name>‘<code
         class=property>foreground-blend-mode</code>’</span> property</a>
-
-       <li><a href="#background-alpha-compositing-v2"><span
-        class=secno>7.4.6. </span>Alternate proposal</a>
-
-       <li><a href="#borders-issue"><span class=secno>7.4.7. </span>blending
-        and compositing on borders</a>
       </ul>
     </ul>
 
@@ -706,7 +711,7 @@ Co = co / αo
    <p style="text-align:center"><img
     alt="Simple box showing alpha compositing" src="examples/simple_box.svg">
     <br>
-    Figure 1</p>
+    Figure 1
 
    <p> Figure 1 describes the most basic case. It consists of 1 shape that is
     filled with a solid color (α = 1). The shape is composited with an empty
@@ -730,10 +735,10 @@ co = RGB(1,0,0)
   <div class=example>
    <p style="text-align:center"><img alt="simple shape"
     src="examples/two_box.svg"> <br>
-    Figure 2</p>
+    Figure 2
 
    <p> Figure 2 is a more complex example. There is no transparency, but the
-    2 shapes intersect.</p>
+    2 shapes intersect.
 
    <p> Applying the compositing formula in the area of intersection, gives:
 
@@ -767,10 +772,10 @@ Co = RGB(0, 0, 1)
    <p style="text-align:center"><img
     alt="interaction of a solid box with a transparent box on top"
     src="examples/two_box_transparency.svg"> <br>
-    Figure 3</p>
+    Figure 3
 
    <p> Figure 3 shows an example where the shape has some transparency, but
-    the <a href="#backdrop">backdrop</a> is fully opaque.</p>
+    the <a href="#backdrop">backdrop</a> is fully opaque.
 
    <p> Applying the compositing formula in the area of intersection, gives:
 
@@ -802,10 +807,10 @@ Co = RGB(0.5, 0, 0.5)
   <div class=example>
    <p style="text-align:center"><img alt="interaction of 2 transparent boxes"
     src="examples/two_box_transparency_both.svg"> <br>
-    Figure 4</p>
+    Figure 4
 
    <p> Figure 4 shows an example where both the shape and the <a
-    href="#backdrop">backdrop</a> are transparent.</p>
+    href="#backdrop">backdrop</a> are transparent.
 
    <p> Applying the compositing formula in the area of intersection, gives:
 
@@ -876,21 +881,20 @@ Co = αs x Fa x Cs + αb x Fb x Cb
    <p style="text-align:center"><img
     alt="example of a simple backdrop calculation"
     src="examples/simple_backdrop.svg"> <br>
-    Figure 5</p>
+    Figure 5
 
    <p> Figure 5 has 2 simple shapes. The backdrop for the blue shape includes
     the bottom right corner of the red shape . The dotted line shows the area
-    that is examined during compositing of the blue shape.</p>
+    that is examined during compositing of the blue shape.
   </div>
 
   <div class=example>
    <p style="text-align:center"><img alt="example of a backdrop with alpha"
     src="examples/simple_backdrop_alpha.svg"> <br>
-    Figure 6</p>
+    Figure 6
 
    <p> In figure 6, the shape in the backdrop has an alpha value. The alpha
     value of the backdrop shape is preserved when the backdrop is calculated.
-    </p>
   </div>
 
   <h2 id=groups><span class=secno>4. </span>Compositing Groups</h2>
@@ -970,7 +974,7 @@ Co = αs x Fa x Cs + αb x Fb x Cb
 
   <div class=example>
    <p style="text-align:center"><img alt="example of a knockout group"
-    src="examples/knockout.png"></p>
+    src="examples/knockout.png">
   </div>
 
   <p> The above example demonstrates two versions of a group containing three
@@ -992,7 +996,6 @@ Co = αs x Fa x Cs + αb x Fb x Cb
    The page group is composited with a backdrop color defined by the User
    Agent. Typically this will be white with 100% opacity.<br>
    The page group may be used as an element in another graphical composition.
-   
 
   <p> For example, <br>
    an SVG file contains a red object at 50% opacity, <br>
@@ -1057,7 +1060,7 @@ co = RGB(255, 127, 127)
   <div class=figure>
    <p style="text-align:center"><img
     alt="overview of the regions affected by porter duff"
-    src="examples/PD_regions.svg"></p>
+    src="examples/PD_regions.svg">
   </div>
 
   <p>The contribution from each region to the final pixel color is defined by
@@ -1182,7 +1185,6 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
   <p>Only the destination will be present.
 
   <p><img alt="example of porter duff destination" src="examples/PD_dst.svg">
-   
 
   <pre>
     Fa = 0; Fb = 1
@@ -1434,7 +1436,7 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     on top of a set of green rectangles that have different levels of
     opacity.<br>
     Note how the top rectangle shifts more toward red as the opacity of the
-    <a href="#backdrop">backdrop</a> lowers.</p>
+    <a href="#backdrop">backdrop</a> lowers.
   </div>
 
   <p> The following formula gives the color value in the area where the
@@ -1651,7 +1653,6 @@ with
 </pre>
 
   <p><img alt="example of difference blending" src="examples/difference.png">
-   
 
   <h4 id=blendingexclusion><span class=secno>6.1.12. </span>‘<code
    class=property>exclusion</code>’ blend mode</h4>
@@ -1746,7 +1747,6 @@ components having the minimum, middle, and maximum values upon entry to the func
 </pre>
 
   <p><img alt="example of saturation blending" src="examples/saturation.png">
-   
 
   <h4 id=blendingcolor><span class=secno>6.2.3. </span>‘<code
    class=property>color</code>’ blend mode</h4>
@@ -1774,7 +1774,6 @@ components having the minimum, middle, and maximum values upon entry to the func
 </pre>
 
   <p><img alt="example of luminosity blending" src="examples/luminosity.png">
-   
 
   <h3 id=isolationblending><span class=secno>6.3. </span>Effect of group
    isolation on blending</h3>
@@ -1979,14 +1978,15 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
-  <h4 id=enable-background><span class=secno>7.3.3. </span>The <span
+  <h4 id=isolation><span class=secno>7.3.3. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
    property</h4>
 
   <p> Defines whether a group is isolated or not.<br>
    When a group is isolated, the group's elements will not look at content
    outside that group when calculating the backdrop.<br>
-   The default behavior is for groups to be non-isolated. <br>
+   The default behavior is for groups to be non-isolated. Certain operations
+   such as 3D transforms will cause a group to be isolated.<br>
    This behavior is described in more detail in <a
    href="#isolatedgroups">Isolated Gropus</a>.
 
@@ -2002,12 +2002,12 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> accumulate | isolate
+        <td> auto | isolate
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>accumulate
+        <td>auto
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2445,38 +2445,6 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=background-alpha-compositing-v2><span class=secno>7.4.6.
-   </span>Alternate proposal</h4>
-
-  <p> To cut down on the number of new keywords, we could extend blend-mode
-   to take the following additional parameters:
-
-  <dl>
-   <dt>box-shadow
-
-   <dd>list of blendmodes that target each shadow
-
-   <dt>background
-
-   <dd>list of blendmodes that target each background layer
-
-   <dt>text-shadow
-
-   <dd>list of blendmodes that target each text shadow
-
-   <dt>foreground
-
-   <dd>blendmode that targets the text and nested elements
-  </dl>
-
-  <p>A possible drawback is that there are no other keywords that target all
-   these layers at once.
-
-  <h4 id=borders-issue><span class=secno>7.4.7. </span>blending and
-   compositing on borders</h4>
-
-  <p> Is there a need to target this part of the element?
-
   <h2 id=canvascompositingandblending><span class=secno>8. </span>Specifying
    Compositing and Blending in Canvas</h2>
 
@@ -2514,7 +2482,6 @@ shadow-alpha-compositing would set the compositing mode of the shadow (the defau
 shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
 </p>
 -->
-   
 
   <h2 id=security><span class=secno>9. </span>Security issues with
    compositing and blending</h2>
@@ -2549,7 +2516,6 @@ shadow-blend-mode would set the blend operation on the shadow (the default is 'n
     Namespace-based Validation Dispatching Language — NVDL. ISO/IEC FCD
     19757-4</strong>, See <a
     href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/</a>
-    
 
    <dt id=ref-PORTERDUFF><strong class=normref>[PORTERDUFF]</strong>
 
@@ -2572,7 +2538,6 @@ shadow-blend-mode would set the blend operation on the shadow (the default is 'n
    <dd><strong>Scalable Vector Graphics (SVG) 1.1 Specification</strong>,
     Dean Jackson editor, W3C, 14 January 2003 (Recommendation). See <a
     href="http://www.w3.org/TR/2003/REC-SVG11-20030114/">http://www.w3.org/TR/2003/REC-SVG11-20030114/</a>
-    
 
    <dt id=ref-svgt12><strong class=normref>[SVGT12]</strong>
 
@@ -2580,7 +2545,6 @@ shadow-blend-mode would set the blend operation on the shadow (the default is 'n
     Specification</strong>, Dean Jackson editor, W3C, 22 December 2008
     (Recommendation). See <a
     href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/">http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/</a>
-    
 
    <dt id=ref-filters10><strong class=normref>[FILTER-EFFECTS]</strong>
 
@@ -2595,5 +2559,4 @@ shadow-blend-mode would set the blend operation on the shadow (the default is 'n
    <dd><strong>HTML5</strong>, Ian Hickson editor, Google, 10 June 2008
     (Working Draft). See <a
     href="http://www.w3.org/TR/2008/WD-html5-20080610/">http://www.w3.org/TR/2008/WD-html5-20080610/</a>
-    
   </dl>

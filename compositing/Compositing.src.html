@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">14 August 2012</h2>
+<h2 class="no-num no-toc">26 September 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -1285,11 +1285,11 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 </dl>
 </div>
 
-<h4 id="enable-background">The <span class="prop-name">'isolation'</span> property</h4>
+<h4 id="isolation">The <span class="prop-name">'isolation'</span> property</h4>
 <p>
 Defines whether a group is isolated or not.<br />
 When a group is isolated, the group's elements will not look at content outside that group when calculating the backdrop.<br />
-The default behavior is for groups to be non-isolated. <br/>
+The default behavior is for groups to be non-isolated. Certain operations such as 3D transforms will cause a group to be isolated.<br/>
 This behavior is described in more detail in <a href="#isolatedgroups">Isolated Gropus</a>.
 </p>
 
@@ -1302,11 +1302,11 @@ This behavior is described in more detail in <a href="#isolatedgroups">Isolated 
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> accumulate | isolate  </td>
+            <td> auto | isolate  </td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
-            <td>accumulate</td>
+            <td>auto</td>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
@@ -1649,27 +1649,6 @@ as follows:</p>
 <pre>
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
-
-<h4 id="background-alpha-compositing-v2">Alternate proposal</h4>
-<p>
-To cut down on the number of new keywords, we could extend blend-mode to take the following additional parameters:
-<dl>
-<dt>box-shadow</dt>
-<dd>list of blendmodes that target each shadow</dd>
-<dt>background</dt>
-<dd>list of blendmodes that target each background layer</dd>
-<dt>text-shadow</dt>
-<dd>list of blendmodes that target each text shadow</dd>
-<dt>foreground</dt>
-<dd>blendmode that targets the text and nested elements</dd>
-</dl>
-A possible drawback is that there are no other keywords that target all these layers at once.
-</p>
-
-<h4 id="borders-issue">blending and compositing on borders</h4>
-<p>
-Is there a need to target this part of the element?
-</p>
 
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
 Please see the <a href="http://www.w3.org/Graphics/fx/wiki/BlendingInCanvas">W3 wiki</a>.
