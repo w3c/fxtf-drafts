@@ -9,11 +9,11 @@
   <link href="http://purl.org/dc/terms/" rel=schema.DC>
   <meta content="CSS Masking" name=DC.title>
   <meta content=text name=DC.type>
-  <meta content=2012-09-26 name=DC.issued>
+  <meta content=2012-10-02 name=DC.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=DC.creator>
   <meta content=W3C name=DC.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20120926/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121002/"
    name=DC.identifier>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
    rel=DC.rights>
@@ -43,15 +43,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 26 September
-    2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 2 October 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20120926/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20121002/-->
 
     <dt>Latest version:
 
@@ -473,8 +472,9 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
   </div>
 
   <p>The first image in the list is the layer closest to the user, the next
-   one is painted behind the first, and so on. All mask images are combined
-   by compositing on the <a href="#TermMask">mask</a>.
+   one is painted behind the first, and so on. All mask images are
+   transformed to alpha masks (if necessary) and combined by compositing on
+   the <a href="#TermMask">mask</a>.
 
   <h3 id=MaskValues><span class=secno>5.2. </span>Calculating mask values</h3>
 
@@ -1605,25 +1605,20 @@ div {
   <pre class=prod><dfn id=ltmask-layergt>&lt;mask-layer&gt;</dfn> = <a
    href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;box&gt;{1,2}</pre>
 
-  <pre class=prod><dfn id=ltmask-sourcegt>&lt;mask-source&gt;</dfn> = <a
-   href="#ltfuncirigt"><var>&lt;FuncIRI&gt;</var></a> | <a
+  <pre class=prod><dfn id=ltmask-sourcegt>&lt;mask-source&gt;</dfn> = [ <a
+   href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
    href="#child"><var>child</var></a> | <a
-   href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a></pre>
+   href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a> ] [ alpha | luminance ] ? </pre>
 
   <pre class=prod><dfn
    id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(&lt;compound-selector&gt;#)</pre>
 
   <dl>
-   <dt> <dfn id=ltfuncirigt>‘<code
-    class=css>&lt;FuncIRI&gt;</code>’</dfn>
+   <dt> <dfn id=lturlgt>‘<code class=css>&lt;url&gt;</code>’</dfn>
 
-   <dd> An <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
-    reference</a> to a <a class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element or SVG <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html">paint
-    server</a> element that defines the mask content effect. For example
-    ‘<code class=css>url(commonmasks.xml#mask)</code>’.
+   <dd> An <span class=xxx>URL reference</span> to a <a class=element-name
+    href="#MaskElement">‘<code class=property>mask</code>’</a> element.
+    For example ‘<code class=css>url(commonmasks.xml#mask)</code>’.
 
    <dt><dfn id=child>‘<code class=css>child</code>’</dfn>
 
@@ -1656,36 +1651,8 @@ div {
    <dd>
   </dl>
 
-  <div class=issue>
-   <p> Need to define the parsing here since <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeFuncIRI">&lt;FuncIRI&gt;</a>
-    and <a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> overlap.
-
-   <p> Basically the process is that when there is a <code>url()</code>
-    component:
-
-   <ol>
-    <li>If the IRI contains a ‘<code class=css>#</code>’, look up the
-     target.
-     <ol>
-      <li>If the target is a <a class=element-name
-       href="#MaskElement">‘<code class=property>mask</code>’</a>
-       element, follow the process outlined for <a
-       href="#MaskElement">‘<code class=property>mask</code>’</a>
-       elements.
-
-      <li>If the target is an SVG <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html">paint
-       server</a> element, follow the process outlined for SVG paint server
-       mask sources.
-
-      <li>Otherwise, the mask source is invalid.
-     </ol>
-
-    <li>Otherwise, process as a <a
-     href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>
-   </ol>
-  </div>
+  <p class=issue>Specify how luminance and alpha keywords influence
+   &lt;mask&gt; elements.
 
   <p class=issue>Make clear that the individual properties for the short hand
    just apply on ‘<a href="#mask-image"><code
@@ -2931,8 +2898,8 @@ div {
      <td>yes
   </table>
 
-  <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
-   href="#ltfuncirigt"><var>&lt;FuncIRI&gt;</var></a> | <a
+  <pre class=prod><dfn
+   id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | <a
    href="#child"><var>child</var></a> | <a
    href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a></pre>
 
@@ -3700,10 +3667,6 @@ div {
     class=css>fill</code></a>’, <a href="#mask-box-image-slice-fill"
     title="''fill''"><strong>7.2.</strong></a>
 
-   <li>‘<a href="#ltfuncirigt"><code
-    class=css>&lt;FuncIRI&gt;</code></a>’, <a href="#ltfuncirigt"
-    title="'&lt;FuncIRI&gt;'"><strong>6.7.</strong></a>
-
    <li>&lt;image&gt;, <a href="#ltimagegt"
     title="&lt;image&gt;"><strong>6.1.</strong></a>
 
@@ -3900,6 +3863,9 @@ div {
       class=property>mask-position</code></a>’ value, <a href="#top"
       title="''top'', 'mask-position' value"><strong>6.3.</strong></a>
     </ul>
+
+   <li>‘<a href="#lturlgt"><code class=css>&lt;url&gt;</code></a>’, <a
+    href="#lturlgt" title="'&lt;url&gt;'"><strong>6.7.</strong></a>
 
    <li>user coordinate system, <a href="#user-coordinate-system"
     title="user coordinate system"><strong>4.</strong></a>

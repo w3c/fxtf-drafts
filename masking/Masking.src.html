@@ -248,7 +248,8 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
 
 <p>The first image in the list is the layer closest to the user,
 the next one is painted behind the first, and so on. All mask images
-are combined by compositing on the <a href="#TermMask">mask</a>.
+are transformed to alpha masks (if necessary) and combined by compositing
+on the <a href="#TermMask">mask</a>.
 
 <h3 id="MaskValues">Calculating mask values</h3>
 
@@ -1137,18 +1138,17 @@ layer.
 
 <pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-image&gt;</var> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;box&gt;{1,2}</pre>
 
-<pre class=prod><dfn>&lt;mask-source&gt;</dfn> = <var>&lt;FuncIRI&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var></pre>
+<pre class=prod><dfn>&lt;mask-source&gt;</dfn> = [ <var>&lt;url&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var> ] [ alpha | luminance ] ? </pre>
 
 <pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(&lt;compound-selector&gt;#)</pre>
 
 <dl>
   <dt>
-    <dfn>'&lt;FuncIRI&gt;'</dfn>
+    <dfn>'&lt;url&gt;'</dfn>
   </dt>
   <dd>
-    An <a>IRI reference</a>
-    to a <a>'mask element'</a> element or SVG <a>paint server</a> element that
-    defines the mask content effect. For example ''url(commonmasks.xml#mask)''.
+    An <a>URL reference</a>
+    to a <a>'mask element'</a> element. For example ''url(commonmasks.xml#mask)''.
   </dd>
   <dt><dfn>''child''</dfn></dt>
   <dd>
@@ -1169,28 +1169,7 @@ layer.
   <dd>
 </dl>
 
-<div class="issue">
-  <p>
-    Need to define the parsing here since <a>&lt;FuncIRI&gt;</a> and
-    <var>&lt;mask-image&gt;</var> overlap.
-  </p>
-  <p>
-    Basically the process is that when there is a <code>url()</code> component:
-  </p>
-  <ol>
-    <li>If the IRI contains a '#', look up the target.
-      <ol>
-        <li>If the target is a <a>'mask element'</a> element, follow the process
-            outlined for <a href="#MaskElement">'mask'</a> elements.</li>
-        <li>If the target is an SVG <a>paint server</a> element, follow the
-            process outlined for SVG paint server mask
-            sources.</li>
-        <li>Otherwise, the mask source is invalid.</li>
-      </ol>
-    </li>
-    <li>Otherwise, process as a <var>&lt;mask-image&gt;</var></li>
-  </ol>
-</div>
+<p class="issue">Specify how luminance and alpha keywords influence &lt;mask&gt; elements.</p>
 
 <p class=issue>Make clear that the individual properties for the short hand just apply on 'mask-image'</p>
 
