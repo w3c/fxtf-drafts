@@ -1169,11 +1169,31 @@ layer.
   <dd>
 </dl>
 
-<p class="issue">Specify how luminance and alpha keywords influence &lt;mask&gt; elements.</p>
+<p>
+  If the keywords ''alpha'' or ''luminance'' are used together with a reference to a <a>mask element</a> element, these
+  keywords override the defintion of the 'mask-type' property.
+</p>
 
-<p class=issue>Make clear that the individual properties for the short hand just apply on 'mask-image'</p>
+<div class="example">
+  <p>
+    In the following example the 'mask-type' property sets the mask type value for the <a>mask element</a> element to
+    ''alpha''. The 'mask' property has a reference to this <a>mask element</a> element and the keyword ''luminance''.
+    The 'mask' property will override the defintion of 'mask-type' to ''luminance''.
+  <pre><code>
+&lt;mask id="SVGMask" mask-type="alpha"&gt;
+    &lt;circle fill="white" cx="50%" cy="50%" r="50%" /&gt;
+&lt;/mask&gt;
 
-<p>An invalid or non-existent mask source is ignored and no masking is applied.
+&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance;" /&gt;
+  </code></pre>
+</div>
+
+<p>An invalid or non-existent mask source is ignored and no masking is applied.</p>
+
+<p class="note">
+  Note that the properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and
+  'mask-size' have no affect on <a>mask element</a> elements.
+</p>
 
 <h3 id="the-mask-type">The 'mask-type' property</h3>
 
@@ -1220,6 +1240,8 @@ described in <a href="#MaskValues">Calculating mask values</a>.</p>
   <dt><dfn>''alpha''</dfn></dt>
   <dd>Indicates that the alpha values of the mask should be used.</dd>
 </dl>
+
+<p>The 'mask-type' property is a presentation attribute for SVG elements.</p>
 
 <h3 id="MaskElement">The <span class="element-name">'mask'</span> element</h3>
 

@@ -6,17 +6,17 @@
   <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
   <title>CSS Masking</title>
 
-  <link href="http://purl.org/dc/terms/" rel=schema.DC>
-  <meta content="CSS Masking" name=DC.title>
-  <meta content=text name=DC.type>
-  <meta content=2012-10-02 name=DC.issued>
-  <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
-   name=DC.creator>
-  <meta content=W3C name=DC.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121002/"
-   name=DC.identifier>
+  <link href="http://purl.org/dc/terms/" rel=schema.dcterms>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-   rel=DC.rights>
+   rel=dcterms.rights>
+  <meta content="CSS Masking" name=dcterms.title>
+  <meta content=text name=dcterms.type>
+  <meta content=2012-10-05 name=dcterms.issued>
+  <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
+   name=dcterms.creator>
+  <meta content=W3C name=dcterms.publisher>
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121005/"
+   name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
   <link href=default.css rel=stylesheet type="text/css">
@@ -43,14 +43,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 2 October 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 5 October 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20121002/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20121005/-->
 
     <dt>Latest version:
 
@@ -1651,15 +1651,46 @@ div {
    <dd>
   </dl>
 
-  <p class=issue>Specify how luminance and alpha keywords influence
-   &lt;mask&gt; elements.
+  <p> If the keywords ‘<a href="#alpha0"><code
+   class=css>alpha</code></a>’ or ‘<a href="#luminance0"><code
+   class=css>luminance</code></a>’ are used together with a reference to a
+   <span class=xxx>mask element</span> element, these keywords override the
+   defintion of the ‘<a href="#mask-type"><code
+   class=property>mask-type</code></a>’ property.
 
-  <p class=issue>Make clear that the individual properties for the short hand
-   just apply on ‘<a href="#mask-image"><code
-   class=property>mask-image</code></a>’
+  <div class=example>
+   <p> In the following example the ‘<a href="#mask-type"><code
+    class=property>mask-type</code></a>’ property sets the mask type value
+    for the <span class=xxx>mask element</span> element to ‘<a
+    href="#alpha0"><code class=css>alpha</code></a>’. The ‘<a
+    href="#mask"><code class=property>mask</code></a>’ property has a
+    reference to this <span class=xxx>mask element</span> element and the
+    keyword ‘<a href="#luminance0"><code class=css>luminance</code></a>’.
+    The ‘<a href="#mask"><code class=property>mask</code></a>’ property
+    will override the defintion of ‘<a href="#mask-type"><code
+    class=property>mask-type</code></a>’ to ‘<a href="#luminance0"><code
+    class=css>luminance</code></a>’.
+
+   <pre><code>
+&lt;mask id="SVGMask" mask-type="alpha"&gt;
+    &lt;circle fill="white" cx="50%" cy="50%" r="50%" /&gt;
+&lt;/mask&gt;
+
+&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance;" /&gt;
+  </code></pre>
+  </div>
 
   <p>An invalid or non-existent mask source is ignored and no masking is
    applied.
+
+  <p class=note> Note that the properties ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’, ‘<a href="#mask-repeat"><code
+   class=property>mask-repeat</code></a>’, ‘<a
+   href="#mask-position"><code class=property>mask-position</code></a>’,
+   ‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’,
+   ‘<a href="#mask-origin"><code class=property>mask-origin</code></a>’
+   and ‘<a href="#mask-size"><code class=property>mask-size</code></a>’
+   have no affect on <span class=xxx>mask element</span> elements.
 
   <h3 id=the-mask-type><span class=secno>6.8. </span>The ‘<a
    href="#mask-type"><code class=property>mask-type</code></a>’ property</h3>
@@ -1730,6 +1761,9 @@ div {
 
    <dd>Indicates that the alpha values of the mask should be used.
   </dl>
+
+  <p>The ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
+   property is a presentation attribute for SVG elements.
 
   <h3 id=MaskElement><span class=secno>6.9. </span>The <a class=element-name
    href="#mask">‘<code class=property>mask</code>’</a> element</h3>
