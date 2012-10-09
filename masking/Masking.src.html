@@ -1194,11 +1194,15 @@ layer.
     ''alpha''. The 'mask' property has a reference to this <a>'mask element'</a> element and the keyword ''luminance''.
     The 'mask' property will override the definition of 'mask-type' to ''luminance''.
 <pre>
-&lt;mask id="SVGMask" mask-type="alpha"&gt;
-    &lt;circle fill="white" cx="50%" cy="50%" r="50%" /&gt;
+&lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
+  &lt;radialGradient id="radialFill"&gt;
+    &lt;stop stop-color="white" offset="0"/&gt;
+    &lt;stop stop-color="black" offset="1"/&gt;
+  &lt;/radialGradient&gt;
+  &lt;circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/&gt;
 &lt;/mask&gt;
 
-&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance;" /&gt;
+&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance"/&gt;
 </pre>
 </div>
 
