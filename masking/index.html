@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-10-07 name=dcterms.issued>
+  <meta content=2012-10-09 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121007/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121009/"
    name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
@@ -43,14 +43,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 7 October 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 9 October 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20121007/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20121009/-->
 
     <dt>Latest version:
 
@@ -622,13 +622,13 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
 
    <dt><dfn id=alpha>‘<code class=css>alpha</code>’</dfn>
 
-   <dd> A value of ‘<a href="#alpha0"><code class=css>alpha</code></a>’
+   <dd> A value of ‘<a href="#alpha"><code class=css>alpha</code></a>’
     indicates that the alpha values of the mask image should be used as the
     mask values. See <a href="#MaskValues">Calculating mask values</a>.
 
    <dt><dfn id=luminance>‘<code class=css>luminance</code>’</dfn>
 
-   <dd> A value of ‘<a href="#luminance0"><code
+   <dd> A value of ‘<a href="#luminance"><code
     class=css>luminance</code></a>’ indicates that the luminance values of
     the mask image should be used as the mask values. See <a
     href="#MaskValues">Calculating mask values</a>.
@@ -639,10 +639,10 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
     counts as an image layer but does not mask the element.
   </dl>
 
-  <p> If neither ‘<a href="#luminance0"><code
-   class=css>luminance</code></a>’ or ‘<a href="#alpha0"><code
+  <p> If neither ‘<a href="#luminance"><code
+   class=css>luminance</code></a>’ or ‘<a href="#alpha"><code
    class=css>alpha</code></a>’ is specified, a value of ‘<a
-   href="#alpha0"><code class=css>alpha</code></a>’ is used.
+   href="#alpha"><code class=css>alpha</code></a>’ is used.
 
   <p>A mask image that is empty (zero width or zero height), that fails to
    download, is non-existent, or that cannot be displayed (e.g. because it is
@@ -1616,7 +1616,7 @@ div {
   <dl>
    <dt> <dfn id=lturlgt>‘<code class=css>&lt;url&gt;</code>’</dfn>
 
-   <dd> An <span class=xxx>URL reference</span> to a <a class=element-name
+   <dd> A <span class=xxx>URL reference</span> to a <a class=element-name
     href="#MaskElement">‘<code class=property>mask</code>’</a> element.
     For example ‘<code class=css>url(commonmasks.xml#mask)</code>’.
 
@@ -1649,38 +1649,53 @@ div {
     rel=biblioentry>[SELECTORS4]<!--{{!SELECTORS4}}--></a>.
 
    <dd>
+
+   <dt>‘<a href="#alpha"><code class=css>alpha</code></a>’
+
+   <dd> A value of ‘<a href="#alpha"><code class=css>alpha</code></a>’
+    indicates that the alpha values of the mask content of the referenced
+    mask element should be used as the mask values. See <a
+    href="#MaskValues">Calculating mask values</a>.
+
+   <dt>‘<a href="#luminance"><code class=css>luminance</code></a>’
+
+   <dd> A value of ‘<a href="#luminance"><code
+    class=css>luminance</code></a>’ indicates that the luminance values of
+    the mask content of the referenced mask element should be used as the
+    mask values. See <a href="#MaskValues">Calculating mask values</a>.
   </dl>
 
-  <p> If the keywords ‘<a href="#alpha0"><code
-   class=css>alpha</code></a>’ or ‘<a href="#luminance0"><code
-   class=css>luminance</code></a>’ are used together with a reference to a
-   <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element, these keywords override the
-   defintion of the ‘<a href="#mask-type"><code
-   class=property>mask-type</code></a>’ property.
+  <p> The keywords ‘<a href="#alpha"><code class=css>alpha</code></a>’ or
+   ‘<a href="#luminance"><code class=css>luminance</code></a>’ may be
+   used together with a reference to a <a class=element-name
+   href="#MaskElement">‘<code class=property>mask</code>’</a> element. If
+   either keyword is specified the effect is to override the value of the
+   ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
+   property on the referenced <a class=element-name
+   href="#MaskElement">‘<code class=property>mask</code>’</a> element.
 
   <div class=example>
-   <p> In the following example the ‘<a href="#mask-type"><code
+   <p> In the following example, the ‘<a href="#mask-type"><code
     class=property>mask-type</code></a>’ property sets the mask type value
     for the <a class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element to ‘<a href="#alpha0"><code
+    class=property>mask</code>’</a> element to ‘<a href="#alpha"><code
     class=css>alpha</code></a>’. The ‘<a href="#mask"><code
     class=property>mask</code></a>’ property has a reference to this <a
     class=element-name href="#MaskElement">‘<code
     class=property>mask</code>’</a> element and the keyword ‘<a
-    href="#luminance0"><code class=css>luminance</code></a>’. The ‘<a
+    href="#luminance"><code class=css>luminance</code></a>’. The ‘<a
     href="#mask"><code class=property>mask</code></a>’ property will
-    override the defintion of ‘<a href="#mask-type"><code
-    class=property>mask-type</code></a>’ to ‘<a href="#luminance0"><code
+    override the definition of ‘<a href="#mask-type"><code
+    class=property>mask-type</code></a>’ to ‘<a href="#luminance"><code
     class=css>luminance</code></a>’.
 
-   <pre><code>
+   <pre>
 &lt;mask id="SVGMask" mask-type="alpha"&gt;
     &lt;circle fill="white" cx="50%" cy="50%" r="50%" /&gt;
 &lt;/mask&gt;
 
 &lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance;" /&gt;
-  </code></pre>
+</pre>
   </div>
 
   <p>An invalid or non-existent mask source is ignored and no masking is
@@ -1757,11 +1772,11 @@ div {
   <p>Values have the following meanings:
 
   <dl>
-   <dt><dfn id=luminance0>‘<code class=css>luminance</code>’</dfn>
+   <dt>‘<a href="#luminance"><code class=css>luminance</code></a>’
 
    <dd>Indicates that the luminance values of the mask should be used.
 
-   <dt><dfn id=alpha0>‘<code class=css>alpha</code>’</dfn>
+   <dt>‘<a href="#alpha"><code class=css>alpha</code></a>’
 
    <dd>Indicates that the alpha values of the mask should be used.
   </dl>
@@ -3607,9 +3622,8 @@ div {
   <!--begin-index-->
 
   <ul class=indexlist>
-   <li>‘<a href="#alpha0"><code class=css>alpha</code></a>’, <a
-    href="#alpha" title="''alpha''"><strong>6.1.</strong></a>, <a
-    href="#alpha0" title="''alpha''"><strong>6.8.</strong></a>
+   <li>‘<a href="#alpha"><code class=css>alpha</code></a>’, <a
+    href="#alpha" title="''alpha''"><strong>6.1.</strong></a>
 
    <li>‘<code class=css>auto</code>’
     <ul>
@@ -3720,9 +3734,8 @@ div {
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="local coordinate system"><strong>4.</strong></a>
 
-   <li>‘<a href="#luminance0"><code class=css>luminance</code></a>’, <a
-    href="#luminance" title="''luminance''"><strong>6.1.</strong></a>, <a
-    href="#luminance0" title="''luminance''"><strong>6.8.</strong></a>
+   <li>‘<a href="#luminance"><code class=css>luminance</code></a>’, <a
+    href="#luminance" title="''luminance''"><strong>6.1.</strong></a>
 
    <li>mask, <a href="#MaskProperty" title=mask><strong>6.7.</strong></a>, <a
     href="#mask" title=mask><strong>6.9.</strong></a>, <a href="#mask0"

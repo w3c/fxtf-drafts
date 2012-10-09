@@ -1147,7 +1147,7 @@ layer.
     <dfn>'&lt;url&gt;'</dfn>
   </dt>
   <dd>
-    An <a>URL reference</a>
+    A <a>URL reference</a>
     to a <a>'mask element'</a> element. For example ''url(commonmasks.xml#mask)''.
   </dd>
   <dt><dfn>''child''</dfn></dt>
@@ -1167,25 +1167,39 @@ layer.
   <dd>
     A <a>compound selector</a> as defined in [[!SELECTORS4]].
   <dd>
+  <dt>''alpha''</dt>
+  <dd>
+    A value of ''alpha'' indicates that the alpha values of the mask content of
+    the referenced mask element should be used as the mask values.
+    See <a href="#MaskValues">Calculating mask values</a>.</p>
+  </dd>
+  <dt>''luminance''</dt>
+  <dd>
+    A value of ''luminance'' indicates that the luminance values of the mask
+    content of the referenced mask element should be used as the mask values.
+    See <a href="#MaskValues">Calculating mask values</a>.</p>
+  </dd>
 </dl>
 
 <p>
-  If the keywords ''alpha'' or ''luminance'' are used together with a reference to a <a>'mask element'</a> element, these
-  keywords override the defintion of the 'mask-type' property.
+  The keywords ''alpha'' or ''luminance'' may be used together with a reference
+  to a <a>'mask element'</a> element. 
+  If either keyword is specified the effect is to override the value of the
+  'mask-type' property on the referenced <a>'mask element'</a> element.
 </p>
 
 <div class="example">
   <p>
-    In the following example the 'mask-type' property sets the mask type value for the <a>'mask element'</a> element to
+    In the following example, the 'mask-type' property sets the mask type value for the <a>'mask element'</a> element to
     ''alpha''. The 'mask' property has a reference to this <a>'mask element'</a> element and the keyword ''luminance''.
-    The 'mask' property will override the defintion of 'mask-type' to ''luminance''.
-  <pre><code>
+    The 'mask' property will override the definition of 'mask-type' to ''luminance''.
+<pre>
 &lt;mask id="SVGMask" mask-type="alpha"&gt;
     &lt;circle fill="white" cx="50%" cy="50%" r="50%" /&gt;
 &lt;/mask&gt;
 
 &lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance;" /&gt;
-  </code></pre>
+</pre>
 </div>
 
 <p>An invalid or non-existent mask source is ignored and no masking is applied.</p>
@@ -1234,10 +1248,10 @@ described in <a href="#MaskValues">Calculating mask values</a>.</p>
 <p>Values have the following meanings:
 
 <dl>
-  <dt><dfn>''luminance''</dfn></dt>
+  <dt>''luminance''</dt>
   <dd>Indicates that the luminance values of the mask should be used.</dd>
 
-  <dt><dfn>''alpha''</dfn></dt>
+  <dt>''alpha''</dt>
   <dd>Indicates that the alpha values of the mask should be used.</dd>
 </dl>
 
