@@ -1147,8 +1147,7 @@ layer.
     <dfn>'&lt;url&gt;'</dfn>
   </dt>
   <dd>
-    A <a>URL reference</a>
-    to a <a>'mask element'</a> element. For example ''url(commonmasks.xml#mask)''.
+    A URL reference to a <a>'mask element'</a> element. For example ''url(commonmasks.xml#mask)''.
   </dd>
   <dt><dfn>''child''</dfn></dt>
   <dd>
@@ -1227,7 +1226,7 @@ layer.
       <td>luminance
     <tr>
       <th>Applies to:
-      <td><a>'mask element'</a>
+      <td><a>'mask element'</a> elements
     <tr>
       <th>Inherited:
       <td>no
@@ -1478,7 +1477,7 @@ div {
     <td>no
   <tr>
     <th>Percentages:
-    <td>refer to size of the border image
+    <td>refer to size of the mask image
   <tr>
     <th>Media:
     <td>visual
@@ -1563,7 +1562,7 @@ area</i>.
     <td>no
   <tr>
     <th>Percentages:
-    <td>Relative to width/height of the <em>mask box image area</em>
+    <td>relative to width/height of the <em>mask box image area</em>
   <tr>
     <th>Media:
     <td>visual
@@ -1825,8 +1824,6 @@ Values have the following meanings:
 
 <p class=issue>For SVG percentage values might be resolved according to the painted bounding box and not bounding client rect (alias object bounding box).</p> 
 
-<p class=issue>There is a proposal to let 'clip' shadow 'clip-path' or the other way around. 'clip' would apply to all HTML elements for basic shapes from the CSS Exclusion spec and &lt;clip-source&gt;, but just to absolute positioned elements for ''rect()''.
-
 <h3 id="the-clip-rule">The 'clip-rule' property</h3>
 
 <table class="propdef">
@@ -1909,6 +1906,137 @@ clipping shape:</p>
 </pre>
 </div>
 
+<h3 id="clip-property">The 'clip' property</h3>
+
+<table class="propdef">
+  <tr>
+    <th>Name:</th>
+    <td><dfn id="ClipProperty">clip</dfn></td>
+  </tr>
+  <tr>
+    <th>Value:</th>
+    <td><var>&lt;shape&gt;</var> | auto</td>
+  </tr>
+  <tr>
+    <th>Initial:</th>
+    <td>see individual properties</td>
+  </tr>
+  <tr>
+    <th>Applies to:</th>
+    <td>Absolutely positioned elements. In SVG, it applies to <a
+      href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements which
+      establish a new viewport</a>, <a>'pattern element'</a> elements and <a>'marker element'</a> elements.</td>
+  </tr>
+  <tr>
+    <th>Inherited:</th>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Percentages:</th>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <th>Media:</th>
+    <td>visual</td>
+  </tr>
+  <tr>
+    <th>Computed&#160;value:</th>
+    <td>as specified</td>
+  </tr>
+  <tr>
+    <th>Animatable:</th>
+    <td>yes</td>
+  </tr>
+</table>
+
+<p class="issue">This is copied from CSS 2.1 and needs to be updated and cleaned up.</p>
+
+<p>
+  The 'clip' property applies only to absolutely positioned elements. In SVG, it applies to
+  <a href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements which establish a new viewport</a>,
+  <a>'pattern element'</a> elements and <a>'marker element'</a> elements</td>. Values have the following meanings:
+</p>
+
+<p class=issue>
+  Should 'clip' be a shorthand for 'clip-path'? 'rect()' would just apply to absolutely positioned elements and in SVG,
+  to <a href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements which establish a new
+  viewport</a>. Or should it be deprecated?
+</p>
+
+<dl>
+  <dt>''auto''</dt>
+  <dd>The element does not clip.</dd>
+  <dt><var>&lt;shape&gt;</var></dt>
+  <dd>
+    <p>
+      In CSS 2.1, the only valid &lt;shape&gt; value is: rect(<var>&lt;top&gt;</var>, <var>&lt;right&gt;</var>,
+      <var>&lt;bottom&gt;</var>, <var>&lt;left&gt;</var>) where <var>&lt;top&gt;</var> and <var>&lt;bottom&gt;</var>
+      specify offsets from the top border edge of the box, and <var>&lt;right&gt;</var>, and <var>&lt;left&gt;</var>
+      specify offsets from the left border edge of the box. Authors should separate offset values with commas. User agents
+      must support separation with commas, but may also support separation without commas (but not a combination), because
+      a previous revision of this specification was ambiguous in this respect.
+    </p>
+
+    <p><dfn>&lt;top&gt;</dfn>,
+      <dfn>&lt;right&gt;</dfn>, <dfn>&lt;bottom&gt;</dfn>, and <dfn>&lt;left&gt;</dfn> may either have a
+      <var>&lt;length&gt;</var> value or ''auto''. Negative lengths are permitted. The value ''auto'' means that a given
+      edge of the clipping region will be the same as the edge of the element's generated border box (i.e., ''auto'' means
+      the same as ''0'' for <var>&lt;top&gt;</var> and <var>&lt;left&gt;</var>, the same as the used value of the height
+      plus the sum of vertical padding and border widths for <var>&lt;bottom&gt;</var>, and the same as the used value of the width
+      plus the sum of the horizontal padding and border widths for <var>&lt;right&gt;</var>, such that four 'auto' values result in
+      the clipping region being the same as the element's border box).
+    </p>
+
+    <p>
+      When coordinates are rounded to pixel coordinates, care should be taken that no pixels remain visible when
+      <var>&lt;left&gt;</var> and <var>&lt;right&gt;</var> have the same value (or <var>&lt;top&gt;</var> and
+      <var>&lt;bottom&gt;</var> have the same value), and conversely that no pixels within the element's border box
+      remain hidden when these values are ''auto''.
+    </p>
+  </dd>
+</dl>
+
+<p>
+  An element's clipping region clips out any aspect of the element (e.g., content, children, background, borders, text
+  decoration, outline and visible scrolling mechanism — if any) that is outside the clipping region. Content that has
+  been clipped does not cause overflow.
+</p>
+
+<p>
+  The element's ancestors may also clip portions of their content (e.g., via their own 'clip' property and/or if their
+  'overflow' property is not ''visible''); what is rendered is the cumulative intersection.
+</p>
+
+<p>
+  If the clipping region exceeds the bounds of the UA's document window, content may be clipped to that window by the
+  native operating environment.
+</p>
+
+<p class="issue">
+  The three paragraphs above need to move in the rendering section for all properies: 'mask', 'clip-path' and
+  'clip'. The handling for 'overflow' differs on SVG.
+</p>
+
+<div class="example">
+  <p>
+    Example: The following two rules:
+  </p>
+
+  <pre><code>
+p#one { clip: rect(5px, 40px, 45px, 5px); }
+p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
+
+  <p>
+    and assuming both Ps are 50 by 55 pixel, will create, respectively, the rectangular clipping regions delimited by
+    the dashed lines in the following illustrations:
+  </p>
+
+  <div class=figure>
+    <img src="images/clip.png" width="292" height="577" alt="Values for rect shape">
+    <p class=caption>This diagram illustrates two block boxes, one above the other, with rectangular clipping regions of different dimensions. (See <a href="http://www.w3.org/TR/CSS2/images/longdesc/clip-desc.html">long description</a>.)
+  </div>
+</div>
+
 <h3 id="ClipPathElement">The <a>'clipPath element'</a> element</h3> 
 
 <!--elementsummary clipPath-->
@@ -1960,7 +2088,7 @@ available for referencing even when the <a>'display'</a> property on the
 <a>'text'</a> elements, <a>basic shapes</a> (such as
 <a>'circle'</a>) or a <a>'use'</a> element. If a <a>'use'</a> element is a
 child of a <a>'clipPath'</a> element, it must directly reference
-<a>'path'</a>, <a>'text'</a> or <a>basic shape</a> elements.
+<a>'path'</a>, <a>'text'</a> or <a>basic shapes</a> elements.
 Indirect references are an error and the <a>'clipPath'</a> element must be
 ignored.</p>
 

@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-10-09 name=dcterms.issued>
+  <meta content=2012-10-11 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121009/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121011/"
    name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
@@ -43,14 +43,15 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 9 October 2012</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 11 October
+    2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20121009/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20121011/-->
 
     <dt>Latest version:
 
@@ -233,10 +234,13 @@
      <li><a href="#the-clip-rule"><span class=secno>8.2. </span>The ‘<code
       class=property>clip-rule</code>’ property</a>
 
-     <li><a href="#ClipPathElement"><span class=secno>8.3. </span>The
+     <li><a href="#clip-property"><span class=secno>8.3. </span>The ‘<code
+      class=property>clip</code>’ property</a>
+
+     <li><a href="#ClipPathElement"><span class=secno>8.4. </span>The
       ‘<code class=property>clipPath</code>’ element</a>
 
-     <li><a href="#clipPath-geometry"><span class=secno>8.4. </span>Clipping
+     <li><a href="#clipPath-geometry"><span class=secno>8.5. </span>Clipping
       paths, geometry, and pointer events</a>
     </ul>
 
@@ -1616,7 +1620,7 @@ div {
   <dl>
    <dt> <dfn id=lturlgt>‘<code class=css>&lt;url&gt;</code>’</dfn>
 
-   <dd> A <span class=xxx>URL reference</span> to a <a class=element-name
+   <dd> A URL reference to a <a class=element-name
     href="#MaskElement">‘<code class=property>mask</code>’</a> element.
     For example ‘<code class=css>url(commonmasks.xml#mask)</code>’.
 
@@ -1739,7 +1743,7 @@ div {
      <th>Applies to:
 
      <td><a class=element-name href="#MaskElement">‘<code
-      class=property>mask</code>’</a>
+      class=property>mask</code>’</a> elements
 
     <tr>
      <th>Inherited:
@@ -2442,7 +2446,7 @@ div {
     <tr>
      <th>Percentages:
 
-     <td>refer to size of the border image
+     <td>refer to size of the mask image
 
     <tr>
      <th>Media:
@@ -2559,7 +2563,7 @@ div {
     <tr>
      <th>Percentages:
 
-     <td>Relative to width/height of the <a
+     <td>relative to width/height of the <a
       href="#mask-box-image-area"><em>mask box image area</em></a>
 
     <tr>
@@ -2974,13 +2978,6 @@ div {
    painted bounding box and not bounding client rect (alias object bounding
    box).
 
-  <p class=issue>There is a proposal to let ‘<code
-   class=property>clip</code>’ shadow ‘<a href="#clip-path"><code
-   class=property>clip-path</code></a>’ or the other way around. ‘<code
-   class=property>clip</code>’ would apply to all HTML elements for basic
-   shapes from the CSS Exclusion spec and &lt;clip-source&gt;, but just to
-   absolute positioned elements for ‘<code class=css>rect()</code>’.
-
   <h3 id=the-clip-rule><span class=secno>8.2. </span>The ‘<a
    href="#clip-rule"><code class=property>clip-rule</code></a>’ property</h3>
 
@@ -3085,7 +3082,180 @@ div {
 </pre>
   </div>
 
-  <h3 id=ClipPathElement><span class=secno>8.3. </span>The <a
+  <h3 id=clip-property><span class=secno>8.3. </span>The ‘<a
+   href="#ClipProperty"><code class=property>clip</code></a>’ property</h3>
+
+  <table class=propdef>
+   <tbody>
+    <tr>
+     <th>Name:
+
+     <td><dfn id=ClipProperty>clip</dfn>
+
+    <tr>
+     <th>Value:
+
+     <td><a href="#ltshapegt"><var>&lt;shape&gt;</var></a> | auto
+
+    <tr>
+     <th>Initial:
+
+     <td>see individual properties
+
+    <tr>
+     <th>Applies to:
+
+     <td>Absolutely positioned elements. In SVG, it applies to <a
+      href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements
+      which establish a new viewport</a>, <a class=element-name
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement">‘<code
+      class=property>pattern</code>’</a> elements and <a class=element-name
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement">‘<code
+      class=property>marker</code>’</a> elements.
+
+    <tr>
+     <th>Inherited:
+
+     <td>no
+
+    <tr>
+     <th>Percentages:
+
+     <td>N/A
+
+    <tr>
+     <th>Media:
+
+     <td>visual
+
+    <tr>
+     <th>Computed value:
+
+     <td>as specified
+
+    <tr>
+     <th>Animatable:
+
+     <td>yes
+  </table>
+
+  <p class=issue>This is copied from CSS 2.1 and needs to be updated and
+   cleaned up.
+
+  <p> The ‘<a href="#ClipProperty"><code class=property>clip</code></a>’
+   property applies only to absolutely positioned elements. In SVG, it
+   applies to <a
+   href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements
+   which establish a new viewport</a>, <a class=element-name
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement">‘<code
+   class=property>pattern</code>’</a> elements and <a class=element-name
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement">‘<code
+   class=property>marker</code>’</a> elements. Values have the following
+   meanings:
+
+  <p class=issue> Should ‘<a href="#ClipProperty"><code
+   class=property>clip</code></a>’ be a shorthand for ‘<a
+   href="#clip-path"><code class=property>clip-path</code></a>’? ‘<code
+   class=css>rect()</code>’ would just apply to absolutely positioned
+   elements and in SVG, to <a
+   href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements
+   which establish a new viewport</a>. Or should it be deprecated?
+
+  <dl>
+   <dt>‘<code class=css>auto</code>’
+
+   <dd>The element does not clip.
+
+   <dt><a href="#ltshapegt"><var>&lt;shape&gt;</var></a>
+
+   <dd>
+    <p> In CSS 2.1, the only valid &lt;shape&gt; value is: rect(<a
+     href="#lttopgt"><var>&lt;top&gt;</var></a>, <a
+     href="#ltrightgt"><var>&lt;right&gt;</var></a>, <a
+     href="#ltbottomgt"><var>&lt;bottom&gt;</var></a>, <a
+     href="#ltleftgt"><var>&lt;left&gt;</var></a>) where <a
+     href="#lttopgt"><var>&lt;top&gt;</var></a> and <a
+     href="#ltbottomgt"><var>&lt;bottom&gt;</var></a> specify offsets from
+     the top border edge of the box, and <a
+     href="#ltrightgt"><var>&lt;right&gt;</var></a>, and <a
+     href="#ltleftgt"><var>&lt;left&gt;</var></a> specify offsets from the
+     left border edge of the box. Authors should separate offset values with
+     commas. User agents must support separation with commas, but may also
+     support separation without commas (but not a combination), because a
+     previous revision of this specification was ambiguous in this respect.
+
+    <p><dfn id=lttopgt>&lt;top&gt;</dfn>, <dfn
+     id=ltrightgt>&lt;right&gt;</dfn>, <dfn
+     id=ltbottomgt>&lt;bottom&gt;</dfn>, and <dfn
+     id=ltleftgt>&lt;left&gt;</dfn> may either have a
+     <var>&lt;length&gt;</var> value or ‘<code class=css>auto</code>’.
+     Negative lengths are permitted. The value ‘<code
+     class=css>auto</code>’ means that a given edge of the clipping region
+     will be the same as the edge of the element's generated border box
+     (i.e., ‘<code class=css>auto</code>’ means the same as ‘<code
+     class=css>0</code>’ for <a href="#lttopgt"><var>&lt;top&gt;</var></a>
+     and <a href="#ltleftgt"><var>&lt;left&gt;</var></a>, the same as the
+     used value of the height plus the sum of vertical padding and border
+     widths for <a href="#ltbottomgt"><var>&lt;bottom&gt;</var></a>, and the
+     same as the used value of the width plus the sum of the horizontal
+     padding and border widths for <a
+     href="#ltrightgt"><var>&lt;right&gt;</var></a>, such that four ‘<code
+     class=property>auto</code>’ values result in the clipping region being
+     the same as the element's border box).
+
+    <p> When coordinates are rounded to pixel coordinates, care should be
+     taken that no pixels remain visible when <a
+     href="#ltleftgt"><var>&lt;left&gt;</var></a> and <a
+     href="#ltrightgt"><var>&lt;right&gt;</var></a> have the same value (or
+     <a href="#lttopgt"><var>&lt;top&gt;</var></a> and <a
+     href="#ltbottomgt"><var>&lt;bottom&gt;</var></a> have the same value),
+     and conversely that no pixels within the element's border box remain
+     hidden when these values are ‘<code class=css>auto</code>’.
+  </dl>
+
+  <p> An element's clipping region clips out any aspect of the element (e.g.,
+   content, children, background, borders, text decoration, outline and
+   visible scrolling mechanism — if any) that is outside the clipping
+   region. Content that has been clipped does not cause overflow.
+
+  <p> The element's ancestors may also clip portions of their content (e.g.,
+   via their own ‘<a href="#ClipProperty"><code
+   class=property>clip</code></a>’ property and/or if their ‘<code
+   class=property>overflow</code>’ property is not ‘<code
+   class=css>visible</code>’); what is rendered is the cumulative
+   intersection.
+
+  <p> If the clipping region exceeds the bounds of the UA's document window,
+   content may be clipped to that window by the native operating environment.
+
+  <p class=issue> The three paragraphs above need to move in the rendering
+   section for all properies: ‘<a href="#mask"><code
+   class=property>mask</code></a>’, ‘<a href="#clip-path"><code
+   class=property>clip-path</code></a>’ and ‘<a
+   href="#ClipProperty"><code class=property>clip</code></a>’. The handling
+   for ‘<code class=property>overflow</code>’ differs on SVG.
+
+  <div class=example>
+   <p> Example: The following two rules:
+
+   <pre><code>
+p#one { clip: rect(5px, 40px, 45px, 5px); }
+p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
+
+   <p> and assuming both Ps are 50 by 55 pixel, will create, respectively,
+    the rectangular clipping regions delimited by the dashed lines in the
+    following illustrations:
+
+   <div class=figure> <img alt="Values for rect shape" height=577
+    src="images/clip.png" width=292>
+    <p class=caption>This diagram illustrates two block boxes, one above the
+     other, with rectangular clipping regions of different dimensions. (See
+     <a href="http://www.w3.org/TR/CSS2/images/longdesc/clip-desc.html">long
+     description</a>.)
+   </div>
+  </div>
+
+  <h3 id=ClipPathElement><span class=secno>8.4. </span>The <a
    class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> element</h3>
 
@@ -3424,10 +3594,11 @@ div {
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
    class=property>path</code>’</a>, <a class=element-name
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
-   class=property>text</code>’</a> or <span class=xxx>basic shape</span>
-   elements. Indirect references are an error and the <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-   element must be ignored.
+   class=property>text</code>’</a> or <a
+   href="http://www.w3.org/TR/2012/WD-dom-20120405/intro.html#TermBasicShapeElement">basic
+   shapes</a> elements. Indirect references are an error and the <a
+   class=element-name href="#ClipPathElement">‘<code
+   class=property>clipPath</code>’</a> element must be ignored.
 
   <p>The raw geometry of each child element exclusive of rendering properties
    such as ‘<a href="#mask-box-image-slice-fill"><code
@@ -3491,7 +3662,7 @@ div {
     property applied.
   </ul>
 
-  <h3 id=clipPath-geometry><span class=secno>8.4. </span>Clipping paths,
+  <h3 id=clipPath-geometry><span class=secno>8.5. </span>Clipping paths,
    geometry, and pointer events</h3>
 
   <p>A clipping path is conceptually equivalent to a custom viewport for the
@@ -3652,6 +3823,9 @@ div {
       title="''border-box'', 'mask-origin' value"><strong>6.5.</strong></a>
     </ul>
 
+   <li>&lt;bottom&gt;, <a href="#ltbottomgt"
+    title="&lt;bottom&gt;"><strong>8.3.</strong></a>
+
    <li>‘<code class=css>bottom</code>’
     <ul>
      <li>‘<a href="#mask-position"><code
@@ -3662,7 +3836,7 @@ div {
    <li>bounding client rect, <a href="#bounding-client-rect"
     title="bounding client rect"><strong>4.</strong></a>, <a
     href="#bounding-client-rect0" title="bounding client rect">8.1.</a>, <a
-    href="#bounding-client-rect1" title="bounding client rect">8.4.</a>
+    href="#bounding-client-rect1" title="bounding client rect">8.5.</a>
 
    <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
     title="&lt;box&gt;"><strong>6.4.</strong></a>
@@ -3685,7 +3859,9 @@ div {
     href="#ltchild-selectorgt0"
     title="'&lt;child-selector&gt;'"><strong>6.7.</strong></a>
 
-   <li>clipPath, <a href="#clippath" title=clipPath><strong>8.3.</strong></a>
+   <li>clip, <a href="#ClipProperty" title=clip><strong>8.3.</strong></a>
+
+   <li>clipPath, <a href="#clippath" title=clipPath><strong>8.4.</strong></a>
 
    <li>clip-path, <a href="#clip-path"
     title=clip-path><strong>8.1.</strong></a>
@@ -3727,6 +3903,9 @@ div {
     title="&lt;image&gt;"><strong>6.1.</strong></a>
 
    <li>layers, <a href="#layers" title=layers>5.1.</a>
+
+   <li>&lt;left&gt;, <a href="#ltleftgt"
+    title="&lt;left&gt;"><strong>8.3.</strong></a>
 
    <li>‘<code class=css>left</code>’
     <ul>
@@ -3837,7 +4016,7 @@ div {
    <li>object bounding box units, <a href="#object-bounding-box-units"
     title="object bounding box units"><strong>4.</strong></a>, <a
     href="#object-bounding-box-units0"
-    title="object bounding box units">8.3.</a>
+    title="object bounding box units">8.4.</a>
 
    <li>‘<code class=css>padding-box</code>’
     <ul>
@@ -3875,6 +4054,9 @@ div {
    <li>‘<a href="#repeat-y"><code class=css>repeat-y</code></a>’, <a
     href="#repeat-y" title="''repeat-y''"><strong>6.2.</strong></a>
 
+   <li>&lt;right&gt;, <a href="#ltrightgt"
+    title="&lt;right&gt;"><strong>8.3.</strong></a>
+
    <li>‘<code class=css>right</code>’
     <ul>
      <li>‘<a href="#mask-position"><code
@@ -3911,6 +4093,9 @@ div {
 
    <li>‘<a href="#stretch"><code class=css>stretch</code></a>’, <a
     href="#stretch" title="''stretch''"><strong>7.5.</strong></a>
+
+   <li>&lt;top&gt;, <a href="#lttopgt"
+    title="&lt;top&gt;"><strong>8.3.</strong></a>
 
    <li>‘<code class=css>top</code>’
     <ul>
@@ -3995,6 +4180,23 @@ div {
      <td>visual
 
     <tr>
+     <th><a class=property href="#ClipProperty">clip</a>
+
+     <td>&lt;shape&gt; | auto
+
+     <td>see individual properties
+
+     <td>Absolutely positioned elements. In SVG, it applies to elements which
+      establish a new viewport, ‘pattern’ elements and ‘marker’
+      elements.
+
+     <td>no
+
+     <td>N/A
+
+     <td>visual
+
+    <tr>
      <th><a class=property
       href="#mask-box-image-outset">mask-box-image-outset</a>
 
@@ -4041,7 +4243,7 @@ div {
 
      <td>no
 
-     <td>refer to size of the border image
+     <td>refer to size of the mask image
 
      <td>visual
 
@@ -4095,7 +4297,7 @@ div {
 
      <td>no
 
-     <td>Relative to width/height of the mask box image area
+     <td>relative to width/height of the mask box image area
 
      <td>visual
 
@@ -4234,7 +4436,7 @@ div {
 
      <td>luminance
 
-     <td>‘mask’
+     <td>‘mask’ elements
 
      <td>no
 
