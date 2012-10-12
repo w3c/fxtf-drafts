@@ -99,12 +99,19 @@
 
   <h2 class="no-num no-toc" id=abstract>Abstract</h2>
 
-  <p> CSS Masking describes how to use another graphical element or image as
-   a lumniance or alpha mask. Typically, rendering an element via CSS or SVG
+  <p> CSS Masking describes ways to partially or fully hide portions of
+   visual elements.
+
+  <p> Masking describes how to use another graphical element or image as a
+   lumniance or alpha mask. Typically, rendering an element via CSS or SVG
    can conceptually described as if the element, including its children, are
    drawn into a buffer (such as a raster image) and then that buffer is
    composited into the elements parent. Luminance or alpha masks influence
    the transperency of this buffer before the compositing stage.
+
+  <p> Clipping describes the visible region of visual elements. A region can
+   be described by SVG graphics elements or basic shapes. Everything outside
+   of a region does not get rendered.
 
   <h2 class="no-num no-toc" id=status>Status of this document</h2>
   <!--begin-status-->
@@ -263,29 +270,40 @@
 
   <h2 id=intro><span class=secno>1. </span> Introduction</h2>
 
-  <p> With CSS Masking it is possible to specify another graphics element or
-   file to be used as an luminance or alpha mask for compositing the current
-   object into the background.
+  <p> With CSS Masking it is possible to specify another graphics element,
+   shape or file to be used as clipping region or an luminance or alpha mask
+   for compositing the current object into the background.
 
   <p> A mask is applied using the ‘<a href="#mask"><code
-   class=property>mask</code></a>’ or ‘<a href="#mask-image"><code
-   class=property>mask-image</code></a>’ property. The mask source may be
-   defined using a <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element referenced by the ‘<a
-   href="#mask"><code class=property>mask</code></a>’ property.
-   Alternatively, for many simple uses, the ‘<a href="#mask-image"><code
+   class=property>mask</code></a>’, ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ or ‘<a
+   href="#mask-box-image0"><code class=property>mask-box-image</code></a>’
+   properties. The mask source may be defined using a <a class=element-name
+   href="#MaskElement">‘<code class=property>mask</code>’</a> element
+   referenced by the ‘<a href="#mask"><code
+   class=property>mask</code></a>’ property. Alternatively, for many simple
+   uses, the ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ property may refer directly to
    graphical elements or images to be used as mask forgoing the need for an
    explicit <a class=element-name href="#MaskElement">‘<code
    class=property>mask</code>’</a> element. The ‘<a href="#mask"><code
    class=property>mask</code></a>’ property is also a shorthand for other
-   masking properties.
+   masking properties. ‘<a href="#mask-box-image0"><code
+   class=property>mask-box-image</code></a>’ splitts a mask image into 9
+   pieces. The pieces may be sliced, scaled and stretched in various ways to
+   fit the size of the mask image area.
 
   <p> The effect of applying a mask is as if the mask images or mask source
    elements are rendered into an offscreen image which has been initialized
    to transparent black. The graphical object to which the mask is applied
    will be painted onto the background through the mask, thus completely or
    partially masking out parts of the graphical object.
+
+  <p> Clipping defines a visible region of a visual element. The region can
+   be specified with SVG <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+   element</a> or basic shapes. Everything outside of a region does not get
+   rendered.
 
   <div class=example>
    <div class=figure> <img alt="Example Mask" height=260px
