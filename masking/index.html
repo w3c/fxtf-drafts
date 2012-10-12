@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-10-11 name=dcterms.issued>
+  <meta content=2012-10-12 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121011/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121012/"
    name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
@@ -43,7 +43,7 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 11 October
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 12 October
     2012</h2>
 
    <dl>
@@ -51,7 +51,7 @@
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20121011/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20121012/-->
 
     <dt>Latest version:
 
@@ -99,8 +99,8 @@
 
   <h2 class="no-num no-toc" id=abstract>Abstract</h2>
 
-  <p>CSS Masking describes how to use another graphical element or image as a
-   lumniance or alpha mask. Typically, rendering an element via CSS or SVG
+  <p> CSS Masking describes how to use another graphical element or image as
+   a lumniance or alpha mask. Typically, rendering an element via CSS or SVG
    can conceptually described as if the element, including its children, are
    drawn into a buffer (such as a raster image) and then that buffer is
    composited into the elements parent. Luminance or alpha masks influence
@@ -223,6 +223,9 @@
 
      <li><a href="#the-mask-box-image"><span class=secno>7.6. </span>The
       ‘<code class=property>mask-box-image</code>’ property</a>
+
+     <li><a href="#masking-with-the-mask-box-image"><span class=secno>7.7.
+      </span>Masking with the mask-box-image</a>
     </ul>
 
    <li><a href="#clipping-paths"><span class=secno>8. </span>Clipping
@@ -287,7 +290,7 @@
   <div class=example>
    <div class=figure> <img alt="Example Mask" height=260px
     src="images/luminance-mask.svg" width=655px>
-    <p class=caption>A luminance mask (middle) is applied on a shape filled
+    <p class=caption> A luminance mask (middle) is applied on a shape filled
      with a gradient (left). This results in a masked shape (right).
    </div>
   </div>
@@ -312,15 +315,16 @@
 
   <h2 id=values><span class=secno>3. </span>Values</h2>
 
-  <p>This specification follows the <a
+  <p> This specification follows the <a
    href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
    definition conventions</a> from <a href="#CSS21"
    rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
    this specification are defined in CSS Level 2 Revision 1 <a
    href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
 
-  <p>In addition to the property-specific values listed in their definitions,
-   all properties defined in this specification also accept the <a
+  <p> In addition to the property-specific values listed in their
+   definitions, all properties defined in this specification also accept the
+   <a
    href="http://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a>
    keyword as their property value. For readability it has not been repeated
    explicitly.
@@ -413,23 +417,24 @@
   <h2 id=the-mask-rendering-model><span class=secno>5. </span>The Mask
    Rendering Model</h2>
 
-  <p>The application of the ‘<a href="#clip-path"><code
-   class=css>clip-path, </code></a>’mask' or ‘<a href="#mask-image"><code
+  <p> The application of the ‘<a href="#clip-path"><code
+   class=property>clip-path</code></a>’, ‘<a href="#mask"><code
+   class=property>mask</code></a>’ or ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ properties to an element formatted
    with the CSS box model establishes a stacking context the same way that
    CSS ‘<code class=property>opacity</code>’ does, and all the element's
    descendants are rendered together as a group with the masking applied to
    the group as a whole.
 
-  <p>The ‘<a href="#mask"><code class=property>mask</code></a>’ and ‘<a
-   href="#mask-image"><code class=property>mask-image</code></a>’
+  <p> The ‘<a href="#mask"><code class=property>mask</code></a>’ and
+   ‘<a href="#mask-image"><code class=property>mask-image</code></a>’
    properties have no effect on the geometry of the target element's CSS
    boxes.
 
-  <p>The compositing model follows the SVG compositing model <a href="#SVG11"
-   rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>: first any filter effect is
-   applied, then any clipping, masking and opacity. These effects all apply
-   after any other CSS effects such as ‘<code
+  <p> The compositing model follows the SVG compositing model <a
+   href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>: first any
+   filter effect is applied, then any clipping, masking and opacity. These
+   effects all apply after any other CSS effects such as ‘<code
    class=property>border</code>’. As per SVG, the application of ‘<a
    href="#mask"><code class=property>mask</code></a>’ or ‘<a
    href="#mask-image"><code class=property>mask-image</code></a>’ has no
@@ -1144,7 +1149,7 @@ body {
      <td>no
   </table>
 
-  <p class=issue>Right now the ‘<a href="#mask-clip"><code
+  <p class=issue> Right now the ‘<a href="#mask-clip"><code
    class=property>mask-clip</code></a>’ property always clips overflowing
    content. Another keyword could either disable clipping or allow to extend
    the clipping area to the boundary of all descendant elements.
@@ -2618,8 +2623,9 @@ div {
     class=property>border-width</code>’ is used instead.
   </dl>
 
-  <p class=issue>Number values are possibly not relative to ‘<code
-   class=property>border-width</code>’. Needs to be verified.
+  <p class=note>Note that for SVG elements without associated layout box the
+   ‘<code class=property>border-width</code>’ is considered to be
+   ‘<code class=css>0</code>’.
 
   <p>Negative values are not allowed for any ‘<a
    href="#mask-box-image-width"><code
@@ -2710,8 +2716,9 @@ div {
    any of the ‘<a href="#mask-box-image-outset"><code
    class=property>mask-box-image-outset</code></a>’ values.
 
-  <p class=issue>Number values are possibly not relative to ‘<code
-   class=property>border-width</code>’. Needs to be verified.
+  <p class=note>Note that for SVG elements without associated layout box the
+   ‘<code class=property>border-width</code>’ is considered to be
+   ‘<code class=css>0</code>’.
 
   <p>Portions of the mask image that are rendered outside the border box do
    not trigger scrolling. Also such portions are invisible to mouse events
@@ -2887,11 +2894,109 @@ div {
    class=property>mask-box-image-repeat</code></a>’. Omitted values are set
    to their initial values.
 
-  <p class=issue>Drawing operation description missing (processeing model).
+  <h3 id=masking-with-the-mask-box-image><span class=secno>7.7.
+   </span>Masking with the mask-box-image</h3>
+
+  <p> After the mask-box-image given by ‘<a
+   href="#mask-box-image-source"><code
+   class=property>mask-box-image-source</code></a>’ is sliced by the ‘<a
+   href="#mask-box-image-slice"><code
+   class=property>mask-box-image-slice</code></a>’ values, the resulting
+   nine images are scaled, positioned, and tiled into their corresponding
+   mask image regions in four steps:
+
+  <ol>
+   <li>Scale to ‘<a href="#mask-box-image-width"><code
+    class=property>mask-box-image-width</code></a>’.
+    <ul>
+     <li>
+      <p>The two images for the top and bottom edges are made as tall as the
+       top and bottom <em>mask image area</em> parts, respectively, and their
+       width is scaled proportionally.
+
+     <li>
+      <p>The images for the left and right edge are made as wide as the left
+       and right <em>mask image area</em> parts, respectively, and their
+       height is scaled proportionally.
+
+     <li>
+      <p>The corner images are scaled to be as wide and as tall as the two
+       mask-box-image edges they are part of.
+
+     <li>
+      <p>The middle image's width is scaled by the same factor as the top
+       image unless that factor is zero or infinity, in which case the
+       scaling factor of the bottom is substituted, and failing that, the
+       width is not scaled. The height of the middle image is scaled by the
+       same factor as the left image unless that factor is zero or infinity,
+       in which case the scaling factor of the right image is substituted,
+       and failing that, the height is not scaled.
+    </ul>
+
+   <li>Scale to ‘<a href="#mask-box-image-repeat"><code
+    class=property>mask-box-image-repeat</code></a>’.
+    <ul>
+     <li>
+      <p>If the first keyword is ‘<a href="#stretch"><code
+       class=css>stretch</code></a>’, the top, middle and bottom images are
+       further scaled to be as wide as the middle part of the <span>mask
+       image area.</span> The height is not changed any further.
+
+     <li>
+      <p>If the first keyword is ‘<code class=css>round</code>’, the top,
+       middle and bottom images are resized in width, so that exactly a whole
+       number of them fit in the middle part of the mask-box-image area,
+       exactly as for ‘<code class=css>round</code>’ in the ‘<code
+       class=property>mask-image-repeat</code>’ property.
+
+     <li>
+      <p>If the first keyword is ‘<code class=css>repeat</code>’ or
+       ‘<code class=css>space</code>’, the top, middle, and bottom images
+       are not changed any further.
+
+     <li>
+      <p>The effects of ‘<a href="#stretch"><code
+       class=css>stretch</code></a>’, ‘<code class=css>round</code>’,
+       ‘<code class=css>repeat</code>’, and ‘<code
+       class=css>space</code>’ for the second keyword are analogous, acting
+       on the height of the left, middle and right images.
+    </ul>
+
+   <li>Position the first tile.
+    <ul>
+     <li>
+      <p>If the first keyword is ‘<code class=css>repeat</code>’, the
+       top, middle, and bottom images are centered horizontally in their
+       respective areas. Otherwise the images are placed at the left edge of
+       their respective parts of the mask-box-image area.
+
+     <li>
+      <p>If the second keyword is ‘<code class=css>repeat</code>’, the
+       left, middle, and right images are centered vertically in their
+       respective areas. Otherwise the images are placed at the top edge of
+       their respective parts of the mask-box-image area.
+    </ul>
+
+   <li>Tile and mask.
+    <ul>
+     <li>
+      <p>The images are then tiled to fill their respective areas. All tiles
+       are used together to mask the element and its descendants after
+       drawing all stacking levels.
+
+     <li>
+      <p>In the case of ‘<code class=css>space</code>’, any partial tiles
+       are discarded and the extra space distributed before, after, and
+       between the tiles. (I.e. the gap before the first tile, the gap after
+       the last tile, and the gaps between tiles are equalized.) <span
+       class=note>Note that this can result in empty mask-box-image side
+       areas.</span>
+    </ul>
+  </ol>
 
   <h2 id=clipping-paths><span class=secno>8. </span>Clipping paths</h2>
 
-  <p>The clipping path restricts the region to which paint can be applied.
+  <p> The clipping path restricts the region to which paint can be applied.
    Conceptually, any parts of the drawing that lie outside of the region
    bounded by the currently active clipping path are not drawn. A clipping
    path can be thought of as a mask wherein those pixels outside the clipping
@@ -2959,8 +3064,10 @@ div {
 
   <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
    href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
-   href="#child"><var>child</var></a> | <a
-   href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a></pre>
+   href="#child"><var>child</var></a> |
+  <a
+   href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a>
+</pre>
 
   <dl>
    <dt> <dfn id=ltshapegt>‘<code class=css>&lt;shape&gt;</code>’</dfn>
@@ -2972,9 +3079,9 @@ div {
     rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>.)
   </dl>
 
-  <p class=issue>For SVG percentage values might be resolved according to the
-   painted bounding box and not bounding client rect (alias object bounding
-   box).
+  <p class=issue> For SVG percentage values might be resolved according to
+   the painted bounding box and not bounding client rect (alias object
+   bounding box).
 
   <h3 id=the-clip-rule><span class=secno>8.2. </span>The ‘<a
    href="#clip-rule"><code class=property>clip-rule</code></a>’ property</h3>
