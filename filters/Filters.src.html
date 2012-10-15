@@ -379,7 +379,7 @@
 <p class="note">
   Note that even though this specification references parts of SVG 1.1 [[!SVG11]] it does not require an SVG 1.1
   implementation.
-  <p class="issue">Add link to conformance classes here.</p>
+  <p class="issue" id="issue-conformance-classes">Add link to conformance classes here.</p>
 </p>
 
 <!-- ****************************************************************************** -->
@@ -3780,11 +3780,11 @@ and optimize the single channel case. If the input has infinite extent and is
 constant (e.g <span class="attr-value"><a href="#FillPaint">FillPaint</a></span> where the fill is a solid color),
 this operation has no effect. If the input has infinite extent and the filter resultwhere the fill is a solid color)
 is the input to an <a>'feTile'</a>, the filter is evaluated with periodic boundary conditions.</p>
-<p class="issue">
+<p class="issue" id="issue-subregion-clipping-fegaussianblur">
   By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 </p>
-<p class="issue">
-  What about other inputs with infinite extends? What is the 'periodic boundary condition'?
+<p class="issue" id="issue-infinite-extents-fegaussianblur">
+  What about other inputs with infinite extents? What is the 'periodic boundary condition'?
 </p>
 
 <div class="adef-list">
@@ -3832,7 +3832,7 @@ For controlling the result there are three attributes that can be used:
   <li>the <a>'feUnsharpMask/amount'</a> attribute specifies an optional multiplier for the difference to subtract</li>
 </ul> 
 
-<p class="issue">
+<p class="issue" id="issue-unsharp-mask-attributes">
   The <span id="feUnsharpMaskStdDeviationAttribute" class="attr-name">'stdDeviation'</span>,
   <span id="feUnsharpMaskThresholdAttribute" class="attr-name">'threshold'</span> and
   <span id="feUnsharpMaskAmountAttribute" class="attr-name">'amount'</span>
@@ -4033,11 +4033,11 @@ where the fill is a solid color), this operation has no effect.
 If the input has infinite extent and the filter result
 is the input to an <a>'feTile'</a>, the filter is evaluated with
 periodic boundary conditions.</p>
-<p class="issue">
+<p class="issue" id="issue-subregion-clipping-femorphology">
   By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 </p>
-<p class="issue">
-  What about other inputs with infinite extends? What is the 'periodic boundary condition'?
+<p class="issue" id="issue-infinite-extents-femorphology">
+  What about other inputs with infinite extents? What is the 'periodic boundary condition'?
 </p>
 
 <p>
@@ -4339,7 +4339,7 @@ class="element-name">'feTurbulence'</span></h2>
 
 <!--elementsummary feTurbulence-->
 
-<p class="issue">Consider phasing out this C algorithm in favor of Simplex noise, which is more HW friendly.</p>
+<p class="issue" id="issue-turbulence-algorithm">Consider phasing out this C algorithm in favor of Simplex noise, which is more HW friendly.</p>
 
 <p>
   This filter primitive creates an image using the Perlin turbulence
@@ -4931,7 +4931,7 @@ class="element-name">'feCustom'</span></h2>
         </dl>
     </div>
     
-    <p class="issue">There may be different ways to specify the &lt;param-value&gt; syntax. For example, it
+    <p class="issue" id="issue-param-value-syntax">There may be different ways to specify the &lt;param-value&gt; syntax. For example, it
         might be better to not have a <code>texture()</code> function and simply a &lt;uri&gt; for texture
         parameters. Or it might be better to not have a <code>mat&lt;n&gt;</code> prefixes for matrices.</p>
     
@@ -5068,7 +5068,7 @@ class="element-name">'feCustom'</span></h2>
         <p>
           The lacuna value is ''filter-box''.
         </p>
-        <p class="issue">
+        <p class="issue" id="issue-filter-box">
           Are padding-box or content-box needed? Can border-box be the bounding client rect?
         </p>
       </dd>
@@ -5104,7 +5104,7 @@ class="element-name">'feCustom'</span></h2>
       feature.
     </p>
 
-    <p class="issue">Reference to discussion missing.</p>
+    <p class="issue" id="issue-shader-discussion-missing">Reference to discussion missing.</p>
 
     <div class="figure" id="vertexMesh56">
       <object data="images/shader-concept.svg#granular-mesh" style="width:372px; height:252px"></object> 
@@ -5265,7 +5265,7 @@ class="element-name">'feCustom'</span></h2>
   mesh folds over itself.
 </p>
 
-<p class="issue">
+<p class="issue" id="issue-shader-application-order">
   There is no guarantee which shader gets applied first. Because the depth buffer is used there's no guarantee that
   blending will happen.
 </p>
@@ -5284,7 +5284,7 @@ class="element-name">'feCustom'</span></h2>
   Each color value passed to the fragment shader gets multiplied with the <i>color matrix</i>, a predefined fragment shader variable that represents a
   4x4 matrix. The matrix is initialized to an identity matrix, but can be set by a fragment shader. The resulting color is the <i>multiplied color</i>.
 </p>
-<p class="issue">Note that color matrices usually operate on 5x4 values, where the last column defines an offset that is added to the color value. The WG may consider to turn the current 4x4 matrix into a 5x4 matrix.</p>
+<p class="issue" id="issue-5x4or4x4matrix">Note that color matrices usually operate on 5x4 values, where the last column defines an offset that is added to the color value. The WG may consider to turn the current 4x4 matrix into a 5x4 matrix.</p>
 
 <p>
   The <i>mix color</i> is a second, predefined fragment shader variable and represents an ''RGBA'' <var>&lt;color&gt;</var> value. The <i>mix color</i> can be set
@@ -5377,7 +5377,7 @@ filter() syntax</h3>
   'iframe' element would receive a completely blank input image.
 </p>
 
-<div class="issue">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
+<div class="issue" id="issue-cors">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
 
 <h2 id="RelaxNG">RelaxNG Schema for Filter Effects 1.0</h2>
 
@@ -5502,7 +5502,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
     &lt;feComposite in2="offsetblur" operator="in"/&gt;
     &lt;feMerge&gt;
       &lt;feMergeNode/&gt;
-      &lt;feMergeNode in="input-image"/&gt;
+      &lt;feMergeNode in="[input-image]"/&gt;
     &lt;/feMerge&gt;
   &lt;/filter&gt; </pre>
 
@@ -5518,7 +5518,7 @@ The RNG is under construction, and only the individual RNG snippets are availabl
   &lt;/filter&gt;
   </pre>
 
-  <div class="issue">It might be clearer to name the <code>custom()</code> function 
+  <div class="issue" id="issue-custom-naming">It might be clearer to name the <code>custom()</code> function 
       the <code>shader()</code> function instead and introduce an <code>feCustomShader</code>
       filter primitive instead of <a>'feCustom element'</a>.</div>
 
@@ -5869,7 +5869,7 @@ void main()
   <p>The CSS 'filter' property is animatable. Interpolation happens between the filter functions 
       only if the 'filter' values have the same number of filter functions, and the same functions appearing in the same order.</p>
 
-  <p class="issue">The CSS WG may define different fading transitions in the future.</p>
+  <p class="issue" id="issue-css-transitions">The CSS WG may define different fading transitions in the future.</p>
       
   <h3 id="filter-params-interpolation">Interpolating filter function parameters</h3>
   
