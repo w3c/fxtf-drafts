@@ -3011,13 +3011,26 @@ div {
 
   <h2 id=clipping-paths><span class=secno>8. </span>Clipping paths</h2>
 
-  <p> The clipping path restricts the region to which paint can be applied.
-   Conceptually, any parts of the drawing that lie outside of the region
-   bounded by the currently active clipping path are not drawn. A clipping
-   path can be thought of as a mask wherein those pixels outside the clipping
-   path are black with an alpha value of zero and those pixels inside the
-   clipping path are white with an alpha value of one (with the possible
-   exception of anti-aliasing along the edge of the silhouette).
+  <p> The clipping path or shape restricts the region to which paint can be
+   applied, the so called clipping region.
+
+  <p> An elements clipping region clips out any aspect of the element (e.g.,
+   content, children, background, borders, text decoration, outline and
+   visible scrolling mechanism — if any) that is outside the clipping
+   region. Conceptually, any parts of the drawing that lie outside of the
+   region are not drawn. Content that has been clipped does not cause
+   overflow.
+
+  <p> The elements ancestors may also clip portions of their content (e.g.,
+   via their own ‘<a href="#ClipProperty"><code
+   class=property>clip</code></a>’ or ‘<a href="#clip-path"><code
+   class=property>clip-path</code></a>’ properties and/or if their ‘<code
+   class=property>overflow</code>’ property is not ‘<code
+   class=css>visible</code>’); what is rendered is the cumulative
+   intersection.
+
+  <p> If the clipping region exceeds the bounds of the UA's document window,
+   content may be clipped to that window by the native operating environment.
 
   <h3 id=the-clip-path><span class=secno>8.1. </span>The ‘<a
    href="#clip-path"><code class=property>clip-path</code></a>’ property</h3>
@@ -3329,28 +3342,6 @@ div {
      and conversely that no pixels within the element's border box remain
      hidden when these values are ‘<code class=css>auto</code>’.
   </dl>
-
-  <p> An element's clipping region clips out any aspect of the element (e.g.,
-   content, children, background, borders, text decoration, outline and
-   visible scrolling mechanism — if any) that is outside the clipping
-   region. Content that has been clipped does not cause overflow.
-
-  <p> The element's ancestors may also clip portions of their content (e.g.,
-   via their own ‘<a href="#ClipProperty"><code
-   class=property>clip</code></a>’ property and/or if their ‘<code
-   class=property>overflow</code>’ property is not ‘<code
-   class=css>visible</code>’); what is rendered is the cumulative
-   intersection.
-
-  <p> If the clipping region exceeds the bounds of the UA's document window,
-   content may be clipped to that window by the native operating environment.
-
-  <p class=issue> The three paragraphs above need to move in the rendering
-   section for all properies: ‘<a href="#mask"><code
-   class=property>mask</code></a>’, ‘<a href="#clip-path"><code
-   class=property>clip-path</code></a>’ and ‘<a
-   href="#ClipProperty"><code class=property>clip</code></a>’. The handling
-   for ‘<code class=property>overflow</code>’ differs on SVG.
 
   <div class=example>
    <p> Example: The following two rules:

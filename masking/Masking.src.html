@@ -1888,11 +1888,24 @@ Values have the following meanings:
 <h2>Clipping paths</h2>
 
 <p>
-  The clipping path restricts the region to which paint can be applied. Conceptually, any parts of the drawing that lie
-  outside of the region bounded by the currently active clipping path are not drawn. A clipping path can be thought of
-  as a mask wherein those pixels outside the clipping path are black with an alpha value of zero and those pixels inside
-  the clipping path are white with an alpha value of one (with the possible exception of anti-aliasing along the edge of
-  the silhouette).
+  The clipping path or shape restricts the region to which paint can be applied, the so called clipping region. 
+</p>
+
+<p>
+  An elements clipping region clips out any aspect of the element (e.g., content, children, background, borders, text
+  decoration, outline and visible scrolling mechanism — if any) that is outside the clipping region. Conceptually, any
+  parts of the drawing that lie outside of the region are not drawn. Content that has been clipped does not cause
+  overflow.
+</p>
+
+<p>
+  The elements ancestors may also clip portions of their content (e.g., via their own 'clip' or 'clip-path' properties
+  and/or if their 'overflow' property is not ''visible''); what is rendered is the cumulative intersection.
+</p>
+
+<p>
+  If the clipping region exceeds the bounds of the UA's document window, content may be clipped to that window by the
+  native operating environment.
 </p>
 
 <h3 id="the-clip-path">The 'clip-path' property</h3>
@@ -2124,27 +2137,6 @@ clipping shape:</p>
     </p>
   </dd>
 </dl>
-
-<p>
-  An element's clipping region clips out any aspect of the element (e.g., content, children, background, borders, text
-  decoration, outline and visible scrolling mechanism — if any) that is outside the clipping region. Content that has
-  been clipped does not cause overflow.
-</p>
-
-<p>
-  The element's ancestors may also clip portions of their content (e.g., via their own 'clip' property and/or if their
-  'overflow' property is not ''visible''); what is rendered is the cumulative intersection.
-</p>
-
-<p>
-  If the clipping region exceeds the bounds of the UA's document window, content may be clipped to that window by the
-  native operating environment.
-</p>
-
-<p class="issue">
-  The three paragraphs above need to move in the rendering section for all properies: 'mask', 'clip-path' and
-  'clip'. The handling for 'overflow' differs on SVG.
-</p>
 
 <div class="example">
   <p>
