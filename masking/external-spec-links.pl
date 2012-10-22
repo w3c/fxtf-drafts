@@ -234,6 +234,7 @@ sub readdefs {
     $interfaces{$1} = {
       href => "$base$2"
     };
+    $terms{$1} = "$base$2";
   }
 
   while ($defs =~ s/<term\s+name=['"](.*?)['"]\s+href=['"](.*?)['"]\s*\/>//s) {
