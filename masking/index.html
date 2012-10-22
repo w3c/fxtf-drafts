@@ -99,19 +99,19 @@
 
   <h2 class="no-num no-toc" id=abstract>Abstract</h2>
 
-  <p> CSS Masking describes ways to partially or fully hide portions of
-   visual elements.
+  <p> CSS Masking provides two means for partially or fully hiding portions
+   of visual elements: masking and clipping.
 
   <p> Masking describes how to use another graphical element or image as a
-   lumniance or alpha mask. Typically, rendering an element via CSS or SVG
+   luminance or alpha mask. Typically, rendering an element via CSS or SVG
    can conceptually described as if the element, including its children, are
-   drawn into a buffer (such as a raster image) and then that buffer is
-   composited into the elements parent. Luminance or alpha masks influence
-   the transperency of this buffer before the compositing stage.
+   drawn into a buffer and then that buffer is composited into the element's
+   parent. Luminance and alpha masks influence the transparency of this
+   buffer before the compositing stage.
 
-  <p> Clipping describes the visible region of visual elements. A region can
-   be described by SVG graphics elements or basic shapes. Everything outside
-   of a region does not get rendered.
+  <p> Clipping describes the visible region of visual elements. The region
+   can be described by using certain SVG graphics elements or basic shapes.
+   Anything outside of this region is not rendered.
 
   <h2 class="no-num no-toc" id=status>Status of this document</h2>
   <!--begin-status-->
@@ -2145,10 +2145,6 @@ div {
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#StyleAttribute"><span
         class=attr-name>‘style’</span></a>
 
-       <li><a
-        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute"><span
-        class=attr-name>‘externalResourcesRequired’</span></a>
-
        <li><a href="#MaskElementXAttribute"><span
         class=attr-name>‘x’</span></a>
 
@@ -2344,9 +2340,9 @@ div {
   <h2 id=mask-box-image><span class=secno>7. </span>Mask Box Image</h2>
 
   <p> With ‘<a href="#mask-box-image0"><code
-   class=property>mask-box-image</code></a>’ a mask can be splitted into
-   nine pieces: four corners, four edges and the middle piece as demonstrated
-   in the figure below.
+   class=property>mask-box-image</code></a>’ a mask can be split into nine
+   pieces: four corners, four edges and the middle piece as demonstrated in
+   the figure below.
 
   <div class=figure> <img alt="pieces of a mask box image"
    src="images/mask-box-image-mask.svg" width=240>
@@ -2652,8 +2648,8 @@ div {
     class=property>border-width</code>’ is used instead.
   </dl>
 
-  <p class=note>Note that for SVG elements without associated layout box the
-   ‘<code class=property>border-width</code>’ is considered to be
+  <p class=note> Note that for SVG elements without an associated layout box
+   the ‘<code class=property>border-width</code>’ is considered to be
    ‘<code class=css>0</code>’.
 
   <p>Negative values are not allowed for any ‘<a
@@ -3025,22 +3021,19 @@ div {
 
   <h2 id=clipping-paths><span class=secno>8. </span>Clipping paths</h2>
 
-  <p> The clipping path or shape restricts the region to which paint can be
-   applied, the so called clipping region.
+  <p> The clipping path restricts the region to which paint can be applied,
+   the so-called clipping region. Conceptually, any parts of the drawing that
+   lie outside of this region are not drawn. This includes any content,
+   background, borders, text decoration, outline and visible scrolling
+   mechanism of the element to which the clipping path is applied, and those
+   of its descendants.
 
-  <p> An elements clipping region clips out any aspect of the element (e.g.,
-   content, children, background, borders, text decoration, outline and
-   visible scrolling mechanism — if any) that is outside the clipping
-   region. Conceptually, any parts of the drawing that lie outside of the
-   region are not drawn. Content that has been clipped does not cause
-   overflow.
-
-  <p> The elements ancestors may also clip portions of their content (e.g.,
+  <p> An element's ancestors may also clip portions of their content (e.g.,
    via their own ‘<a href="#ClipProperty"><code
    class=property>clip</code></a>’ or ‘<a href="#clip-path"><code
    class=property>clip-path</code></a>’ properties and/or if their ‘<code
    class=property>overflow</code>’ property is not ‘<code
-   class=css>visible</code>’); what is rendered is the cumulative
+   class=css>visible</code>’). What is rendered is the cumulative
    intersection.
 
   <p> If the clipping region exceeds the bounds of the UA's document window,
@@ -3629,7 +3622,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <th>DOM Interfaces:
 
      <td><a class=idlinterface
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#InterfaceSVGClipPathElement">SVGClipPathElement</a>
+      href="#InterfaceSVGClipPathElement">SVGClipPathElement</a>
   </table>
 
   <div class=adef-list>

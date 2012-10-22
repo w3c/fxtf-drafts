@@ -66,20 +66,25 @@
 <h2 class="no-num no-toc" id="abstract">Abstract</h2>
 
 <p>
-  CSS Masking describes ways to partially or fully hide portions of visual elements.
+  CSS Masking provides two means for partially or fully hiding portions of
+  visual elements: masking and clipping.
 </p>
 
 <p>
-  Masking describes how to use another graphical element or image as a lumniance or alpha mask.
+  Masking describes how to use another graphical element or image as a luminance
+  or alpha mask.
   Typically, rendering an element via CSS or SVG can conceptually described as if the element,
-  including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited
-  into the elements parent. Luminance or alpha masks influence the transperency of this buffer before the compositing
-  stage.
+  including its children, are drawn into a buffer and then that buffer is composited
+  into the element's parent.
+  Luminance and alpha masks influence the transparency of this buffer before the
+  compositing stage.
 </p>
 
 <p>
-  Clipping describes the visible region of visual elements. A region can be described by SVG graphics
-  elements or basic shapes. Everything outside of a region does not get rendered.
+  Clipping describes the visible region of visual elements.
+  The region can be described by using certain SVG graphics elements or basic
+  shapes.
+  Anything outside of this region is not rendered.
 </p>
 
 <h2 class="no-num no-toc" id="status">Status of this document</h2>
@@ -1429,8 +1434,8 @@ on the <a>'mask element'</a> element or any of its ancestors is set to
 <h2>Mask Box Image</h2>
 
 <p>
-  With 'mask-box-image' a mask can be splitted into nine pieces: four corners, four edges and the middle piece as
-  demonstrated in the figure below.
+  With 'mask-box-image' a mask can be split into nine pieces: four corners, four
+  edges and the middle piece as demonstrated in the figure below.
 </p>
 
 <div class=figure>
@@ -1649,7 +1654,10 @@ it is the same as the top. Values have the following meanings:</p>
     instead.
 </dl>
 
-<p class=note>Note that for SVG elements without associated layout box the 'border-width' is considered to be ''0''.</p>
+<p class=note>
+  Note that for SVG elements without an associated layout box the 'border-width'
+  is considered to be ''0''.
+</p>
 
 <p>Negative values are not allowed for any 'mask-box-image-width' values.
 
@@ -1888,19 +1896,20 @@ Values have the following meanings:
 <h2>Clipping paths</h2>
 
 <p>
-  The clipping path or shape restricts the region to which paint can be applied, the so called clipping region. 
+  The clipping path restricts the region to which paint can be applied, the
+  so-called clipping region.
+  Conceptually, any parts of the drawing that lie outside of this region are not
+  drawn.
+  This includes any content, background, borders, text decoration, outline and
+  visible scrolling mechanism of the element to which the clipping path is
+  applied, and those of its descendants.
 </p>
 
 <p>
-  An elements clipping region clips out any aspect of the element (e.g., content, children, background, borders, text
-  decoration, outline and visible scrolling mechanism — if any) that is outside the clipping region. Conceptually, any
-  parts of the drawing that lie outside of the region are not drawn. Content that has been clipped does not cause
-  overflow.
-</p>
-
-<p>
-  The elements ancestors may also clip portions of their content (e.g., via their own 'clip' or 'clip-path' properties
-  and/or if their 'overflow' property is not ''visible''); what is rendered is the cumulative intersection.
+  An element's ancestors may also clip portions of their content (e.g., via
+  their own 'clip' or 'clip-path' properties and/or if their 'overflow' property
+  is not ''visible'').
+  What is rendered is the cumulative intersection.
 </p>
 
 <p>
@@ -2265,7 +2274,7 @@ element (that is, an element which references a <a>'clipPath'</a>
 element via a 'clip-path' property, or a child of the 
 referencing element) must remain the same as if it were not clipped.</p>
 
-<p>By default, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#PointerEventsProperty">pointer events</a>
+<p>By default, <a>pointer events</a>
 must not be dispatched on the clipped (non-visible) regions of a shape.  For
 example, a circle with a radius of 10 which is clipped to a circle with a radius
 of 5 will not receive <span class="event-name">'click'</span> events outside the
