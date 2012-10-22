@@ -34,25 +34,12 @@ PUBMSG=
 PUBDATE=
 USER=
 
-W3C_CSS_DIR=~/work/W3C/cvs/dev.w3.org/csswg/css3-shaders
-
-all: $(OUTPUTFILE) 
+all: $(OUTPUTFILE)
 
 $(OUTPUTFILE): $(SOURCEFILE)
 ifeq (,$(PUBDATE))
-	$(CURL) $(CURLFLAGS) --user $(USER) -F file="@$<" -o "$@" -F group=CSS -F output=html -F method=file $(PROCESSCGI)
+	$(CURL) $(CURLFLAGS) -K ~/.curl-w3.org -F file="@$<" -o "$@" -F group=FX -F output=html -F shortname=css-shaders -F method=file $(PROCESSCGI)
 else
-	$(CURL) $(CURLFLAGS) --user $(USER) -F file="@$<" -o "$@" -F group=CSS -F output=html -F method=file $(PROCESSCGI) -F date=$(PUBDATE)
+	$(CURL) $(CURLFLAGS) -K ~/.curl-w3.org -F file="@$<" -o "$@" -F group=FX -F output=html -F shortname=ss-shaders -F method=file $(PROCESSCGI) -F date=$(PUBDATE)
 endif
-
-publish:
-ifeq (,$(PUBMSG)) 
-		@echo "Invoke command with a commit message for publication: e.g., make USER=<user-name> PUBMSG=<msg>"
-else
-		$(shell cd $(W3C_CSS_DIR); cvs edit *.html; cvs edit images/*.*;)
-		cp 	*.html $(W3C_CSS_DIR)/.
-		cp ./images/*.* $(W3C_CSS_DIR)/images/.
-    	$(shell cd $(W3C_CSS_DIR); cvs commit -m "$(PUBMSG)";)
-endif
-	
 
