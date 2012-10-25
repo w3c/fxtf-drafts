@@ -5,57 +5,18 @@
   <title>Filter Effects 1.0</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style/default.css">
-  <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
-  <link id="st" href="style/alternate-spec-style.css" rel="stylesheet" type="text/css" title="additional spec styles">
-  <script type="text/javascript" src="style/style-toggle.js"></script>
+  <link rel="stylesheet" type="text/css"
+        href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
   <style type="text/css">
-  
-  /* Alternate stylesheet fonts are here because in some browsers (Opera 11.5) */
-  /* The fonts are not applied if only loaded from the alternate stylesheet    */
-  @import url("http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic");
-  @import url("http://fonts.googleapis.com/css?family=Droid+Sans+Mono");
-
-  a.toggle {
-    position: fixed;
-    top: 0.5em;
-    right: 0.5em;
-    font-size: smaller;
-    color: gray;
-    opacity: 0.2;
-  }
-
-  a.toggle:hover {
-    opacity: 1;
-    color: #46A4E9;
-  }
-
-  div.issue-marker {
-    position: absolute;
-    width: 20ex;
-    margin-left: -26ex;
-    padding-left: 1em;
-    padding: 5px;
-    font-weight: normal;
-    font-size: 11px;
-    text-align: right;
-    background-color: white;
-    font-size: 90%;
-  }
-
-  div.issue-marker a {
-    color: red;
-  }
-  
   .todo {
-      font-weight: bold;
       border-left: 0.5em solid #f44;
       padding-left: 1em;
       margin-top: 0.5em;
-      color: #a0a0a0;
+      background: #FBE9E9;
   }
   
   .todo:before {
-      content: "TO DO : ";
+      content: "TO DO ";
       color: #f44;
   }
  </style>
@@ -370,12 +331,6 @@
   Each section of this document is normative unless otherwise specified.
 </p>
 
-<p>
-  This document contains explicit conformance criteria that overlap with some
-  RelaxNG definitions in requirements. If there is any conflict between the two,
-  the explicit conformance criteria are the definitive reference.
-</p>
-
 <p class="note">
   Note that even though this specification references parts of SVG 1.1 [[!SVG11]] it does not require an SVG 1.1
   implementation.
@@ -454,8 +409,10 @@
     <a>'feComponentTransfer'</a>,
     <a>'feComposite'</a>,
     <a>'feConvolveMatrix'</a>,
+    <a>'feCustom'</a>.
     <a>'feDiffuseLighting'</a>,
     <a>'feDisplacementMap'</a>,
+    <a>'feDropShadow'</a>,
     <a>'feFlood'</a>,
     <a>'feGaussianBlur'</a>,
     <a>'feImage'</a>,
@@ -465,10 +422,6 @@
     <a>'feSpecularLighting'</a>,
     <a>'feTile'</a>,
     <a>'feTurbulence'</a>,
-    <a>'feDropShadow'</a>,
-    <a>'feDiffuseSpecular'</a>,
-    <a>'feUnsharpMask'</a>,
-    <a>'feCustom'</a>.
     </p>
 </dd>
 <dt id="TermLightSourceElement"><dfn>light sources</dfn></dt>
@@ -804,12 +757,12 @@
   in the sRGB color space.
 </p>
 
-<p class="issue">
-  At the moment it is unspecified how the 'color-interpolation-filters' property applies to short hand filters.
-  The FXTF discussed to apply it to the whole filter chain.
+<p class="note">
+  Note that the 'color-interpolation-filters' propert has no effect on <span>Filter
+  Functions</span>, which operate in the sRGB color space.
 </p>
 
-<h2 id="FilterFunction">Filter Functions</h2>
+<h2 id="FilterFunction"><dfn>Filter Functions</dfn></h2>
 
 <p>
   The value of the 'filter' property is a list of <dfn>&lt;filter-function&gt;</dfn>s
@@ -820,13 +773,13 @@
 
 <dl>
   <dt>
-    <a>&lt;FuncIRI&gt;</a>
+    <a>&lt;URL&gt;</a>
   </dt>
   <dd>
-    An <a>IRI reference</a>
-    to a <a>'filter element'</a> element that defines the
-    filter effect. For example ''url(commonfilters.xml#large-blur)''. If the IRI references a non-existent object or the referenced  
-    object is not a <a>'filter element'</a> element, then the <span class="term">null filter</term> will be applied instead.
+    A URL reference to a 'filter' element. For example ''url(commonmasks.xml#mask)''.
+    If the URL references a non-existent object or the referenced  
+    object is not a <a>'filter element'</a> element, then the <span class="term">null 
+    filter</term> will be applied instead.
   </dd>
 
   <dt>
@@ -979,40 +932,8 @@
           The <code>&lt;params&gt;</code> specify the parameters and corresponding passed to the shader programs.
           The markup equivalent is <a href="#customEquivalent">given below</a>.
       </div>
-      <p class="issue">It might be clearer to name the <code>custom()</code> function 
-          the <code>shader()</code> function instead and introduce an <code>feCustomShader</code>
-          filter primitive instead of <a>'feCustom element'</a>.
-      </p>
-      
   </dd>
 </dl>
-
-<div class="issue">
-  <p>
-    The above list is a collection of effects that can be easily defined in
-    terms of SVG filters. However, there are many more interesting effects
-    that can be considered for inclusion. If accepted, there will have to
-    be equivalent XML elements for the effect. Effects considered include:
-  </p>
-  <ul>
-  <li>brightness, contrast, exposure</li>
-  <li>halftone</li>
-  <li>motion-blur(radius, angle)</li>
-  <li>posterize(levels)</li>
-  <li>bump(x, y, radius, intensity)</li>
-  <li>generators</li>
-  <li>circle-crop(x, y, radius)</li>
-  <li>affine-transform(some matrix)</li>
-  <li>crop(x, y, w, h)</li>
-  <li>bloom(radius, intensity)</li>
-  <li>gloom(radius, intensity)</li>
-  <li>mosaic(w,h)</li>
-  <li>displace(url, intensity)</li>
-  <li>edge-detect(intensity)</li>
-  <li>pinch(x, y, radius, scale)</li>
-  <li>twirl(x, y, radius, angle)</li>
-  </ul>
-</div>
 
 <p>
   The first function in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as
@@ -1610,24 +1531,14 @@ primitives:</p>
   <span class="adef">result</span> =
   "<em><dfn>&lt;filter-primitive-reference&gt;</dfn></em>"</dt>
     <dd><p>
-  Assigned name for this <a>filter primitive</a>. If supplied, then graphics
+      &lt;filter-primitive-reference&gt; is an <a href="">&lt;author-ident&gt;</a> and an assigned name for this
+      <a>filter primitive</a>. If supplied, then graphics
       that result from processing this <a>filter primitive</a> can be referenced by
       an <a>'in'</a> attribute on a subsequent filter
       primitive within the same <a>'filter element'</a> element. If no value is
       provided, the output will only be available for re-use as the implicit
       input into the next <a>filter primitive</a> if that <a>filter primitive</a> provides
       no value for its <a>'in'</a> attribute.</p>
-      <p class="issue">Can &lt;filter-primitive-reference&gt; be defined as &lt;author-ident&gt; as in CSS Values and Units?</p>
-      <p class="note">
-  Note that a <a>&lt;filter-primitive-reference&gt;</a> is not an XML
-      ID; instead, a <a>&lt;filter-primitive-reference&gt;</a> is only
-      meaningful within a given <a>'filter element'</a> element and thus have only
-      local scope. It is legal for the same
-      <a>&lt;filter-primitive-reference&gt;</a> to appear multiple times
-      within the same <a>'filter element'</a> element. When referenced, the
-      <a>&lt;filter-primitive-reference&gt;</a> will use the closest
-      preceding <a>filter primitive</a> with the given result.</p>
-      <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
   <dt id="FilterPrimitiveInAttribute">
   <span class="adef">in</span> = "<em><a>SourceGraphic</a> | <a>SourceAlpha</a> | <a>BackgroundImage</a> | <a>BackgroundAlpha</a> | <a>FillPaint</a> | <a>StrokePaint</a> |
@@ -3812,33 +3723,6 @@ is the input to an <a>'feTile'</a>, the filter is evaluated with periodic bounda
 use of the <a>'feGaussianBlur'</a> filter primitive
 to create a drop shadow effect.</p>
 
-<h2 id="feUnsharpMaskElement">Filter primitive <span
-class="element-name">'feUnsharpMask'</span></h2>
-
-<!--elementsummary feUnsharpMask-->
-
-<p>
-  This filter primitive performs an image sharpening operation on the input image. This is traditionally known as an unsharp mask operation.</p>
-
-<p>
-  The filter first does a <a>'feGaussianBlur'</a> operation on the input image and then subtracts the difference between the input image and the blurred image.</p>
-
-<p>
-For controlling the result there are three attributes that can be used:
-</p>
-<ul>
-  <li>the <a>'feUnsharpMask/stdDeviation'</a> attribute controls how much to blur the input image</li>
-  <li>the <a>'feUnsharpMask/threshold'</a> attribute can be used for controlling when the difference should not be subtracted</li>
-  <li>the <a>'feUnsharpMask/amount'</a> attribute specifies an optional multiplier for the difference to subtract</li>
-</ul> 
-
-<p class="issue" id="issue-unsharp-mask-attributes">
-  The <span id="feUnsharpMaskStdDeviationAttribute" class="attr-name">'stdDeviation'</span>,
-  <span id="feUnsharpMaskThresholdAttribute" class="attr-name">'threshold'</span> and
-  <span id="feUnsharpMaskAmountAttribute" class="attr-name">'amount'</span>
-  attributes need to be defined.
-</p>
-
 <h2 id="feImageElement">Filter primitive <span
 class="element-name">'feImage'</span></h2>
 
@@ -4339,8 +4223,6 @@ class="element-name">'feTurbulence'</span></h2>
 
 <!--elementsummary feTurbulence-->
 
-<p class="issue" id="issue-turbulence-algorithm">Consider phasing out this C algorithm in favor of Simplex noise, which is more HW friendly.</p>
-
 <p>
   This filter primitive creates an image using the Perlin turbulence
 function. It allows the synthesis of artificial textures like clouds or
@@ -4824,12 +4706,6 @@ be exposed to the DOM.</span> </p>
     <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
 </dl>
-</div>
-
-<div class="note">
-<h2 id="feDiffuseSpecularElement">Filter primitive <span
-class="element-name">'feDiffuseSpecular'</span></h2>
-The WG is looking at providing a shorthand for diffuse+specular.
 </div>
 
 <h2 id="feCustomElement">Filter primitive <span
@@ -5379,33 +5255,6 @@ filter() syntax</h3>
 
 <div class="issue" id="issue-cors">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
 
-<h2 id="RelaxNG">RelaxNG Schema for Filter Effects 1.0</h2>
-
-<p>
-  The schema for Filter Effects 1.0 is written in <a
-href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">RelaxNG</a>
-[<a href="#ref-RNG">RelaxNG</a>], a namespace-aware schema language that uses
-the datatypes from <a
-href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part
-2</a> [<a href="#ref-Schema2">Schema2</a>]. This allows namespaces and
-modularity to be much more naturally expressed than using DTD syntax. The
-RelaxNG schema for Filter Effects 1.0 may be imported by other RelaxNG schemas,
-or combined with other schemas in other languages into a multi-namespace,
-multi-grammar schema using <a
-href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">Namespace-based Validation
-Dispatching Language</a> [<a href="#ref-NVDL">NVDL</a>].</p>
-
-<p>
-  Unlike a DTD, the schema used for validation is not hardcoded into the
-document instance. There is no equivalent to the DOCTYPE declaration. Simply
-point your editor or other validation tool to the IRI of the schema (or your
-local cached copy, as you prefer).</p>
-
-<p>
-The RNG is under construction, and only the individual RNG snippets are available at this time. They have not yet been integrated into a functional schema. The individual RNG files are available <a href="rng">here</a>. 
-</p>
-
-
 <h2 id="ShorthandEquivalents">Shorthands defined in terms of the <span class="element-name">'filter'</span> element</h2>
 
 <p>
@@ -5920,10 +5769,6 @@ void main()
   </div>
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
-
-<div class="note">
-The interfaces below will be made available in a IDL file for an upcoming draft.
-</div>
 
 <h3 id="InterfaceImageData">Interface ImageData</h3>
 
