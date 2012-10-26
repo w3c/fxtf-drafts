@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending 1.0</h1>
 
-<h2 class="no-num no-toc">26 September 2012</h2>
+<h2 class="no-num no-toc">26 October 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -1202,7 +1202,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> clear | copy | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | lighter</td>
+            <td> <a href="#porterduffcompositingoperators_clear">clear</a> | <a href="#porterduffcompositingoperators_src">copy</a> | <a href="#porterduffcompositingoperators_dst">destination</a> | <a href="#porterduffcompositingoperators_srcover">source-over</a> | <a href="#porterduffcompositingoperators_dstover">destination-over</a> | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a href="#porterduffcompositingoperators_dstin">destination-in</a> | <a href="#porterduffcompositingoperators_srcout">source-out</a> | <a href="#porterduffcompositingoperators_dstout">destination-out</a> | <a href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a href="#porterduffcompositingoperators_xor">xor</a> | <a href="#porterduffcompositingoperators_plus">lighter</a></td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1439,10 +1439,11 @@ as follows:</p>
 </dl>
 </div>
 <pre>
-	compositing-style = clear | copy | destination | source-over | destination-over | source-in | destination-in | source-out | destination-out | source-atop | destination-atop | xor | lighter 
+	compositing-style = <a href="#porterduffcompositingoperators_clear">clear</a> | <a href="#porterduffcompositingoperators_src">copy</a> | <a href="#porterduffcompositingoperators_dst">destination</a> | <a href="#porterduffcompositingoperators_srcover">source-over</a> | <a href="#porterduffcompositingoperators_dstover">destination-over</a> | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a href="#porterduffcompositingoperators_dstin">destination-in</a> | <a href="#porterduffcompositingoperators_srcout">source-out</a> | <a href="#porterduffcompositingoperators_dstout">destination-out</a> | <a href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a href="#porterduffcompositingoperators_xor">xor</a> | <a href="#porterduffcompositingoperators_plus">lighter</a>
 </pre>
 <p>
-Background images will always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'false'.
+Background images will always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'false'.<br/>
+The stack of background images will act as an isolated group so the background compositing operators will no affect content that is drawn prior to the element backdrop.
 </p>
 
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
@@ -1650,51 +1651,42 @@ as follows:</p>
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-<h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
-Please see the <a href="http://www.w3.org/Graphics/fx/wiki/BlendingInCanvas">W3 wiki</a>.
-<!--
-<h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas </h2>
-<p><strong>This spec is not intending to become an official extension for Canvas. These keywords are only here to start a discussion and will be removed once there is consensus.</strong></p>
-<h3 id="canvascompositingandblending">Specifying the current compositing and blending mode</h3>
-<p>
-<p class="issue">DRAFT.This proposal needs more discussion.</p><br/>
-The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter Duff operators.
-To allow blending, we can extend the list with the blending keywords:
-<pre>normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.</pre>
-If a blend mode is specified, the blended image is calculated as specified above and is then always composited to the destination with the source-over compositing operator.<br/>Isolation and knockout do not apply in a canvas context since there is no concept of grouping.
-</p>
-<p>
-<span p="issue">or</p>
-</p>
-<p>
-The <a href="http://dev.w3.org/html5/2dcontext/#compositing">Canvas specification</a> already defines the Porter Duff operators.<br/>
-To allow blending, we can add a new operator 'globalBlendOperation' on the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#2dcontext">2D context</a> with the blending keywords: 
-<pre>
-normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color and luminosity.
-</pre>
-The default value will be 'normal'.<br/><br/>
-Blending is done first, followed by compositing.<br/>
-</p>
-
-<h3 id="canvascompositingandblending">Specifying the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#shadows">shadow</a>'s compositing and blending mode</h3>
-<p>
-<span p="issue">DRAFT.This proposal needs more discussion.</p><br/>
-Introduce 2 new keywords that allow compositing and blending on the shadow color:<br/>
-shadow-alpha-compositing would set the compositing mode of the shadow (the default would be 'source-over'/'normal')<br/>
-shadow-blend-mode would set the blend operation on the shadow (the default is 'normal').
-</p>
--->
+<h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas 2D</h2>
+<p>The <a href="http://www.w3.org/TR/2dcontext">canvas 2d</a> context has the <a href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a> attribute that is used to set the current compositing and blending operator<p>
+<p>Blending is not separated from compositing in canvas 2d. If a blend operation is selected its results will always be composited with the <a href="#porterduffcompositingoperators_srcover">'source-over'</a> compositing mode.</p>
+<p>Compositing and blending in canvas 2d is always done with <a href="#groupcompositingcliptoself">'clip-to-self'</a> assumed 	false. This means that the operation will affect the entire canvas and not just be limited to the shape that is being composited.
+However, the <a href="http://www.w3.org/TR/2dcontext/#clipping-region">clipping region</a> will still be in effect and limit the area the affected area.</p>
+<div class="propdef">
+<dl>
+  <dt id='propdef-globalCompositeOperation'><span class='propdef-title prop-name'><a href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a></span></dt>
+    <dd>
+      <table summary="globalCompositeOperation attribute" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> <a href="#porterduffcompositingoperators_clear">clear</a> | <a href="#porterduffcompositingoperators_src">copy</a> | <a href="#porterduffcompositingoperators_dst">destination</a> | <a href="#porterduffcompositingoperators_srcover">source-over</a> | <a href="#porterduffcompositingoperators_dstover">destination-over</a> | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a href="#porterduffcompositingoperators_dstin">destination-in</a> | <a href="#porterduffcompositingoperators_srcout">source-out</a> | <a href="#porterduffcompositingoperators_dstout">destination-out</a> | <a href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a href="#porterduffcompositingoperators_xor">xor</a> | <a href="#porterduffcompositingoperators_plus">lighter</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a> </td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td><a href="#porterduffcompositingoperators_srcover">source-over</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
 
 <h2 id="security">Security issues with compositing and blending</h2>
 <p>
-It is important that the timing to the blending and compositing operations is independant of the source and destination pixel. In other words, operations should be implemented in such a way that they always take the same amount of time regardless of the pixel values.<br/>
-If this rule is not followed, an attacker could mount a timing attack.
+It is important that the timing to the blending and compositing operations is independant of the source and destination pixel. Operations should be implemented in such a way that they always take the same amount of time regardless of the pixel values.<br/>
+If this rule is not followed, an attacker could infer information and mount a timing attack.
 </p>
 <p> A timing attack is a method of obtaining information about content that
    is otherwise protected, based on studying the amount of time it takes for
-   an operation to occur.If, for example, red pixels took longer to
+   an operation to occur. If, for example, red pixels took longer to
    draw than green pixels, one might be able to reconstruct a rough image of 
-   the element being rendered, even without ever having access to the content 
+   the element being rendered, without ever having access to the content 
    of the element.</p>
 
 <h2 id="references1">References</h2>
