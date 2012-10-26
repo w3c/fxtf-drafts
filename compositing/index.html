@@ -508,56 +508,55 @@
    <li><a href="#csscompositingandblending"><span class=secno>7.
     </span>Specifying Compositing and Blending in CSS </a>
     <ul class=toc>
-     <li><a href="#csscompositingrules_CSS"><span class=secno>7.1.
+     <li><a href="#compositingandblendingorder"><span class=secno>7.1.
+      </span>Order of graphical operations</a>
+
+     <li><a href="#csscompositingrules_CSS"><span class=secno>7.2.
       </span>Behavior specific to CSS</a>
 
-     <li><a href="#csscompositingrules_SVG"><span class=secno>7.2.
+     <li><a href="#csscompositingrules_SVG"><span class=secno>7.3.
       </span>Behavior specific to SVG</a>
 
-     <li><a href="#csscompositingkeyword"><span class=secno>7.3.
+     <li><a href="#csscompositingkeyword"><span class=secno>7.4.
       </span>Properties</a>
       <ul class=toc>
-       <li><a href="#alpha-compositing"><span class=secno>7.3.1. </span>The
+       <li><a href="#alpha-compositing"><span class=secno>7.4.1. </span>The
         <span class=prop-name>‘<code
         class=property>alpha-compositing</code>’</span> property</a>
 
-       <li><a href="#blend-mode"><span class=secno>7.3.2. </span>The <span
+       <li><a href="#blend-mode"><span class=secno>7.4.2. </span>The <span
         class=prop-name>‘<code class=property>blend-mode</code>’</span>
         property</a>
 
-       <li><a href="#isolation"><span class=secno>7.3.3. </span>The <span
+       <li><a href="#isolation"><span class=secno>7.4.3. </span>The <span
         class=prop-name>‘<code class=property>isolation</code>’</span>
         property</a>
 
-       <li><a href="#knock-out"><span class=secno>7.3.4. </span>The <span
+       <li><a href="#knock-out"><span class=secno>7.4.4. </span>The <span
         class=prop-name>‘<code class=property>knock-out</code>’</span>
         property</a>
       </ul>
 
-     <li><a href="#cssbackgroundsyntax"><span class=secno>7.4.
+     <li><a href="#cssbackgroundsyntax"><span class=secno>7.5.
       </span>Specifying blending and compositing in the element
       background</a>
       <ul class=toc>
-       <li><a href="#background-alpha-compositing"><span class=secno>7.4.1.
+       <li><a href="#background-alpha-compositing"><span class=secno>7.5.1.
         </span>The <span class=prop-name>‘<code
         class=property>background-alpha-compositing</code>’</span>
         property</a>
 
-       <li><a href="#background-blend-mode"><span class=secno>7.4.2.
+       <li><a href="#background-blend-mode"><span class=secno>7.5.2.
         </span>The <span class=prop-name>‘<code
         class=property>background-blend-mode</code>’</span> property</a>
 
-       <li><a href="#box-shadow-blend-mode"><span class=secno>7.4.3.
+       <li><a href="#box-shadow-blend-mode"><span class=secno>7.5.3.
         </span>The <span class=prop-name>‘<code
         class=property>box-shadow-blend-mode</code>’</span> property</a>
 
-       <li><a href="#text-shadow-blend-mode"><span class=secno>7.4.4.
+       <li><a href="#text-shadow-blend-mode"><span class=secno>7.5.4.
         </span>The <span class=prop-name>‘<code
         class=property>text-shadow-blend-mode</code>’</span> property</a>
-
-       <li><a href="#text-blend-mode"><span class=secno>7.4.5. </span>The
-        <span class=prop-name>‘<code
-        class=property>foreground-blend-mode</code>’</span> property</a>
       </ul>
     </ul>
 
@@ -1799,49 +1798,53 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h2 id=csscompositingandblending><span class=secno>7. </span>Specifying
    Compositing and Blending in CSS</h2>
 
-  <h3 id="csscompositingrules_CSS"><span class=secno>7.1. </span>Behavior
+  <h3 id=compositingandblendingorder><span class=secno>7.1. </span>Order of
+   graphical operations</h3>
+
+  <p>The compositing model must follow the <a
+   href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG
+   compositing</a> model: first any filter effect is applied, then any
+   clipping, masking, blending and compositing.
+
+  <h3 id="csscompositingrules_CSS"><span class=secno>7.2. </span>Behavior
    specific to CSS</h3>
 
   <p> If an element specifies non-default blending, compositing or <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a>, its <a
    href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a>
-   and that of all of its children will revert to ‘<code
+   and that of all of its children must revert to ‘<code
    class=property>flat</code>’.<br>
    The application of non-default blending or compositing to an element
-   formatted with the CSS box model also establishes a <a
+   formatted with the CSS box model must also establishe a <a
    href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the
    same way that CSS <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a> does. One of the consequences is that
-   elements with z-index will not honor the depth of elements outside of the
+   elements with z-index must not honor the depth of elements outside of the
    group.<br>
    Everything in CSS that creates a <a
-   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> is
-   considered a group. HTML elements themselves do not create groups.
+   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be
+   considered a group. HTML elements themselves should not create groups.
 
-  <p>If content uses CSS filters, they will be applied before blending and
-   compositing.
-
-  <h3 id="csscompositingrules_SVG"><span class=secno>7.2. </span>Behavior
+  <h3 id="csscompositingrules_SVG"><span class=secno>7.3. </span>Behavior
    specific to SVG</h3>
 
-  <p> In SVG, every element will create a group.<br>
-   Most implementations can optimize this by not treating elements with
-   default arguments as groups.<br>
+  <p> In SVG, every element must create a group.<br>
+   This seems costly but implementations can optimize this by not treating
+   elements with default arguments as groups.<br>
    The compositing model follows the <a
    href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG
    compositing</a> model: first any filter effect is applied, then any
    clipping, masking, blending and compositing
 
-  <h3 id=csscompositingkeyword><span class=secno>7.3. </span>Properties</h3>
+  <h3 id=csscompositingkeyword><span class=secno>7.4. </span>Properties</h3>
 
-  <h4 id=alpha-compositing><span class=secno>7.3.1. </span>The <span
+  <h4 id=alpha-compositing><span class=secno>7.4.1. </span>The <span
    class=prop-name>‘<code class=property>alpha-compositing</code>’</span>
    property</h4>
 
-  <p> Defines the compositing mode used when compositing an element onto a
-   page or group.<br>
+  <p> Defines the compositing mode that must be used on the element.<br>
    This behavior is described in more detail in <a
    href="#advancedcompositing">Advanced compositing features</a>.<br>
    The description of the <span class=prop-name>‘<code
@@ -1915,13 +1918,13 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>clip-to-self</code>’</a> set to ‘<code
    class=property>true</code>’.
 
-  <h4 id=blend-mode><span class=secno>7.3.2. </span>The <span
+  <h4 id=blend-mode><span class=secno>7.4.2. </span>The <span
    class=prop-name>‘<code class=property>blend-mode</code>’</span>
    property</h4>
 
-  <p> Defines the blend mode used when compositing an element onto the page.
-   The blend mode defines the formula used to mix colors when shapes
-   overlap.<br>
+  <p> Defines the blend mode that must be used on the element. The blend mode
+   defines the formula that must be used to mix the colors of the element
+   with its backdrop.<br>
    This behavior is described in more detail in <a
    href="#blending">Blending</a>.
 
@@ -1989,15 +1992,15 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
-  <h4 id=isolation><span class=secno>7.3.3. </span>The <span
+  <h4 id=isolation><span class=secno>7.4.3. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
    property</h4>
 
   <p> Defines whether a group is isolated or not.<br>
-   When a group is isolated, the group's elements will not look at content
+   When a group is isolated, the group's elements should not look at content
    outside that group when calculating the backdrop.<br>
-   The default behavior is for groups to be non-isolated. Certain operations
-   such as 3D transforms will cause a group to be isolated.<br>
+   The default behavior for groups should be non-isolated. However certain
+   operations such as 3D transforms should cause a group to be isolated.<br>
    This behavior is described in more detail in <a
    href="#isolatedgroups">Isolated Gropus</a>.
 
@@ -2052,7 +2055,7 @@ components having the minimum, middle, and maximum values upon entry to the func
   </div>
 
   <p> In CSS, the ‘<code class=property>isolation</code>’ property of an
-   &lt;img&gt; or a background image is always ‘<code
+   &lt;img&gt; or a background image must always be ‘<code
    class=property>isolate</code>’. For instance, if you link to an SVG file
    through the ‘<code class=property>img</code>’ tag, the content of that
    SVG will not blend with its backdrop.
@@ -2061,21 +2064,21 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="http://www.w3.org/TR/SVG/masking.html#Masking">‘<code
    class=property>mask</code>’</a> always creates an isolated group.
 
-  <h4 id=knock-out><span class=secno>7.3.4. </span>The <span
+  <h4 id=knock-out><span class=secno>7.4.4. </span>The <span
    class=prop-name>‘<code class=property>knock-out</code>’</span>
    property</h4>
 
   <p> Defines whether a group is a knock-out group.<br>
    When a group is set to ‘<code class=property>knock-out</code>’, the
-   elements within the group only composite and blend with elements outside
-   that group. This effectively ‘<code class=css>knocks out</code>’ any
-   element from within the group that is already drawn. The end result is as
-   if every shape composites with a ‘<code class=property>clear</code>’
-   operation (with clip-to-self enabled) first before it blends and
-   composites.<br>
+   elements within the group must only composite and blend with elements
+   outside that group. This effectively ‘<code class=css>knocks
+   out</code>’ any element from within the group that is already drawn. The
+   end result is as if every shape composites with a ‘<code
+   class=property>clear</code>’ operation (with clip-to-self enabled) first
+   before it blends and composites.<br>
    When ‘<code class=property>knock-out</code>’ is set to ‘<code
-   class=property>preserve</code>’, the group is not a knock-out group and
-   its elements composite normally.<br>
+   class=property>preserve</code>’, the group must not be a knock-out group
+   and its elements composite normally.<br>
    The behavior of this keyword is described in more detail in <a
    href="#knockoutgroups">Knockout Groups</a>.
 
@@ -2127,14 +2130,14 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
-  <h3 id=cssbackgroundsyntax><span class=secno>7.4. </span>Specifying
+  <h3 id=cssbackgroundsyntax><span class=secno>7.5. </span>Specifying
    blending and compositing in the element background</h3>
 
   <p> An author might want to specify the blending of multiple backgrounds of
    an element. The <a href="#background">background</a> compositing and
    blending is always treated as an isolated group.
 
-  <h4 id=background-alpha-compositing><span class=secno>7.4.1. </span>The
+  <h4 id=background-alpha-compositing><span class=secno>7.5.1. </span>The
    <span class=prop-name>‘<code
    class=property>background-alpha-compositing</code>’</span> property</h4>
 
@@ -2207,19 +2210,22 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="#porterduffcompositingoperators_plus">lighter</a>
 </pre>
 
-  <p> Background images will always composite with <a
+  <p> Background images myst always composite with <a
    href="#groupcompositingcliptoself">‘<code
    class=property>clip-to-self</code>’</a> set to ‘<code
    class=property>false</code>’.<br>
-   The stack of background images will act as an isolated group so the
-   background compositing operators will no affect content that is drawn
+   The stack of background images must act as an isolated group so the
+   background compositing operators must no affect content that is drawn
    prior to the element backdrop.
 
-  <h4 id=background-blend-mode><span class=secno>7.4.2. </span>The <span
+  <h4 id=background-blend-mode><span class=secno>7.5.2. </span>The <span
    class=prop-name>‘<code
    class=property>background-blend-mode</code>’</span> property</h4>
 
-  <p> The description of the <span class=prop-name>‘<code
+  <p>This attribute sets the blending modes of background image. It should
+   specify a blend mode for each of the background images. Every background
+   image must use this blend mode when it is composited with its sibling
+   bacground images The description of the <span class=prop-name>‘<code
    class=property>background-blend-mode</code>’</span> property is as
    follows:
 
@@ -2275,14 +2281,13 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=box-shadow-blend-mode><span class=secno>7.4.3. </span>The <span
+  <h4 id=box-shadow-blend-mode><span class=secno>7.5.3. </span>The <span
    class=prop-name>‘<code
    class=property>box-shadow-blend-mode</code>’</span> property</h4>
 
   <p> Sets the blend mode of the box shadow.<br>
-   <span class=p>Also needs to be added to the shorthand.</span>
-
-  <p><br>
+   If this attribute is set and there is a box shadow, the shadow must blend
+   with its background using the specified blending mode.<br>
    The description of the <span class=prop-name>‘<code
    class=property>box-shadow-blend-mode</code>’</span> property is as
    follows:
@@ -2339,18 +2344,13 @@ components having the minimum, middle, and maximum values upon entry to the func
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
 
-  <h4 id=text-shadow-blend-mode><span class=secno>7.4.4. </span>The <span
+  <h4 id=text-shadow-blend-mode><span class=secno>7.5.4. </span>The <span
    class=prop-name>‘<code
    class=property>text-shadow-blend-mode</code>’</span> property</h4>
 
-  <p> <span class=p>DRAFT.This proposal needs more discussion.</span>
-
-  <p><br>
-   Set the blend mode of the text shadow.<br>
-
-  <p class=issue>Also needs to be added to the shorthand.
-
-  <p><br>
+  <p> Set the blend mode of the text shadow. If this attribute is set and
+   there is a text shadow, the shadow must blend with its background using
+   the specified blending mode.<br>
    The description of the <span class=prop-name>‘<code
    class=property>text-shadow-blend-mode</code>’</span> property is as
    follows:
@@ -2406,71 +2406,58 @@ components having the minimum, middle, and maximum values upon entry to the func
   <pre>
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
+  <!--
+<h4 id="text-blend-mode">The <span class="prop-name">'foreground-blend-mode'</span> property</h4>
+<p>
+Sets the blend mode of the text or nested elements.<br/><p class="issue">Also needs to be added to the shorthand.</p><br/>
+The description of the <span class="prop-name">'foreground-blend-mode'</span> property is
+as follows:</p>
 
-  <h4 id=text-blend-mode><span class=secno>7.4.5. </span>The <span
-   class=prop-name>‘<code
-   class=property>foreground-blend-mode</code>’</span> property</h4>
-
-  <p> Sets the blend mode of the text or nested elements.<br>
-
-  <p class=issue>Also needs to be added to the shorthand.
-
-  <p><br>
-   The description of the <span class=prop-name>‘<code
-   class=property>foreground-blend-mode</code>’</span> property is as
-   follows:
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-blend-mode-foreground><span
-     class="propdef-title prop-name">‘<code
-     class=property>foreground-blend-mode</code>’</span>
-
+<div class="propdef">
+<dl>
+  <dt id='propdef-blend-mode-foreground'><span class='propdef-title prop-name'>'foreground-blend-mode'</span></dt>
     <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="foreground-blend-mode property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
+      <table summary="foreground-blend-mode property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td>blend-style</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>normal</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All HTML elements</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>no</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>no</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
 
-        <td>blend-style
-
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>normal
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>All HTML elements
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>no
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>no
-     </table>
-   </dl>
-  </div>
-
-  <pre>
+<pre>
 	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
 </pre>
+-->
 
   <h2 id=canvascompositingandblending><span class=secno>8. </span>Specifying
    Compositing and Blending in Canvas 2D</h2>
@@ -2484,17 +2471,17 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p>
 
   <p>Blending is not separated from compositing in canvas 2d. If a blend
-   operation is selected its results will always be composited with the <a
+   operation is selected its results must always be composited with the <a
    href="#porterduffcompositingoperators_srcover">‘<code
    class=property>source-over</code>’</a> compositing mode.
 
-  <p>Compositing and blending in canvas 2d is always done with <a
+  <p>Compositing and blending in canvas 2d must always done with <a
    href="#groupcompositingcliptoself">‘<code
    class=property>clip-to-self</code>’</a> assumed false. This means that
    the operation will affect the entire canvas and not just be limited to the
    shape that is being composited. However, the <a
    href="http://www.w3.org/TR/2dcontext/#clipping-region">clipping region</a>
-   will still be in effect and limit the area the affected area.
+   must still be in effect and limit the area the affected area.
 
   <div class=propdef>
    <dl>
@@ -2552,8 +2539,8 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <p> It is important that the timing to the blending and compositing
    operations is independant of the source and destination pixel. Operations
-   should be implemented in such a way that they always take the same amount
-   of time regardless of the pixel values.<br>
+   must be implemented in such a way that they always take the same amount of
+   time regardless of the pixel values.<br>
    If this rule is not followed, an attacker could infer information and
    mount a timing attack.
 
