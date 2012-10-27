@@ -11,30 +11,17 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-10-26 name=dcterms.issued>
+  <meta content=2012-10-27 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121026/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121027/"
    name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
   <link href=default.css rel=stylesheet type="text/css">
   <link href="http://www.w3.org/StyleSheets/TR/W3C-ED.css" rel=stylesheet
    type="text/css">
-  <style type="text/css">
-  .todo {
-      border-left: 0.5em solid #f44;
-      padding-left: 1em;
-      margin-top: 0.5em;
-      background: #FBE9E9;
-  }
-  
-  .todo:before {
-      content: "TO DO ";
-      color: #f44;
-  }
- </style>
 
  <body>
   <div class=head> <!--begin-logo-->
@@ -43,7 +30,7 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 26 October
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 27 October
     2012</h2>
 
    <dl>
@@ -51,7 +38,7 @@
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20121026/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20121027/-->
 
     <dt>Latest version:
 
@@ -254,13 +241,19 @@
       paths, geometry, and pointer events</a>
     </ul>
 
-   <li><a href="#DOMInterfaces"><span class=secno>9. </span>DOM
+   <li><a href="#security"><span class=secno>9. </span>Security</a>
+    <ul class=toc>
+     <li><a href="#origin-restrictions"><span class=secno>9.1. </span>Origin
+      Restrictions</a>
+    </ul>
+
+   <li><a href="#DOMInterfaces"><span class=secno>10. </span>DOM
     interfaces</a>
     <ul class=toc>
-     <li><a href="#InterfaceSVGClipPathElement"><span class=secno>9.1.
+     <li><a href="#InterfaceSVGClipPathElement"><span class=secno>10.1.
       </span>Interface SVGClipPathElement</a>
 
-     <li><a href="#InterfaceSVGMaskElement"><span class=secno>9.2.
+     <li><a href="#InterfaceSVGMaskElement"><span class=secno>10.2.
       </span>Interface SVGMaskElement</a>
     </ul>
 
@@ -340,6 +333,23 @@
   <p>Defintions of CSS properties and values in this specification comply
    with CSS Backgrounds and Borders <a href="#CSS3BG"
    rel=biblioentry>[CSS3BG]<!--{{CSS3BG}}--></a>.
+
+  <p> Some property and element definitions in this specification require an
+   SVG 1.1 implementation <a href="#SVG11"
+   rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>. UAs without support for SVG
+   must not implement the ‘<a href="#mask-type"><code
+   class=property>mask-type</code></a>’ and ‘<a href="#clip-rule"><code
+   class=property>clip-rule</code></a>’ properties as well as the <a
+   class=element-name href="#MaskElement">‘<code
+   class=property>mask</code>’</a> and <a class=element-name
+   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+   elements. Futhermore, the ‘<a href="#mask"><code
+   class=property>mask</code></a>’ and ‘<a href="#clip-path"><code
+   class=property>clip-path</code></a>’ properties must not support
+   references to <a class=element-name href="#MaskElement">‘<code
+   class=property>mask</code>’</a> and <a class=element-name
+   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+   elements.
 
   <h2 id=values><span class=secno>3. </span>Values</h2>
 
@@ -3807,9 +3817,38 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    fine-grained control over the interactions between hit testing and
    clipping.
 
-  <h2 id=DOMInterfaces><span class=secno>9. </span>DOM interfaces</h2>
+  <h2 id=security><span class=secno>9. </span>Security</h2>
 
-  <h3 id=InterfaceSVGClipPathElement><span class=secno>9.1. </span>Interface
+  <h3 id=origin-restrictions><span class=secno>9.1. </span>Origin
+   Restrictions</h3>
+
+  <p> External references to resources like <a class=element-name
+   href="#MaskElement">‘<code class=property>mask</code>’</a> or <a
+   class=element-name href="#ClipPathElement">‘<code
+   class=property>clipPath</code>’</a> must not violate the same origin
+   restrictions <a href="#CORS" rel=biblioentry>[CORS]<!--{{!CORS}}--></a>.
+
+  <p>This restriction includes:
+
+  <ul>
+   <li>Any images, either as content or via styling, that are not exposed
+    with CORS
+
+   <li>Any tainted canvas
+
+   <li>Any cross-origin content referenced by ‘<code
+    class=css>xlink:href</code>’ or &lt;use&gt;
+  </ul>
+
+  <p> If content falls under this restriction, the resource must be rejected.
+   The element is drawn as if the resource was not specified (i.e. the ‘<a
+   href="#clip-path"><code class=property>clip-path</code></a>’ or ‘<a
+   href="#mask"><code class=property>mask</code></a>’ property were set to
+   ‘<a href="#none"><code class=css>none</code></a>’).
+
+  <h2 id=DOMInterfaces><span class=secno>10. </span>DOM interfaces</h2>
+
+  <h3 id=InterfaceSVGClipPathElement><span class=secno>10.1. </span>Interface
    SVGClipPathElement</h3>
 
   <p>The <a href="#InterfaceSVGClipPathElement">SVGClipPathElement</a>
@@ -3849,7 +3888,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     </dl>
   </dl>
 
-  <h3 id=InterfaceSVGMaskElement><span class=secno>9.2. </span>Interface
+  <h3 id=InterfaceSVGMaskElement><span class=secno>10.2. </span>Interface
    SVGMaskElement</h3>
 
   <p>The <a href="#InterfaceSVGMaskElement">SVGMaskElement</a> interface
@@ -3996,6 +4035,16 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <dl class=bibliography>
    <dt style="display: none"><!-- keeps the doc valid if the DL is empty -->
     <!---->
+
+   <dt id=CORS>[CORS]
+
+   <dd>Anne van Kesteren. <a
+    href="http://www.w3.org/TR/2012/WD-cors-20120403/"><cite>Cross-Origin
+    Resource Sharing.</cite></a> 3 April 2012. W3C Working Draft. (Work in
+    progress.) URL: <a
+    href="http://www.w3.org/TR/2012/WD-cors-20120403/">http://www.w3.org/TR/2012/WD-cors-20120403/</a>
+   </dd>
+   <!---->
 
    <dt id=CSS21>[CSS21]
 

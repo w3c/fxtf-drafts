@@ -9,19 +9,6 @@
   <link rel="stylesheet" type="text/css" href="default.css">
   <link rel="stylesheet" type="text/css"
         href="http://www.w3.org/StyleSheets/TR/W3C-ED.css">
-  <style type="text/css">
-  .todo {
-      border-left: 0.5em solid #f44;
-      padding-left: 1em;
-      margin-top: 0.5em;
-      background: #FBE9E9;
-  }
-  
-  .todo:before {
-      content: "TO DO ";
-      color: #f44;
-  }
- </style>
 </head>
 
 <div class="head">
@@ -155,6 +142,13 @@ Table of contents</h2>
 </p>
 
 <p>Defintions of CSS properties and values in this specification comply with CSS Backgrounds and Borders [[CSS3BG]].</p>
+
+<p>
+  Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without
+  support for SVG must not implement the 'mask-type' and 'clip-rule' properties as well as the <a>'mask element'</a>
+  and <a>'clipPath element'</a> elements. Futhermore, the 'mask' and 'clip-path' properties must not support references to
+  <a>'mask element'</a> and <a>'clipPath element'</a> elements.
+</p>
 
 <h2 id="values">Values</h2>
 
@@ -2282,6 +2276,29 @@ example, a circle with a radius of 10 which is clipped to a circle with a radius
 of 5 will not receive <span class="event-name">'click'</span> events outside the
 smaller radius. Later versions of this specification may define new properties to enable
 fine-grained control over the interactions between hit testing and clipping.</p>
+
+<h2 id="security">Security</h2>
+
+<h3 id="origin-restrictions">Origin Restrictions</h3>
+
+<p>
+  External references to resources like <a>'mask element'</a> or <a>'clipPath element'</a>
+  must not violate the same origin restrictions [[!CORS]].
+</p>
+
+<p>This restriction includes:</p>
+
+<ul>
+  <li>Any images, either as content or via styling, that are not exposed with CORS</li>
+  <li>Any tainted canvas</li>
+  <li>Any cross-origin content referenced by ''xlink:href'' or &lt;use&gt;</li>
+</ul>
+
+<p>
+  If content falls under this restriction, the resource must be rejected. The element is
+  drawn as if the resource was not specified (i.e. the 'clip-path' or 'mask' property were
+  set to ''none'').
+</p>
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 
