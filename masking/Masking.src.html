@@ -815,40 +815,37 @@ layer.
       <td>no
 </table>
 
-<p class=issue>
-  Right now the 'mask-clip' property always clips overflowing content. Another keyword could either disable clipping or
-  allow to extend the clipping area to the boundary of all descendant elements.
-</p>
-
 <p>Determines the <dfn id="mask-painting-area">mask painting area</dfn>,
-which determines the area that is affected by the mask.
+which determines the area that is affected by the mask. The painted content
+of an element may be resricted to this area.
 The syntax of the property is given with
 
-<pre class=prod><dfn><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box</pre>
+<pre class=prod><dfn><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box | none</pre>
 
 <p>Values have the following meanings:
 
 <dl>
   <dt><dfn title="''border-box''!!'mask-clip' value">
       ''border-box''</dfn></dt>
-  <dd>The mask is rectricted to (clipped to) the
+  <dd>The painted content is rectricted to (clipped to) the
     <span>border box</span> respectively <span>painting box</span> for objects without associated layout box.
   <dt><dfn title="''padding-box''!!'mask-clip' value">
       ''padding-box''</dfn></dt>
-  <dd>The mask is rectricted to (clipped to) the
+  <dd>The painted content is rectricted to (clipped to) the
     <span>padding box.</span>
   <dt><dfn title="''content-box''!!'mask-clip' value">
       ''content-box''</dfn></dt> respectively object bounding box [[!SVG11]] for objects without associated layout box.
-  <dd>The mask is rectricted to (clipped to) the
+  <dd>The painted content is rectricted to (clipped to) the
     <span>content box.</span>
+  <dt><dfn title="''none''!!'mask-clip' value">
+      ''none''</dfn></dt>
+  <dd>The painted content is not restricted (not clipped). The <span>mask painting area</span> is set to
+    the <span>bounding client rect</span>.
 </dl>
 
 <p class="note">Note that there is no corresponding box for
 ''padding-box'' on objects without associated layout box
 and ''content-box'' is choosen instead.</p>
-
-<p class="issue">The SVG WG considers to add a value ''filter-box''. The dimension of this box needs to be defined by Filter
-Effects.</p>
 
 <p>See the section <a href="#layering">“Layering multiple mask
 images”</a> for how 'mask-clip' interacts with other
@@ -921,8 +918,7 @@ images”</a> for how 'mask-origin' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
-<p class="issue">The SVG WG considers to add a value ''filter-box''. The dimension of this box needs to be defined by Filter
-Effects.</p>
+<p class="issue">Needs to be resolved where the origin for ''mask-clip: none'' should be.</p>
 
 <h3 id="the-mask-size">The 'mask-size' property</h3>
 
@@ -2098,16 +2094,14 @@ clipping shape:</p>
   </tr>
 </table>
 
+<p class=note>With this specification the 'clip' property is deprecated. Authors are encouraged to use the 'clip-path' property instead.
+  UAs must support the 'clip' property.
+</p>
+
 <p>
   The 'clip' property applies only to absolutely positioned elements. In SVG, it applies to
   <a href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements which establish a new viewport</a>,
   <a>'pattern element'</a> elements and <a>'marker element'</a> elements</td>. Values have the following meanings:
-</p>
-
-<p class=issue>
-  Should 'clip' be a shorthand for 'clip-path'? 'rect()' would just apply to absolutely positioned elements and in SVG,
-  to <a href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements which establish a new
-  viewport</a>. Or should it be deprecated?
 </p>
 
 <dl>

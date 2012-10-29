@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-10-27 name=dcterms.issued>
+  <meta content=2012-10-29 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121027/"
+  <meta content="http://www.w3.org/TR/2012/ED-css-masking-20121029/"
    name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
@@ -30,7 +30,7 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 27 October
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 29 October
     2012</h2>
 
    <dl>
@@ -38,7 +38,7 @@
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-css-masking-20121027/-->
+     <!--http://www.w3.org/TR/2012/WD-css-masking-20121029/-->
 
     <dt>Latest version:
 
@@ -1188,17 +1188,13 @@ body {
      <td>no
   </table>
 
-  <p class=issue> Right now the ‘<a href="#mask-clip"><code
-   class=property>mask-clip</code></a>’ property always clips overflowing
-   content. Another keyword could either disable clipping or allow to extend
-   the clipping area to the boundary of all descendant elements.
-
   <p>Determines the <dfn id=mask-painting-area>mask painting area</dfn>,
-   which determines the area that is affected by the mask. The syntax of the
+   which determines the area that is affected by the mask. The painted
+   content of an element may be resricted to this area. The syntax of the
    property is given with
 
   <pre class=prod><dfn
-   id=ltboxgt><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box</pre>
+   id=ltboxgt><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box | none</pre>
 
   <p>Values have the following meanings:
 
@@ -1206,14 +1202,15 @@ body {
    <dt><dfn id=border-box title="''border-box''!!'mask-clip' value"> ‘<code
     class=css>border-box</code>’</dfn>
 
-   <dd>The mask is rectricted to (clipped to) the <span>border box</span>
-    respectively <span>painting box</span> for objects without associated
-    layout box.
+   <dd>The painted content is rectricted to (clipped to) the <span>border
+    box</span> respectively <span>painting box</span> for objects without
+    associated layout box.
 
    <dt><dfn id=padding-box title="''padding-box''!!'mask-clip' value">
     ‘<code class=css>padding-box</code>’</dfn>
 
-   <dd>The mask is rectricted to (clipped to) the <span>padding box.</span>
+   <dd>The painted content is rectricted to (clipped to) the <span>padding
+    box.</span>
 
    <dt><dfn id=content-box title="''content-box''!!'mask-clip' value">
     ‘<code class=css>content-box</code>’</dfn>
@@ -1224,17 +1221,21 @@ body {
    associated layout box.
 
   <dl>
-   <dd>The mask is rectricted to (clipped to) the <span>content box.</span>
+   <dd>The painted content is rectricted to (clipped to) the <span>content
+    box.</span>
+
+   <dt><dfn id=none0 title="''none''!!'mask-clip' value"> ‘<code
+    class=css>none</code>’</dfn>
+
+   <dd>The painted content is not restricted (not clipped). The <a
+    href="#mask-painting-area">mask painting area</a> is set to the <a
+    href="#bounding-client-rect">bounding client rect</a>.
   </dl>
 
   <p class=note>Note that there is no corresponding box for ‘<code
    class=css>padding-box</code>’ on objects without associated layout box
    and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
    is choosen instead.
-
-  <p class=issue>The SVG WG considers to add a value ‘<code
-   class=css>filter-box</code>’. The dimension of this box needs to be
-   defined by Filter Effects.
 
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-clip"><code
@@ -1345,9 +1346,8 @@ body {
    class=property>mask-origin</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
-  <p class=issue>The SVG WG considers to add a value ‘<code
-   class=css>filter-box</code>’. The dimension of this box needs to be
-   defined by Filter Effects.
+  <p class=issue>Needs to be resolved where the origin for ‘<code
+   class=css>mask-clip: none</code>’ should be.
 
   <h3 id=the-mask-size><span class=secno>6.6. </span>The ‘<a
    href="#mask-size"><code class=property>mask-size</code></a>’ property</h3>
@@ -3295,6 +3295,13 @@ div {
      <td>yes
   </table>
 
+  <p class=note>With this specification the ‘<a href="#ClipProperty"><code
+   class=property>clip</code></a>’ property is deprecated. Authors are
+   encouraged to use the ‘<a href="#clip-path"><code
+   class=property>clip-path</code></a>’ property instead. UAs must support
+   the ‘<a href="#ClipProperty"><code class=property>clip</code></a>’
+   property.
+
   <p> The ‘<a href="#ClipProperty"><code class=property>clip</code></a>’
    property applies only to absolutely positioned elements. In SVG, it
    applies to <a
@@ -3305,14 +3312,6 @@ div {
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement">‘<code
    class=property>marker</code>’</a> elements. Values have the following
    meanings:
-
-  <p class=issue> Should ‘<a href="#ClipProperty"><code
-   class=property>clip</code></a>’ be a shorthand for ‘<a
-   href="#clip-path"><code class=property>clip-path</code></a>’? ‘<code
-   class=css>rect()</code>’ would just apply to absolutely positioned
-   elements and in SVG, to <a
-   href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements
-   which establish a new viewport</a>. Or should it be deprecated?
 
   <dl>
    <dt>‘<code class=css>auto</code>’
@@ -4366,6 +4365,11 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>‘<a href="#none"><code class=css>none</code></a>’, <a href="#none"
     title="''none''"><strong>6.1.</strong></a>
+    <ul>
+     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
+      value, <a href="#none0"
+      title="''none'', 'mask-clip' value"><strong>6.4.</strong></a>
+    </ul>
 
    <li>‘<a href="#nonzero"><code class=css>nonzero</code></a>’, <a
     href="#nonzero" title="''nonzero''"><strong>8.2.</strong></a>
