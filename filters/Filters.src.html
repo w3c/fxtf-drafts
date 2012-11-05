@@ -4708,56 +4708,167 @@ be exposed to the DOM.</span> </p>
 </dl>
 </div>
 
-<h2 id="feCustomElement">Filter primitive <span
-class="element-name">'feCustom'</span></h2>
+<h2 id="feCustomElement">Filter primitive <span class="element-name">'feCustom'</span></h2>
 
-    <div class="element-summary">
-        <div class="element-summary-name">
-            <span class="element-name">‘feCustom’</span>
-        </div>
-        <dl>
-            <dt>Content model:</dt>
-            <dd>Any number of the following elements, in any order:
-                    <ul class="no-bullets">
-                        <li><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/animate.html#AnimateElement"><span class="element-name">‘animate’</span></a></li>
-                        <li><a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/animate.html#SetElement"><span class="element-name">‘set’</span></a></li>
-                    </ul>
-            </dd>
-            <dt>Attributes:</dt>
-            <dd>
-                <ul class="no-bullets">
-                    <li><a>core attributes</a></li>
-                    <li><a>presentation attributes</a></li>
-                    <li><a>filter primitive attributes</a></li>
-                    <li><a href="http://www.w3.org/TR/SVG/styling.html#ClassAttribute"><span class="attr-name">‘class’</span></a></li>
-                    <li><a href="http://www.w3.org/TR/SVG/styling.html#StyleAttribute"><span class="attr-name">‘style’</span></a></li>
-                    <li><a href="#feCustomVertexShaderAttribute"><span class="attr-name">‘vertexShader’</span></a></li>
-                    <li><a href="#feCustomFragmentShaderAttribute"><span class="attr-name">‘fragmentShader’</span></a></li>
-                    <li><a href="#feCustomVertexMeshAttribute"><span class="attr-name">‘vertexMesh’</span></a></li>
-                    <li><a href="#feCustomParamsAttribute"><span class="attr-name">‘params’</span></a></li>
-                </ul>
-            </dd>
-        </dl>
-    </div>
+<!--elementsummary feCustom-->
 
-    <p>The calculations are performed on non-premultiplied color values. If the input graphics consists of premultiplied color values, those values are automatically converted into non-premultiplied color values for this operation.</p>
+<div class="adef-list">
+  <p>
+    <em>Attribute definitions:</em>
+  </p>
+  <dl>
+    <dt id="feCustomVertexShaderAttribute">
+      <span class="adef">vertexShader</span> = "<em>&lt;uri&gt;</em>"
+    </dt>
+    <dd>
+      The shader referenced by &lt;uri&gt; provides the implementation for the <a>'feCustom element'</a> vertex shader.
+      If the shader cannot be retrieved, or if the shader cannot be loaded or compiled because it contains erroneous
+      code, the shader is a <a href="#default-shaders">pass through</a>. Otherwise, the vertex shader is invoked for all
+      the vertex mesh vertices.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomFragmentShaderAttribute">
+      <span class="adef">fragmentShader</span> = "<em>&lt;uri&gt; | mix(&lt;uri&gt;
+      [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</em>"
+    </dt>
+    <dd>
+      See the <a href='#fragmentShader-attribute'>fragmentShader</a> attribute discussion.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomVertexMeshAttribute">
+      <span class="adef">vertexMesh</span> = "<em>&lt;integer&gt;{0,2} &lt;box&gt;? [ detached | attached ]?</em>"
+    </dt>
+    <dd>
+      See the <a href='#vertexMesh-attribute'>vertexMesh</a> attribute discussion.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <p class="issue">Not fully compatible with SVG Animations. Attributes need to be split more.</p>
+  </dl>
+</div>
+
+<p>
+  The calculations are performed on non-premultiplied color values. If the input graphics consists of premultiplied
+  color values, those values are automatically converted into non-premultiplied color values for this operation.
+</p>
+
+<p id="feCustomParamElement">
+  Each 'feCustom' element can have any number of 'feCustomParam' subelements. Each 'feCustomParam' node passes one
+  parameter 
+</p>
+
+<!--elementsummary feCustomParam-->
+
+<div class="adef-list">
+  <p>
+    <em>Attribute definitions:</em>
+  </p>
+  <dl>
+    <dt id="feCustomParamIdentAttribute">
+      <span class="adef">ident</span> = "<em><a>&lt;string&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates the parameter name to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamTypeAttribute">
+      <span class="adef">type</span> = "<em>number | array | vec2 | vec3 | vec4 | mat2 | mat3 | mat4 | color |
+      texture | transform</em>"
+    </dt>
+    <dd>
+      Indicates the type of the parameter passed to the shaders. For the types ''number'', ''array'', ''vec2'', ''vec3'',
+      ''vec4'', ''mat2'', ''mat3'' and ''mat4'', the <a>'feCustomParam/values'</a> attribute passes the values to the
+      shader. For all other types, the attributes with the same name pass the parameter to the shader.
+      The <a>lacuna value</a> for <a>'feCustomParam/type'</a> is <span class="attr-value">number</span>.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamValuesAttribute">
+      <span class="adef">values</span> = "<em>list of <a>&lt;number&gt;</a>s</em>"
+    </dt>
+    <dd>
+      The contents of <span class="attr-name">values</span> depends on the value of attribute
+      <a href="#feCustomParamTypeAttribute"><span class="attr-name">type</span></a>: 
+      <ul>
+        <li>
+          For <span class="attr-value">type="number"</span>, <span class="attr-name">values</span> is a single real
+          number value.
+        </li>
+        <li>
+          For <span class="attr-value">type="array"</span>, <span class="attr-name">values</span> is a list of at least
+          one real number value.
+        </li>
+        <li>
+          For <span class="attr-value">type="vec2"</span>, <span class="attr-name">values</span> is a list of two real
+          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
+          the top of the vector.
+        </li>
+        <li>
+          For <span class="attr-value">type="vec3"</span>, <span class="attr-name">values</span> is a list of three real
+          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
+          the top of the vector.
+        </li>
+        <li>
+          For <span class="attr-value">type="vec4"</span>, <span class="attr-name">values</span> is a list of four real
+          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
+          the top of the vector.
+        </li>
+        <li>
+          For <span class="attr-value">type="mat2"</span>, <span class="attr-name">values</span> is a list of four real
+          number values. The list specifies a 2x2 homogeneous matrix in column-major order.
+        </li>
+        <li>
+          For <span class="attr-value">type="mat3"</span>, <span class="attr-name">values</span> is a list of nine real
+          number values. The list specifies a 3x3 homogeneous matrix in column-major order.
+        </li>
+        <li>
+          For <span class="attr-value">type="mat4"</span>, <span class="attr-name">values</span> is a list of 16 real
+          number values. The list specifies a 4x4 homogeneous matrix in column-major order.
+        </li>
+      </ul>
+      <p>
+        If the attribute is not specified, then the default behavior depends on the value of attribute
+        <span class="attr-name">type</span>. If <span class="attr-name">type</span> is ''mat2'', ''mat3'' or ''mat4'',
+        then this attribute defaults to the identity matrix. If <span class="attr-name">type</span> is ''number'' or
+        ''array'', then this attribute defaults to the value 0. If <span class="attr-name">type</span> is ''vec2'',
+        ''vec3'' or ''vec4'', then this attribute defaults to a number list with values of 0. The length of the number
+        list depends on the size of the specified vector.
+      </p>
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamColorAttribute">
+      <span class="adef">color</span> = "<em><a>&lt;color&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates that a color value is passed as parameter to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamTextureAttribute">
+      <span class="adef">texture</span> = "<em><a>&lt;URL&gt;</a> | <a>&lt;filter-primitive-reference&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates that a texture is passed as parameter to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamTransformAttribute">
+      <span class="adef">transform</span> = "<em><a>&lt;transform-list&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates that a list of transform functions is passed as parameter to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>    
+  </dl>
+</div>
     
-    <div>
-        <dl>
-            <dt id="feCustomVertexShaderAttribute">vertexShader: <code>&lt;uri&gt;</code></dt>
-            <dd>The shader referenced by &lt;uri&gt; provides the implementation for the <a>'feCustom element'</a>
-                vertex shader. If the 
-                shader cannot be retrieved, or if the shader cannot be loaded or compiled because it contains erroneous code, the shader is a <a href="#default-shaders">pass through</a>. Otherwise, the vertex shader is invoked for all the vertex mesh vertices. 
-                </dd>
-        </dl>
-        <dl>
-            <dt id="feCustomFragmentShaderAttribute">fragmentShader: <code>&lt;uri&gt; | mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</code></dt>
-            <dd>See the <a href='#fragmentShader-attribute'>fragmentShader</a> attribute discussion.</dd>
-        </dl>
-        <dl>
-            <dt id="feCustomVertexMeshAttribute">vertexMesh: <code>&lt;integer&gt;{0,2} &lt;box&gt;? [ detached | attached ]?</code></dt>
-            <dd>See the <a href='#vertexMesh-attribute'>vertexMesh</a> attribute discussion.</dd>
-        </dl>
+    <div class="issue">
+      <p>The following content needs to be reorganized</p>
         <dl>
             <dt id="feCustomParamsAttribute">params: <code>&lt;param-def&gt; [ , &lt;param-def&gt; ]*</code></dt>
             <dd>
