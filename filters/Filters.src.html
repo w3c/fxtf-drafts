@@ -5881,32 +5881,6 @@ void main()
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 
-<h3 id="InterfaceImageData">Interface ImageData</h3>
-
- The ImageData interface corresponds to pixel data that can be used as input to the SVGFilterElement interface.
-<pre class="idl">interface <b>ImageData</b> {
-  readonly attribute long <a href="#ImageData__width">width</a>;
-  readonly attribute long <a href="#ImageData__height">height</a>;
-  readonly attribute  <a href="#ImageData__data">data</a>;
-};</pre><dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="ImageData__width"><b>width</b><span class="idl-type-parenthetical"> (readonly long)</span></dt><dd><div>
- The width of the bitmap that the ImageData represents.
-</div></dd>
-<dt id="ImageData__height"><b>height</b><span class="idl-type-parenthetical"> (readonly long)</span></dt><dd><div>
- The height of the bitmap that the ImageData represents.
-</div></dd>
-<dt id="ImageData__data"><b>data</b><span class="idl-type-parenthetical"> (readonly )</span></dt><dd><div>
- An array of pixel values that is the bitmap. This array must
- always be in the form of width×height×4 integer values. The
- pixel data is in left-to-right order, starting from the top-left
- corner, and going row by row downwards. Every pixel is
- represented by four integer values, red, green, blue and alpha,
- in that order. The range of each color component is 0..255. The
- intent is that this is compatible with the HTML5 [<a href="#ref-html5">HTML5</a>] 
- canvas interfaces, in particular see 
- <a href="http://www.w3.org/TR/html5/the-canvas-element.html#the-canvas-element">ImageData</a>.
-</div></dd></dl></dd></dl>
-
 <h3 id="InterfaceSVGFilterElement">Interface SVGFilterElement</h3>
 
 <p>
@@ -5924,7 +5898,7 @@ void main()
   readonly attribute <a>SVGAnimatedInteger</a> <a href="#SVGFilterElement__filterResY">filterResY</a>;
 
   void <a href="#SVGFilterElement__setFilterRes">setFilterRes</a>(in unsigned long filterResX, in unsigned long filterResY);
-  <a class="idlinterface" href="#InterfaceImageData">ImageData</a> <a href="#SVGFilterElement__apply">apply</a>(in <a class="idlinterface" href="#InterfaceImageData">ImageData</a> source);
+  <a>ImageData</a> <a href="#SVGFilterElement__apply">apply</a>(in <a>ImageData</a> source);
 };
 
 <a>SVGFilterElement</a> implements <a>SVGURIReference</a>;
@@ -5932,50 +5906,149 @@ void main()
 </pre>
 
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFilterElement__filterUnits"><b>filterUnits</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementFilterUnitsAttribute"><span class="attr-name">‘filterUnits’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a>
- element. Takes one of the constants defined in <a class="idlinterface" href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGUnitTypes">SVGUnitTypes</a>.
-</div></dd>
-<dt id="SVGFilterElement__primitiveUnits"><b>primitiveUnits</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementPrimitiveUnitsAttribute"><span class="attr-name">‘primitiveUnits’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a>
- element. Takes one of the constants defined in <a class="idlinterface" href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGUnitTypes">SVGUnitTypes</a>.
-</div></dd>
-<dt id="SVGFilterElement__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementXAttribute"><span class="attr-name">‘x’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element.
-</div></dd>
-<dt id="SVGFilterElement__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementYAttribute"><span class="attr-name">‘y’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element.
-</div></dd>
-<dt id="SVGFilterElement__width"><b>width</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementWidthAttribute"><span class="attr-name">‘width’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element.
-</div></dd>
-<dt id="SVGFilterElement__height"><b>height</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementHeightAttribute"><span class="attr-name">‘height’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a> element.
-</div></dd>
-<dt id="SVGFilterElement__filterResX"><b>filterResX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a>
- element.  Contains the X component of attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a>.
-</div></dd>
-<dt id="SVGFilterElement__filterResY"><b>filterResY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a> on the given <a href="#FilterElement"><span class="element-name">‘filter’</span></a>
- element.  Contains the Y component (possibly computed automatically) of
- attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a>.
-</div></dd></dl></dd><dt>Operations:</dt><dd><dl class="attributes">
-<dt id="SVGFilterElement__setFilterRes">void <b>setFilterRes</b>(in unsigned long <var>filterResX</var>, in unsigned long <var>filterResY</var>)</dt><dd><div>
- Sets the values for attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a>.
+<dl class="interface">
+<dt class="attributes-header">Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFilterElement__filterUnits"><b>filterUnits</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filterUnits'</a> on the given <a>'filter element'</a> element. Takes one of the constants
+  defined in <a>SVGUnitTypes</a>.
+</div>
+</dd>
 
-</div><dl class="operation"><dt>Parameters</dt><dd><ol class="parameters"><li><div class="parameter">unsigned long <var>filterResX</var></div> <div> The X component of attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a>.
-</div></li><li><div class="parameter">unsigned long <var>filterResY</var></div> <div> The Y component of attribute <a href="#FilterElementFilterResAttribute"><span class="attr-name">‘filterRes’</span></a>.
-</div></li></ol></dd><dt>Exceptions</dt><dd><dl class="exceptions"><dt><a class="idlinterface" href="http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-17189187">DOMException</a>, code NO_MODIFICATION_ALLOWED_ERR</dt><dd> Raised on an attempt
-   to change the value of a readonly attribute.
-</dd></dl></dd></dl></dd>
-<dt id="SVGFilterElement__apply"><a class="idlinterface" href="#InterfaceImageData">ImageData</a> <b>apply</b>(in <a class="idlinterface" href="#InterfaceImageData">ImageData</a> <var>source</var>)</dt><dd><div>
- Applies the filter to the given ImageData object and returns the result.
+<dt id="SVGFilterElement__primitiveUnits"><b>primitiveUnits</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd>
+<div>
+  Corresponds to attribute <a>'primitiveUnits'</a> on the given <a>'filter element'</a> element. Takes one of the
+  constants defined in <a>SVGUnitTypes</a>.
+</div>
+</dd>
 
-</div><dl class="operation"><dt>Parameters</dt><dd><ol class="parameters"><li><div class="parameter"><a class="idlinterface" href="#InterfaceImageData">ImageData</a> <var>source</var></div> <div> The image to apply the filter to.
-</div></li></ol></dd><dt>Returns</dt><dd><div> The result of the filter, see <a class="idlinterface" href="#InterfaceImageData">ImageData</a> for how to construct this.
-</div></dd></dl></dd></dl></dd></dl>
+<dt id="SVGFilterElement__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter/x'</a> on the given <a>'filter element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFilterElement__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter/y'</a> on the given <a>'filter element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFilterElement__width"><b>width</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter/width'</a> on the given <a>'filter element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFilterElement__height"><b>height</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter/height'</a> on the given <a>'filter element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFilterElement__filterResX"><b>filterResX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter/filterRes'</a> on the given <a>'filter element'</a> element. Contains the X
+  component of attribute <a>'filter/filterRes'</a>.
+</div>
+</dd>
+
+<dt id="SVGFilterElement__filterResY"><b>filterResY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter/filterRes'</a> on the given <a>'filter element'</a> element.  Contains the Y
+  component (possibly computed automatically) of attribute <a>'filter/filterRes'</a>.
+</div>
+</dd>
+</dl>
+</dd>
+
+<dt>Operations:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFilterElement__setFilterRes">void <b>setFilterRes</b>(in unsigned long <var>filterResX</var>, in unsigned
+  long <var>filterResY</var>)
+</dt>
+<dd>
+<div>
+  Sets the values for attribute <a>'filter/filterRes'</a>.
+</div>
+
+<dl class="operation">
+<dt>Parameters</dt>
+<dd>
+<ol class="parameters">
+<li>
+<div class="parameter">
+  unsigned long <var>filterResX</var>
+</div>
+<div>
+  The X component of attribute <a>'filter/filterRes'</a>.
+</div>
+</li>
+
+<li>
+<div class="parameter">
+  unsigned long <var>filterResY</var>
+</div>
+<div>
+  The Y component of attribute <a>'filter/filterRes'</a>.
+</div>
+</li>
+</ol>
+</dd>
+
+<dt>Exceptions</dt>
+<dd>
+<dl class="exceptions">
+<dt><a class="idlinterface" href="http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-17189187">DOMException</a>, code NO_MODIFICATION_ALLOWED_ERR</dt>
+<dd>
+  Raised on an attempt to change the value of a readonly attribute.
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+
+<dt id="SVGFilterElement__apply"><a>ImageData</a> <b>apply</b>(in <a>ImageData</a> <var>source</var>)</dt>
+<dd>
+<div>
+  Applies the filter to the given ImageData object and returns the result.
+</div>
+<dl class="operation">
+<dt>Parameters</dt>
+<dd>
+<ol class="parameters">
+<li>
+<div class="parameter">
+  <a>ImageData</a> <var>source</var>
+</div>
+<div>
+  The image to apply the filter to.
+</div>
+</li>
+</ol>
+</dd>
+
+<dt>Returns</dt>
+<dd>
+<div>
+  The result of the filter, see <a>ImageData</a> for how to construct this.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFilterPrimitiveStandardAttributes">Interface SVGFilterPrimitiveStandardAttributes</h3>
@@ -5991,25 +6064,49 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
   readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGFilterPrimitiveStandardAttributes__width">width</a>;
   readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGFilterPrimitiveStandardAttributes__height">height</a>;
   readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFilterPrimitiveStandardAttributes__result">result</a>;
-};
-</pre>
+};</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFilterPrimitiveStandardAttributes__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveXAttribute"><span class="attr-name">‘x’</span></a> on the given element.
-</div></dd>
-<dt id="SVGFilterPrimitiveStandardAttributes__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveYAttribute"><span class="attr-name">‘y’</span></a> on the given element.
-</div></dd>
-<dt id="SVGFilterPrimitiveStandardAttributes__width"><b>width</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveWidthAttribute"><span class="attr-name">‘width’</span></a> on the given element.
-</div></dd>
-<dt id="SVGFilterPrimitiveStandardAttributes__height"><b>height</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveHeightAttribute"><span class="attr-name">‘height’</span></a> on the given element.
-</div></dd>
-<dt id="SVGFilterPrimitiveStandardAttributes__result"><b>result</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveResultAttribute"><span class="attr-name">‘result’</span></a> on the given element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFilterPrimitiveStandardAttributes__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/x'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGFilterPrimitiveStandardAttributes__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'filter primitive/y'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGFilterPrimitiveStandardAttributes__width"><b>width</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/width'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGFilterPrimitiveStandardAttributes__height"><b>height</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedLength</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/height'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGFilterPrimitiveStandardAttributes__result"><b>result</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/result'</a> on the given element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEBlendElement">Interface SVGFEBlendElement</h3>
@@ -6038,45 +6135,77 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </pre>
 
 <dl class="interface"><dt>Constants in group “Blend Mode Types”:</dt><dd><dl class="constants">
-<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_UNKNOWN"><b>SVG_FEBLEND_MODE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_UNKNOWN"><b>SVG_FEBLEND_MODE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
+<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_NORMAL"><b>SVG_FEBLEND_MODE_NORMAL</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''normal''.
 </div></dd>
-<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_NORMAL"><b>SVG_FEBLEND_MODE_NORMAL</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'normal'</span>.
+<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_MULTIPLY"><b>SVG_FEBLEND_MODE_MULTIPLY</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''multiply''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_MULTIPLY"><b>SVG_FEBLEND_MODE_MULTIPLY</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'multiply'</span>.
+<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_SCREEN"><b>SVG_FEBLEND_MODE_SCREEN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''screen''.
 
-</div></dd>
-<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_SCREEN"><b>SVG_FEBLEND_MODE_SCREEN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'screen'</span>.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_DARKEN"><b>SVG_FEBLEND_MODE_DARKEN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'darken'</span>.
+<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_DARKEN"><b>SVG_FEBLEND_MODE_DARKEN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''darken''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_LIGHTEN"><b>SVG_FEBLEND_MODE_LIGHTEN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'lighten'</span>.
+<dt id="SVGFEBlendElement__SVG_FEBLEND_MODE_LIGHTEN"><b>SVG_FEBLEND_MODE_LIGHTEN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''lighten''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEBlendElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feBlendElement"><span class="element-name">‘feBlend’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEBlendElement__in2"><b>in2</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feBlendIn2Attribute"><span class="attr-name">‘in2’</span></a> on the given <a href="#feBlendElement"><span class="element-name">‘feBlend’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEBlendElement__mode"><b>mode</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feBlendModeAttribute"><span class="attr-name">‘mode’</span></a> on the given <a href="#feBlendElement"><span class="element-name">‘feBlend’</span></a>
- element.  Takes one of the SVG_FEBLEND_MODE_* constants defined on
- this interface.
-</div></dd></dl></dd></dl>
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEBlendElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feBlend element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEBlendElement__in2"><b>in2</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feBlend/in2'</a> on the given <a>'feBlend element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEBlendElement__mode"><b>mode</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feBlend/mode'</a> on the given <a>'feBlend element'</a> element. Takes one of the
+  SVG_FEBLEND_MODE_* constants defined on this interface.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEColorMatrixElement">Interface SVGFEColorMatrixElement</h3>
@@ -6099,45 +6228,77 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumberList</a> <a href="#SVGFEColorMatrixElement__values">values</a>;
 };
 
-<a>SVGFEColorMatrixElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFEColorMatrixElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
-<dl class="interface"><dt>Constants in group “Color Matrix Types”:</dt><dd><dl class="constants">
-<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_UNKNOWN"><b>SVG_FECOLORMATRIX_TYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dl class="interface">
+<dt>Constants in group “Color Matrix Types”:</dt>
+<dd>
+<dl class="constants">
+<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_UNKNOWN"><b>SVG_FECOLORMATRIX_TYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_MATRIX"><b>SVG_FECOLORMATRIX_TYPE_MATRIX</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'matrix'</span>.
+<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_MATRIX"><b>SVG_FECOLORMATRIX_TYPE_MATRIX</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''matrix''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_SATURATE"><b>SVG_FECOLORMATRIX_TYPE_SATURATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'saturate'</span>.
+<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_SATURATE"><b>SVG_FECOLORMATRIX_TYPE_SATURATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''saturate''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_HUEROTATE"><b>SVG_FECOLORMATRIX_TYPE_HUEROTATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'hueRotate'</span>.
+<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_HUEROTATE"><b>SVG_FECOLORMATRIX_TYPE_HUEROTATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''hueRotate''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA"><b>SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'luminanceToAlpha'</span>.
+<dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA"><b>SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''luminanceToAlpha''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEColorMatrixElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feColorMatrixElement"><span class="element-name">‘feColorMatrix’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEColorMatrixElement__type"><b>type</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feColorMatrixTypeAttribute"><span class="attr-name">‘type’</span></a> on the given <a href="#feColorMatrixElement"><span class="element-name">‘feColorMatrix’</span></a>
- element.  Takes one of the SVG_FECOLORMATRIX_TYPE_* constants defined
- on this interface.
-</div></dd>
-<dt id="SVGFEColorMatrixElement__values"><b>values</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumberList</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feColorMatrixValuesAttribute"><span class="attr-name">‘values’</span></a> on the given <a href="#feColorMatrixElement"><span class="element-name">‘feColorMatrix’</span></a>
- element.
-</div></dd></dl></dd></dl>
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEColorMatrixElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feColorMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEColorMatrixElement__type"><b>type</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feColorMatrix/type'</a> on the given <a>'feColorMatrix element'</a> element. 
+  Takes one of the SVG_FECOLORMATRIX_TYPE_* constants defined on this interface.
+</div>
+</dd>
+
+<dt id="SVGFEColorMatrixElement__values"><b>values</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumberList</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feColorMatrix/values'</a> on the given <a>'feColorMatrix element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEComponentTransferElement">Interface SVGFEComponentTransferElement</h3>
@@ -6150,14 +6311,21 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEComponentTransferElement__in1">in1</a>;
 };
 
-<a>SVGFEComponentTransferElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFEComponentTransferElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEComponentTransferElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feComponentTransferElement"><span class="element-name">‘feComponentTransfer’</span></a>
- element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEComponentTransferElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feComponentTransfer element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGComponentTransferFunctionElement">Interface SVGComponentTransferFunctionElement</h3>
@@ -6183,59 +6351,109 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGComponentTransferFunctionElement__amplitude">amplitude</a>;
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGComponentTransferFunctionElement__exponent">exponent</a>;
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGComponentTransferFunctionElement__offset">offset</a>;
-};
-</pre>
+};</pre>
 
-<dl class="interface"><dt>Constants in group “Component Transfer Types”:</dt><dd><dl class="constants">
-<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN"><b>SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dl class="interface"><dt>Constants in group “Component Transfer Types”:</dt>
+<dd>
+<dl class="constants">
+<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN"><b>SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY"><b>SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'identity'</span>.
+<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY"><b>SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''identity''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_TABLE"><b>SVG_FECOMPONENTTRANSFER_TYPE_TABLE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'table'</span>.
+<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_TABLE"><b>SVG_FECOMPONENTTRANSFER_TYPE_TABLE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''table''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE"><b>SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'discrete'</span>.
+<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE"><b>SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''discrete''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_LINEAR"><b>SVG_FECOMPONENTTRANSFER_TYPE_LINEAR</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'linear'</span>.
+<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_LINEAR"><b>SVG_FECOMPONENTTRANSFER_TYPE_LINEAR</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''linear''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_GAMMA"><b>SVG_FECOMPONENTTRANSFER_TYPE_GAMMA</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'gamma'</span>.
+<dt id="SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_GAMMA"><b>SVG_FECOMPONENTTRANSFER_TYPE_GAMMA</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''gamma''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGComponentTransferFunctionElement__type"><b>type</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feComponentTransferTypeAttribute"><span class="attr-name">‘type’</span></a> on the given
- element.  Takes one of the SVG_FECOMPONENTTRANSFER_TYPE_* constants defined
- on this interface.
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__tableValues"><b>tableValues</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumberList</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feComponentTransferTableValuesAttribute"><span class="attr-name">‘tableValues’</span></a> on the given element.
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__slope"><b>slope</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feComponentTransferSlopeAttribute"><span class="attr-name">‘slope’</span></a> on the given element.
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__intercept"><b>intercept</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feComponentTransferInterceptAttribute"><span class="attr-name">‘intercept’</span></a> on the given element.
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__amplitude"><b>amplitude</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feComponentTransferAmplitudeAttribute"><span class="attr-name">‘amplitude’</span></a> on the given element.
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__exponent"><b>exponent</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feComponentTransferExponentAttribute"><span class="attr-name">‘exponent’</span></a> on the given element.
-</div></dd>
-<dt id="SVGComponentTransferFunctionElement__offset"><b>offset</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feComponentTransferOffsetAttribute"><span class="attr-name">‘offset’</span></a> on the given element.
-</div></dd></dl></dd></dl>
+<dt>Attributes:</dt><dd><dl class="attributes">
+<dt id="SVGComponentTransferFunctionElement__type"><b>type</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComponentTransferFunction/type'</a> on the given element. Takes one of the
+  SVG_FECOMPONENTTRANSFER_TYPE_* constants defined on this interface.
+</div>
+</dd>
+
+<dt id="SVGComponentTransferFunctionElement__tableValues"><b>tableValues</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumberList</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComponentTransferFunction/tableValues'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGComponentTransferFunctionElement__slope"><b>slope</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComponentTransferFunction/slope'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGComponentTransferFunctionElement__intercept"><b>intercept</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComponentTransferFunction/intercept'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGComponentTransferFunctionElement__amplitude"><b>amplitude</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComponentTransferFunction/amplitude'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGComponentTransferFunctionElement__exponent"><b>exponent</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComponentTransferFunction/exponent'</a> on the given element.
+</div>
+</dd>
+
+<dt id="SVGComponentTransferFunctionElement__offset"><b>offset</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComponentTransferFunction/offset'</a> on the given element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEFuncRElement">Interface SVGFEFuncRElement</h3>
@@ -6245,8 +6463,7 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </p>
 
 <pre class="idl">interface <b>SVGFEFuncRElement</b> : <a>SVGComponentTransferFunctionElement</a> {
-};
-</pre>
+};</pre>
 
 
 <h3 id="InterfaceSVGFEFuncGElement">Interface SVGFEFuncGElement</h3>
@@ -6256,8 +6473,7 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </p>
 
 <pre class="idl">interface <b>SVGFEFuncGElement</b> : <a>SVGComponentTransferFunctionElement</a> {
-};
-</pre>
+};</pre>
 
 
 <h3 id="InterfaceSVGFEFuncBElement">Interface SVGFEFuncBElement</h3>
@@ -6267,8 +6483,7 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </p>
 
 <pre class="idl">interface <b>SVGFEFuncBElement</b> : <a>SVGComponentTransferFunctionElement</a> {
-};
-</pre>
+};</pre>
 
 
 <h3 id="InterfaceSVGFEFuncAElement">Interface SVGFEFuncAElement</h3>
@@ -6278,8 +6493,7 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </p>
 
 <pre class="idl">interface <b>SVGFEFuncAElement</b> : <a>SVGComponentTransferFunctionElement</a> {
-};
-</pre>
+};</pre>
 
 
 <h3 id="InterfaceSVGFECompositeElement">Interface SVGFECompositeElement</h3>
@@ -6308,69 +6522,114 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFECompositeElement__k4">k4</a>;
 };
 
-<a>SVGFECompositeElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFECompositeElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
 <dl class="interface"><dt>Constants in group “Composite Operators”:</dt><dd><dl class="constants">
-<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_UNKNOWN"><b>SVG_FECOMPOSITE_OPERATOR_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_UNKNOWN"><b>SVG_FECOMPOSITE_OPERATOR_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_OVER"><b>SVG_FECOMPOSITE_OPERATOR_OVER</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'over'</span>.
+<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_OVER"><b>SVG_FECOMPOSITE_OPERATOR_OVER</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''over''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_IN"><b>SVG_FECOMPOSITE_OPERATOR_IN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'in'</span>.
+<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_IN"><b>SVG_FECOMPOSITE_OPERATOR_IN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''in''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_OUT"><b>SVG_FECOMPOSITE_OPERATOR_OUT</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'out'</span>.
+<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_OUT"><b>SVG_FECOMPOSITE_OPERATOR_OUT</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''out''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_ATOP"><b>SVG_FECOMPOSITE_OPERATOR_ATOP</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'atop'</span>.
+<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_ATOP"><b>SVG_FECOMPOSITE_OPERATOR_ATOP</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''atop''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_XOR"><b>SVG_FECOMPOSITE_OPERATOR_XOR</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'xor'</span>.
+<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_XOR"><b>SVG_FECOMPOSITE_OPERATOR_XOR</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''xor''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_ARITHMETIC"><b>SVG_FECOMPOSITE_OPERATOR_ARITHMETIC</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'arithmetic'</span>.
+<dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_ARITHMETIC"><b>SVG_FECOMPOSITE_OPERATOR_ARITHMETIC</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''arithmetic''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFECompositeElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>
- element.
-</div></dd>
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFECompositeElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feComposite element'</a> element.
+</div>
+</dd>
+
 <dt id="SVGFECompositeElement__in2"><b>in2</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feCompositeIn2Attribute"><span class="attr-name">‘in2’</span></a> on the given <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>
- element.
-</div></dd>
-<dt id="SVGFECompositeElement__operator"><b>operator</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feCompositeOperatorAttribute"><span class="attr-name">‘operator’</span></a> on the given <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>
- element.  Takes one of the SVG_FECOMPOSITE_OPERATOR_* constants defined
- on this interface.
-</div></dd>
-<dt id="SVGFECompositeElement__k1"><b>k1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feCompositeK1Attribute"><span class="attr-name">‘k1’</span></a> on the given <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>
- element.
-</div></dd>
-<dt id="SVGFECompositeElement__k2"><b>k2</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feCompositeK2Attribute"><span class="attr-name">‘k2’</span></a> on the given <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>
- element.
-</div></dd>
-<dt id="SVGFECompositeElement__k3"><b>k3</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feCompositeK3Attribute"><span class="attr-name">‘k3’</span></a> on the given <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>
- element.
-</div></dd>
-<dt id="SVGFECompositeElement__k4"><b>k4</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feCompositeK4Attribute"><span class="attr-name">‘k4’</span></a> on the given <a href="#feCompositeElement"><span class="element-name">‘feComposite’</span></a>
- element.
-</div></dd></dl></dd></dl>
+  Corresponds to attribute <a>'feComposite/in2'</a> on the given <a>'feComposite element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFECompositeElement__operator"><b>operator</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feComposite/operator'</a> on the given <a>'feComposite element'</a> element. Takes one of
+  the SVG_FECOMPOSITE_OPERATOR_* constants defined on this interface.
+</div>
+</dd>
+
+<dt id="SVGFECompositeElement__k1"><b>k1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'feComposite/k1'</a> on the given <a>'feComposite element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFECompositeElement__k2"><b>k2</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'feComposite/k2'</a> on the given <a>'feComposite element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFECompositeElement__k3"><b>k3</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'feComposite/k3'</a> on the given <a>'feComposite element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFECompositeElement__k4"><b>k4</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'feComposite/k4'</a> on the given <a>'feComposite element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEConvolveMatrixElement">Interface SVGFEConvolveMatrixElement</h3>
@@ -6404,74 +6663,134 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 <a>SVGFEConvolveMatrixElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
-<dl class="interface"><dt>Constants in group “Edge Mode Values”:</dt><dd><dl class="constants">
-<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_UNKNOWN"><b>SVG_EDGEMODE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dl class="interface">
+<dt>Constants in group “Edge Mode Values”:</dt>
+<dd>
+<dl class="constants">
+<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_UNKNOWN"><b>SVG_EDGEMODE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_DUPLICATE"><b>SVG_EDGEMODE_DUPLICATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'duplicate'</span>.
+<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_DUPLICATE"><b>SVG_EDGEMODE_DUPLICATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''duplicate''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_WRAP"><b>SVG_EDGEMODE_WRAP</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'wrap'</span>.
+<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_WRAP"><b>SVG_EDGEMODE_WRAP</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''wrap''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_NONE"><b>SVG_EDGEMODE_NONE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'none'</span>.
+<dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_NONE"><b>SVG_EDGEMODE_NONE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''none''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEConvolveMatrixElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__orderX"><b>orderX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementOrderAttribute"><span class="attr-name">‘order’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__orderY"><b>orderY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementOrderAttribute"><span class="attr-name">‘order’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__kernelMatrix"><b>kernelMatrix</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumberList</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementKernelMatrixAttribute"><span class="attr-name">‘kernelMatrix’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__divisor"><b>divisor</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementDivisorAttribute"><span class="attr-name">‘divisor’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__bias"><b>bias</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementBiasAttribute"><span class="attr-name">‘bias’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__targetX"><b>targetX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementTargetXAttribute"><span class="attr-name">‘targetX’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__targetY"><b>targetY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementTargetYAttribute"><span class="attr-name">‘targetY’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__edgeMode"><b>edgeMode</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementEdgeModeAttribute"><span class="attr-name">‘edgeMode’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.  Takes one of the SVG_EDGEMODE_*
- constants defined on this interface.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__kernelUnitLengthX"><b>kernelUnitLengthX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementKernelUnitLengthAttribute"><span class="attr-name">‘kernelUnitLength’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__kernelUnitLengthY"><b>kernelUnitLengthY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementKernelUnitLengthAttribute"><span class="attr-name">‘kernelUnitLength’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd>
-<dt id="SVGFEConvolveMatrixElement__preserveAlpha"><b>preserveAlpha</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedBoolean</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feConvolveMatrixElementPreserveAlphaAttribute"><span class="attr-name">‘preserveAlpha’</span></a> on the given
- <a href="#feConvolveMatrixElement"><span class="element-name">‘feConvolveMatrix’</span></a> element.
-</div></dd></dl></dd></dl>
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEConvolveMatrixElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__orderX"><b>orderX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/order'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__orderY"><b>orderY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/order'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__kernelMatrix"><b>kernelMatrix</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumberList</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/kernelMatrix'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__divisor"><b>divisor</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/divisor'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__bias"><b>bias</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/bias'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__targetX"><b>targetX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/targetX'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__targetY"><b>targetY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/targetY'</a> on the given <a>'feConvolveMatrix element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__edgeMode"><b>edgeMode</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/edgeMode'</a> on the given <a>'feConvolveMatrix element'</a> element.
+  Takes one of the SVG_EDGEMODE_* constants defined on this interface.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__kernelUnitLengthX"><b>kernelUnitLengthX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/kernelUnitLength'</a> on the given <a>'feConvolveMatrix element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__kernelUnitLengthY"><b>kernelUnitLengthY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/kernelUnitLength'</a> on the given <a>'feConvolveMatrix element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFEConvolveMatrixElement__preserveAlpha"><b>preserveAlpha</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedBoolean</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feConvolveMatrix/preserveAlpha'</a> on the given <a>'feConvolveMatrix element'</a>
+  element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEDiffuseLightingElement">Interface SVGFEDiffuseLightingElement</h3>
@@ -6491,27 +6810,51 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 <a>SVGFEDiffuseLightingElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEDiffuseLightingElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feDiffuseLightingElement"><span class="element-name">‘feDiffuseLighting’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEDiffuseLightingElement__surfaceScale"><b>surfaceScale</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDiffuseLightingSurfaceScaleAttribute"><span class="attr-name">‘surfaceScale’</span></a> on the given
- <a href="#feDiffuseLightingElement"><span class="element-name">‘feDiffuseLighting’</span></a> element.
-</div></dd>
-<dt id="SVGFEDiffuseLightingElement__diffuseConstant"><b>diffuseConstant</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDiffuseLightingDiffuseConstantAttribute"><span class="attr-name">‘diffuseConstant’</span></a> on the given
- <a href="#feDiffuseLightingElement"><span class="element-name">‘feDiffuseLighting’</span></a> element.
-</div></dd>
-<dt id="SVGFEDiffuseLightingElement__kernelUnitLengthX"><b>kernelUnitLengthX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDiffuseLightingKernelUnitLengthAttribute"><span class="attr-name">‘kernelUnitLength’</span></a> on the given
- <a href="#feDiffuseLightingElement"><span class="element-name">‘feDiffuseLighting’</span></a> element.
-</div></dd>
-<dt id="SVGFEDiffuseLightingElement__kernelUnitLengthY"><b>kernelUnitLengthY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDiffuseLightingKernelUnitLengthAttribute"><span class="attr-name">‘kernelUnitLength’</span></a> on the given
- <a href="#feDiffuseLightingElement"><span class="element-name">‘feDiffuseLighting’</span></a> element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEDiffuseLightingElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feDiffuseLighting element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEDiffuseLightingElement__surfaceScale"><b>surfaceScale</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDiffuseLighting/surfaceScale'</a> on the given <a>'feDiffuseLighting element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFEDiffuseLightingElement__diffuseConstant"><b>diffuseConstant</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDiffuseLighting/diffuseConstant'</a> on the given <a>'feDiffuseLighting element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFEDiffuseLightingElement__kernelUnitLengthX"><b>kernelUnitLengthX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDiffuseLighting/kernelUnitLength'</a> on the given <a>'feDiffuseLighting element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFEDiffuseLightingElement__kernelUnitLengthY"><b>kernelUnitLengthY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDiffuseLighting/kernelUnitLength'</a> on the given <a>'feDiffuseLighting element'</a>
+  element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEDistantLightElement">Interface SVGFEDistantLightElement</h3>
@@ -6523,18 +6866,28 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 <pre class="idl">interface <b>SVGFEDistantLightElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEDistantLightElement__azimuth">azimuth</a>;
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEDistantLightElement__elevation">elevation</a>;
-};
-</pre>
+};</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEDistantLightElement__azimuth"><b>azimuth</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDistantLightAzimuthAttribute"><span class="attr-name">‘azimuth’</span></a> on the given
- <a href="#feDistantLightElement"><span class="element-name">‘feDistantLight’</span></a> element.
-</div></dd>
-<dt id="SVGFEDistantLightElement__elevation"><b>elevation</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDistantLightElevationAttribute"><span class="attr-name">‘elevation’</span></a> on the given
- <a href="#feDistantLightElement"><span class="element-name">‘feDistantLight’</span></a> element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEDistantLightElement__azimuth"><b>azimuth</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDistantLight/azimuth'</a> on the given <a>'feDistantLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEDistantLightElement__elevation"><b>elevation</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDistantLight/elevation'</a> on the given <a>'feDistantLight element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEPointLightElement">Interface SVGFEPointLightElement</h3>
@@ -6547,22 +6900,35 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__x">x</a>;
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__y">y</a>;
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__z">z</a>;
-};
-</pre>
+};</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEPointLightElement__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#fePointLightXAttribute"><span class="attr-name">‘x’</span></a> on the given
- <a href="#fePointLightElement"><span class="element-name">‘fePointLight’</span></a> element.
-</div></dd>
-<dt id="SVGFEPointLightElement__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#fePointLightYAttribute"><span class="attr-name">‘y’</span></a> on the given
- <a href="#fePointLightElement"><span class="element-name">‘fePointLight’</span></a> element.
-</div></dd>
-<dt id="SVGFEPointLightElement__z"><b>z</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#fePointLightZAttribute"><span class="attr-name">‘z’</span></a> on the given
- <a href="#fePointLightElement"><span class="element-name">‘fePointLight’</span></a> element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEPointLightElement__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'fePointLight/x'</a> on the given <a>'fePointLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEPointLightElement__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'fePointLight/y'</a> on the given <a>'fePointLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEPointLightElement__z"><b>z</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'fePointLight/z'</a> on the given <a>'fePointLight element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFESpotLightElement">Interface SVGFESpotLightElement</h3>
@@ -6580,42 +6946,70 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__pointsAtZ">pointsAtZ</a>;
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__specularExponent">specularExponent</a>;
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__limitingConeAngle">limitingConeAngle</a>;
-};
-</pre>
+};</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFESpotLightElement__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightXAttribute"><span class="attr-name">‘x’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd>
-<dt id="SVGFESpotLightElement__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightYAttribute"><span class="attr-name">‘y’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd>
-<dt id="SVGFESpotLightElement__z"><b>z</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightZAttribute"><span class="attr-name">‘z’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd>
-<dt id="SVGFESpotLightElement__pointsAtX"><b>pointsAtX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightPointsAtXAttribute"><span class="attr-name">‘pointsAtX’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd>
-<dt id="SVGFESpotLightElement__pointsAtY"><b>pointsAtY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightPointsAtYAttribute"><span class="attr-name">‘pointsAtY’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd>
-<dt id="SVGFESpotLightElement__pointsAtZ"><b>pointsAtZ</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightPointsAtZAttribute"><span class="attr-name">‘pointsAtZ’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd>
-<dt id="SVGFESpotLightElement__specularExponent"><b>specularExponent</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightSpecularExponentAttribute"><span class="attr-name">‘specularExponent’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd>
-<dt id="SVGFESpotLightElement__limitingConeAngle"><b>limitingConeAngle</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpotLightLimitingConeAngleAttribute"><span class="attr-name">‘limitingConeAngle’</span></a> on the given
- <a href="#feSpotLightElement"><span class="element-name">‘feSpotLight’</span></a> element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFESpotLightElement__x"><b>x</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/x'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpotLightElement__y"><b>y</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/y'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpotLightElement__z"><b>z</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/z'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpotLightElement__pointsAtX"><b>pointsAtX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/pointsAtX'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpotLightElement__pointsAtY"><b>pointsAtY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/pointsAtY'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpotLightElement__pointsAtZ"><b>pointsAtZ</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/pointsAtZ'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpotLightElement__specularExponent"><b>specularExponent</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/specularExponent'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpotLightElement__limitingConeAngle"><b>limitingConeAngle</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpotLight/limitingConeAngle'</a> on the given <a>'feSpotLight element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEDisplacementMapElement">Interface SVGFEDisplacementMapElement</h3>
@@ -6644,51 +7038,90 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </pre>
 
 
-<dl class="interface"><dt>Constants in group “Channel Selectors”:</dt><dd><dl class="constants">
-<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_UNKNOWN"><b>SVG_CHANNEL_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dl class="interface">
+<dt>Constants in group “Channel Selectors”:</dt>
+<dd>
+<dl class="constants">
+<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_UNKNOWN"><b>SVG_CHANNEL_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_R"><b>SVG_CHANNEL_R</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'R'</span>.
+<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_R"><b>SVG_CHANNEL_R</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''R''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_G"><b>SVG_CHANNEL_G</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'G'</span>.
+<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_G"><b>SVG_CHANNEL_G</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''G''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_B"><b>SVG_CHANNEL_B</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'B'</span>.
+<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_B"><b>SVG_CHANNEL_B</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''B''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_A"><b>SVG_CHANNEL_A</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'A'</span>.
+<dt id="SVGFEDisplacementMapElement__SVG_CHANNEL_A"><b>SVG_CHANNEL_A</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''A''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEDisplacementMapElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feDisplacementMapElement"><span class="element-name">‘feDisplacementMap’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__in2"><b>in2</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDisplacementMapIn2Attribute"><span class="attr-name">‘in2’</span></a> on the given <a href="#feDisplacementMapElement"><span class="element-name">‘feDisplacementMap’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__scale"><b>scale</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDisplacementMapScaleAttribute"><span class="attr-name">‘scale’</span></a> on the given <a href="#feDisplacementMapElement"><span class="element-name">‘feDisplacementMap’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__xChannelSelector"><b>xChannelSelector</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDisplacementMapXChannelSelectorAttribute"><span class="attr-name">‘xChannelSelector’</span></a> on the given
- <a href="#feDisplacementMapElement"><span class="element-name">‘feDisplacementMap’</span></a> element.  Takes one of the SVG_CHANNEL_*
- constants defined on this interface.
-</div></dd>
-<dt id="SVGFEDisplacementMapElement__yChannelSelector"><b>yChannelSelector</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feDisplacementMapYChannelSelectorAttribute"><span class="attr-name">‘yChannelSelector’</span></a> on the given
- <a href="#feDisplacementMapElement"><span class="element-name">‘feDisplacementMap’</span></a> element.  Takes one of the SVG_CHANNEL_*
- constants defined on this interface.
-</div></dd></dl></dd></dl>
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEDisplacementMapElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feDisplacementMap element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEDisplacementMapElement__in2"><b>in2</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDisplacementMap/in2'</a> on the given <a>'feDisplacementMap element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEDisplacementMapElement__scale"><b>scale</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDisplacementMap/scale'</a> on the given <a>'feDisplacementMap element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEDisplacementMapElement__xChannelSelector"><b>xChannelSelector</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDisplacementMap/xChannelSelector'</a> on the given <a>'feDisplacementMap element'</a>
+  element. Takes one of the SVG_CHANNEL_* constants defined on this interface.
+</div>
+</dd>
+
+<dt id="SVGFEDisplacementMapElement__yChannelSelector"><b>yChannelSelector</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feDisplacementMap/yChannelSelector'</a> on the given <a>'feDisplacementMap element'</a>
+  element. Takes one of the SVG_CHANNEL_* constants defined on this interface.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEDropShadowElement">Interface SVGFEDropShadowElement</h3>
@@ -6705,15 +7138,27 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEDropShadowElement__stdDeviationY">stdDeviationY</a>;
 };
 
-<a>SVGFEDropShadowElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFEDropShadowElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
 <dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEDropShadowElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd> </dd>
-<dt id="SVGFEDropShadowElement__dx"><b>dx</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd> </dd>
-<dt id="SVGFEDropShadowElement__dy"><b>dy</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd> </dd>
-<dt id="SVGFEDropShadowElement__stdDeviationX"><b>stdDeviationX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd> </dd>
-<dt id="SVGFEDropShadowElement__stdDeviationY"><b>stdDeviationY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd> </dd></dl></dd></dl>
+<dt id="SVGFEDropShadowElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+</dd>
+<dt id="SVGFEDropShadowElement__dx"><b>dx</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+</dd>
+<dt id="SVGFEDropShadowElement__dy"><b>dy</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+</dd>
+<dt id="SVGFEDropShadowElement__stdDeviationX"><b>stdDeviationX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+</dd>
+<dt id="SVGFEDropShadowElement__stdDeviationY"><b>stdDeviationY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEFloodElement">Interface SVGFEFloodElement</h3>
@@ -6723,8 +7168,7 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </p>
 
 <pre class="idl">interface <b>SVGFEFloodElement</b> : <a>SVGElement</a> {
-};
-</pre>
+};</pre>
 
 
 <h3 id="InterfaceSVGFEGaussianBlurElement">Interface SVGFEGaussianBlurElement</h3>
@@ -6741,33 +7185,79 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   void <a href="#SVGFEGaussianBlurElement__setStdDeviation">setStdDeviation</a>(in float stdDeviationX, in float stdDeviationY);
 };
 
-<a>SVGFEGaussianBlurElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFEGaussianBlurElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEGaussianBlurElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given
- <a href="#feGaussianBlurElement"><span class="element-name">‘feGaussianBlur’</span></a> element.
-</div></dd>
-<dt id="SVGFEGaussianBlurElement__stdDeviationX"><b>stdDeviationX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feGaussianBlurStdDeviationAttribute"><span class="attr-name">‘stdDeviation’</span></a> on the given
- <a href="#feGaussianBlurElement"><span class="element-name">‘feGaussianBlur’</span></a> element.  Contains the X component
- of attribute <a href="#feGaussianBlurStdDeviationAttribute"><span class="attr-name">‘stdDeviation’</span></a>.
-</div></dd>
-<dt id="SVGFEGaussianBlurElement__stdDeviationY"><b>stdDeviationY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feGaussianBlurStdDeviationAttribute"><span class="attr-name">‘stdDeviation’</span></a> on the given
- <a href="#feGaussianBlurElement"><span class="element-name">‘feGaussianBlur’</span></a> element.  Contains the Y component
- (possibly computed automatically) of attribute <a href="#feGaussianBlurStdDeviationAttribute"><span class="attr-name">‘stdDeviation’</span></a>.
-</div></dd></dl></dd><dt>Operations:</dt><dd><dl class="attributes">
-<dt id="SVGFEGaussianBlurElement__setStdDeviation">void <b>setStdDeviation</b>(in float <var>stdDeviationX</var>, in float <var>stdDeviationY</var>)</dt><dd><div>
- Sets the values for attribute <a href="#feGaussianBlurStdDeviationAttribute"><span class="attr-name">‘stdDeviation’</span></a>.
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEGaussianBlurElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feGaussianBlur element'</a> element.
+</div>
+</dd>
 
-</div><dl class="operation"><dt>Parameters</dt><dd><ol class="parameters"><li><div class="parameter">float <var>stdDeviationX</var></div> <div> The X component of attribute <a href="#feGaussianBlurStdDeviationAttribute"><span class="attr-name">‘stdDeviation’</span></a>.
-</div></li><li><div class="parameter">float <var>stdDeviationY</var></div> <div> The Y component of attribute <a href="#feGaussianBlurStdDeviationAttribute"><span class="attr-name">‘stdDeviation’</span></a>.
-</div></li></ol></dd><dt>Exceptions</dt><dd><dl class="exceptions"><dt><a class="idlinterface" href="http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-17189187">DOMException</a>, code NO_MODIFICATION_ALLOWED_ERR</dt><dd> Raised on an attempt
-   to change the value of a readonly attribute.
-</dd></dl></dd></dl></dd></dl></dd></dl>
+<dt id="SVGFEGaussianBlurElement__stdDeviationX"><b>stdDeviationX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feGaussianBlur/stdDeviation'</a> on the given <a>'feGaussianBlur element'</a> element.
+  Contains the X component of attribute <a>'feGaussianBlur/stdDeviation'</a>.
+</div>
+</dd>
+
+<dt id="SVGFEGaussianBlurElement__stdDeviationY"><b>stdDeviationY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feGaussianBlur/stdDeviation'</a> on the given <a>'feGaussianBlur element'</a> element.
+  Contains the Y component (possibly computed automatically) of attribute <a>'feGaussianBlur/stdDeviation'</a>.
+</div>
+</dd>
+</dl>
+</dd>
+
+<dt>Operations:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEGaussianBlurElement__setStdDeviation">void <b>setStdDeviation</b>(in float <var>stdDeviationX</var>, in float <var>stdDeviationY</var>)</dt>
+<dd>
+<div>
+  Sets the values for attribute <a>'feGaussianBlur/stdDeviation'</a>.
+</div>
+
+<dl class="operation">
+<dt>Parameters</dt>
+<dd>
+<ol class="parameters">
+<li>
+<div class="parameter">float <var>stdDeviationX</var></div>
+<div>
+  The X component of attribute <a>'feGaussianBlur/stdDeviation'</a>.
+</div>
+</li>
+<li>
+<div class="parameter">float <var>stdDeviationY</var></div>
+<div>
+  The Y component of attribute <a>'feGaussianBlur/stdDeviation'</a>.
+</div>
+</li>
+</ol>
+</dd>
+
+<dt>Exceptions</dt>
+<dd>
+<dl class="exceptions">
+<dt><a class="idlinterface" href="http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-17189187">DOMException</a>, code NO_MODIFICATION_ALLOWED_ERR</dt>
+<dd>Raised on an attempt to change the value of a readonly attribute.
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEImageElement">Interface SVGFEImageElement</h3>
@@ -6779,15 +7269,22 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 };
 
 <a>SVGFEGaussianBlurElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-<a>SVGFEImageElement</a> implements <a>SVGURIReference</a>;
-</pre>
+<a>SVGFEImageElement</a> implements <a>SVGURIReference</a>;</pre>
 
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEImageElement__preserveAspectRatio"><b>preserveAspectRatio</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedPreserveAspectRatio</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#PreserveAspectRatioAttribute"><span class="attr-name">‘preserveAspectRatio’</span></a> on the given
- <a href="#feImageElement"><span class="element-name">‘feImage’</span></a> element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEImageElement__preserveAspectRatio"><b>preserveAspectRatio</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedPreserveAspectRatio</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feImage/preserveAspectRatio'</a> on the given <a>'feImage element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEMergeElement">Interface SVGFEMergeElement</h3>
@@ -6797,8 +7294,7 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 </p>
 
 <pre class="idl">interface <b>SVGFEMergeElement</b> : <a>SVGElement</a> {
-};
-</pre>
+};</pre>
 
 
 <h3 id="InterfaceSVGFEMergeNodeElement">Interface SVGFEMergeNodeElement</h3>
@@ -6809,14 +7305,21 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 
 <pre class="idl">interface <b>SVGFEMergeNodeElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEMergeNodeElement__in1">in1</a>;
-};
-</pre>
+};</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEMergeNodeElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feMergeNodeElement"><span class="element-name">‘feMergeNode’</span></a>
- element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEMergeNodeElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feMergeNode element'</a>element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEMorphologyElement">Interface SVGFEMorphologyElement</h3>
@@ -6838,41 +7341,67 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEMorphologyElement__radiusY">radiusY</a>;
 };
 
-<a>SVGFEMorphologyElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFEMorphologyElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
 <dl class="interface"><dt>Constants in group “Morphology Operators”:</dt><dd><dl class="constants">
-<dt id="SVGFEMorphologyElement__SVG_MORPHOLOGY_OPERATOR_UNKNOWN"><b>SVG_MORPHOLOGY_OPERATOR_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dt id="SVGFEMorphologyElement__SVG_MORPHOLOGY_OPERATOR_UNKNOWN"><b>SVG_MORPHOLOGY_OPERATOR_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEMorphologyElement__SVG_MORPHOLOGY_OPERATOR_ERODE"><b>SVG_MORPHOLOGY_OPERATOR_ERODE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'erode'</span>.
+<dt id="SVGFEMorphologyElement__SVG_MORPHOLOGY_OPERATOR_ERODE"><b>SVG_MORPHOLOGY_OPERATOR_ERODE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''erode''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFEMorphologyElement__SVG_MORPHOLOGY_OPERATOR_DILATE"><b>SVG_MORPHOLOGY_OPERATOR_DILATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'dilate'</span>.
+<dt id="SVGFEMorphologyElement__SVG_MORPHOLOGY_OPERATOR_DILATE"><b>SVG_MORPHOLOGY_OPERATOR_DILATE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''dilate''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEMorphologyElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feMorphologyElement"><span class="element-name">‘feMorphology’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEMorphologyElement__operator"><b>operator</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feMorphologyOperatorAttribute"><span class="attr-name">‘operator’</span></a> on the given <a href="#feMorphologyElement"><span class="element-name">‘feMorphology’</span></a>
- element.  Takes one of the SVG_MORPHOLOGY_OPERATOR_* constants
- defined on this interface.
-</div></dd>
-<dt id="SVGFEMorphologyElement__radiusX"><b>radiusX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feMorphologyRadiusAttribute"><span class="attr-name">‘radius’</span></a> on the given <a href="#feMorphologyElement"><span class="element-name">‘feMorphology’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEMorphologyElement__radiusY"><b>radiusY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feMorphologyRadiusAttribute"><span class="attr-name">‘radius’</span></a> on the given <a href="#feMorphologyElement"><span class="element-name">‘feMorphology’</span></a>
- element.
-</div></dd></dl></dd></dl>
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEMorphologyElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feMorphology element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEMorphologyElement__operator"><b>operator</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feMorphology/operator'</a> on the given <a>'feMorphology element'</a> element. Takes one
+  of the SVG_MORPHOLOGY_OPERATOR_* constants defined on this interface.
+</div>
+</dd>
+
+<dt id="SVGFEMorphologyElement__radiusX"><b>radiusX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feMorphology/radius'</a> on the given <a>'feMorphology element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEMorphologyElement__radiusY"><b>radiusY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feMorphology/radius'</a> on the given <a>'feMorphology element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFEOffsetElement">Interface SVGFEOffsetElement</h3>
@@ -6887,22 +7416,35 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dy">dy</a>;
 };
 
-<a>SVGFEOffsetElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFEOffsetElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFEOffsetElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feOffsetElement"><span class="element-name">‘feOffset’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEOffsetElement__dx"><b>dx</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feOffsetDxAttribute"><span class="attr-name">‘dx’</span></a> on the given <a href="#feOffsetElement"><span class="element-name">‘feOffset’</span></a>
- element.
-</div></dd>
-<dt id="SVGFEOffsetElement__dy"><b>dy</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feOffsetDyAttribute"><span class="attr-name">‘dy’</span></a> on the given <a href="#feOffsetElement"><span class="element-name">‘feOffset’</span></a>
- element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFEOffsetElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feOffset element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEOffsetElement__dx"><b>dx</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feOffset/dx'</a> on the given <a>'feOffset element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFEOffsetElement__dy"><b>dy</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feOffset/dy'</a> on the given <a>'feOffset element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFESpecularLightingElement">Interface SVGFESpecularLightingElement</h3>
@@ -6920,34 +7462,61 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFESpecularLightingElement__kernelUnitLengthY">kernelUnitLengthY</a>;
 };
 
-<a>SVGFESpecularLightingElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFESpecularLightingElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFESpecularLightingElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feSpecularLightingElement"><span class="element-name">‘feSpecularLighting’</span></a>
- element.
-</div></dd>
-<dt id="SVGFESpecularLightingElement__surfaceScale"><b>surfaceScale</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpecularLightingSurfaceScaleAttribute"><span class="attr-name">‘surfaceScale’</span></a> on the given
- <a href="#feSpecularLightingElement"><span class="element-name">‘feSpecularLighting’</span></a> element.
-</div></dd>
-<dt id="SVGFESpecularLightingElement__specularConstant"><b>specularConstant</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpecularLightingSpecularConstantAttribute"><span class="attr-name">‘specularConstant’</span></a> on the given
- <a href="#feSpecularLightingElement"><span class="element-name">‘feSpecularLighting’</span></a> element.
-</div></dd>
-<dt id="SVGFESpecularLightingElement__specularExponent"><b>specularExponent</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpecularLightingSpecularExponentAttribute"><span class="attr-name">‘specularExponent’</span></a> on the given
- <a href="#feSpecularLightingElement"><span class="element-name">‘feSpecularLighting’</span></a> element.
-</div></dd>
-<dt id="SVGFESpecularLightingElement__kernelUnitLengthX"><b>kernelUnitLengthX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpecularLightingKernelUnitLengthAttribute"><span class="attr-name">‘kernelUnitLength’</span></a> on the given
- <a href="#feSpecularLightingElement"><span class="element-name">‘feSpecularLighting’</span></a> element.
-</div></dd>
-<dt id="SVGFESpecularLightingElement__kernelUnitLengthY"><b>kernelUnitLengthY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feSpecularLightingKernelUnitLengthAttribute"><span class="attr-name">‘kernelUnitLength’</span></a> on the given
- <a href="#feSpecularLightingElement"><span class="element-name">‘feSpecularLighting’</span></a> element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFESpecularLightingElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feSpecularLighting element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFESpecularLightingElement__surfaceScale"><b>surfaceScale</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpecularLighting/surfaceScale'</a> on the given <a>'feSpecularLighting element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFESpecularLightingElement__specularConstant"><b>specularConstant</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpecularLighting/specularConstant'</a> on the given <a>'feSpecularLighting element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFESpecularLightingElement__specularExponent"><b>specularExponent</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpecularLighting/specularExponent'</a> on the given <a>'feSpecularLighting element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFESpecularLightingElement__kernelUnitLengthX"><b>kernelUnitLengthX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpecularLighting/kernelUnitLength'</a> on the given <a>'feSpecularLighting element'</a>
+  element.
+</div>
+</dd>
+
+<dt id="SVGFESpecularLightingElement__kernelUnitLengthY"><b>kernelUnitLengthY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feSpecularLighting/kernelUnitLength'</a> on the given <a>'feSpecularLighting'</a>
+  element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFETileElement">Interface SVGFETileElement</h3>
@@ -6960,14 +7529,21 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFETileElement__in1">in1</a>;
 };
 
-<a>SVGFETileElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-</pre>
+<a>SVGFETileElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
 
-<dl class="interface"><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFETileElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#FilterPrimitiveInAttribute"><span class="attr-name">‘in’</span></a> on the given <a href="#feTileElement"><span class="element-name">‘feTile’</span></a>
- element.
-</div></dd></dl></dd></dl>
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFETileElement__in1"><b>in1</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feTile element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 
 <h3 id="InterfaceSVGFETurbulenceElement">Interface SVGFETurbulenceElement</h3>
@@ -6999,63 +7575,111 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 <a>SVGFETurbulenceElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
-<dl class="interface"><dt>Constants in group “Turbulence Types”:</dt><dd><dl class="constants">
-<dt id="SVGFETurbulenceElement__SVG_TURBULENCE_TYPE_UNKNOWN"><b>SVG_TURBULENCE_TYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dl class="interface">
+<dt>Constants in group “Turbulence Types”:</dt>
+<dd>
+<dl class="constants">
+<dt id="SVGFETurbulenceElement__SVG_TURBULENCE_TYPE_UNKNOWN"><b>SVG_TURBULENCE_TYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFETurbulenceElement__SVG_TURBULENCE_TYPE_FRACTALNOISE"><b>SVG_TURBULENCE_TYPE_FRACTALNOISE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'fractalNoise'</span>.
+<dt id="SVGFETurbulenceElement__SVG_TURBULENCE_TYPE_FRACTALNOISE"><b>SVG_TURBULENCE_TYPE_FRACTALNOISE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''fractalNoise''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFETurbulenceElement__SVG_TURBULENCE_TYPE_TURBULENCE"><b>SVG_TURBULENCE_TYPE_TURBULENCE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'turbulence'</span>.
+<dt id="SVGFETurbulenceElement__SVG_TURBULENCE_TYPE_TURBULENCE"><b>SVG_TURBULENCE_TYPE_TURBULENCE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''turbulence''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Constants in group “Stitch Options”:</dt><dd><dl class="constants">
-<dt id="SVGFETurbulenceElement__SVG_STITCHTYPE_UNKNOWN"><b>SVG_STITCHTYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- The type is not one of predefined types. It is invalid to attempt to
- define a new value of this type or to attempt to switch an existing
- value to this type.
+<dt>Constants in group “Stitch Options”:</dt>
+<dd>
+<dl class="constants">
+<dt id="SVGFETurbulenceElement__SVG_STITCHTYPE_UNKNOWN"><b>SVG_STITCHTYPE_UNKNOWN</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to
+  switch an existing value to this type.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFETurbulenceElement__SVG_STITCHTYPE_STITCH"><b>SVG_STITCHTYPE_STITCH</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'stitch'</span>.
+<dt id="SVGFETurbulenceElement__SVG_STITCHTYPE_STITCH"><b>SVG_STITCHTYPE_STITCH</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
+<dd>
+<div>
+  Corresponds to value ''stitch''.
+</div>
+</dd>
 
-</div></dd>
-<dt id="SVGFETurbulenceElement__SVG_STITCHTYPE_NOSTITCH"><b>SVG_STITCHTYPE_NOSTITCH</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd><div>
- Corresponds to value <span class="attr-value">'noStitch'</span>.
+<dt id="SVGFETurbulenceElement__SVG_STITCHTYPE_NOSTITCH"><b>SVG_STITCHTYPE_NOSTITCH</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt><dd>
+<div>
+  Corresponds to value ''noStitch''.
+</div>
+</dd>
+</dl>
+</dd>
 
-</div></dd></dl></dd><dt>Attributes:</dt><dd><dl class="attributes">
-<dt id="SVGFETurbulenceElement__baseFrequencyX"><b>baseFrequencyX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feTurbulenceBaseFrequencyAttribute"><span class="attr-name">‘baseFrequency’</span></a> on the given
- <a href="#feTurbulenceElement"><span class="element-name">‘feTurbulence’</span></a> element.  Contains the X component of the
- <a href="#feTurbulenceBaseFrequencyAttribute"><span class="attr-name">‘baseFrequency’</span></a> attribute.
-</div></dd>
-<dt id="SVGFETurbulenceElement__baseFrequencyY"><b>baseFrequencyY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feTurbulenceBaseFrequencyAttribute"><span class="attr-name">‘baseFrequency’</span></a> on the given
- <a href="#feTurbulenceElement"><span class="element-name">‘feTurbulence’</span></a> element.  Contains the Y component of the
- (possibly computed automatically) <a href="#feTurbulenceBaseFrequencyAttribute"><span class="attr-name">‘baseFrequency’</span></a> attribute.
-</div></dd>
-<dt id="SVGFETurbulenceElement__numOctaves"><b>numOctaves</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feTurbulenceNumOctavesAttribute"><span class="attr-name">‘numOctaves’</span></a> on the given
- <a href="#feTurbulenceElement"><span class="element-name">‘feTurbulence’</span></a> element.
-</div></dd>
-<dt id="SVGFETurbulenceElement__seed"><b>seed</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feTurbulenceSeedAttribute"><span class="attr-name">‘seed’</span></a> on the given
- <a href="#feTurbulenceElement"><span class="element-name">‘feTurbulence’</span></a> element.
-</div></dd>
-<dt id="SVGFETurbulenceElement__stitchTiles"><b>stitchTiles</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feTurbulenceStitchTilesAttribute"><span class="attr-name">‘stitchTiles’</span></a> on the given
- <a href="#feTurbulenceElement"><span class="element-name">‘feTurbulence’</span></a> element.  Takes one of the SVG_STITCHTYPE_*
- constants defined on this interface.
-</div></dd>
-<dt id="SVGFETurbulenceElement__type"><b>type</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt><dd><div>
- Corresponds to attribute <a href="#feTurbulenceTypeAttribute"><span class="attr-name">‘type’</span></a> on the given
- <a href="#feTurbulenceElement"><span class="element-name">‘feTurbulence’</span></a> element.  Takes one of the SVG_TURBULENCE_TYPE_*
- constants defined on this interface.
-</div></dd></dl></dd></dl>
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFETurbulenceElement__baseFrequencyX"><b>baseFrequencyX</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feTurbulence/baseFrequency'</a> on the given <a>'feTurbulence element'</a> element.
+  Contains the X component of the <a>'feTurbulence/baseFrequency'</a> attribute.
+</div>
+</dd>
+
+<dt id="SVGFETurbulenceElement__baseFrequencyY"><b>baseFrequencyY</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+ Corresponds to attribute <a>'feTurbulence/baseFrequency'</a> on the given <a>'feTurbulence element'</a> element.
+ Contains the Y component of the (possibly computed automatically) <a>'feTurbulence/baseFrequency'</a> attribute.
+</div>
+</dd>
+
+<dt id="SVGFETurbulenceElement__numOctaves"><b>numOctaves</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedInteger</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feTurbulence/numOctaves'</a> on the given <a>'feTurbulence element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFETurbulenceElement__seed"><b>seed</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedNumber</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feTurbulence/seed'</a> on the given <a>'feTurbulence element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFETurbulenceElement__stitchTiles"><b>stitchTiles</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feTurbulence/stitchTiles'</a> on the given <a>'feTurbulence element'</a> element. Takes
+  one of the SVG_STITCHTYPE_* constants defined on this interface.
+</div>
+</dd>
+
+<dt id="SVGFETurbulenceElement__type"><b>type</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedEnumeration</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feTurbulence/type'</a> on the given <a>'feTurbulence element'</a> element. Takes one of
+  the SVG_TURBULENCE_TYPE_* constants defined on this interface.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 
 <h2>References</h2>
 
