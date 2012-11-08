@@ -325,16 +325,39 @@
 
 <!-- ****************************************************************************** -->
 
-<h2 id="about">Reading This Document</h2>
+<h2 id="placement">Module interactions</h2>
 
-<p>
-  Each section of this document is normative unless otherwise specified.
+<p>This specification defines a set of CSS properties that affect the visual rendering of elements to which
+  those properties are applied; these effects are applied after elements have been sized and positioned according
+  to the <a href="http://www.w3.org/TR/CSS2/visuren.html" title="Visual formatting model">Visual formatting model</a>
+  from [[!CSS21]]. Some values of these properties result in the creation of a
+  <a href="http://www.w3.org/TR/CSS2/visuren.html#containing-block" title="Visual formatting model">containing block</a>,
+  and/or the creation of a <a href="http://www.w3.org/TR/CSS2/visuren.html#z-index" title="Visual formatting model">stacking
+  context</a>.
 </p>
 
-<p class="note">
-  Note that even though this specification references parts of SVG 1.1 [[!SVG11]] it does not require an SVG 1.1
-  implementation.
-  <p class="issue" id="issue-conformance-classes">Add link to conformance classes here.</p>
+<p>
+  Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without
+  support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and
+  'lightning-color' properties as well as the <a>'filter element'</a> element, the <a>'feMergeNode element'</a> element,
+  the <a>'feCustomParam element'</a> element, the <span>transfer function elements</span> and the <span>filter primitive
+  elements</span>.
+</p>
+
+<!-- ****************************************************************************** -->
+
+<h2 id="values">Values</h2>
+
+<p>
+  This specification follows the <a href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property definition
+  conventions</a> from [[!CSS21]]. Value types not defined in this specification are defined in CSS Level 2 Revision 1
+  [[!CSS21]].
+</p>
+
+<p>
+  In addition to the property-specific values listed in their definitions, all properties defined in this specification
+  also accept the <a href="http://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a> keyword as their
+  property value. For readability it has not been repeated explicitly.
 </p>
 
 <!-- ****************************************************************************** -->
@@ -1648,8 +1671,9 @@ primitives:</p>
 
 <h3 id="FilterPrimitiveSubRegion">Filter primitive subregion</h3>
 
-<p class="todo">
-  Define filter primitive subregion for shorthands. E.g. the outout bounds of the previous filter functions, extended by affected area of current filter function.
+<p class="issue">
+  Define filter primitive subregion for shorthands. E.g. the out bounds of the previous filter functions, extended by
+  affected area of current filter function.
 </p>
     
 <p>
@@ -1686,7 +1710,6 @@ primitive is disabled. </p>
 <p>
   The <a>filter primitive subregion</a> act as a hard clip clipping rectangle on both the
 filter primitive's input image(s) and the filter primitive result.</p>
-<p class="issue">Consider making it possible to do select between clip-input, clip-output, clip-both or none.</p>
 
 <p>
   All intermediate offscreens are defined to not exceed the intersection of
