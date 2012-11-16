@@ -5326,7 +5326,7 @@ descriptor: value;</code></pre>
   The list of parameters define shader variables, that get passed into the shaders. Each parameter has an identifier.
   If a parameter with the same identifier occurs more then once in the list of parameters, the latest parameter
   definition overrides all previous definitions. A parameter definition can be overloaded by a parameter definition in
-  the referencing 'custom()' filter function.
+  the referencing ''custom()'' filter function.
 </p>
 
 <pre class=prod><dfn>&lt;param&gt;</dfn> = IDENT <var>&lt;param-value&gt;</var></pre>
@@ -5337,7 +5337,7 @@ descriptor: value;</code></pre>
 
 <pre class=prod><dfn>&lt;array&gt;</dfn> = <var>array(&lt;number&gt;#)</var></pre>
 
-<pre class=prod><dfn>&lt;mat&gt;</dfn> = <var>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3})<var> | mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</pre>
+<pre class=prod><dfn>&lt;mat&gt;</dfn> = <var>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3})</var> | <var>mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8})</var> | <var>mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</var></pre>
 
 <dl>
   <dt><dfn>array(&lt;number&gt;#)</dfn><dt>
@@ -5346,7 +5346,11 @@ descriptor: value;</code></pre>
   </dd>
   <dt><dfn>&lt;color&gt;</dfn><dt>
   <dd>
-    A CSS color value. (See [[CSS-COLOR]].) 
+    A CSS color value. (See [[!CSS3COLOR]].) 
+  </dd>
+  <dt><dfn>&lt;transform-function&gt;</dfn><dt>
+  <dd>
+    A CSS transform function value. (See [[!CSS3-TRANSFORMS]].) 
   </dd>
   <dt><dfn>texture(&lt;url&gt;)</dfn><dt>
   <dd>
@@ -5443,16 +5447,16 @@ descriptor: value;</code></pre>
   </dt>
   <dd>
     Each pixel in the fragment shader is blended with the <var>mix-color</var> by using one of the predefined blend
-    modes and it's appropriate blend mode keyword (See [[COMPOSITING]]).
+    modes and it's appropriate blend mode keyword (See [[!COMPOSITING]]).
   </dd>
   <dt>
     <dfn>&lt;alpha-compositing&gt;</dfn>
   </dt>
   <dd>
     Each pixel in the fragment shader is composed with the <var>mix-color</var> by using one of the predefined
-    alpha-compositing operators and it's appropriate alpha-compositing keyword (See [[COMPOSITING]]).
+    alpha-compositing operators and it's appropriate alpha-compositing keyword (See [[!COMPOSITING]]).
   </dd>
-  <dt><dfn title="''none''!!'mix' value">''none'</dfn></dt>
+  <dt><dfn title="''none''!!'mix' value">''none''</dfn></dt>
   <dd>
     Pixels in the fragment shader are neither alpha-composited nor blended with the <var>mix-color</var>.
   </dd>
@@ -5461,11 +5465,41 @@ descriptor: value;</code></pre>
 
 <h3>Custom margins: the <span>margin</span> descriptor</h3>
 
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>margin</dfn>
+    <tr>
+      <td>Value:
+      <td>&lt;margin-width&gt;{1,4} | auto
+    <tr>
+      <td><em>Initial:</em>
+      <td>auto
+    <tr>
+      <td><em>Computed Value:</em>
+      <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the input filter
+        effects region.
+</table>
+
 <p class="issue">
   The editors are looking into defining custom shader margins descriptors as a replacement for the 'filter-margin'
   properties.
 </p>
 
+<pre class=prod><dfn>&lt;margin-width&gt;</dfn> = <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>auto</var></pre>
+
+<dl>
+  <dt><var>&lt;length&gt;</var></dt>
+  <dd>
+  </dd>
+  <dt><var>&lt;percentage&gt;</var></dt>
+  <dd>
+  </dd>
+  <dt><var>''auto''</var></dt>
+  <dd>
+  </dd>
+</dl>
 
 
 <h2 id="shader-processing-model">Shader Processing Model</h2>

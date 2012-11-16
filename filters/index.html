@@ -1148,8 +1148,9 @@
 
   <p> The ‘<a href="#filter-margin"><code
    class=property>filter-margin</code></a>’ property can take the same
-   values as the ‘<code class=property>margin</code>’ property and is a
-   shorthand for setting ‘<a href="#filter-margin-top"><code
+   values as the ‘<a href="#margin"><code
+   class=property>margin</code></a>’ property and is a shorthand for
+   setting ‘<a href="#filter-margin-top"><code
    class=property>filter-margin-top</code></a>’, ‘<a
    href="#filter-margin-right"><code
    class=property>filter-margin-right</code></a>’, ‘<a
@@ -11787,8 +11788,8 @@ descriptor: value;</code></pre>
       <pre class=prod><dfn id=ltparamgt>&lt;param&gt;</dfn> = IDENT <a
        href="#ltparam-valuegt"><var>&lt;param-value&gt;</var></a></pre>
 
-      <pre class=prod><dfn
-       id=ltparam-valuegt>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | <a
+      <pre class=prod><dfn id=ltparam-valuegt>&lt;param-value&gt;</dfn> = <a
+       href="#lttransform-functiongt"><var>&lt;transform-function&gt;</var></a>+ | <a
        href="#ltbooleangt"><var>&lt;boolean&gt;</var></a> | &lt;number&gt;{1,4} | <a
        href="#ltarraygt"><var>&lt;array&gt;</var></a> |  <a
        href="#ltmatgt"><var>&lt;mat&gt;</var></a> | <a
@@ -11801,8 +11802,10 @@ descriptor: value;</code></pre>
       <pre class=prod><dfn id=ltarraygt>&lt;array&gt;</dfn> = <a
        href="#arrayltnumbergt"><var>array(&lt;number&gt;#)</var></a></pre>
 
-      <pre class=prod><dfn
-       id=ltmatgt>&lt;mat&gt;</dfn> = <var>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3})<var> | mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</var></var></pre>
+      <pre class=prod><dfn id=ltmatgt>&lt;mat&gt;</dfn> = <a
+       href="#mat2ltnumbergt-ltnumbergt-33"><var>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3})</var></a> | <a
+       href="#mat3ltnumbergt-ltnumbergt-88"><var>mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8})</var></a> | <a
+       href="#mat4ltnumbergt-ltnumbergt-1515"><var>mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</var></a></pre>
 
       <dl>
        <dt><dfn id=arrayltnumbergt>array(&lt;number&gt;#)</dfn>
@@ -11815,7 +11818,15 @@ descriptor: value;</code></pre>
 
        <dt>
 
-       <dd> A CSS color value. (See [[CSS-COLOR]].)
+       <dd> A CSS color value. (See <a href="#CSS3COLOR"
+        rel=biblioentry>[CSS3COLOR]<!--{{!CSS3COLOR}}--></a>.)
+
+       <dt><dfn id=lttransform-functiongt>&lt;transform-function&gt;</dfn>
+
+       <dt>
+
+       <dd> A CSS transform function value. (See <a href="#CSS3-TRANSFORMS"
+        rel=biblioentry>[CSS3-TRANSFORMS]<!--{{!CSS3-TRANSFORMS}}--></a>.)
 
        <dt><dfn id=texturelturlgt>texture(&lt;url&gt;)</dfn>
 
@@ -11938,7 +11949,7 @@ descriptor: value;</code></pre>
        <dd> Each pixel in the fragment shader is blended with the
         <var>mix-color</var> by using one of the predefined blend modes and
         it's appropriate blend mode keyword (See <a href="#COMPOSITING"
-        rel=biblioentry>[COMPOSITING]<!--{{COMPOSITING}}--></a>).
+        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
 
        <dt> <dfn id=ltalpha-compositinggt>&lt;alpha-compositing&gt;</dfn>
 
@@ -11946,21 +11957,63 @@ descriptor: value;</code></pre>
         <var>mix-color</var> by using one of the predefined alpha-compositing
         operators and it's appropriate alpha-compositing keyword (See <a
         href="#COMPOSITING"
-        rel=biblioentry>[COMPOSITING]<!--{{COMPOSITING}}--></a>).
+        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
 
        <dt><dfn id=none1 title="''none''!!'mix' value">‘<code
-        class=css>none'</code></dfn>
+        class=css>none</code>’</dfn>
 
        <dd> Pixels in the fragment shader are neither alpha-composited nor
         blended with the <var>mix-color</var>.
       </dl>
 
       <h3 id=custom-margins-the-margin-descriptor><span class=secno>32.8.
-       </span>Custom margins: the <span>margin</span> descriptor</h3>
+       </span>Custom margins: the <a href="#margin">margin</a> descriptor</h3>
+
+      <table class=descdef>
+       <tbody>
+        <tr>
+         <td>Name:
+
+         <td><dfn id=margin>margin</dfn>
+
+        <tr>
+         <td>Value:
+
+         <td>&lt;margin-width&gt;{1,4} | auto
+
+        <tr>
+         <td><em>Initial:</em>
+
+         <td>auto
+
+        <tr>
+         <td><em>Computed Value:</em>
+
+         <td>the percentage as specified or the absolute length. A value of
+          auto computes to 10% of the input filter effects region.
+      </table>
 
       <p class=issue> The editors are looking into defining custom shader
-       margins descriptors as a replacement for the 'filter-margin'
+       margins descriptors as a replacement for the ‘<a
+       href="#filter-margin"><code class=property>filter-margin</code></a>’
        properties.
+
+      <pre class=prod><dfn
+       id=ltmargin-widthgt>&lt;margin-width&gt;</dfn> = <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>auto</var></pre>
+
+      <dl>
+       <dt><var>&lt;length&gt;</var>
+
+       <dd>
+
+       <dt><var>&lt;percentage&gt;</var>
+
+       <dd>
+
+       <dt><var>‘<code class=css>auto</code>’</var>
+
+       <dd>
+      </dl>
 
       <h2 id=shader-processing-model><span class=secno>33. </span>Shader
        Processing Model</h2>
@@ -11987,9 +12040,10 @@ descriptor: value;</code></pre>
         the element offscreen and adding filter primitive margins
       </div>
 
-      <p>An <a class=element-name href="#feCustomElement">'feCustom'</a>
-       element or a <code>custom()</code> filter function defines a custom
-       filter primitive. The following figure illustrates its model.
+      <p>An <a class=element-name href="#feCustomElement">‘<code
+       class=property>feCustom</code>’</a> element or a
+       <code>custom()</code> filter function defines a custom filter
+       primitive. The following figure illustrates its model.
 
       <div class=figure> <object
        data="images/shader-concept.svg#processing-model"
@@ -12011,11 +12065,12 @@ descriptor: value;</code></pre>
        <p class=caption>The default vertex mesh and its default vertices
       </div>
 
-      <p> The <a class=attr-name
-       href="#feCustomVertexMeshAttribute">'vertexMesh'</a> attribute on the
-       <a class=element-name href="#feCustomElement">'feCustom'</a> element
-       and the &lt;vertex-mesh&gt; parameter on the <code>custom()</code>
-       filter function give more granularity controll over the vertex mesh.
+      <p> The <a class=attr-name href="#feCustomVertexMeshAttribute">‘<code
+       class=property>vertexMesh</code>’</a> attribute on the <a
+       class=element-name href="#feCustomElement">‘<code
+       class=property>feCustom</code>’</a> element and the
+       &lt;vertex-mesh&gt; parameter on the <code>custom()</code> filter
+       function give more granularity controll over the vertex mesh.
 
       <div class=figure> <object
        data="images/shader-concept.svg#image-granular-mesh"
@@ -12076,26 +12131,24 @@ descriptor: value;</code></pre>
        matrix into a 5x4 matrix.
 
       <p> The <i>mix color</i> is a second, predefined fragment shader
-       variable and represents an ’RGBA'‘<code class=css> <a
+       variable and represents an ‘<code class=css>RGBA</code>’ <a
        href="#ltcolorgt"><var>&lt;color&gt;</var></a> value. The <i>mix
        color</i> can be set by the fragment shader. If not specified, the
-       default value is transparent black. The </code>’‘<code
-       class=property>RGB</code>’‘<code class=css> channels of the
-       <i>multiplied color</i> get blended with the </code>’‘<code
-       class=property>RGB</code>’‘<code class=css> channels of the <i>mix
-       color</i> with the <i>multiplied color</i> as destination and the
-       <i>mix color</i> as source [[!compositing]]. The applied blend mode
-       depends on the passed &lt;blend-mode&gt; parameter which is
-       </code>’‘<code class=property>normal</code>’‘<code class=css>
-       by default. The result of the blending and the opacity of the <i>mix
-       color</i> define the <i>blended color</i>. </code>
+       default value is transparent black. The ‘<code
+       class=css>RGB</code>’ channels of the <i>multiplied color</i> get
+       blended with the ‘<code class=css>RGB</code>’ channels of the
+       <i>mix color</i> with the <i>multiplied color</i> as destination and
+       the <i>mix color</i> as source [[!compositing]]. The applied blend
+       mode depends on the passed &lt;blend-mode&gt; parameter which is
+       ‘<code class=css>normal</code>’ by default. The result of the
+       blending and the opacity of the <i>mix color</i> define the <i>blended
+       color</i>.
 
       <p> The <i>multiplied color</i> and the <i>mix color</i> get composed
        using the alpha-compositing rules as described in the Compositing and
        Blending spec [[compositing]]. The applied alpha-compositing mode is
        specified by the passed &lt;alpha-compositing&gt; parameter and is
-       ’‘<code class=property>source-atop</code>’‘<code class=css> by
-       default. </code>
+       ‘<code class=css>source-atop</code>’ by default.
 
       <p> The last step, <strong>step 4</strong>, shows rasterized output. If
        the custom filter primitive is the last primitive in the filter chain,
@@ -12119,8 +12172,9 @@ descriptor: value;</code></pre>
 </code></pre>
 
       <p> The function takes two parameters. The first is a CSS &lt;image&gt;
-       value. The second is the value of a ’filter' property. The function
-       take the input image parameter and apply the filter rules, returning a
+       value. The second is the value of a ‘<a href="#filter"><code
+       class=property>filter</code></a>’ property. The function take the
+       input image parameter and apply the filter rules, returning a
        processing image.
 
       <h2 id=security><span class=secno>35. </span>Security</h2>
@@ -12767,7 +12821,8 @@ void main()
          <td>Interpolate between the array elements.
 
         <tr>
-         <td><code>&lt;transform-function&gt;</code>
+         <td><a
+          href="#lttransform-functiongt"><code>&lt;transform-function&gt;</code></a>
 
          <td>Follows the <a
           href="http://www.w3.org/TR/css3-transforms/#animation">CSS3
@@ -15470,6 +15525,16 @@ interface <b>SVGFEBlendElement</b> : <a
        </dd>
        <!---->
 
+       <dt id=CSS3-TRANSFORMS>[CSS3-TRANSFORMS]
+
+       <dd>Simon Fraser; et al. <a
+        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/"><cite>CSS
+        Transforms.</cite></a> 11 September 2012. W3C Working Draft. (Work in
+        progress.) URL: <a
+        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/">http://www.w3.org/TR/2012/WD-css3-transforms-20120911/</a>
+       </dd>
+       <!---->
+
        <dt id=CSS3-TRANSITIONS>[CSS3-TRANSITIONS]
 
        <dd>Dean Jackson; et al. <a
@@ -15477,6 +15542,16 @@ interface <b>SVGFEBlendElement</b> : <a
         Transitions.</cite></a> 3 April 2012. W3C Working Draft. (Work in
         progress.) URL: <a
         href="http://www.w3.org/TR/2012/WD-css3-transitions-20120403/">http://www.w3.org/TR/2012/WD-css3-transitions-20120403/</a>
+       </dd>
+       <!---->
+
+       <dt id=CSS3COLOR>[CSS3COLOR]
+
+       <dd>Tantek Çelik; Chris Lilley; L. David Baron. <a
+        href="http://www.w3.org/TR/2011/REC-css3-color-20110607"><cite>CSS
+        Color Module Level 3.</cite></a> 7 June 2011. W3C Recommendation.
+        URL: <a
+        href="http://www.w3.org/TR/2011/REC-css3-color-20110607">http://www.w3.org/TR/2011/REC-css3-color-20110607</a>
        </dd>
        <!---->
 
@@ -15555,16 +15630,6 @@ interface <b>SVGFEBlendElement</b> : <a
        <dt
         style="display: none"><!-- keeps the doc valid if the DL is empty -->
         <!---->
-
-       <dt id=CSS3-TRANSFORMS>[CSS3-TRANSFORMS]
-
-       <dd>Simon Fraser; et al. <a
-        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/"><cite>CSS
-        Transforms.</cite></a> 11 September 2012. W3C Working Draft. (Work in
-        progress.) URL: <a
-        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/">http://www.w3.org/TR/2012/WD-css3-transforms-20120911/</a>
-       </dd>
-       <!---->
 
        <dt id=SVG2>[SVG2]
 
@@ -16386,6 +16451,12 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>local coordinate system, <a href="#local-coordinate-system"
         title="section 4."><strong>4.</strong></a>
 
+       <li>margin, <a href="#margin"
+        title="section 32.8."><strong>32.8.</strong></a>
+
+       <li>&lt;margin-width&gt;, <a href="#ltmargin-widthgt"
+        title="section 32.8."><strong>32.8.</strong></a>
+
        <li>&lt;mat&gt;, <a href="#ltmatgt"
         title="section 32.5."><strong>32.5.</strong></a>
 
@@ -16447,6 +16518,9 @@ interface <b>SVGFEBlendElement</b> : <a
 
        <li>transfer functions, <a href="#transfer-functions"
         title="section 16.">16.</a>
+
+       <li>&lt;transform-function&gt;, <a href="#lttransform-functiongt"
+        title="section 32.5."><strong>32.5.</strong></a>
 
        <li>user coordinate system, <a href="#user-coordinate-system"
         title="section 4."><strong>4.</strong></a>
