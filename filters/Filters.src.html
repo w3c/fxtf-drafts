@@ -5101,14 +5101,6 @@ be exposed to the DOM.</span> </p>
 
     <p class="issue" id="issue-shader-discussion-missing">Reference to discussion missing.</p>
 
-    <div class="figure" id="vertexMesh56">
-      <object data="images/shader-concept.svg#granular-mesh" style="width:372px; height:252px"></object> 
-      <p class="caption">
-        The figure illustrates how a <a>'vertexMesh attribute'</a> value of '6 6' adds vertices passed to the vertex shader.
-        The red vertices are the default ones and the gray vertices are resulting from the <a>'vertexMesh attribute'</a> value.
-      </p>
-    </div>
-
     <div class="example">
       <p>
         The following example applies a vertex shader ('distort.vs') to elements with class 'distorted'.
@@ -5155,7 +5147,7 @@ be exposed to the DOM.</span> </p>
 <p>
   When an <a>'feCustom element'</a> filter primitive is used in a filter graph, a ''texture'' parameter 
   can take a value of <span class="term">&lt;filter-primitive-reference&gt;</span> where <span class="term">&lt;filter-primitive-reference&gt;</span>
-  references the result of a previous filter primitive in the same filter graph. This result is used as a texture and must fulfill the <a href="#rendered-content-access-from-fragment-shaders">security requirments</a>. 
+  references the result of a previous filter primitive in the same filter graph. This result is used as a texture and must fulfill the <a href="#rendered-content-access-from-fragment-shaders">security requirements</a>. 
 </p>
 
 <div class="example">
@@ -5211,7 +5203,7 @@ be exposed to the DOM.</span> </p>
   The general form of an @custom-filter at-rule is:
 </p>
 
-<pre><code>@custom-filter { &lt;custom-filter-description&gt; }</code></pre>
+<pre><code>@custom-filter IDENT { &lt;custom-filter-description&gt; }</code></pre>
 
 <p>
   where &lt;custom-filter-description&gt; has the form:
@@ -5223,7 +5215,7 @@ descriptor: value;
 descriptor: value;</code></pre>
 
 <p>
-  Each @custom-filter rule specifies a value for every font descriptor, either implicitly or explicitly. Those not given
+  Each @custom-filter rule specifies a value for every custom-filter descriptor, either implicitly or explicitly. Those not given
   explicit values in the rule take the initial value listed with each descriptor in this specification. When a given
   descriptor occurs multiple times in a given @custom-filter rule, only the last specified value is used, all prior
   values for that descriptor are ignored.
@@ -5280,7 +5272,7 @@ descriptor: value;</code></pre>
     cannot be loaded or compiled because it contains erroneous code, the shader is a pass through. Otherwise, the vertex
     shader is invoked for all the vertex mesh vertices. 
   </dd>
-  <dt><var>''none''</var></dt>
+  <dt><dfn title="''none''!!'vertex' value">''none'</dfn></dt>
   <dd>
     The vertex shader acts as a pass through.
 </dl>
@@ -5309,7 +5301,7 @@ descriptor: value;</code></pre>
     fragment shader is invoked for each of the pixels during the rasterization phase that follows the vertex shader
     processing.
   </dd>
-  <dt><var>''none''</var></dt>
+  <dt><dfn title="''none''!!'fragment' value">''none''</dfn></dt>
   <dd>
     The fragment shader acts as a pass through.
 </dl>
@@ -5330,27 +5322,57 @@ descriptor: value;</code></pre>
       <td>N/A
 </table>
 
+<p>
+  The list of parameters define shader variables, that get passed into the shaders. Each parameter has an identifier.
+  If a parameter with the same identifier occurs more then once in the list of parameters, the latest parameter
+  definition overrides all previous definitions. A parameter definition can be overloaded by a parameter definition in
+  the referencing 'custom()' filter function.
+</p>
+
 <pre class=prod><dfn>&lt;param&gt;</dfn> = IDENT <var>&lt;param-value&gt;</var></pre>
 
 <pre class=prod><dfn>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | <var>&lt;boolean&gt;</var> | &lt;number&gt;{1,4} | <var>&lt;array&gt;</var> |  <var>&lt;mat&gt;</var> | <var>&lt;color&gt;</var> | <var>texture(&lt;URL&gt;)</var></pre>
 
-<pre class=prod><dfn>&lt;array&gt;</dfn> = array(&lt;number&gt;#)</pre>
+<pre class=prod><dfn>&lt;boolean&gt;</dfn> = true | false</pre>
 
-<pre class=prod><dfn>&lt;mat&gt;</dfn> = mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</pre>
+<pre class=prod><dfn>&lt;array&gt;</dfn> = <var>array(&lt;number&gt;#)</var></pre>
+
+<pre class=prod><dfn>&lt;mat&gt;</dfn> = <var>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3})<var> | mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</pre>
 
 <dl>
-  <dt><var>&lt;param&gt;</var><dt>
+  <dt><dfn>array(&lt;number&gt;#)</dfn><dt>
   <dd>
-    Defines a parameter that gets passed into the shaders. Each parameter has an identifier. If a parameter with the same
-    identifier occurs more then once in the list of parameters, the latest parameter definition overrides all previous
-    definitions. A parameter definition can be overloaded by a parameter definition of the referencing 'custom()' filter
-    function. 
+    Specifies an array of number values. 
   </dd>
-  <dt><var>&lt;param-value&gt;</var></dt>
+  <dt><dfn>&lt;color&gt;</dfn><dt>
   <dd>
-    <p class=issue>Description missing
+    A CSS color value. (See [[CSS-COLOR]].) 
+  </dd>
+  <dt><dfn>texture(&lt;url&gt;)</dfn><dt>
+  <dd>
+    Specifies a function that takes an image reference as input.
   </dd>
 </dl>
+
+<p>
+  The following function definitions describe matrices in column-major order.
+</p>
+
+<dl>
+  <dt><dfn>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3})</dfn><dt>
+  <dd>
+    Specifies a 2x2 homogeneous matrix of 4 values.
+  </dd>
+  <dt><dfn>mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8})</dfn><dt>
+  <dd>
+    Specifies a 3x3 homogeneous matrix of 9 values.
+  </dd>
+  <dt><dfn>mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</dfn><dt>
+  <dd>
+    Specifies a 4x4 homogeneous matrix of 16 values.
+  </dd>
+</dl>
+
 
 <h3>Vertex mesh: the <span>mesh</span> descriptor</h3>
 
@@ -5361,14 +5383,44 @@ descriptor: value;</code></pre>
       <td><dfn>mesh</dfn>
     <tr>
       <td>Value:
-      <td>&lt;integer&gt;{1,2} || &lt;box&gt; || [ detached | attached ]
+      <td>&lt;integer&gt;{1,2} || &lt;box&gt; || [ detached | attached ]?
     <tr>
       <td><em>Initial:</em>
       <td>1 1 border-box attached
 </table>
 
-<p class=issue>Description missing
+<pre class=prod><dfn>&lt;box&gt;</dfn> = border-box | padding-box | content-box</pre>
 
+<p class=issue>&lt;box&gt; might be dropped in a later version of this draft.</p>
+
+<dl>
+  <dt><dfn>&lt;integer&gt;</dfn></dt>
+  <dd>
+    One or two positive integers greater then zero indicate the additional number of vertex lines and columns that will
+    make the vertex mesh. With the initial value of ''1 1'' there is a single row and a single column, resulting in a
+    four-vertices mesh (top-left, top-right, bottom-right, bottom-left). If the second parameter is not provided, it
+    takes a value equal to the first. A value of ''n m'' results in a vertex mesh that has n columns and m rows. This
+    results in a total of (n + 1) * (m + 1) vertices.
+    If one of the passed parameters is zero or negative, the UA must use the initial mesh.
+
+    <div class="figure" id="vertexMesh56">
+      <object data="images/shader-concept.svg#granular-mesh" style="width:372px; height:252px"></object> 
+      <p class="caption">
+        The figure illustrates how a mesh of '6 6' creates vertices passed to the vertex shader.
+      </p>
+    </div>
+  </dd>
+  <dt><dfn>detached</dfn></dt>
+  <dd>
+    Implies that the triangles are detached. The geometry provided to the vertex shader is made of triangles which do
+    not share adjacent edges' vertices.
+  </dd>
+  <dt><dfn>attached</dfn></dt>
+  <dd>
+    Implies that the triangles are attached. The geometry provided to the vertex shader is made of triangles which share
+    adjacent edges' vertices.
+  </dd>
+</dl>
 
 <h3>Mix function: the <span>mix</span> descriptor</h3>
 
@@ -5400,9 +5452,7 @@ descriptor: value;</code></pre>
     Each pixel in the fragment shader is composed with the <var>mix-color</var> by using one of the predefined
     alpha-compositing operators and it's appropriate alpha-compositing keyword (See [[COMPOSITING]]).
   </dd>
-  <dt>
-    <dfn>''none'</dfn>
-  </dt>
+  <dt><dfn title="''none''!!'mix' value">''none'</dfn></dt>
   <dd>
     Pixels in the fragment shader are neither alpha-composited nor blended with the <var>mix-color</var>.
   </dd>
