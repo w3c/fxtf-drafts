@@ -11,13 +11,13 @@
    rel=dcterms.rights>
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-11-08 name=dcterms.issued>
+  <meta content=2012-11-16 name=dcterms.issued>
   <meta content="Vincent Hardy" name=dcterms.creator>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-filter-effects-20121108/"
+  <meta content="http://www.w3.org/TR/2012/ED-filter-effects-20121116/"
    name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
@@ -34,7 +34,7 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 8 November
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 16 November
     2012</h2>
 
    <dl>
@@ -42,7 +42,7 @@
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-filter-effects-20121108/-->
+     <!--http://www.w3.org/TR/2012/WD-filter-effects-20121116/-->
 
     <dt>Latest version:
 
@@ -330,193 +330,226 @@
       inputs in filter graph</a>
     </ul>
 
-   <li><a href="#shader-processing-model"><span class=secno>32. </span>Shader
+   <li><a href="#custom-filter-function"><span class=secno>32. </span>Custom
+    Filter Function</a>
+    <ul class=toc>
+     <li><a href="#the-atcustom-filter-rule"><span class=secno>32.1.
+      </span>The @custom-filter rule</a>
+
+     <li><a href="#shader-format-the-format-descriptor"><span
+      class=secno>32.2. </span>Shader format: the <span>format</span>
+      descriptor</a>
+
+     <li><a href="#vertex-shader-the-vertex-descriptor"><span
+      class=secno>32.3. </span>Vertex shader: the <span>vertex</span>
+      descriptor</a>
+
+     <li><a href="#fragment-shader-reference-the-fragment-d"><span
+      class=secno>32.4. </span>Fragment shader reference: the
+      <span>fragment</span> descriptor</a>
+
+     <li><a href="#shader-parameters-reference-the-paramete"><span
+      class=secno>32.5. </span>Shader parameters reference: the
+      <span>parameters</span> descriptor</a>
+
+     <li><a href="#vertex-mesh-the-mesh-descriptor"><span class=secno>32.6.
+      </span>Vertex mesh: the <span>mesh</span> descriptor</a>
+
+     <li><a href="#mix-function-the-mix-descriptor"><span class=secno>32.7.
+      </span>Mix function: the <span>mix</span> descriptor</a>
+
+     <li><a href="#custom-margins-the-margin-descriptor"><span
+      class=secno>32.8. </span>Custom margins: the <span>margin</span>
+      descriptor</a>
+    </ul>
+
+   <li><a href="#shader-processing-model"><span class=secno>33. </span>Shader
     Processing Model</a>
 
-   <li><a href="#FilterCSSImageValue"><span class=secno>33. </span>The filter
+   <li><a href="#FilterCSSImageValue"><span class=secno>34. </span>The filter
     CSS &lt;image&gt; value</a>
 
-   <li><a href="#security"><span class=secno>34. </span>Security</a>
+   <li><a href="#security"><span class=secno>35. </span>Security</a>
     <ul class=toc>
      <li><a href="#rendered-content-access-from-fragment-shaders"><span
-      class=secno>34.1. </span>Rendered Content Access in custom filter
+      class=secno>35.1. </span>Rendered Content Access in custom filter
       primitives</a>
 
-     <li><a href="#origin-restrictions"><span class=secno>34.2. </span>Origin
+     <li><a href="#origin-restrictions"><span class=secno>35.2. </span>Origin
       Restrictions</a>
     </ul>
 
-   <li><a href="#ShorthandEquivalents"><span class=secno>35.
+   <li><a href="#ShorthandEquivalents"><span class=secno>36.
     </span>Shorthands defined in terms of the <span
     class=element-name>‘<code class=property>filter</code>’</span>
     element</a>
     <ul class=toc>
-     <li><a href="#grayscaleEquivalent"><span class=secno>35.1.
+     <li><a href="#grayscaleEquivalent"><span class=secno>36.1.
       </span>grayscale</a>
 
-     <li><a href="#sepiaEquivalent"><span class=secno>35.2. </span>sepia</a>
+     <li><a href="#sepiaEquivalent"><span class=secno>36.2. </span>sepia</a>
 
-     <li><a href="#saturateEquivalent"><span class=secno>35.3.
+     <li><a href="#saturateEquivalent"><span class=secno>36.3.
       </span>saturate</a>
 
-     <li><a href="#huerotateEquivalent"><span class=secno>35.4.
+     <li><a href="#huerotateEquivalent"><span class=secno>36.4.
       </span>hue-rotate</a>
 
-     <li><a href="#invertEquivalent"><span class=secno>35.5.
+     <li><a href="#invertEquivalent"><span class=secno>36.5.
       </span>invert</a>
 
-     <li><a href="#opacityEquivalent"><span class=secno>35.6.
+     <li><a href="#opacityEquivalent"><span class=secno>36.6.
       </span>opacity</a>
 
-     <li><a href="#brightnessEquivalent"><span class=secno>35.7.
+     <li><a href="#brightnessEquivalent"><span class=secno>36.7.
       </span>brightness</a>
 
-     <li><a href="#contrastEquivalent"><span class=secno>35.8.
+     <li><a href="#contrastEquivalent"><span class=secno>36.8.
       </span>contrast</a>
 
-     <li><a href="#blurEquivalent"><span class=secno>35.9. </span>blur</a>
+     <li><a href="#blurEquivalent"><span class=secno>36.9. </span>blur</a>
 
-     <li><a href="#dropshadowEquivalent"><span class=secno>35.10.
+     <li><a href="#dropshadowEquivalent"><span class=secno>36.10.
       </span>drop-shadow</a>
 
-     <li><a href="#customEquivalent"><span class=secno>35.11.
+     <li><a href="#customEquivalent"><span class=secno>36.11.
       </span>custom</a>
     </ul>
 
-   <li><a href="#shading-language"><span class=secno>36. </span>Shading
+   <li><a href="#shading-language"><span class=secno>37. </span>Shading
     language</a>
     <ul class=toc>
-     <li><a href="#precedents"><span class=secno>36.1. </span>Precedents</a>
+     <li><a href="#precedents"><span class=secno>37.1. </span>Precedents</a>
 
-     <li><a href="#recommendation"><span class=secno>36.2. </span>Recommended
+     <li><a href="#recommendation"><span class=secno>37.2. </span>Recommended
       shading language</a>
       <ul class=toc>
        <li><a href="#fragment-shaders-differences-with-glsl"><span
-        class=secno>36.2.1. </span>Fragment Shaders Differences with GLSL</a>
+        class=secno>37.2.1. </span>Fragment Shaders Differences with GLSL</a>
 
-       <li><a href="#vertex-attribute-variables"><span class=secno>36.2.2.
+       <li><a href="#vertex-attribute-variables"><span class=secno>37.2.2.
         </span>Vertex attribute variables</a>
 
-       <li><a href="#shader-uniform-variables"><span class=secno>36.2.3.
+       <li><a href="#shader-uniform-variables"><span class=secno>37.2.3.
         </span>Shader uniform variables</a>
 
-       <li><a href="#varyings"><span class=secno>36.2.4. </span>Varyings</a>
+       <li><a href="#varyings"><span class=secno>37.2.4. </span>Varyings</a>
 
        <li><a href="#other-uniform-variables-the-css-shaders-"><span
-        class=secno>36.2.5. </span>Other uniform variables: the CSS shaders
+        class=secno>37.2.5. </span>Other uniform variables: the CSS shaders
         parameters</a>
 
-       <li><a href="#default-shaders"><span class=secno>36.2.6.
+       <li><a href="#default-shaders"><span class=secno>37.2.6.
         </span>Default shaders</a>
 
-       <li><a href="#texture-access"><span class=secno>36.2.7. </span>Texture
+       <li><a href="#texture-access"><span class=secno>37.2.7. </span>Texture
         access</a>
       </ul>
     </ul>
 
    <li><a href="#integration-with-css-animations-transitions"><span
-    class=secno>37. </span>Integration with CSS Animations and CSS
+    class=secno>38. </span>Integration with CSS Animations and CSS
     Transitions</a>
     <ul class=toc>
-     <li><a href="#filter-params-interpolation"><span class=secno>37.1.
+     <li><a href="#filter-params-interpolation"><span class=secno>38.1.
       </span>Interpolating filter function parameters</a>
 
-     <li><a href="#shader-params-interpolation"><span class=secno>37.2.
+     <li><a href="#shader-params-interpolation"><span class=secno>38.2.
       </span>Interpolating the shader-params component in the custom()
       function.</a>
     </ul>
 
-   <li><a href="#DOMInterfaces"><span class=secno>38. </span>DOM
+   <li><a href="#DOMInterfaces"><span class=secno>39. </span>DOM
     interfaces</a>
     <ul class=toc>
-     <li><a href="#InterfaceSVGFilterElement"><span class=secno>38.1.
+     <li><a href="#InterfaceSVGFilterElement"><span class=secno>39.1.
       </span>Interface SVGFilterElement</a>
 
      <li><a href="#InterfaceSVGFilterPrimitiveStandardAttributes"><span
-      class=secno>38.2. </span>Interface
+      class=secno>39.2. </span>Interface
       SVGFilterPrimitiveStandardAttributes</a>
 
-     <li><a href="#InterfaceSVGFEBlendElement"><span class=secno>38.3.
+     <li><a href="#InterfaceSVGFEBlendElement"><span class=secno>39.3.
       </span>Interface SVGFEBlendElement</a>
 
-     <li><a href="#InterfaceSVGFEColorMatrixElement"><span class=secno>38.4.
+     <li><a href="#InterfaceSVGFEColorMatrixElement"><span class=secno>39.4.
       </span>Interface SVGFEColorMatrixElement</a>
 
      <li><a href="#InterfaceSVGFEComponentTransferElement"><span
-      class=secno>38.5. </span>Interface SVGFEComponentTransferElement</a>
+      class=secno>39.5. </span>Interface SVGFEComponentTransferElement</a>
 
      <li><a href="#InterfaceSVGComponentTransferFunctionElement"><span
-      class=secno>38.6. </span>Interface
+      class=secno>39.6. </span>Interface
       SVGComponentTransferFunctionElement</a>
 
-     <li><a href="#InterfaceSVGFEFuncRElement"><span class=secno>38.7.
+     <li><a href="#InterfaceSVGFEFuncRElement"><span class=secno>39.7.
       </span>Interface SVGFEFuncRElement</a>
 
-     <li><a href="#InterfaceSVGFEFuncGElement"><span class=secno>38.8.
+     <li><a href="#InterfaceSVGFEFuncGElement"><span class=secno>39.8.
       </span>Interface SVGFEFuncGElement</a>
 
-     <li><a href="#InterfaceSVGFEFuncBElement"><span class=secno>38.9.
+     <li><a href="#InterfaceSVGFEFuncBElement"><span class=secno>39.9.
       </span>Interface SVGFEFuncBElement</a>
 
-     <li><a href="#InterfaceSVGFEFuncAElement"><span class=secno>38.10.
+     <li><a href="#InterfaceSVGFEFuncAElement"><span class=secno>39.10.
       </span>Interface SVGFEFuncAElement</a>
 
-     <li><a href="#InterfaceSVGFECompositeElement"><span class=secno>38.11.
+     <li><a href="#InterfaceSVGFECompositeElement"><span class=secno>39.11.
       </span>Interface SVGFECompositeElement</a>
 
      <li><a href="#InterfaceSVGFEConvolveMatrixElement"><span
-      class=secno>38.12. </span>Interface SVGFEConvolveMatrixElement</a>
+      class=secno>39.12. </span>Interface SVGFEConvolveMatrixElement</a>
 
      <li><a href="#InterfaceSVGFEDiffuseLightingElement"><span
-      class=secno>38.13. </span>Interface SVGFEDiffuseLightingElement</a>
+      class=secno>39.13. </span>Interface SVGFEDiffuseLightingElement</a>
 
      <li><a href="#InterfaceSVGFEDistantLightElement"><span
-      class=secno>38.14. </span>Interface SVGFEDistantLightElement</a>
+      class=secno>39.14. </span>Interface SVGFEDistantLightElement</a>
 
-     <li><a href="#InterfaceSVGFEPointLightElement"><span class=secno>38.15.
+     <li><a href="#InterfaceSVGFEPointLightElement"><span class=secno>39.15.
       </span>Interface SVGFEPointLightElement</a>
 
-     <li><a href="#InterfaceSVGFESpotLightElement"><span class=secno>38.16.
+     <li><a href="#InterfaceSVGFESpotLightElement"><span class=secno>39.16.
       </span>Interface SVGFESpotLightElement</a>
 
      <li><a href="#InterfaceSVGFEDisplacementMapElement"><span
-      class=secno>38.17. </span>Interface SVGFEDisplacementMapElement</a>
+      class=secno>39.17. </span>Interface SVGFEDisplacementMapElement</a>
 
-     <li><a href="#InterfaceSVGFEDropShadowElement"><span class=secno>38.18.
+     <li><a href="#InterfaceSVGFEDropShadowElement"><span class=secno>39.18.
       </span>Interface SVGFEDropShadowElement</a>
 
-     <li><a href="#InterfaceSVGFEFloodElement"><span class=secno>38.19.
+     <li><a href="#InterfaceSVGFEFloodElement"><span class=secno>39.19.
       </span>Interface SVGFEFloodElement</a>
 
      <li><a href="#InterfaceSVGFEGaussianBlurElement"><span
-      class=secno>38.20. </span>Interface SVGFEGaussianBlurElement</a>
+      class=secno>39.20. </span>Interface SVGFEGaussianBlurElement</a>
 
-     <li><a href="#InterfaceSVGFEImageElement"><span class=secno>38.21.
+     <li><a href="#InterfaceSVGFEImageElement"><span class=secno>39.21.
       </span>Interface SVGFEImageElement</a>
 
-     <li><a href="#InterfaceSVGFEMergeElement"><span class=secno>38.22.
+     <li><a href="#InterfaceSVGFEMergeElement"><span class=secno>39.22.
       </span>Interface SVGFEMergeElement</a>
 
-     <li><a href="#InterfaceSVGFEMergeNodeElement"><span class=secno>38.23.
+     <li><a href="#InterfaceSVGFEMergeNodeElement"><span class=secno>39.23.
       </span>Interface SVGFEMergeNodeElement</a>
 
-     <li><a href="#InterfaceSVGFEMorphologyElement"><span class=secno>38.24.
+     <li><a href="#InterfaceSVGFEMorphologyElement"><span class=secno>39.24.
       </span>Interface SVGFEMorphologyElement</a>
 
-     <li><a href="#InterfaceSVGFEOffsetElement"><span class=secno>38.25.
+     <li><a href="#InterfaceSVGFEOffsetElement"><span class=secno>39.25.
       </span>Interface SVGFEOffsetElement</a>
 
      <li><a href="#InterfaceSVGFESpecularLightingElement"><span
-      class=secno>38.26. </span>Interface SVGFESpecularLightingElement</a>
+      class=secno>39.26. </span>Interface SVGFESpecularLightingElement</a>
 
-     <li><a href="#InterfaceSVGFETileElement"><span class=secno>38.27.
+     <li><a href="#InterfaceSVGFETileElement"><span class=secno>39.27.
       </span>Interface SVGFETileElement</a>
 
-     <li><a href="#InterfaceSVGFETurbulenceElement"><span class=secno>38.28.
+     <li><a href="#InterfaceSVGFETurbulenceElement"><span class=secno>39.28.
       </span>Interface SVGFETurbulenceElement</a>
     </ul>
 
-   <li><a href="#references"><span class=secno>39. </span>References</a>
+   <li><a href="#references"><span class=secno>40. </span>References</a>
     <ul class=toc>
      <li class=no-num><a href="#normative-references">Normative
       references</a>
@@ -980,8 +1013,8 @@
   </table>
 
   <p> If the value of the ‘<a href="#filter"><code
-   class=property>filter</code></a>’ property is ‘<code
-   class=css>none</code>’ then there is no filter effect applied.
+   class=property>filter</code></a>’ property is ‘<a href="#none"><code
+   class=css>none</code></a>’ then there is no filter effect applied.
    Otherwise, the list of functions (described <a
    href="#FilterFunction">below</a>) are applied in order.
 
@@ -1912,13 +1945,14 @@
    elements are not directly rendered even if the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty">‘<code
    class=property>display</code>’</a> property is set to a value other than
-   <span class=prop-value>none</span>, and <a class=element-name
+   <a class=prop-value href="#none">none</a>, and <a class=element-name
    href="#FilterElement">‘<code class=property>filter</code>’</a>
    elements are available for referencing even when the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty">‘<code
    class=property>display</code>’</a> property on the <a class=element-name
    href="#FilterElement">‘<code class=property>filter</code>’</a> element
-   or any of its ancestors is set to <span class=prop-value>none</span>.
+   or any of its ancestors is set to <a class=prop-value
+   href="#none">none</a>.
 
   <p><br>
 
@@ -6089,9 +6123,9 @@ Extended by two pixels using "duplicate":
 
          <div class=note-editor> ED: Consider making this into mathml</div>
 
-         <p> The value <span class=attr-value>none</span> indicates that the
-          input image is extended with pixel values of zero for R, G, B and
-          A.
+         <p> The value <a class=attr-value href="#none">none</a> indicates
+          that the input image is extended with pixel values of zero for R,
+          G, B and A.
 
          <p> The <a
           href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
@@ -11093,7 +11127,8 @@ double turbulence(int nColorChannel, double *point, double <a
 
        <dl>
         <dt id=feCustomParamIdentAttribute> <span class=adef>ident</span> =
-         "<em><span class=xxx>&lt;string&gt;</span></em>"
+         "<a href="#ltstringgt"><em><span
+         class=xxx>&lt;string&gt;</span></em></a>"
 
         <dd> Indicates the parameter name to the shaders. <br>
          <span class=anim-target>Animatable: yes.</span>
@@ -11264,9 +11299,10 @@ double turbulence(int nColorChannel, double *point, double <a
           href="#integration-with-css-animations-transitions">how they are
           interpolated.</a>
 
-         <p>The <code>&lt;mat&gt;</code> values are in column major order.
-          For example, <code>mat2(1, 2, 3, 4)</code> has <code>[1, 2]</code>
-          in the first column and <code>[3, 4]</code> in the second one.
+         <p>The <a href="#ltmatgt"><code>&lt;mat&gt;</code></a> values are in
+          column major order. For example, <code>mat2(1, 2, 3, 4)</code> has
+          <code>[1, 2]</code> in the first column and <code>[3, 4]</code> in
+          the second one.
        </dl>
       </div>
 
@@ -11323,9 +11359,10 @@ double turbulence(int nColorChannel, double *point, double <a
 
        <dd> The <a href="#security">security model</a> disallows any color
         value based conditions for the fragment shader. Authors may use the
-        ‘<code class=css>mix</code>’ function for a basic control of
-        compositing and color managment within a fragment shader. The
-        processing model for ‘<code class=css>mix</code>’ is provided <a
+        ‘<a href="#mix"><code class=css>mix</code></a>’ function for a
+        basic control of compositing and color managment within a fragment
+        shader. The processing model for ‘<a href="#mix"><code
+        class=css>mix</code></a>’ is provided <a
         href="#shader-processing-model">below</a>.
         <dl>
          <dt>&lt;uri&gt;
@@ -11580,8 +11617,279 @@ double turbulence(int nColorChannel, double *point, double <a
         params="tex texture(blur)" /&gt;
 &lt;/filter&gt;</pre>
       </div>
+      <!-- No id's, to avoid external references. Once the proposal is accepted, the following paragraphs move into
+     the proper positions. -->
 
-      <h2 id=shader-processing-model><span class=secno>32. </span>Shader
+      <h2 id=custom-filter-function><span class=secno>32. </span>Custom
+       Filter Function</h2>
+
+      <p class=issue> The following section is a proposal and under
+       discussion on the <a
+       href="http://lists.w3.org/Archives/Public/public-fx/2012OctDec/0029.html">public-fx</a>
+       mailing list. Please send feedback and suggestions to the mailing list
+       and be aware of fundamental changes.
+
+      <h3 id=the-atcustom-filter-rule><span class=secno>32.1. </span>The
+       @custom-filter rule</h3>
+
+      <p> The @custom-filter rule allows specifying custom shader programs
+       for the use of the ‘<a href="#filter"><code
+       class=property>filter</code></a>’ property. A @custom-filter rule
+       consists of the keyword "@custom-filter", followed by an identifier
+       giving a name for the custom shader program (which will be referenced
+       using the ‘<code class=css>custom()</code>’ filter function),
+       followed by a set of custom filter descriptors.
+
+      <p> The general form of an @custom-filter at-rule is:
+
+      <pre><code>@custom-filter { &lt;custom-filter-description&gt; }</code></pre>
+
+      <p> where &lt;custom-filter-description&gt; has the form:
+
+      <pre><code>descriptor: value;
+descriptor: value;
+[...]
+descriptor: value;</code></pre>
+
+      <p> Each @custom-filter rule specifies a value for every font
+       descriptor, either implicitly or explicitly. Those not given explicit
+       values in the rule take the initial value listed with each descriptor
+       in this specification. When a given descriptor occurs multiple times
+       in a given @custom-filter rule, only the last specified value is used,
+       all prior values for that descriptor are ignored.
+
+      <div class=example></div>
+
+      <h3 id=shader-format-the-format-descriptor><span class=secno>32.2.
+       </span>Shader format: the <a href="#format">format</a> descriptor</h3>
+
+      <table class=descdef>
+       <tbody>
+        <tr>
+         <td>Name:
+
+         <td><dfn id=format>format</dfn>
+
+        <tr>
+         <td>Value:
+
+         <td>&lt;string&gt;
+
+        <tr>
+         <td><em>Initial:</em>
+
+         <td>"glsl"
+      </table>
+
+      <dl>
+       <dt><dfn id=ltstringgt>&lt;string&gt;</dfn>
+
+       <dd> Is a unique identifier for a specific shading language. The
+        identifier for the recommended shading language is "glsl". Future
+        versions can add a version number. UAs can support other shading
+        languages with other identifiers.
+      </dl>
+
+      <h3 id=vertex-shader-the-vertex-descriptor><span class=secno>32.3.
+       </span>Vertex shader: the <a href="#vertex">vertex</a> descriptor</h3>
+
+      <table class=descdef>
+       <tbody>
+        <tr>
+         <td>Name:
+
+         <td><dfn id=vertex>vertex</dfn>
+
+        <tr>
+         <td>Value:
+
+         <td>none | &lt;url&gt;
+
+        <tr>
+         <td><em>Initial:</em>
+
+         <td>none
+      </table>
+
+      <dl>
+       <dt><var>&lt;url&gt;</var>
+
+       <dd> The shader referenced by &lt;url&gt; provides the vertex shader.
+        If the shader cannot be retrieved, or if the shader cannot be loaded
+        or compiled because it contains erroneous code, the shader is a pass
+        through. Otherwise, the vertex shader is invoked for all the vertex
+        mesh vertices.
+
+       <dt><a href="#none"><var>‘<code class=css>none</code>’</var></a>
+
+       <dd> The vertex shader acts as a pass through.
+      </dl>
+
+      <h3 id=fragment-shader-reference-the-fragment-d><span class=secno>32.4.
+       </span>Fragment shader reference: the <a href="#fragment">fragment</a>
+       descriptor</h3>
+
+      <table class=descdef>
+       <tbody>
+        <tr>
+         <td>Name:
+
+         <td><dfn id=fragment>fragment</dfn>
+
+        <tr>
+         <td>Value:
+
+         <td>none | &lt;url&gt;
+
+        <tr>
+         <td><em>Initial:</em>
+
+         <td>none
+      </table>
+
+      <dl>
+       <dt><var>&lt;url&gt;</var>
+
+       <dd> The shader referenced by &lt;url&gt; provides the fragment
+        shader. If the shader cannot be retrieved, or if the shader cannot be
+        loaded or compiled because it contains erroneous code, the shader is
+        a pass through. Otherwise, the fragment shader is invoked for each of
+        the pixels during the rasterization phase that follows the vertex
+        shader processing.
+
+       <dt><a href="#none"><var>‘<code class=css>none</code>’</var></a>
+
+       <dd> The fragment shader acts as a pass through.
+      </dl>
+
+      <h3 id=shader-parameters-reference-the-paramete><span class=secno>32.5.
+       </span>Shader parameters reference: the <a
+       href="#parameters">parameters</a> descriptor</h3>
+
+      <table class=descdef>
+       <tbody>
+        <tr>
+         <td>Name:
+
+         <td><dfn id=parameters>parameters</dfn>
+
+        <tr>
+         <td>Value:
+
+         <td>&lt;param&gt;#
+
+        <tr>
+         <td><em>Initial:</em>
+
+         <td>N/A
+      </table>
+
+      <pre class=prod><dfn id=ltparamgt>&lt;param&gt;</dfn> = IDENT <a
+       href="#ltparam-valuegt"><var>&lt;param-value&gt;</var></a></pre>
+
+      <pre class=prod><dfn
+       id=ltparam-valuegt>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | <var>&lt;boolean&gt;</var> | &lt;number&gt;{1,4} | <a
+       href="#ltarraygt"><var>&lt;array&gt;</var></a> |  <a
+       href="#ltmatgt"><var>&lt;mat&gt;</var></a> | <var>&lt;color&gt;</var> | <var>texture(&lt;URL&gt;)</var></pre>
+
+      <pre class=prod><dfn
+       id=ltarraygt>&lt;array&gt;</dfn> = array(&lt;number&gt;#)</pre>
+
+      <pre class=prod><dfn
+       id=ltmatgt>&lt;mat&gt;</dfn> = mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</pre>
+
+      <dl>
+       <dt><a href="#ltparamgt"><var>&lt;param&gt;</var></a>
+
+       <dt>
+
+       <dd> Defines a parameter that gets passed into the shaders. Each
+        parameter has an identifier. If a parameter with the same identifier
+        occurs more then once in the list of parameters, the latest parameter
+        definition overrides all previous definitions. A parameter definition
+        can be overloaded by a parameter definition of the referencing
+        ‘<code class=css>custom()</code>’ filter function.
+
+       <dt><a href="#ltparam-valuegt"><var>&lt;param-value&gt;</var></a>
+
+       <dd>
+        <p class=issue>Description missing
+      </dl>
+
+      <h3 id=vertex-mesh-the-mesh-descriptor><span class=secno>32.6.
+       </span>Vertex mesh: the <a href="#mesh">mesh</a> descriptor</h3>
+
+      <table class=descdef>
+       <tbody>
+        <tr>
+         <td>Name:
+
+         <td><dfn id=mesh>mesh</dfn>
+
+        <tr>
+         <td>Value:
+
+         <td>&lt;integer&gt;{1,2} || &lt;box&gt; || [ detached | attached ]
+
+        <tr>
+         <td><em>Initial:</em>
+
+         <td>1 1 border-box attached
+      </table>
+
+      <p class=issue>Description missing
+
+      <h3 id=mix-function-the-mix-descriptor><span class=secno>32.7.
+       </span>Mix function: the <a href="#mix">mix</a> descriptor</h3>
+
+      <table class=descdef>
+       <tbody>
+        <tr>
+         <td>Name:
+
+         <td><dfn id=mix>mix</dfn>
+
+        <tr>
+         <td>Value:
+
+         <td>none | [&lt;blend-mode&gt; || &lt;alpha-compositing&gt;]
+
+        <tr>
+         <td><em>Initial:</em>
+
+         <td>normal source-atop
+      </table>
+
+      <dl>
+       <dt> <dfn id=ltblend-modegt>&lt;blend-mode&gt;</dfn>
+
+       <dd> Each pixel in the fragment shader is blended with the
+        <var>mix-color</var> by using one of the predefined blend modes and
+        it's appropriate blend mode keyword (See <a href="#COMPOSITING"
+        rel=biblioentry>[COMPOSITING]<!--{{COMPOSITING}}--></a>).
+
+       <dt> <dfn id=ltalpha-compositinggt>&lt;alpha-compositing&gt;</dfn>
+
+       <dd> Each pixel in the fragment shader is composed with the
+        <var>mix-color</var> by using one of the predefined alpha-compositing
+        operators and it's appropriate alpha-compositing keyword (See <a
+        href="#COMPOSITING"
+        rel=biblioentry>[COMPOSITING]<!--{{COMPOSITING}}--></a>).
+
+       <dt> <dfn id=none>‘<code class=css>none'</code></dfn>
+
+       <dd> Pixels in the fragment shader are neither alpha-composited nor
+        blended with the <var>mix-color</var>.
+      </dl>
+
+      <h3 id=custom-margins-the-margin-descriptor><span class=secno>32.8.
+       </span>Custom margins: the <span>margin</span> descriptor</h3>
+
+      <p class=issue> The editors are looking into defining custom shader
+       margins descriptors as a replacement for the 'filter-margin'
+       properties.
+
+      <h2 id=shader-processing-model><span class=secno>33. </span>Shader
        Processing Model</h2>
 
       <p>This section illustrates the shader processing model as it applies
@@ -11606,10 +11914,9 @@ double turbulence(int nColorChannel, double *point, double <a
         the element offscreen and adding filter primitive margins
       </div>
 
-      <p>An <a class=element-name href="#feCustomElement">‘<code
-       class=property>feCustom</code>’</a> element or a
-       <code>custom()</code> filter function defines a custom filter
-       primitive. The following figure illustrates its model.
+      <p>An <a class=element-name href="#feCustomElement">'feCustom'</a>
+       element or a <code>custom()</code> filter function defines a custom
+       filter primitive. The following figure illustrates its model.
 
       <div class=figure> <object
        data="images/shader-concept.svg#processing-model"
@@ -11631,12 +11938,11 @@ double turbulence(int nColorChannel, double *point, double <a
        <p class=caption>The default vertex mesh and its default vertices
       </div>
 
-      <p> The <a class=attr-name href="#feCustomVertexMeshAttribute">‘<code
-       class=property>vertexMesh</code>’</a> attribute on the <a
-       class=element-name href="#feCustomElement">‘<code
-       class=property>feCustom</code>’</a> element and the
-       &lt;vertex-mesh&gt; parameter on the <code>custom()</code> filter
-       function give more granularity controll over the vertex mesh.
+      <p> The <a class=attr-name
+       href="#feCustomVertexMeshAttribute">'vertexMesh'</a> attribute on the
+       <a class=element-name href="#feCustomElement">'feCustom'</a> element
+       and the &lt;vertex-mesh&gt; parameter on the <code>custom()</code>
+       filter function give more granularity controll over the vertex mesh.
 
       <div class=figure> <object
        data="images/shader-concept.svg#image-granular-mesh"
@@ -11674,10 +11980,11 @@ double turbulence(int nColorChannel, double *point, double <a
        which shader gets applied first. Because the depth buffer is used
        there's no guarantee that blending will happen.
 
-      <p> The <code>mix</code> function provides basic functionalities for
-       color manipulation like blending and alpha compositing on a fragment
-       shader. The processing model of <code>mix</code> is illustrated in the
-       following figure:
+      <p> The <a href="#mix"><code>mix</code></a> function provides basic
+       functionalities for color manipulation like blending and alpha
+       compositing on a fragment shader. The processing model of <a
+       href="#mix"><code>mix</code></a> is illustrated in the following
+       figure:
 
       <div class=figure> <img alt="fragmentShader: processing model for mix"
        height=726 src="images/mix-fragment-shader.png" width=451>
@@ -11696,23 +12003,25 @@ double turbulence(int nColorChannel, double *point, double <a
        matrix into a 5x4 matrix.
 
       <p> The <i>mix color</i> is a second, predefined fragment shader
-       variable and represents an ‘<code class=css>RGBA</code>’
+       variable and represents an ’RGBA'‘<code class=css>
        <var>&lt;color&gt;</var> value. The <i>mix color</i> can be set by the
        fragment shader. If not specified, the default value is transparent
-       black. The ‘<code class=css>RGB</code>’ channels of the
-       <i>multiplied color</i> get blended with the ‘<code
-       class=css>RGB</code>’ channels of the <i>mix color</i> with the
-       <i>multiplied color</i> as destination and the <i>mix color</i> as
-       source [[!compositing]]. The applied blend mode depends on the passed
-       &lt;blend-mode&gt; parameter which is ‘<code
-       class=css>normal</code>’ by default. The result of the blending and
-       the opacity of the <i>mix color</i> define the <i>blended color</i>.
+       black. The </code>’‘<code class=property>RGB</code>’‘<code
+       class=css> channels of the <i>multiplied color</i> get blended with
+       the </code>’‘<code class=property>RGB</code>’‘<code class=css>
+       channels of the <i>mix color</i> with the <i>multiplied color</i> as
+       destination and the <i>mix color</i> as source [[!compositing]]. The
+       applied blend mode depends on the passed &lt;blend-mode&gt; parameter
+       which is </code>’‘<code class=property>normal</code>’‘<code
+       class=css> by default. The result of the blending and the opacity of
+       the <i>mix color</i> define the <i>blended color</i>. </code>
 
       <p> The <i>multiplied color</i> and the <i>mix color</i> get composed
        using the alpha-compositing rules as described in the Compositing and
        Blending spec [[compositing]]. The applied alpha-compositing mode is
        specified by the passed &lt;alpha-compositing&gt; parameter and is
-       ‘<code class=css>source-atop</code>’ by default.
+       ’‘<code class=property>source-atop</code>’‘<code class=css> by
+       default. </code>
 
       <p> The last step, <strong>step 4</strong>, shows rasterized output. If
        the custom filter primitive is the last primitive in the filter chain,
@@ -11720,13 +12029,13 @@ double turbulence(int nColorChannel, double *point, double <a
        the output of the primitive becomes the input to the next filter
        primitive using it.
 
-      <h2 id=FilterCSSImageValue><span class=secno>33. </span>The filter CSS
+      <h2 id=FilterCSSImageValue><span class=secno>34. </span>The filter CSS
        &lt;image&gt; value</h2>
 
       <p> The filter() function produces a CSS &lt;image&gt; value. It has
        the following syntax:
 
-      <h3 class=no-toc id=filter-syntax><span class=secno>33.1. </span>
+      <h3 class=no-toc id=filter-syntax><span class=secno>34.1. </span>
        filter() syntax</h3>
 
       <pre class=prod><code><dfn id=ltfilter>&lt;filter></dfn> = filter(
@@ -11736,15 +12045,14 @@ double turbulence(int nColorChannel, double *point, double <a
 </code></pre>
 
       <p> The function takes two parameters. The first is a CSS &lt;image&gt;
-       value. The second is the value of a ‘<a href="#filter"><code
-       class=property>filter</code></a>’ property. The function take the
-       input image parameter and apply the filter rules, returning a
+       value. The second is the value of a ’filter' property. The function
+       take the input image parameter and apply the filter rules, returning a
        processing image.
 
-      <h2 id=security><span class=secno>34. </span>Security</h2>
+      <h2 id=security><span class=secno>35. </span>Security</h2>
 
       <h3 id=rendered-content-access-from-fragment-shaders><span
-       class=secno>34.1. </span>Rendered Content Access in custom filter
+       class=secno>35.1. </span>Rendered Content Access in custom filter
        primitives</h3>
 
       <p> Since a <a href="#feCustomElement">custom filter primitive</a> is
@@ -11761,7 +12069,7 @@ double turbulence(int nColorChannel, double *point, double <a
       <p> If a custom filter primitive does not fulfill these requirements,
        the primitive is a <a href="#default-shaders">pass through</a>.
 
-      <h3 id=origin-restrictions><span class=secno>34.2. </span>Origin
+      <h3 id=origin-restrictions><span class=secno>35.2. </span>Origin
        Restrictions</h3>
 
       <p> Input to a filter effect must not include anything as input that
@@ -11797,7 +12105,7 @@ double turbulence(int nColorChannel, double *point, double <a
        CORS violation is attempted, then the filter is disabled (instead of
        running the filter with an empty canvas).</div>
 
-      <h2 id=ShorthandEquivalents><span class=secno>35. </span>Shorthands
+      <h2 id=ShorthandEquivalents><span class=secno>36. </span>Shorthands
        defined in terms of the <a class=element-name href="#filter">‘<code
        class=property>filter</code>’</a> element</h2>
 
@@ -11807,7 +12115,7 @@ double turbulence(int nColorChannel, double *point, double <a
        in the following style: [amount]. In the case of parameters that are
        percentage values, they are converted to real numbers.
 
-      <h3 id=grayscaleEquivalent><span class=secno>35.1. </span>grayscale</h3>
+      <h3 id=grayscaleEquivalent><span class=secno>36.1. </span>grayscale</h3>
 
       <pre class=examplesource> &lt;filter id="grayscale"&gt;
     &lt;feColorMatrix type="matrix"
@@ -11817,7 +12125,7 @@ double turbulence(int nColorChannel, double *point, double <a
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=sepiaEquivalent><span class=secno>35.2. </span>sepia</h3>
+      <h3 id=sepiaEquivalent><span class=secno>36.2. </span>sepia</h3>
 
       <pre class=examplesource> &lt;filter id="sepia"&gt;
     &lt;feColorMatrix type="matrix"
@@ -11827,21 +12135,21 @@ double turbulence(int nColorChannel, double *point, double <a
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=saturateEquivalent><span class=secno>35.3. </span>saturate</h3>
+      <h3 id=saturateEquivalent><span class=secno>36.3. </span>saturate</h3>
 
       <pre class=examplesource> &lt;filter id="saturate"&gt;
     &lt;feColorMatrix type="saturate"
                values="(1 - [amount])"/&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=huerotateEquivalent><span class=secno>35.4. </span>hue-rotate</h3>
+      <h3 id=huerotateEquivalent><span class=secno>36.4. </span>hue-rotate</h3>
 
       <pre class=examplesource> &lt;filter id="hue-rotate"&gt;
     &lt;feColorMatrix type="hueRotate"
                values="[angle]"/&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=invertEquivalent><span class=secno>35.5. </span>invert</h3>
+      <h3 id=invertEquivalent><span class=secno>36.5. </span>invert</h3>
 
       <pre class=examplesource> &lt;filter id="invert"&gt;
     &lt;feComponentTransfer&gt;
@@ -11851,7 +12159,7 @@ double turbulence(int nColorChannel, double *point, double <a
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=opacityEquivalent><span class=secno>35.6. </span>opacity</h3>
+      <h3 id=opacityEquivalent><span class=secno>36.6. </span>opacity</h3>
 
       <pre class=examplesource> &lt;filter id="opacity"&gt;
     &lt;feComponentTransfer&gt;
@@ -11859,7 +12167,7 @@ double turbulence(int nColorChannel, double *point, double <a
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=brightnessEquivalent><span class=secno>35.7. </span>brightness</h3>
+      <h3 id=brightnessEquivalent><span class=secno>36.7. </span>brightness</h3>
 
       <pre class=examplesource> &lt;filter id="brightness"&gt;
     &lt;feComponentTransfer&gt;
@@ -11869,7 +12177,7 @@ double turbulence(int nColorChannel, double *point, double <a
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=contrastEquivalent><span class=secno>35.8. </span>contrast</h3>
+      <h3 id=contrastEquivalent><span class=secno>36.8. </span>contrast</h3>
 
       <pre class=examplesource> &lt;filter id="contrast"&gt;
     &lt;feComponentTransfer&gt;
@@ -11879,13 +12187,13 @@ double turbulence(int nColorChannel, double *point, double <a
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=blurEquivalent><span class=secno>35.9. </span>blur</h3>
+      <h3 id=blurEquivalent><span class=secno>36.9. </span>blur</h3>
 
       <pre class=examplesource> &lt;filter id="blur"&gt;
     &lt;feGaussianBlur stdDeviation="[radius radius]"&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=dropshadowEquivalent><span class=secno>35.10. </span>drop-shadow</h3>
+      <h3 id=dropshadowEquivalent><span class=secno>36.10. </span>drop-shadow</h3>
 
       <pre class=examplesource> &lt;filter id="drop-shadow"&gt;
     &lt;feGaussianBlur in="[alpha-channel-of-input]" stdDeviation="[radius]"/&gt;
@@ -11898,7 +12206,7 @@ double turbulence(int nColorChannel, double *point, double <a
     &lt;/feMerge&gt;
   &lt;/filter&gt; </pre>
 
-      <h3 id=customEquivalent><span class=secno>35.11. </span>custom</h3>
+      <h3 id=customEquivalent><span class=secno>36.11. </span>custom</h3>
 
       <pre class=examplesource>
   &lt;filter id="custom"&gt;
@@ -11915,9 +12223,9 @@ double turbulence(int nColorChannel, double *point, double <a
        instead of <a class=element-name href="#feCustomElement">‘<code
        class=property>feCustom</code>’</a>.</div>
 
-      <h2 id=shading-language><span class=secno>36. </span>Shading language</h2>
+      <h2 id=shading-language><span class=secno>37. </span>Shading language</h2>
 
-      <h3 id=precedents><span class=secno>36.1. </span>Precedents</h3>
+      <h3 id=precedents><span class=secno>37.1. </span>Precedents</h3>
 
       <p>There are many precedents for shading languages, for example:
 
@@ -11940,7 +12248,7 @@ double turbulence(int nColorChannel, double *point, double <a
         CoreImage Filters</a>
       </ul>
 
-      <h3 id=recommendation><span class=secno>36.2. </span>Recommended
+      <h3 id=recommendation><span class=secno>37.2. </span>Recommended
        shading language</h3>
 
       <p>This document recommends the adoption of the subset of GLSL ES [<a
@@ -11991,7 +12299,7 @@ double turbulence(int nColorChannel, double *point, double <a
        The implementation could use the mime type of the url or
        &lt;script&gt; element to determine the the shading language.</div>
 
-      <h4 id=fragment-shaders-differences-with-glsl><span class=secno>36.2.1.
+      <h4 id=fragment-shaders-differences-with-glsl><span class=secno>37.2.1.
        </span>Fragment Shaders Differences with GLSL</h4>
 
       <p>A normal GLSL shader requires that the fragment shaders computes a
@@ -12100,7 +12408,7 @@ void main()
 }      </pre>
       </div>
 
-      <h4 id=vertex-attribute-variables><span class=secno>36.2.2.
+      <h4 id=vertex-attribute-variables><span class=secno>37.2.2.
        </span>Vertex attribute variables</h4>
       The following attribute variables are available to the vertex shader.
       <table class=values-desc>
@@ -12147,7 +12455,7 @@ void main()
        <p class=caption>The a_triangleCoord.z value
       </div>
 
-      <h4 id=shader-uniform-variables><span class=secno>36.2.3. </span>Shader
+      <h4 id=shader-uniform-variables><span class=secno>37.2.3. </span>Shader
        uniform variables</h4>
       The following uniform variables are set to specific values by the user
       agent:
@@ -12190,7 +12498,7 @@ void main()
           number of rows.
       </table>
 
-      <h4 id=varyings><span class=secno>36.2.4. </span>Varyings</h4>
+      <h4 id=varyings><span class=secno>37.2.4. </span>Varyings</h4>
 
       <p>When the author provides both a vertex and a fragment shader, there
        is no requirement on the varyings passed from the vertex shader to the
@@ -12209,7 +12517,7 @@ void main()
       </table>
 
       <h4 id=other-uniform-variables-the-css-shaders-><span
-       class=secno>36.2.5. </span>Other uniform variables: the CSS shaders
+       class=secno>37.2.5. </span>Other uniform variables: the CSS shaders
        parameters</h4>
 
       <p>When there parameters are passed to the <code>custom()</code> filter
@@ -12291,7 +12599,7 @@ void main()
        texture()</code> parameter, an additional <code>vec2</code> uniform is
        passed to the shaders with the size of the corresponding texture.
 
-      <h4 id=default-shaders><span class=secno>36.2.6. </span>Default shaders</h4>
+      <h4 id=default-shaders><span class=secno>37.2.6. </span>Default shaders</h4>
 
       <p>If no vertex shader is provided, the default one is as shown below.
 
@@ -12320,14 +12628,14 @@ void main()
   }</pre>
       </div>
 
-      <h4 id=texture-access><span class=secno>36.2.7. </span>Texture access</h4>
+      <h4 id=texture-access><span class=secno>37.2.7. </span>Texture access</h4>
 
       <p>If shaders access texture values outside the <code>[0, 1]</code>
        range on both axis, the returned value is a fully transluscent black
        pixel.
 
       <h2 id=integration-with-css-animations-transitions><span
-       class=secno>37. </span>Integration with CSS Animations and CSS
+       class=secno>38. </span>Integration with CSS Animations and CSS
        Transitions</h2>
 
       <p>The CSS ‘<a href="#filter"><code
@@ -12340,7 +12648,7 @@ void main()
       <p class=issue id=issue-css-transitions>The CSS WG may define different
        fading transitions in the future.
 
-      <h3 id=filter-params-interpolation><span class=secno>37.1.
+      <h3 id=filter-params-interpolation><span class=secno>38.1.
        </span>Interpolating filter function parameters</h3>
 
       <p>All properties defined as animatable, provided they are one of the
@@ -12348,7 +12656,7 @@ void main()
        rel=biblioentry>[CSS3-TRANSITIONS]<!--{{!CSS3-TRANSITIONS}}--></a>,
        can be animated.
 
-      <h3 id=shader-params-interpolation><span class=secno>37.2.
+      <h3 id=shader-params-interpolation><span class=secno>38.2.
        </span>Interpolating the shader-params component in the custom()
        function.</h3>
 
@@ -12380,7 +12688,7 @@ void main()
          <td>Interpolate between each of the values using a step function.
 
         <tr>
-         <td><code>&lt;array&gt;</code>
+         <td><a href="#ltarraygt"><code>&lt;array&gt;</code></a>
 
          <td>Interpolate between the array elements.
 
@@ -12392,7 +12700,7 @@ void main()
           transform interpolation rules</a>.
 
         <tr>
-         <td><code>&lt;mat&gt;</code>
+         <td><a href="#ltmatgt"><code>&lt;mat&gt;</code></a>
 
          <td>Interpolate between the matrix components (applies to mat2, mat3
           and mat4).
@@ -12405,9 +12713,9 @@ void main()
        or with different keyframes. This is a generic issue of animating
        properties that have multiple components to them.</div>
 
-      <h2 id=DOMInterfaces><span class=secno>38. </span>DOM interfaces</h2>
+      <h2 id=DOMInterfaces><span class=secno>39. </span>DOM interfaces</h2>
 
-      <h3 id=InterfaceSVGFilterElement><span class=secno>38.1.
+      <h3 id=InterfaceSVGFilterElement><span class=secno>39.1.
        </span>Interface SVGFilterElement</h3>
 
       <p> The <a href="#InterfaceSVGFilterElement">SVGFilterElement</a>
@@ -12642,7 +12950,7 @@ void main()
       </dl>
 
       <h3 id=InterfaceSVGFilterPrimitiveStandardAttributes><span
-       class=secno>38.2. </span>Interface
+       class=secno>39.2. </span>Interface
        SVGFilterPrimitiveStandardAttributes</h3>
 
       <p> This interface defines the set of DOM attributes that are common
@@ -12722,7 +13030,7 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEBlendElement><span class=secno>38.3.
+      <h3 id=InterfaceSVGFEBlendElement><span class=secno>39.3.
        </span>Interface SVGFEBlendElement</h3>
 
       <p> The <a href="#InterfaceSVGFEBlendElement">SVGFEBlendElement</a>
@@ -12852,7 +13160,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEColorMatrixElement><span class=secno>38.4.
+      <h3 id=InterfaceSVGFEColorMatrixElement><span class=secno>39.4.
        </span>Interface SVGFEColorMatrixElement</h3>
 
       <p> The <a>SVGFEColorMatrixElement</a> interface corresponds to the <a
@@ -12972,7 +13280,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEComponentTransferElement><span class=secno>38.5.
+      <h3 id=InterfaceSVGFEComponentTransferElement><span class=secno>39.5.
        </span>Interface SVGFEComponentTransferElement</h3>
 
       <p> The <a
@@ -13010,7 +13318,7 @@ interface <b>SVGFEBlendElement</b> : <a
       </dl>
 
       <h3 id=InterfaceSVGComponentTransferFunctionElement><span
-       class=secno>38.6. </span>Interface SVGComponentTransferFunctionElement</h3>
+       class=secno>39.6. </span>Interface SVGComponentTransferFunctionElement</h3>
 
       <p> This interface defines a base interface used by the component
        transfer function interfaces.
@@ -13182,7 +13490,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEFuncRElement><span class=secno>38.7.
+      <h3 id=InterfaceSVGFEFuncRElement><span class=secno>39.7.
        </span>Interface SVGFEFuncRElement</h3>
 
       <p> The <a href="#InterfaceSVGFEFuncRElement">SVGFEFuncRElement</a>
@@ -13194,7 +13502,7 @@ interface <b>SVGFEBlendElement</b> : <a
        href="#InterfaceSVGComponentTransferFunctionElement">SVGComponentTransferFunctionElement</a> {
 };</pre>
 
-      <h3 id=InterfaceSVGFEFuncGElement><span class=secno>38.8.
+      <h3 id=InterfaceSVGFEFuncGElement><span class=secno>39.8.
        </span>Interface SVGFEFuncGElement</h3>
 
       <p> The <a href="#InterfaceSVGFEFuncRElement">SVGFEFuncRElement</a>
@@ -13206,7 +13514,7 @@ interface <b>SVGFEBlendElement</b> : <a
        href="#InterfaceSVGComponentTransferFunctionElement">SVGComponentTransferFunctionElement</a> {
 };</pre>
 
-      <h3 id=InterfaceSVGFEFuncBElement><span class=secno>38.9.
+      <h3 id=InterfaceSVGFEFuncBElement><span class=secno>39.9.
        </span>Interface SVGFEFuncBElement</h3>
 
       <p> The <a href="#InterfaceSVGFEFuncBElement">SVGFEFuncBElement</a>
@@ -13218,7 +13526,7 @@ interface <b>SVGFEBlendElement</b> : <a
        href="#InterfaceSVGComponentTransferFunctionElement">SVGComponentTransferFunctionElement</a> {
 };</pre>
 
-      <h3 id=InterfaceSVGFEFuncAElement><span class=secno>38.10.
+      <h3 id=InterfaceSVGFEFuncAElement><span class=secno>39.10.
        </span>Interface SVGFEFuncAElement</h3>
 
       <p> The <a href="#InterfaceSVGFEFuncAElement">SVGFEFuncAElement</a>
@@ -13230,7 +13538,7 @@ interface <b>SVGFEBlendElement</b> : <a
        href="#InterfaceSVGComponentTransferFunctionElement">SVGComponentTransferFunctionElement</a> {
 };</pre>
 
-      <h3 id=InterfaceSVGFECompositeElement><span class=secno>38.11.
+      <h3 id=InterfaceSVGFECompositeElement><span class=secno>39.11.
        </span>Interface SVGFECompositeElement</h3>
 
       <p> The <a
@@ -13425,7 +13733,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEConvolveMatrixElement><span class=secno>38.12.
+      <h3 id=InterfaceSVGFEConvolveMatrixElement><span class=secno>39.12.
        </span>Interface SVGFEConvolveMatrixElement</h3>
 
       <p> The <a
@@ -13523,7 +13831,8 @@ interface <b>SVGFEBlendElement</b> : <a
           class=idl-type-parenthetical> (unsigned short)</span>
 
          <dd>
-          <div> Corresponds to value ‘<code class=css>none</code>’.</div>
+          <div> Corresponds to value ‘<a href="#none"><code
+           class=css>none</code></a>’.</div>
         </dl>
 
        <dt>Attributes:
@@ -13668,7 +13977,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEDiffuseLightingElement><span class=secno>38.13.
+      <h3 id=InterfaceSVGFEDiffuseLightingElement><span class=secno>39.13.
        </span>Interface SVGFEDiffuseLightingElement</h3>
 
       <p> The <a
@@ -13766,7 +14075,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEDistantLightElement><span class=secno>38.14.
+      <h3 id=InterfaceSVGFEDistantLightElement><span class=secno>39.14.
        </span>Interface SVGFEDistantLightElement</h3>
 
       <p> The <a
@@ -13814,7 +14123,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEPointLightElement><span class=secno>38.15.
+      <h3 id=InterfaceSVGFEPointLightElement><span class=secno>39.15.
        </span>Interface SVGFEPointLightElement</h3>
 
       <p> The <a
@@ -13876,7 +14185,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFESpotLightElement><span class=secno>38.16.
+      <h3 id=InterfaceSVGFESpotLightElement><span class=secno>39.16.
        </span>Interface SVGFESpotLightElement</h3>
 
       <p> The <a
@@ -14010,7 +14319,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEDisplacementMapElement><span class=secno>38.17.
+      <h3 id=InterfaceSVGFEDisplacementMapElement><span class=secno>39.17.
        </span>Interface SVGFEDisplacementMapElement</h3>
 
       <p> The <a
@@ -14163,7 +14472,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEDropShadowElement><span class=secno>38.18.
+      <h3 id=InterfaceSVGFEDropShadowElement><span class=secno>39.18.
        </span>Interface SVGFEDropShadowElement</h3>
 
       <p> The <a
@@ -14314,7 +14623,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEFloodElement><span class=secno>38.19.
+      <h3 id=InterfaceSVGFEFloodElement><span class=secno>39.19.
        </span>Interface SVGFEFloodElement</h3>
 
       <p> The <a href="#InterfaceSVGFEFloodElement">SVGFEFloodElement</a>
@@ -14326,7 +14635,7 @@ interface <b>SVGFEBlendElement</b> : <a
        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGElement">SVGElement</a> {
 };</pre>
 
-      <h3 id=InterfaceSVGFEGaussianBlurElement><span class=secno>38.20.
+      <h3 id=InterfaceSVGFEGaussianBlurElement><span class=secno>39.20.
        </span>Interface SVGFEGaussianBlurElement</h3>
 
       <p> The <a
@@ -14450,7 +14759,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEImageElement><span class=secno>38.21.
+      <h3 id=InterfaceSVGFEImageElement><span class=secno>39.21.
        </span>Interface SVGFEImageElement</h3>
 
       <p> The <a href="#InterfaceSVGFEImageElement">SVGFEImageElement</a>
@@ -14491,7 +14800,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEMergeElement><span class=secno>38.22.
+      <h3 id=InterfaceSVGFEMergeElement><span class=secno>39.22.
        </span>Interface SVGFEMergeElement</h3>
 
       <p> The <a href="#InterfaceSVGFEMergeElement">SVGFEMergeElement</a>
@@ -14503,7 +14812,7 @@ interface <b>SVGFEBlendElement</b> : <a
        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGElement">SVGElement</a> {
 };</pre>
 
-      <h3 id=InterfaceSVGFEMergeNodeElement><span class=secno>38.23.
+      <h3 id=InterfaceSVGFEMergeNodeElement><span class=secno>39.23.
        </span>Interface SVGFEMergeNodeElement</h3>
 
       <p> The <a
@@ -14536,7 +14845,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEMorphologyElement><span class=secno>38.24.
+      <h3 id=InterfaceSVGFEMorphologyElement><span class=secno>39.24.
        </span>Interface SVGFEMorphologyElement</h3>
 
       <p> The <a
@@ -14653,7 +14962,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFEOffsetElement><span class=secno>38.25.
+      <h3 id=InterfaceSVGFEOffsetElement><span class=secno>39.25.
        </span>Interface SVGFEOffsetElement</h3>
 
       <p> The <a href="#InterfaceSVGFEOffsetElement">SVGFEOffsetElement</a>
@@ -14717,7 +15026,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFESpecularLightingElement><span class=secno>38.26.
+      <h3 id=InterfaceSVGFESpecularLightingElement><span class=secno>39.26.
        </span>Interface SVGFESpecularLightingElement</h3>
 
       <p> The <a
@@ -14829,7 +15138,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFETileElement><span class=secno>38.27.
+      <h3 id=InterfaceSVGFETileElement><span class=secno>39.27.
        </span>Interface SVGFETileElement</h3>
 
       <p> The <a href="#InterfaceSVGFETileElement">SVGFETileElement</a>
@@ -14865,7 +15174,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h3 id=InterfaceSVGFETurbulenceElement><span class=secno>38.28.
+      <h3 id=InterfaceSVGFETurbulenceElement><span class=secno>39.28.
        </span>Interface SVGFETurbulenceElement</h3>
 
       <p> The <a
@@ -15059,7 +15368,7 @@ interface <b>SVGFEBlendElement</b> : <a
         </dl>
       </dl>
 
-      <h2 id=references><span class=secno>39. </span>References</h2>
+      <h2 id=references><span class=secno>40. </span>References</h2>
 
       <h3 class=no-num id=normative-references>Normative references</h3>
       <!--begin-normative--> <!-- Sorted by label -->
@@ -15177,10 +15486,10 @@ interface <b>SVGFEBlendElement</b> : <a
        <dt id=CSS3-TRANSFORMS>[CSS3-TRANSFORMS]
 
        <dd>Simon Fraser; et al. <a
-        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120403/"><cite>CSS
-        Transforms.</cite></a> 3 April 2012. W3C Working Draft. (Work in
+        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/"><cite>CSS
+        Transforms.</cite></a> 11 September 2012. W3C Working Draft. (Work in
         progress.) URL: <a
-        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120403/">http://www.w3.org/TR/2012/WD-css3-transforms-20120403/</a>
+        href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/">http://www.w3.org/TR/2012/WD-css3-transforms-20120911/</a>
        </dd>
        <!---->
 
@@ -15219,17 +15528,17 @@ interface <b>SVGFEBlendElement</b> : <a
          <th><a class=property
           href="#color-interpolation-filters">color-interpolation-filters</a>
 
-         <td>
+         <td>auto | sRGB | linearRGB
 
-         <td>
+         <td>linearRGB
 
-         <td>
+         <td>filter primitives
 
-         <td>
+         <td>yes
 
-         <td>
+         <td>N/A
 
-         <td>
+         <td>visual
 
         <tr>
          <th><a class=property
@@ -15326,7 +15635,7 @@ interface <b>SVGFEBlendElement</b> : <a
          <td>
 
         <tr>
-         <th><a class=property href="#fecustomparam">feCustomParam</a>
+         <th><a class=property href="#fecustom">feCustom</a>
 
          <td>
 
@@ -15341,7 +15650,7 @@ interface <b>SVGFEBlendElement</b> : <a
          <td>
 
         <tr>
-         <th><a class=property href="#fecustom">feCustom</a>
+         <th><a class=property href="#fecustomparam">feCustomParam</a>
 
          <td>
 
@@ -15523,7 +15832,7 @@ interface <b>SVGFEBlendElement</b> : <a
          <td>
 
         <tr>
-         <th><a class=property href="#femergenode">feMergeNode</a>
+         <th><a class=property href="#femerge">feMerge</a>
 
          <td>
 
@@ -15538,7 +15847,7 @@ interface <b>SVGFEBlendElement</b> : <a
          <td>
 
         <tr>
-         <th><a class=property href="#femerge">feMerge</a>
+         <th><a class=property href="#femergenode">feMergeNode</a>
 
          <td>
 
@@ -15659,42 +15968,7 @@ interface <b>SVGFEBlendElement</b> : <a
          <td>
 
         <tr>
-         <th><a class=property href="#filter-margin">filter-margin</a>
-
-         <td>&lt;margin-width&gt;{1,4} | auto
-
-         <td>
-
-         <td>all elements
-
-         <td>no
-
-         <td>refer to the dimension of the bounding client rect
-
-         <td>visual
-
-        <tr>
-         <th><a class=property
-          href="#filter-margin-top">filter-margin-top</a>, <a class=property
-          href="#filter-margin-right">filter-margin-right</a>, <a
-          class=property
-          href="#filter-margin-bottom">filter-margin-bottom</a>, <a
-          class=property href="#filter-margin-left">filter-margin-left</a>
-
-         <td>&lt;margin-width&gt; | auto
-
-         <td>
-
-         <td>all elements
-
-         <td>no
-
-         <td>refer to the dimension of the bounding client rect
-
-         <td>visual
-
-        <tr>
-         <th><a class=property href="#filter">filter</a>
+         <th><a class=property href="#effects">filter</a>
 
          <td>none | &lt;filter-function&gt; [ &lt;filter-function&gt; ]*
 
@@ -15723,6 +15997,85 @@ interface <b>SVGFEBlendElement</b> : <a
          <td>
 
          <td>
+
+        <tr>
+         <th><a class=property href="#filter-margin">filter-margin</a>
+
+         <td>&lt;margin-width&gt;{1,4} | auto
+
+         <td>auto
+
+         <td>all elements
+
+         <td>no
+
+         <td>refer to the dimension of the bounding client rect
+
+         <td>visual
+
+        <tr>
+         <th><a class=property
+          href="#filter-margin-bottom">filter-margin-bottom</a>
+
+         <td>&lt;margin-width&gt; | auto
+
+         <td>auto
+
+         <td>all elements
+
+         <td>no
+
+         <td>refer to the dimension of the bounding client rect
+
+         <td>visual
+
+        <tr>
+         <th><a class=property
+          href="#filter-margin-left">filter-margin-left</a>
+
+         <td>&lt;margin-width&gt; | auto
+
+         <td>auto
+
+         <td>all elements
+
+         <td>no
+
+         <td>refer to the dimension of the bounding client rect
+
+         <td>visual
+
+        <tr>
+         <th><a class=property
+          href="#filter-margin-right">filter-margin-right</a>
+
+         <td>&lt;margin-width&gt; | auto
+
+         <td>auto
+
+         <td>all elements
+
+         <td>no
+
+         <td>refer to the dimension of the bounding client rect
+
+         <td>visual
+
+        <tr>
+         <th><a class=property
+          href="#filter-margin-top">filter-margin-top</a>
+
+         <td>&lt;margin-width&gt; | auto
+
+         <td>auto
+
+         <td>all elements
+
+         <td>no
+
+         <td>refer to the dimension of the bounding client rect
+
+         <td>visual
 
         <tr>
          <th><a class=property href="#flood-color">flood-color</a>
@@ -15773,6 +16126,15 @@ interface <b>SVGFEBlendElement</b> : <a
       <h2 class=no-num id=index>Index</h2>
       <!--begin-index-->
       <ul class=indexlist>
+       <li>&lt;alpha-compositing&gt;, <a href="#ltalpha-compositinggt"
+        title="&lt;alpha-compositing&gt;"><strong>32.7.</strong></a>
+
+       <li>&lt;array&gt;, <a href="#ltarraygt"
+        title="&lt;array&gt;"><strong>32.5.</strong></a>
+
+       <li>&lt;blend-mode&gt;, <a href="#ltblend-modegt"
+        title="&lt;blend-mode&gt;"><strong>32.7.</strong></a>
+
        <li>bounding client rect, <a href="#bounding-client-rect"
         title="bounding client rect"><strong>4.</strong></a>
 
@@ -15859,7 +16221,7 @@ interface <b>SVGFEBlendElement</b> : <a
         <a href="#filter" title=filter><strong>9.</strong></a>
 
        <li>&lt;filter>, <a href="#ltfilter"
-        title="&lt;filter>"><strong>33.1.</strong></a>
+        title="&lt;filter>"><strong>34.1.</strong></a>
 
        <li>&lt;filter-function&gt;, <a href="#ltfilter-functiongt"
         title="&lt;filter-function&gt;"><strong>8.</strong></a>
@@ -15902,6 +16264,11 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>flood-opacity, <a href="#flood-opacity"
         title=flood-opacity><strong>21.2.</strong></a>
 
+       <li>format, <a href="#format" title=format><strong>32.2.</strong></a>
+
+       <li>fragment, <a href="#fragment"
+        title=fragment><strong>32.4.</strong></a>
+
        <li>lighting-color, <a href="#lighting-color"
         title=lighting-color><strong>13.5.</strong></a>
 
@@ -15914,11 +16281,33 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>local coordinate system, <a href="#local-coordinate-system"
         title="local coordinate system"><strong>4.</strong></a>
 
+       <li>&lt;mat&gt;, <a href="#ltmatgt"
+        title="&lt;mat&gt;"><strong>32.5.</strong></a>
+
+       <li>mesh, <a href="#mesh" title=mesh><strong>32.6.</strong></a>
+
+       <li>mix, <a href="#mix" title=mix><strong>32.7.</strong></a>
+
+       <li>‘<a href="#none"><code class=css>none', <a href="#none"
+        title="</code>’none'"><strong>32.7.</strong></a> </code></a>
+
        <li>null filter, <a href="#null-filter"
         title="null filter"><strong>4.</strong></a>
 
        <li>object bounding box units, <a href="#object-bounding-box-units"
         title="object bounding box units"><strong>4.</strong></a>
+
+       <li>&lt;param&gt;, <a href="#ltparamgt"
+        title="&lt;param&gt;"><strong>32.5.</strong></a>
+
+       <li>parameters, <a href="#parameters"
+        title=parameters><strong>32.5.</strong></a>
+
+       <li>&lt;param-value&gt;, <a href="#ltparam-valuegt"
+        title="&lt;param-value&gt;"><strong>32.5.</strong></a>
+
+       <li>&lt;string&gt;, <a href="#ltstringgt"
+        title="&lt;string&gt;"><strong>32.2.</strong></a>
 
        <li>transfer function elements, <a href="#transfer-function-elements"
         title="transfer function elements"><strong>4.</strong></a>
@@ -15928,6 +16317,8 @@ interface <b>SVGFEBlendElement</b> : <a
 
        <li>user coordinate system, <a href="#user-coordinate-system"
         title="user coordinate system"><strong>4.</strong></a>
+
+       <li>vertex, <a href="#vertex" title=vertex><strong>32.3.</strong></a>
 
        <li>vertex mesh, <a href="#vertex-mesh"
         title="vertex mesh"><strong>4.</strong></a>

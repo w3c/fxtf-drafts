@@ -5188,6 +5188,236 @@ be exposed to the DOM.</span> </p>
 </div>
 
 
+<!-- No id's, to avoid external references. Once the proposal is accepted, the following paragraphs move into
+     the proper positions. -->
+<h2>Custom Filter Function</h2>
+
+<p class="issue">
+  The following section is a proposal and under discussion on the
+  <a href="http://lists.w3.org/Archives/Public/public-fx/2012OctDec/0029.html">public-fx</a> mailing list. Please send
+  feedback and suggestions to the mailing list and be aware of fundamental changes.
+</p>
+
+<h3>The @custom-filter rule</h3>
+
+<p>
+  The @custom-filter rule allows specifying custom shader programs for the use of the 'filter' property. A
+  @custom-filter rule consists of the keyword "@custom-filter", followed by an identifier giving a name for the custom
+  shader program (which will be referenced using the 'custom()' filter function), followed by a set of custom filter
+  descriptors.
+</p>
+
+<p>
+  The general form of an @custom-filter at-rule is:
+</p>
+
+<pre><code>@custom-filter { &lt;custom-filter-description&gt; }</code></pre>
+
+<p>
+  where &lt;custom-filter-description&gt; has the form:
+</p>
+
+<pre><code>descriptor: value;
+descriptor: value;
+[...]
+descriptor: value;</code></pre>
+
+<p>
+  Each @custom-filter rule specifies a value for every font descriptor, either implicitly or explicitly. Those not given
+  explicit values in the rule take the initial value listed with each descriptor in this specification. When a given
+  descriptor occurs multiple times in a given @custom-filter rule, only the last specified value is used, all prior
+  values for that descriptor are ignored.
+</p>
+
+<div class="example">
+
+</div>
+
+
+<h3>Shader format: the <span>format</span> descriptor</h3>
+
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>format</dfn>
+    <tr>
+      <td>Value:
+      <td>&lt;string&gt;
+    <tr>
+      <td><em>Initial:</em>
+      <td>"glsl"
+</table>
+
+<dl>
+  <dt><dfn>&lt;string&gt;</dfn></dt>
+  <dd>
+     Is a unique identifier for a specific shading language. The identifier for the recommended shading language is
+     "glsl". Future versions can add a version number. UAs can support other shading languages with other identifiers.
+  </dd>
+</dl>
+
+
+<h3>Vertex shader: the <span>vertex</span> descriptor</h3>
+
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>vertex</dfn>
+    <tr>
+      <td>Value:
+      <td>none | &lt;url&gt;
+    <tr>
+      <td><em>Initial:</em>
+      <td>none
+</table>
+
+<dl>
+  <dt><var>&lt;url&gt;</var></dt>
+  <dd>
+    The shader referenced by &lt;url&gt; provides the vertex shader. If the shader cannot be retrieved, or if the shader
+    cannot be loaded or compiled because it contains erroneous code, the shader is a pass through. Otherwise, the vertex
+    shader is invoked for all the vertex mesh vertices. 
+  </dd>
+  <dt><var>''none''</var></dt>
+  <dd>
+    The vertex shader acts as a pass through.
+</dl>
+
+
+<h3>Fragment shader reference: the <span>fragment</span> descriptor</h3>
+
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>fragment</dfn>
+    <tr>
+      <td>Value:
+      <td>none | &lt;url&gt;
+    <tr>
+      <td><em>Initial:</em>
+      <td>none
+</table>
+
+<dl>
+  <dt><var>&lt;url&gt;</var></dt>
+  <dd>
+    The shader referenced by &lt;url&gt; provides the fragment shader. If the shader cannot be retrieved, or if the
+    shader cannot be loaded or compiled because it contains erroneous code, the shader is a pass through. Otherwise, the
+    fragment shader is invoked for each of the pixels during the rasterization phase that follows the vertex shader
+    processing.
+  </dd>
+  <dt><var>''none''</var></dt>
+  <dd>
+    The fragment shader acts as a pass through.
+</dl>
+
+
+<h3>Shader parameters reference: the <span>parameters</span> descriptor</h3>
+
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>parameters</dfn>
+    <tr>
+      <td>Value:
+      <td>&lt;param&gt;#
+    <tr>
+      <td><em>Initial:</em>
+      <td>N/A
+</table>
+
+<pre class=prod><dfn>&lt;param&gt;</dfn> = IDENT <var>&lt;param-value&gt;</var></pre>
+
+<pre class=prod><dfn>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | <var>&lt;boolean&gt;</var> | &lt;number&gt;{1,4} | <var>&lt;array&gt;</var> |  <var>&lt;mat&gt;</var> | <var>&lt;color&gt;</var> | <var>texture(&lt;URL&gt;)</var></pre>
+
+<pre class=prod><dfn>&lt;array&gt;</dfn> = array(&lt;number&gt;#)</pre>
+
+<pre class=prod><dfn>&lt;mat&gt;</dfn> = mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</pre>
+
+<dl>
+  <dt><var>&lt;param&gt;</var><dt>
+  <dd>
+    Defines a parameter that gets passed into the shaders. Each parameter has an identifier. If a parameter with the same
+    identifier occurs more then once in the list of parameters, the latest parameter definition overrides all previous
+    definitions. A parameter definition can be overloaded by a parameter definition of the referencing 'custom()' filter
+    function. 
+  </dd>
+  <dt><var>&lt;param-value&gt;</var></dt>
+  <dd>
+    <p class=issue>Description missing
+  </dd>
+</dl>
+
+<h3>Vertex mesh: the <span>mesh</span> descriptor</h3>
+
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>mesh</dfn>
+    <tr>
+      <td>Value:
+      <td>&lt;integer&gt;{1,2} || &lt;box&gt; || [ detached | attached ]
+    <tr>
+      <td><em>Initial:</em>
+      <td>1 1 border-box attached
+</table>
+
+<p class=issue>Description missing
+
+
+<h3>Mix function: the <span>mix</span> descriptor</h3>
+
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>mix</dfn>
+    <tr>
+      <td>Value:
+      <td>none | [&lt;blend-mode&gt; || &lt;alpha-compositing&gt;]
+    <tr>
+      <td><em>Initial:</em>
+      <td>normal source-atop
+</table>
+
+<dl>
+  <dt>
+    <dfn>&lt;blend-mode&gt;</dfn>
+  </dt>
+  <dd>
+    Each pixel in the fragment shader is blended with the <var>mix-color</var> by using one of the predefined blend
+    modes and it's appropriate blend mode keyword (See [[COMPOSITING]]).
+  </dd>
+  <dt>
+    <dfn>&lt;alpha-compositing&gt;</dfn>
+  </dt>
+  <dd>
+    Each pixel in the fragment shader is composed with the <var>mix-color</var> by using one of the predefined
+    alpha-compositing operators and it's appropriate alpha-compositing keyword (See [[COMPOSITING]]).
+  </dd>
+  <dt>
+    <dfn>''none'</dfn>
+  </dt>
+  <dd>
+    Pixels in the fragment shader are neither alpha-composited nor blended with the <var>mix-color</var>.
+  </dd>
+</dl>
+
+
+<h3>Custom margins: the <span>margin</span> descriptor</h3>
+
+<p class="issue">
+  The editors are looking into defining custom shader margins descriptors as a replacement for the 'filter-margin'
+  properties.
+</p>
+
+
+
 <h2 id="shader-processing-model">Shader Processing Model</h2>
 
 <p>This section illustrates the shader processing model as it applies to an element whose unfiltered rendering is shown in the figure <a href="#unfiltered-input">below</a>.</p>
