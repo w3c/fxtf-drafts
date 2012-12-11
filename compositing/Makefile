@@ -24,7 +24,7 @@
 
 SOURCEFILE=Compositing.src.html
 OUTPUTFILE=index.html
-PROCESSCGI=http://cgi.w3.org/member-bin/process.cgi
+PROCESSCGI=https://www.w3.org/Style/Group/process.cgi
 CURL=curl
 CURLFLAGS=
 
