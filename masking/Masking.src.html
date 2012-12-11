@@ -370,7 +370,7 @@ were multiplied with the mask's resulting mask values.</p>
       <td><dfn>mask-image</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var>&lt;mask-image&gt;</var>#
+      <td><var>&lt;mask-reference&gt;</var>#
     <tr>
       <th>Initial:
       <td>none
@@ -394,14 +394,45 @@ were multiplied with the mask's resulting mask values.</p>
       <td>no
 </table>
 
-<p>This property sets the mask image(s) of an element. Images
+<p>This property sets the mask image(s) or the mask source of an element. Images
 are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
 Where:
 
-<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = [<var>&lt;image&gt;</var> [ alpha | luminance ]? ] | none</pre>
+<pre class=prod><var><dfn>&lt;mask-reference&gt;</dfn></var> = [ <var>&lt;mask-source&gt;</var> | <var>&lt;mask-image&gt;</var> ] [ alpha | luminance ]?</pre>
+
+<pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = <var>&lt;image&gt;</var> | none </pre>
+
+<pre class=prod><var><dfn>&lt;mask-source&gt;</dfn></var> = <var>&lt;url&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var></pre>
+
+<pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(<var>&lt;compound-selector&gt;</var>#)</pre>
+
+<p class="note">A <var>&lt;mask-source&gt;</var> can just be specified as a single value and can not contibute to a list of <var>&lt;mask-reference&gt;</var> values. Otherwise the specified value of the property is invalid. (See examples below.)</p>
 
 <dl>
+  <dt>
+    <dfn>'&lt;url&gt;'</dfn>
+  </dt>
+  <dd>
+    A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.xml#mask)'') or an <var>&lt;image&gt;</var>.
+  </dd>
+  <dt><dfn>''child''</dfn></dt>
+  <dd>
+    A keyword to indicate that the last child <a>'mask element'</a>
+    element should be used as the mask source. It is equivalent to
+    ''select(mask:last-of-type)''.</dd>
+  <dt><dfn>'&lt;child-selector&gt;'</dfn></dt>
+  <dd>
+    A comma-separated list of <a>compound selector</a>s scoped at the element to
+    which the 'mask' property is applied.
+    The first matching element in <a>tree order</a> (as defined in [[!DOM]]) as
+    a result of evaluating the list of selectors is taken as the mask source.
+    If there are no matching elements the mask source is invalid.
+  </dd>
+  <dt><dfn>'&lt;compound-selector&gt;'</dfn></dt>
+  <dd>
+    A <a>compound selector</a> as defined in [[!SELECTORS4]].
+  <dd>
   <dt><dfn>&lt;image&gt;</dfn></dt>
   <dd>
     A 2D image. (See [[!CSS3-IMAGES]].)
@@ -424,10 +455,32 @@ Where:
   </dd>
 </dl>
 
-<p>
-If neither ''luminance'' or ''alpha'' is specified, a value of ''alpha'' is
-used.
+<p class="note">If the URI in the ''url()'' function has a fragment identifier, the <var>&lt;mask-reference&gt;</var> is treated as <var>&lt;mask-source&gt;</var>, otherwise as <var>&lt;mask-image&gt;</var>.</p>
+
+<p>If neither ''luminance'' nor ''alpha'' is specified, a value of ''luminance'' is
+used for <var>&lt;mask-source&gt;</var> and a value of ''alpha'' is
+used for <var>&lt;mask-image&gt;</var>.
 </p>
+
+<div class="example">
+  <p>
+    In the following example, the 'mask-type' property sets the mask type value for the <a>'mask element'</a> element to
+    ''alpha''. The 'mask' property has a reference to this <a>'mask element'</a> element and the keyword ''luminance''.
+    The 'mask' property will override the definition of 'mask-type' to ''luminance''.
+<pre>
+&lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
+  &lt;radialGradient id="radialFill"&gt;
+    &lt;stop stop-color="white" offset="0"/&gt;
+    &lt;stop stop-color="black" offset="1"/&gt;
+  &lt;/radialGradient&gt;
+  &lt;circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/&gt;
+&lt;/mask&gt;
+
+&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance"/&gt;
+</pre>
+</div>
+
+<p>An invalid or non-existent mask source is ignored and no masking is applied.</p>
 
 <p>A mask image that is empty (zero width or zero height), that fails to
 download, is non-existent, or that cannot be displayed (e.g. because it is not
@@ -438,12 +491,6 @@ images”</a> for how 'mask-image' interacts with other
 comma-separated mask properties to form each mask image
 layer.
 
-<p class="note"><a href="http://www.w3.org/TR/media-frags/#naming-space">Media fragments</a>
-can be used to use a portion of an image as a mask. The
-<a href="http://www.w3.org/TR/css3-images/">CSS Images</a> module
-will provide fallback syntax for image formats and include additional
-controls for image display.
-
 <div class="example">
 <p>Some examples specifying mask images:</p>
 <pre>
@@ -451,6 +498,19 @@ body { mask-image: linear-gradient(black 0%, transparent 100%) }
 p { mask-image: none }
 div { mask-image: url(tl.png), url(tr.png) }
 </pre>
+
+<p>Some examples of a specified mask source:</p>
+<pre>
+img { mask-image: url(#mask) }
+span { mask-image: url(resources.svg#mask2) }
+</pre>
+
+<p>Examples of <i>invalid</i> mask source usages:</p>
+<pre>
+p { mask-image: url(#mask), url(tl.png) }
+img { mask-image: url(#mask), url(resources.svg#mask2) }
+</pre>
+<p>The <var>&lt;mask-source&gt;</var> value is either used together with another <var>&lt;mask-source&gt;</var> value or an <var>&lt;mask-image&gt;</var> value. This is treated as invalid.
 </div>
 
 <h3 id="the-mask-repeat">The 'mask-repeat' property</h3>
@@ -820,7 +880,7 @@ which determines the area that is affected by the mask. The painted content
 of an element may be resricted to this area.
 The syntax of the property is given with
 
-<pre class=prod><dfn><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box | none</pre>
+<pre class=prod><dfn><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box | no-clip</pre>
 
 <p>Values have the following meanings:
 
@@ -837,8 +897,8 @@ The syntax of the property is given with
       ''content-box''</dfn></dt> respectively object bounding box [[!SVG11]] for objects without associated layout box.
   <dd>The painted content is rectricted to (clipped to) the
     <span>content box.</span>
-  <dt><dfn title="''none''!!'mask-clip' value">
-      ''none''</dfn></dt>
+  <dt><dfn title="''no-clip''!!'mask-clip' value">
+      ''no-clip''</dfn></dt>
   <dd>The painted content is not restricted (not clipped). The <span>mask painting area</span> is set to
     the <span>bounding client rect</span>.
 </dl>
@@ -917,8 +977,6 @@ clipped.
 images”</a> for how 'mask-origin' interacts with other
 comma-separated mask properties to form each mask image
 layer.
-
-<p class="issue">Needs to be resolved where the origin for ''mask-clip: none'' should be.</p>
 
 <h3 id="the-mask-size">The 'mask-size' property</h3>
 
@@ -1145,7 +1203,7 @@ layer.
   </tr>
   <tr>
     <th>Value:</th>
-    <td><var>&lt;mask-source&gt;</var> | <var>&lt;mask-layer&gt;</var>#</td>
+    <td><var>&lt;mask-layer&gt;</var>#</td>
   </tr>
   <tr>
     <th>Initial:</th>
@@ -1178,78 +1236,7 @@ layer.
 </table>
 <p>Where</p>
 
-<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-image&gt;</var> || &lt;position&gt; [ / &lt;mask-size&gt; ]? || &lt;repeat-style&gt; || &lt;box&gt;{1,2}</pre>
-
-<p class="issue">Currently Mozilla needs to differ between CSS Image and Mask resource right after parsing and before loading the resource. This is not possible with the current 'mask' property definition.</p>
-
-<pre class=prod><dfn>&lt;mask-source&gt;</dfn> = [ <var>&lt;url&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var> ] [ alpha | luminance ] ? </pre>
-
-<pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(&lt;compound-selector&gt;#)</pre>
-
-<dl>
-  <dt>
-    <dfn>'&lt;url&gt;'</dfn>
-  </dt>
-  <dd>
-    A URL reference to a <a>'mask element'</a> element. For example ''url(commonmasks.xml#mask)''.
-  </dd>
-  <dt><dfn>''child''</dfn></dt>
-  <dd>
-    A keyword to indicate that the last child <a>'mask element'</a>
-    element should be used as the mask source. It is equivalent to
-    ''select(mask:last-of-type)''.</dd>
-  <dt><dfn>'&lt;child-selector&gt;'</dfn></dt>
-  <dd>
-    A comma-separated list of <a>compound selector</a>s scoped at the element to
-    which the 'mask' property is applied.
-    The first matching element in <a>tree order</a> (as defined in [[!DOM]]) as
-    a result of evaluating the list of selectors is taken as the mask source.
-    If there are no matching elements the mask source is invalid.
-  </dd>
-  <dt><dfn>'&lt;compound-selector&gt;'</dfn></dt>
-  <dd>
-    A <a>compound selector</a> as defined in [[!SELECTORS4]].
-  <dd>
-  <dt>''alpha''</dt>
-  <dd>
-    A value of ''alpha'' indicates that the alpha values of the mask content of
-    the referenced mask element should be used as the mask values.
-    See <a href="#MaskValues">Calculating mask values</a>.</p>
-  </dd>
-  <dt>''luminance''</dt>
-  <dd>
-    A value of ''luminance'' indicates that the luminance values of the mask
-    content of the referenced mask element should be used as the mask values.
-    See <a href="#MaskValues">Calculating mask values</a>.</p>
-  </dd>
-</dl>
-
-<p>
-  The keywords ''alpha'' or ''luminance'' may be used together with a reference
-  to a <a>'mask element'</a> element. 
-  If either keyword is specified the effect is to override the value of the
-  'mask-type' property on the referenced <a>'mask element'</a> element.
-</p>
-
-<div class="example">
-  <p>
-    In the following example, the 'mask-type' property sets the mask type value for the <a>'mask element'</a> element to
-    ''alpha''. The 'mask' property has a reference to this <a>'mask element'</a> element and the keyword ''luminance''.
-    The 'mask' property will override the definition of 'mask-type' to ''luminance''.
-<pre>
-&lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
-  &lt;radialGradient id="radialFill"&gt;
-    &lt;stop stop-color="white" offset="0"/&gt;
-    &lt;stop stop-color="black" offset="1"/&gt;
-  &lt;/radialGradient&gt;
-  &lt;circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/&gt;
-&lt;/mask&gt;
-
-&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance"/&gt;
-</pre>
-</div>
-
-<p>An invalid or non-existent mask source is ignored and no masking is applied.</p>
+<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-reference&gt;</var> || <var>&lt;position&gt;</var> [ / <var>&lt;mask-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var> || <var>&lt;box&gt;</var>{1,2}</pre>
 
 <p class="note">
   Note that the properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and
