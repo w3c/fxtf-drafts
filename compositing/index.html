@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="Compositing and Blending Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-12-14 name=dcterms.issued>
+  <meta content=2012-12-19 name=dcterms.issued>
   <meta content="Rik Cabanier" name=dcterms.creator>
   <meta content="Nikos Andronikos" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-compositing-20121214/"
+  <meta content="http://www.w3.org/TR/2012/ED-compositing-20121219/"
    name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
@@ -231,14 +231,14 @@
 
    <h1>Compositing and Blending Level 1</h1>
 
-   <h2 class="no-num no-toc" id=december-2012>14 December 2012</h2>
+   <h2 class="no-num no-toc" id=december-2012>19 December 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-compositing-20121214/-->
+     <!--http://www.w3.org/TR/2012/WD-compositing-20121219/-->
 
     <dt>Latest version:
 
@@ -1590,7 +1590,10 @@ now subsitute the result of blending for Cs:
     if(Cs < 1)
         B(Cb, Cs) = min(1, Cb / (1 - Cs))
     else
-        B(Cb, Cs) = 1	
+    if(Cb < 1)
+        B(Cb, Cs) = 1
+    else
+        B(Cb, Cs) = 0	
 </pre>
 
   <p><img alt="example of color dodge blending"
@@ -1606,7 +1609,10 @@ now subsitute the result of blending for Cs:
     if(Cs > 0)
         B(Cb, Cs) = 1 - min(1, (1 - Cb) / Cs)
     else
-        B(Cb, Cs) = 0	
+    if(Cb)
+        B(Cb, Cs) = 0
+    else
+        B(Cb, Cs) = 1
 </pre>
 
   <p><img alt="example of color burn blending" src="examples/colorburn.png">

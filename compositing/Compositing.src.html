@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending Level 1</h1>
 
-<h2 class="no-num no-toc">14 December 2012</h2>
+<h2 class="no-num no-toc">19 December 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -1015,7 +1015,10 @@ Brightens the <a href="#backdrop">backdrop</a> color to reflect the source color
     if(Cs < 1)
         B(Cb, Cs) = min(1, Cb / (1 - Cs))
     else
-        B(Cb, Cs) = 1	
+    if(Cb < 1)
+        B(Cb, Cs) = 1
+    else
+        B(Cb, Cs) = 0	
 </pre>
 </p>
 <img src="examples/colordodge.png" alt="example of color dodge blending"/>
@@ -1027,7 +1030,10 @@ Darkens the <a href="#backdrop">backdrop</a> color to reflect the source color. 
     if(Cs > 0)
         B(Cb, Cs) = 1 - min(1, (1 - Cb) / Cs)
     else
-        B(Cb, Cs) = 0	
+    if(Cb)
+        B(Cb, Cs) = 0
+    else
+        B(Cb, Cs) = 1
 </pre>
 </p>
 <img src="examples/colorburn.png" alt="example of color burn blending"/>
