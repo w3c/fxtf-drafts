@@ -445,29 +445,6 @@ Where:
 
 <p class="note">If the URI in the ''url()'' function has a fragment identifier, the <var>&lt;mask-reference&gt;</var> is treated as <var>&lt;mask-source&gt;</var>, otherwise as <var>&lt;mask-image&gt;</var>.</p>
 
-<p>If neither ''luminance'' nor ''alpha'' is specified, a value of ''luminance'' is
-used for <var>&lt;mask-source&gt;</var> and a value of ''alpha'' is
-used for <var>&lt;mask-image&gt;</var>.
-</p>
-
-<div class="example">
-  <p>
-    In the following example, the 'mask-type' property sets the mask type value for the <a>'mask element'</a> element to
-    ''alpha''. The 'mask' property has a reference to this <a>'mask element'</a> element and the keyword ''luminance''.
-    The 'mask' property will override the definition of 'mask-type' to ''luminance''.
-<pre>
-&lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
-  &lt;radialGradient id="radialFill"&gt;
-    &lt;stop stop-color="white" offset="0"/&gt;
-    &lt;stop stop-color="black" offset="1"/&gt;
-  &lt;/radialGradient&gt;
-  &lt;circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/&gt;
-&lt;/mask&gt;
-
-&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance"/&gt;
-</pre>
-</div>
-
 <p>An invalid or non-existent mask source is ignored and no masking is applied.</p>
 
 <p>A mask image that is empty (zero width or zero height), that fails to
@@ -498,7 +475,7 @@ span { mask-image: url(resources.svg#mask2) }
 p { mask-image: url(#mask), url(tl.png) }
 img { mask-image: url(#mask), url(resources.svg#mask2) }
 </pre>
-<p>The <var>&lt;mask-source&gt;</var> value is either used together with another <var>&lt;mask-source&gt;</var> value or an <var>&lt;mask-image&gt;</var> value. This is treated as invalid.
+<p>A <var>&lt;mask-source&gt;</var> value that is either used together with another <var>&lt;mask-source&gt;</var> value or an <var>&lt;mask-image&gt;</var> value makes the whole specified 'mask-image' value list invalid.
 </div>
 
 <h3 id="the-mask-source-type">The 'mask-source-type' property</h3>
@@ -556,14 +533,37 @@ is treated as luminance mask or alpha mask. (See <a href="#MaskValues">Calculati
   <dt><dfn>''auto''</dfn></dt>
   <dd>
     <p>
-      If the <var>&lt;mask-reference&gt;</var> is of type <var>&lt;mask-image&gt;</var> the luminance values of the mask
+      If the <var>&lt;mask-reference&gt;</var> of the 'mask-image' property is of type <var>&lt;mask-image&gt;</var> the luminance values of the mask
       image should be used as the mask values.
     <p>
-      If the <var>&lt;mask-reference&gt;</var> is of type <var>&lt;mask-source&gt;</var> the alpha values of the mask
+      If the <var>&lt;mask-reference&gt;</var> of the 'mask-image' property is of type <var>&lt;mask-source&gt;</var> the alpha values of the mask
       image should be used as the mask values.
   </dd>
 </dl>
 
+<div class="example">
+  <p>
+    In the following example, the 'mask-type' property sets the mask type value for the <a>'mask element'</a> element to
+    ''alpha''. The 'mask-image' property has a reference to this <a>'mask element'</a> element and the 'mask-source-type' property has a value of ''luminance''. The 'mask-source-type' property will override the definition of 'mask-type' to ''luminance''.
+<pre>
+&lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
+  &lt;radialGradient id="radialFill"&gt;
+    &lt;stop stop-color="white" offset="0"/&gt;
+    &lt;stop stop-color="black" offset="1"/&gt;
+  &lt;/radialGradient&gt;
+  &lt;circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/&gt;
+&lt;/mask&gt;
+
+&lt;style&gt;
+  rect {
+    mask-image: url(#SVGMask);
+    mask-source-type: luminance;
+  }
+&lt;/style&gt;
+
+&lt;rect width="200" height="200" fill="green"/&gt;
+</pre>
+</div>
 
 <h3 id="the-mask-repeat">The 'mask-repeat' property</h3>
 
@@ -1981,8 +1981,7 @@ Values have the following meanings:
   </tr>
 </table>
 
-<pre class=prod><dfn>&lt;clip-source&gt;</dfn> = <var>&lt;url&gt;</var> | <var>child</var> |
-  <var>&lt;child-selector&gt;</var>
+<pre class=prod><dfn>&lt;clip-source&gt;</dfn> = <var>&lt;url&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var>
 </pre>
 
 <dl>
@@ -1990,8 +1989,9 @@ Values have the following meanings:
     <dfn>'&lt;shape&gt;'</dfn>
   </dt>
   <dd>
-    A basic shape function as defined in CSS3 Exclusions. Percentage values are resolved against the
-    <span class=index>bounding client rect</span>. (See [[!CSS3-EXCLUSIONS]].)
+    A basic shape function as defined in CSS3 Exclusions. The origin of clipping shapes is on the top left of the <span
+    class=index>bounding client rect</span>. Percentage values are resolved against the
+    <span class=index>bounding client rect</span> width and height. (See [[!CSS3-EXCLUSIONS]].)
   </dd>
 </dl>
 

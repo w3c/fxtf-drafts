@@ -741,42 +741,6 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
    treated as <a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a>,
    otherwise as <a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>.
 
-  <p>If neither ‘<a href="#luminance"><code
-   class=css>luminance</code></a>’ nor ‘<a href="#alpha"><code
-   class=css>alpha</code></a>’ is specified, a value of ‘<a
-   href="#luminance"><code class=css>luminance</code></a>’ is used for <a
-   href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> and a value of
-   ‘<a href="#alpha"><code class=css>alpha</code></a>’ is used for <a
-   href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>.
-
-  <div class=example>
-   <p> In the following example, the ‘<a href="#mask-type"><code
-    class=property>mask-type</code></a>’ property sets the mask type value
-    for the <a class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element to ‘<a href="#alpha"><code
-    class=css>alpha</code></a>’. The ‘<a href="#mask"><code
-    class=property>mask</code></a>’ property has a reference to this <a
-    class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element and the keyword ‘<a
-    href="#luminance"><code class=css>luminance</code></a>’. The ‘<a
-    href="#mask"><code class=property>mask</code></a>’ property will
-    override the definition of ‘<a href="#mask-type"><code
-    class=property>mask-type</code></a>’ to ‘<a href="#luminance"><code
-    class=css>luminance</code></a>’.
-
-   <pre>
-&lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
-  &lt;radialGradient id="radialFill"&gt;
-    &lt;stop stop-color="white" offset="0"/&gt;
-    &lt;stop stop-color="black" offset="1"/&gt;
-  &lt;/radialGradient&gt;
-  &lt;circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/&gt;
-&lt;/mask&gt;
-
-&lt;rect width="200" height="200" style="fill: green; mask: url(#SVGMask) luminance"/&gt;
-</pre>
-  </div>
-
   <p>An invalid or non-existent mask source is ignored and no masking is
    applied.
 
@@ -812,11 +776,12 @@ p { mask-image: url(#mask), url(tl.png) }
 img { mask-image: url(#mask), url(resources.svg#mask2) }
 </pre>
 
-   <p>The <a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> value
-    is either used together with another <a
+   <p>A <a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> value
+    that is either used together with another <a
     href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> value or an <a
-    href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> value. This is
-    treated as invalid.
+    href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> value makes the
+    whole specified ‘<a href="#mask-image"><code
+    class=property>mask-image</code></a>’ value list invalid.
   </div>
 
   <h3 id=the-mask-source-type><span class=secno>6.2. </span>The ‘<a
@@ -904,15 +869,57 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
 
    <dd>
     <p> If the <a
-     href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> is of
-     type <a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> the
-     luminance values of the mask image should be used as the mask values.
+     href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> of the
+     ‘<a href="#mask-image"><code class=property>mask-image</code></a>’
+     property is of type <a
+     href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> the luminance
+     values of the mask image should be used as the mask values.
 
     <p> If the <a
-     href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> is of
-     type <a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> the
-     alpha values of the mask image should be used as the mask values.
+     href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> of the
+     ‘<a href="#mask-image"><code class=property>mask-image</code></a>’
+     property is of type <a
+     href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> the alpha
+     values of the mask image should be used as the mask values.
   </dl>
+
+  <div class=example>
+   <p> In the following example, the ‘<a href="#mask-type"><code
+    class=property>mask-type</code></a>’ property sets the mask type value
+    for the <a class=element-name href="#MaskElement">‘<code
+    class=property>mask</code>’</a> element to ‘<a href="#alpha"><code
+    class=css>alpha</code></a>’. The ‘<a href="#mask-image"><code
+    class=property>mask-image</code></a>’ property has a reference to this
+    <a class=element-name href="#MaskElement">‘<code
+    class=property>mask</code>’</a> element and the ‘<a
+    href="#mask-source-type"><code
+    class=property>mask-source-type</code></a>’ property has a value of
+    ‘<a href="#luminance"><code class=css>luminance</code></a>’. The
+    ‘<a href="#mask-source-type"><code
+    class=property>mask-source-type</code></a>’ property will override the
+    definition of ‘<a href="#mask-type"><code
+    class=property>mask-type</code></a>’ to ‘<a href="#luminance"><code
+    class=css>luminance</code></a>’.
+
+   <pre>
+&lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
+  &lt;radialGradient id="radialFill"&gt;
+    &lt;stop stop-color="white" offset="0"/&gt;
+    &lt;stop stop-color="black" offset="1"/&gt;
+  &lt;/radialGradient&gt;
+  &lt;circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/&gt;
+&lt;/mask&gt;
+
+&lt;style&gt;
+  rect {
+    mask-image: url(#SVGMask);
+    mask-source-type: luminance;
+  }
+&lt;/style&gt;
+
+&lt;rect width="200" height="200" fill="green"/&gt;
+</pre>
+  </div>
 
   <h3 id=the-mask-repeat><span class=secno>6.3. </span>The ‘<a
    href="#mask-repeat"><code class=property>mask-repeat</code></a>’
@@ -1874,7 +1881,7 @@ div {
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td><a href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>
+     <td>luminance | alpha
 
     <tr>
      <th>Initial:
@@ -1929,13 +1936,6 @@ div {
    <dt>‘<a href="#alpha"><code class=css>alpha</code></a>’
 
    <dd>Indicates that the alpha values of the mask should be used.
-
-   <dt>‘<a href="#auto"><code class=css>auto</code></a>’
-
-   <dd>The computed value of the ‘<a href="#mask-source-type"><code
-    class=property>mask-source-type</code></a>’ property of the referencing
-    element indicates if the luminance or the alpha values of the mask should
-    be used.
   </dl>
 
   <p>The ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
@@ -3204,18 +3204,19 @@ div {
 
   <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
    href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
-   href="#child"><var>child</var></a> |
-  <a
+   href="#child"><var>child</var></a> | <a
    href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a>
 </pre>
 
   <dl>
    <dt> <dfn id=ltshapegt>‘<code class=css>&lt;shape&gt;</code>’</dfn>
 
-   <dd> A basic shape function as defined in CSS3 Exclusions. Percentage
-    values are resolved against the <a class=index
+   <dd> A basic shape function as defined in CSS3 Exclusions. The origin of
+    clipping shapes is on the top left of the <a class=index
     href="#bounding-client-rect" id=bounding-client-rect0>bounding client
-    rect</a>. (See <a href="#CSS3-EXCLUSIONS"
+    rect</a>. Percentage values are resolved against the <a class=index
+    href="#bounding-client-rect" id=bounding-client-rect1>bounding client
+    rect</a> width and height. (See <a href="#CSS3-EXCLUSIONS"
     rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>.)
   </dl>
 
@@ -3893,7 +3894,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <p>A clipping path is conceptually equivalent to a custom viewport for the
    referencing element. Thus, it affects the rendering of an element, but not
    the element's inherent geometry. The <a class=index
-   href="#bounding-client-rect" id=bounding-client-rect1>bounding client
+   href="#bounding-client-rect" id=bounding-client-rect2>bounding client
    rect</a> of a clipped element (that is, an element which references a <a
    class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> element via a ‘<a
@@ -4293,7 +4294,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>bounding client rect, <a href="#bounding-client-rect"
     title="section 4."><strong>4.</strong></a>, <a
     href="#bounding-client-rect0" title="section 8.1.">8.1.</a>, <a
-    href="#bounding-client-rect1" title="section 8.5.">8.5.</a>
+    href="#bounding-client-rect1" title="section 8.1.">8.1.</a>, <a
+    href="#bounding-client-rect2" title="section 8.5.">8.5.</a>
 
    <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
     title="section 6.5."><strong>6.5.</strong></a>
@@ -4917,7 +4919,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-type">mask-type</a>
 
-     <td>&lt;source-type&gt;
+     <td>luminance | alpha
 
      <td>luminance
 
