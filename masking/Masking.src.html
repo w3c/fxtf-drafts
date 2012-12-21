@@ -399,7 +399,7 @@ are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
 Where:
 
-<pre class=prod><var><dfn>&lt;mask-reference&gt;</dfn></var> = [ <var>&lt;mask-source&gt;</var> | <var>&lt;mask-image&gt;</var> ] [ alpha | luminance ]?</pre>
+<pre class=prod><var><dfn>&lt;mask-reference&gt;</dfn></var> = <var>&lt;mask-source&gt;</var> | <var>&lt;mask-image&gt;</var></pre>
 
 <pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = <var>&lt;image&gt;</var> | none </pre>
 
@@ -436,18 +436,6 @@ Where:
   <dt><dfn>&lt;image&gt;</dfn></dt>
   <dd>
     A 2D image. (See [[!CSS3-IMAGES]].)
-  </dd>
-  <dt><dfn>''alpha''</dfn></dt>
-  <dd>
-    A value of ''alpha'' indicates that the alpha values of the mask
-    image should be used as the mask values.
-    See <a href="#MaskValues">Calculating mask values</a>.</p>
-  </dd>
-  <dt><dfn>''luminance''</dfn></dt>
-  <dd>
-    A value of ''luminance'' indicates that the luminance values of the mask
-    image should be used as the mask values.
-    See <a href="#MaskValues">Calculating mask values</a>.</p>
   </dd>
   <dt><dfn>''none''</dfn></dt>
   <dd>
@@ -512,6 +500,70 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
 </pre>
 <p>The <var>&lt;mask-source&gt;</var> value is either used together with another <var>&lt;mask-source&gt;</var> value or an <var>&lt;mask-image&gt;</var> value. This is treated as invalid.
 </div>
+
+<h3 id="the-mask-source-type">The 'mask-source-type' property</h3>
+
+<table class="propdef">
+    <tr>
+      <th>Name:
+      <td><dfn>mask-source-type</dfn>
+    <tr>
+      <th><a href="#values">Value</a>:
+      <td><var>&lt;source-type&gt;</var>#
+    <tr>
+      <th>Initial:
+      <td>auto
+    <tr>
+      <th>Applies to:
+      <td>All elements. In SVG, it applies to <a>container elements</a> and <a>graphics elements</a>
+    <tr>
+      <th>Inherited:
+      <td>no
+    <tr>
+      <th>Percentages:
+      <td>N/A
+    <tr>
+      <th>Media:
+      <td>visual
+    <tr>
+      <th>Computed value:
+      <td>as specified
+    <tr>
+      <th>Animatable:
+      <td>yes except keyword values
+</table>
+
+<p>The 'mask-source-type' property indicates whether the <var>&lt;mask-reference&gt;</var>
+is treated as luminance mask or alpha mask. (See <a href="#MaskValues">Calculating mask values</a>.)</p>
+
+<pre class=prod><dfn><var>&lt;source-type&gt;</var></dfn> = alpha | luminance | auto</pre>
+
+<p>Values have the following meanings:
+
+<dl>
+  <dt><dfn>''alpha''</dfn></dt>
+  <dd>
+    A value of ''alpha'' indicates that the alpha values of the mask
+    image should be used as the mask values.
+    See <a href="#MaskValues">Calculating mask values</a>.</p>
+  </dd>
+  <dt><dfn>''luminance''</dfn></dt>
+  <dd>
+    A value of ''luminance'' indicates that the luminance values of the mask
+    image should be used as the mask values.
+    See <a href="#MaskValues">Calculating mask values</a>.</p>
+  </dd>
+  <dt><dfn>''auto''</dfn></dt>
+  <dd>
+    <p>
+      If the <var>&lt;mask-reference&gt;</var> is of type <var>&lt;mask-image&gt;</var> the luminance values of the mask
+      image should be used as the mask values.
+    <p>
+      If the <var>&lt;mask-reference&gt;</var> is of type <var>&lt;mask-source&gt;</var> the alpha values of the mask
+      image should be used as the mask values.
+  </dd>
+</dl>
+
 
 <h3 id="the-mask-repeat">The 'mask-repeat' property</h3>
 
@@ -1236,7 +1288,7 @@ layer.
 </table>
 <p>Where</p>
 
-<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-reference&gt;</var> || <var>&lt;position&gt;</var> [ / <var>&lt;mask-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var> || <var>&lt;box&gt;</var>{1,2}</pre>
+<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-reference&gt;</var> <var>&lt;source-type&gt;</var>? || <var>&lt;position&gt;</var> [ / <var>&lt;mask-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var> || <var>&lt;box&gt;</var>{1,2}</pre>
 
 <p class="note">
   Note that the properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and
@@ -1251,7 +1303,7 @@ layer.
       <td><dfn>mask-type</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td>luminance | alpha</var>
+      <td>luminance | alpha
     <tr>
       <th>Initial:
       <td>luminance
