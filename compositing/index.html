@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="Compositing and Blending Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2012-12-19 name=dcterms.issued>
+  <meta content=2012-12-30 name=dcterms.issued>
   <meta content="Rik Cabanier" name=dcterms.creator>
   <meta content="Nikos Andronikos" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2012/ED-compositing-20121219/"
+  <meta content="http://www.w3.org/TR/2012/ED-compositing-20121230/"
    name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
@@ -231,14 +231,14 @@
 
    <h1>Compositing and Blending Level 1</h1>
 
-   <h2 class="no-num no-toc" id=december-2012>19 December 2012</h2>
+   <h2 class="no-num no-toc" id=december-2012>29 December 2012</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2012/WD-compositing-20121219/-->
+     <!--http://www.w3.org/TR/2012/WD-compositing-20121230/-->
 
     <dt>Latest version:
 
@@ -544,11 +544,6 @@
        <li><a href="#knock-out"><span class=secno>7.4.4. </span>The <span
         class=prop-name>‘<code class=property>knock-out</code>’</span>
         property</a>
-
-       <li><a href="#mix-shorthand"><span class=secno>7.4.5.
-        </span>Compositing and blending shorthand: the <span
-        class=prop-name>‘<code class=property>mix</code>’</span>
-        property</a>
       </ul>
 
      <li><a href="#cssbackgroundsyntax"><span class=secno>7.5.
@@ -562,14 +557,6 @@
        <li><a href="#background-blend-mode"><span class=secno>7.5.2.
         </span>The <span class=prop-name>‘<code
         class=property>background-blend-mode</code>’</span> property</a>
-
-       <li><a href="#box-shadow-blend-mode"><span class=secno>7.5.3.
-        </span>The <span class=prop-name>‘<code
-        class=property>box-shadow-blend-mode</code>’</span> property</a>
-
-       <li><a href="#text-shadow-blend-mode"><span class=secno>7.5.4.
-        </span>The <span class=prop-name>‘<code
-        class=property>text-shadow-blend-mode</code>’</span> property</a>
       </ul>
     </ul>
 
@@ -1864,7 +1851,8 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=prop-name>‘<code class=property>mix-composite</code>’</span>
    property</h4>
 
-  <p> Defines the compositing mode that must be used on the element.<br>
+  <p> Defines the compositing mode that must be used on the area of an
+   element.<br>
    This behavior is described in more detail in <a
    href="#advancedcompositing">Advanced compositing features</a>.<br>
    The description of the <span class=prop-name>‘<code
@@ -1883,20 +1871,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> <a href="#porterduffcompositingoperators_clear">clear</a> | <a
-         href="#porterduffcompositingoperators_src">copy</a> | <a
-         href="#porterduffcompositingoperators_dst">destination</a> | <a
-         href="#porterduffcompositingoperators_srcover">source-over</a> | <a
-         href="#porterduffcompositingoperators_dstover">destination-over</a>
-         | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a
-         href="#porterduffcompositingoperators_dstin">destination-in</a> | <a
-         href="#porterduffcompositingoperators_srcout">source-out</a> | <a
-         href="#porterduffcompositingoperators_dstout">destination-out</a> |
-         <a href="#porterduffcompositingoperators_srcatop">source-atop</a> |
-         <a
-         href="#porterduffcompositingoperators_dstatop">destination-atop</a>
-         | <a href="#porterduffcompositingoperators_xor">xor</a> | <a
-         href="#porterduffcompositingoperators_plus">lighter</a>
+        <td><a
+         href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a>[, <a
+         href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a>]*
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -1938,7 +1915,75 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
-  <p> Elements will always composite with <a
+  <p>The syntax of the property of <a
+   href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a> is given
+   with:
+
+  <pre class=compositearea><dfn
+   id=ltcompositeareagt><var>&lt;compositearea&gt;</var></dfn> = [<a
+   href="#ltareagt">&lt;area&gt;</a>] <a
+   href="#ltcompositegt">&lt;composite&gt;</a></pre>
+
+  <p>The syntax of the property of <a
+   href="#ltareagt"><var>&lt;area&gt;</var></a> is given with:
+
+  <pre class=area><dfn
+   id=ltareagt><var>&lt;area&gt;</var></dfn> = element | box-shadow | text-shadow | background | content</pre>
+
+  <p>Values have the following meanings:
+
+  <dl>
+   <dt><dfn id=area-element title="''element'' value"> ‘<code
+    class=css>element</code>’</dfn>
+
+   <dd>The area is the whole element, including shadows, background and
+    content
+
+   <dt><dfn id=area-box-shadow title="''box-shadow'' value"> ‘<code
+    class=css>box-shadow</code>’</dfn>
+
+   <dd>The area is box shadow
+
+   <dt><dfn id=area-text-shadow title="''text-shadow'' value"> ‘<code
+    class=css>text-shadow</code>’</dfn>
+
+   <dd>The area is the box shadow
+
+   <dt><dfn id=area-background title="''background'' value"> ‘<code
+    class=css>background</code>’</dfn>
+
+   <dd>The area is the composited result of all the background images.
+
+   <dt><dfn id=area-content title="''content'' value"> ‘<code
+    class=css>content</code>’</dfn>
+
+   <dd>The area is the content of the element (such as the text).
+  </dl>
+
+  <p class=note>If <a href="#ltareagt"><var>&lt;area&gt;</var></a> is
+   omitted, <var>‘<code class=css><a
+   href="#area-element">element</a></code>’</var> is assumed
+
+  <p>The syntax of the property of <a
+   href="#ltcompositegt"><var>&lt;composite&gt;</var></a> is given with:
+
+  <pre class=composite><dfn
+   id=ltcompositegt><var>&lt;composite&gt;</var></dfn> = <a
+   href="#porterduffcompositingoperators_clear">clear</a> | <a
+   href="#porterduffcompositingoperators_src">copy</a> | <a
+   href="#porterduffcompositingoperators_dst">destination</a> | <a
+   href="#porterduffcompositingoperators_srcover">source-over</a> | <a
+   href="#porterduffcompositingoperators_dstover">destination-over</a> | <a
+   href="#porterduffcompositingoperators_srcin">source-in</a> | <a
+   href="#porterduffcompositingoperators_dstin">destination-in</a> | <a
+   href="#porterduffcompositingoperators_srcout">source-out</a> | <a
+   href="#porterduffcompositingoperators_dstout">destination-out</a> | <a
+   href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a
+   href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a
+   href="#porterduffcompositingoperators_xor">xor</a> | <a
+   href="#porterduffcompositingoperators_plus">lighter</a></pre>
+
+  <p class=note>An area will always composite with <a
    href="#groupcompositingcliptoself">‘<code
    class=property>clip-to-self</code>’</a> set to ‘<code
    class=property>true</code>’.
@@ -1947,9 +1992,9 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=prop-name>‘<code class=property>mix-blend-mode</code>’</span>
    property</h4>
 
-  <p> Defines the blend mode that must be used on the element. The blend mode
-   defines the formula that must be used to mix the colors of the element
-   with its backdrop.<br>
+  <p> Defines the blend mode that must be used on an area of the element. The
+   blend mode defines the formula that must be used to mix the colors with
+   the backdrop.<br>
    This behavior is described in more detail in <a
    href="#blending">Blending</a>.
 
@@ -1966,22 +2011,8 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> <a href="#blendingnormal">normal</a> | <a
-         href="#blendingmultiply">multiply</a> | <a
-         href="#blendingscreen">screen</a> | <a
-         href="#blendingoverlay">overlay</a> | <a
-         href="#blendingdarken">darken</a> | <a
-         href="#blendinglighten">lighten</a> | <a
-         href="#blendingcolordodge">color-dodge</a> | <a
-         href="#blendingcolorburn">color-burn</a> | <a
-         href="#blendinghardlight">hard-light</a> | <a
-         href="#blendingsoftlight">soft-light</a> | <a
-         href="#blendingdifference">difference</a> | <a
-         href="#blendingexclusion">exclusion</a> | <a
-         href="#blendinghue">hue</a> | <a
-         href="#blendingsaturation">saturation</a> | <a
-         href="#blendingcolor">color</a> | <a
-         href="#blendingluminosity">luminosity</a>
+        <td><a href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a>[, <a
+         href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a>]*
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -2022,6 +2053,36 @@ components having the minimum, middle, and maximum values upon entry to the func
      </table>
    </dl>
   </div>
+
+  <p>The syntax of the property of <a
+   href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a> is given with:
+
+  <pre class=blendarea><dfn
+   id=ltblendareagt><var>&lt;blendarea&gt;</var></dfn> = [<a
+   href="#ltareagt">&lt;area&gt;</a>] <a
+   href="#ltblendmodegt">&lt;blendmode&gt;</a></pre>
+
+  <p>The syntax of the property of <a
+   href="#ltblendmodegt"><var>&lt;blendmode&gt;</var></a> is given with:
+
+  <pre class=blendmode><dfn
+   id=ltblendmodegt><var>&lt;blendmode&gt;</var></dfn> = <a
+   href="#blendingnormal">normal</a> | <a
+   href="#blendingmultiply">multiply</a> | <a
+   href="#blendingscreen">screen</a> | <a
+   href="#blendingoverlay">overlay</a> | <a
+   href="#blendingdarken">darken</a> | <a
+   href="#blendinglighten">lighten</a> | <a
+   href="#blendingcolordodge">color-dodge</a> | <a
+   href="#blendingcolorburn">color-burn</a> | <a
+   href="#blendinghardlight">hard-light</a> | <a
+   href="#blendingsoftlight">soft-light</a> | <a
+   href="#blendingdifference">difference</a> | <a
+   href="#blendingexclusion">exclusion</a> | <a
+   href="#blendinghue">hue</a> | <a
+   href="#blendingsaturation">saturation</a> | <a
+   href="#blendingcolor">color</a> | <a
+   href="#blendingluminosity">luminosity</a></pre>
 
   <h4 id=isolation><span class=secno>7.4.3. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
@@ -2172,70 +2233,57 @@ components having the minimum, middle, and maximum values upon entry to the func
      </table>
    </dl>
   </div>
-
-  <h4 id=mix-shorthand><span class=secno>7.4.5. </span>Compositing and
-   blending shorthand: the <span class=prop-name>‘<code
-   class=property>mix</code>’</span> property</h4>
-
-  <p> The ‘<code class=property>mix</code>’ property is a shorthand
-   property for setting blending and compositing properties at the same place
-   in the style sheet.<br>
-   Omitted values are set to their initial values.
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-mix><span class="propdef-title prop-name">‘<code
-     class=property>mix</code>’</span>
-
+  <!--
+<h4 id="mix-shorthand">Compositing and blending shorthand: the <span class="prop-name">'mix'</span> property</h4>
+<p>
+The 'mix' property is a shorthand property for setting blending and compositing properties at the same place in the style sheet.<br/>
+Omitted values are set to their initial values.
+</p>
+<div class="propdef">
+<dl>
+  <dt id='propdef-mix'><span class='propdef-title prop-name'>'mix'</span></dt>
     <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="knock-out property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
-
-        <td> &lt;‘<a href="#mix-composite">mix-composite</a>’&gt; ||
-         &lt;<a href="#mix-blend-mode">mix-blend-mode</a>’&gt; || &lt;<a
-         href="#isolation">isolation</a>’&gt; || &lt;<a
-         href="#knock-out">knock-out</a>’&gt;
-
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>‘<code class=property>source-over</code>’
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>See individual properties
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>See individual properties
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Computed value:</em>  
-
-        <td>same as the specified value
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>No
-     </table>
-   </dl>
-  </div>
+      <table summary="knock-out property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> &lt;‘<a href="#mix-composite">mix-composite</a>’&gt; || &lt;<a href="#mix-blend-mode">mix-blend-mode</a>’&gt; || &lt;<a href="#isolation">isolation</a>’&gt; || &lt;<a href="#knock-out">knock-out</a>’&gt;</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>'source-over'</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>See individual properties</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>See individual properties</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+           <tr valign="baseline">
+            <td><em>Computed value:</em>  </td>
+          	<td>same as the specified value</td>
+          </tr>         
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+-->
 
   <h3 id=cssbackgroundsyntax><span class=secno>7.5. </span>Specifying
    blending and compositing in the element background</h3>
@@ -2406,217 +2454,6 @@ components having the minimum, middle, and maximum values upon entry to the func
      </table>
    </dl>
   </div>
-
-  <h4 id=box-shadow-blend-mode><span class=secno>7.5.3. </span>The <span
-   class=prop-name>‘<code
-   class=property>box-shadow-blend-mode</code>’</span> property</h4>
-
-  <p> Sets the blend mode of the composited result of all the box
-   shadows.<br>
-   If this attribute is set and there is a box shadow, the shadow must blend
-   with its background using the specified blending mode.<br>
-   The description of the <span class=prop-name>‘<code
-   class=property>box-shadow-blend-mode</code>’</span> property is as
-   follows:
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-blend-mode-shadow><span
-     class="propdef-title prop-name">‘<code
-     class=property>box-shadow-blend-mode</code>’</span>
-
-    <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="box-shadow-blend-mode property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
-
-        <td> <a href="#blendingnormal">normal</a> | <a
-         href="#blendingmultiply">multiply</a> | <a
-         href="#blendingscreen">screen</a> | <a
-         href="#blendingoverlay">overlay</a> | <a
-         href="#blendingdarken">darken</a> | <a
-         href="#blendinglighten">lighten</a> | <a
-         href="#blendingcolordodge">color-dodge</a> | <a
-         href="#blendingcolorburn">color-burn</a> | <a
-         href="#blendinghardlight">hard-light</a> | <a
-         href="#blendingsoftlight">soft-light</a> | <a
-         href="#blendingdifference">difference</a> | <a
-         href="#blendingexclusion">exclusion</a> | <a
-         href="#blendinghue">hue</a> | <a
-         href="#blendingsaturation">saturation</a> | <a
-         href="#blendingcolor">color</a> | <a
-         href="#blendingluminosity">luminosity</a>
-
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>‘<code class=property>normal</code>’
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>All HTML elements
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>no
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Computed value:</em>  
-
-        <td>same as the specified value
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>no
-     </table>
-   </dl>
-  </div>
-
-  <h4 id=text-shadow-blend-mode><span class=secno>7.5.4. </span>The <span
-   class=prop-name>‘<code
-   class=property>text-shadow-blend-mode</code>’</span> property</h4>
-
-  <p> Set the blend mode of the composited result of all the text shadows. If
-   this attribute is set and there is a text shadow, the shadow must blend
-   with its background using the specified blending mode.<br>
-   The description of the <span class=prop-name>‘<code
-   class=property>text-shadow-blend-mode</code>’</span> property is as
-   follows:
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-blend-mode-text-shadow><span
-     class="propdef-title prop-name">‘<code
-     class=property>text-shadow-blend-mode</code>’</span>
-
-    <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="text-shadow-blend-mode property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
-
-        <td> <a href="#blendingnormal">normal</a> | <a
-         href="#blendingmultiply">multiply</a> | <a
-         href="#blendingscreen">screen</a> | <a
-         href="#blendingoverlay">overlay</a> | <a
-         href="#blendingdarken">darken</a> | <a
-         href="#blendinglighten">lighten</a> | <a
-         href="#blendingcolordodge">color-dodge</a> | <a
-         href="#blendingcolorburn">color-burn</a> | <a
-         href="#blendinghardlight">hard-light</a> | <a
-         href="#blendingsoftlight">soft-light</a> | <a
-         href="#blendingdifference">difference</a> | <a
-         href="#blendingexclusion">exclusion</a> | <a
-         href="#blendinghue">hue</a> | <a
-         href="#blendingsaturation">saturation</a> | <a
-         href="#blendingcolor">color</a> | <a
-         href="#blendingluminosity">luminosity</a>
-
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>‘<code class=property>normal</code>’
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>All HTML elements
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>no
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Computed value:</em>  
-
-        <td>same as the specified value
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>no
-     </table>
-   </dl>
-  </div>
-  <!--
-<h4 id="text-mix-blend-mode">The <span class="prop-name">'foreground-mix-blend-mode'</span> property</h4>
-<p>
-Sets the blend mode of the text or nested elements.<br/><p class="issue">Also needs to be added to the shorthand.</p><br/>
-The description of the <span class="prop-name">'foreground-mix-blend-mode'</span> property is
-as follows:</p>
-
-<div class="propdef">
-<dl>
-  <dt id='propdef-mix-blend-mode-foreground'><span class='propdef-title prop-name'>'foreground-mix-blend-mode'</span></dt>
-    <dd>
-      <table summary="foreground-mix-blend-mode property" class="propinfo" cellspacing="0"
-      cellpadding="0">
-        <tbody>
-          <tr valign="baseline">
-            <td><em>Value:</em>  </td>
-            <td>blend-style</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Initial:</em>  </td>
-            <td>normal</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Applies to:</em>  </td>
-            <td>All HTML elements</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Inherited:</em>  </td>
-            <td>no</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Percentages:</em>  </td>
-            <td>N/A</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Media:</em>  </td>
-            <td>visual</td>
-          </tr>
-          <tr valign="baseline">
-            <td><em>Animatable:</em>  </td>
-            <td>no</td>
-          </tr>
-        </tbody>
-      </table>
-    </dd>
-</dl>
-</div>
-
-<pre>
-	blend-style = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity 
-</pre>
--->
 
   <h2 id=canvascompositingandblending><span class=secno>8. </span>Specifying
    Compositing and Blending in Canvas 2D</h2>
