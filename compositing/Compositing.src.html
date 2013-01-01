@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending Level 1</h1>
 
-<h2 class="no-num no-toc">29 December 2012</h2>
+<h2 class="no-num no-toc">31 December 2012</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -1012,13 +1012,13 @@ The <a href="#backdrop">backdrop</a> is replaced with the source where the sourc
 <p>
 Brightens the <a href="#backdrop">backdrop</a> color to reflect the source color. Painting with black produces no changes.
 <pre>
-    if(Cs < 1)
-        B(Cb, Cs) = min(1, Cb / (1 - Cs))
+    if(Cb == 0)
+        B(Cb, Cs) = 0
     else
-    if(Cb < 1)
+    if(Cs == 1)
         B(Cb, Cs) = 1
     else
-        B(Cb, Cs) = 0	
+        B(Cb, Cs) = min(1, Cb / (1 - Cs))
 </pre>
 </p>
 <img src="examples/colordodge.png" alt="example of color dodge blending"/>
@@ -1027,13 +1027,13 @@ Brightens the <a href="#backdrop">backdrop</a> color to reflect the source color
 <p>
 Darkens the <a href="#backdrop">backdrop</a> color to reflect the source color. Painting with white produces no change.
 <pre>
-    if(Cs > 0)
-        B(Cb, Cs) = 1 - min(1, (1 - Cb) / Cs)
+    if(Cb == 1)
+        B(Cb, Cs) = 1
     else
-    if(Cb)
+    if(Cs == 0)
         B(Cb, Cs) = 0
     else
-        B(Cb, Cs) = 1
+        B(Cb, Cs) = 1 - min(1, (1 - Cb) / Cs)
 </pre>
 </p>
 <img src="examples/colorburn.png" alt="example of color burn blending"/>
@@ -1218,7 +1218,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td><a href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a>[, <a href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a>]* </td>      
+            <td><a href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a># </td>      
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1254,7 +1254,7 @@ as follows:</p>
 </dl>
 </div>
 <p>The syntax of the property of <var>&lt;compositearea&gt;</var> is given with:</p>
-<pre class="compositearea"><dfn id="ltcompositeareagt"><var>&lt;compositearea&gt;</var></dfn> = [<a href="#ltareagt">&lt;area&gt;</a>] <a href="#ltcompositegt">&lt;composite&gt;</a></pre>
+<pre class="compositearea"><dfn id="ltcompositeareagt"><var>&lt;compositearea&gt;</var></dfn> = <a href="#ltareagt">&lt;area&gt;</a>? &amp;&amp; <a href="#ltcompositegt">&lt;composite&gt;</a></pre>
 
 
 <p>The syntax of the property of <var>&lt;area&gt;</var> is given with:</p>
@@ -1312,7 +1312,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td><a href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a>[, <a href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a>]* </td>
+            <td><a href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a>#</td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1349,7 +1349,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 </div>
 
 <p>The syntax of the property of <var>&lt;blendarea&gt;</var> is given with:</p>
-<pre class="blendarea"><dfn id="ltblendareagt"><var>&lt;blendarea&gt;</var></dfn> = [<a href="#ltareagt">&lt;area&gt;</a>] <a href="#ltblendmodegt">&lt;blendmode&gt;</a></pre>
+<pre class="blendarea"><dfn id="ltblendareagt"><var>&lt;blendarea&gt;</var></dfn> = <a href="#ltareagt">&lt;area&gt;</a>? &amp;&amp; <a href="#ltblendmodegt">&lt;blendmode&gt;</a></pre>
 
 <p>The syntax of the property of <var>&lt;blendmode&gt;</var> is given with:</p>
 <pre class="blendmode"><dfn id="ltblendmodegt"><var>&lt;blendmode&gt;</var></dfn> = <a href="#blendingnormal">normal</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a></pre>
@@ -1464,7 +1464,6 @@ The behavior of this keyword is described in more detail in <a href="#knockoutgr
 </dl>
 </div>
 
-<!--
 <h4 id="mix-shorthand">Compositing and blending shorthand: the <span class="prop-name">'mix'</span> property</h4>
 <p>
 The 'mix' property is a shorthand property for setting blending and compositing properties at the same place in the style sheet.<br/>
@@ -1479,7 +1478,7 @@ Omitted values are set to their initial values.
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> &lt;‘<a href="#mix-composite">mix-composite</a>’&gt; || &lt;<a href="#mix-blend-mode">mix-blend-mode</a>’&gt; || &lt;<a href="#isolation">isolation</a>’&gt; || &lt;<a href="#knock-out">knock-out</a>’&gt;</td>
+            <td><a href="#ltmixareagt"><var>&lt;mixarea&gt;</var></a>#</td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1514,7 +1513,11 @@ Omitted values are set to their initial values.
     </dd>
 </dl>
 </div>
--->
+
+<p>The syntax of the property of <var>&lt;mixarea&gt;</var> is given with:</p>
+<pre class="blendarea"><dfn id="ltmixareagt"><var>&lt;mixarea&gt;</var></dfn> = <a href="#ltareagt">&lt;area&gt;</a>? &amp;&amp; <a href="#ltblendmodegt">&lt;blendmode&gt;</a>? &amp;&amp; <a href="#ltcompositegt">&lt;composite&gt;</a>? &amp;&amp; &lt;<a href="#isolation">isolation</a>’&gt;? && &lt;<a href="#knock-out">knock-out</a>’&gt?</pre>
+
+
 
 <h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
 <h4 id="background-composite">The <span class="prop-name">'background-composite'</span> property</h4>
@@ -1535,7 +1538,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> compositing-style [, compositing-style]* </td>
+            <td> <a href="#ltcompositegt">&lt;composite&gt;</a># </td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1570,9 +1573,7 @@ as follows:</p>
     </dd>
 </dl>
 </div>
-<pre>
-	compositing-style = <a href="#porterduffcompositingoperators_clear">clear</a> | <a href="#porterduffcompositingoperators_src">copy</a> | <a href="#porterduffcompositingoperators_dst">destination</a> | <a href="#porterduffcompositingoperators_srcover">source-over</a> | <a href="#porterduffcompositingoperators_dstover">destination-over</a> | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a href="#porterduffcompositingoperators_dstin">destination-in</a> | <a href="#porterduffcompositingoperators_srcout">source-out</a> | <a href="#porterduffcompositingoperators_dstout">destination-out</a> | <a href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a href="#porterduffcompositingoperators_xor">xor</a> | <a href="#porterduffcompositingoperators_plus">lighter</a>
-</pre>
+
 
 
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
@@ -1590,7 +1591,7 @@ as follows:</p>
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td> <a href="#blendingnormal">normal</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a> </td>
+            <td> <a href="#ltblendmodegt">&lt;blendmode&gt;</a># </td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
