@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-01-08 name=dcterms.issued>
+  <meta content=2013-01-09 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2013/ED-css-masking-20130108/"
+  <meta content="http://www.w3.org/TR/2013/ED-css-masking-20130109/"
    name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
@@ -30,14 +30,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 8 January 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 9 January 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130108/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130109/-->
 
     <dt>Latest version:
 
@@ -737,8 +737,9 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
   <p class=note>If the URI in the ‘<code class=css>url()</code>’ function
    has a fragment identifier, the <a
    href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> is
-   treated as <var>&lt;mask-source&gt;</var>, otherwise as <a
-   href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>.
+   treated as <a
+   href="#ltmask-elementgt"><var>&lt;mask-element&gt;</var></a>, otherwise as
+   <a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>.
 
   <p>An invalid or non-existent mask source is ignored and no masking is
    applied.
@@ -775,10 +776,11 @@ p { mask-image: url(#mask), url(tl.png) }
 img { mask-image: url(#mask), url(resources.svg#mask2) }
 </pre>
 
-   <p>A <var>&lt;mask-source&gt;</var> value that is either used together
-    with another <var>&lt;mask-source&gt;</var> value or an <a
-    href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> value makes the
-    whole specified ‘<a href="#mask-image"><code
+   <p>A <a href="#ltmask-elementgt"><var>&lt;mask-element&gt;</var></a> value
+    that is either used together with another <a
+    href="#ltmask-elementgt"><var>&lt;mask-element&gt;</var></a> value or an
+    <a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a> value makes
+    the whole specified ‘<a href="#mask-image"><code
     class=property>mask-image</code></a>’ value list invalid.
   </div>
 
@@ -876,8 +878,9 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
     <p> If the <a
      href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> of the
      ‘<a href="#mask-image"><code class=property>mask-image</code></a>’
-     property is of type <var>&lt;mask-source&gt;</var> the alpha values of
-     the mask image should be used as the mask values.
+     property is of type <a
+     href="#ltmask-elementgt"><var>&lt;mask-element&gt;</var></a> the alpha
+     values of the mask image should be used as the mask values.
   </dl>
 
   <div class=example>
@@ -1347,7 +1350,7 @@ body {
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td><a href="#ltboxgt"><var>&lt;box&gt;</var></a>#
+     <td><a href="#ltclip-boxgt"><var>&lt;clip-box&gt;</var></a>#
 
     <tr>
      <th>Initial:
@@ -1394,8 +1397,11 @@ body {
    content of an element may be resricted to this area. The syntax of the
    property is given with
 
+  <pre class=prod><dfn id=ltclip-boxgt><var>&lt;clip-box&gt;</var></dfn> = <a
+   href="#ltboxgt"><var>&lt;box&gt;</var></a> | no-clip</pre>
+
   <pre class=prod><dfn
-   id=ltboxgt><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box | no-clip</pre>
+   id=ltboxgt><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box</pre>
 
   <p>Values have the following meanings:
 
@@ -1415,15 +1421,11 @@ body {
 
    <dt><dfn id=content-box title="''content-box''!!'mask-clip' value">
     ‘<code class=css>content-box</code>’</dfn>
-  </dl>
 
-  <p> respectively object bounding box <a href="#SVG11"
-   rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a> for objects without
-   associated layout box.
-
-  <dl>
    <dd>The painted content is rectricted to (clipped to) the <span>content
-    box.</span>
+    box</span> respectively <span>object bounding box</span> <a href="#SVG11"
+    rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a> for objects without
+    associated layout box.
 
    <dt><dfn id=no-clip title="''no-clip''!!'mask-clip' value"> ‘<code
     class=css>no-clip</code>’</dfn>
@@ -1853,7 +1855,17 @@ div {
    href="#ltpositiongt"><var>&lt;position&gt;</var></a> [ / <a
    href="#ltmask-sizegt"><var>&lt;mask-size&gt;</var></a> ]? || <a
    href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a> || <a
-   href="#ltboxgt"><var>&lt;box&gt;</var></a>{1,2}</pre>
+   href="#ltboxgt"><var>&lt;box&gt;</var></a> || <a
+   href="#ltclip-boxgt"><var>&lt;clip-box&gt;</var></a></pre>
+
+  <p> If one <a href="#ltboxgt"><var>&lt;box&gt;</var></a> value is present
+   then it sets both ‘<a href="#mask-origin"><code
+   class=property>mask-origin</code></a>’ and ‘<a href="#mask-clip"><code
+   class=property>mask-clip</code></a>’ to that value. If two <a
+   href="#ltboxgt"><var>&lt;box&gt;</var></a> values are present, then the
+   first sets ‘<a href="#mask-origin"><code
+   class=property>mask-origin</code></a>’ and the second ‘<a
+   href="#mask-clip"><code class=property>mask-clip</code></a>’.
 
   <p class=note> Note that the properties ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’, ‘<a href="#mask-repeat"><code
@@ -4321,6 +4333,9 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>clip, <a href="#ClipProperty"
     title="section 8.3."><strong>8.3.</strong></a>
 
+   <li><a href="#ltclip-boxgt"><var>&lt;clip-box&gt;</var></a>, <a
+    href="#ltclip-boxgt" title="section 6.5."><strong>6.5.</strong></a>
+
    <li>clipPath, <a href="#clippath"
     title="section 8.4."><strong>8.4.</strong></a>
 
@@ -4806,7 +4821,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-clip">mask-clip</a>
 
-     <td>&lt;box&gt;#
+     <td>&lt;clip-box&gt;#
 
      <td>border-box
 

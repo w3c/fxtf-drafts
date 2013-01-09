@@ -443,7 +443,7 @@ Where:
   </dd>
 </dl>
 
-<p class="note">If the URI in the ''url()'' function has a fragment identifier, the <var>&lt;mask-reference&gt;</var> is treated as <var>&lt;mask-source&gt;</var>, otherwise as <var>&lt;mask-image&gt;</var>.</p>
+<p class="note">If the URI in the ''url()'' function has a fragment identifier, the <var>&lt;mask-reference&gt;</var> is treated as <var>&lt;mask-element&gt;</var>, otherwise as <var>&lt;mask-image&gt;</var>.</p>
 
 <p>An invalid or non-existent mask source is ignored and no masking is applied.</p>
 
@@ -475,7 +475,7 @@ span { mask-image: url(resources.svg#mask2) }
 p { mask-image: url(#mask), url(tl.png) }
 img { mask-image: url(#mask), url(resources.svg#mask2) }
 </pre>
-<p>A <var>&lt;mask-source&gt;</var> value that is either used together with another <var>&lt;mask-source&gt;</var> value or an <var>&lt;mask-image&gt;</var> value makes the whole specified 'mask-image' value list invalid.
+<p>A <var>&lt;mask-element&gt;</var> value that is either used together with another <var>&lt;mask-element&gt;</var> value or an <var>&lt;mask-image&gt;</var> value makes the whole specified 'mask-image' value list invalid.
 </div>
 
 <h3 id="the-mask-source-type">The 'mask-source-type' property</h3>
@@ -536,7 +536,7 @@ is treated as luminance mask or alpha mask. (See <a href="#MaskValues">Calculati
       If the <var>&lt;mask-reference&gt;</var> of the 'mask-image' property is of type <var>&lt;mask-image&gt;</var> the luminance values of the mask
       image should be used as the mask values.
     <p>
-      If the <var>&lt;mask-reference&gt;</var> of the 'mask-image' property is of type <var>&lt;mask-source&gt;</var> the alpha values of the mask
+      If the <var>&lt;mask-reference&gt;</var> of the 'mask-image' property is of type <var>&lt;mask-element&gt;</var> the alpha values of the mask
       image should be used as the mask values.
   </dd>
 </dl>
@@ -903,7 +903,7 @@ layer.
       <td><dfn>mask-clip</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var>&lt;box&gt;</var>#
+      <td><var>&lt;clip-box&gt;</var>#
     <tr>
       <th>Initial:
       <td>border-box
@@ -932,7 +932,8 @@ which determines the area that is affected by the mask. The painted content
 of an element may be resricted to this area.
 The syntax of the property is given with
 
-<pre class=prod><dfn><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box | no-clip</pre>
+<pre class=prod><dfn><var>&lt;clip-box&gt;</var></dfn> = <var>&lt;box&gt;</var> | no-clip</pre>
+<pre class=prod><dfn><var>&lt;box&gt;</var></dfn> = border-box | padding-box | content-box</pre>
 
 <p>Values have the following meanings:
 
@@ -946,9 +947,9 @@ The syntax of the property is given with
   <dd>The painted content is rectricted to (clipped to) the
     <span>padding box.</span>
   <dt><dfn title="''content-box''!!'mask-clip' value">
-      ''content-box''</dfn></dt> respectively object bounding box [[!SVG11]] for objects without associated layout box.
+      ''content-box''</dfn></dt> 
   <dd>The painted content is rectricted to (clipped to) the
-    <span>content box.</span>
+    <span>content box</span> respectively <span>object bounding box</span> [[!SVG11]] for objects without associated layout box.
   <dt><dfn title="''no-clip''!!'mask-clip' value">
       ''no-clip''</dfn></dt>
   <dd>The painted content is not restricted (not clipped). The <span>mask painting area</span> is set to
@@ -1288,7 +1289,10 @@ layer.
 </table>
 <p>Where</p>
 
-<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-reference&gt;</var> <var>&lt;source-type&gt;</var>? || <var>&lt;position&gt;</var> [ / <var>&lt;mask-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var> || <var>&lt;box&gt;</var>{1,2}</pre>
+<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-reference&gt;</var> <var>&lt;source-type&gt;</var>? || <var>&lt;position&gt;</var> [ / <var>&lt;mask-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var> || <var>&lt;box&gt;</var> || <var>&lt;clip-box&gt;</var></pre>
+
+<p>
+  If one <var>&lt;box&gt;</var> value is present then it sets both 'mask-origin' and 'mask-clip' to that value. If two <var>&lt;box&gt;</var> values are present, then the first sets 'mask-origin' and the second 'mask-clip'.
 
 <p class="note">
   Note that the properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and
