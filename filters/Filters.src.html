@@ -34,11 +34,6 @@
   </dd>
   <dt>Editors:</dt>
   <dd class="vcard">
-    <span class="fn">Vincent Hardy</span>,
-    <span class="org">Adobe Systems</span>,
-    <span class="email">vhardy@adobe.com</span>
-  </dd>
-  <dd class="vcard">
     <span class="fn">Dean Jackson</span>,
     <span class="org">Apple Inc.</span>,
     <span class="email">dino@apple.com</span>
@@ -52,6 +47,12 @@
     <span class="fn">Dirk Schulze</span>,
     <span class="org">Adobe Systems</span>, 
     <span class="email">dschulze@adobe.com</span>
+  </dd>
+  <dt>Former Editors:</dt>
+  <dd class="vcard">
+    <span class="fn">Vincent Hardy</span>,
+    <span class="org">Adobe Systems</span>,
+    <span class="email">vhardy@adobe.com</span>
   </dd>
   <dt>Authors:</dt>
   <dd>
@@ -461,7 +462,6 @@
   The description of the 'filter' property is as follows:
 </p>
 
-
 <table summary="filter property" class="propdef">
   <tbody>
     <tr>
@@ -495,6 +495,10 @@
     <tr>
       <th>Media:</th>
       <td>visual</td>
+    </tr>
+    <tr>
+      <th>Computed value:</th>
+      <td>as specified</td>
     </tr>
     <tr>
       <th>Animatable:</th>
@@ -536,242 +540,6 @@
 
 <p class="issue">
   The CSS WG wants to look into how to apply the filter to certain parts of an object (background, border) instead of just the whole group with descendants.
-</p>
-
-<h2 id="filter-margin-property">
-  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 
-  'filter-margin-right', and 'filter-margin' properties
-</h2>
-
-<p>
-  The filter-margin properties define the <a href="#FilterEffectsRegion">filter effect region</a>
-  for the <a href="#FilterFunction">filter functions</a> 'custom()'.
-  If the filter property references a <a>'filter element'</a> element, then the filter effect
-  region defined by the element takes precedence over the 'filter-margin' property.
-</p>
-    
-<p>
-  On a regular <a>'filter element'</a> element, the <a>'filter/x'</a>, <a>'filter/y'</a>,
-  <a>'filter/width'</a> and <a>'filter/height'</a> attributes define the <a href="#FilterEffectsRegion">filter
-  effects region</a>.
-</p>
-    
-<p>
-  The following sections describe the 'filter-margin-top', 'filter-margin-left', 'filter-margin-bottom',
-  'filter-margin-right' properties.
-</p>
-
-<p>
-  The filter-margin properties are a shorthand mechanism for defining a filter region equivalent to:</p>
-
-<pre>
-&lt;filter filterUnits="objectBoundingBox" 
-        x="fx(targetBox, [filter-margin-left])"
-        y="fy(targetBox, [filter-margin-top])"
-        width="fw(targetBox, [filter-margin-left], [filter-margin-right])"
-        height="fh(targetBox, [filter-margin-top], [filter-margin-bottom])"&gt;
-    &lt;!-- filter primitives for the filter function --&gt;
-&lt;/filter&gt;
-</pre>
-
-<p>
-  Where:
-</p>
-
-<ul>
-    <li><code id="targetBox">targetBox</code> is the <span class="term">bounding client rect</span>
-    <li><code>fx(box, left) = - (left / box.width)</code></li>
-    <li><code>fy(box, top) = - (top / box.height)</code></li>
-    <li><code>fw(box, left, right) = ((box.width + left + right) / box.width)</code></li>
-    <li><code>fh(box, top, bottom) = ((box.height + top + bottom) / box.height)</code></li> 
-</ul>
-
-<p>
-  Margin properties specify the width of the <a href="#FilterEffectsRegion">filter region</a> of a box. The
-  'filter-margin' shorthand property sets the margin for all four sides while the other margin properties
-  only set their respective side. These properties apply to all elements (which is different from the regular
-  margin properties where vertical margins will not have any effect on non-replaced inline elements).
-</p>
-    
-<p>
-  The 'filter-margin-top', 'filter-margin-bottom', 'filter-margin-left', 'filter-margin-right' can
-  take the same values as the 'margin-top', 'margin-bottom', 'margin-left' and 'margin-right' 
-  properties, respectively. In addition, they can take the ''auto'' value which is also their default value.
-</p>
-    
-<p>
-  The 'filter-margin' property can take the same values as the 'margin' property and is a shorthand
-  for setting 'filter-margin-top', 'filter-margin-right', 'filter-margin-bottom' and 
-  'filter-margin-left' at the same place in the stylesheet.
-</p>
-    
-<p>
-  The following figure illustrates how the various filter-margin properties affect the filter region.
-</p>
-
-<div class="figure">
-  <img src="images/filter-region.png" alt="The filter region" width="300" />
-  <p class="caption">The filter region</p>
-</div>
-
-<p>The blue border delimit the filter region. The margins are represented by:</p>
-
-<ul>
-  <li>A: 'filter-margin-left'</li>
-  <li>B: 'filter-margin-right'</li>
-  <li>C: 'filter-margin-top'</li>
-  <li>D: 'filter-margin-bottom'</li>
-</ul>
-
-<table class="propdef">
-  <tr>
-    <th>Name:
-    <td>
-      <dfn>filter-margin-top</dfn>, <dfn>filter-margin-right</dfn>, <dfn>filter-margin-bottom</dfn>, <dfn>filter-margin-left</dfn>
-    </td>
-  </tr>
-  <tr>
-    <th>Value:</th>
-    <td><code>&lt;margin-width&gt; | auto</code></td>
-  </tr>
-  <tr>
-    <th>Initial</th>
-    <td>auto</td>
-  </tr>
-  <tr>
-    <th>Applies to:</th>
-    <td>all elements</td>
-  </tr>
-  <tr>
-    <th>Inherited:</th>
-    <td>no</td>
-  </tr>
-  <tr>
-    <th>Percentages:</th>
-    <td>refer to the dimension of the <span class="term">bounding client rect</span></td>
-  </tr>
-  <tr>
-    <th>Media:</th>
-    <td>visual</td>
-  </tr>
-  <tr>
-    <th>Computed value:</th>
-    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the <span class="term">bounding client rect</span></td>
-  </tr>
-</table>
-
-<table class="propdef">
-  <tr>
-    <th>Name:</th>
-    <td><dfn>filter-margin</dfn></td>
-  </tr>
-  <tr>
-    <th>Value:</th>
-    <td><code>&lt;margin-width&gt;{1,4} | auto</code></td>
-  </tr>
-  <tr>
-    <th>Initial</th>
-    <td>auto</td>
-  </tr>
-  <tr>
-    <th>Applies to:</th>
-    <td>all elements</td>
-  </tr>
-  <tr>
-    <th>Inherited:</th>
-    <td>no</td>
-  </tr>
-  <tr>
-    <th>Percentages:</th>
-    <td>refer to the dimension of the <span class="term">bounding client rect</span></td>
-  </tr>
-  <tr>
-    <th>Media:</th>
-    <td>visual</td>
-  </tr>
-  <tr>
-    <th>Computed value:</th>
-    <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the <span class="term">bounding client rect</span></td>
-  </tr>
-</table>
-
-<h2 id="ColorInterpolationFiltersProperty">
-  The 'color-interpolation-filters' property
-</h2>
-
-<p>
-  The description of the 'color-interpolation-filters' property is as follows:
-</p>
-
-<table summary="color-interpolation-filters property" class="propdef">
-  <tr>
-    <th>Name:</th>
-    <td><dfn>color-interpolation-filters</dfn></td>
-  </tr>
-  <tr>
-    <th>Value:</em>&nbsp;&nbsp;</td>
-    <td>auto | sRGB | linearRGB</td>
-  </tr>
-  <tr>
-    <th>Initial:</em>&nbsp;&nbsp;</td>
-    <td>linearRGB</td>
-  </tr>
-  <tr>
-    <th>Applies to:</em>&nbsp;&nbsp;</td>
-    <td><a>filter primitives</a></td>
-  </tr>
-  <tr>
-    <th>Inherited:</em>&nbsp;&nbsp;</td>
-    <td>yes</td>
-  </tr>
-  <tr>
-    <th>Percentages:</em>&nbsp;&nbsp;</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <th>Media:</em>&nbsp;&nbsp;</td>
-    <td>visual</td>
-  </tr>
-  <tr>
-    <th><a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#Animatable">Animatable</a>:</em>&nbsp;&nbsp;</td>
-    <td>yes</td>
-  </tr>
-</table>
-
-<dl>
-  <dt>''auto''</dt>
-  <dd>Indicates that the user agent can choose either the ''sRGB or
-  ''linearRGB'' spaces for filter effects color
-  operations. This option indicates that the author doesn't require that color
-  operations occur in a particular color space.</dd>
-
-  <dt>''sRGB''</dt>
-  <dd>Indicates that filter effects color operations should occur in the sRGB
-  color space.</dd>
-
-  <dt>''linearRGB''</dt>
-  <dd>Indicates that filter effects color operations should occur in the
-  linearized RGB color space.</dd>
-</dl>
-
-<p>
-  The 'color-interpolation-filters' property specifies the color space for imaging
-  operations performed via filter effects.
-</p>
-
-<p class="note">
-  Note that 'color-interpolation-filters' has a different initial
-  value than 'color-interpolation'. 'color-interpolation-filters' has an initial
-  value of ''linearRGB'', where as 'color-interpolation' has an initial value of
-  ''sRGB''.  Thus, in the default case, filter effects operations occur in the
-  linearRGB color space, whereas all other color interpolations occur by default
-  in the sRGB color space.
-</p>
-
-<p class="note">
-  Note that the 'color-interpolation-filters' propert has no effect on <span>Filter
-  Functions</span>, which operate in the sRGB color space.
 </p>
 
 <h2 id="FilterFunction"><dfn>Filter Functions</dfn></h2>
@@ -912,38 +680,11 @@
   </dd>
   
   <dt>
-    custom(&lt;vertex-shader&gt; &lt;fragment-shader&gt;? [ , &lt;vertex-mesh&gt; ]? [ , &lt;params&gt; ]?)
+    custom(IDENT [, &lt;param&gt;]*)
   </dt>
   <dd>
-      <table class="values-desc">
-          <tr>
-              <td><code>&lt;vertex-shader&gt;</code></td>
-              <td><code>none | &lt;uri&gt;</code></td>
-          </tr>
-          <tr>
-              <td><code>&lt;fragment-shader&gt;</code></td>
-              <td><code>none | &lt;uri&gt; | mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</code></td>
-          </tr>
-          <tr>
-              <td><code>&lt;vertex-mesh&gt;</code></td>
-              <td><code>&lt;integer&gt;{0,2} &lt;box&gt;? [ detached | attached ]?</code></td>
-          </tr>
-          <tr>
-              <td><code>&lt;box&gt;</code></td>
-              <td><code>filter-box | border-box | padding-box | content-box</code></td>
-          </tr>
-          <tr>
-              <td id='shader-params'><code>&lt;params&gt;</code></td>
-              <td>See the <a>'feCustom element'</a>'s <a href='#feCustomParamsAttribute'><code>params</code></a> attribute.</td>
-          </tr>
-      </table>
-      
-      
-      <div>The <code>&lt;vertex-shader&gt;</code> and <code>&lt;fragment-shader&gt;</code> parameters reference the 
-          shader sources. The <code>&lt;vertex-mesh&gt;</code> parameter specifies the granularity of the vertex mesh.
-          The <code>&lt;params&gt;</code> specify the parameters and corresponding passed to the shader programs.
-          The markup equivalent is <a href="#customEquivalent">given below</a>.
-      </div>
+     References a custom-filter at-rule by the given identifier. See <a
+     href="#custom-filter">Custom Filter Function</a> for details.
   </dd>
 </dl>
 
@@ -992,16 +733,16 @@ follows:</p>
       The <a>lacuna value</a> for <a>'filter/primitiveUnits'</a> is <span class="attr-value">userSpaceOnUse</span>.<br />
       <span class="anim-target">Animatable: yes.</span></dd>
   <dt id="FilterElementXAttribute">
-  <span class="adef">x</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
+  <span class="adef">x</span> = "<em>&lt;length&gt; | &lt;percentage&gt;</em>"</dt>
     <dd>See <a>filter effects region</a>.</dd>
   <dt id="FilterElementYAttribute">
-  <span class="adef">y</span> = "<em><a>&lt;coordinate&gt;</a></em>"</dt>
+  <span class="adef">y</span> = "<em>&lt;length&gt; | &lt;percentage&gt;</em>"</dt>
     <dd>See <a>filter effects region</a>.</dd>
   <dt id="FilterElementWidthAttribute"><span class="adef">width</span> =
-  "<em><a>&lt;length&gt;</a></em>"</dt>
+  "<em>&lt;length&gt; | &lt;percentage&gt;</em>"</dt>
     <dd>See <a>filter effects region</a>.</dd>
   <dt id="FilterElementHeightAttribute"><span class="adef">height</span> =
-  "<em><a>&lt;length&gt;</a></em>"</dt>
+  "<em>&lt;length&gt; | &lt;percentage&gt;</em>"</dt>
     <dd>See <a>filter effects region</a>.</dd>
 <dt id="FilterElementFilterResAttribute"><span
   class="adef">filterRes</span> = "<em><a>&lt;number-optional-number&gt;</a></em>"
@@ -1161,297 +902,7 @@ values for <a>'filter/x'</a>, <a>'filter/y'</a> and percentages values greater t
 the filter effects region are <span class="attr-value">x="-10%" y="-10%" width="120%"
 height="120%"</span>.</p>
 
-<h2 id="AccessBackgroundImage">Accessing the background image</h2>
-
-<p id="AccessingBackgroundImage">Two possible pseudo input images for filter effects are <a>BackgroundImage</a> and <a>BackgroundAlpha</a>, which each represent an image
-snapshot of the canvas under the <a>filter region</a> at the time that the <a
-href="#FilterElement"><span class="element-name">'filter'</span></a> element
-is invoked. <a>BackgroundImage</a> represents both
-the color values and alpha channel of the canvas (i.e., RGBA pixel values),
-whereas <a>BackgroundAlpha</a> represents only the
-alpha channel.</p>
-
-<p>
-  Implementations <!--of SVG user agents often-->
-will often need to maintain supplemental background image buffers in order to
-support the <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images. Sometimes,
-the background image buffers will contain an in-memory copy of the
-accumulated painting operations on the current canvas.</p>
-
-<p>
-  Because in-memory image buffers can take up significant system resources, <!--SVG-->
-content must explicitly indicate to the <!--SVG-->
-user agent that the document needs access to the background image before <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images can be used.
-</p>
-
-A background image is what's been <i>rendered before</i> the current element.
-The host language is responsible for defining what <i>rendered before</i> in
-this context means. For SVG, that uses the painter's algorithm, <i>rendered before</i> means
-all of the prior elements in pre order traversal previous to the element to
-which the filter is applied.
-
-<p>
-  The property which enables access to the background image is
-'enable-background':</p>
-
-<table summary="enable-background property" class="propdef" id="EnableBackgroundProperty">
-  <tbody>
-    <tr>
-      <th>Name:</th>
-      <td><dfn>enable-background</dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td>accumulate | new</td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>accumulate</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td>Typically elements that can contain renderable elements. 
-        language is responsible for defining the applicable set of
-        elements.
-        For SVG: <a>container elements</a></td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>no</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>'enable-background' is only
-  applicable to <a>container elements</a>
-  and specifies how the <a>SVG user agent</a> manages the accumulation
-  of the background image.</p>
-
-<p>
-  <strong>new</strong>
-</p>
-<ul>
-  <li>Indicates that a new (i.e., initially transparent black) background
-    image canvas is established and that (in effect) all children of the
-    current <a>container element</a>
-    element shall be rendered into the new background image canvas in
-    addition to being rendered onto the target device.</li>
-</ul>
-
-<p>
-  <strong>accumulate</strong> (the initial/default value)
-</p>
-<ul>
-  <li>If an ancestor <a>container element</a>
-    element has a property value of ''enable-background: new'', then all
-    renderable child elements of the current <a>container element</a>
-    element are rendered both onto the parent <a>container element</a>
-    element's background image canvas and onto the target device.</li>
-  <li>Otherwise, there is no current background image canvas, so it is only
-    necessary to render <a>graphics elements</a>
-    the renderable elements onto the target device. (No need to render to the
-    background image canvas.)</li>
-</ul>
-
-<p>
-  If a filter effect specifies either the <a>BackgroundImage</a> or the 
-  <a>BackgroundAlpha</a> pseudo input images and no
-ancestor <a>container element</a>
- element has a property value of ''enable-background: new'', then the background
-image request is technically in error. Processing will proceed without
-interruption (i.e., no error message) and a transparent black image shall be
-provided in response to the request.</p>
-
-<h3 id="AccessBackgroundImageSVG">Accessing the background image in SVG</h3>
-<p>
-  This section only applies to the SVG definition of enable-background.</p>
-
-<p>
-  Assume you have an element E in the document and that E has a series of
-ancestors A<sub>1</sub> (its immediate parent), A<sub>2</sub>, etc. (Note:
-A<sub>0</sub> is E.) Each ancestor A<sub>i</sub> will have a corresponding
-temporary background image offscreen buffer BUF<sub>i</sub>. The contents of
-the <em>background image</em> available to a <a>'filter element'</a>
-referenced by E is defined as follows:</p>
-<ul>
-  <li>Find the element A<sub>i</sub> with the smallest subscript i (including
-    A<sub>0</sub>=E) for which the 'enable-background' property has the value
-    ''new''.
-    <p class="note">Note that if there is no such ancestor
-    element, then the outermost element A<sub>n</sub> will be chosen.</li>
-  <li>For each A<sub>i</sub> (from i=n to 1), initialize BUF<sub>i</sub> to
-    transparent black. Render all children of A<sub>i</sub> up to but not
-    including A<sub>i-1</sub> into BUF<sub>i</sub>. The children are painted,
-    then filtered, clipped, masked and composited using the various painting,
-    filtering, clipping, masking and object opacity settings on the given
-    child. Any filter effects, masking and group opacity that might be set on
-    A<sub>i</sub> do <em>not</em> apply when rendering the children of
-    A<sub>i</sub> into BUF<sub>i</sub>.<br />
-    (Note that for the case of A<sub>0</sub>=E, the graphical contents of E
-    are not rendered into BUF<sub>1</sub> and thus are not part of the
-    background image available to E. Instead, the graphical contents of E are
-    available via the <a href="#SourceGraphic">SourceGraphic</a> and
-    <a>SourceAlpha</a> pseudo input images.)</li>
-  <li>Then, for each A<sub>i</sub> (from i=1 to n-1), composite
-    BUF<sub>i</sub> into BUF<sub>i+1</sub>.</li>
-  <li>The accumulated result (i.e., BUF<sub>n</sub>) represents the
-    background image available to E.</li>
-</ul>
-
-<pre class="xml">&lt;?xml version="1.0" standalone="no"?&gt;
-&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
-  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
-&lt;svg width="13.5cm" height="2.7cm" viewBox="0 0 1350 270"
-     xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
-  &lt;title&gt;Example enable-background01&lt;/title&gt;
-  &lt;desc&gt;This test case shows five pictures which illustrate the rules
-        for background image processing.&lt;/desc&gt;
-
-  &lt;defs&gt;
-    &lt;filter id="ShiftBGAndBlur" 
-            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
-      &lt;desc&gt;
-        This filter discards the SourceGraphic, if any, and just produces
-        a result consisting of the BackgroundImage shifted down 125 units
-        and then blurred.
-      &lt;/desc&gt;
-      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
-      &lt;feGaussianBlur stdDeviation="8" /&gt;
-    &lt;/filter&gt;
-    &lt;filter id="ShiftBGAndBlur_WithSourceGraphic" 
-            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
-      &lt;desc&gt;
-        This filter takes the BackgroundImage, shifts it down 125 units, blurs it,
-        and then renders the SourceGraphic on top of the shifted/blurred background.
-      &lt;/desc&gt;
-      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
-      &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
-      &lt;feMerge&gt;
-        &lt;feMergeNode in="blur"/&gt;
-        &lt;feMergeNode in="SourceGraphic"/&gt;
-      &lt;/feMerge&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-
-  &lt;g transform="translate(0,0)"&gt;
-    &lt;desc&gt;The first picture is our reference graphic without filters.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(270,0)"&gt;
-    &lt;desc&gt;The second adds an empty 'g' element which invokes ShiftBGAndBlur.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;g filter="url(#ShiftBGAndBlur)"/&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(540,0)"&gt;
-    &lt;desc&gt;The third invokes ShiftBGAndBlur on the inner group.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g filter="url(#ShiftBGAndBlur)" opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(810,0)"&gt;
-    &lt;desc&gt;The fourth invokes ShiftBGAndBlur on the triangle.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"
-               filter="url(#ShiftBGAndBlur)"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(1080,0)"&gt;
-    &lt;desc&gt;The fifth invokes ShiftBGAndBlur_WithSourceGraphic on the triangle.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"
-               filter="url(#ShiftBGAndBlur_WithSourceGraphic)"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/enable-background-01.png"/></td></tr></table><p class="view-as-svg"><a href="examples/enable-background-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
-
-<p>
-  The example above contains five parts, described as follows:</p>
-<ol>
-  <li>The first set is the reference graphic. The reference graphic consists
-    of a red rectangle followed by a 50% transparent <span
-    class="element-name">'g'</span>
-    element. Inside the <span class="element-name">'g'</span>
-    is a green circle that partially overlaps the rectangle and a a blue
-    triangle that partially overlaps the circle. The three objects are then
-    outlined by a rectangle stroked with a thin blue line. No filters are
-    applied to the reference graphic.</li>
-  <li>The second set enables background image processing and adds an empty
-    <span class="element-name">'g'</span>
-    element which invokes the ShiftBGAndBlur filter. This filter takes the
-    current accumulated background image (i.e., the entire reference graphic)
-    as input, shifts its offscreen down, blurs it, and then writes the result
-    to the canvas. Note that the offscreen for the filter is initialized to
-    transparent black, which allows the already rendered rectangle, circle
-    and triangle to show through after the filter renders its own result to
-    the canvas.</li>
-  <li>The third set enables background image processing and instead invokes
-    the ShiftBGAndBlur filter on the inner <span
-    class="element-name">'g'</span>
-    element. The accumulated background at the time the filter is applied
-    contains only the red rectangle. Because the children of the inner <span
-    class="element-name">'g'</span>
-    (i.e., the circle and triangle) are not part of the inner <span
-    class="element-name">'g'</span>
-    element's background and because ShiftBGAndBlur ignores SourceGraphic,
-    the children of the inner <span class="element-name">'g'</span>
-    do not appear in the result.</li>
-  <li>The fourth set enables background image processing and invokes the
-    ShiftBGAndBlur on the <span class="element-name">'polygon'</span>
-    element that draws the triangle. The accumulated background at the time
-    the filter is applied contains the red rectangle plus the green circle
-    ignoring the effect of the <span class="prop-name">'opacity'</span>
-    property on the inner <span class="element-name">'g'</span>
-    element. (Note that the blurred green circle at the bottom does not let
-    the red rectangle show through on its left side. This is due to ignoring
-    the effect of the <span class="prop-name">'opacity'</span>
-    property.) Because the triangle itself is not part of the accumulated
-    background and because ShiftBGAndBlur ignores SourceGraphic, the triangle
-    does not appear in the result.</li>
-  <li>The fifth set is the same as the fourth except that filter
-    ShiftBGAndBlur_WithSourceGraphic is invoked instead of ShiftBGAndBlur.
-    ShiftBGAndBlur_WithSourceGraphic performs the same effect as
-    ShiftBGAndBlur, but then renders the SourceGraphic on top of the shifted,
-    blurred background image. In this case, SourceGraphic is the blue
-    triangle; thus, the result is the same as in the fourth case except that
-    the blue triangle now appears.</li>
-</ol>
-
-<h2 id="FilterPrimitivesOverview">Filter primitives overview</h2>
+<h2 id="FilterPrimitivesOverview">Filter primitives</h2>
 
 <h3 id="FilterPrimitivesOverviewIntro">Overview</h3>
 
@@ -1498,7 +949,7 @@ primitives:</p>
 <p><em>Attribute definitions:</em></p>
 <dl>
   <dt id="FilterPrimitiveXAttribute">
-    <span class="adef">x</span> = "<em><a>&lt;coordinate&gt;</a></em>"
+    <span class="adef">x</span> = "<em>&lt;length&gt; | &lt;percentage&gt;</em>"
   </dt>
   <dd>
     <p>
@@ -1511,7 +962,7 @@ primitives:</p>
     <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
   <dt id="FilterPrimitiveYAttribute">
-    <span class="adef">y</span> = "<em><a>&lt;coordinate&gt;</a></em>"
+    <span class="adef">y</span> = "<em>&lt;length&gt; | &lt;percentage&gt;</em>"
   </dt>
   <dd>
     <p>
@@ -1524,7 +975,7 @@ primitives:</p>
     <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
   <dt id="FilterPrimitiveWidthAttribute">
-    <span class="adef">width</span> = "<em><a>&lt;length&gt;</a></em>"
+    <span class="adef">width</span> = "<em>&lt;length&gt; | &lt;percentage&gt;</em>"
   </dt>
   <dd>
     <p>
@@ -1541,7 +992,7 @@ primitives:</p>
     <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
   <dt id="FilterPrimitiveHeightAttribute">
-    <span class="adef">height</span> = "<em><a>&lt;length&gt;</a></em>"
+    <span class="adef">height</span> = "<em>&lt;length&gt; | &lt;percentage&gt;</em>"
   </dt>
   <dd>
     <p>
@@ -1774,197 +1225,8 @@ The lower left rect shows an <a>'feMerge'</a> that merges <a>SourceGraphic</a> w
 </li>
 </ul>
 
-<h2 id="LightSourceDefinitions">Light source elements and properties</h2>
 
-<h3 id="LightSourceIntro">Introduction</h3>
-
-<p>
-  The following sections define the elements that define a <span class=index>light source</span>, <a>'feDistantLight'</a>, 
-<a>'fePointLight'</a> and <a>'feSpotLight'</a>,
-and property 'lighting-color', which defines the color of the
-light.</p>
-
-<h3 id="feDistantLightElement">Light source <span class="element-name">'feDistantLight'</span></h3>
-
-<!--elementsummary feDistantLight-->
-
-<div class="adef-list">
-<p><em>Attribute definitions:</em></p>
-<dl>
-  <dt id="feDistantLightAzimuthAttribute"><span
-  class="adef">azimuth</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Direction angle for the light source on the XY plane (clockwise), in
-      degrees from the x axis.<br />
-      The <a>lacuna value</a> for <a>'azimuth'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feDistantLightElevationAttribute"><span
-  class="adef">elevation</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Direction angle for the light source from the XY plane towards the Z-axis, in degrees.
-    Note that the positive Z-axis points towards the viewer.<br />
-    The <a>lacuna value</a> for <a>'elevation'</a> is <span class="attr-value">0</span>.<br />
-    <span class="anim-target">Animatable: yes.</span></dd>
-</dl>
-</div>
-
-<p>
-  The following diagram illustrates the angles which <a>'azimuth'</a>
-  and <a>'elevation'</a> represent in an XYZ coordinate system.
-</p>
-<img src="examples/azimuth-elevation.png" alt="Angles which azimuth and elevation represent" width="480" height="360" />
-
-<h3 id="fePointLightElement">Light source <span class="element-name">'fePointLight'</span></h3>
-
-<!--elementsummary fePointLight-->
-
-<div class="adef-list">
-<p><em>Attribute definitions:</em></p>
-<dl>
-  <dt id="fePointLightXAttribute"><span
-  class="adef">x</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>X location for the light source in the coordinate system established
-      by attribute <a>'filter/primitiveUnits'</a> on the <a
-      href="#FilterElement"><span class="element-name">'filter'</span></a>
-      element.<br />
-      The <a>lacuna value</a> for <a>'fePointLight/x'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="fePointLightYAttribute"><span
-  class="adef">y</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Y location for the light source in the coordinate system established
-      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
-      element.<br />
-      The <a>lacuna value</a> for <a>'fePointLight/y'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="fePointLightZAttribute"><span
-  class="adef">z</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Z location for the light source in the coordinate system established
-      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
-      element, assuming that, in the <a>initial coordinate system</a>
-      , the positive Z-axis comes out towards the person viewing the content
-      and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br />
-      The <a>lacuna value</a> for <a>'fePointLight/z'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-</dl>
-</div>
-
-<h3 id="feSpotLightElement">Light source <span class="element-name">'feSpotLight'</span></h3>
-
-<!--elementsummary feSpotLight-->
-
-<div class="adef-list">
-<p><em>Attribute definitions:</em></p>
-<dl>
-  <dt id="feSpotLightXAttribute"><span
-  class="adef">x</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>X location for the light source in the coordinate system established
-      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
-      element.<br />
-      The <a>lacuna value</a> for <a>'feSpotLight/x'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feSpotLightYAttribute"><span
-  class="adef">y</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Y location for the light source in the coordinate system established
-      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
-      element.<br />
-      The <a>lacuna value</a> for <a>'feSpotLight/y'</a> is <span class="attr-value">0</span>.<br />
-     <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feSpotLightZAttribute"><span
-  class="adef">z</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Z location for the light source in the coordinate system established
-      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
-      element, assuming that, in the <a>initial coordinate system</a>
-      , the positive Z-axis comes out towards the person viewing the content
-      and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br />
-      The <a>lacuna value</a> for <a>'feSpotLight/z'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feSpotLightPointsAtXAttribute"><span
-  class="adef">pointsAtX</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>X location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> 
-      on the <a>'filter element'</a>
-      element of the point at which the light source is pointing.<br />
-      The <a>lacuna value</a> for <a>'pointsAtX'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feSpotLightPointsAtYAttribute"><span
-  class="adef">pointsAtY</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Y location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> 
-      on the <a>'filter element'</a> element of the point at which the light source is pointing.<br />
-      The <a>lacuna value</a> for <a>'pointsAtY'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feSpotLightPointsAtZAttribute"><span
-  class="adef">pointsAtZ</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Z location in the coordinate system established by the
-        attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element of
-        the point at which the light source is pointing, assuming that, in the
-        <a>initial coordinate system</a>, the positive Z-axis comes out
-         towards the person viewing the content and assuming that
-         one unit along the Z-axis equals 
-         <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">
-         one unit in X and Y</a>.<br />
-      The <a>lacuna value</a> for <a>'pointsAtZ'</a> is <span class="attr-value">0</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feSpotLightSpecularExponentAttribute"><span
-  class="adef">specularExponent</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>Exponent value controlling the focus for the light source.<br />
-      The <a>lacuna value</a> for <a>'feSpotLight/specularExponent'</a> is <span class="attr-value">1</span>.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-  <dt id="feSpotLightLimitingConeAngleAttribute"><span
-  class="adef">limitingConeAngle</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>A limiting cone which restricts the region where the light is
-      projected. No light is projected outside the cone. <span
-      class="attr-name">limitingConeAngle</span> represents the angle in degrees between
-      the spot light axis (i.e. the axis between the light source and the
-      point to which it is pointing at) and the spot light cone. <span class="requirement" id="assert_userAgentLightingConeSmoothing">User agents
-      should apply a smoothing technique such as anti-aliasing at the
-      boundary of the cone.</span><br />
-      If no value is specified, then no limiting cone will be applied.<br />
-      <span class="anim-target">Animatable: yes.</span></dd>
-</dl>
-</div>
-
-<h3 id="LightingColorProperty">The 'lighting-color' property</h3>
-
-<p>
-  The 'lighting-color' property defines the
-color of the light source for <span class="term">filter primitives</span> <a>'feDiffuseLighting element'</a> and <a>'feSpecularLighting element'</a>.</p>
-
-<table summary="lighting-color property" class="propdef">
-  <tbody>
-    <tr>
-      <th>Name:</th>
-      <td><dfn>lighting-color</dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?</td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>white</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td><a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a>
-      elements</td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>yes</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="feBlendElement">Filter primitive <span class="element-name">'feBlend'</span></h2>
+<h3 id="feBlendElement">Filter primitive <span class="element-name">'feBlend'</span></h3>
 
 <!--elementsummary feBlend-->
 
@@ -2093,7 +1355,7 @@ the <a>simple alpha compositing</a> technique used in SVG for all compositing ou
   &lt;/g&gt;
 &lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feBlend.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feBlend.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
-<h2 id="feColorMatrixElement">Filter primitive <span class="element-name">'feColorMatrix'</span></h2>
+<h3 id="feColorMatrixElement">Filter primitive <span class="element-name">'feColorMatrix'</span></h3>
 
 <!--elementsummary feColorMatrix-->
 
@@ -2286,7 +1548,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
   &lt;/g&gt;
 &lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feColorMatrix.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feColorMatrix.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
-<h2 id="feComponentTransferElement">Filter primitive <span class="element-name">'feComponentTransfer'</span></h2>
+<h3 id="feComponentTransferElement">Filter primitive <span class="element-name">'feComponentTransfer'</span></h3>
 
 <!--elementsummary feComponentTransfer-->
 
@@ -2534,7 +1796,7 @@ which apply to the <a>transfer function elements</a>.</p>
   &lt;/g&gt;
 &lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feComponentTransfer.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feComponentTransfer.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
-<h2 id="feCompositeElement">Filter primitive <span class="element-name">'feComposite'</span></h2>
+<h3 id="feCompositeElement">Filter primitive <span class="element-name">'feComposite'</span></h3>
 
 <!--elementsummary feComposite-->
 
@@ -2786,7 +2048,7 @@ described in the section that describes the <a>filter primitive subregion</a>.</
   &lt;/g&gt;
 &lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feComposite.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feComposite.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
-<h2 id="feConvolveMatrixElement">Filter primitive <span class="element-name">'feConvolveMatrix'</span></h2>
+<h3 id="feConvolveMatrixElement">Filter primitive <span class="element-name">'feConvolveMatrix'</span></h3>
 
 <!--elementsummary feConvolveMatrix-->
 
@@ -3077,9 +2339,158 @@ Extended by two pixels using "duplicate":
 </dl>
 </div>
 
+<h3 id="feCustomElement">Filter primitive <span class="element-name">'feCustom'</span></h3>
 
-<h2 id="feDiffuseLightingElement">Filter primitive <span
-class="element-name">'feDiffuseLighting'</span></h2>
+<!--elementsummary feCustom-->
+
+<div class="adef-list">
+  <p>
+    <em>Attribute definitions:</em>
+  </p>
+  <dl>
+    <dt id="feCustomGeometryAttribute">
+      <span class="adef">geometry</span> = "<em>grid(&lt;integer&gt;{0,2} [ detached | attached ]?</em>"
+    </dt>
+    <dd>
+      See the 'geometry' descriptor.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+  </dl>
+</div>
+
+<p>
+  The calculations are performed on non-premultiplied color values. If the input graphics consists of premultiplied
+  color values, those values are converted into non-premultiplied color values for this operation.
+</p>
+
+<p id="feCustomSourceElement">
+  Each 'feCustom' element can have any number of 'feCustomSource' subelements. Each 'feCustomSource' references one resource.
+</p>
+
+<!--elementsummary feCustomSource-->
+
+<div class="adef-list">
+  <p>
+    <em>Attribute definitions:</em>
+  </p>
+</div>
+
+<p id="feCustomParamElement">
+  Each 'feCustom' element can have any number of 'feCustomParam' subelements. Each 'feCustomParam' node passes one
+  parameter.
+</p>
+
+<!--elementsummary feCustomParam-->
+
+<div class="adef-list">
+  <p>
+    <em>Attribute definitions:</em>
+  </p>
+  <dl>
+    <dt id="feCustomParamIdentAttribute">
+      <span class="adef">ident</span> = "<em><a>&lt;string&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates the parameter name to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamTypeAttribute">
+      <span class="adef">type</span> = "<em>number | array | vec2 | vec3 | vec4 | mat2 | mat3 | mat4 | color |
+      texture | transform</em>"
+    </dt>
+    <dd>
+      Indicates the type of the parameter passed to the shaders. For the types ''number'', ''array'', ''vec2'', ''vec3'',
+      ''vec4'', ''mat2'', ''mat3'' and ''mat4'', the <a>'feCustomParam/values'</a> attribute passes the values to the
+      shader. For all other types, the attributes with the same name pass the parameter to the shader.
+      The <a>lacuna value</a> for <a>'feCustomParam/type'</a> is <span class="attr-value">number</span>.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamValuesAttribute">
+      <span class="adef">values</span> = "<em>list of <a>&lt;number&gt;</a>s</em>"
+    </dt>
+    <dd>
+      The contents of <span class="attr-name">values</span> depends on the value of attribute
+      <a href="#feCustomParamTypeAttribute"><span class="attr-name">type</span></a>: 
+      <ul>
+        <li>
+          For <span class="attr-value">type="number"</span>, <span class="attr-name">values</span> is a single real
+          number value.
+        </li>
+        <li>
+          For <span class="attr-value">type="array"</span>, <span class="attr-name">values</span> is a list of at least
+          one real number value.
+        </li>
+        <li>
+          For <span class="attr-value">type="vec2"</span>, <span class="attr-name">values</span> is a list of two real
+          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
+          the top of the vector.
+        </li>
+        <li>
+          For <span class="attr-value">type="vec3"</span>, <span class="attr-name">values</span> is a list of three real
+          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
+          the top of the vector.
+        </li>
+        <li>
+          For <span class="attr-value">type="vec4"</span>, <span class="attr-name">values</span> is a list of four real
+          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
+          the top of the vector.
+        </li>
+        <li>
+          For <span class="attr-value">type="mat2"</span>, <span class="attr-name">values</span> is a list of four real
+          number values. The list specifies a 2x2 homogeneous matrix in column-major order.
+        </li>
+        <li>
+          For <span class="attr-value">type="mat3"</span>, <span class="attr-name">values</span> is a list of nine real
+          number values. The list specifies a 3x3 homogeneous matrix in column-major order.
+        </li>
+        <li>
+          For <span class="attr-value">type="mat4"</span>, <span class="attr-name">values</span> is a list of 16 real
+          number values. The list specifies a 4x4 homogeneous matrix in column-major order.
+        </li>
+      </ul>
+      <p>
+        If the attribute is not specified, then the default behavior depends on the value of attribute
+        <span class="attr-name">type</span>. If <span class="attr-name">type</span> is ''mat2'', ''mat3'' or ''mat4'',
+        then this attribute defaults to the identity matrix. If <span class="attr-name">type</span> is ''number'' or
+        ''array'', then this attribute defaults to the value 0. If <span class="attr-name">type</span> is ''vec2'',
+        ''vec3'' or ''vec4'', then this attribute defaults to a number list with values of 0. The length of the number
+        list depends on the size of the specified vector.
+      </p>
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamColorAttribute">
+      <span class="adef">color</span> = "<em><a>&lt;color&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates that a color value is passed as parameter to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamTextureAttribute">
+      <span class="adef">texture</span> = "<em><a>&lt;URL&gt;</a> | <a>&lt;filter-primitive-reference&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates that a texture is passed as parameter to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feCustomParamTransformAttribute">
+      <span class="adef">transform</span> = "<em><a>&lt;transform-list&gt;</a></em>"
+    </dt>
+    <dd>
+      Indicates that a list of transform functions is passed as parameter to the shaders.
+      <br />
+      <span class="anim-target">Animatable: yes.</span>
+    </dd>    
+  </dl>
+</div>
+
+<h3 id="feDiffuseLightingElement">Filter primitive <span
+class="element-name">'feDiffuseLighting'</span></h3>
 
 <!--elementsummary feDiffuseLighting-->
 
@@ -3445,7 +2856,7 @@ L<sub>b</sub> = 0). If <a>'feSpotLight/limitingConeAngle'</a> is specified, -L.S
 <a>'fePointLight'</a> or <a>'feSpotLight'</a>. The light color is specified
 by property <a>'lighting-color'</a>.</p>
 
-<h2 id="feDisplacementMapElement">Filter primitive <span class="element-name">'feDisplacementMap'</span></h2>
+<h3 id="feDisplacementMapElement">Filter primitive <span class="element-name">'feDisplacementMap'</span></h3>
 
 <!--elementsummary feDisplacementMap-->
 
@@ -3529,7 +2940,126 @@ setting.</p>
 </dl>
 </div>
 
-<h2 id="feFloodElement">Filter primitive <span class="element-name">'feFlood'</span></h2>
+<h3 id="feDropShadowElement">Filter primitive <span
+class="element-name">'feDropShadow'</span></h3>
+
+<!--elementsummary feDropShadow-->
+
+<p>
+  This filter creates a drop shadow of the input image. It is a shorthand
+filter, and is defined in terms of combinations of other <a>filter primitives</a>.
+The expectation is that it can be optimized more easily by
+implementations.</p>
+
+<p>
+  The result of a <a>'feDropShadow'</a> filter
+primitive is equivalent to the following: 
+</p>
+
+<pre class="examplesource">
+  &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt; 
+  &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt; 
+  &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt; 
+  &lt;feComposite in2="offsetblur" operator="in"/&gt; 
+  &lt;feMerge&gt; 
+    &lt;feMergeNode/&gt;
+    &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt; 
+  &lt;/feMerge&gt;
+</pre>
+
+<p>
+The above divided into steps:
+</p>
+<ol>
+  <li>Take the alpha channel of the input to the <a>'feDropShadow'</a> filter primitive and the <a>'feDropShadow/stdDeviation'</a> on the <a>'feDropShadow'</a> and do processing as if the
+    following <a>'feGaussianBlur'</a> was applied: 
+    <pre class="examplesource"> &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;</pre>
+    <br />
+  </li>
+  <li>Offset the result of step 1 by <a>'feDropShadow/dx'</a> and <a>'feDropShadow/dy'</a> as
+    specified on the <a>'feDropShadow'</a>
+    element, equivalent to applying an <a>'feOffset'</a> with these parameters: 
+    <pre class="examplesource"> &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;</pre>
+    <br />
+  </li>
+  <li>Do processing as if an <a>'feFlood'</a> element with <a>'flood-color'</a> and 
+  <a>'flood-opacity'</a> as specified on the <a>'feDropShadow'</a> was applied: 
+    <pre class="examplesource"> &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;</pre>
+    <br />
+  </li>
+  <li>Composite the result of the <a href="#feFloodElement"><span
+    class="element-name">'feFlood'</span></a> in step 3 with the result of
+    the <a href="#feOffsetElement"><span
+    class="element-name">'feOffset'</span></a> in step 2 as if an <a>'feComposite'</a> filter primitive with <a
+    href="#feCompositeOperatorAttribute"><span
+    class="attr-name">operator</span></a>='in' was applied: 
+    <pre class="examplesource"> &lt;feComposite in2="offsetblur" operator="in"/&gt;</pre>
+    <br />
+  </li>
+  <li>Finally merge the result of the previous step, doing processing as if
+    the following <a>'feMerge'</a> was performed: 
+    <pre class="examplesource"> &lt;feMerge&gt;
+      &lt;feMergeNode/&gt;
+      &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
+  &lt;/feMerge&gt;</pre>
+  </li>
+</ol>
+
+<p class="note implementation">Note that while the definition of the <span
+class="element-name">'feDropShadow'</span> filter primitive says that it can
+be expanded into an equivalent tree it is not required that it is implemented
+like that. The expectation is that user agents can optimize the handling by not having to do all the steps separately.
+</p> 
+
+<p>
+  Beyond the DOM interface <a
+href="#InterfaceSVGFEDropShadowElement">SVGFEDropShadowElement</a> there is no way
+of accessing the internals of the <a>'feDropShadow'</a> filter primitive, meaning <span class="requirement" id="assert_dropShadowShadowTrees">if the
+filter primitive is implemented as an equivalent tree then that tree must not
+be exposed to the DOM.</span> </p>
+
+<div class="adef-list">
+<p><em>Attribute definitions:</em></p>
+<dl>
+  <dt id="feDropShadowDxAttribute">
+  <span class="adef">dx</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>
+    <p>
+  The x offset of the drop shadow.</p> 
+    <p>
+  The <a>lacuna value</a> for <a>'feDropShadow/dx'</a> is <span class="attr-value">2</span>.</p> 
+    <p>
+  This attribute is then forwarded to the <a>'feOffset/dx'</a> attribute of the internal <a>'feOffset'</a> element.</p>
+    <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
+  <dt id="feDropShadowDyAttribute">
+  <span class="adef">dy</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>
+    <p>
+  The y offset of the drop shadow.</p>
+    <p>
+  The <a>lacuna value</a> for <a>'feDropShadow/dy'</a> is <span class="attr-value">2</span>. </p>
+    <p>
+  This attribute is then forwarded to the <a>'feOffset/dy'</a> attribute of the internal <a>'feOffset'</a> element.</p>
+    <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
+  <dt id="feDropShadowStdDeviationAttribute"><span
+  class="adef">stdDeviation</span> =
+  "<em><a>&lt;number-optional-number&gt;</a></em>"</dt>
+    <dd>
+    <p>
+  The standard deviation for the blur operation in the drop shadow.</p>
+    <p>
+  The <a>lacuna value</a> for <a>'feDropShadow/stdDeviation'</a> is <span class="attr-value">2</span>.</p> 
+    <p>
+  This attribute is then forwarded to the <a>'feGaussianBlur/stdDeviation'</a> attribute of the internal
+      <a>'feGaussianBlur'</a> element.</p>
+    <p><span class="anim-target">Animatable: yes.</span></p>
+  </dd>
+</dl>
+</div>
+
+<h3 id="feFloodElement">Filter primitive <span class="element-name">'feFlood'</span></h3>
 
 <!--elementsummary feFlood-->
 
@@ -3543,7 +3073,7 @@ established by the <a>'feFlood element'</a> element.</p>
 <div class="adef-list">
   </div>
 
-<h3 id="FloodColorProperty"> The 'flood-color' property</h3>
+<h4 id="FloodColorProperty"> The 'flood-color' property</h4>
 
 <p>
   The 'flood-color' property indicates what
@@ -3586,13 +3116,17 @@ properties.</p>
       <td>visual</td>
     </tr>
     <tr>
+      <th>Computed value:</th>
+      <td>as specified</td>
+    </tr>
+    <tr>
       <th>Animatable:</th>
       <td>yes</td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="FloodOpacityProperty">The 'flood-opacity' property</h3>
+<h4 id="FloodOpacityProperty">The 'flood-opacity' property</h4>
 
 <p>
   The 'flood-opacity' property defines the
@@ -3633,14 +3167,18 @@ href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.</p>
       <td>visual</td>
     </tr>
     <tr>
+      <th>Computed value:</th>
+      <td>as specified</td>
+    </tr>
+    <tr>
       <th>Animatable:</th>
       <td>yes</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="feGaussianBlurElement">Filter primitive <span
-class="element-name">'feGaussianBlur'</span></h2>
+<h3 id="feGaussianBlurElement">Filter primitive <span
+class="element-name">'feGaussianBlur'</span></h3>
 
 <!--elementsummary feGaussianBlur-->
 
@@ -3731,8 +3269,8 @@ is the input to an <a>'feTile'</a>, the filter is evaluated with periodic bounda
 use of the <a>'feGaussianBlur'</a> filter primitive
 to create a drop shadow effect.</p>
 
-<h2 id="feImageElement">Filter primitive <span
-class="element-name">'feImage'</span></h2>
+<h3 id="feImageElement">Filter primitive <span
+class="element-name">'feImage'</span></h3>
 
 <!--elementsummary feImage-->
 
@@ -3847,8 +3385,8 @@ to an object. From left to right:</p>
 &lt;/svg&gt;</pre><table summary="Example "><caption>Example feImage</caption><tr><td><img alt="Example feImage — Examples of feImage use" src="examples/feImage-01.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feImage-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
 
-<h2 id="feMergeElement">Filter primitive <span
-class="element-name">'feMerge'</span></h2>
+<h3 id="feMergeElement">Filter primitive <span
+class="element-name">'feMerge'</span></h3>
 
 <!--elementsummary feMerge-->
 
@@ -3896,8 +3434,8 @@ description on top.</p>
 use of the <span class="element-name">feMerge</span> filter primitive to
 composite two intermediate filter results together.</p>
 
-<h2 id="feMorphologyElement">Filter primitive <span
-class="element-name">'feMorphology'</span></h2>
+<h3 id="feMorphologyElement">Filter primitive <span
+class="element-name">'feMorphology'</span></h3>
 
 <!--elementsummary feMorphology-->
 
@@ -4000,8 +3538,9 @@ equal to the alpha channel.</p>
     &lt;/g&gt;
   &lt;/g&gt;
 &lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feMorphology.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feMorphology.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
-<h2 id="feOffsetElement">Filter primitive <span
-class="element-name">'feOffset'</span></h2>
+
+<h3 id="feOffsetElement">Filter primitive <span
+class="element-name">'feOffset'</span></h3>
 
 <!--elementsummary feOffset-->
 
@@ -4051,8 +3590,8 @@ determine the authors intent.</p>
 use of the <span class="element-name">feOffset</span> filter primitive to
 offset the drop shadow from the original source graphic.</p>
 
-<h2 id="feSpecularLightingElement">Filter primitive <span
-class="element-name">'feSpecularLighting'</span></h2>
+<h3 id="feSpecularLightingElement">Filter primitive <span
+class="element-name">'feSpecularLighting'</span></h3>
 
 <!--elementsummary feSpecularLighting-->
 
@@ -4191,8 +3730,8 @@ specified by property <a>'lighting-color'</a>.</p>
 use of the <span class="element-name">feSpecularLighting</span> filter
 primitive to achieve a highly reflective, 3D glowing effect.</p>
 
-<h2 id="feTileElement">Filter primitive <span
-class="element-name">'feTile'</span></h2>
+<h3 id="feTileElement">Filter primitive <span
+class="element-name">'feTile'</span></h3>
 
 <!--elementsummary feTile-->
 
@@ -4226,8 +3765,8 @@ adjacent tiles which each have partial overlap with particular pixels.</p>
 <div class="adef-list">
   </div>
 
-<h2 id="feTurbulenceElement">Filter primitive <span
-class="element-name">'feTurbulence'</span></h2>
+<h3 id="feTurbulenceElement">Filter primitive <span
+class="element-name">'feTurbulence'</span></h3>
 
 <!--elementsummary feTurbulence-->
 
@@ -4597,592 +4136,285 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
     &lt;text x="375" y="296"&gt;numOctaves=1&lt;/text&gt;
   &lt;/g&gt;
 &lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feTurbulence.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feTurbulence.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
-<h2 id="feDropShadowElement">Filter primitive <span
-class="element-name">'feDropShadow'</span></h2>
 
-<!--elementsummary feDropShadow-->
-
-<p>
-  This filter creates a drop shadow of the input image. It is a shorthand
-filter, and is defined in terms of combinations of other <a>filter primitives</a>.
-The expectation is that it can be optimized more easily by
-implementations.</p>
+<h2 id="ColorInterpolationFiltersProperty">
+  The 'color-interpolation-filters' property
+</h2>
 
 <p>
-  The result of a <a>'feDropShadow'</a> filter
-primitive is equivalent to the following: 
+  The description of the 'color-interpolation-filters' property is as follows:
 </p>
 
-<pre class="examplesource">
-  &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt; 
-  &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt; 
-  &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt; 
-  &lt;feComposite in2="offsetblur" operator="in"/&gt; 
-  &lt;feMerge&gt; 
-    &lt;feMergeNode/&gt;
-    &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt; 
-  &lt;/feMerge&gt;
-</pre>
+<table summary="color-interpolation-filters property" class="propdef">
+  <tr>
+    <th>Name:</th>
+    <td><dfn>color-interpolation-filters</dfn></td>
+  </tr>
+  <tr>
+    <th>Value:</em>&nbsp;&nbsp;</td>
+    <td>auto | sRGB | linearRGB</td>
+  </tr>
+  <tr>
+    <th>Initial:</em>&nbsp;&nbsp;</td>
+    <td>linearRGB</td>
+  </tr>
+  <tr>
+    <th>Applies to:</em>&nbsp;&nbsp;</td>
+    <td><a>filter primitives</a></td>
+  </tr>
+  <tr>
+    <th>Inherited:</em>&nbsp;&nbsp;</td>
+    <td>yes</td>
+  </tr>
+  <tr>
+    <th>Percentages:</em>&nbsp;&nbsp;</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <th>Media:</em>&nbsp;&nbsp;</td>
+    <td>visual</td>
+  </tr>
+  <tr>
+    <th>Computed value:</th>
+    <td>as specified</td>
+  </tr>
+  <tr>
+    <th><a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#Animatable">Animatable</a>:</em>&nbsp;&nbsp;</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+<dl>
+  <dt>''auto''</dt>
+  <dd>Indicates that the user agent can choose either the ''sRGB'' or
+  ''linearRGB'' spaces for filter effects color
+  operations. This option indicates that the author doesn't require that color
+  operations occur in a particular color space.</dd>
+
+  <dt>''sRGB''</dt>
+  <dd>Indicates that filter effects color operations should occur in the sRGB
+  color space.</dd>
+
+  <dt>''linearRGB''</dt>
+  <dd>Indicates that filter effects color operations should occur in the
+  linearized RGB color space.</dd>
+</dl>
 
 <p>
-The above divided into steps:
+  The 'color-interpolation-filters' property specifies the color space for imaging
+  operations performed via filter effects.
 </p>
-<ol>
-  <li>Take the alpha channel of the input to the <a>'feDropShadow'</a> filter primitive and the <a>'feDropShadow/stdDeviation'</a> on the <a>'feDropShadow'</a> and do processing as if the
-    following <a>'feGaussianBlur'</a> was applied: 
-    <pre class="examplesource"> &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;</pre>
-    <br />
-  </li>
-  <li>Offset the result of step 1 by <a>'feDropShadow/dx'</a> and <a>'feDropShadow/dy'</a> as
-    specified on the <a>'feDropShadow'</a>
-    element, equivalent to applying an <a>'feOffset'</a> with these parameters: 
-    <pre class="examplesource"> &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;</pre>
-    <br />
-  </li>
-  <li>Do processing as if an <a>'feFlood'</a> element with <a>'flood-color'</a> and 
-  <a>'flood-opacity'</a> as specified on the <a>'feDropShadow'</a> was applied: 
-    <pre class="examplesource"> &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;</pre>
-    <br />
-  </li>
-  <li>Composite the result of the <a href="#feFloodElement"><span
-    class="element-name">'feFlood'</span></a> in step 3 with the result of
-    the <a href="#feOffsetElement"><span
-    class="element-name">'feOffset'</span></a> in step 2 as if an <a>'feComposite'</a> filter primitive with <a
-    href="#feCompositeOperatorAttribute"><span
-    class="attr-name">operator</span></a>='in' was applied: 
-    <pre class="examplesource"> &lt;feComposite in2="offsetblur" operator="in"/&gt;</pre>
-    <br />
-  </li>
-  <li>Finally merge the result of the previous step, doing processing as if
-    the following <a>'feMerge'</a> was performed: 
-    <pre class="examplesource"> &lt;feMerge&gt;
-      &lt;feMergeNode/&gt;
-      &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
-  &lt;/feMerge&gt;</pre>
-  </li>
-</ol>
 
-<p class="note implementation">Note that while the definition of the <span
-class="element-name">'feDropShadow'</span> filter primitive says that it can
-be expanded into an equivalent tree it is not required that it is implemented
-like that. The expectation is that user agents can optimize the handling by not having to do all the steps separately.
-</p> 
+<p class="note">
+  Note that 'color-interpolation-filters' has a different initial
+  value than 'color-interpolation'. 'color-interpolation-filters' has an initial
+  value of ''linearRGB'', where as 'color-interpolation' has an initial value of
+  ''sRGB''.  Thus, in the default case, filter effects operations occur in the
+  linearRGB color space, whereas all other color interpolations occur by default
+  in the sRGB color space.
+</p>
+
+<p class="note">
+  Note that the 'color-interpolation-filters' propert has no effect on <span>Filter
+  Functions</span>, which operate in the sRGB color space.
+</p>
+
+<h2 id="LightSourceDefinitions">Light source elements and properties</h2>
+
+<h3 id="LightSourceIntro">Introduction</h3>
 
 <p>
-  Beyond the DOM interface <a
-href="#InterfaceSVGFEDropShadowElement">SVGFEDropShadowElement</a> there is no way
-of accessing the internals of the <a>'feDropShadow'</a> filter primitive, meaning <span class="requirement" id="assert_dropShadowShadowTrees">if the
-filter primitive is implemented as an equivalent tree then that tree must not
-be exposed to the DOM.</span> </p>
+  The following sections define the elements that define a <span class=index>light source</span>, <a>'feDistantLight'</a>, 
+<a>'fePointLight'</a> and <a>'feSpotLight'</a>,
+and property 'lighting-color', which defines the color of the
+light.</p>
+
+<h3 id="feDistantLightElement">Light source <span class="element-name">'feDistantLight'</span></h3>
+
+<!--elementsummary feDistantLight-->
 
 <div class="adef-list">
 <p><em>Attribute definitions:</em></p>
 <dl>
-  <dt id="feDropShadowDxAttribute">
-  <span class="adef">dx</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>
-    <p>
-  The x offset of the drop shadow.</p> 
-    <p>
-  The <a>lacuna value</a> for <a>'feDropShadow/dx'</a> is <span class="attr-value">2</span>.</p> 
-    <p>
-  This attribute is then forwarded to the <a>'feOffset/dx'</a> attribute of the internal <a>'feOffset'</a> element.</p>
-    <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
-  <dt id="feDropShadowDyAttribute">
-  <span class="adef">dy</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
-    <dd>
-    <p>
-  The y offset of the drop shadow.</p>
-    <p>
-  The <a>lacuna value</a> for <a>'feDropShadow/dy'</a> is <span class="attr-value">2</span>. </p>
-    <p>
-  This attribute is then forwarded to the <a>'feOffset/dy'</a> attribute of the internal <a>'feOffset'</a> element.</p>
-    <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
-  <dt id="feDropShadowStdDeviationAttribute"><span
-  class="adef">stdDeviation</span> =
-  "<em><a>&lt;number-optional-number&gt;</a></em>"</dt>
-    <dd>
-    <p>
-  The standard deviation for the blur operation in the drop shadow.</p>
-    <p>
-  The <a>lacuna value</a> for <a>'feDropShadow/stdDeviation'</a> is <span class="attr-value">2</span>.</p> 
-    <p>
-  This attribute is then forwarded to the <a>'feGaussianBlur/stdDeviation'</a> attribute of the internal
-      <a>'feGaussianBlur'</a> element.</p>
-    <p><span class="anim-target">Animatable: yes.</span></p>
-  </dd>
+  <dt id="feDistantLightAzimuthAttribute"><span
+  class="adef">azimuth</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Direction angle for the light source on the XY plane (clockwise), in
+      degrees from the x axis.<br />
+      The <a>lacuna value</a> for <a>'azimuth'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feDistantLightElevationAttribute"><span
+  class="adef">elevation</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Direction angle for the light source from the XY plane towards the Z-axis, in degrees.
+    Note that the positive Z-axis points towards the viewer.<br />
+    The <a>lacuna value</a> for <a>'elevation'</a> is <span class="attr-value">0</span>.<br />
+    <span class="anim-target">Animatable: yes.</span></dd>
 </dl>
 </div>
 
-<h2 id="feCustomElement">Filter primitive <span class="element-name">'feCustom'</span></h2>
+<p>
+  The following diagram illustrates the angles which <a>'azimuth'</a>
+  and <a>'elevation'</a> represent in an XYZ coordinate system.
+</p>
+<img src="examples/azimuth-elevation.png" alt="Angles which azimuth and elevation represent" width="480" height="360" />
 
-<!--elementsummary feCustom-->
+<h3 id="fePointLightElement">Light source <span class="element-name">'fePointLight'</span></h3>
+
+<!--elementsummary fePointLight-->
 
 <div class="adef-list">
-  <p>
-    <em>Attribute definitions:</em>
-  </p>
-  <dl>
-    <dt id="feCustomVertexShaderAttribute">
-      <span class="adef">vertexShader</span> = "<em>&lt;uri&gt;</em>"
-    </dt>
-    <dd>
-      The shader referenced by &lt;uri&gt; provides the implementation for the <a>'feCustom element'</a> vertex shader.
-      If the shader cannot be retrieved, or if the shader cannot be loaded or compiled because it contains erroneous
-      code, the shader is a <a href="#default-shaders">pass through</a>. Otherwise, the vertex shader is invoked for all
-      the vertex mesh vertices.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <dt id="feCustomFragmentShaderAttribute">
-      <span class="adef">fragmentShader</span> = "<em>&lt;uri&gt; | mix(&lt;uri&gt;
-      [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</em>"
-    </dt>
-    <dd>
-      See the <a href='#fragmentShader-attribute'>fragmentShader</a> attribute discussion.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <dt id="feCustomVertexMeshAttribute">
-      <span class="adef">vertexMesh</span> = "<em>&lt;integer&gt;{0,2} &lt;box&gt;? [ detached | attached ]?</em>"
-    </dt>
-    <dd>
-      See the <a href='#vertexMesh-attribute'>vertexMesh</a> attribute discussion.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <p class="issue">Not fully compatible with SVG Animations. Attributes need to be split more.</p>
-  </dl>
+<p><em>Attribute definitions:</em></p>
+<dl>
+  <dt id="fePointLightXAttribute"><span
+  class="adef">x</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>X location for the light source in the coordinate system established
+      by attribute <a>'filter/primitiveUnits'</a> on the <a
+      href="#FilterElement"><span class="element-name">'filter'</span></a>
+      element.<br />
+      The <a>lacuna value</a> for <a>'fePointLight/x'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="fePointLightYAttribute"><span
+  class="adef">y</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Y location for the light source in the coordinate system established
+      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
+      element.<br />
+      The <a>lacuna value</a> for <a>'fePointLight/y'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="fePointLightZAttribute"><span
+  class="adef">z</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Z location for the light source in the coordinate system established
+      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
+      element, assuming that, in the <a>initial coordinate system</a>
+      , the positive Z-axis comes out towards the person viewing the content
+      and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br />
+      The <a>lacuna value</a> for <a>'fePointLight/z'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+</dl>
 </div>
 
-<p>
-  The calculations are performed on non-premultiplied color values. If the input graphics consists of premultiplied
-  color values, those values are automatically converted into non-premultiplied color values for this operation.
-</p>
+<h3 id="feSpotLightElement">Light source <span class="element-name">'feSpotLight'</span></h3>
 
-<p id="feCustomParamElement">
-  Each 'feCustom' element can have any number of 'feCustomParam' subelements. Each 'feCustomParam' node passes one
-  parameter 
-</p>
-
-<!--elementsummary feCustomParam-->
+<!--elementsummary feSpotLight-->
 
 <div class="adef-list">
-  <p>
-    <em>Attribute definitions:</em>
-  </p>
-  <dl>
-    <dt id="feCustomParamIdentAttribute">
-      <span class="adef">ident</span> = "<em><a>&lt;string&gt;</a></em>"
-    </dt>
-    <dd>
-      Indicates the parameter name to the shaders.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <dt id="feCustomParamTypeAttribute">
-      <span class="adef">type</span> = "<em>number | array | vec2 | vec3 | vec4 | mat2 | mat3 | mat4 | color |
-      texture | transform</em>"
-    </dt>
-    <dd>
-      Indicates the type of the parameter passed to the shaders. For the types ''number'', ''array'', ''vec2'', ''vec3'',
-      ''vec4'', ''mat2'', ''mat3'' and ''mat4'', the <a>'feCustomParam/values'</a> attribute passes the values to the
-      shader. For all other types, the attributes with the same name pass the parameter to the shader.
-      The <a>lacuna value</a> for <a>'feCustomParam/type'</a> is <span class="attr-value">number</span>.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <dt id="feCustomParamValuesAttribute">
-      <span class="adef">values</span> = "<em>list of <a>&lt;number&gt;</a>s</em>"
-    </dt>
-    <dd>
-      The contents of <span class="attr-name">values</span> depends on the value of attribute
-      <a href="#feCustomParamTypeAttribute"><span class="attr-name">type</span></a>: 
-      <ul>
-        <li>
-          For <span class="attr-value">type="number"</span>, <span class="attr-name">values</span> is a single real
-          number value.
-        </li>
-        <li>
-          For <span class="attr-value">type="array"</span>, <span class="attr-name">values</span> is a list of at least
-          one real number value.
-        </li>
-        <li>
-          For <span class="attr-value">type="vec2"</span>, <span class="attr-name">values</span> is a list of two real
-          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
-          the top of the vector.
-        </li>
-        <li>
-          For <span class="attr-value">type="vec3"</span>, <span class="attr-name">values</span> is a list of three real
-          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
-          the top of the vector.
-        </li>
-        <li>
-          For <span class="attr-value">type="vec4"</span>, <span class="attr-name">values</span> is a list of four real
-          number values. The value list is interpreted as a vertical list, where the first entry equals the parameter on
-          the top of the vector.
-        </li>
-        <li>
-          For <span class="attr-value">type="mat2"</span>, <span class="attr-name">values</span> is a list of four real
-          number values. The list specifies a 2x2 homogeneous matrix in column-major order.
-        </li>
-        <li>
-          For <span class="attr-value">type="mat3"</span>, <span class="attr-name">values</span> is a list of nine real
-          number values. The list specifies a 3x3 homogeneous matrix in column-major order.
-        </li>
-        <li>
-          For <span class="attr-value">type="mat4"</span>, <span class="attr-name">values</span> is a list of 16 real
-          number values. The list specifies a 4x4 homogeneous matrix in column-major order.
-        </li>
-      </ul>
-      <p>
-        If the attribute is not specified, then the default behavior depends on the value of attribute
-        <span class="attr-name">type</span>. If <span class="attr-name">type</span> is ''mat2'', ''mat3'' or ''mat4'',
-        then this attribute defaults to the identity matrix. If <span class="attr-name">type</span> is ''number'' or
-        ''array'', then this attribute defaults to the value 0. If <span class="attr-name">type</span> is ''vec2'',
-        ''vec3'' or ''vec4'', then this attribute defaults to a number list with values of 0. The length of the number
-        list depends on the size of the specified vector.
-      </p>
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <dt id="feCustomParamColorAttribute">
-      <span class="adef">color</span> = "<em><a>&lt;color&gt;</a></em>"
-    </dt>
-    <dd>
-      Indicates that a color value is passed as parameter to the shaders.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <dt id="feCustomParamTextureAttribute">
-      <span class="adef">texture</span> = "<em><a>&lt;URL&gt;</a> | <a>&lt;filter-primitive-reference&gt;</a></em>"
-    </dt>
-    <dd>
-      Indicates that a texture is passed as parameter to the shaders.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>
-    <dt id="feCustomParamTransformAttribute">
-      <span class="adef">transform</span> = "<em><a>&lt;transform-list&gt;</a></em>"
-    </dt>
-    <dd>
-      Indicates that a list of transform functions is passed as parameter to the shaders.
-      <br />
-      <span class="anim-target">Animatable: yes.</span>
-    </dd>    
-  </dl>
+<p><em>Attribute definitions:</em></p>
+<dl>
+  <dt id="feSpotLightXAttribute"><span
+  class="adef">x</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>X location for the light source in the coordinate system established
+      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
+      element.<br />
+      The <a>lacuna value</a> for <a>'feSpotLight/x'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feSpotLightYAttribute"><span
+  class="adef">y</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Y location for the light source in the coordinate system established
+      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
+      element.<br />
+      The <a>lacuna value</a> for <a>'feSpotLight/y'</a> is <span class="attr-value">0</span>.<br />
+     <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feSpotLightZAttribute"><span
+  class="adef">z</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Z location for the light source in the coordinate system established
+      by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a>
+      element, assuming that, in the <a>initial coordinate system</a>
+      , the positive Z-axis comes out towards the person viewing the content
+      and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br />
+      The <a>lacuna value</a> for <a>'feSpotLight/z'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feSpotLightPointsAtXAttribute"><span
+  class="adef">pointsAtX</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>X location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> 
+      on the <a>'filter element'</a>
+      element of the point at which the light source is pointing.<br />
+      The <a>lacuna value</a> for <a>'pointsAtX'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feSpotLightPointsAtYAttribute"><span
+  class="adef">pointsAtY</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Y location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> 
+      on the <a>'filter element'</a> element of the point at which the light source is pointing.<br />
+      The <a>lacuna value</a> for <a>'pointsAtY'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feSpotLightPointsAtZAttribute"><span
+  class="adef">pointsAtZ</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Z location in the coordinate system established by the
+        attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element of
+        the point at which the light source is pointing, assuming that, in the
+        <a>initial coordinate system</a>, the positive Z-axis comes out
+         towards the person viewing the content and assuming that
+         one unit along the Z-axis equals 
+         <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">
+         one unit in X and Y</a>.<br />
+      The <a>lacuna value</a> for <a>'pointsAtZ'</a> is <span class="attr-value">0</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feSpotLightSpecularExponentAttribute"><span
+  class="adef">specularExponent</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>Exponent value controlling the focus for the light source.<br />
+      The <a>lacuna value</a> for <a>'feSpotLight/specularExponent'</a> is <span class="attr-value">1</span>.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+  <dt id="feSpotLightLimitingConeAngleAttribute"><span
+  class="adef">limitingConeAngle</span> = "<em><a>&lt;number&gt;</a></em>"</dt>
+    <dd>A limiting cone which restricts the region where the light is
+      projected. No light is projected outside the cone. <span
+      class="attr-name">limitingConeAngle</span> represents the angle in degrees between
+      the spot light axis (i.e. the axis between the light source and the
+      point to which it is pointing at) and the spot light cone. <span class="requirement" id="assert_userAgentLightingConeSmoothing">User agents
+      should apply a smoothing technique such as anti-aliasing at the
+      boundary of the cone.</span><br />
+      If no value is specified, then no limiting cone will be applied.<br />
+      <span class="anim-target">Animatable: yes.</span></dd>
+</dl>
 </div>
-    
-    <div class="issue">
-      <p>The following content needs to be reorganized</p>
-        <dl>
-            <dt id="feCustomParamsAttribute">params: <code>&lt;param-def&gt; [ , &lt;param-def&gt; ]*</code></dt>
-            <dd>
-                Parameters are passed as uniforms to both the vertex and the fragment shaders.
-                <table class="values-desc">
-                    <tr>
-                        <td id="param-def">&lt;param-def&gt;</td>
-                        <td> &lt;param-name&gt; &lt;param-value&gt;</td>
-                    </tr>
-                    <tr>
-                        <td>&lt;param-name&gt;</td>
-                        <td>&lt;author-ident&gt;</td>
-                    </tr>
-                    <tr>
-                        <td>&lt;param-value&gt;</td>
-                        <td>[ true | false ]{1,4} | <br />
-                            &lt;number&gt;{1,4} | <br/>
-                            &lt;array&gt; | <br />
-                            <a href="http://www.w3.org/TR/css3-transforms/#transform-functions">&lt;transform-function&gt;</a>+ | <br />
-                            &lt;mat&gt; | <br />
-                            &lt;color&gt; | <br />
-                            texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
-                    </tr>
-                    <tr>
-                        <td>&lt;array&gt;</td>
-                        <td>array(&lt;number&gt;#)</td>
-                    </tr>
-                    <tr>
-                        <td>&lt;mat&gt;</td>
-                        <td>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3} ) |  <br/>
-                            mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8} ) |  <br/>        
-                            mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15} )
-                        </td>
-                    </tr>
-                </table>
 
-                <p>The data type <span class="term">&lt;filter-primitive-reference&gt;</span> can just be used for the <a href="#shader-inputs">primitive feCustom</a>.</p>
-                
-                <p>There are two ways to specify a 4x4 matrix. They differ in 
-                    <a href="#integration-with-css-animations-transitions">how 
-                    they are interpolated.</a></p>
-
-                <p>The <code>&lt;mat&gt;</code> values are in column major order.
-                    For example, <code>mat2(1, 2, 3, 4)</code> has <code>[1, 2]</code> in the
-                    first column and <code>[3, 4]</code> in the second one.</p>
-            </dd>
-        </dl>
-    </div>
-    
-    <p class="issue" id="issue-param-value-syntax">There may be different ways to specify the &lt;param-value&gt; syntax. For example, it
-        might be better to not have a <code>texture()</code> function and simply a &lt;uri&gt; for texture
-        parameters. Or it might be better to not have a <code>mat&lt;n&gt;</code> prefixes for matrices.</p>
-    
-    <div class="note">
-        <p>The following <a href="https://developer.mozilla.org/en/WebGL/Adding_2D_content_to_a_WebGL_context">document</a> from Mozilla
-        describes how WebGL vertex and fragment shaders can be defined in <code>&lt;script&gt;</code> elements.</p>
-            
-        <p>CSS shaders can reference shaders defined in <code>&lt;script&gt;</code> elements, as shown in the 
-        following code snippet.</p>
-    
-        <div><code class="xml"><pre>
-&lt;script id="warp" type="x-shader/x-vertex" &gt;
-&lt;-- source code here --&gt;
-&lt;/script&gt;
-
-..
-&lt;style&gt;
-.shaded {
-    filter: custom(url(#warp));
-}</pre></code>
-        </div>
-    </div>
-    <h3 id="fragmentShader-attribute">The <a>'fragmentShader'</a> attribute</h3>
-
-    <dl>
-      <dt>&lt;uri&gt;</dt>
-      <dd>
-        The shader referenced by &lt;uri&gt; provides the implementation for the <a>'feCustom element'</a> element fragment
-        shader. If the shader cannot be retrieved, or if the shader cannot be loaded or compiled because
-        it contains erroneous code, the shader is a <a href="#default-shaders">pass through</a>.
-        Otherwise, the fragment shader is invoked for each of the pixels during the rasterization phase
-        that follows the vertex shader processing.
-      </dd>
-    </dl>
-
-    <dl>
-      <dt>mix(&lt;uri&gt; [ &lt;blend-mode&gt; || &lt;alpha-compositing&gt; ]?)</dt>
-      <dd>
-        The <a href="#security">security model</a> disallows any color value based conditions for the
-        fragment shader. Authors may use the ''mix'' function for a basic control of compositing
-        and color managment within a fragment shader. The processing model for ''mix'' is
-        provided <a href="#shader-processing-model">below</a>.
-        <dl>
-          <dt>&lt;uri&gt;</dt>
-          <dd>
-            The shader referenced by &lt;uri&gt; provides the implementation for the <a>'feCustom element'</a> element fragment
-            shader. If the shader cannot be retrieved, or if the shader cannot be loaded or compiled because
-            it contains erroneous code, the shader is a <a href="#default-shaders">pass through</a>.
-            Otherwise, the fragment shader is invoked for each of the pixels during the rasterization phase
-            that follows the vertex shader processing.
-          </dd>
-          <dt>&lt;blend-mode&gt;</dt>
-          <dd>
-            <p>
-              Each pixel is blended with the <a href="#shader-processing-model"><i>mix color</i></a> by using one of the predefined blend modes and it's
-              appropriate blend mode keyword (See [[!COMPOSITING]]).
-            </p>
-          </dd>
-          <dt>&lt;alpha-compositing&gt;</dt>
-          <dd>
-            <p>
-              Each pixel is composed with the <a href="#shader-processing-model"><i>mix color</i></a> by using one of the predefined alpha-compositing
-              operators and it's appropriate alpha-compositing keyword (See [[!COMPOSITING]]).
-            </p>
-          </dd>
-
-        </dl>
-      </dd>
-    </dl>
-
-    <p>
-      The lacuna value for 'fragmentShader' is ''mix(&lt;default-fragment-shader&gt; normal source-atop)''.
-    </p>
-    
-    <h3 id="vertexMesh-attribute">The <span class="attr-name">‘vertexMesh’</a> attribute</h3>
-
-    <p>
-      The <a>'vertexMesh attribute'</a> attribute of the <a>'feCustom element'</a> element defines the granularity
-      of vertices in the <a href="#vertex-mesh">shader mesh</a>. By default, the vertex mesh is made of two triangles
-      that encompass the <a href="#FilterEffectsRegion">filter region</a> area.
-    </p>
-
-    <dl>
-      <dt>&lt;integer&gt;{0,2}</dt>
-      <dd>
-        <p>
-          One or two positive integers greater then zero indicate the additional number of vertex lines and columns
-          that will make the vertex mesh. With the initial value of ''1 1'' there is a single row and a single column,
-          resulting in a four-vertices mesh (top-left, top-right, bottom-right, bottom-left). If the second parameter
-          is not provided, it takes a value equal to the first. A value of ''<em>n m</em>'' results in a vertex mesh that
-          has <em>n</em> columns and <em>m</em> rows. This results in a total of <em>(n + 1) * (m + 1)</em> vertices as
-          illustrated in the <a href="#vertexMesh56">figure below</a>.
-        </p>
-
-        <p>
-          The lacuna value is ''1 1''.
-        </p>
-
-        <p>
-          If one of the passed parameters is zero or negative, the UA must fallback to the lacuna values.
-        </p>
-      </dd>
-      <dt>&lt;box&gt; = "filter-box | border-box | padding-box | content-box"</dt>
-      <dd>
-        The optional &lt;box&gt; parameter defines the box on which the vertex mesh is stretched to.
-        <dl>
-          <dt>filter-box</dt>
-          <dd>
-            The <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
-          </dd>
-          <dt>border-box</dt>
-          <dd>
-            The border box as defined in the CSS box model [[!CSS21]] for elements that have an associated CSS
-            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the stroke bounding box
-            [[SVG2]], if the element does not have an associated CSS layout box and is in the
-            http://www.w3.org/2000/svg namespace.
-          </dd>
-          <dt>padding-box</dt>
-          <dd>
-            The padding box as defined in the CSS box model [[!CSS21]] for elements that have an associated CSS
-            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the object bounding box
-            [[!SVG11]], if the element does not have an associated CSS layout box and is in the
-            http://www.w3.org/2000/svg namespace.
-          </dd>
-          <dt>content-box</dt>
-          <dd>
-            The content box as defined in the CSS box model [[!CSS21]] for elements that have an associated CSS
-            layout box and are not in the http://www.w3.org/2000/svg namespace. Or the object bounding box
-            [[!SVG11]], if the element does not have an associated CSS layout box and is in the
-            http://www.w3.org/2000/svg namespace.
-          </dd>
-        </dl>
-
-        <p>
-          The lacuna value is ''filter-box''.
-        </p>
-        <p class="issue" id="issue-filter-box">
-          Are padding-box or content-box needed? Can border-box be the bounding client rect?
-        </p>
-      </dd>
-      <dt>detached | attached</dt>
-      <dd>
-        The optional keywords specify whether the mesh triangles are attached or detached.
-        <dl>
-          <dt>detached</dt>
-          <dd>
-            If ''detached'' is specified, the triangles are detached. The geometry provided to the vertex shader
-            is made of triangles which do not share adjacent edges' vertices.
-          </dd>
-          <dt>attached</dt>
-          <dd>
-            If ''attached'' is specified, the triangles are attached. The geometry provided to the vertex shader
-            is made of triangles which share adjacent edges' vertices.
-          </dd>
-        </dl>
-        The lacuna value is ''attached''.
-      </dd>
-    </dl>
-            
-    <p>
-      In the following figure, let us consider the top-left "tile" in the shader mesh.
-      In the detached mode, the vertex shader will receive the bottom right and top left 
-      vertices multiple time, one of each of the two triangles which make up the tile.
-      Otherwise, the shader will receive these vertices only once, because they are 
-      shared by the "connected" triangles.
-    </p>
-                
-    <p>
-      See the discussion on uniforms passed to shaders to understand how the shader programs can leverage that
-      feature.
-    </p>
-
-    <p class="issue" id="issue-shader-discussion-missing">Reference to discussion missing.</p>
-
-    <div class="example">
-      <p>
-        The following example applies a vertex shader ('distort.vs') to elements with class 'distorted'.
-        The vertex shader will operate on a mesh that has 6 lines and 6 columns (because there are 5 additional
-        lines and 5 additional columns).
-      </p>
-
-      <pre>
-&lt;style&gt;
-.distorted {
-    filter: custom(url(distort.vs), 6 6);
-}
-&lt;/style&gt;
-
-...
-&lt;div class="distorted"&gt;
-..
-&lt;/div&gt;</pre>
-        
-      <p>
-        which could also be written as:
-      </p>
-
-      <pre>
-&lt;style&gt;
-.distorted {
-    filter: url(#distort);
-}
-&lt;/style&gt;
-
-...
-
-&lt;filter id="distort"&gt;
-    &lt;feCustom vertexShader="url(distort.vs)" vertexMesh="6 6" /&gt;
-&lt;/filter&gt;
-
-&lt;div class="distorted"&gt;
-..
-&lt;/div&gt;</pre>
-    </div>
-    
-<h3 id="shader-inputs">Shader inputs in filter graph</h3>
+<h3 id="LightingColorProperty">The 'lighting-color' property</h3>
 
 <p>
-  When an <a>'feCustom element'</a> filter primitive is used in a filter graph, a ''texture'' parameter 
-  can take a value of <span class="term">&lt;filter-primitive-reference&gt;</span> where <span class="term">&lt;filter-primitive-reference&gt;</span>
-  references the result of a previous filter primitive in the same filter graph. This result is used as a texture and must fulfill the <a href="#rendered-content-access-from-fragment-shaders">security requirements</a>. 
-</p>
+  The 'lighting-color' property defines the
+color of the light source for <span class="term">filter primitives</span> <a>'feDiffuseLighting element'</a> and <a>'feSpecularLighting element'</a>.</p>
 
-<div class="example">
-  <p>
-    The <a>'feCustom element'</a> filter primitive in the following examples requests the resulting texture of the previous filter primitive <a>'feTurbulence element'</a>. This texture gets passed to
-    the shader with the parameter name ''tex''.
-  </p>
+<table summary="lighting-color property" class="propdef">
+  <tbody>
+    <tr>
+      <th>Name:</th>
+      <td><dfn>lighting-color</dfn></td>
+    </tr>
+    <tr>
+      <th>Value:</th>
+      <td>currentColor | <a>&lt;color&gt;</a> <a>&lt;icccolor&gt;</a>?</td>
+    </tr>
+    <tr>
+      <th>Initial:</th>
+      <td>white</td>
+    </tr>
+    <tr>
+      <th>Applies to:</th>
+      <td><a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a>
+      elements</td>
+    </tr>
+    <tr>
+      <th>Inherited:</th>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>Percentages:</th>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <th>Media:</th>
+      <td>visual</td>
+    </tr>
+    <tr>
+      <th>Computed value:</th>
+      <td>as specified</td>
+    </tr>
+    <tr>
+      <th>Animatable:</th>
+      <td>yes</td>
+    </tr>
+  </tbody>
+</table>
 
-  <pre>
-&lt;filter&gt;
-    &lt;feTurbulence type="fractalNoise" baseFrequency="0.4"
-        numOctaves="4" result="turbulence" /&gt;
-    &lt;feCustom fragmentShader="url(complex.fs)"
-        params="tex texture(turbulence)" /&gt;
-&lt;/filter&gt;</pre>
-</div>
-
-<div class="example">
-  <p>
-    The <a>'feCustom element'</a> filter primitive in the following examples requests the resulting texture of the previous filter primitive <a>'feGaussianBlur element'</a>.
-    This primitive has access to rendered content, therefore the custom filter primitive must fall back to a <a href="#default-shaders">pass through</a>.
-  </p>
-
-  <pre>
-&lt;filter&gt;
-    &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
-    &lt;feCustom fragmentShader="url(complex.fs)"
-        params="tex texture(blur)" /&gt;
-&lt;/filter&gt;</pre>
-</div>
-
-
-<!-- No id's, to avoid external references. Once the proposal is accepted, the following paragraphs move into
-     the proper positions. -->
-<h2>Custom Filter Function</h2>
+<h2 id="custom-filter">Custom Filter Function</h2>
 
 <p class="issue">
   The following section is a proposal and under discussion on the
@@ -5190,124 +4422,125 @@ be exposed to the DOM.</span> </p>
   feedback and suggestions to the mailing list and be aware of fundamental changes.
 </p>
 
-<h3>The @custom-filter rule</h3>
+<p>
+  The custom-filter function allows extending Filter Effects with a customized filter effect. Customized filter effects are described by the @filter rule and referenced internal or external resources. Each @filter rule has a unique identifier that can be referenced by the custom-filter function. 
+</p>
+
+<h3>The @filter rule</h3>
 
 <p>
-  The @custom-filter rule allows specifying custom shader programs for the use of the 'filter' property. A
-  @custom-filter rule consists of the keyword "@custom-filter", followed by an identifier giving a name for the custom
-  shader program (which will be referenced using the 'custom()' filter function), followed by a set of custom filter
+  The @filter rule allows specifying custom-filter definitions (like <a href="#shading-language">shaders</a>) for the use of the 'filter' property. A
+  @filter rule consists of the keyword "@filter", followed by an identifier giving a name for the custom-filter
+  (which will be referenced using the 'custom()' filter function), followed by a set of custom-filter
   descriptors.
 </p>
 
 <p>
-  The general form of an @custom-filter at-rule is:
+  The general form of an @filter at-rule is:
 </p>
 
-<pre><code>@custom-filter IDENT { &lt;custom-filter-description&gt; }</code></pre>
+<pre>@filter IDENT { &lt;custom-filter-description&gt; }</pre>
 
 <p>
   where &lt;custom-filter-description&gt; has the form:
 </p>
 
-<pre><code>descriptor: value;
+<pre>descriptor: value;
 descriptor: value;
 [...]
-descriptor: value;</code></pre>
+descriptor: value;</pre>
 
 <p>
-  Each @custom-filter rule specifies a value for every custom-filter descriptor, either implicitly or explicitly. Those not given
+  Each @filter rule specifies a value for every custom-filter descriptor, either implicitly or explicitly. Those not given
   explicit values in the rule take the initial value listed with each descriptor in this specification. When a given
-  descriptor occurs multiple times in a given @custom-filter rule, only the last specified value is used, all prior
+  descriptor occurs multiple times in a given @filter rule, only the last specified value is used, all prior
   values for that descriptor are ignored.
 </p>
 
-<div class="example">
+<p>
+  The following is the grammar for the custom-filter at-rule and extends the lexical scanner in the
+  <a href="http://www.w3.org/TR/CSS21/grammar.html">Grammar of CSS 2.1</a> ([[!CSS21]], Appendix G):
 
+<pre><dfn>filter_rule</dfn>
+  : FILTER_SYM S+ IDENT S* '{' S* <i>group_rule_body</i> '}' S*;
+
+@{F}{I}{L}{T}{E}{R}   {return FILTER_SYM;}
+</pre>
+
+<p>
+  <dfn>group_rule_body</dfn> as defined in [[!CSS3-CONDITIONAL]]. 
+
+<p>
+  Furthermore, the <code>nested_statement</code> rule [[!CSS3-CONDITIONAL]] gets extended by adding "<code>filter_rule</code>".
+</p>
+
+<h3 id="custom-filter-src">Custom filter resources: the <span>src</span> descriptor</h3>
+
+<table class="descdef">
+  <tbody>
+    <tr>
+      <td>Name:
+      <td><dfn>src</dfn>
+    <tr>
+      <td>Value:
+      <td>[ &lt;uri&gt; [format(&lt;string&gt;)]?]#
+    <tr>
+      <td><em>Initial:</em>
+      <td>N/A
+</table>
+
+<p>
+  The 'src' descriptor takes a comma separated list of resource references with an optional format function. The file format is determined by a provided MIME type (e.g. transfered MIME type from the resource providing server). If a format function is provided, then the passed string overrides the MIME type definition of the resource. The type of the customized filter effect described by a @filter rule may depend on the passed resources.
+</p>
+      
+<p>
+  It is possible to reference custom filter resources in a document by a fragment identifier. The format type may be identified by the context
+  of the referenced custom filter. If the referenced resource is a '&lt;script&gt;' element, the ''type'' attribute defines the MIME type of the content.
+</p>
+
+<div class="example">
+  <p>
+    The following <a href="https://developer.mozilla.org/en/WebGL/Adding_2D_content_to_a_WebGL_context">document</a> from Mozilla
+    describes how WebGL vertex and fragment shaders can be defined in <code>&lt;script&gt;</code> elements.
+  </p>
+
+  <code class="xml"><pre>
+&lt;script id="warp" type="x-shader/x-vertex" &gt;
+  &lt;-- source code here --&gt;
+&lt;/script&gt;
+
+&lt;style&gt;
+  @filter warp {
+    src: url(#warp);
+  }
+&lt;/style&gt;</pre></code>
 </div>
 
+<p>Format strings defined by this specification:
 
-<h3>Shader format: the <span>format</span> descriptor</h3>
-
-<table class="descdef">
+<table class="data" id="fontformats">
+  <thead>
+    <tr>
+      <th>String
+      <th>Custom-filter Format
+      <th>Common extensions
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name:
-      <td><dfn>format</dfn>
+      <th>"x-shader/x-vertex"
+      <td>WebGL 1.0 vertex shader
+      <td>.vs
+    </tr>
     <tr>
-      <td>Value:
-      <td>&lt;string&gt;
-    <tr>
-      <td><em>Initial:</em>
-      <td>"glsl"
+      <th>"x-shader/x-fragment"
+      <td>WebGL 1.0 fragment shader
+      <td>.fs
+    </tr>
+  </tbody>
 </table>
 
-<dl>
-  <dt><dfn>&lt;string&gt;</dfn></dt>
-  <dd>
-     Is a unique identifier for a specific shading language. The identifier for the recommended shading language is
-     "glsl". Future versions can add a version number. UAs can support other shading languages with other identifiers.
-  </dd>
-</dl>
-
-
-<h3>Vertex shader: the <span>vertex</span> descriptor</h3>
-
-<table class="descdef">
-  <tbody>
-    <tr>
-      <td>Name:
-      <td><dfn>vertex</dfn>
-    <tr>
-      <td>Value:
-      <td>none | &lt;url&gt;
-    <tr>
-      <td><em>Initial:</em>
-      <td>none
-</table>
-
-<dl>
-  <dt><var>&lt;url&gt;</var></dt>
-  <dd>
-    The shader referenced by &lt;url&gt; provides the vertex shader. If the shader cannot be retrieved, or if the shader
-    cannot be loaded or compiled because it contains erroneous code, the shader is a pass through. Otherwise, the vertex
-    shader is invoked for all the vertex mesh vertices. 
-  </dd>
-  <dt><dfn title="''none''!!'vertex' value">''none'</dfn></dt>
-  <dd>
-    The vertex shader acts as a pass through.
-</dl>
-
-
-<h3>Fragment shader reference: the <span>fragment</span> descriptor</h3>
-
-<table class="descdef">
-  <tbody>
-    <tr>
-      <td>Name:
-      <td><dfn>fragment</dfn>
-    <tr>
-      <td>Value:
-      <td>none | &lt;url&gt;
-    <tr>
-      <td><em>Initial:</em>
-      <td>none
-</table>
-
-<dl>
-  <dt><var>&lt;url&gt;</var></dt>
-  <dd>
-    The shader referenced by &lt;url&gt; provides the fragment shader. If the shader cannot be retrieved, or if the
-    shader cannot be loaded or compiled because it contains erroneous code, the shader is a pass through. Otherwise, the
-    fragment shader is invoked for each of the pixels during the rasterization phase that follows the vertex shader
-    processing.
-  </dd>
-  <dt><dfn title="''none''!!'fragment' value">''none''</dfn></dt>
-  <dd>
-    The fragment shader acts as a pass through.
-</dl>
-
-
-<h3>Shader parameters reference: the <span>parameters</span> descriptor</h3>
+<h3 id="custom-filter-parameters">Custom filter parameters: the <span>parameters</span> descriptor</h3>
 
 <table class="descdef">
   <tbody>
@@ -5323,10 +4556,10 @@ descriptor: value;</code></pre>
 </table>
 
 <p>
-  The list of parameters define shader variables, that get passed into the shaders. Each parameter has an identifier.
+  The list of parameters define variables, that get passed into the custom filter effect (e.g. parameters passed to a shader). Each parameter has an identifier.
   If a parameter with the same identifier occurs more then once in the list of parameters, the latest parameter
   definition overrides all previous definitions. A parameter definition can be overloaded by a parameter definition in
-  the referencing ''custom()'' filter function.
+  the referencing custom filter function.
 </p>
 
 <pre class=prod><dfn>&lt;param&gt;</dfn> = IDENT <var>&lt;param-value&gt;</var></pre>
@@ -5378,55 +4611,58 @@ descriptor: value;</code></pre>
 </dl>
 
 
-<h3>Vertex mesh: the <span>mesh</span> descriptor</h3>
+<h3 id="custom-filter-geometry">Custom filter geometry: the <span>geometry</span> descriptor</h3>
 
 <table class="descdef">
   <tbody>
     <tr>
       <td>Name:
-      <td><dfn>mesh</dfn>
+      <td><dfn>geometry</dfn>
     <tr>
       <td>Value:
-      <td>&lt;integer&gt;{1,2} || &lt;box&gt; || [ detached | attached ]?
+      <td><var>&lt;geometry-shape&gt;</var>
     <tr>
       <td><em>Initial:</em>
-      <td>1 1 border-box attached
+      <td>grid(1 1 attached)
 </table>
 
-<pre class=prod><dfn>&lt;box&gt;</dfn> = border-box | padding-box | content-box</pre>
-
-<p class=issue>&lt;box&gt; might be dropped in a later version of this draft.</p>
+<pre class=prod><dfn><var>&lt;geometry-shape&gt;</var></dfn> = <var>grid(&lt;integer&gt;{1,2} || [ detached | attached ]?)</var></pre>
 
 <dl>
-  <dt><dfn>&lt;integer&gt;</dfn></dt>
+  <dt><dfn>grid(&lt;integer&gt;{1,2} || [ detached | attached ]?)</dfn></dt>
   <dd>
-    One or two positive integers greater then zero indicate the additional number of vertex lines and columns that will
-    make the vertex mesh. With the initial value of ''1 1'' there is a single row and a single column, resulting in a
-    four-vertices mesh (top-left, top-right, bottom-right, bottom-left). If the second parameter is not provided, it
-    takes a value equal to the first. A value of ''n m'' results in a vertex mesh that has n columns and m rows. This
-    results in a total of (n + 1) * (m + 1) vertices.
-    If one of the passed parameters is zero or negative, the UA must use the initial mesh.
+    <dl>
+      <dt><dfn>&lt;integer&gt;</dfn></dt>
+      <dd>
+        One or two positive integers greater then zero indicate the additional number of vertex lines and columns that will
+        make the vertex mesh. With the initial value of ''1 1'' there is a single row and a single column, resulting in a
+        four-vertices mesh (top-left, top-right, bottom-right, bottom-left). If the second parameter is not provided, it
+        takes a value equal to the first. A value of ''n m'' results in a vertex mesh that has n columns and m rows. This
+        results in a total of (n + 1) * (m + 1) vertices.
+        If one of the passed parameters is zero or negative, the UA must use the initial mesh.
 
-    <div class="figure" id="vertexMesh56">
-      <object data="images/shader-concept.svg#granular-mesh" style="width:372px; height:252px"></object> 
-      <p class="caption">
-        The figure illustrates how a mesh of '6 6' creates vertices passed to the vertex shader.
-      </p>
-    </div>
-  </dd>
-  <dt><dfn>detached</dfn></dt>
-  <dd>
-    Implies that the triangles are detached. The geometry provided to the vertex shader is made of triangles which do
-    not share adjacent edges' vertices.
-  </dd>
-  <dt><dfn>attached</dfn></dt>
-  <dd>
-    Implies that the triangles are attached. The geometry provided to the vertex shader is made of triangles which share
-    adjacent edges' vertices.
+        <div class="figure" id="vertexMesh56">
+          <object data="images/shader-concept.svg#granular-mesh" style="width:372px; height:252px"></object> 
+          <p class="caption">
+            The figure illustrates how a mesh of '6 6' creates vertices passed to the vertex shader.
+          </p>
+        </div>
+      </dd>
+      <dt><dfn>''detached''</dfn></dt>
+      <dd>
+        Implies that the triangles are detached. The geometry provided to the vertex shader is made of triangles which do
+        not share adjacent edges' vertices.
+      </dd>
+      <dt><dfn>''attached''</dfn></dt>
+      <dd>
+        Implies that the triangles are attached. The geometry provided to the vertex shader is made of triangles which share
+        adjacent edges' vertices.
+      </dd>
+    </dl>
   </dd>
 </dl>
 
-<h3>Mix function: the <span>mix</span> descriptor</h3>
+<h3 id="custom-filter-mix">Custom filter compositing: the <span>mix</span> descriptor</h3>
 
 <table class="descdef">
   <tbody>
@@ -5435,7 +4671,7 @@ descriptor: value;</code></pre>
       <td><dfn>mix</dfn>
     <tr>
       <td>Value:
-      <td>none | [&lt;blend-mode&gt; || &lt;alpha-compositing&gt;]
+      <td>none | [&lt;blend-mode&gt; || &lt;composite-mode&gt;]
     <tr>
       <td><em>Initial:</em>
       <td>normal source-atop
@@ -5446,24 +4682,24 @@ descriptor: value;</code></pre>
     <dfn>&lt;blend-mode&gt;</dfn>
   </dt>
   <dd>
-    Each pixel in the fragment shader is blended with the <var>mix-color</var> by using one of the predefined blend
+    For fragment shaders, each pixel is blended with the <var>mix-color</var> by using one of the predefined blend
     modes and it's appropriate blend mode keyword (See [[!COMPOSITING]]).
   </dd>
   <dt>
-    <dfn>&lt;alpha-compositing&gt;</dfn>
+    <dfn>&lt;composite-mode&gt;</dfn>
   </dt>
   <dd>
-    Each pixel in the fragment shader is composed with the <var>mix-color</var> by using one of the predefined
+    For fragment shaders, each pixel is composed with the <var>mix-color</var> by using one of the predefined
     alpha-compositing operators and it's appropriate alpha-compositing keyword (See [[!COMPOSITING]]).
   </dd>
   <dt><dfn title="''none''!!'mix' value">''none''</dfn></dt>
   <dd>
-    Pixels in the fragment shader are neither alpha-composited nor blended with the <var>mix-color</var>.
+    No alpha-compositing nor blending will be applied in the custom-filter. (E.g. a pixel in a fragment shader is not composed with the <var>mix-color</var>.)
   </dd>
 </dl>
 
 
-<h3>Custom margins: the <span>margin</span> descriptor</h3>
+<h3 id="custom-filter-margin">Custom filter margins: the <span>margin</span> descriptor</h3>
 
 <table class="descdef">
   <tbody>
@@ -5483,8 +4719,7 @@ descriptor: value;</code></pre>
 </table>
 
 <p class="issue">
-  The editors are looking into defining custom shader margins descriptors as a replacement for the 'filter-margin'
-  properties.
+  The editors are looking into defining custom shader margins descriptors.
 </p>
 
 <pre class=prod><dfn>&lt;margin-width&gt;</dfn> = <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>auto</var></pre>
@@ -5502,9 +4737,50 @@ descriptor: value;</code></pre>
 </dl>
 
 
-<h2 id="shader-processing-model">Shader Processing Model</h2>
+<h2 id="shading-language">Shading language</h2>
 
-<p>This section illustrates the shader processing model as it applies to an element whose unfiltered rendering is shown in the figure <a href="#unfiltered-input">below</a>.</p>
+  <h3 id="precedents">Precedents</h3>
+
+  <p>There are many precedents for shading languages, for example:</p>
+  <ul>
+      <li><a href="http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf">OpenGL ES Shading Language</a> (also known as GLSL ES) from <a href="http://www.khronos.org/registry/webgl/specs/latest/#refsGLES20GLSL">WebGL</a></li>
+      <li><a href="http://msdn.microsoft.com/en-us/library/bb509635(v=VS.85).aspx">HLSL Shading Language</a></li>
+      <li><a href="http://www.adobe.com/content/dam/Adobe/en/devnet/pixelbender/pdfs/pixelbender_reference.pdf">Adobe's Pixel Bender language</a></li>
+      <li><a href="http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Conceptual/CoreImaging/ci_custom_filters/ci_custom_filters.html">Apple's CoreImage Filters</a></li>
+  </ul>
+
+<h3 id="recommendation">Recommended shading language</h3>
+
+<p>
+  This document recommends the adoption of the subset of GLSL ES [<a href="#ref-GLSLES">GLSLES</a>] defined in the WebGL 1.0 <a href="#ref-WEBGL">WEBGL</a>] specification.
+</p>
+
+<p>
+  In particular, the same restrictions as defined in WebGL should apply to shaders for CSS:
+</p>
+
+<ul>
+  <li><a href="http://www.khronos.org/registry/webgl/specs/latest/#SUPPORTED_GLSL_CONSTRUCTS">supported GLSL constructs.</a></li>
+  <li><a href="http://www.khronos.org/registry/webgl/specs/latest/#6">differences between WebGL and OpenGL ES 2.0</a> as it applies to shaders.</li>
+</ul>
+
+<p>
+  All the parameters specified in the <var>&lt;param&gt;</var> values (e.g., the <a href="#custom-filter">custom-filter at-rule</a> or the ''custom()'' filter function) will be available as uniforms to the shader(s) referenced by the 'shader' property.</p>
+
+<p>
+  The group may consider applying further restrictions to the GLSL ES language to make it easier to write vertex and fragment shaders.
+</p>
+
+<p>
+  The OpenGL ES shading language provides a number of variables that can be passed to shaders, exchanged between shaders or set by shaders. In particular, a vertex shader can provide specific data to the fragment shader in the form of "varying" parameters (parameters that vary per pixel). The following sections describe particular variables that are assumed for the vertex and fragment shaders in CSS shaders.
+</p>
+
+
+<h3 id="shader-processing-model">Shader Processing Model</h3>
+
+<p>
+  This section illustrates the shader processing model as it applies to an element whose unfiltered rendering is shown in the figure <a href="#unfiltered-input">below</a>.
+</p>
 
 <div class="figure" id="unfiltered-input">
   <object type="image/svg+xml" data="images/shader-concept.svg#image" style="width:372px; height:252px"></object>
@@ -5521,7 +4797,9 @@ descriptor: value;</code></pre>
   <p class="caption">Source texture created by rendering<br />the element offscreen and adding filter primitive margins</p>
 </div>
 
-<p>An <a>'feCustom element'</a> element or a <code>custom()</code> filter function defines a custom filter primitive. The following figure illustrates its model.</p>
+<p>
+  An <a>'feCustom element'</a> element or a ''custom()'' filter function defines a custom filter primitive. The following figure illustrates its model.
+</p>
 
 <div class="figure">
   <object type="image/svg+xml" data="images/shader-concept.svg#processing-model" style="width:800px; height:334px"></object>
@@ -5529,9 +4807,7 @@ descriptor: value;</code></pre>
 </div>
 
 <p>
-  In a <strong>first step</strong> the source texture is used on a <span class="term">vertex mesh</spam>. By default, the vertex mesh has the position and size of the
-  <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. In the following
-  figure, the red markers represent the default vertices in the default vertex mesh. The diagonal line illustrate how the vertices define two triangles.
+  In a <strong>first step</strong> the source texture is used on a <span>vertex mesh</span>. By default, the vertex mesh has the position and size of the <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. In the following figure, the red markers represent the default vertices in the default vertex mesh. The diagonal line illustrate how the vertices define two triangles.
 </p>
 
 <div class="figure">
@@ -5540,8 +4816,7 @@ descriptor: value;</code></pre>
 </div>
 
 <p>
-  The <a>'vertexMesh attribute'</a> attribute on the <a>'feCustom element'</a> element
-  and the &lt;vertex-mesh&gt; parameter on the <code>custom()</code> filter function give more granularity controll over the vertex mesh.
+  The <a>'geometry attribute'</a> attribute on the <a>'feCustom element'</a> element and the 'geometry' descriptor on the <a href="#custom-filter">custom-filter at-rule</a> give more granularity control over the vertex mesh.
 </p>
 
 <div class="figure">
@@ -5550,8 +4825,7 @@ descriptor: value;</code></pre>
 </div>
 
 <p>
-  In a <strong>second step</strong>, the <span class="term">vertex mesh</spam> gets processesed through the vertex shader, which produces a set of transformed vertices.
-  These transformed vertices are the output as shown in the figure below.
+  In a <strong>second step</strong>, the <span class="term">vertex mesh</spam> gets processed through the vertex shader, which produces a set of transformed vertices. These transformed vertices are the output as shown in the figure below.
 </p>
 
 <div class="figure">
@@ -5560,8 +4834,7 @@ descriptor: value;</code></pre>
 </div>
 
 <p>
-  The <strong>third step</strong> is the rasterization step. The filter primitive invokes the fragment shader for every pixel location inside the vertex mesh to perform
-  per pixel operation and produce the final pixel color at that vertex mesh location.
+  The <strong>third step</strong> is the rasterization step. The filter primitive invokes the fragment shader for every pixel location inside the vertex mesh to perform per pixel operation and produce the final pixel color at that vertex mesh location.
 </p>
 
 <div class="figure">
@@ -5570,8 +4843,7 @@ descriptor: value;</code></pre>
 </div>
 
 <p class="note">
-  Note that the fragment shader may be called several time for what corresponds to the same pixel coordinate on the output, for example when the vertex
-  mesh folds over itself.
+  Note that the fragment shader may be called several time for what corresponds to the same pixel coordinate on the output, for example when the vertex mesh folds over itself.
 </p>
 
 <p class="issue" id="issue-shader-application-order">
@@ -5580,8 +4852,7 @@ descriptor: value;</code></pre>
 </p>
 
 <p>
-  The <code>mix</code> function provides basic functionalities
-  for color manipulation like blending and alpha compositing on a fragment shader. The processing model of <code>mix</code> is illustrated in the following figure:
+  The 'mix' descriptor provides basic functionalities for color manipulation like blending and alpha compositing on a fragment shader. The processing model of 'mix' is illustrated in the following figure:
 </p>
 
 <div class="figure">
@@ -5590,25 +4861,336 @@ descriptor: value;</code></pre>
 </div>
 
 <p>
-  Each color value passed to the fragment shader gets multiplied with the <i>color matrix</i>, a predefined fragment shader variable that represents a
+  Each color value passed to the fragment shader gets multiplied with the <dfn>color matrix</dfn>, a predefined fragment shader variable that represents a
   4x4 matrix. The matrix is initialized to an identity matrix, but can be set by a fragment shader. The resulting color is the <i>multiplied color</i>.
 </p>
 <p class="issue" id="issue-5x4or4x4matrix">Note that color matrices usually operate on 5x4 values, where the last column defines an offset that is added to the color value. The WG may consider to turn the current 4x4 matrix into a 5x4 matrix.</p>
 
 <p>
-  The <i>mix color</i> is a second, predefined fragment shader variable and represents an ''RGBA'' <var>&lt;color&gt;</var> value. The <i>mix color</i> can be set
-  by the fragment shader. If not specified, the default value is transparent black. The ''RGB'' channels of the <i>multiplied color</i> get blended with the ''RGB'' channels of the <i>mix color</i> with the <i>multiplied color</i> as destination and the <i>mix color</i> as source [[!compositing]]. The applied blend mode depends on the passed &lt;blend-mode&gt; parameter which is ''normal'' by default. The result of the blending and the opacity of the <i>mix color</i> define the <i>blended color</i>.
+  The <dfn>mix color</dfn> is a second, predefined fragment shader variable and represents an ''RGBA'' <var>&lt;color&gt;</var> value. The <i>mix color</i> can be set
+  by the fragment shader. If not specified, the default value is transparent black. The ''RGB'' channels of the <i>multiplied color</i> get blended with the ''RGB'' channels of the <i>mix color</i> with the <i>multiplied color</i> as destination and the <i>mix color</i> as source [[!COMPOSITING]]. The applied blend mode depends on the passed &lt;blend-mode&gt; parameter which is ''normal'' by default. The result of the blending and the opacity of the <i>mix color</i> define the <dfn>blended color</dfn>.
 </p>
 
 <p>
-  The <i>multiplied color</i> and the <i>mix color</i> get composed using the alpha-compositing rules as described in the Compositing and Blending
-  spec [[compositing]]. The applied alpha-compositing mode is specified by the passed &lt;alpha-compositing&gt; parameter and is ''source-atop'' by default.
+  The <dfn>multiplied color</dfn> and the <i>mix color</i> get composed using the alpha-compositing rules as described in the Compositing and Blending
+  spec [[!COMPOSITING]]. The applied alpha-compositing mode is specified by the passed &lt;composite-mode&gt; parameter and is ''source-atop'' by default.
 </p>
 
 <p>
   The last step, <strong>step 4</strong>, shows rasterized output. If the custom filter primitive is the last primitive in the filter chain,
   then this output is the filtered rendering of the element. Otherwise, the output of the primitive becomes the input to the next filter primitive using it.
 </p>
+
+  <h3 id="differences-to-webgl">Differences to GLSL</h3>
+
+  <h4 id="fragment-shaders-differences-with-glsl">Fragment Shaders Differences with GLSL</h4>
+  
+  <p>A normal GLSL shader requires that the fragment shaders computes a <code>gl_FragColor</code> value which
+     is the color value for the processed fragment (pixel). 
+  </p>
+  
+  <p>Because of the <a href="#security">security restrictions</a>, fragment shaders are not allowed to 
+      access rendered content pixel values directly. However, fragment shaders in this specification
+      have the option to compute a value that is automatically mixed with the rendered content values (but without
+      ever providing direct access to these values to the shader code).</p>
+      
+  <p>In the context of this specification, fragment shaders have the options to compute the following values:</p>
+  
+  <ul>
+      <li><code>gl_FragColor</code>. When the fragment shader parameter is a direct reference to a source file,
+          that shader should compute a <code>gl_FragColor</code>. This may be userful, for example, to compute
+          complex patterns.</li>
+      <li><code>css_MixColor</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
+          function, then it can compute a <i>mix color</i> value that is composited with the rendered
+          content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
+      <li><code>css_ColorMatrix</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
+              function, then it can compute a <i>color matrix</i> value that is multiplied with the rendered
+              content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
+  </ul>
+  
+  <div class="example">
+      <p>The following example shows a fragment shader which computes a simple solid red color:</p>
+      
+      <p>CSS</p>
+      <pre>
+@filter red {
+    src: url('simple.vs') format('x-shader/x-vertex'), url(simple.fs) format('x-shader/x-fragment');
+}
+
+#filtered-element {
+    filter: custom(red);
+}
+      </pre>
+      
+      <p>simple.fs</p>
+      <pre>
+void main()
+{  
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}      </pre>
+  </div>
+
+
+<div class="example">
+    <p>The following example shows a fragment shader which darkens the rendered content by 
+       computing a <code>css_MixColor</code> which is multiplied with the rendered content:</p>
+
+    <p>CSS</p>
+    <pre>
+@filter mix {
+    src: url('simple.vs') format('x-shader/x-vertex'), url(simple2.fs) format('x-shader/x-fragment');
+    mix: multiply;
+}
+
+#filtered-element {
+    filter: custom(mix);
+}
+    </pre>
+
+    <p>simple2.fs</p>
+    <pre>
+void main()
+{  
+  <strong>css_MixColor</strong> = vec4(0.8, 0.8, 0.8, 1.0);
+}      </pre>
+</div>
+
+
+  <div class="example">
+      <p>The following example shows a fragment shader which darkens the rendered content by
+         computing a <code>css_ColorMatrix</code> which varies depending on the texture coordinate:</p>
+
+      <p>CSS</p>
+      <pre>
+@filter colormatrix {
+    src: url('simple.vs') format('x-shader/x-vertex'), url(simple3.fs) format('x-shader/x-fragment');
+}
+
+#filtered-element {
+    filter: custom(colormatrix);
+}
+      </pre>
+
+      <p>simple3.fs</p>
+      <pre>
+varying vec2 v_texCoord;
+
+void main()
+{  
+    float x = v_texCoord.x;
+    css_ColorMatrix = mat4(
+        vec4(x, x, x, x), // 1rst column
+        vec4(x, x, x, x), // 2nd column
+        vec4(x, x, x, x), // 3rd column
+        vec4(x, x, x, x), // 4th column
+    );
+}      </pre>
+  </div>
+
+  
+  <h4>Vertex attribute variables</h4>
+
+  The following attribute variables are available to the vertex shader.
+
+  <table class="values-desc">
+      <tr>
+          <td><code>attribute vec4 a_position</code></td>
+          <td>The vertex coordinates in the <a href="#FilterEffectsRegion">filter region</a> box. 
+              Coordinates are normalized to the [-0.5, 0.5] range along the x, y and z axis.</td>
+      </tr>
+      <tr>
+          <td><code>attribute vec2 a_texCoord;</code></td>
+          <td>The vertex's texture coordinate. Coordinates are in the [0, 1] range on both axis</td>
+      </tr>
+      <tr>
+          <td><code>attribute vec2 a_meshCoord;</code></td>
+          <td>The vertex's coordinate in the <a href="#vertexMesh-attribute">mesh box</a>. 
+              Coordinates are in the [0, 1] range on both axis.</td>
+      </tr>
+      <tr>
+          <td><code>attribute vec3 a_triangleCoord;</code></td>
+          <td><p>The x and y values provide the coordinate of the current 'tile' in the shader mesh. 
+              For example, (0, 0) for the
+              top right tile in the mesh. The x and y values are in the [0, mesh columns] and [0, mesh rows]
+              range, respectively.</p>
+              <p>The z coordinate is computed according to the following figure. The z coordinate value 
+                  is provided for each vertex and corresponding triangle. For example, for the bottom
+                  right vertex of the top triangle, the z coordinate will be 2. For the bottom
+                  right vertex of the bottom triangle, the z coordinate will be 4.</p>
+      </tr>
+      </tr>
+
+  </table>
+
+
+              <div class="figure">
+              <img src="images/a_triangleCoord.z.png" alt="The a_triangleCoord.z value" width="50%"/>
+              <p class="caption">The a_triangleCoord.z value</p>
+              </div>
+              </td>
+
+  <h4>Shader uniform variables</h4>
+
+  The following uniform variables are set to specific values by the user agent:
+
+  <table class="values-desc">
+      <tr>
+          <td><code>uniform mat4 u_projectionMatrix</code></td>
+          <td>The current projection matrix to the 
+              destination texture's coordinate space). <em>Note that the 'model matrix' which 
+              the 'transform' property sets, is not passed to the shaders. It is applied to the 
+              filtered element's rendering.</em></td>
+      </tr>
+      <tr>
+          <td><code>uniform vec2 u_textureSize</code></td>
+          <td>The input texture's size. Includes the filter margins.</td>
+      </tr>
+      <tr>
+          <td><code>uniform vec4 u_meshBox</code></td>
+          <td>The mesh box position and size in the <a href="#FilterEffectsRegion">filter box</a> coordinate
+              system. For example, if the mesh box is the filter box, the value will be (-0.5, -0.5, 1, 1).</td>
+      </tr>
+      <tr>
+          <td><code>uniform vec2 u_tileSize</code></td>
+          <td>The size of the current mesh tile, in the same coordinate space as the vertices.</td>
+      </tr>
+      <tr>
+          <td><code>uniform vec2 u_meshSize</code></td>
+          <td>The size of the current mesh in terms of tiles. The x coordinate provides the number of
+              columns and the y coordinate provides the number of rows.</td>
+      </tr>
+  </table>
+
+  <h4>Varyings</h4>
+
+  <p>When the author provides both a vertex and a fragment shader, there is no requirement on the 
+      varyings passed from the vertex shader to the fragment shader. If no vertex shader is provided,
+      the fragment shader can expect the <code>v_texCoord</code> varying. If no fragment shader is 
+      provided, the vertex shader must compute a <code>v_texCoord</code> varying for the default shaders.</p>
+
+  <table class="values-desc">
+  <tr>
+      <td>varying vec2 v_texCoord;</td>
+      <td>The current pixel's texture coordinates (in the content texture).</td>
+  </tr>
+  </table>
+
+  <h4>Other uniform variables: the CSS shaders parameters</h4>
+
+  <p>When there parameters are passed to the custom filter function or the 
+      <a>'feCustom element'</a> filter primitive, the user agent pass uniforms of the corresponding name and
+      type to the shaders.</p>
+
+  <p>The following table shows the mapping between CSS shader parameters and uniform types.</p>
+
+      <div class="table">
+  <table class="values-desc">
+      <tr>
+          <th>CSS param type</th>
+          <th>GLSL uniform type</th>
+      </tr>
+      <tr>
+          <td>[ true | false ]{1,4}</td>
+          <td>bool, bvec2, bvec3 or bvec4</td>
+      </tr>
+      <tr>
+          <td>&lt;number&gt;{1,4}
+          <td>float, vec2, vec3 or vec4</td>
+      </tr>
+      <tr>
+          <td>
+              &lt;array&gt;
+          </td>
+          <td>
+              float[n]
+          </td>
+      </tr>
+      <tr>
+          <td>
+              &lt;transform-function&gt;
+          </td>
+          <td>
+              mat4
+          </td>
+      </tr>
+      <tr>
+          <td>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br />
+              mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br />    
+              mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</td>
+          <td>
+              mat2, mat3 or mat4
+          </td>
+      </tr>
+      <tr>
+          <td>texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
+          <td>sampler2D</td>
+      </tr>
+  </table>
+  </div>
+
+      <p>The following code sample illustrates that mechanism.</p>
+
+  <div class="example">
+      <code><pre>
+  <strong>CSS</strong>
+
+  @filter distort {
+    src: url(distort.vs), url(tint.fs);
+    param: distortAmount 0.5, lightVector 1.0 1.0 0.0, disp texture(disp.png);
+  }
+
+  .shaded {
+      filter: custom(distort);
+  }
+
+  <strong>Shader (vertex or fragment)</strong>
+  ...
+
+  uniform float distortAmount;
+  uniform vec3 lightVector;
+  uniform sampler2D disp;
+  uniform vec2 dispSize;
+  ...</pre></code>
+  </div>
+
+  <p>
+    As illustrated in the example, for each <code>&lt;textureName&gt; texture()</code> parameter, an additional <code>vec2</code> uniform is passed 
+    to the shaders with the size of the corresponding texture.
+  </p>
+
+
+  <h4>Default shaders</h4>
+
+  <p>If no vertex shader is provided, the default one is as shown below.</p>
+
+  <div id="default-vertex-shader" class="shader example">
+      <code class="idl"><pre>
+  attribute vec4 a_position;
+
+  uniform mat4 u_projectionMatrix;
+
+  void main()
+  {        
+      gl_Position = u_projectionMatrix * a_position;
+  }
+
+      </pre></code>
+  </div>
+
+  <p>If no fragment shader is provided, the default one is shown below.</p>
+
+  <div id="default-fragment-shader" class="shader example">
+          <code class="idl"><pre>
+  void main()
+  {  
+  }</pre></code>
+  </div>
+
+  <h4>Texture access</h4>
+
+  <p>If shaders access texture values outside the <code>[0, 1]</code> range on both axis, the
+      returned value is a fully translucent black pixel.</p>
+
 
 <h2 id="FilterCSSImageValue">The filter CSS &lt;image&gt; value</h2>
 
@@ -5630,54 +5212,6 @@ filter() syntax</h3>
   is the value of a 'filter' property. The function take the
   input image parameter and apply the filter rules, returning a processing image.
 </p>
-
-<h2 id="security">Security</h2>
-
-<h3 id="rendered-content-access-from-fragment-shaders">Rendered Content Access in custom filter primitives</h3>
-
-<p>
-  Since a <a href="#feCustomElement">custom filter primitive</a> is applying a processing operation on input 
-  values, it is important that no protected information leaks from that operation. 
-</p>
-
-<p>
-  A <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of the security issues</a> has led 
-  to the requirement that vertex shaders and fragment shaders do not get access 
-  to the rendered content in order to prevent <a href="http://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.
-</p>
-
-<p>
-  If a custom filter primitive does not fulfill these requirements, the primitive is a <a href="#default-shaders">pass through</a>.
-</p>
-
-
-<h3 id="origin-restrictions">Origin Restrictions</h3>
-
-<p>
-  Input to a filter effect must not include anything as input that would
-  violate <a href="http://www.w3.org/TR/cors/">same origin restrictions</a>. 
-  If cross-origin access is required, then the requested content should be explicitly 
-  marked with <a href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
-</p>
-
-<p>
-  This restriction includes:
-</p>
-
-<ul>
-  <li>Any <span class="code"><a href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">&lt;iframe&gt;</a></span> content</li>
-  <li>Any images, either as content or via styling, that are not exposed with <a href="http://www.w3.org/TR/cors/">CORS</a></li>
-  <li>Any <a href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted canvas</a></li>
-  <li>Any cross-origin content referenced by <span class="code"><a href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span></li>
-</ul>
-
-<p>
-  For content that falls under this restriction, it should not be rendered into
-  the input image. For example, a filter effect that is applying to a cross-origin
-  'iframe' element would receive a completely blank input image.
-</p>
-
-<div class="issue" id="issue-cors">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
 
 <h2 id="ShorthandEquivalents">Shorthands defined in terms of the <span class="element-name">'filter'</span> element</h2>
 
@@ -5779,363 +5313,313 @@ filter() syntax</h3>
     &lt;/feMerge&gt;
   &lt;/filter&gt; </pre>
 
-  <h3 id="customEquivalent">custom</h3>
-
+<h3 id="customEquivalent">custom</h3>
 
 <pre class="examplesource">
   &lt;filter id="custom"&gt;
-    &lt;feCustom vertexShader="<strong>vertex-shader</strong>" 
-      fragmentShader="<strong>fragment-shader</strong>" 
-      vertexMesh="<strong>vertex-mesh</strong>"
-      params="<strong>params</strong>"/&gt;
-  &lt;/filter&gt;
-  </pre>
-
-  <div class="issue" id="issue-custom-naming">It might be clearer to name the <code>custom()</code> function 
-      the <code>shader()</code> function instead and introduce an <code>feCustomShader</code>
-      filter primitive instead of <a>'feCustom element'</a>.</div>
+    &lt;feCustom mix="[blend-mode || composite-mode]" geometry="[geometry-shape]"&gt;
+      &lt;feCustomParam ident="[ident]" type="[type]" values="values"/&gt;
+      ...
+      &lt;feCustomSource src="[resource]" format="[format]"/&gt;
+      ...
+    &lt;/feCustom&gt;
+  &lt;/filter&gt; </pre>
 
 
-  <h2 id="shading-language">Shading language</h2>
 
-  <h3 id="precedents">Precedents</h3>
+<h2 id="AccessBackgroundImage">Accessing the background image</h2>
 
-  <p>There are many precedents for shading languages, for example:</p>
-  <ul>
-      <li><a href="http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf">OpenGL ES Shading Language</a> (also known as GLSL ES) from <a href="http://www.khronos.org/registry/webgl/specs/latest/#refsGLES20GLSL">WebGL</a></li>
-      <li><a href="http://msdn.microsoft.com/en-us/library/bb509635(v=VS.85).aspx">HLSL Shading Language</a></li>
-      <li><a href="http://www.adobe.com/content/dam/Adobe/en/devnet/pixelbender/pdfs/pixelbender_reference.pdf">Adobe's Pixel Bender language</a></li>
-      <li><a href="http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Conceptual/CoreImaging/ci_custom_filters/ci_custom_filters.html">Apple's CoreImage Filters</a></li>
-  </ul>
+<p id="AccessingBackgroundImage">Two possible pseudo input images for filter effects are <a>BackgroundImage</a> and <a>BackgroundAlpha</a>, which each represent an image
+snapshot of the canvas under the <a>filter region</a> at the time that the <a
+href="#FilterElement"><span class="element-name">'filter'</span></a> element
+is invoked. <a>BackgroundImage</a> represents both
+the color values and alpha channel of the canvas (i.e., RGBA pixel values),
+whereas <a>BackgroundAlpha</a> represents only the
+alpha channel.</p>
 
-  <h3 id="recommendation">Recommended shading language</h3>
+<p>
+  Implementations <!--of SVG user agents often-->
+will often need to maintain supplemental background image buffers in order to
+support the <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images. Sometimes,
+the background image buffers will contain an in-memory copy of the
+accumulated painting operations on the current canvas.</p>
 
-  <p>This document recommends the adoption of the subset of GLSL ES [<a href="#ref-GLSLES">GLSLES</a>] defined in the WebGL 1.0 <a href="#ref-WEBGL">WEBGL</a>] specification.</p>
+<p>
+  Because in-memory image buffers can take up significant system resources, <!--SVG-->
+content must explicitly indicate to the <!--SVG-->
+user agent that the document needs access to the background image before <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images can be used.
+</p>
 
-      <p>In particular, the same restrictions as defined in WebGL should apply to CSS shaders:</p>
+A background image is what's been <i>rendered before</i> the current element.
+The host language is responsible for defining what <i>rendered before</i> in
+this context means. For SVG, that uses the painter's algorithm, <i>rendered before</i> means
+all of the prior elements in pre order traversal previous to the element to
+which the filter is applied.
 
-      <ul>
-          <li><a href="http://www.khronos.org/registry/webgl/specs/latest/#SUPPORTED_GLSL_CONSTRUCTS">supported GLSL constructs.</a></li>
-          <li><a href="http://www.khronos.org/registry/webgl/specs/latest/#6">differences between WebGL and OpenGL ES 2.0</a> as it applies to shaders.</li>
-      </ul>
+<p>
+  The property which enables access to the background image is
+'enable-background':</p>
 
-      <p>All the parameters specified in the <code>&lt;shader-params&gt;</code> values (e.g., the <code>feCustom's param</code> attribute or the <code>custom(&lt;uri&gt;, &lt;shader-params&gt;)</code> filter function or the <code>shader</code> property value) will be available as uniforms to the shader(s) referenced by the 'shader' property.</p>
+<table summary="enable-background property" class="propdef" id="EnableBackgroundProperty">
+  <tbody>
+    <tr>
+      <th>Name:</th>
+      <td><dfn>enable-background</dfn></td>
+    </tr>
+    <tr>
+      <th>Value:</th>
+      <td>accumulate | new</td>
+    </tr>
+    <tr>
+      <th>Initial:</th>
+      <td>accumulate</td>
+    </tr>
+    <tr>
+      <th>Applies to:</th>
+      <td>Typically elements that can contain renderable elements. 
+        language is responsible for defining the applicable set of
+        elements.
+        For SVG: <a>container elements</a></td>
+    </tr>
+    <tr>
+      <th>Inherited:</th>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>Percentages:</th>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <th>Media:</th>
+      <td>visual</td>
+    </tr>
+    <tr>
+      <th>Computed value:</th>
+      <td>as specified</td>
+    </tr>
+    <tr>
+      <th>Animatable:</th>
+      <td>no</td>
+    </tr>
+  </tbody>
+</table>
 
-  <p>The group may consider applying further restrictions to the GLSL ES language to make it easier to 
-      write vertex and fragment shaders.</p>
+<p>'enable-background' is only
+  applicable to <a>container elements</a>
+  and specifies how the <a>SVG user agent</a> manages the accumulation
+  of the background image.</p>
 
-  <p>The OpenGL ES shading language provides a number of variables that can be passed to shaders,
-      exchanged between shaders or set by shaders. In particular, a vertex shader can provide specific
-      data to the fragment shader in the form of 'varying' parameters (parameters that vary per pixel).
-      The following sections describe particular variables that are assumed for the 
-      vertex and fragment shaders in CSS shaders.</p>
+<p>
+  <strong>new</strong>
+</p>
+<ul>
+  <li>Indicates that a new (i.e., initially transparent black) background
+    image canvas is established and that (in effect) all children of the
+    current <a>container element</a>
+    element shall be rendered into the new background image canvas in
+    addition to being rendered onto the target device.</li>
+</ul>
 
-  <div class="issue">
-      Even though this document recommends the GLSL ES shading language, there are other possible options to 
-      consider, for example:
-      <ul>
-          <li>Allow multiple shading languages, present or future (similar to how the &lt;script&gt; tag 
-              allows different scripting languages).</li>
-          <li>Define a shading language specific to custom filter effects.</li>
-      </ul>
+<p>
+  <strong>accumulate</strong> (the initial/default value)
+</p>
+<ul>
+  <li>If an ancestor <a>container element</a>
+    element has a property value of ''enable-background: new'', then all
+    renderable child elements of the current <a>container element</a>
+    element are rendered both onto the parent <a>container element</a>
+    element's background image canvas and onto the target device.</li>
+  <li>Otherwise, there is no current background image canvas, so it is only
+    necessary to render <a>graphics elements</a>
+    the renderable elements onto the target device. (No need to render to the
+    background image canvas.)</li>
+</ul>
 
-      The implementation could use the mime type of the url or &lt;script&gt; element
-      to determine the the shading language.
-  </div>
+<p>
+  If a filter effect specifies either the <a>BackgroundImage</a> or the 
+  <a>BackgroundAlpha</a> pseudo input images and no
+ancestor <a>container element</a>
+ element has a property value of ''enable-background: new'', then the background
+image request is technically in error. Processing will proceed without
+interruption (i.e., no error message) and a transparent black image shall be
+provided in response to the request.</p>
 
-  <h4 id="fragment-shaders-differences-with-glsl">Fragment Shaders Differences with GLSL</h4>
-  
-  <p>A normal GLSL shader requires that the fragment shaders computes a <code>gl_FragColor</code> value which
-     is the color value for the processed fragment (pixel). 
-  </p>
-  
-  <p>Because of the <a href="#security">security restrictions</a>, fragment shaders are not allowed to 
-      access rendered content pixel values directly. However, fragment shaders in this specification
-      have the option to compute a value that is automatically mixed with the rendered content values (but without
-      ever providing direct access to these values to the shader code).</p>
-      
-  <p>In the context of this specification, fragment shaders have the options to compute the following values:</p>
-  
-  <ul>
-      <li><code>gl_FragColor</code>. When the fragment shader parameter is a direct reference to a source file,
-          that shader should compute a <code>gl_FragColor</code>. This may be userful, for example, to compute
-          complex patterns.</li>
-      <li><code>css_MixColor</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
-          function, then it can compute a <i>mix color</i> value that is composited with the rendered
-          content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
-      <li><code>css_ColorMatrix</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
-              function, then it can compute a <i>color matrix</i> value that is multiplied with the rendered
-              content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
-  </ul>
-  
-  <div class="example">
-      <p>The following example shows a fragment shader which computes a simple solid red color:</p>
-      
-      <p>CSS</p>
-      <pre>
-#filtered-element {
-    filter: custom(url(simple.vs) url(simple.fs));
-}
-      </pre>
-      
-      <p>simple.fs</p>
-      <pre>
-void main()
-{  
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-}      </pre>
-  </div>
+<h3 id="AccessBackgroundImageSVG">Accessing the background image in SVG</h3>
+<p>
+  This section only applies to the SVG definition of enable-background.</p>
 
+<p>
+  Assume you have an element E in the document and that E has a series of
+ancestors A<sub>1</sub> (its immediate parent), A<sub>2</sub>, etc. (Note:
+A<sub>0</sub> is E.) Each ancestor A<sub>i</sub> will have a corresponding
+temporary background image offscreen buffer BUF<sub>i</sub>. The contents of
+the <em>background image</em> available to a <a>'filter element'</a>
+referenced by E is defined as follows:</p>
+<ul>
+  <li>Find the element A<sub>i</sub> with the smallest subscript i (including
+    A<sub>0</sub>=E) for which the 'enable-background' property has the value
+    ''new''.
+    <p class="note">Note that if there is no such ancestor
+    element, then the outermost element A<sub>n</sub> will be chosen.</li>
+  <li>For each A<sub>i</sub> (from i=n to 1), initialize BUF<sub>i</sub> to
+    transparent black. Render all children of A<sub>i</sub> up to but not
+    including A<sub>i-1</sub> into BUF<sub>i</sub>. The children are painted,
+    then filtered, clipped, masked and composited using the various painting,
+    filtering, clipping, masking and object opacity settings on the given
+    child. Any filter effects, masking and group opacity that might be set on
+    A<sub>i</sub> do <em>not</em> apply when rendering the children of
+    A<sub>i</sub> into BUF<sub>i</sub>.<br />
+    (Note that for the case of A<sub>0</sub>=E, the graphical contents of E
+    are not rendered into BUF<sub>1</sub> and thus are not part of the
+    background image available to E. Instead, the graphical contents of E are
+    available via the <a href="#SourceGraphic">SourceGraphic</a> and
+    <a>SourceAlpha</a> pseudo input images.)</li>
+  <li>Then, for each A<sub>i</sub> (from i=1 to n-1), composite
+    BUF<sub>i</sub> into BUF<sub>i+1</sub>.</li>
+  <li>The accumulated result (i.e., BUF<sub>n</sub>) represents the
+    background image available to E.</li>
+</ul>
 
-<div class="example">
-    <p>The following example shows a fragment shader which darkens the rendered content by 
-       computing a <code>css_MixColor</code> which is multiplied with the rendered content:</p>
+<pre class="xml">&lt;?xml version="1.0" standalone="no"?&gt;
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+&lt;svg width="13.5cm" height="2.7cm" viewBox="0 0 1350 270"
+     xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
+  &lt;title&gt;Example enable-background01&lt;/title&gt;
+  &lt;desc&gt;This test case shows five pictures which illustrate the rules
+        for background image processing.&lt;/desc&gt;
 
-    <p>CSS</p>
-    <pre>
-#filtered-element {
-  filter: custom(url(simple.vs) <strong>mix(url(simple2.fs) multiply)</strong>);
-}
-    </pre>
+  &lt;defs&gt;
+    &lt;filter id="ShiftBGAndBlur" 
+            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
+      &lt;desc&gt;
+        This filter discards the SourceGraphic, if any, and just produces
+        a result consisting of the BackgroundImage shifted down 125 units
+        and then blurred.
+      &lt;/desc&gt;
+      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
+      &lt;feGaussianBlur stdDeviation="8" /&gt;
+    &lt;/filter&gt;
+    &lt;filter id="ShiftBGAndBlur_WithSourceGraphic" 
+            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
+      &lt;desc&gt;
+        This filter takes the BackgroundImage, shifts it down 125 units, blurs it,
+        and then renders the SourceGraphic on top of the shifted/blurred background.
+      &lt;/desc&gt;
+      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
+      &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
+      &lt;feMerge&gt;
+        &lt;feMergeNode in="blur"/&gt;
+        &lt;feMergeNode in="SourceGraphic"/&gt;
+      &lt;/feMerge&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
 
-    <p>simple2.fs</p>
-    <pre>
-void main()
-{  
-  <strong>css_MixColor</strong> = vec4(0.8, 0.8, 0.8, 1.0);
-}      </pre>
-</div>
+  &lt;g transform="translate(0,0)"&gt;
+    &lt;desc&gt;The first picture is our reference graphic without filters.&lt;/desc&gt;
+    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
+    &lt;g opacity=".5"&gt;
+      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
+      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
+    &lt;/g&gt;
+    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
+  &lt;/g&gt;
 
+  &lt;g enable-background="new" transform="translate(270,0)"&gt;
+    &lt;desc&gt;The second adds an empty 'g' element which invokes ShiftBGAndBlur.&lt;/desc&gt;
+    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
+    &lt;g opacity=".5"&gt;
+      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
+      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
+    &lt;/g&gt;
+    &lt;g filter="url(#ShiftBGAndBlur)"/&gt;
+    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
+  &lt;/g&gt;
 
-  <div class="example">
-      <p>The following example shows a fragment shader which darkens the rendered content by
-         computing a <code>css_ColorMatrix</code> which varies depending on the texture coordinate:</p>
+  &lt;g enable-background="new" transform="translate(540,0)"&gt;
+    &lt;desc&gt;The third invokes ShiftBGAndBlur on the inner group.&lt;/desc&gt;
+    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
+    &lt;g filter="url(#ShiftBGAndBlur)" opacity=".5"&gt;
+      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
+      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
+    &lt;/g&gt;
+    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
+  &lt;/g&gt;
 
-      <p>CSS</p>
-      <pre>
-#filtered-element {
-    filter: custom(url(simple.vs) mix(url(simple3.fs)));
-}
-      </pre>
+  &lt;g enable-background="new" transform="translate(810,0)"&gt;
+    &lt;desc&gt;The fourth invokes ShiftBGAndBlur on the triangle.&lt;/desc&gt;
+    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
+    &lt;g opacity=".5"&gt;
+      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
+      &lt;polygon points="160,25 160,125 240,75" fill="blue"
+               filter="url(#ShiftBGAndBlur)"/&gt;
+    &lt;/g&gt;
+    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
+  &lt;/g&gt;
 
-      <p>simple3.fs</p>
-      <pre>
-varying vec2 v_texCoord;
+  &lt;g enable-background="new" transform="translate(1080,0)"&gt;
+    &lt;desc&gt;The fifth invokes ShiftBGAndBlur_WithSourceGraphic on the triangle.&lt;/desc&gt;
+    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
+    &lt;g opacity=".5"&gt;
+      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
+      &lt;polygon points="160,25 160,125 240,75" fill="blue"
+               filter="url(#ShiftBGAndBlur_WithSourceGraphic)"/&gt;
+    &lt;/g&gt;
+    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/enable-background-01.png"/></td></tr></table><p class="view-as-svg"><a href="examples/enable-background-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
-void main()
-{  
-    float x = v_texCoord.x;
-    css_ColorMatrix = mat4(
-        vec4(x, x, x, x), // 1rst column
-        vec4(x, x, x, x), // 2nd column
-        vec4(x, x, x, x), // 3rd column
-        vec4(x, x, x, x), // 4th column
-    );
-}      </pre>
-  </div>
-
-  
-  <h4>Vertex attribute variables</h4>
-
-  The following attribute variables are available to the vertex shader.
-
-  <table class="values-desc">
-      <tr>
-          <td><code>attribute vec4 a_position</code></td>
-          <td>The vertex coordinates in the <a href="#FilterEffectsRegion">filter region</a> box. 
-              Coordinates are normalized to the [-0.5, 0.5] range along the x, y and z axis.</td>
-      </tr>
-      <tr>
-          <td><code>attribute vec2 a_texCoord;</code></td>
-          <td>The vertex's texture coordinate. Coordinates are in the [0, 1] range on both axis</td>
-      </tr>
-      <tr>
-          <td><code>attribute vec2 a_meshCoord;</code></td>
-          <td>The vertex's coordinate in the <a href="#vertexMesh-attribute">mesh box</a>. 
-              Coordinates are in the [0, 1] range on both axis.</td>
-      </tr>
-      <tr>
-          <td><code>attribute vec3 a_triangleCoord;</code></td>
-          <td><p>The x and y values provide the coordinate of the current 'tile' in the shader mesh. 
-              For example, (0, 0) for the
-              top right tile in the mesh. The x and y values are in the [0, mesh columns] and [0, mesh rows]
-              range, respectively.</p>
-              <p>The z coordinate is computed according to the following figure. The z coordinate value 
-                  is provided for each vertex and corresponding triangle. For example, for the bottom
-                  right vertex of the top triangle, the z coordinate will be 2. For the bottom
-                  right vertex of the bottom triangle, the z coordinate will be 4.</p>
-      </tr>
-      </tr>
-
-  </table>
-
-
-              <div class="figure">
-              <img src="images/a_triangleCoord.z.png" alt="The a_triangleCoord.z value" width="50%"/>
-              <p class="caption">The a_triangleCoord.z value</p>
-              </div>
-              </td>
-
-  <h4>Shader uniform variables</h4>
-
-  The following uniform variables are set to specific values by the user agent:
-
-  <table class="values-desc">
-      <tr>
-          <td><code>uniform mat4 u_projectionMatrix</code></td>
-          <td>The current projection matrix to the 
-              destination texture's coordinate space). <em>Note that the 'model matrix' which 
-              the 'transform' property sets, is not passed to the shaders. It is applied to the 
-              filtered element's rendering.</em></td>
-      </tr>
-      <tr>
-          <td><code>uniform vec2 u_textureSize</code></td>
-          <td>The input texture's size. Includes the filter margins.</td>
-      </tr>
-      <tr>
-          <td><code>uniform vec4 u_meshBox</code></td>
-          <td>The mesh box position and size in the <a href="#FilterEffectsRegion">filter box</a> coordinate
-              system. For example, if the mesh box is the filter box, the value will be (-0.5, -0.5, 1, 1).</td>
-      </tr>
-      <tr>
-          <td><code>uniform vec2 u_tileSize</code></td>
-          <td>The size of the current mesh tile, in the same coordinate space as the vertices.</td>
-      </tr>
-      <tr>
-          <td><code>uniform vec2 u_meshSize</code></td>
-          <td>The size of the current mesh in terms of tiles. The x coordinate provides the number of
-              columns and the y coordinate provides the number of rows.</td>
-      </tr>
-  </table>
-
-  <h4>Varyings</h4>
-
-  <p>When the author provides both a vertex and a fragment shader, there is no requirement on the 
-      varyings passed from the vertex shader to the fragment shader. If no vertex shader is provided,
-      the fragment shader can expect the <code>v_texCoord</code> varying. If no fragment shader is 
-      provided, the vertex shader must compute a v_texCoord varying for the default shaders.</p>
-
-  <table class="values-desc">
-  <tr>
-      <td>varying vec2 v_texCoord;</td>
-      <td>The current pixel's texture coordinates (in the content texture).</td>
-  </tr>
-  </table>
-
-  <h4>Other uniform variables: the CSS shaders parameters</h4>
-
-  <p>When there parameters are passed to the <code>custom()</code> filter function or the 
-      <a>'feCustom element'</a> filter primitive, the user agent pass uniforms of the corresponding name and
-      type to the shaders.</p>
-
-  <p>The following table shows the mapping between CSS shader parameters and uniform types.</p>
-
-      <div class="table">
-  <table class="values-desc">
-      <tr>
-          <th>CSS param type</th>
-          <th>GLSL uniform type</th>
-      </tr>
-      <tr>
-          <td>[ true | false ]{1,4}</td>
-          <td>bool, bvec2, bvec3 or bvec4</td>
-      </tr>
-      <tr>
-          <td>&lt;number&gt;{1,4}
-          <td>float, vec2, vec3 or vec4</td>
-      </tr>
-      <tr>
-          <td>
-              &lt;array&gt;
-          </td>
-          <td>
-              float[n]
-          </td>
-      </tr>
-      <tr>
-          <td>
-              &lt;transform-function&gt;
-          </td>
-          <td>
-              mat4
-          </td>
-      </tr>
-      <tr>
-          <td>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br />
-              mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br />    
-              mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</td>
-          <td>
-              mat2, mat3 or mat4
-          </td>
-      </tr>
-      <tr>
-          <td>texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
-          <td>sampler2D</td>
-      </tr>
-  </table>
-  </div>
-
-      <p>The following code sample illustrates that mechanism.</p>
-
-  <div class="example">
-      <code><pre>
-  <strong>CSS</strong>
-
-  .shaded {
-      filter: custom(
-                     url(distort.vs) url(tint.fs), 
-                     distortAmount 0.5, lightVector 1.0 1.0 0.0, 
-                     disp texture(disp.png)
-                  );
-  }
-
-  <strong>Shader (vertex or fragment)</strong>
-  ...
-
-  uniform float distortAmount;
-  uniform vec3 lightVector;
-  uniform sampler2D disp;
-  uniform vec2 dispSize;
-  ...</pre></code>
-  </div>
-
-  <p>
-    As illustrated in the example, for each <code>&lt;textureName&gt; texture()</code> parameter, an additional <code>vec2</code> uniform is passed 
-    to the shaders with the size of the corresponding texture.
-  </p>
-
-
-  <h4>Default shaders</h4>
-
-  <p>If no vertex shader is provided, the default one is as shown below.</p>
-
-  <div id="default-vertex-shader" class="shader example">
-      <code class="idl"><pre>
-  attribute vec4 a_position;
-
-  uniform mat4 u_projectionMatrix;
-
-  void main()
-  {        
-      gl_Position = u_projectionMatrix * a_position;
-  }
-
-      </pre></code>
-  </div>
-
-  <p>If no fragment shader is provided, the default one is shown below.</p>
-
-  <div id="default-fragment-shader" class="shader example">
-          <code class="idl"><pre>
-  void main()
-  {  
-  }</pre></code>
-  </div>
-
-  <h4>Texture access</h4>
-
-  <p>If shaders access texture values outside the <code>[0, 1]</code> range on both axis, the
-      returned value is a fully transluscent black pixel.</p>
+<p>
+  The example above contains five parts, described as follows:</p>
+<ol>
+  <li>The first set is the reference graphic. The reference graphic consists
+    of a red rectangle followed by a 50% transparent <span
+    class="element-name">'g'</span>
+    element. Inside the <span class="element-name">'g'</span>
+    is a green circle that partially overlaps the rectangle and a a blue
+    triangle that partially overlaps the circle. The three objects are then
+    outlined by a rectangle stroked with a thin blue line. No filters are
+    applied to the reference graphic.</li>
+  <li>The second set enables background image processing and adds an empty
+    <span class="element-name">'g'</span>
+    element which invokes the ShiftBGAndBlur filter. This filter takes the
+    current accumulated background image (i.e., the entire reference graphic)
+    as input, shifts its offscreen down, blurs it, and then writes the result
+    to the canvas. Note that the offscreen for the filter is initialized to
+    transparent black, which allows the already rendered rectangle, circle
+    and triangle to show through after the filter renders its own result to
+    the canvas.</li>
+  <li>The third set enables background image processing and instead invokes
+    the ShiftBGAndBlur filter on the inner <span
+    class="element-name">'g'</span>
+    element. The accumulated background at the time the filter is applied
+    contains only the red rectangle. Because the children of the inner <span
+    class="element-name">'g'</span>
+    (i.e., the circle and triangle) are not part of the inner <span
+    class="element-name">'g'</span>
+    element's background and because ShiftBGAndBlur ignores SourceGraphic,
+    the children of the inner <span class="element-name">'g'</span>
+    do not appear in the result.</li>
+  <li>The fourth set enables background image processing and invokes the
+    ShiftBGAndBlur on the <span class="element-name">'polygon'</span>
+    element that draws the triangle. The accumulated background at the time
+    the filter is applied contains the red rectangle plus the green circle
+    ignoring the effect of the <span class="prop-name">'opacity'</span>
+    property on the inner <span class="element-name">'g'</span>
+    element. (Note that the blurred green circle at the bottom does not let
+    the red rectangle show through on its left side. This is due to ignoring
+    the effect of the <span class="prop-name">'opacity'</span>
+    property.) Because the triangle itself is not part of the accumulated
+    background and because ShiftBGAndBlur ignores SourceGraphic, the triangle
+    does not appear in the result.</li>
+  <li>The fifth set is the same as the fourth except that filter
+    ShiftBGAndBlur_WithSourceGraphic is invoked instead of ShiftBGAndBlur.
+    ShiftBGAndBlur_WithSourceGraphic performs the same effect as
+    ShiftBGAndBlur, but then renders the SourceGraphic on top of the shifted,
+    blurred background image. In this case, SourceGraphic is the blue
+    triangle; thus, the result is the same as in the fourth case except that
+    the blue triangle now appears.</li>
+</ol>
 
   <h2 id="integration-with-css-animations-transitions">Integration with CSS Animations and CSS Transitions</h2>
 
@@ -6192,6 +5676,54 @@ void main()
       issue of animating properties that have multiple components to them.
   </div>
 
+<h2 id="security">Security</h2>
+
+<h3 id="rendered-content-access-from-fragment-shaders">Rendered Content Access in custom filter primitives</h3>
+
+<p>
+  Since a <a href="#feCustomElement">custom filter primitive</a> is applying a processing operation on input 
+  values, it is important that no protected information leaks from that operation. 
+</p>
+
+<p>
+  A <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of the security issues</a> has led 
+  to the requirement that vertex shaders and fragment shaders do not get access 
+  to the rendered content in order to prevent <a href="http://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.
+</p>
+
+<p>
+  If a custom filter primitive does not fulfill these requirements, the primitive is a <a href="#default-shaders">pass through</a>.
+</p>
+
+
+<h3 id="origin-restrictions">Origin Restrictions</h3>
+
+<p>
+  Input to a filter effect must not include anything as input that would
+  violate <a href="http://www.w3.org/TR/cors/">same origin restrictions</a>. 
+  If cross-origin access is required, then the requested content should be explicitly 
+  marked with <a href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
+</p>
+
+<p>
+  This restriction includes:
+</p>
+
+<ul>
+  <li>Any <span class="code"><a href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">&lt;iframe&gt;</a></span> content</li>
+  <li>Any images, either as content or via styling, that are not exposed with <a href="http://www.w3.org/TR/cors/">CORS</a></li>
+  <li>Any <a href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted canvas</a></li>
+  <li>Any cross-origin content referenced by <span class="code"><a href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span></li>
+</ul>
+
+<p>
+  For content that falls under this restriction, it should not be rendered into
+  the input image. For example, a filter effect that is applying to a cross-origin
+  'iframe' element would receive a completely blank input image.
+</p>
+
+<div class="issue" id="issue-cors">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
+
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 
 <h3 id="InterfaceSVGFilterElement">Interface SVGFilterElement</h3>
@@ -6200,7 +5732,7 @@ void main()
   The <a>SVGFilterElement</a> interface corresponds to the <a>'filter element'</a> element.
 </p>
 
-<pre class="idl">interface <b>SVGFilterElement</b> : SVGDefinitionElement {
+<pre class="idl">interface <b>SVGFilterElement</b> : SVGElement {
   readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGFilterElement__filterUnits">filterUnits</a>;
   readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGFilterElement__primitiveUnits">primitiveUnits</a>;
   readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGFilterElement__x">x</a>;
@@ -6216,8 +5748,8 @@ void main()
 
 <a>SVGFilterElement</a> implements <a>SVGURIReference</a>;
 <a>SVGFilterElement</a> implements <a>SVGUnitTypes</a>;
+<a>SVGFilterElement</a> implements <a>SVGTests</a>;
 </pre>
-
 
 <dl class="interface">
 <dt class="attributes-header">Attributes:</dt>
@@ -7099,6 +6631,139 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
 <div>
   Corresponds to attribute <a>'feConvolveMatrix/preserveAlpha'</a> on the given <a>'feConvolveMatrix element'</a>
   element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+<h3 id="InterfaceSVGFECustomElement">Interface SVGFECustomElement</h3>
+
+<p>
+  The <a>SVGFECustomElement</a> interface corresponds to the <a>'feCustom element'</a> element.
+</p>
+
+<pre class="idl">interface <b>SVGFECustomElement</b> : <a>SVGElement</a> {
+
+  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFECustomElement__in">in</a>;
+  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFECustomElement__geometry">geometry</a>;
+};
+
+<a>SVGFECustomElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;</pre>
+
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFECustomElement__in"><b>in</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feCustom element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFECustomElement__geometry"><b>geometry</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feCustom/geometry'</a> on the given <a>'feCustom element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+<h3 id="InterfaceSVGFECustomSourceElement">Interface SVGFECustomSourceElement</h3>
+
+<p>
+  The <a>SVGFECustomSourceElement</a> interface corresponds to the <a>'feCustomSource element'</a> element.
+</p>
+
+<pre class="idl">interface <b>SVGFECustomSourceElement</b> : <a>SVGElement</a> {
+
+  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFECustomSourceElement__src">src</a>;
+  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFECustomSourceElement__format">format</a>;
+};
+
+<dl class="interface">
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFECustomSourceElement__src"><b>src</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feCustomSource/src'</a> on the given <a>'feCustomSource element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFECustomSourceElement__format"><b>format</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feCustomSource/format'</a> on the given <a>'feCustomSource element'</a> element.
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+<h3 id="InterfaceSVGFECustomParamElement">Interface SVGFECustomParamElement</h3>
+
+<p>
+  The <a>SVGFECustomParamElement</a> interface corresponds to the <a>'feCustomParam element'</a> element.
+</p>
+
+<pre class="idl">interface <b>SVGFECustomParamElement</b> : <a>SVGElement</a> {
+
+  // Custom Parameter Types
+  const unsigned short SVG_CUSTOM_PARAM_UNKNOWN = 0;
+  const unsigned short SVG_CUSTOM_PARAM_NUMBER = 1;
+  const unsigned short SVG_CUSTOM_PARAM_ARRAY = 2;
+  const unsigned short SVG_CUSTOM_PARAM_VEC2 = 3;
+  const unsigned short SVG_CUSTOM_PARAM_VEC3 = 4;
+  const unsigned short SVG_CUSTOM_PARAM_VEC4 = 5;
+  const unsigned short SVG_CUSTOM_PARAM_MAT2 = 6;
+  const unsigned short SVG_CUSTOM_PARAM_MAT3 = 7;
+  const unsigned short SVG_CUSTOM_PARAM_MAT4 = 8;
+  const unsigned short SVG_CUSTOM_PARAM_COLOR = 9;
+  const unsigned short SVG_CUSTOM_PARAM_TEXTURE = 10;
+  const unsigned short SVG_CUSTOM_PARAM_TRANSFORM = 11;
+
+  readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGFECustomParamElement__type">type</a>;
+  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFECustomParamElement__ident">ident</a>;
+  readonly attribute <a>SVGAnimatedNumberList</a> <a href="#SVGFECustomParamElement__values">values</a>;
+  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFECustomParamElement__texture">texture</a>;
+  readonly attribute <a>SVGAnimatedColor</a> <a href="#SVGFECustomParamElement__color">color</a>;
+  readonly attribute <a>SVGAnimatedTransformList</a> <a href="#SVGFECustomParamElement__transform">transform</a>;
+};
+
+<dl class="interface">
+<dt>Constants in group "Custom Parameter Types":
+<dd>
+  <dl>
+  <dt>SVG_CUSTOM_PARAM_UNKNOWN (unsigned short)</dt>
+  <dd>The type is not one of predefined types. It is invalid to attempt to define a new value of this type or to attempt to switch an existing value to this type.</dd>
+  </dl>
+</dd>
+
+<p class=issue>Incomplete</p>
+
+
+<dt>Attributes:</dt>
+<dd>
+<dl class="attributes">
+<dt id="SVGFECustomElement__in"><b>in</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'filter primitive/in'</a> on the given <a>'feCustom element'</a> element.
+</div>
+</dd>
+
+<dt id="SVGFECustomElement__geometry"><b>geometry</b><span class="idl-type-parenthetical"> (readonly <a>SVGAnimatedString</a>)</span></dt>
+<dd>
+<div>
+  Corresponds to attribute <a>'feCustom/geometry'</a> on the given <a>'feCustom element'</a> element.
 </div>
 </dd>
 </dl>
