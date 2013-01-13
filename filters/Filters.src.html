@@ -474,7 +474,7 @@
     </tr>
     <tr>
       <th>Value:</th>
-      <td>none | <span class="term">&lt;filter-function&gt;</span> [ <span class="term">&lt;filter-function&gt;</span> ]* </td>
+      <td>none | <var>&lt;filter-function&gt;</var>+</td>
     </tr>
     <tr>
       <th>Initial:</th>
@@ -509,8 +509,141 @@
 
 <p>
   If the value of the 'filter' property is ''none'' then there
-  is no filter effect applied. Otherwise, the list of functions (described <a href="#FilterFunction">below</a>)
-  are applied in order.
+  is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
+</p>
+
+<pre class=prod><dfn><var>&lt;filter-function&gt;</var></dfn> = <var>&lt;URL&gt;</var> | <var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var>
+ | <var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>saturate(&lt;number&gt; | &lt;percentage&gt;)</var>
+ | <var>hue-rotate(&lt;angle&gt;)</var> | <var>invert(&lt;number&gt; | &lt;percentage&gt;)</var>
+ | <var>opacity(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>brightness(&lt;number&gt; | &lt;percentage&gt;)</var>
+ | <var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>blur(&lt;length&gt;)</var> | <var>drop-shadow(&lt;shadow&gt;)</var>
+ | <var>custom(IDENT [, &lt;param&gt;]*)</var></pre>
+
+<dl id="FilterFunction">
+  <dt><dfn>&lt;URL&gt;</dfn></dt>
+  <dd>
+    A URL reference to a 'filter' element. For example ''url(commonmasks.xml#mask)''.
+    If the URL references a non-existent object or the referenced  
+    object is not a <a>'filter element'</a> element, then the <span>null 
+    filter</span> will be applied instead.
+  </dd>
+
+  <dt><dfn>grayscale(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
+  <dd>
+    Converts the input image to grayscale. The passed parameter defines the proportion
+    of the conversion. A value of 100% is completely grayscale. A value of 0% leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    If the parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
+  </dd>
+
+  <dt><dfn>sepia(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
+  <dd>
+    Converts the input image to sepia. The passed parameter defines the proportion
+    of the conversion. A value of 100% is completely sepia. A value of 0 leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    If the parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
+  </dd>
+
+  <dt><dfn>saturate(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
+  <dd>
+    Saturates the input image. The passed parameter defines the proportion
+    of the conversion. A value of 0% is completely un-saturated. A value of 100% leaves the
+    input unchanged. Other values are linear multipliers on the effect.
+    Values of amount over 100% are allowed, providing super-saturated results.
+    If the parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
+  </dd>
+
+  <dt><dfn>hue-rotate(&lt;angle&gt;)</dfn></dt>
+  <dd>
+    Applies a hue rotation on the input image. The passed parameter defines the 
+    number of degrees around the color circle the input samples will be adjusted.
+    A value of 0deg leaves the input unchanged. If the parameter is missing,
+    a value of 0deg is used. Implementations should not normalize this value in order
+    to allow animations beyond 360deg.
+    The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
+  </dd>
+
+  <dt><dfn>invert(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
+  <dd>
+    Inverts the samples in the input image. The passed parameter defines the proportion
+    of the conversion. A value of 100% is completely inverted. A value of 0% leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    If the parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
+  </dd>
+
+  <dt><dfn>opacity(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
+  <dd>
+    Applies transparency to the samples in the input image. The passed parameter defines the proportion
+    of the conversion. A value of 0% is completely transparent. A value of 100% leaves the
+    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+    This is equivalent to multiplying the input image samples by amount.
+    If the parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
+    <p class="note">
+      The ''opacity()'' function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the ''opacity()'' filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
+    </p>
+  </dd>
+
+  <dt><dfn>brightness(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
+  <dd>
+    Applies a linear multiplier to input image, making it appear more
+    or less bright.
+    A value of 0% will create an image that is completely black. A value of 100% leaves the
+    input unchanged. Other values are linear multipliers on the effect.
+    Values of amount over 100% are allowed, providing brighter results.
+    If the parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
+  </dd>
+
+  <dt><dfn>contrast(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
+  <dd>
+    Adjusts the contrast of the input.
+    A value of 0% will create an image that is completely black. A value of 100% leaves the
+    input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
+    If the parameter is missing, a value of 100% is used.
+    The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
+  </dd>
+
+  <dt><dfn>blur(&lt;length&gt;)</dfn></dt>
+  <dd>
+    Applies a Gaussian blur to the input image.
+    The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function.
+    If no parameter is provided, then a value 0 is used. The parameter is
+    specified a CSS length, but does not accept percentage values.
+    The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
+    <p class=issue>The FXTF is looking into distinguish between vertical and horizontal blur radii.</p>
+  </dd>
+
+  <dt><dfn>drop-shadow(&lt;shadow&gt;)</dfn></dt>
+  <dd>
+    Applies a drop shadow effect to the input image. A drop shadow is
+    effectively a blurred, offset version of the input image's alpha mask
+    drawn in a particular color, composited below the image. The function
+    accepts a parameter of type &lt;shadow&gt; (defined in CSS3 Backgrounds),
+    with the exception that the 'inset' keyword is not allowed. The markup
+    equivalent of this function is <a href="#dropshadowEquivalent">given
+    below</a>.
+    <p class=issue>The FXTF is looking into allowing multiple drop shadows.</p>
+  </dd>
+  
+  <dt><dfn>custom(IDENT [, &lt;param&gt;]*)</dfn></dt>
+  <dd>
+     References a custom filter at-rule by the given identifier. See <a
+     href="#custom-filter">Custom Filter Function</a> for details.
+  </dd>
+</dl>
+
+<p>
+  The first function in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as
+  the input image. Subsequent operations take the output from the 
+  previous function as the input image. The exception is the function
+  that references a <a>'filter element'</a> element, which can specify an
+  alternate input, but still uses the previous output as its
+  <a href="#SourceGraphic">SourceGraphic</a>.
 </p>
 
 <p>
@@ -542,160 +675,6 @@
   The CSS WG wants to look into how to apply the filter to certain parts of an object (background, border) instead of just the whole group with descendants.
 </p>
 
-<h2 id="FilterFunction"><dfn>Filter Functions</dfn></h2>
-
-<p>
-  The value of the 'filter' property is a list of <dfn>&lt;filter-function&gt;</dfn>s
-  applied in the order provided. The individual filter functions are
-  separated by whitespace. The set of allowed filter functions is given
-  below.
-</p>
-
-<dl>
-  <dt>
-    <a>&lt;URL&gt;</a>
-  </dt>
-  <dd>
-    A URL reference to a 'filter' element. For example ''url(commonmasks.xml#mask)''.
-    If the URL references a non-existent object or the referenced  
-    object is not a <a>'filter element'</a> element, then the <span class="term">null 
-    filter</term> will be applied instead.
-  </dd>
-
-  <dt>
-    grayscale(&lt;number&gt; | &lt;percentage&gt;)
-  </dt>
-  <dd>
-    Converts the input image to grayscale. The passed parameter defines the proportion
-    of the conversion. A value of 100% is completely grayscale. A value of 0% leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    sepia(&lt;number&gt; | &lt;percentage&gt;)
-  </dt>
-  <dd>
-    Converts the input image to sepia. The passed parameter defines the proportion
-    of the conversion. A value of 100% is completely sepia. A value of 0 leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    saturate(&lt;number&gt; | &lt;percentage&gt;)
-  </dt>
-  <dd>
-    Saturates the input image. The passed parameter defines the proportion
-    of the conversion. A value of 0% is completely un-saturated. A value of 100% leaves the
-    input unchanged. Other values are linear multipliers on the effect.
-    Values of amount over 100% are allowed, providing super-saturated results.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    hue-rotate(&lt;angle&gt;)
-  </dt>
-  <dd>
-    Applies a hue rotation on the input image. The passed parameter defines the 
-    number of degrees around the color circle the input samples will be adjusted.
-    A value of 0deg leaves the input unchanged. If the parameter is missing,
-    a value of 0deg is used. Implementations should not normalize this value in order
-    to allow animations beyond 360deg.
-    The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    invert(&lt;number&gt; | &lt;percentage&gt;)
-  </dt>
-  <dd>
-    Inverts the samples in the input image. The passed parameter defines the proportion
-    of the conversion. A value of 100% is completely inverted. A value of 0% leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    opacity(&lt;number&gt; | &lt;percentage&gt;)
-  </dt>
-  <dd>
-    Applies transparency to the samples in the input image. The passed parameter defines the proportion
-    of the conversion. A value of 0% is completely transparent. A value of 100% leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    This is equivalent to multiplying the input image samples by amount.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    brightness(&lt;number&gt; | &lt;percentage&gt;)
-  </dt>
-  <dd>
-    Applies a linear multiplier to input image, making it appear more
-    or less bright.
-    A value of 0% will create an image that is completely black. A value of 100% leaves the
-    input unchanged. Other values are linear multipliers on the effect.
-    Values of amount over 100% are allowed, providing brighter results.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    contrast(&lt;number&gt; | &lt;percentage&gt;)
-  </dt>
-  <dd>
-    Adjusts the contrast of the input.
-    A value of 0% will create an image that is completely black. A value of 100% leaves the
-    input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    blur(&lt;length&gt;)
-  </dt>
-  <dd>
-    Applies a Gaussian blur to the input image.
-    The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function.
-    If no parameter is provided, then a value 0 is used. The parameter is
-    specified a CSS length, but does not accept percentage values.
-    The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
-  </dd>
-
-  <dt>
-    drop-shadow(&lt;shadow&gt;)
-  </dt>
-  <dd>
-    Applies a drop shadow effect to the input image. A drop shadow is
-    effectively a blurred, offset version of the input image's alpha mask
-    drawn in a particular color, composited below the image. The function
-    accepts a parameter of type &lt;shadow&gt; (defined in CSS3 Backgrounds),
-    with the exception that the 'inset' keyword is not allowed. The markup
-    equivalent of this function is <a href="#dropshadowEquivalent">given
-    below</a>.
-  </dd>
-  
-  <dt>
-    custom(IDENT [, &lt;param&gt;]*)
-  </dt>
-  <dd>
-     References a custom-filter at-rule by the given identifier. See <a
-     href="#custom-filter">Custom Filter Function</a> for details.
-  </dd>
-</dl>
-
-<p>
-  The first function in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as
-  the input image. Subsequent operations take the output from the 
-  previous function as the input image. The exception is the function
-  that references a <a>'filter element'</a> element, which can specify an
-  alternate input, but still uses the previous output as its
-  <a href="#SourceGraphic">SourceGraphic</a>.
-</p>
 
 <h2 id="FilterElement">The <span class="element-name">'filter'</span>
 element</h2>
@@ -4423,7 +4402,26 @@ color of the light source for <span class="term">filter primitives</span> <a>'fe
 </p>
 
 <p>
-  The custom-filter function allows extending Filter Effects with a customized filter effect. Customized filter effects are described by the @filter rule and referenced internal or external resources. Each @filter rule has a unique identifier that can be referenced by the custom-filter function. 
+  The custom-filter function allows extending this specification with a customized filter effect. Customized filter effects are described by the @filter rule or <a>feCustom element</a> element and referenced internal or external resources. Each @filter rule has a unique identifier that can be referenced by the custom-filter function. 
+</p>
+
+<h3 id="media-feature-filter">The media feature: ''filter''</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td><em>Value:
+      <td>&lt;custom-filter-type&gt;
+    <tr>
+      <td><em>Applies to:</em>
+      <td>bitmap media types
+    <tr>
+      <td><em>Accepts min/max prefix:</em>
+      <td>no
+</table>
+
+<p>
+  To verify if a UA supports a certain customized filter effect type, the Media Queries [[!MEDIAQ]] syntax gets extended by adding the media feature ''filter''.
 </p>
 
 <h3>The @filter rule</h3>
@@ -4490,12 +4488,12 @@ descriptor: value;</pre>
 </table>
 
 <p>
-  The 'src' descriptor takes a comma separated list of resource references with an optional format function. The file format is determined by a provided MIME type (e.g. transfered MIME type from the resource providing server). If a format function is provided, then the passed string overrides the MIME type definition of the resource. The type of the customized filter effect described by a @filter rule may depend on the passed resources.
+  The 'src' descriptor takes a comma separated list of resource references with an optional format function. The resource format is either determined by a provided custom filter format string with the format function, or by the MIME type of the resource (e.g. transfered MIME type from the resource providing server). If a format function is provided, then the passed string overrides the MIME type definition of the resource. The type of a customized filter effect depends on the format of the resources.
 </p>
       
 <p>
-  It is possible to reference custom filter resources in a document by a fragment identifier. The format type may be identified by the context
-  of the referenced custom filter. If the referenced resource is a '&lt;script&gt;' element, the ''type'' attribute defines the MIME type of the content.
+  It is possible to reference custom filter resources in a document by a fragment identifier. The format may be identified by the context
+  of the referenced resource. If the referenced resource is a '&lt;script&gt;' element, the ''type'' attribute defines the format of the content.
 </p>
 
 <div class="example">
@@ -4518,7 +4516,7 @@ descriptor: value;</pre>
 
 <p>Format strings defined by this specification:
 
-<table class="data" id="fontformats">
+<table class="data" id="custom-filter-formats">
   <thead>
     <tr>
       <th>String
@@ -4714,8 +4712,7 @@ descriptor: value;</pre>
       <td>auto
     <tr>
       <td><em>Computed Value:</em>
-      <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the input filter
-        effects region.
+      <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the input <a href="#FilterPrimitiveSubRegion">Filter primitive subregion</a>.
 </table>
 
 <p class="issue">
