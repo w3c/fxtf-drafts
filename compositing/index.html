@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="Compositing and Blending Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-01-01 name=dcterms.issued>
+  <meta content=2013-01-14 name=dcterms.issued>
   <meta content="Rik Cabanier" name=dcterms.creator>
   <meta content="Nikos Andronikos" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2013/ED-compositing-20130101/"
+  <meta content="http://www.w3.org/TR/2013/ED-compositing-20130114/"
    name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
@@ -238,7 +238,7 @@
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-compositing-20130101/-->
+     <!--http://www.w3.org/TR/2013/WD-compositing-20130114/-->
 
     <dt>Latest version:
 
@@ -1877,12 +1877,12 @@ components having the minimum, middle, and maximum values upon entry to the func
         <td><em>Value:</em>  
 
         <td><a
-         href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a>#
+         href="#ltcompositeareagt"><var>&lt;composite-area&gt;</var></a>#
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>source-over</code>’
+        <td>source-over
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -1920,13 +1920,13 @@ components having the minimum, middle, and maximum values upon entry to the func
   </div>
 
   <p>The syntax of the property of <a
-   href="#ltcompositeareagt"><var>&lt;compositearea&gt;</var></a> is given
+   href="#ltcompositeareagt"><var>&lt;composite-area&gt;</var></a> is given
    with:
 
   <pre class=compositearea><dfn
-   id=ltcompositeareagt><var>&lt;compositearea&gt;</var></dfn> = <a
+   id=ltcompositeareagt><var>&lt;composite-area&gt;</var></dfn> = <a
    href="#ltareagt">&lt;area&gt;</a>? &amp;&amp; <a
-   href="#ltcompositegt">&lt;composite&gt;</a></pre>
+   href="#ltcompositegt">&lt;composite-mode&gt;</a></pre>
 
   <p>The syntax of the property of <a
    href="#ltareagt"><var>&lt;area&gt;</var></a> is given with:
@@ -1966,16 +1966,19 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <p class=note>If <a href="#ltareagt"><var>&lt;area&gt;</var></a> is
    omitted, <var>‘<code class=css><a
-   href="#area-element">element</a></code>’</var> is assumed
+   href="#area-element">element</a></code>’</var> must be assumed. An area
+   can only be set once in the CSS property; an attempt to list it more than
+   once must be ignored.
 
-  <p class=note>In SVG, only <var>‘<code class=css><a
-   href="#area-element">element</a></code>’</var> is supported.
+  <p class=note>In SVG, <var>‘<code class=css><a
+   href="#area-element">element</a></code>’</var> will be used, regardless
+   of what area is specified.
 
   <p>The syntax of the property of <a
-   href="#ltcompositegt"><var>&lt;composite&gt;</var></a> is given with:
+   href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> is given with:
 
   <pre class=composite><dfn
-   id=ltcompositegt><var>&lt;composite&gt;</var></dfn> = <a
+   id=ltcompositegt><var>&lt;composite-mode&gt;</var></dfn> = <a
    href="#porterduffcompositingoperators_clear">clear</a> | <a
    href="#porterduffcompositingoperators_src">copy</a> | <a
    href="#porterduffcompositingoperators_dst">destination</a> | <a
@@ -1990,7 +1993,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="#porterduffcompositingoperators_xor">xor</a> | <a
    href="#porterduffcompositingoperators_plus">lighter</a></pre>
 
-  <p class=note>An area will always composite with <a
+  <p class=note>An area must always composite with <a
    href="#groupcompositingcliptoself">‘<code
    class=property>clip-to-self</code>’</a> set to ‘<code
    class=property>true</code>’.
@@ -2018,12 +2021,12 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td><a href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a>#
+        <td><a href="#ltblendareagt"><var>&lt;blend-area&gt;</var></a>#
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>normal</code>’
+        <td>normal
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2061,18 +2064,18 @@ components having the minimum, middle, and maximum values upon entry to the func
   </div>
 
   <p>The syntax of the property of <a
-   href="#ltblendareagt"><var>&lt;blendarea&gt;</var></a> is given with:
+   href="#ltblendareagt"><var>&lt;blend-area&gt;</var></a> is given with:
 
   <pre class=blendarea><dfn
-   id=ltblendareagt><var>&lt;blendarea&gt;</var></dfn> = <a
+   id=ltblendareagt><var>&lt;blend-area&gt;</var></dfn> = <a
    href="#ltareagt">&lt;area&gt;</a>? &amp;&amp; <a
-   href="#ltblendmodegt">&lt;blendmode&gt;</a></pre>
+   href="#ltblendmodegt">&lt;blend-mode&gt;</a></pre>
 
   <p>The syntax of the property of <a
-   href="#ltblendmodegt"><var>&lt;blendmode&gt;</var></a> is given with:
+   href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> is given with:
 
   <pre class=blendmode><dfn
-   id=ltblendmodegt><var>&lt;blendmode&gt;</var></dfn> = <a
+   id=ltblendmodegt><var>&lt;blend-mode&gt;</var></dfn> = <a
    href="#blendingnormal">normal</a> | <a
    href="#blendingmultiply">multiply</a> | <a
    href="#blendingscreen">screen</a> | <a
@@ -2116,12 +2119,12 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> auto | isolate
+        <td><a href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a>
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>isolate</code>’
+        <td>auto
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2159,6 +2162,13 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
+  <p>The syntax of the property of <a
+   href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> is given
+   with:
+
+  <pre class=isolated><dfn
+   id=isolated-propid><var>&lt;isolation-mode&gt;</var></dfn> = auto | isolate</pre>
+
   <p> In CSS, the ‘<code class=property>isolation</code>’ property of an
    &lt;img&gt; or a background image must always be ‘<code
    class=property>isolate</code>’. For instance, if you link to an SVG file
@@ -2168,6 +2178,9 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p> In SVG, <a
    href="http://www.w3.org/TR/SVG/masking.html#Masking">‘<code
    class=property>mask</code>’</a> always creates an isolated group.
+
+  <p class=note>‘<code class=property>Isolation</code>’ is always applied
+   to the area of the element
 
   <h4 id=knock-out><span class=secno>7.4.4. </span>The <span
    class=prop-name>‘<code class=property>knock-out</code>’</span>
@@ -2199,12 +2212,12 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> preserve | knock-out
+        <td><a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>preserve</code>’
+        <td>preserve
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2240,6 +2253,16 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
+  <p>The syntax of the property of <a
+   href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a> is given
+   with:
+
+  <pre class=knockout-prop><dfn
+   id=knockout-propid><var>&lt;knock-out-mode&gt;</var></dfn> = preserve | knock-out</pre>
+
+  <p class=note>‘<code class=property>Knock-out</code>’ is always applied
+   to the area of the element
+
   <h4 id=mix-shorthand><span class=secno>7.4.5. </span>Compositing and
    blending shorthand: the <span class=prop-name>‘<code
    class=property>mix</code>’</span> property</h4>
@@ -2266,7 +2289,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>source-over</code>’
+        <td>source-over
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2306,11 +2329,11 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <pre class=blendarea><dfn
    id=ltmixareagt><var>&lt;mixarea&gt;</var></dfn> = <a
-   href="#ltareagt">&lt;area&gt;</a>? &amp;&amp; <a
-   href="#ltblendmodegt">&lt;blendmode&gt;</a>? &amp;&amp; <a
-   href="#ltcompositegt">&lt;composite&gt;</a>? &amp;&amp; &lt;<a
-   href="#isolation">isolation</a>’&gt;? && &lt;<a
-   href="#knock-out">knock-out</a>’&gt;?</pre>
+   href="#ltareagt"><var>&lt;area&gt;</var></a>? &amp;&amp; [<a
+   href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a
+   href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a
+   href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a
+   href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>]</pre>
 
   <h3 id=cssbackgroundsyntax><span class=secno>7.5. </span>Specifying
    blending and compositing in the element background</h3>
@@ -2347,12 +2370,12 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> <a href="#ltcompositegt">&lt;composite&gt;</a>#
+        <td> <a href="#ltcompositegt">&lt;composite-mode&gt;</a>#
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>source-over</code>’
+        <td>source-over
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2387,6 +2410,11 @@ components having the minimum, middle, and maximum values upon entry to the func
    </dl>
   </div>
 
+  <p class=note>Background image will always composite with <a
+   href="#groupcompositingcliptoself">‘<code
+   class=property>clip-to-self</code>’</a> set to ‘<code
+   class=property>false</code>’.
+
   <h4 id=background-blend-mode><span class=secno>7.5.2. </span>The <span
    class=prop-name>‘<code
    class=property>background-blend-mode</code>’</span> property</h4>
@@ -2415,7 +2443,7 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>normal</code>’
+        <td>normal
 
        <tr valign=baseline>
         <td><em>Applies to:</em>  
@@ -2464,7 +2492,8 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p><a
    href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a>
    takes the same arguments as the ‘<code class=css><a
-   href="#mix-shorthand">mix</a></code>’ shorthand property. The ‘<code
+   href="#mix-shorthand">mix</a></code>’ shorthand property except that it
+   doesn't support the <a href="#ltareagt">&lt;area&gt;</a>. The ‘<code
    class=property>isolation</code>’ and ‘<code
    class=property>knock-out</code>’ values are ignored in a canvas 2d
    context. If a value is not specified, it is assumed to be the default.
@@ -2489,15 +2518,15 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> &lt;‘<a href="#mix-composite">mix-composite</a>’&gt; ||
-         &lt;<a href="#mix-blend-mode">mix-blend-mode</a>’&gt; || &lt;<a
-         href="#isolation">isolation</a>’&gt; || &lt;<a
-         href="#knock-out">knock-out</a>’&gt;
+        <td> <a href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a
+         href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a
+         href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a
+         href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
 
-        <td>‘<code class=property>source-over</code>’
+        <td>source-over
      </table>
    </dl>
   </div>
