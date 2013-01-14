@@ -11,12 +11,12 @@
    rel=dcterms.rights>
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-01-13 name=dcterms.issued>
+  <meta content=2013-01-14 name=dcterms.issued>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2013/ED-filter-effects-20130113/"
+  <meta content="http://www.w3.org/TR/2013/ED-filter-effects-20130114/"
    name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
@@ -33,7 +33,7 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 13 January
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 14 January
     2013</h2>
 
    <dl>
@@ -41,7 +41,7 @@
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130113/-->
+     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130114/-->
 
     <dt>Latest version:
 
@@ -1099,15 +1099,14 @@
     equivalent to multiplying the input image samples by amount. If the
     parameter is missing, a value of 100% is used. The markup equivalent of
     this function is <a href="#opacityEquivalent">given below</a>.
-    <p class=note> The ‘<code class=css>opacity()</code>’ function is not
-     meant to be a shorthand of the ‘<code class=property>opacity</code>’
-     property. Furthermore, it allows setting the transparency of
-     intermediate filter primitive results before passing to the next filter
-     primitive. If the ‘<code class=css>opacity()</code>’ filter function
-     is set as last filter primitive, the value of the ‘<code
-     class=property>opacity</code>’ property is multiplied on top of the
-     value of the filter function, which may result in a more transparent
-     content.
+    <p class=note> The opacity filter function is not meant to be a shorthand
+     of the ‘<code class=property>opacity</code>’ property. Furthermore,
+     it allows setting the transparency of intermediate filter primitive
+     results before passing to the next filter primitive. If the opacity
+     filter function is set as last filter primitive, the value of the
+     ‘<code class=property>opacity</code>’ property is multiplied on top
+     of the value of the filter function, which may result in a more
+     transparent content.
 
    <dt><dfn id=brightnessltnumbergt-ltpercentagegt>brightness(&lt;number&gt;
     | &lt;percentage&gt;)</dfn>
@@ -1119,6 +1118,10 @@
     providing brighter results. If the parameter is missing, a value of 100%
     is used. The markup equivalent of this function is <a
     href="#brightnessEquivalent">given below</a>.
+    <p class=issue>The brightness filter function (and possibly the contrast
+     filter function as well) do not have linear behavior. This is not a
+     problem, but might be confusing. Should we try to make it more linear as
+     graphic applications seem do it?
 
    <dt><dfn id=contrastltnumbergt-ltpercentagegt>contrast(&lt;number&gt; |
     &lt;percentage&gt;)</dfn>
@@ -3665,10 +3668,6 @@ A' = <a
             that:
 
            <p class=filterformula>k/n &lt;= C &lt; (k+1)/n
-
-           <p> For a value <code>C</code> pick a <code>k</code> such that:
-
-           <p class=filterformula>k/N &lt;= C &lt; (k+1)/N
 
            <p> The result <code>C'</code> is given by:
 
