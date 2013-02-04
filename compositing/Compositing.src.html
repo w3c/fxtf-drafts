@@ -1358,7 +1358,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <h4 id="isolation">The <span class="prop-name">'isolation'</span> property</h4>
 <p>
 Defines whether a group is isolated or not.<br />
-When a group is isolated, the group's backdrop must be ignored and replace with transparent black.<br />
+When a group is isolated, the group's backdrop must be ignored and replaced with transparent black.<br />
 Groups can be set to non-isolated with the 'auto' keyword. However certain operations that cause the creation of stacking context (such as 3D transforms) will still cause a group to be isolated.<br/>
 This behavior is described in more detail in <a href="#isolatedgroups">Isolated Gropus</a>.
 </p>
@@ -1414,7 +1414,7 @@ In CSS, the 'isolation' property of an &lt;img&gt; or a background image must al
 <p>
 In SVG, <a href="http://www.w3.org/TR/SVG/masking.html#Masking">'mask'</a> always creates an isolated group.
 </p>
-<p class="note">'Isolation' is always applied to the area of the element</p>
+<p class="note">'Isolation' is always applied to the <a href="#ltareagt">area</a> of the element</p>
 
 <h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
 <p>
@@ -1522,15 +1522,14 @@ Omitted values are set to their initial values.
 </div>
 
 <p>The syntax of the property of <var>&lt;mixa-rea&gt;</var> is given with:</p>
-<pre class="blendarea"><dfn id="ltmixareagt"><var>&lt;mix-area&gt;</var></dfn> = <a href="#ltareagt"><var>&lt;area&gt;</var></a>? &amp;&amp; [<a href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>]</pre>
+<pre class="blendarea"><dfn id="ltmixareagt"><var>&lt;mix-area&gt;</var></dfn> = <a href="#ltareagt"><var>&lt;area&gt;</var></a>? [<a href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>]</pre>
 
 
 
 <h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
 <h4 id="background-composite">The <span class="prop-name">'background-composite'</span> property</h4>
 <p><span class="prop-name">'background-composite'</span> defines how background images composite with each other.<br/>
-Background images must always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'false'.<br/>
-This means that the stack of background images acts as an isolated group and the background compositing operators do not affect content that is drawn prior to the element backdrop.
+Background images must always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'true'.<br/>
 </p>
 <p>
   The description of the <span class="prop-name">'background-composite'</span> property is
@@ -1585,7 +1584,8 @@ as follows:</p>
 
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
 
-<p>This attribute sets the blending mode of the composited result of all the background images. <br/>
+<p>This attribute sets the blending mode of each background images. <br/>
+Background image will blend with the background of the current stacking context according to the <a href="http://www.w3.org/TR/CSS21/zindex.html">CSS drawing model</a>.
   The description of the <span class="prop-name">'background-blend-mode'</span> property is
 as follows:</p>
 

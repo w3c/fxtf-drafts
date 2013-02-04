@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="Compositing and Blending Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-01-30 name=dcterms.issued>
+  <meta content=2013-02-04 name=dcterms.issued>
   <meta content="Rik Cabanier" name=dcterms.creator>
   <meta content="Nikos Andronikos" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2013/ED-compositing-20130130/"
+  <meta content="http://www.w3.org/TR/2013/ED-compositing-20130204/"
    name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
@@ -238,7 +238,7 @@
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/tip/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-compositing-20130130/-->
+     <!--http://www.w3.org/TR/2013/WD-compositing-20130204/-->
 
     <dt>Latest version:
 
@@ -278,7 +278,8 @@
     title="Massachusetts Institute of Technology">MIT</abbr></a>, <a
     href="http://www.ercim.eu/"><abbr
     title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
-    <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
+    <a href="http://www.keio.ac.jp/">Keio</a>, <a
+    href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved. W3C <a
     href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
     <a
     href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
@@ -2099,8 +2100,8 @@ components having the minimum, middle, and maximum values upon entry to the func
    property</h4>
 
   <p> Defines whether a group is isolated or not.<br>
-   When a group is isolated, the group's backdrop must be ignored and replace
-   with transparent black.<br>
+   When a group is isolated, the group's backdrop must be ignored and
+   replaced with transparent black.<br>
    Groups can be set to non-isolated with the ‘<code
    class=property>auto</code>’ keyword. However certain operations that
    cause the creation of stacking context (such as 3D transforms) will still
@@ -2181,7 +2182,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>mask</code>’</a> always creates an isolated group.
 
   <p class=note>‘<code class=property>Isolation</code>’ is always applied
-   to the area of the element
+   to the <a href="#ltareagt">area</a> of the element
 
   <h4 id=knock-out><span class=secno>7.4.4. </span>The <span
    class=prop-name>‘<code class=property>knock-out</code>’</span>
@@ -2329,7 +2330,7 @@ components having the minimum, middle, and maximum values upon entry to the func
 
   <pre class=blendarea><dfn
    id=ltmixareagt><var>&lt;mix-area&gt;</var></dfn> = <a
-   href="#ltareagt"><var>&lt;area&gt;</var></a>? &amp;&amp; [<a
+   href="#ltareagt"><var>&lt;area&gt;</var></a>? [<a
    href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a
    href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a
    href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a
@@ -2348,10 +2349,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    Background images must always composite with <a
    href="#groupcompositingcliptoself">‘<code
    class=property>clip-to-self</code>’</a> set to ‘<code
-   class=property>false</code>’.<br>
-   This means that the stack of background images acts as an isolated group
-   and the background compositing operators do not affect content that is
-   drawn prior to the element backdrop.
+   class=property>true</code>’.<br>
 
   <p> The description of the <span class=prop-name>‘<code
    class=property>background-composite</code>’</span> property is as
@@ -2419,9 +2417,11 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=prop-name>‘<code
    class=property>background-blend-mode</code>’</span> property</h4>
 
-  <p>This attribute sets the blending mode of the composited result of all
-   the background images. <br>
-   The description of the <span class=prop-name>‘<code
+  <p>This attribute sets the blending mode of each background images. <br>
+   Background image will blend with the background of the current stacking
+   context according to the <a
+   href="http://www.w3.org/TR/CSS21/zindex.html">CSS drawing model</a>. The
+   description of the <span class=prop-name>‘<code
    class=property>background-blend-mode</code>’</span> property is as
    follows:
 
