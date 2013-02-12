@@ -4403,24 +4403,30 @@ color of the light source for <span class="term">filter primitives</span> <a>'fe
   The custom-filter function allows extending this specification with a customized filter effect. Customized filter effects are described by the @filter rule or <a>feCustom element</a> element and referenced internal or external resources. Each @filter rule has a unique identifier that can be referenced by the custom-filter function. 
 </p>
 
-<h3 id="media-feature-filter">The media feature: ''filter''</h3>
+<h3 id="support-condition-filter">The '@supports' condition: ''filter''</h3>
 
-<table>
+<table class="descdef">
   <tbody>
     <tr>
       <td><em>Value:
       <td>&lt;custom-filter-type&gt;
-    <tr>
-      <td><em>Applies to:</em>
-      <td>bitmap media types
-    <tr>
-      <td><em>Accepts min/max prefix:</em>
-      <td>no
 </table>
 
 <p>
-  To verify if a UA supports a certain customized filter effect type, the Media Queries [[!MEDIAQ]] syntax gets extended by adding the media feature ''filter''.
+  To verify if a UA supports a certain customized filter effect type, the support condition syntax [[!CSS3-CONDITIONAL]] gets extended by adding the media feature ''filter''.
 </p>
+
+<pre class=prod><dfn>&lt;custom-filter-type&gt;</dfn> = webgl</pre>
+
+<p>
+  This specification supports the custom filter type ''webgl'' to indicate support for the <a href="#shading-language">shading language</a> based on WebGL. Future versions may allow additional keywords.
+</p>
+
+<div class="example">
+  <pre><code>@support filter(webgl) {
+    ...
+}</code></pre>
+</div>
 
 <h3>The @filter rule</h3>
 
@@ -4704,7 +4710,7 @@ descriptor: value;</pre>
       <td><dfn>margin</dfn>
     <tr>
       <td>Value:
-      <td>&lt;margin-width&gt;{1,4} | auto
+      <td>&lt;margin-width&gt;{1,4}
     <tr>
       <td><em>Initial:</em>
       <td>auto
@@ -4713,24 +4719,15 @@ descriptor: value;</pre>
       <td>the percentage as specified or the absolute length. A value of auto computes to 10% of the input <a href="#FilterPrimitiveSubRegion">Filter primitive subregion</a>.
 </table>
 
-<p class="issue">
-  The editors are looking into defining custom shader margins descriptors.
+<p>
+  The 'margin' descriptor values and the input <a href="#FilterPrimitiveSubRegion">Filter primitive subregion</a> define the filter primitive subregion of the custom filter primitive.
 </p>
 
 <pre class=prod><dfn>&lt;margin-width&gt;</dfn> = <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>auto</var></pre>
 
-<dl>
-  <dt><var>&lt;length&gt;</var></dt>
-  <dd>
-  </dd>
-  <dt><var>&lt;percentage&gt;</var></dt>
-  <dd>
-  </dd>
-  <dt><var>''auto''</var></dt>
-  <dd>
-  </dd>
-</dl>
-
+<p>
+  For the definiton of the <span>&lt;margin-width&gt;</span> values see CSS Box Model [[!CSS21]].
+</p>
 
 <h2 id="shading-language">Shading language</h2>
 
