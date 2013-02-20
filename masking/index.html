@@ -11,11 +11,11 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-01-18 name=dcterms.issued>
+  <meta content=2013-02-20 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://www.w3.org/TR/2013/ED-css-masking-20130118/"
+  <meta content="http://dev.w3.org/csswg/css-masking/"
    name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
@@ -30,7 +30,7 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 18 January
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 February
     2013</h2>
 
    <dl>
@@ -38,7 +38,7 @@
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130118/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130220/-->
 
     <dt>Latest version:
 
@@ -73,7 +73,8 @@
     title="Massachusetts Institute of Technology">MIT</abbr></a>, <a
     href="http://www.ercim.eu/"><abbr
     title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
-    <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a
+    <a href="http://www.keio.ac.jp/">Keio</a>, <a
+    href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved. W3C <a
     href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
     <a
     href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
@@ -333,9 +334,53 @@
    of a <a href="http://www.w3.org/TR/CSS2/visuren.html#z-index"
    title="Visual formatting model">stacking context</a>.
 
-  <p>Definitions of CSS properties and values in this specification comply
+  <p> Definitions of CSS properties and values in this specification comply
    with CSS Backgrounds and Borders <a href="#CSS3BG"
-   rel=biblioentry>[CSS3BG]<!--{{CSS3BG}}--></a>.
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>. To avoid redundancy, this
+   specification relies on descriptions and definitions of CSS Backgrounds
+   and Borders. Every reference will be marked clearly. The following terms
+   in CSS Backgrounds and Borders have the following meaning in this
+   specification:
+
+  <table class=data id=term-matching>
+   <thead>
+    <tr>
+     <th>Term in <a href="#CSS3BG"
+      rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>
+
+     <th>Term in CSS Masking
+
+   <tbody>
+    <tr>
+     <th>background images
+
+     <td>mask images
+
+    <tr>
+     <th>background painting area
+
+     <td>mask painting area
+
+    <tr>
+     <th>background-size
+
+     <td>mask-size
+
+    <tr>
+     <th>background-position
+
+     <td>mask-position
+
+    <tr>
+     <th>background positioning area
+
+     <td>mask positioning area
+
+    <tr>
+     <th>border image area
+
+     <td>mask box image area
+  </table>
 
   <p> Some property and element definitions in this specification require an
    SVG 1.1 implementation <a href="#SVG11"
@@ -985,98 +1030,12 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
   <pre class=prod><dfn
    id=ltrepeat-stylegt><var>&lt;repeat-style&gt;</var></dfn> = repeat-x | repeat-y | [repeat | space | round | no-repeat]{1,2}</pre>
 
-  <p>Single values for <a
-   href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a> have the
-   following meanings:
-
-  <dl>
-   <dt><dfn id=repeat-x>‘<code class=css>repeat-x</code>’</dfn>
-
-   <dd> Computes to ‘<code class=css>repeat no-repeat</code>’.
-
-   <dt><dfn id=repeat-y>‘<code class=css>repeat-y</code>’</dfn>
-
-   <dd> Computes to ‘<code class=css>no-repeat repeat</code>’.
-
-   <dt>‘<code class=css>repeat</code>’
-
-   <dd> Computes to ‘<code class=css>repeat repeat</code>’.
-
-   <dt>‘<code class=css>space</code>’
-
-   <dd> Computes to ‘<code class=css>space space</code>’
-
-   <dt>‘<code class=css>round</code>’
-
-   <dd> Computes to ‘<code class=css>round round</code>’
-
-   <dt>‘<code class=css>no-repeat</code>’
-
-   <dd> Computes to ‘<code class=css>no-repeat no-repeat</code>’
-  </dl>
-
-  <p>If a <a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a>
-   value has two keywords, the first one is for the horizontal direction, the
-   second for the vertical one, as follows:
-
-  <dl>
-   <dt><dfn id=repeat title="''repeat''!!'mask-repeat' value">‘<code
-    class=css>repeat</code>’</dfn>
-
-   <dd> The image is repeated in this direction as often as needed to cover
-    the <a class=index href="#mask-painting-area" id=mask-painting-area0>mask
-    painting area</a>.
-
-   <dt><dfn id=space title="''space''!!'mask-repeat' value">‘<code
-    class=css>space</code>’</dfn>
-
-   <dd> The image is repeated as often as will fit within the <a class=index
-    href="#mask-painting-area" id=mask-painting-area1>mask painting area</a>
-    without being clipped and then the images are spaced out to fill the
-    area. The first and last images touch the edges of the area. If the <a
-    class=index href="#mask-painting-area" id=mask-painting-area2>mask
-    painting area</a> is larger than the mask positioning area, then the
-    pattern repeats to fill the mask painting area. The value of ‘<a
-    href="#mask-position"><code class=property>mask-position</code></a>’
-    for this direction is ignored, unless there is not enough space for two
-    copies of the image in this direction, in which case only one image is
-    placed and ‘<a href="#mask-position"><code
-    class=property>mask-position</code></a>’ determines its position in
-    this direction.
-
-   <dt><dfn id=round title="''round''!!'mask-repeat' value">‘<code
-    class=css>round</code>’</dfn>
-
-   <dd> The image is repeated as often as will fit within the <a class=index
-    href="#mask-painting-area" id=mask-painting-area.>mask painting area.</a>
-    If it doesn't fit a whole number of times, it is rescaled so that it
-    does. See the formula under ‘<a href="#mask-size"><code
-    class=property>mask-size</code></a>’. If the <a class=index
-    href="#mask-painting-area" id=mask-painting-area3>mask painting area</a>
-    is larger than the mask positioning area, then the pattern repeats to
-    fill the mask painting area.
-
-   <dt><dfn id=no-repeat title="''no-repeat''!!'mask-repeat' value">‘<code
-    class=css>no-repeat</code>’</dfn>
-
-   <dd> The image is placed once and not repeated in this direction.
-  </dl>
-
-  <p>Unless one of the two keywords is ‘<code
-   class=css>no-repeat</code>’, the whole mask painting area will be tiled,
-   i.e., not just one vertical strip and one horizontal strip.
-
-  <div class=example>
-   <p style="display:none">Example(s):
-
-   <pre>
-body {
-  mask: url(pendant.png);
-  mask-repeat: repeat-y;
-  mask-position: center;
-}
-</pre>
-  </div>
+  <p>See <a
+   href="http://www.w3.org/TR/css3-background/#the-background-repeat">Tiling
+   Images: the ‘<code class=property>background-repeat</code>’
+   property</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a> for the defintions of the
+   property values.
 
   <div class=example>
    <p style="display:none">Example(s):
@@ -1095,7 +1054,7 @@ body {
 
     <p class=caption>The effect of ‘<code class=property>space</code>’:
      the mask image of a dot is tiled to cover the whole <a class=index
-     href="#mask-painting-area" id=mask-painting-area4>mask painting area</a>
+     href="#mask-painting-area" id=mask-painting-area0>mask painting area</a>
      and the mask images are equally spaced.
    </div>
   </div>
@@ -1144,7 +1103,7 @@ body {
      <th>Percentages:
 
      <td>refer to size of <a class=index href="#mask-painting-area"
-      id=mask-painting-area5>mask painting area</a> <em>minus</em> size of
+      id=mask-painting-area1>mask painting area</a> <em>minus</em> size of
       mask image; see text
 
     <tr>
@@ -1165,11 +1124,6 @@ body {
      <td>yes
   </table>
 
-  <p>If mask images have been specified, this property specifies their
-   initial position (after any <a href="#the-mask-size">resizing</a>) within
-   their corresponding <a class=index href="#mask-painting-area"
-   id=mask-painting-area6>mask painting area</a>.
-
   <p>Where
 
   <pre class=prod><dfn id=ltpositiongt><var>&lt;position&gt;</var></dfn> = [
@@ -1182,135 +1136,12 @@ body {
   [ center | [ top | bottom ] [ <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]? ]
 ]</pre>
 
-  <p>If only one value is specified, the second value is assumed to be
-   ‘<code class=css>center</code>’. If two values are given, a length or
-   percentage as the first value represents the horizontal position (or
-   offset) and a length or percentage as the second value represents the
-   vertical position (or offset). <var>&lt;percentage&gt;</var> and
-   <var>&lt;length&gt;</var> values here represent an offset of the top left
-   corner of the mask image from the top left corner of the <a class=index
-   href="#mask-painting-area" id=mask-painting-area7>mask painting area</a>.
-
-  <p class=note>Note that a pair of keywords can be reordered while a
-   combination of keyword and length or percentage cannot. So ‘<code
-   class=css>center left</code>’ is valid while ‘<code class=css>50%
-   left</code>’ is not.
-
-  <p>If three or four values are given, then each
-   <var>&lt;percentage&gt;</var> or<var>&lt;length&gt;</var> represents an
-   offset and must be preceded by a keyword, which specifies from which edge
-   the offset is given. For example, ‘<code class=css>mask-position: bottom
-   10px right 20px</code>’ represents a ‘<code class=css>10px</code>’
-   vertical offset up from the bottom edge and a ‘<code
-   class=css>20px</code>’ horizontal offset leftward from the right edge.
-   If three values are given, the missing offset is assumed to be zero.
-
-  <p>Positive values represent an offset <em>inward</em> from the edge of the
-   mask painting area. Negative values represent an offset <em>outward</em>
-   from the edge of the mask painting area.
-
-  <div class=example>
-   <p>The following declarations give the stated (horizontal, vertical)
-    offsets from the top left corner:
-
-   <pre>
- mask-position: left 10px top 15px;   /* 10px, 15px */
- mask-position: left      top     ;   /*  0px,  0px */
- mask-position:      10px     15px;   /* 10px, 15px */
- mask-position: left          15px;   /*  0px, 15px */
- mask-position:      10px top     ;   /* 10px,  0px */
- mask-position: left      top 15px;   /*  0px, 15px */
- mask-position: left 10px top     ;   /* 10px,  0px */</pre>
-  </div>
-
-  <dl>
-   <dt><var>&lt;percentage&gt;</var>
-
-   <dd>
-    <p>A percentage for the horizontal offset is relative to (<var>width of
-     mask painting area</var> - <var>width of mask image</var>). A percentage
-     for the vertical offset is relative to (<var>height of mask painting
-     area</var> - <var>height of mask image</var>), where the size of the
-     image is the size given by ‘<a href="#mask-size"><code
-     class=property>mask-size</code></a>’.
-
-    <div class=example>
-     <p>For example, with a value pair of ‘<code class=css>0% 0%</code>’,
-      the upper left corner of the image is aligned with the upper left
-      corner of, usually, the box's padding edge. A value pair of ‘<code
-      class=css>100% 100%</code>’ places the lower right corner of the
-      image in the lower right corner of the area. With a value pair of
-      ‘<code class=css>75% 50%</code>’, the point 75% across and 50% down
-      the image is to be placed at the point 75% across and 50% down the
-      area.
-
-     <div class=figure>
-      <p><img alt="Diagram of image position within element"
-       src="images/bg-pos.png">
-
-      <p class=caption>Diagram of the meaning of ‘<code
-       class=css>mask-position: 75% 50%</code>’.
-     </div>
-    </div>
-
-   <dt><var>&lt;length&gt;</var>
-
-   <dd>A length value gives a fixed length as the offset. For example, with a
-    value pair of ‘<code class=css>2cm 1cm</code>’, the upper left corner
-    of the image is placed 2cm to the right and 1cm below the upper left
-    corner of the mask painting area.
-
-   <dt><dfn id=top title="''top''!!'mask-position' value">‘<code
-    class=css>top</code>’</dfn>
-
-   <dd>Computes to ‘<code class=css>0%</code>’ for the vertical position
-    if one or two values are given, otherwise specifies the top edge as the
-    origin for the next offset.
-
-   <dt><dfn id=right title="''right''!!'mask-position' value">‘<code
-    class=css>right</code>’</dfn>
-
-   <dd>Computes to ‘<code class=css>100%</code>’ for the horizontal
-    position if one or two values are given, otherwise specifies the right
-    edge as the origin for the next offset.
-
-   <dt><dfn id=bottom title="''bottom''!!'mask-position' value">‘<code
-    class=css>bottom</code>’</dfn>
-
-   <dd>Computes to ‘<code class=css>100%</code>’ for the vertical
-    position if one or two values are given, otherwise specifies the bottom
-    edge as the origin for the next offset.
-
-   <dt><dfn id=left title="''left''!!'mask-position' value">‘<code
-    class=css>left</code>’</dfn>
-
-   <dd>Computes to ‘<code class=css>0%</code>’ for the horizontal
-    position if one or two values are given, otherwise specifies the left
-    edge as the origin for the next offset.
-
-   <dt><dfn id=center title="''center''!!'mask-position' value">‘<code
-    class=css>center</code>’</dfn>
-
-   <dd>Computes to ‘<code class=css>50%</code>’ (‘<code class=css>left
-    50%</code>’) for the horizontal position if the horizontal position is
-    not otherwise specified, or ‘<code class=css>50%</code>’ (‘<code
-    class=css>top 50%</code>’) for the vertical position if it is.
-  </dl>
-
-  <div class=example>
-   <p>The following ‘<a href="#mask"><code
-    class=property>mask</code></a>’ shorthand declarations use keywords to
-    set ‘<a href="#mask-position"><code
-    class=property>mask-position</code></a>’ to the stated percentage
-    values.
-
-   <pre>
-body { mask: url("banner.jpeg") right top }    /* 100%   0% */
-body { mask: url("banner.jpeg") top center }   /*  50%   0% */
-body { mask: url("banner.jpeg") center }       /*  50%  50% */
-body { mask: url("banner.jpeg") bottom }       /*  50% 100% */
-</pre>
-  </div>
+  <p>See <a
+   href="http://www.w3.org/TR/css3-background/#the-background-position">Positioning
+   Images: the ‘<code class=property>background-position</code>’
+   property</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a> for the defintions of the
+   property values.
 
   <div class=example>
    <p>In the example below, the (single) image is placed in the lower-right
@@ -1610,183 +1441,11 @@ body {
   <pre class=prod><dfn
    id=ltmask-sizegt><var>&lt;mask-size&gt;</var></dfn> = [ <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | auto ]{1,2} | cover | contain</pre>
 
-  <p>Values have the following meanings:
-
-  <dl>
-   <dt><dfn id=contain>‘<code class=css>contain</code>’</dfn>
-
-   <dd>Scale the image, while preserving its intrinsic aspect ratio (if any),
-    to the largest size such that both its width and its height can fit
-    inside the <a class=index href="#mask-positioning-area"
-    id=mask-positioning-area.>mask positioning area.</a>
-
-   <dt><dfn id=cover>‘<code class=css>cover</code>’</dfn>
-
-   <dd>Scale the image, while preserving its intrinsic aspect ratio (if any),
-    to the smallest size such that both its width and its height can
-    completely cover the mask positioning area.
-
-   <dt>[ <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <dfn
-    id=auto0 title="''auto''!!'mask-size' value">auto</dfn> ]{1,2}
-
-   <dd>
-    <p>The first value gives the width of the corresponding image, the second
-     value its height. If only one value is given the second is assumed to be
-     ‘<a href="#auto"><code class=css>auto</code></a>’.
-
-    <p>A percentage is relative to the background positioning area.
-
-    <p>An ‘<a href="#auto"><code class=css>auto</code></a>’ value for one
-     dimension is resolved by using the image's intrinsic ratio and the size
-     of the other dimension, or failing that, using the image's intrinsic
-     size, or failing that, treating it as 100%.
-
-    <p>If both values are ‘<a href="#auto"><code
-     class=css>auto</code></a>’ then the intrinsic width and/or height of
-     the image should be used, if any, the missing dimension (if any)
-     behaving as ‘<a href="#auto"><code class=css>auto</code></a>’ as
-     described above. If the image has neither an intrinsic width nor an
-     intrinsic height, its size is determined as for ‘<a
-     href="#contain"><code class=css>contain</code></a>’.
-
-    <p>Negative values are not allowed.
-  </dl>
-
-  <div class=example>
-   <p>Here are some examples. The first example stretches the mask image
-    independently in both dimensions to completely cover the content area:
-
-   <pre>
-div {
-    mask-image: url(plasma.png);
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
-    mask-origin: content-box }
-</pre>
-
-   <p>The second example stretches the image so that exactly two copies fit
-    horizontally. The aspect ratio is preserved:
-
-   <pre>
-p {
-    mask-image: url(tubes.png);
-    mask-size: 50% auto;
-    mask-origin: border-box }
-</pre>
-
-   <p>This example forces the mask image to be 15 by 15 pixels:
-
-   <pre>
-para {
-    mask-size: 15px 15px;
-    mask-image: url(tile.png)}
-</pre>
-
-   <p>This example uses the image's intrinsic size. Note that this is the
-    only possible behavior in CSS level 1 and 2.
-
-   <pre>
-body {
-    mask-size: auto;            /* default */
-    mask-image: url(flower.png) }
-</pre>
-
-   <p>The following example rounds the height of the image to 33.3%, up from
-    the specified value of 30%. At 30%, three images would fit entirely and a
-    fourth only partially. After rounding, three images fit. The width of the
-    image is 20% of the mask area width and is not rounded.
-
-   <pre>
-p {
-    mask-image: url(chain.png);
-    mask-repeat: no-repeat round;
-    mask-size: 20% 30% }
-</pre>
-  </div>
-
-  <p>If ‘<a href="#mask-repeat"><code
-   class=property>mask-repeat</code></a>’ is ‘<code
-   class=css>round</code>’ for one (or both) dimensions, there is a second
-   step. The UA must scale the image in that dimension (or both dimensions)
-   so that it fits a whole number of times in the mask positioning area. In
-   the case of the width (height is analogous):
-
-  <blockquote>
-   <p>If <var>X</var> ≠ 0 is the width of the image after step one and
-    <var>W</var> is the width of the mask positioning area, then the rounded
-    width <var>X'</var> = <var>W</var> / round(<var>W</var> / <var>X</var>)
-    where round() is a function that returns the nearest natural number
-    (integer greater than zero).
-  </blockquote>
-
-  <p>If ‘<a href="#mask-repeat"><code
-   class=property>mask-repeat</code></a>’ is ‘<code
-   class=css>round</code>’ for one dimension only and if ‘<a
-   href="#mask-size"><code class=property>mask-size</code></a>’ is ‘<a
-   href="#auto"><code class=css>auto</code></a>’ for the other dimension,
-   then there is a third step: that other dimension is scaled so that the
-   original aspect ratio is restored.
-
-  <div class=example>
-   <p>In this example the mask image is shown at its intrinsic size:
-
-   <pre>
-div {
-  mask-image: url(image1.png);
-  mask-repeat: repeat;         /* default */
-  mask-size: auto }            /* default */
-</pre>
-
-   <p>In the following example, the mask is shown with a width of 3em and its
-    height is scaled proportionally to keep the original aspect ratio:
-
-   <pre>
-div {
-  mask-image: url(image2.png);
-  mask-repeat: repeat;         /* default */
-  mask-size: 3em }             /* = '3em auto' */
-</pre>
-
-   <p>In the following example, the mask is shown with a width of
-    approximately 3em: scaled so that it fits a whole number of times in the
-    width of the mask. The height is scaled proportionally to keep the
-    original aspect ratio:
-
-   <pre>
-div {
-  mask-image: url(image3.png);
-  mask-repeat: round repeat;
-  mask-size: 3em auto }
-</pre>
-
-   <p>In the following example, the mask image is shown with a width of 3em
-    and a height that is either the height corresponding to that width at the
-    original aspect ratio or slightly less:
-
-   <pre>
-div {
-  mask-image: url(image4.png);
-  mask-repeat: repeat round;
-  mask-size: 3em auto }
-</pre>
-
-   <p>In the following example, the mask image is shown with a height of
-    approximately 4em: scaled slightly so that it fits a whole number of
-    times in the mask height. The width is the approximately the width that
-    correspond to a 4em height at the original aspect ratio: scaled slightly
-    so that it fits a whole number of times in the mask width.
-
-   <pre>
-div {
-  mask-image: url(image5.png);
-  mask-repeat: round;
-  mask-size: auto 4em }
-</pre>
-  </div>
-
-  <p>If the mask image's width or height resolves to zero, this causes the
-   image not to be displayed. (The effect is the same as if it had been a
-   transparent image.)
+  <p>See <a
+   href="http://www.w3.org/TR/css3-background/#the-background-size">Sizing
+   Images: the ‘background-size’ property</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a> for the defintions of the
+   property values.
 
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-size"><code
@@ -2474,7 +2133,10 @@ div {
 
   <p> These pieces may be sliced, scaled and stretched in various ways to fit
    the size of the <span class=index id=mask-image-area>mask image
-   area</span>.
+   area</span>. The usage of ‘<a href="#mask-box-image0"><code
+   class=property>mask-box-image</code></a>’ corresponds to the ‘<code
+   class=property>border-image</code>’ property of CSS Background and
+   Borders <a href="#CSS3BG" rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
 
   <div class=example>
    <p> The mask image in the following example is split into four corners
@@ -2619,62 +2281,15 @@ div {
   <p>This property specifies inward offsets from the top, right, bottom, and
    left edges of the mask image, dividing it into nine regions: four corners,
    four edges and a middle. The middle image part is discarded (treated as
-   fully transparent black) unless the ‘<a
-   href="#mask-box-image-slice-fill"><code class=css>fill</code></a>’
+   fully transparent black) unless the ‘<code class=css>fill</code>’
    keyword is present.
 
-  <p>When four values are specified, they set the offsets on the top, right,
-   bottom and left sides in that order. If the left is missing, it is the
-   same as the right; if the bottom is missing, it is the same as the top; if
-   the right is missing, it is the same as the top.
-
-  <dl>
-   <dt><var>&lt;percentage&gt;</var>
-
-   <dd>Percentages are relative to the size of the mask image: the width of
-    the image for the horizontal offsets, the height for vertical offsets.
-
-   <dt><var>&lt;number&gt;</var>
-
-   <dd>Numbers represent pixels in the mask image (if the image is a raster
-    image) or vector coordinates (if the image is a vector image).
-
-   <dt><dfn id=mask-box-image-slice-fill>‘<code
-    class=css>fill</code>’</dfn>
-
-   <dd>The ‘<a href="#mask-box-image-slice-fill"><code
-    class=css>fill</code></a>’ keyword, if present, causes the middle part
-    of the mask image to be preserved. (By default it is discarded, i.e.,
-    treated as transparent black.)
-  </dl>
-
-  <p>Negative values are not allowed and values bigger than the size of the
-   image are interpreted as ‘<code class=css>100%</code>’.
-
-  <p>The regions given by the ‘<a href="#mask-box-image-slice"><code
-   class=property>mask-box-image-slice</code></a>’ values may overlap.
-   However if the sum of the right and left widths is equal to or greater
-   than the width of the image, the images for the top and bottom edge and
-   the middle part are empty, which has the same effect as if a nonempty
-   transparent image had been specified for those parts. Analogously for the
-   top and bottom values.
-
-  <p>If the image must be sized to determine the slices (for example, for SVG
-   images with no intrinsic size), then it is sized as for an auto-sized
-   background, using the <a href="#mask-box-image-area"><i>mask box image
-   area</i></a> as the <i>default object size</i> in place of the <a
-   href="#mask-positioning-area"><i>mask positioning area</i></a>.
-
-  <div class=example>
-   <div class=figure>
-    <p><img
-     alt="Diagram: two horizontal cuts and two   vertical cuts through an image"
-     src="images/slice.svg" width=365>
-
-    <p class=caption>Diagram illustrating the cuts corresponding to the value
-     ‘<code class=css>25% 30% 12% 20%</code>’
-   </div>
-  </div>
+  <p>See <a
+   href="http://www.w3.org/TR/css3-background/#the-border-image-slice">Image
+   Slicing: the ‘<code class=property>border-image-slice</code>’
+   property</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a> for the defintions of the
+   property values.
 
   <h3 id=the-mask-box-image-width><span class=secno>7.3. </span>The ‘<a
    href="#mask-box-image-width"><code
@@ -2740,59 +2355,15 @@ div {
    href="#mask-box-image-outset"><code
    class=property>mask-box-image-outset</code></a>’.
 
-  <p>The four values of ‘<a href="#mask-box-image-width"><code
-   class=property>mask-box-image-width</code></a>’ specify offsets that are
-   used to divide the mask box image area into nine parts. They represent
-   inward distances from the the top, right, bottom, and left sides of the
-   area, respectively. If the left width is missing, it is the same as the
-   right; if the bottom is missing, it is the same as the top; if the right
-   is missing, it is the same as the top. Values have the following meanings:
-
-  <dl>
-   <dt><var>&lt;percentage&gt;</var>
-
-   <dd>Percentages refer to the size of the mask box image area: the width of
-    the area for horizontal offsets, the height for vertical offsets.
-
-   <dt><var>&lt;number&gt;</var>
-
-   <dd>Numbers represent multiples of the corresponding computed ‘<code
-    class=property>border-width</code>’.
-
-   <dt><dfn id=auto1 title="''auto''!!'mask-box-image-width' value">‘<code
-    class=css>auto</code>’</dfn>
-
-   <dd>If ‘<a href="#auto"><code class=css>auto</code></a>’ is specified
-    then the mask box image width is the intrinsic width or height (whichever
-    is applicable) of the corresponding image slice (see ‘<a
-    href="#mask-box-image-slice"><code
-    class=property>mask-box-image-slice</code></a>’). If the image does not
-    have the required intrinsic dimension then the corresponding ‘<code
-    class=property>border-width</code>’ is used instead.
-  </dl>
+  <p>See <a
+   href="http://www.w3.org/TR/css3-background/#the-border-image-width">Drawing
+   Areas: the ‘border-image-width’ property</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a> for the defintions of the
+   property values.
 
   <p class=note> Note that for SVG elements without an associated layout box
    the ‘<code class=property>border-width</code>’ is considered to be
    ‘<code class=css>0</code>’.
-
-  <p>Negative values are not allowed for any ‘<a
-   href="#mask-box-image-width"><code
-   class=property>mask-box-image-width</code></a>’ values.
-
-  <p>If two opposite ‘<a href="#mask-box-image-width"><code
-   class=property>mask-box-image-width</code></a>’ offsets are large enough
-   that they overlap, then the used values of all ‘<a
-   href="#mask-box-image-width"><code
-   class=property>mask-box-image-width</code></a>’ offsets are
-   proportionally reduced until they no longer overlap. In mathematical
-   notation: Given <var>L<sub>width</sub></var> as the width of the mask box
-   image area, <var>L<sub>height</sub></var> as its height, and
-   <var>W<sub><var>side</var></sub></var> as the mask image width offset for
-   the <var>side</var> side, let <var>f</var> =
-   min(<var>L<sub>width</sub></var>/(<var>W<sub>left</sub></var>+<var>W<sub>right</sub></var>),
-   <var>L<sub>height</sub></var>/(<var>W<sub>top</sub></var>+<var>W<sub>bottom</sub></var>)).
-   If <var>f</var> &lt; 1, then all <var>W</var> are reduced by multiplying
-   them by <var>f</var>.
 
   <h3 id=the-mask-box-image-outset><span class=secno>7.4. </span>The ‘<a
    href="#mask-box-image-outset"><code
@@ -2927,36 +2498,18 @@ div {
   <p>This property specifies how the images for the sides and the middle part
    of the mask image are scaled and tiled. The first keyword applies to the
    horizontal sides, the second to the vertical ones. If the second keyword
-   is absent, it is assumed to be the same as the first. Values have the
-   following meanings:
+   is absent, it is assumed to be the same as the first.
 
-  <dl>
-   <dt><dfn id=stretch>‘<code class=css>stretch</code>’</dfn>
+  <p>See <a
+   href="http://www.w3.org/TR/css3-background/#the-border-image-repeat">Image
+   Tiling: the ‘<code class=property>border-image-repeat</code>’
+   property</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a> for the defintions of the
+   property values.
 
-   <dd>The image is stretched to fill the area.
-
-   <dt><dfn id=repeat0
-    title="''repeat''!!'mask-box-image-repeat' value">‘<code
-    class=css>repeat</code>’</dfn>
-
-   <dd>The image is tiled (repeated) to fill the area.
-
-   <dt><dfn id=round0
-    title="''round''!!'mask-box-image-repeat' value">‘<code
-    class=css>round</code>’</dfn>
-
-   <dd>The image is tiled (repeated) to fill the area. If it does not fill
-    the area with a whole number of tiles, the image is rescaled so that it
-    does.
-
-   <dt><dfn id=space0
-    title="''space''!!'mask-box-image-repeat' value">‘<code
-    class=css>space</code>’</dfn>
-
-   <dd>The image is tiled (repeated) to fill the area. If it does not fill
-    the area with a whole number of tiles, the extra space is distributed
-    around the tiles.
-  </dl>
+  <p>The exact process for scaling and tiling the mask box image parts is
+   given in the section <a href="#masking-with-the-mask-box-image">Masking
+   with the mask-box-image</a>.
 
   <h3 id=the-mask-box-image><span class=secno>7.6. </span>The ‘<a
    href="#mask-box-image0"><code class=property>mask-box-image</code></a>’
@@ -3043,96 +2596,10 @@ div {
    href="#mask-box-image-slice"><code
    class=property>mask-box-image-slice</code></a>’ values, the resulting
    nine images are scaled, positioned, and tiled into their corresponding
-   mask image regions in four steps:
-
-  <ol>
-   <li>Scale to ‘<a href="#mask-box-image-width"><code
-    class=property>mask-box-image-width</code></a>’.
-    <ul>
-     <li>
-      <p>The two images for the top and bottom edges are made as tall as the
-       top and bottom <em>mask image area</em> parts, respectively, and their
-       width is scaled proportionally.
-
-     <li>
-      <p>The images for the left and right edge are made as wide as the left
-       and right <em>mask image area</em> parts, respectively, and their
-       height is scaled proportionally.
-
-     <li>
-      <p>The corner images are scaled to be as wide and as tall as the two
-       mask-box-image edges they are part of.
-
-     <li>
-      <p>The middle image's width is scaled by the same factor as the top
-       image unless that factor is zero or infinity, in which case the
-       scaling factor of the bottom is substituted, and failing that, the
-       width is not scaled. The height of the middle image is scaled by the
-       same factor as the left image unless that factor is zero or infinity,
-       in which case the scaling factor of the right image is substituted,
-       and failing that, the height is not scaled.
-    </ul>
-
-   <li>Scale to ‘<a href="#mask-box-image-repeat"><code
-    class=property>mask-box-image-repeat</code></a>’.
-    <ul>
-     <li>
-      <p>If the first keyword is ‘<a href="#stretch"><code
-       class=css>stretch</code></a>’, the top, middle and bottom images are
-       further scaled to be as wide as the middle part of the <span>mask
-       image area.</span> The height is not changed any further.
-
-     <li>
-      <p>If the first keyword is ‘<code class=css>round</code>’, the top,
-       middle and bottom images are resized in width, so that exactly a whole
-       number of them fit in the middle part of the mask-box-image area,
-       exactly as for ‘<code class=css>round</code>’ in the ‘<code
-       class=property>mask-image-repeat</code>’ property.
-
-     <li>
-      <p>If the first keyword is ‘<code class=css>repeat</code>’ or
-       ‘<code class=css>space</code>’, the top, middle, and bottom images
-       are not changed any further.
-
-     <li>
-      <p>The effects of ‘<a href="#stretch"><code
-       class=css>stretch</code></a>’, ‘<code class=css>round</code>’,
-       ‘<code class=css>repeat</code>’, and ‘<code
-       class=css>space</code>’ for the second keyword are analogous, acting
-       on the height of the left, middle and right images.
-    </ul>
-
-   <li>Position the first tile.
-    <ul>
-     <li>
-      <p>If the first keyword is ‘<code class=css>repeat</code>’, the
-       top, middle, and bottom images are centered horizontally in their
-       respective areas. Otherwise the images are placed at the left edge of
-       their respective parts of the mask-box-image area.
-
-     <li>
-      <p>If the second keyword is ‘<code class=css>repeat</code>’, the
-       left, middle, and right images are centered vertically in their
-       respective areas. Otherwise the images are placed at the top edge of
-       their respective parts of the mask-box-image area.
-    </ul>
-
-   <li>Tile and mask.
-    <ul>
-     <li>
-      <p>The images are then tiled to fill their respective areas. All tiles
-       are used together to mask the element and its descendants after
-       drawing all stacking levels.
-
-     <li>
-      <p>In the case of ‘<code class=css>space</code>’, any partial tiles
-       are discarded and the extra space distributed before, after, and
-       between the tiles. (I.e. the gap before the first tile, the gap after
-       the last tile, and the gaps between tiles are equalized.) <span
-       class=note>Note that this can result in empty mask-box-image side
-       areas.</span>
-    </ul>
-  </ol>
+   mask image regions in four steps as described in the section <a
+   href="http://www.w3.org/TR/css3-background/#border-image-process">Drawing
+   the Border Image</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
 
   <h2 id=clipping-paths><span class=secno>8. </span>Clipping paths</h2>
 
@@ -3833,8 +3300,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    class=property>clipPath</code>’</a> element must be ignored.
 
   <p>The raw geometry of each child element exclusive of rendering properties
-   such as ‘<a href="#mask-box-image-slice-fill"><code
-   class=property>fill</code></a>’, ‘<code
+   such as ‘<code class=property>fill</code>’, ‘<code
    class=property>stroke</code>’, ‘<code
    class=property>stroke-width</code>’ within a <a class=element-name
    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
@@ -4153,10 +3619,10 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <dt id=CORS>[CORS]
 
    <dd>Anne van Kesteren. <a
-    href="http://www.w3.org/TR/2012/WD-cors-20120403/"><cite>Cross-Origin
-    Resource Sharing.</cite></a> 3 April 2012. W3C Working Draft. (Work in
-    progress.) URL: <a
-    href="http://www.w3.org/TR/2012/WD-cors-20120403/">http://www.w3.org/TR/2012/WD-cors-20120403/</a>
+    href="http://www.w3.org/TR/2013/CR-cors-20130129/"><cite>Cross-Origin
+    Resource Sharing.</cite></a> 29 January 2013. W3C Candidate
+    Recommendation. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2013/CR-cors-20130129/">http://www.w3.org/TR/2013/CR-cors-20130129/</a>
    </dd>
    <!---->
 
@@ -4190,12 +3656,22 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    </dd>
    <!---->
 
+   <dt id=CSS3BG>[CSS3BG]
+
+   <dd>Bert Bos; Elika J. Etemad; Brad Kemper. <a
+    href="http://www.w3.org/TR/2012/CR-css3-background-20120724/"><cite>CSS
+    Backgrounds and Borders Module Level 3.</cite></a> 24 July 2012. W3C
+    Candidate Recommendation. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2012/CR-css3-background-20120724/">http://www.w3.org/TR/2012/CR-css3-background-20120724/</a>
+   </dd>
+   <!---->
+
    <dt id=DOM>[DOM]
 
-   <dd>Anne van Kesteren; Aryeh Gregor; Ms2ger. <a
-    href="http://www.w3.org/TR/2012/WD-dom-20120405/"><cite>DOM4.</cite></a>
-    5 April 2012. W3C Working Draft. (Work in progress.) URL: <a
-    href="http://www.w3.org/TR/2012/WD-dom-20120405/">http://www.w3.org/TR/2012/WD-dom-20120405/</a>
+   <dd>Anne van Kesteren; et al. <a
+    href="http://www.w3.org/TR/2012/WD-dom-20121206/"><cite>DOM4.</cite></a>
+    6 December 2012. W3C Working Draft. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2012/WD-dom-20121206/">http://www.w3.org/TR/2012/WD-dom-20121206/</a>
    </dd>
    <!---->
 
@@ -4249,16 +3725,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    </dd>
    <!---->
 
-   <dt id=CSS3BG>[CSS3BG]
-
-   <dd>Bert Bos; Elika J. Etemad; Brad Kemper. <a
-    href="http://www.w3.org/TR/2012/CR-css3-background-20120724/"><cite>CSS
-    Backgrounds and Borders Module Level 3.</cite></a> 24 July 2012. W3C
-    Candidate Recommendation. (Work in progress.) URL: <a
-    href="http://www.w3.org/TR/2012/CR-css3-background-20120724/">http://www.w3.org/TR/2012/CR-css3-background-20120724/</a>
-   </dd>
-   <!---->
-
    <dt id=CSSOM-VIEW>[CSSOM-VIEW]
 
    <dd>Anne van Kesteren. <a
@@ -4280,14 +3746,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>‘<a href="#auto"><code class=css>auto</code></a>’, <a href="#auto"
     title="section 6.2."><strong>6.2.</strong></a>
-    <ul>
-     <li>‘<a href="#mask-box-image-width"><code
-      class=property>mask-box-image-width</code></a>’ value, <a
-      href="#auto1" title="section 7.3."><strong>7.3.</strong></a>
-
-     <li>‘<a href="#mask-size"><code class=property>mask-size</code></a>’
-      value, <a href="#auto0" title="section 6.7."><strong>6.7.</strong></a>
-    </ul>
 
    <li>‘<code class=css>border-box</code>’
     <ul>
@@ -4303,13 +3761,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>&lt;bottom&gt;, <a href="#ltbottomgt"
     title="section 8.3."><strong>8.3.</strong></a>
 
-   <li>‘<code class=css>bottom</code>’
-    <ul>
-     <li>‘<a href="#mask-position"><code
-      class=property>mask-position</code></a>’ value, <a href="#bottom"
-      title="section 6.4."><strong>6.4.</strong></a>
-    </ul>
-
    <li>bounding client rect, <a href="#bounding-client-rect"
     title="section 4."><strong>4.</strong></a>, <a
     href="#bounding-client-rect0" title="section 8.1.">8.1.</a>, <a
@@ -4318,13 +3769,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
     title="section 6.5."><strong>6.5.</strong></a>
-
-   <li>‘<code class=css>center</code>’
-    <ul>
-     <li>‘<a href="#mask-position"><code
-      class=property>mask-position</code></a>’ value, <a href="#center"
-      title="section 6.4."><strong>6.4.</strong></a>
-    </ul>
 
    <li>‘<a href="#child"><code class=css>child</code></a>’, <a
     href="#child" title="section 6.1."><strong>6.1.</strong></a>
@@ -4360,9 +3804,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     href="#ltcompound-selectorgt"
     title="section 6.1."><strong>6.1.</strong></a>
 
-   <li>‘<a href="#contain"><code class=css>contain</code></a>’, <a
-    href="#contain" title="section 6.7."><strong>6.7.</strong></a>
-
    <li>‘<a href="#content-box0"><code class=css>content-box</code></a>’,
     <a href="#content-box0" title="section 6.6."><strong>6.6.</strong></a>
     <ul>
@@ -4371,15 +3812,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
       title="section 6.5."><strong>6.5.</strong></a>
     </ul>
 
-   <li>‘<a href="#cover"><code class=css>cover</code></a>’, <a
-    href="#cover" title="section 6.7."><strong>6.7.</strong></a>
-
    <li>‘<a href="#evenodd"><code class=css>evenodd</code></a>’, <a
     href="#evenodd" title="section 8.2."><strong>8.2.</strong></a>
-
-   <li>‘<a href="#mask-box-image-slice-fill"><code
-    class=css>fill</code></a>’, <a href="#mask-box-image-slice-fill"
-    title="section 7.2."><strong>7.2.</strong></a>
 
    <li>&lt;image&gt;, <a href="#ltimagegt"
     title="section 6.1."><strong>6.1.</strong></a>
@@ -4388,13 +3822,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>&lt;left&gt;, <a href="#ltleftgt"
     title="section 8.3."><strong>8.3.</strong></a>
-
-   <li>‘<code class=css>left</code>’
-    <ul>
-     <li>‘<a href="#mask-position"><code
-      class=property>mask-position</code></a>’ value, <a href="#left"
-      title="section 6.4."><strong>6.4.</strong></a>
-    </ul>
 
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="section 4."><strong>4.</strong></a>
@@ -4450,22 +3877,14 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>mask painting area, <a href="#mask-painting-area"
     title="section 6.5."><strong>6.5.</strong></a>, <a
-    href="#mask-painting-area." title="section 6.3.">6.3.</a>, <a
     href="#mask-painting-area0" title="section 6.3.">6.3.</a>, <a
-    href="#mask-painting-area1" title="section 6.3.">6.3.</a>, <a
-    href="#mask-painting-area2" title="section 6.3.">6.3.</a>, <a
-    href="#mask-painting-area3" title="section 6.3.">6.3.</a>, <a
-    href="#mask-painting-area4" title="section 6.3.">6.3.</a>, <a
-    href="#mask-painting-area5" title="section 6.4.">6.4.</a>, <a
-    href="#mask-painting-area6" title="section 6.4.">6.4.</a>, <a
-    href="#mask-painting-area7" title="section 6.4.">6.4.</a>
+    href="#mask-painting-area1" title="section 6.4.">6.4.</a>
 
    <li>mask-position, <a href="#mask-position"
     title="section 6.4."><strong>6.4.</strong></a>
 
    <li>mask positioning area, <a href="#mask-positioning-area"
-    title="section 6.6."><strong>6.6.</strong></a>, <a
-    href="#mask-positioning-area." title="section 6.7.">6.7.</a>
+    title="section 6.6."><strong>6.6.</strong></a>
 
    <li>&lt;mask-reference&gt;, <a href="#ltmask-referencegt"
     title="section 6.1."><strong>6.1.</strong></a>
@@ -4501,13 +3920,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>‘<a href="#nonzero"><code class=css>nonzero</code></a>’, <a
     href="#nonzero" title="section 8.2."><strong>8.2.</strong></a>
 
-   <li>‘<code class=css>no-repeat</code>’
-    <ul>
-     <li>‘<a href="#mask-repeat"><code
-      class=property>mask-repeat</code></a>’ value, <a href="#no-repeat"
-      title="section 6.3."><strong>6.3.</strong></a>
-    </ul>
-
    <li>object bounding box units, <a href="#object-bounding-box-units"
     title="section 4."><strong>4.</strong></a>, <a
     href="#object-bounding-box-units0" title="section 8.4.">8.4.</a>
@@ -4526,46 +3938,11 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li><a href="#ltpositiongt"><var>&lt;position&gt;</var></a>, <a
     href="#ltpositiongt" title="section 6.4."><strong>6.4.</strong></a>
 
-   <li>‘<code class=css>repeat</code>’
-    <ul>
-     <li>‘<a href="#mask-box-image-repeat"><code
-      class=property>mask-box-image-repeat</code></a>’ value, <a
-      href="#repeat0" title="section 7.5."><strong>7.5.</strong></a>
-
-     <li>‘<a href="#mask-repeat"><code
-      class=property>mask-repeat</code></a>’ value, <a href="#repeat"
-      title="section 6.3."><strong>6.3.</strong></a>
-    </ul>
-
    <li><a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a>, <a
     href="#ltrepeat-stylegt" title="section 6.3."><strong>6.3.</strong></a>
 
-   <li>‘<a href="#repeat-x"><code class=css>repeat-x</code></a>’, <a
-    href="#repeat-x" title="section 6.3."><strong>6.3.</strong></a>
-
-   <li>‘<a href="#repeat-y"><code class=css>repeat-y</code></a>’, <a
-    href="#repeat-y" title="section 6.3."><strong>6.3.</strong></a>
-
    <li>&lt;right&gt;, <a href="#ltrightgt"
     title="section 8.3."><strong>8.3.</strong></a>
-
-   <li>‘<code class=css>right</code>’
-    <ul>
-     <li>‘<a href="#mask-position"><code
-      class=property>mask-position</code></a>’ value, <a href="#right"
-      title="section 6.4."><strong>6.4.</strong></a>
-    </ul>
-
-   <li>‘<code class=css>round</code>’
-    <ul>
-     <li>‘<a href="#mask-box-image-repeat"><code
-      class=property>mask-box-image-repeat</code></a>’ value, <a
-      href="#round0" title="section 7.5."><strong>7.5.</strong></a>
-
-     <li>‘<a href="#mask-repeat"><code
-      class=property>mask-repeat</code></a>’ value, <a href="#round"
-      title="section 6.3."><strong>6.3.</strong></a>
-    </ul>
 
    <li>‘<a href="#ltshapegt"><code class=css>&lt;shape&gt;</code></a>’,
     <a href="#ltshapegt" title="section 8.1."><strong>8.1.</strong></a>
@@ -4573,29 +3950,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li><a href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>, <a
     href="#ltsource-typegt" title="section 6.2."><strong>6.2.</strong></a>
 
-   <li>‘<code class=css>space</code>’
-    <ul>
-     <li>‘<a href="#mask-box-image-repeat"><code
-      class=property>mask-box-image-repeat</code></a>’ value, <a
-      href="#space0" title="section 7.5."><strong>7.5.</strong></a>
-
-     <li>‘<a href="#mask-repeat"><code
-      class=property>mask-repeat</code></a>’ value, <a href="#space"
-      title="section 6.3."><strong>6.3.</strong></a>
-    </ul>
-
-   <li>‘<a href="#stretch"><code class=css>stretch</code></a>’, <a
-    href="#stretch" title="section 7.5."><strong>7.5.</strong></a>
-
    <li>&lt;top&gt;, <a href="#lttopgt"
     title="section 8.3."><strong>8.3.</strong></a>
-
-   <li>‘<code class=css>top</code>’
-    <ul>
-     <li>‘<a href="#mask-position"><code
-      class=property>mask-position</code></a>’ value, <a href="#top"
-      title="section 6.4."><strong>6.4.</strong></a>
-    </ul>
 
    <li>‘<a href="#lturlgt"><code class=css>&lt;url&gt;</code></a>’, <a
     href="#lturlgt" title="section 6.1."><strong>6.1.</strong></a>
