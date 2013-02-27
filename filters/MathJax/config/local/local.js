@@ -13,5 +13,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+MathJax.Hub.Config({
+         SVG: { linebreaks: { automatic: true } }
+});
 
 MathJax.Ajax.loadComplete("[MathJax]/config/local/local.js");
