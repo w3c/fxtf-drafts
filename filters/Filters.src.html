@@ -1256,7 +1256,7 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
 <p id="BlendingTable">The following table
 provides the list of available image blending modes:</p>
 
-<table class="data" id="custom-filter-formats" summary="blending modes">
+<table class="data" summary="blending modes">
   <thead>
     <tr>
       <th>Image Blending Mode
@@ -3231,7 +3231,7 @@ is the input to an <a>'feTile'</a>, the filter is evaluated with periodic bounda
 </dl>
 </div>
 
-<p><a href="#AnExample">The example</a> at the start of this chapter makes
+<p><a href="#introduction">The example</a> at the start of this chapter makes
 use of the <a>'feGaussianBlur'</a> filter primitive
 to create a drop shadow effect.</p>
 
@@ -4913,11 +4913,11 @@ descriptor: value;</pre>
       <li><code>gl_FragColor</code>. When the fragment shader parameter is a direct reference to a source file,
           that shader should compute a <code>gl_FragColor</code>. This may be userful, for example, to compute
           complex patterns.</li>
-      <li><code>css_MixColor</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
-          function, then it can compute a <i>mix color</i> value that is composited with the rendered
+      <li><code>css_MixColor</code>. When the 'mix'
+          descriptor is set, then it can compute a <i>mix color</i> value that is composited with the rendered
           content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
-      <li><code>css_ColorMatrix</code>. When the fragment shader parameter uses the <a href="#fragmentShader-attribute"><code>mix()</code></a>
-              function, then it can compute a <i>color matrix</i> value that is multiplied with the rendered
+      <li><code>css_ColorMatrix</code>. When the 'mix'
+          descriptor is set, then it can computes a <i>color matrix</i> value that is multiplied with the rendered
               content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
   </ul>
   
@@ -5001,39 +5001,44 @@ void main()
   </div>
 
   
-  <h4>Vertex attribute variables</h4>
+<h4>Vertex attribute variables</h4>
 
-  The following attribute variables are available to the vertex shader.
+<p>The following attribute variables are available to the vertex shader.
 
-  <table class="values-desc">
-      <tr>
-          <td><code>attribute vec4 a_position</code></td>
-          <td>The vertex coordinates in the <a href="#FilterEffectsRegion">filter region</a> box. 
-              Coordinates are normalized to the [-0.5, 0.5] range along the x, y and z axis.</td>
-      </tr>
-      <tr>
-          <td><code>attribute vec2 a_texCoord;</code></td>
-          <td>The vertex's texture coordinate. Coordinates are in the [0, 1] range on both axis</td>
-      </tr>
-      <tr>
-          <td><code>attribute vec2 a_meshCoord;</code></td>
-          <td>The vertex's coordinate in the <a href="#vertexMesh-attribute">mesh box</a>. 
-              Coordinates are in the [0, 1] range on both axis.</td>
-      </tr>
-      <tr>
-          <td><code>attribute vec3 a_triangleCoord;</code></td>
-          <td><p>The x and y values provide the coordinate of the current 'tile' in the shader mesh. 
+<table class="data">
+  <thead>
+    <tr>
+      <th>attribute variables
+      <td>description
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th><code>attribute vec4 a_position</code>
+      <td>The vertex coordinates in the <a href="#FilterEffectsRegion">filter region</a> box. Coordinates are normalized to the [-0.5, 0.5] range along the x, y and z axis.
+    </tr>
+    <tr>
+      <th><code>attribute vec2 a_texCoord</code>
+      <td>The vertex's texture coordinate. Coordinates are in the [0, 1] range on both axis
+    </tr>
+    <tr>
+      <th><code>attribute vec2 a_meshCoord</code>
+      <td>The vertex's coordinate in the <a href="#gridltintegergt12-detached-attached-">mesh box</a>. Coordinates are in the [0, 1] range on both axis.
+    </tr>
+    <tr>
+      <th><code>attribute vec3 a_triangleCoord</code>
+      <td>
+        <p>The x and y values provide the coordinate of the current 'tile' in the shader mesh. 
               For example, (0, 0) for the
               top right tile in the mesh. The x and y values are in the [0, mesh columns] and [0, mesh rows]
               range, respectively.</p>
-              <p>The z coordinate is computed according to the following figure. The z coordinate value 
+        <p>The z coordinate is computed according to the following figure. The z coordinate value 
                   is provided for each vertex and corresponding triangle. For example, for the bottom
                   right vertex of the top triangle, the z coordinate will be 2. For the bottom
                   right vertex of the bottom triangle, the z coordinate will be 4.</p>
-      </tr>
-      </tr>
-
-  </table>
+    </tr>
+  </tbody>
+</table>
 
 
               <div class="figure">
@@ -5640,11 +5645,11 @@ referenced by E is defined as follows:</p>
 
   <h3 id="shader-params-interpolation">Interpolating the shader-params component in the custom() function.</h3>
 
-  <p>To interpolate between <a href="#shader-params"><code>params</code></a> values in a
+  <p>To interpolate between 'parameters' values in a
       <code>custom()</code> filter function or between 
-      <a>'feCustom element'</a>
-      <a href="#feCustomParamsAttribute">'params'</a> attribute values, the user
-      agent should interpolate between each of the <strong><a href="#param-def">[param-def]</a></strong> values
+      <a>'feCustomParam element'</a>
+      attribute values, the user
+      agent should interpolate between each of the parameter values
       according to its type. List of values need to be of the same length. Matrices need to be of the same
       dimension. Arrays need to be of the same size.</p>
 
@@ -5678,7 +5683,7 @@ referenced by E is defined as follows:</p>
 
   <div class="note">
       As with the 'transform' property, it is not possible to animate the different components of the 
-      'shader-params' property on different timelines or with different keyframes. This is a generic
+      custom() filter parameters on different timelines or with different keyframes. This is a generic
       issue of animating properties that have multiple components to them.
   </div>
 
