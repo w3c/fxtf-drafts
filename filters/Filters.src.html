@@ -153,18 +153,14 @@
   </li>
 </ol>
 
-<p id="AnExample">
-  The following shows an example of a filter effect.
-</p>
-
-<p>
-  <span class="example-ref">Example filters01</span> - introducing filter
-  effects.
-</p>
-
 <div class="example">
-  <img src="examples/filters01.png" alt="Example Filter">
-  <br>
+  <p>The following shows an example of a filter effect.
+
+  <div class="figure">
+    <img src="examples/filters01.png" alt="Example Filter">
+    <p class="capture">Initial example for a filtered object.</p>
+  </div>
+
   <p><a href="examples/filters01.svg">View this example</a> as SVG</p>
 </div>
 
@@ -518,7 +514,7 @@
  | <var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>saturate(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>hue-rotate(&lt;angle&gt;)</var> | <var>invert(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>opacity(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>brightness(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>blur(&lt;length&gt;)</var> | <var>drop-shadow(&lt;shadow&gt;)</var>
+ | <var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>blur(&lt;length&gt;)</var> | <var>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#)</var>
  | <var>custom(IDENT [, &lt;param&gt;]*)</var></pre>
 
 <dl id="FilterFunction">
@@ -527,7 +523,7 @@
     A URL reference to a 'filter' element. For example ''url(commonmasks.xml#mask)''.
     If the URL references a non-existent object or the referenced  
     object is not a <a>'filter element'</a> element, then the <span>null 
-    filter</span> will be applied instead.
+    filter</span> will be applied instead. 
   </dd>
 
   <dt><dfn>grayscale(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
@@ -594,18 +590,17 @@
   <dd>
     Applies a linear multiplier to input image, making it appear more
     or less bright.
-    A value of 0% will create an image that is completely black. A value of 100% leaves the
+    A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the
     input unchanged. Other values are linear multipliers on the effect.
     Values of amount over 100% are allowed, providing brighter results.
     If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
-    <p class=issue>The brightness filter function (and possibly the contrast filter function as well) do not have linear behavior. This is not a problem, but might be confusing. Should we try to make it more linear as graphic applications seem do it?</p>
   </dd>
 
   <dt><dfn>contrast(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
   <dd>
     Adjusts the contrast of the input.
-    A value of 0% will create an image that is completely gray. A value of 100% leaves the
+    A value of ''0%'' will create an image that is completely gray. A value of ''100%'' leaves the
     input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
     If the parameter is missing, a value of 100% is used.
     The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
@@ -630,7 +625,6 @@
     The markup
     equivalent of this function is <a href="#dropshadowEquivalent">given
     below</a>.
-    <p class=issue>The FXTF is looking into allowing multiple drop shadows.</p>
   </dd>
   
   <dt><dfn>custom(IDENT [, &lt;param&gt;]*)</dfn></dt>
@@ -700,16 +694,15 @@ follows:</p>
   <em>objectBoundingBox</em>"</dt>
     <dd>Specifies the coordinate system for the various length values within
       the <span class="term">filter primitives</span> and for the attributes that define the <a>filter primitive subregion</a>.<br />
-      If <span class='attr-value'>primitiveUnits="userSpaceOnUse"</span>, any length values
+      If <a>'filter/primitiveUnits'</a> is equal to ''userSpaceOnUse'', any length values
       within the filter definitions represent values in the current <span class="term">user
       coordinate system</span> in place at the time when the <a>'filter element'</a>
       element is referenced (i.e., the user coordinate system for the element
       referencing the <a>'filter element'</a> element via a 'filter'
       property).<br />
-      If <span class='attr-value'>primitiveUnits="objectBoundingBox"</span>, then any length
+      If <a>'filter/primitiveUnits'</a> is equal to ''objectBoundingBox'', then any length
       values within the filter definitions represent fractions or percentages
-      of the bounding box on the referencing element (see <a href="#TermObjectBoundingBoxUnits">object bounding box
-      units</a>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value
+      of the bounding box on the referencing element (see <span>object bounding box units</span>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value
     this number is expanded out before the <a>'filter/primitiveUnits'</a> computation takes place.
     <br />
       The <a>lacuna value</a> for <a>'filter/primitiveUnits'</a> is <span class="attr-value">userSpaceOnUse</span>.<br />
@@ -790,20 +783,19 @@ effects region:</p>
       <a>'filter/width'</a>, <a>'filter/height'</a>.</p>
     
     <p>
-  If <span class="attr-value">filterUnits="userSpaceOnUse"</span>, <a>'filter/x'</a>, <a>'filter/y'</a>,
+  If <a>'filter/filterUnits'</a> is equal to ''userSpaceOnUse'', <a>'filter/x'</a>, <a>'filter/y'</a>,
       <a>'filter/width'</a>, <a>'filter/height'</a> represent values in the current user coordinate
       system in place at the time when the <a>'filter element'</a> element is referenced (i.e., the
       user coordinate system for the element referencing the <a>'filter element'</a>
       element via a 'filter' property).</p>
 
       <p>
-  If <span class="attr-value">filterUnits="objectBoundingBox"</span>, then <a>'filter/x'</a>, <a>'filter/y'</a>,
+  If <a>'filter/filterUnits'</a> is equal to ''objectBoundingBox'', then <a>'filter/x'</a>, <a>'filter/y'</a>,
       <a>'filter/width'</a>, <a>'filter/height'</a> represent fractions or percentages of the
       bounding box on the referencing element (see <a>object bounding box units</a>).</p>
 
     <p>
-  The <a>lacuna value</a> for <a>'filterUnits'</a> is <span
-      class="attr-value">objectBoundingBox</span>.</p>
+  The <a>lacuna value</a> for <a>'filterUnits'</a> is ''objectBoundingBox''.</p>
 
       <p><span class="anim-target">Animatable: yes.</span></p>
   </dd>
@@ -1141,6 +1133,7 @@ to be set up such that all offscreens are made big enough to accommodate any
 pixels which even partly intersect with either the <a>filter region</a> or the
 filter primitive subregions.</p>
 
+<div class="example">
 <p><a>'feTile'</a> references a previous filter primitive and then stitches the tiles together
 based on the <a>filter primitive subregion</a> of the referenced filter primitive in
 order to fill its own <a>filter primitive subregion</a>.</p>
@@ -1187,7 +1180,14 @@ order to fill its own <a>filter primitive subregion</a>.</p>
     &lt;/g&gt;
     &lt;circle fill="green" fill-opacity="0.5" filter="url(#merge)" cx="100" cy="100" r="90"/&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/filtersubregion00.png"/></td></tr></table><p class="view-as-svg"><a href="examples/filtersubregion00.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+<div class="figure">
+  <table summary="Example"><tr><td><img alt="Example " src="examples/filtersubregion00.png"/></td></tr></table>
+  <p class="caption">Example for subregions</p>
+</div>
+
+<p class="view-as-svg"><a href="examples/filtersubregion00.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
 <p>
 In the example above there are three rects that each have a cross and a circle in them.
@@ -1206,7 +1206,7 @@ The lower left rect shows an <a>'feMerge'</a> that merges <a>SourceGraphic</a> w
 <li>The upper right rect shows an <a>'feBlend'</a> that has <span class="attr-name">mode</span>="<span class="attr-value">multiply</span>". Since the circle in this case isn't transparent the result is totally opaque. The rect should be dark green and the cross should not be visible through it.
 </li>
 </ul>
-
+</div>
 
 <h3 id="feBlendElement">Filter primitive <span class="element-name">'feBlend'</span></h3>
 
@@ -1255,31 +1255,33 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
 <p id="BlendingTable">The following table
 provides the list of available image blending modes:</p>
 
-<table summary="blending modes" width="500" border="1">
+<table class="data" id="custom-filter-formats" summary="blending modes">
+  <thead>
+    <tr>
+      <th>Image Blending Mode
+      <th>Formula for computing result color
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Image Blending Mode</td>
-      <td>Formula for computing result color</td>
+      <th>normal
+      <td><pre>cr = (1 - qa) * cb + ca</pre>
     </tr>
     <tr>
-      <td>normal</td>
-      <td>cr = (1 - qa) * cb + ca</td>
+      <th>multiply
+      <td><pre>cr = (1 - qa) * cb + (1 - qb) * ca + ca * cb</pre>
     </tr>
     <tr>
-      <td>multiply</td>
-      <td>cr = (1-qa)*cb + (1-qb)*ca + ca*cb</td>
+      <th>screen
+      <td><pre>cr = cb + ca - ca * cb</pre>
     </tr>
     <tr>
-      <td>screen</td>
-      <td>cr = cb + ca - ca * cb</td>
+      <th>darken
+      <td><pre>cr = Min ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</pre>
     </tr>
     <tr>
-      <td>darken</td>
-      <td>cr = Min ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</td>
-    </tr>
-    <tr>
-      <td>lighten</td>
-      <td>cr = Max ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</td>
+      <th>lighten
+      <td><pre>cr = Max ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</pre>
     </tr>
   </tbody>
 </table>
@@ -1291,6 +1293,7 @@ class="attr-value">operator="over"</span></a> on the <a>'feComposite'</a>
 filter primitive, matches the blending method used by <a>'feMerge'</a> and matches
 the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.</p>
 
+<div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
@@ -1335,7 +1338,15 @@ the <a>simple alpha compositing</a> technique used in SVG for all compositing ou
       &lt;text x="50" y="450" filter="url(#Lighten)" &gt;Lighten&lt;/text&gt;
     &lt;/g&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feBlend.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feBlend.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+  <div class="figure">
+    <img alt="Example " src="examples/feBlend.png"/>
+    <p class="caption">Example of feBlend
+  </div>
+  
+  <p class="view-as-svg"><a href="examples/feBlend.svg">View this example as SVG (SVG-enabled browsers only)</a>
+</div>
 
 <h3 id="feColorMatrixElement">Filter primitive <span class="element-name">'feColorMatrix'</span></h3>
 
@@ -1481,6 +1492,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 </dl>
 </div>
 
+<div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
@@ -1534,7 +1546,15 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
     &lt;text x="100" y="390" filter="url(#HueRotate90)" &gt;HueRotate&lt;/text&gt;
     &lt;text x="100" y="490" filter="url(#LuminanceToAlpha)" &gt;Luminance&lt;/text&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feColorMatrix.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feColorMatrix.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+  <div class="figure">
+    <img alt="Example " src="examples/feColorMatrix.png"/>
+    <p class="caption">Example of feColorMatrix
+  </div>
+
+  <p class="view-as-svg"><a href="examples/feColorMatrix.svg">View this example as SVG (SVG-enabled browsers only)</a>
+</div>
 
 <h3 id="feComponentTransferElement">Filter primitive <span class="element-name">'feComponentTransfer'</span></h3>
 
@@ -1611,10 +1631,10 @@ which apply to the <a>transfer function elements</a>.</p>
          <a>'feFuncR'</a>), C' is the remapped component; both
          in the closed interval [0,1].</p>
       <ul>
-        <li>For <span class="attr-value">identity</span>: 
+        <li>For ''identity'': 
           <pre>C' = C</pre>
         </li>
-        <li>For <span class="attr-value">table</span>, the function is
+        <li>For ''table'', the function is
           defined by linear interpolation
           between values given in the attribute
           <a>'tableValues'</a>. The table has <em>n+1</em>
@@ -1635,7 +1655,7 @@ which apply to the <a>transfer function elements</a>.</p>
   If <code>C = 1</code> then:</p>
           <p class="filterformula">C' = v<sub>n</sub>.</p>
         </li>
-        <li>For <span class="attr-value">discrete</span>, the function is defined by the step function
+        <li>For ''discrete'', the function is defined by the step function
           given in the attribute <a>'tableValues'</a>, which provides a list of
           <em>n</em> values (i.e., v<sub>0</sub> to v<sub>n-1</sub>) in order
           to identify a step function consisting of <em>n</em> steps. The
@@ -1652,7 +1672,7 @@ which apply to the <a>transfer function elements</a>.</p>
   If <code>C = 1</code> then:</p>
           <p class="filterformula">C' = v<sub>n-1</sub>.</p>
         </li>
-        <li>For <span class="attr-value">linear</span>, the function is
+        <li>For ''linear'', the function is
           defined by the following linear equation: 
           <p class="filterformula">C' = <a
           href="#feComponentTransferSlopeAttribute"><span
@@ -1660,7 +1680,7 @@ which apply to the <a>transfer function elements</a>.</p>
           href="#feComponentTransferInterceptAttribute"><span
           class="attr-name">intercept</span></a></p>
         </li>
-        <li>For <span class="attr-value">gamma</span>, the function is
+        <li>For ''gamma'', the function is
           defined by the following exponential function: 
           <p class="filterformula">C' = <a
           href="#feComponentTransferAmplitudeAttribute"><span
@@ -1715,6 +1735,7 @@ which apply to the <a>transfer function elements</a>.</p>
 </div>
 </edit:with>
 
+<div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
@@ -1778,7 +1799,15 @@ which apply to the <a>transfer function elements</a>.</p>
     &lt;text x="100" y="290" filter="url(#Linear)" &gt;LinearFunc&lt;/text&gt;
     &lt;text x="100" y="390" filter="url(#Gamma)" &gt;GammaFunc&lt;/text&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feComponentTransfer.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feComponentTransfer.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+  <div class="figure">
+    <img alt="Example " src="examples/feComponentTransfer.png"/>
+    <p class="caption">Example for feComponentTransfer
+  </div>
+
+  <p class="view-as-svg"><a href="examples/feComponentTransfer.svg">View this example as SVG (SVG-enabled browsers only)</a>
+</div>
 
 <h3 id="feCompositeElement">Filter primitive <span class="element-name">'feComposite'</span></h3>
 
@@ -1862,6 +1891,7 @@ described in the section that describes the <a>filter primitive subregion</a>.</
 </div>
 </edit:with>
 
+<div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
@@ -2030,7 +2060,15 @@ described in the section that describes the <a>filter primitive subregion</a>.</
       &lt;/g&gt;
     &lt;/g&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feComposite.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feComposite.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+  <div class="figure">
+    <img alt="Example " src="examples/feComposite.png">
+    <p class="caption">Example of feComposite
+  </div>
+
+  <p class="view-as-svg"><a href="examples/feComposite.svg">View this example as SVG (SVG-enabled browsers only)</a>
+</div>
 
 <h3 id="feConvolveMatrixElement">Filter primitive <span class="element-name">'feConvolveMatrix'</span></h3>
 
@@ -2064,8 +2102,7 @@ href="#feConvolveMatrixElementOrderAttribute">'orderY'</a>-I-1</sub> <br />
             ) /  <a>'divisor'</a> +  <a>'bias'</a>&nbsp;*&nbsp;ALPHA<sub>X,Y</sub><br />
 </p>
 
-<div class="note-editor">
-ED: Consider making this into mathml</div>
+<div class="issue">Consider making this into mathml</div>
 
 <p>
   where "orderX" and "orderY" represent the X and Y values for the <a>'order'</a> attribute, "targetX" represents the value
@@ -2090,8 +2127,8 @@ pixels, whose color values for one of the color channels are as follows:</p>
   225 225 255 255 255
   225 225 255 255 255</pre>
 
-<div class="note-editor">
-ED: Consider making this into mathml</div>
+<div class="issue">Consider making this into mathml</div>
+
 
 <p>
   and you define a 3-by-3 convolution kernel as follows:</p>
@@ -2099,8 +2136,8 @@ ED: Consider making this into mathml</div>
   4 5 6
   7 8 9</pre>
 
-<div class="note-editor">
-ED: Consider making this into mathml</div>
+<div class="issue">Consider making this into mathml</div>
+
 
 <p>
   Let's focus on the color value at the second row and second column of the
@@ -2113,8 +2150,8 @@ be:</p>
 6*100 + 5*120 + 4*140 +
 3*200 + 2*220 + 1*240) / (9+8+7+6+5+4+3+2+1)</pre>
 
-<div class="note-editor">
-ED: Consider making this into mathml</div>
+<div class="issue">Consider making this into mathml</div>
+
 
 <p>
   Because they operate on pixels, matrix convolutions are inherently
@@ -2239,8 +2276,8 @@ Extended by two pixels using "duplicate":
   N1 N1   N1 N2 ... Nm NM   NM NM
   N1 N1   N1 N2 ... Nm NM   NM NM</pre>
 
-      <div class="note-editor">
-      ED: Consider making this into mathml</div>
+<div class="issue">Consider making this into mathml</div>
+
       <p>"wrap" indicates that the input image is extended by taking the
       color values from the opposite edge of the image.</p>
       <pre>Extended by two pixels using "wrap":
@@ -2254,8 +2291,8 @@ Extended by two pixels using "duplicate":
   1m 1M   11 12 ... 1m 1M   11 12
   2m 2M   21 22 ... 2m 2M   21 22</pre>
 
-      <div class="note-editor">
-      ED: Consider making this into mathml</div>
+<div class="issue">Consider making this into mathml</div>
+
       <p>
   The value <span class="attr-value">none</span> indicates that the input image is extended with pixel values
       of zero for R, G, B and A.</p>
@@ -2520,8 +2557,7 @@ considerably smaller than a device pixel.</p>
 <code>Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z</sub>)</code> function is
 defined as:</p>
 
-<div class="note-editor">
-ED: Consider making the following in mathml</div>
+<div class="issue">Consider making this into mathml</div>
 
 <p class="filterformula">Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z</sub>) =
 sqrt(A<sub>x</sub>^2+A<sub>y</sub>^2+A<sub>z</sub>^2)</p>
@@ -3314,7 +3350,8 @@ class="prop-name">'image-rendering'</span> property setting.</p>
    </dl>
 </div>
 
-<p><span class="example-ref">Example feImage</span> illustrates how images are placed relative
+<div class="example">
+<p>The followinf example illustrates how images are placed relative
 to an object. From left to right:</p>
 <ul>
  <li>
@@ -3366,8 +3403,15 @@ to an object. From left to right:</p>
     &lt;rect x="450" y="25" width="100" height="200" filter="url(#Shifted)"/&gt;
     &lt;rect x="450" y="25" width="100" height="200" fill="none" stroke="green"/&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example feImage</caption><tr><td><img alt="Example feImage — Examples of feImage use" src="examples/feImage-01.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feImage-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
 
+  <div class="figure">
+    <img alt="Example feImage — Examples of feImage use" src="examples/feImage-01.png"/>
+    <p class="caption">Example of feImage
+  </div>
+
+  <p class="view-as-svg"><a href="examples/feImage-01.svg">View this example as SVG (SVG-enabled browsers only)</a>
+</div>
 
 <h3 id="feMergeElement">Filter primitive <span
 class="element-name">'feMerge'</span></h3>
@@ -3486,6 +3530,7 @@ equal to the alpha channel.</p>
 </dl>
 </div>
 
+<div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
@@ -3521,7 +3566,15 @@ equal to the alpha channel.</p>
       &lt;text x="50" y="450" filter="url(#Dilate6)" &gt;Dilate radius 6&lt;/text&gt;
     &lt;/g&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feMorphology.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feMorphology.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+  <div class="figure">
+    <img alt="Example " src="examples/feMorphology.png"/>
+    <p class="caption">Example of feMorphology
+  </div>
+
+  <p class="view-as-svg"><a href="examples/feMorphology.svg">View this example as SVG (SVG-enabled browsers only)</a>
+</div>
 
 <h3 id="feOffsetElement">Filter primitive <span
 class="element-name">'feOffset'</span></h3>
@@ -4050,6 +4103,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
 </dl>
 </div>
 
+<div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
@@ -4119,7 +4173,15 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
     &lt;text x="375" y="284"&gt;baseFrequency=0.1&lt;/text&gt;
     &lt;text x="375" y="296"&gt;numOctaves=1&lt;/text&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/feTurbulence.png"/></td></tr></table><p class="view-as-svg"><a href="examples/feTurbulence.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+  <div class="figure">
+    <img alt="Example " src="examples/feTurbulence.png"/>
+    <p class="caption">Example of feTurbulence
+  </div>
+
+  <p class="view-as-svg"><a href="examples/feTurbulence.svg">View this example as SVG (SVG-enabled browsers only)</a>
+</div>
 
 <h2 id="ColorInterpolationFiltersProperty">
   The 'color-interpolation-filters' property
@@ -4240,7 +4302,13 @@ light.</p>
   The following diagram illustrates the angles which <a>'azimuth'</a>
   and <a>'elevation'</a> represent in an XYZ coordinate system.
 </p>
-<img src="examples/azimuth-elevation.png" alt="Angles which azimuth and elevation represent" width="480" height="360" />
+
+<div class="figure">
+  <img src="examples/azimuth-elevation.png" alt="Angles which azimuth and elevation represent" width="480" height="360" />
+  <p class="caption">Angles which azimuth and elevation represent
+</div>
+
+<p class="issue">Use other color then red and green
 
 <h3 id="fePointLightElement">Light source <span class="element-name">'fePointLight'</span></h3>
 
@@ -5028,109 +5096,106 @@ void main()
               </div>
               </td>
 
-  <h4>Shader uniform variables</h4>
+<h4>Shader uniform variables</h4>
 
-  The following uniform variables are set to specific values by the user agent:
+<p>The following uniform variables are set to specific values by the user agent:
 
-  <table class="values-desc">
-      <tr>
-          <td><code>uniform mat4 u_projectionMatrix</code></td>
-          <td>The current projection matrix to the 
-              destination texture's coordinate space). <em>Note that the 'model matrix' which 
-              the 'transform' property sets, is not passed to the shaders. It is applied to the 
-              filtered element's rendering.</em></td>
-      </tr>
-      <tr>
-          <td><code>uniform vec2 u_textureSize</code></td>
-          <td>The input texture's size. Includes the filter margins.</td>
-      </tr>
-      <tr>
-          <td><code>uniform vec4 u_meshBox</code></td>
-          <td>The mesh box position and size in the <a href="#FilterEffectsRegion">filter box</a> coordinate
-              system. For example, if the mesh box is the filter box, the value will be (-0.5, -0.5, 1, 1).</td>
-      </tr>
-      <tr>
-          <td><code>uniform vec2 u_tileSize</code></td>
-          <td>The size of the current mesh tile, in the same coordinate space as the vertices.</td>
-      </tr>
-      <tr>
-          <td><code>uniform vec2 u_meshSize</code></td>
-          <td>The size of the current mesh in terms of tiles. The x coordinate provides the number of
-              columns and the y coordinate provides the number of rows.</td>
-      </tr>
-  </table>
+<table class="data">
+  <thead>
+    <tr>
+      <th>uniform variable
+      <th>description
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th><code>uniform mat4 u_projectionMatrix</code>
+      <td>The current projection matrix to the destination texture's coordinate space). <em>Note that the 'model matrix' which the 'transform' property sets, is not passed to the shaders. It is applied to the filtered element's rendering.</em>
+    </tr>
+    <tr>
+      <th><code>uniform vec2 u_textureSize</code>
+      <td>The input texture's size. Includes the filter margins.
+    </tr>
+    <tr>
+      <th><code>uniform vec4 u_meshBox</code>
+      <td>The mesh box position and size in the <a href="#FilterEffectsRegion">filter box</a> coordinate bsystem. For example, if the mesh box is the filter box, the value will be (-0.5, -0.5, 1, 1).
+    </tr>
+    <tr>
+      <th><code>uniform vec2 u_tileSize</code>
+      <td>The size of the current mesh tile, in the same coordinate space as the vertices.
+    </tr>
+    <tr>
+      <th><code>uniform vec2 u_meshSize</code>
+      <td>The size of the current mesh in terms of tiles. The x coordinate provides the number of columns and the y coordinate provides the number of rows.
+    </tr>
+  </tbody>
+</table>
 
-  <h4>Varyings</h4>
+<h4>Varyings</h4>
 
-  <p>When the author provides both a vertex and a fragment shader, there is no requirement on the 
-      varyings passed from the vertex shader to the fragment shader. If no vertex shader is provided,
-      the fragment shader can expect the <code>v_texCoord</code> varying. If no fragment shader is 
-      provided, the vertex shader must compute a <code>v_texCoord</code> varying for the default shaders.</p>
+<p>When the author provides both a vertex and a fragment shader, there is no requirement on the varyings passed from the vertex shader to the fragment shader. If no vertex shader is provided, the fragment shader can expect the <code>v_texCoord</code> varying. If no fragment shader is provided, the vertex shader must compute a <code>v_texCoord</code> varying for the default shaders.
 
-  <table class="values-desc">
-  <tr>
-      <td>varying vec2 v_texCoord;</td>
+<table class="data">
+  <thead>
+    <tr>
+      <th>varying
+      <th>description
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>varying vec2 v_texCoord;</td>
       <td>The current pixel's texture coordinates (in the content texture).</td>
-  </tr>
-  </table>
+    </tr>
+  </tbody>
+</table>
 
-  <h4>Other uniform variables: the CSS shaders parameters</h4>
+<h4>Other uniform variables: the CSS shaders parameters</h4>
 
-  <p>When there parameters are passed to the custom filter function or the 
-      <a>'feCustom element'</a> filter primitive, the user agent pass uniforms of the corresponding name and
-      type to the shaders.</p>
+<p>When there parameters are passed to the custom filter function or the <a>'feCustom element'</a> filter primitive, the user agent pass uniforms of the corresponding name and type to the shaders.
 
-  <p>The following table shows the mapping between CSS shader parameters and uniform types.</p>
+<p>The following table shows the mapping between CSS shader parameters and uniform types.
 
-      <div class="table">
-  <table class="values-desc">
-      <tr>
-          <th>CSS param type</th>
-          <th>GLSL uniform type</th>
-      </tr>
-      <tr>
-          <td>[ true | false ]{1,4}</td>
-          <td>bool, bvec2, bvec3 or bvec4</td>
-      </tr>
-      <tr>
-          <td>&lt;number&gt;{1,4}
-          <td>float, vec2, vec3 or vec4</td>
-      </tr>
-      <tr>
-          <td>
-              &lt;array&gt;
-          </td>
-          <td>
-              float[n]
-          </td>
-      </tr>
-      <tr>
-          <td>
-              &lt;transform-function&gt;
-          </td>
-          <td>
-              mat4
-          </td>
-      </tr>
-      <tr>
-          <td>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br />
-              mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br />    
-              mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})</td>
-          <td>
-              mat2, mat3 or mat4
-          </td>
-      </tr>
-      <tr>
-          <td>texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)</td>
-          <td>sampler2D</td>
-      </tr>
-  </table>
-  </div>
+<table class="data">
+  <thead>
+    <tr>
+        <th>CSS param type
+        <th>GLSL uniform type
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>[ true | false ]{1,4}
+      <td>bool, bvec2, bvec3 or bvec4
+    </tr>
+    <tr>
+      <th>&lt;number&gt;{1,4}
+      <td>float, vec2, vec3 or vec4
+    </tr>
+    <tr>
+      <th>&lt;array&gt;
+      <td>float[n]
+    </tr>
+    <tr>
+      <th>&lt;transform-function&gt;
+      <td>mat4
+    </tr>
+    <tr>
+      <th>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br />
+          mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br />    
+          mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})
+      <td>mat2, mat3 or mat4
+    </tr>
+    <tr>
+      <th>texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)
+      <td>sampler2D
+    </tr>
+</table>
 
-      <p>The following code sample illustrates that mechanism.</p>
+<p>The following code sample illustrates that mechanism.</p>
 
-  <div class="example">
-      <code><pre>
+<div class="example">
+  <code><pre>
   <strong>CSS</strong>
 
   @filter distort {
@@ -5150,20 +5215,16 @@ void main()
   uniform sampler2D disp;
   uniform vec2 dispSize;
   ...</pre></code>
-  </div>
+</div>
 
-  <p>
-    As illustrated in the example, for each <code>&lt;textureName&gt; texture()</code> parameter, an additional <code>vec2</code> uniform is passed 
-    to the shaders with the size of the corresponding texture.
-  </p>
+<p>As illustrated in the example, for each <code>&lt;textureName&gt; texture()</code> parameter, an additional <code>vec2</code> uniform is passed to the shaders with the size of the corresponding texture.
 
+<h4>Default shaders</h4>
 
-  <h4>Default shaders</h4>
+<p>If no vertex shader is provided, the default one is as shown below.
 
-  <p>If no vertex shader is provided, the default one is as shown below.</p>
-
-  <div id="default-vertex-shader" class="shader example">
-      <code class="idl"><pre>
+<div id="default-vertex-shader" class="shader example">
+  <code class="idl"><pre>
   attribute vec4 a_position;
 
   uniform mat4 u_projectionMatrix;
@@ -5171,46 +5232,37 @@ void main()
   void main()
   {        
       gl_Position = u_projectionMatrix * a_position;
-  }
+  }</pre></code>
+</div>
 
-      </pre></code>
-  </div>
+<p>If no fragment shader is provided, the default one is shown below.
 
-  <p>If no fragment shader is provided, the default one is shown below.</p>
-
-  <div id="default-fragment-shader" class="shader example">
-          <code class="idl"><pre>
+<div id="default-fragment-shader" class="shader example">
+  <code class="idl"><pre>
   void main()
   {  
   }</pre></code>
-  </div>
+</div>
 
-  <h4>Texture access</h4>
+<h4>Texture access</h4>
 
-  <p>If shaders access texture values outside the <code>[0, 1]</code> range on both axis, the
-      returned value is a fully translucent black pixel.</p>
+<p>If shaders access texture values outside the <code>[0, 1]</code> range on both axis, the returned value is a fully translucent black pixel.
 
 
-<h2 id="FilterCSSImageValue">The filter CSS &lt;image&gt; value</h2>
+<h2 id="FilterCSSImageValue">The filter CSS <var>&lt;image&gt;</var> value</h2>
 
-<p>
-  The filter() function produces a CSS &lt;image&gt; value. It has the following syntax:
-</p>
+<p>The filter() function produces a CSS <var>&lt;image&gt;</var> value. It has the following syntax:
 
-<h3 class='no-toc' id='filter-syntax'>
-filter() syntax</h3>
+<h3 class='no-toc' id='filter-syntax'>filter() syntax</h3>
 
 <pre class='prod'><code><dfn>&lt;filter></dfn> = filter(
-  &lt;image>, 
-  none | &lt;filter-function&gt; [ &lt;filter-function&gt; ]*
-)
-</code></pre>
+  <var>&lt;image></var>, 
+  none | <var>&lt;filter-function&gt;</var>+
+)</code></pre>
 
-<p>
-  The function takes two parameters. The first is a CSS &lt;image&gt; value. The second
-  is the value of a 'filter' property. The function take the
-  input image parameter and apply the filter rules, returning a processing image.
-</p>
+<p>The function takes two parameters. The first is a CSS <var>&lt;image&gt;</var> value. The second is the value of a 'filter' property. The function take the input image parameter and apply the filter rules, returning a processing image.
+
+<p class="issue">The filter functions may increase the dimension of the image in comparison to the original image. Does it influence the offset when passed to a CSS property?
 
 <h2 id="ShorthandEquivalents">Shorthands defined in terms of the <span class="element-name">'filter'</span> element</h2>
 
@@ -5479,6 +5531,7 @@ referenced by E is defined as follows:</p>
     background image available to E.</li>
 </ul>
 
+<div class="example">
 <pre class="xml">&lt;?xml version="1.0" standalone="no"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
@@ -5566,7 +5619,14 @@ referenced by E is defined as follows:</p>
     &lt;/g&gt;
     &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
   &lt;/g&gt;
-&lt;/svg&gt;</pre><table summary="Example "><caption>Example </caption><tr><td><img alt="Example " src="examples/enable-background-01.png"/></td></tr></table><p class="view-as-svg"><a href="examples/enable-background-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+&lt;/svg&gt;</pre>
+
+<div class="figure">
+  <img alt="Example " src="examples/enable-background-01.png"/>
+  <p class="caption">Example of 'enable-background' in use
+</div>
+
+<p class="view-as-svg"><a href="examples/enable-background-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 
 <p>
   The example above contains five parts, described as follows:</p>
@@ -5619,6 +5679,7 @@ referenced by E is defined as follows:</p>
     triangle; thus, the result is the same as in the fourth case except that
     the blue triangle now appears.</li>
 </ol>
+</div>
 
   <h2 id="integration-with-css-animations-transitions">Integration with CSS Animations and CSS Transitions</h2>
 

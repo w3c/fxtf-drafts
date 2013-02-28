@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-02-27 name=dcterms.issued>
+  <meta content=2013-02-28 name=dcterms.issued>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -35,7 +35,7 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 27 February
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 28 February
     2013</h2>
 
    <dl>
@@ -43,7 +43,7 @@
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130227/-->
+     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130228/-->
 
     <dt>Latest version:
 
@@ -372,7 +372,7 @@
     </ul>
 
    <li><a href="#FilterCSSImageValue"><span class=secno>13. </span>The filter
-    CSS &lt;image&gt; value</a>
+    CSS <var>&lt;image&gt;</var> value</a>
 
    <li><a href="#ShorthandEquivalents"><span class=secno>14.
     </span>Shorthands defined in terms of the <span
@@ -587,13 +587,13 @@
     control over the geometry and pixel values of filtered output.
   </ol>
 
-  <p id=AnExample> The following shows an example of a filter effect.
+  <div class=example>
+   <p>The following shows an example of a filter effect.
 
-  <p> <span class=example-ref>Example filters01</span> - introducing filter
-   effects.
+   <div class=figure> <img alt="Example Filter" src="examples/filters01.png">
 
-  <div class=example> <img alt="Example Filter" src="examples/filters01.png">
-   <br>
+    <p class=capture>Initial example for a filtered object.
+   </div>
 
    <p><a href="examples/filters01.svg">View this example</a> as SVG
   </div>
@@ -1026,7 +1026,8 @@
    href="#brightnessltnumbergt-ltpercentagegt"><var>brightness(&lt;number&gt; | &lt;percentage&gt;)</var></a>
  | <a
    href="#contrastltnumbergt-ltpercentagegt"><var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var></a> | <a
-   href="#blurltlengthgt"><var>blur(&lt;length&gt;)</var></a> | <var>drop-shadow(&lt;shadow&gt;)</var>
+   href="#blurltlengthgt"><var>blur(&lt;length&gt;)</var></a> | <a
+   href="#drop-shadowltlengthgt23-ltcolorgt"><var>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#)</var></a>
  | <a
    href="#customident-ltparamgt"><var>custom(IDENT [, &lt;param&gt;]*)</var></a></pre>
 
@@ -1115,22 +1116,20 @@
     | &lt;percentage&gt;)</dfn>
 
    <dd> Applies a linear multiplier to input image, making it appear more or
-    less bright. A value of 0% will create an image that is completely black.
-    A value of 100% leaves the input unchanged. Other values are linear
-    multipliers on the effect. Values of amount over 100% are allowed,
+    less bright. A value of ‘<code class=css>0%</code>’ will create an
+    image that is completely black. A value of ‘<code
+    class=css>100%</code>’ leaves the input unchanged. Other values are
+    linear multipliers on the effect. Values of amount over 100% are allowed,
     providing brighter results. If the parameter is missing, a value of 100%
     is used. The markup equivalent of this function is <a
     href="#brightnessEquivalent">given below</a>.
-    <p class=issue>The brightness filter function (and possibly the contrast
-     filter function as well) do not have linear behavior. This is not a
-     problem, but might be confusing. Should we try to make it more linear as
-     graphic applications seem do it?
 
    <dt><dfn id=contrastltnumbergt-ltpercentagegt>contrast(&lt;number&gt; |
     &lt;percentage&gt;)</dfn>
 
-   <dd> Adjusts the contrast of the input. A value of 0% will create an image
-    that is completely gray. A value of 100% leaves the input unchanged.
+   <dd> Adjusts the contrast of the input. A value of ‘<code
+    class=css>0%</code>’ will create an image that is completely gray. A
+    value of ‘<code class=css>100%</code>’ leaves the input unchanged.
     Values of amount over 100% are allowed, providing results with less
     contrast. If the parameter is missing, a value of 100% is used. The
     markup equivalent of this function is <a href="#contrastEquivalent">given
@@ -1158,7 +1157,6 @@
     href="#CSS3BG" rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>. (But note
     that spread values are not allowed.) The markup equivalent of this
     function is <a href="#dropshadowEquivalent">given below</a>.
-    <p class=issue>The FXTF is looking into allowing multiple drop shadows.
 
    <dt><dfn id=customident-ltparamgt>custom(IDENT [, &lt;param&gt;]*)</dfn>
 
@@ -1509,19 +1507,25 @@
      the <a class=term href="#filter-primitives">filter primitives</a> and
      for the attributes that define the <a
      href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.<br>
-     If <span class=attr-value>primitiveUnits="userSpaceOnUse"</span>, any
-     length values within the filter definitions represent values in the
-     current <a class=term href="#user-coordinate-system">user coordinate
-     system</a> in place at the time when the <a class=element-name
-     href="#FilterElement">‘<code class=property>filter</code>’</a>
-     element is referenced (i.e., the user coordinate system for the element
-     referencing the <a class=element-name href="#FilterElement">‘<code
+     If <a class=attr-name
+     href="#FilterElementPrimitiveUnitsAttribute">‘<code
+     class=property>primitiveUnits</code>’</a> is equal to ‘<code
+     class=css>userSpaceOnUse</code>’, any length values within the filter
+     definitions represent values in the current <a class=term
+     href="#user-coordinate-system">user coordinate system</a> in place at
+     the time when the <a class=element-name href="#FilterElement">‘<code
+     class=property>filter</code>’</a> element is referenced (i.e., the
+     user coordinate system for the element referencing the <a
+     class=element-name href="#FilterElement">‘<code
      class=property>filter</code>’</a> element via a ‘<a
      href="#filter"><code class=property>filter</code></a>’ property).<br>
-     If <span class=attr-value>primitiveUnits="objectBoundingBox"</span>,
-     then any length values within the filter definitions represent fractions
-     or percentages of the bounding box on the referencing element (see <a
-     href="#TermObjectBoundingBoxUnits">object bounding box units</a>). Note
+     If <a class=attr-name
+     href="#FilterElementPrimitiveUnitsAttribute">‘<code
+     class=property>primitiveUnits</code>’</a> is equal to ‘<code
+     class=css>objectBoundingBox</code>’, then any length values within the
+     filter definitions represent fractions or percentages of the bounding
+     box on the referencing element (see <a
+     href="#object-bounding-box-units">object bounding box units</a>). Note
      that if only one number was specified in a <a
      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber">&lt;number-optional-number&gt;</a>
      value this number is expanded out before the <a class=attr-name
@@ -1648,11 +1652,14 @@
      href="#FilterElementHeightAttribute">‘<code
      class=property>height</code>’</a>.
 
-    <p> If <span class=attr-value>filterUnits="userSpaceOnUse"</span>, <a
-     class=attr-name href="#FilterElementXAttribute">‘<code
-     class=property>x</code>’</a>, <a class=attr-name
-     href="#FilterElementYAttribute">‘<code class=property>y</code>’</a>,
-     <a class=attr-name href="#FilterElementWidthAttribute">‘<code
+    <p> If <a class=attr-name
+     href="#FilterElementFilterUnitsAttribute">‘<code
+     class=property>filterUnits</code>’</a> is equal to ‘<code
+     class=css>userSpaceOnUse</code>’, <a class=attr-name
+     href="#FilterElementXAttribute">‘<code class=property>x</code>’</a>,
+     <a class=attr-name href="#FilterElementYAttribute">‘<code
+     class=property>y</code>’</a>, <a class=attr-name
+     href="#FilterElementWidthAttribute">‘<code
      class=property>width</code>’</a>, <a class=attr-name
      href="#FilterElementHeightAttribute">‘<code
      class=property>height</code>’</a> represent values in the current user
@@ -1663,11 +1670,14 @@
      class=property>filter</code>’</a> element via a ‘<a
      href="#filter"><code class=property>filter</code></a>’ property).
 
-    <p> If <span class=attr-value>filterUnits="objectBoundingBox"</span>,
-     then <a class=attr-name href="#FilterElementXAttribute">‘<code
-     class=property>x</code>’</a>, <a class=attr-name
-     href="#FilterElementYAttribute">‘<code class=property>y</code>’</a>,
-     <a class=attr-name href="#FilterElementWidthAttribute">‘<code
+    <p> If <a class=attr-name
+     href="#FilterElementFilterUnitsAttribute">‘<code
+     class=property>filterUnits</code>’</a> is equal to ‘<code
+     class=css>objectBoundingBox</code>’, then <a class=attr-name
+     href="#FilterElementXAttribute">‘<code class=property>x</code>’</a>,
+     <a class=attr-name href="#FilterElementYAttribute">‘<code
+     class=property>y</code>’</a>, <a class=attr-name
+     href="#FilterElementWidthAttribute">‘<code
      class=property>width</code>’</a>, <a class=attr-name
      href="#FilterElementHeightAttribute">‘<code
      class=property>height</code>’</a> represent fractions or percentages
@@ -1679,8 +1689,8 @@
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
      value</a> for <a class=attr-name
      href="#FilterElementFilterUnitsAttribute">‘<code
-     class=property>filterUnits</code>’</a> is <span
-     class=attr-value>objectBoundingBox</span>.
+     class=property>filterUnits</code>’</a> is ‘<code
+     class=css>objectBoundingBox</code>’.
 
     <p><span class=anim-target>Animatable: yes.</span>
 
@@ -2177,15 +2187,16 @@
    either the <a href="#FilterEffectsRegion">filter region</a> or the filter
    primitive subregions.
 
-  <p><a class=element-name href="#feTileElement">‘<code
-   class=property>feTile</code>’</a> references a previous filter primitive
-   and then stitches the tiles together based on the <a
-   href="#FilterPrimitiveSubRegion">filter primitive subregion</a> of the
-   referenced filter primitive in order to fill its own <a
-   href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
+  <div class=example>
+   <p><a class=element-name href="#feTileElement">‘<code
+    class=property>feTile</code>’</a> references a previous filter
+    primitive and then stitches the tiles together based on the <a
+    href="#FilterPrimitiveSubRegion">filter primitive subregion</a> of the
+    referenced filter primitive in order to fill its own <a
+    href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
 
-  <pre
-   class=xml>&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt; 
+   <pre
+    class=xml>&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt; 
   &lt;defs&gt;
     &lt;filter id="flood" x="0" y="0" width="100%" height="100%" primitiveUnits="objectBoundingBox"&gt;
        &lt;feFlood x="25%" y="25%" width="50%" height="50%"
@@ -2229,47 +2240,50 @@
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-  <table summary="Example ">
-   <caption>Example</caption>
+   <div class=figure>
+    <table summary=Example>
+     <tbody>
+      <tr>
+       <td><img alt="Example " src="examples/filtersubregion00.png">
+    </table>
 
-   <tbody>
-    <tr>
-     <td><img alt="Example " src="examples/filtersubregion00.png">
-  </table>
+    <p class=caption>Example for subregions
+   </div>
 
-  <p class=view-as-svg><a href="examples/filtersubregion00.svg">View this
-   example as SVG (SVG-enabled browsers only)</a>
+   <p class=view-as-svg><a href="examples/filtersubregion00.svg">View this
+    example as SVG (SVG-enabled browsers only)</a>
 
-  <p> In the example above there are three rects that each have a cross and a
-   circle in them. The circle element in each one has a different filter
-   applied, but with the same <a href="#FilterPrimitiveSubRegion">filter
-   primitive subregion</a>. The filter output should be limited to the <a
-   href="#FilterPrimitiveSubRegion">filter primitive subregion</a>, so you
-   should never see the circles themselves, just the rects that make up the
-   <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
+   <p> In the example above there are three rects that each have a cross and
+    a circle in them. The circle element in each one has a different filter
+    applied, but with the same <a href="#FilterPrimitiveSubRegion">filter
+    primitive subregion</a>. The filter output should be limited to the <a
+    href="#FilterPrimitiveSubRegion">filter primitive subregion</a>, so you
+    should never see the circles themselves, just the rects that make up the
+    <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
 
-  <ul>
-   <li> The upper left rect shows an <a class=element-name
-    href="#feFloodElement">‘<code class=property>feFlood</code>’</a> with
-    <a class=attr-name href="#flood-opacity">flood-opacity</a>="<span
-    class=attr-value>75%</span>" so the cross should be visible through the
-    green rect in the middle.
+   <ul>
+    <li> The upper left rect shows an <a class=element-name
+     href="#feFloodElement">‘<code class=property>feFlood</code>’</a>
+     with <a class=attr-name href="#flood-opacity">flood-opacity</a>="<span
+     class=attr-value>75%</span>" so the cross should be visible through the
+     green rect in the middle.
 
-   <li> The lower left rect shows an <a class=element-name
-    href="#feMergeElement">‘<code class=property>feMerge</code>’</a> that
-    merges <a href="#SourceGraphic">SourceGraphic</a> with <a
-    href="#FillPaint">FillPaint</a>. Since the circle has <span
-    class=attr-name>fill-opacity</span>="<span class=attr-value>0.5</span>"
-    it will also be transparent so that the cross is visible through the
-    green rect in the middle.
+    <li> The lower left rect shows an <a class=element-name
+     href="#feMergeElement">‘<code class=property>feMerge</code>’</a>
+     that merges <a href="#SourceGraphic">SourceGraphic</a> with <a
+     href="#FillPaint">FillPaint</a>. Since the circle has <span
+     class=attr-name>fill-opacity</span>="<span class=attr-value>0.5</span>"
+     it will also be transparent so that the cross is visible through the
+     green rect in the middle.
 
-   <li>The upper right rect shows an <a class=element-name
-    href="#feBlendElement">‘<code class=property>feBlend</code>’</a> that
-    has <span class=attr-name>mode</span>="<span
-    class=attr-value>multiply</span>". Since the circle in this case isn't
-    transparent the result is totally opaque. The rect should be dark green
-    and the cross should not be visible through it.
-  </ul>
+    <li>The upper right rect shows an <a class=element-name
+     href="#feBlendElement">‘<code class=property>feBlend</code>’</a>
+     that has <span class=attr-name>mode</span>="<span
+     class=attr-value>multiply</span>". Since the circle in this case isn't
+     transparent the result is totally opaque. The rect should be dark green
+     and the cross should not be visible through it.
+   </ul>
+  </div>
 
   <h3 id=feBlendElement><span class=secno>8.4. </span>Filter primitive <a
    class=element-name href="#feblend">‘<code
@@ -2534,37 +2548,43 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
   <p id=BlendingTable>The following table provides the list of available
    image blending modes:
 
-  <table border=1 summary="blending modes" width=500>
+  <table class=data id=custom-filter-formats summary="blending modes">
+   <thead>
+    <tr>
+     <th>Image Blending Mode
+
+     <th>Formula for computing result color
+
    <tbody>
     <tr>
-     <td>Image Blending Mode
+     <th>normal
 
-     <td>Formula for computing result color
-
-    <tr>
-     <td>normal
-
-     <td>cr = (1 - qa) * cb + ca
+     <td>
+      <pre>cr = (1 - qa) * cb + ca</pre>
 
     <tr>
-     <td>multiply
+     <th>multiply
 
-     <td>cr = (1-qa)*cb + (1-qb)*ca + ca*cb
-
-    <tr>
-     <td>screen
-
-     <td>cr = cb + ca - ca * cb
+     <td>
+      <pre>cr = (1 - qa) * cb + (1 - qb) * ca + ca * cb</pre>
 
     <tr>
-     <td>darken
+     <th>screen
 
-     <td>cr = Min ((1 - qa) * cb + ca, (1 - qb) * ca + cb)
+     <td>
+      <pre>cr = cb + ca - ca * cb</pre>
 
     <tr>
-     <td>lighten
+     <th>darken
 
-     <td>cr = Max ((1 - qa) * cb + ca, (1 - qb) * ca + cb)
+     <td>
+      <pre>cr = Min ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</pre>
+
+    <tr>
+     <th>lighten
+
+     <td>
+      <pre>cr = Max ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</pre>
   </table>
 
   <p> The <span class=attr-value>‘<code
@@ -2580,7 +2600,8 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
    alpha compositing</a> technique used in SVG for all compositing outside of
    filter effects.
 
-  <pre class=xml>&lt;?xml version="1.0"?&gt;
+  <div class=example>
+   <pre class=xml>&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg width="5cm" height="5cm" viewBox="0 0 500 500"
@@ -2626,16 +2647,13 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-  <table summary="Example ">
-   <caption>Example</caption>
+   <div class=figure> <img alt="Example " src="examples/feBlend.png">
+    <p class=caption>Example of feBlend
+   </div>
 
-   <tbody>
-    <tr>
-     <td><img alt="Example " src="examples/feBlend.png">
-  </table>
-
-  <p class=view-as-svg><a href="examples/feBlend.svg">View this example as
-   SVG (SVG-enabled browsers only)</a>
+   <p class=view-as-svg><a href="examples/feBlend.svg">View this example as
+    SVG (SVG-enabled browsers only)</a>
+  </div>
 
   <h3 id=feColorMatrixElement><span class=secno>8.5. </span>Filter primitive
    <a class=element-name href="#fecolormatrix">‘<code
@@ -3067,7 +3085,8 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
    </dl>
   </div>
 
-  <pre class=xml>&lt;?xml version="1.0"?&gt;
+  <div class=example>
+   <pre class=xml>&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg width="8cm" height="5cm" viewBox="0 0 800 500"
@@ -3122,16 +3141,13 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-  <table summary="Example ">
-   <caption>Example</caption>
+   <div class=figure> <img alt="Example " src="examples/feColorMatrix.png">
+    <p class=caption>Example of feColorMatrix
+   </div>
 
-   <tbody>
-    <tr>
-     <td><img alt="Example " src="examples/feColorMatrix.png">
-  </table>
-
-  <p class=view-as-svg><a href="examples/feColorMatrix.svg">View this example
-   as SVG (SVG-enabled browsers only)</a>
+   <p class=view-as-svg><a href="examples/feColorMatrix.svg">View this
+    example as SVG (SVG-enabled browsers only)</a>
+  </div>
 
   <h3 id=feComponentTransferElement><span class=secno>8.6. </span>Filter
    primitive <a class=element-name href="#fecomponenttransfer">‘<code
@@ -3714,12 +3730,12 @@ A' = <a
           component; both in the closed interval [0,1].
 
          <ul>
-          <li>For <span class=attr-value>identity</span>:
+          <li>For ‘<code class=css>identity</code>’:
            <pre>C' = C</pre>
 
-          <li>For <span class=attr-value>table</span>, the function is
-           defined by linear interpolation between values given in the
-           attribute <a class=attr-name
+          <li>For ‘<code class=css>table</code>’, the function is defined
+           by linear interpolation between values given in the attribute <a
+           class=attr-name
            href="#feComponentTransferTableValuesAttribute">‘<code
            class=property>tableValues</code>’</a>. The table has
            <em>n+1</em> values (i.e., v<sub>0</sub> to v<sub>n</sub>)
@@ -3739,7 +3755,7 @@ A' = <a
 
            <p class=filterformula>C' = v<sub>n</sub>.
 
-          <li>For <span class=attr-value>discrete</span>, the function is
+          <li>For ‘<code class=css>discrete</code>’, the function is
            defined by the step function given in the attribute <a
            class=attr-name
            href="#feComponentTransferTableValuesAttribute">‘<code
@@ -3760,7 +3776,7 @@ A' = <a
 
            <p class=filterformula>C' = v<sub>n-1</sub>.
 
-          <li>For <span class=attr-value>linear</span>, the function is
+          <li>For ‘<code class=css>linear</code>’, the function is
            defined by the following linear equation:
            <p class=filterformula>C' = <a
             href="#feComponentTransferSlopeAttribute"><span
@@ -3768,8 +3784,8 @@ A' = <a
             href="#feComponentTransferInterceptAttribute"><span
             class=attr-name>intercept</span></a>
 
-          <li>For <span class=attr-value>gamma</span>, the function is
-           defined by the following exponential function:
+          <li>For ‘<code class=css>gamma</code>’, the function is defined
+           by the following exponential function:
            <p class=filterformula>C' = <a
             href="#feComponentTransferAmplitudeAttribute"><span
             class=attr-name>amplitude</span></a> * pow(C, <a
@@ -3864,7 +3880,8 @@ A' = <a
        </dl>
       </div>
 
-      <pre class=xml>&lt;?xml version="1.0"?&gt;
+      <div class=example>
+       <pre class=xml>&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg width="8cm" height="4cm" viewBox="0 0 800 400"
@@ -3929,16 +3946,14 @@ A' = <a
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-      <table summary="Example ">
-       <caption>Example</caption>
+       <div class=figure> <img alt="Example "
+        src="examples/feComponentTransfer.png">
+        <p class=caption>Example for feComponentTransfer
+       </div>
 
-       <tbody>
-        <tr>
-         <td><img alt="Example " src="examples/feComponentTransfer.png">
-      </table>
-
-      <p class=view-as-svg><a href="examples/feComponentTransfer.svg">View
-       this example as SVG (SVG-enabled browsers only)</a>
+       <p class=view-as-svg><a href="examples/feComponentTransfer.svg">View
+        this example as SVG (SVG-enabled browsers only)</a>
+      </div>
 
       <h3 id=feCompositeElement><span class=secno>8.7. </span>Filter
        primitive <a class=element-name href="#fecomposite">‘<code
@@ -4285,7 +4300,8 @@ A' = <a
        </dl>
       </div>
 
-      <pre class=xml>&lt;?xml version="1.0"?&gt;
+      <div class=example>
+       <pre class=xml>&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg width="330" height="195" viewBox="0 0 1100 650" version="1.1"
@@ -4455,16 +4471,14 @@ A' = <a
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-      <table summary="Example ">
-       <caption>Example</caption>
+       <div class=figure> <img alt="Example " src="examples/feComposite.png">
 
-       <tbody>
-        <tr>
-         <td><img alt="Example " src="examples/feComposite.png">
-      </table>
+        <p class=caption>Example of feComposite
+       </div>
 
-      <p class=view-as-svg><a href="examples/feComposite.svg">View this
-       example as SVG (SVG-enabled browsers only)</a>
+       <p class=view-as-svg><a href="examples/feComposite.svg">View this
+        example as SVG (SVG-enabled browsers only)</a>
+      </div>
 
       <h3 id=feConvolveMatrixElement><span class=secno>8.8. </span>Filter
        primitive <a class=element-name href="#feconvolvematrix">‘<code
@@ -4746,7 +4760,7 @@ A' = <a
        href="#feConvolveMatrixElementBiasAttribute">‘<code
        class=property>bias</code>’</a> * ALPHA<sub>X,Y</sub><br>
 
-      <div class=note-editor> ED: Consider making this into mathml</div>
+      <div class=issue>Consider making this into mathml</div>
 
       <p> where "orderX" and "orderY" represent the X and Y values for the <a
        class=attr-name href="#feConvolveMatrixElementOrderAttribute">‘<code
@@ -4782,7 +4796,7 @@ A' = <a
   225 225 255 255 255
   225 225 255 255 255</pre>
 
-      <div class=note-editor> ED: Consider making this into mathml</div>
+      <div class=issue>Consider making this into mathml</div>
 
       <p> and you define a 3-by-3 convolution kernel as follows:
 
@@ -4790,7 +4804,7 @@ A' = <a
   4 5 6
   7 8 9</pre>
 
-      <div class=note-editor> ED: Consider making this into mathml</div>
+      <div class=issue>Consider making this into mathml</div>
 
       <p> Let's focus on the color value at the second row and second column
        of the image (source pixel value is 120). Assuming the simplest case
@@ -4809,7 +4823,7 @@ A' = <a
 6*100 + 5*120 + 4*140 +
 3*200 + 2*220 + 1*240) / (9+8+7+6+5+4+3+2+1)</pre>
 
-      <div class=note-editor> ED: Consider making this into mathml</div>
+      <div class=issue>Consider making this into mathml</div>
 
       <p> Because they operate on pixels, matrix convolutions are inherently
        resolution-dependent. To make <a class=element-name
@@ -5004,7 +5018,7 @@ Extended by two pixels using "duplicate":
   N1 N1   N1 N2 ... Nm NM   NM NM
   N1 N1   N1 N2 ... Nm NM   NM NM</pre>
 
-         <div class=note-editor> ED: Consider making this into mathml</div>
+         <div class=issue>Consider making this into mathml</div>
 
          <p>"wrap" indicates that the input image is extended by taking the
           color values from the opposite edge of the image.
@@ -5020,7 +5034,7 @@ Extended by two pixels using "duplicate":
   1m 1M   11 12 ... 1m 1M   11 12
   2m 2M   21 22 ... 2m 2M   21 22</pre>
 
-         <div class=note-editor> ED: Consider making this into mathml</div>
+         <div class=issue>Consider making this into mathml</div>
 
          <p> The value <span class=attr-value>none</span> indicates that the
           input image is extended with pixel values of zero for R, G, B and
@@ -5909,7 +5923,7 @@ Extended by two pixels using "duplicate":
        <code>Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z</sub>)</code> function
        is defined as:
 
-      <div class=note-editor> ED: Consider making the following in mathml</div>
+      <div class=issue>Consider making this into mathml</div>
 
       <p class=filterformula>Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z</sub>)
        = sqrt(A<sub>x</sub>^2+A<sub>y</sub>^2+A<sub>z</sub>^2)
@@ -7983,30 +7997,31 @@ Extended by two pixels using "duplicate":
        </dl>
       </div>
 
-      <p><span class=example-ref>Example feImage</span> illustrates how
-       images are placed relative to an object. From left to right:
+      <div class=example>
+       <p>The followinf example illustrates how images are placed relative to
+        an object. From left to right:
 
-      <ul>
-       <li> The default placement of an image. Note that the image is
-        centered in the <a href="#FilterEffectsRegion">filter region</a> and
-        has the maximum size that will fit in the region consistent with
-        preserving the aspect ratio.
+       <ul>
+        <li> The default placement of an image. Note that the image is
+         centered in the <a href="#FilterEffectsRegion">filter region</a> and
+         has the maximum size that will fit in the region consistent with
+         preserving the aspect ratio.
 
-       <li> The image stretched to fit the bounding box of an object.
+        <li> The image stretched to fit the bounding box of an object.
 
-       <li> The image placed using user coordinates. Note that the image is
-        first centered in a box the size of the <a
-        href="#FilterEffectsRegion">filter region</a> and has the maximum
-        size that will fit in the box consistent with preserving the aspect
-        ratio. This box is then shifted by the given <a class=attr-name
-        href="#FilterPrimitiveXAttribute">‘<code
-        class=property>x</code>’</a> and <a class=attr-name
-        href="#FilterPrimitiveYAttribute">‘<code
-        class=property>y</code>’</a> values relative to the viewport the
-        object is in.
-      </ul>
+        <li> The image placed using user coordinates. Note that the image is
+         first centered in a box the size of the <a
+         href="#FilterEffectsRegion">filter region</a> and has the maximum
+         size that will fit in the box consistent with preserving the aspect
+         ratio. This box is then shifted by the given <a class=attr-name
+         href="#FilterPrimitiveXAttribute">‘<code
+         class=property>x</code>’</a> and <a class=attr-name
+         href="#FilterPrimitiveYAttribute">‘<code
+         class=property>y</code>’</a> values relative to the viewport the
+         object is in.
+       </ul>
 
-      <pre class=xml>&lt;svg width="600" height="250" viewBox="0 0 600 250"
+       <pre class=xml>&lt;svg width="600" height="250" viewBox="0 0 600 250"
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
   &lt;title&gt;Example feImage - Examples of feImage use&lt;/title&gt;
@@ -8040,17 +8055,15 @@ Extended by two pixels using "duplicate":
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-      <table summary="Example ">
-       <caption>Example feImage</caption>
+       <div class=figure> <img
+        alt="Example feImage — Examples of feImage use"
+        src="examples/feImage-01.png">
+        <p class=caption>Example of feImage
+       </div>
 
-       <tbody>
-        <tr>
-         <td><img alt="Example feImage — Examples of feImage use"
-          src="examples/feImage-01.png">
-      </table>
-
-      <p class=view-as-svg><a href="examples/feImage-01.svg">View this
-       example as SVG (SVG-enabled browsers only)</a>
+       <p class=view-as-svg><a href="examples/feImage-01.svg">View this
+        example as SVG (SVG-enabled browsers only)</a>
+      </div>
 
       <h3 id=feMergeElement><span class=secno>8.16. </span>Filter primitive
        <a class=element-name href="#femerge">‘<code
@@ -8649,7 +8662,8 @@ Extended by two pixels using "duplicate":
        </dl>
       </div>
 
-      <pre class=xml>&lt;?xml version="1.0"?&gt;
+      <div class=example>
+       <pre class=xml>&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg width="5cm" height="7cm" viewBox="0 0 700 500"
@@ -8686,16 +8700,14 @@ Extended by two pixels using "duplicate":
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-      <table summary="Example ">
-       <caption>Example</caption>
+       <div class=figure> <img alt="Example "
+        src="examples/feMorphology.png">
+        <p class=caption>Example of feMorphology
+       </div>
 
-       <tbody>
-        <tr>
-         <td><img alt="Example " src="examples/feMorphology.png">
-      </table>
-
-      <p class=view-as-svg><a href="examples/feMorphology.svg">View this
-       example as SVG (SVG-enabled browsers only)</a>
+       <p class=view-as-svg><a href="examples/feMorphology.svg">View this
+        example as SVG (SVG-enabled browsers only)</a>
+      </div>
 
       <h3 id=feOffsetElement><span class=secno>8.18. </span>Filter primitive
        <a class=element-name href="#feoffset">‘<code
@@ -10174,7 +10186,8 @@ double turbulence(int nColorChannel, double *point, double <a
        </dl>
       </div>
 
-      <pre class=xml>&lt;?xml version="1.0"?&gt;
+      <div class=example>
+       <pre class=xml>&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
           "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg width="450px" height="325px" viewBox="0 0 450 325"
@@ -10245,16 +10258,14 @@ double turbulence(int nColorChannel, double *point, double <a
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-      <table summary="Example ">
-       <caption>Example</caption>
+       <div class=figure> <img alt="Example "
+        src="examples/feTurbulence.png">
+        <p class=caption>Example of feTurbulence
+       </div>
 
-       <tbody>
-        <tr>
-         <td><img alt="Example " src="examples/feTurbulence.png">
-      </table>
-
-      <p class=view-as-svg><a href="examples/feTurbulence.svg">View this
-       example as SVG (SVG-enabled browsers only)</a>
+       <p class=view-as-svg><a href="examples/feTurbulence.svg">View this
+        example as SVG (SVG-enabled browsers only)</a>
+      </div>
 
       <h2 id=ColorInterpolationFiltersProperty><span class=secno>9. </span>
        The ‘<a href="#color-interpolation-filters"><code
@@ -10478,9 +10489,16 @@ double turbulence(int nColorChannel, double *point, double <a
        class=property>azimuth</code>’</a> and <a class=attr-name
        href="#feDistantLightElevationAttribute">‘<code
        class=property>elevation</code>’</a> represent in an XYZ coordinate
-       system.</p>
-      <img alt="Angles which azimuth and elevation represent" height=360
-      src="examples/azimuth-elevation.png" width=480>
+       system.
+
+      <div class=figure> <img
+       alt="Angles which azimuth and elevation represent" height=360
+       src="examples/azimuth-elevation.png" width=480>
+       <p class=caption>Angles which azimuth and elevation represent
+      </div>
+
+      <p class=issue>Use other color then red and green
+
       <h3 id=fePointLightElement><span class=secno>10.3. </span>Light source
        <a class=element-name href="#fepointlight">‘<code
        class=property>fePointLight</code>’</a></h3>
@@ -11732,12 +11750,20 @@ void main()
 
       <h4 id=shader-uniform-variables><span class=secno>12.4.3. </span>Shader
        uniform variables</h4>
-      The following uniform variables are set to specific values by the user
-      agent:
-      <table class=values-desc>
+
+      <p>The following uniform variables are set to specific values by the
+       user agent:
+
+      <table class=data>
+       <thead>
+        <tr>
+         <th>uniform variable
+
+         <th>description
+
        <tbody>
         <tr>
-         <td><code>uniform mat4 u_projectionMatrix</code>
+         <th><code>uniform mat4 u_projectionMatrix</code>
 
          <td>The current projection matrix to the destination texture's
           coordinate space). <em>Note that the ‘<code class=css>model
@@ -11747,26 +11773,26 @@ void main()
           rendering.</em>
 
         <tr>
-         <td><code>uniform vec2 u_textureSize</code>
+         <th><code>uniform vec2 u_textureSize</code>
 
          <td>The input texture's size. Includes the filter margins.
 
         <tr>
-         <td><code>uniform vec4 u_meshBox</code>
+         <th><code>uniform vec4 u_meshBox</code>
 
          <td>The mesh box position and size in the <a
-          href="#FilterEffectsRegion">filter box</a> coordinate system. For
+          href="#FilterEffectsRegion">filter box</a> coordinate bsystem. For
           example, if the mesh box is the filter box, the value will be
           (-0.5, -0.5, 1, 1).
 
         <tr>
-         <td><code>uniform vec2 u_tileSize</code>
+         <th><code>uniform vec2 u_tileSize</code>
 
          <td>The size of the current mesh tile, in the same coordinate space
           as the vertices.
 
         <tr>
-         <td><code>uniform vec2 u_meshSize</code>
+         <th><code>uniform vec2 u_meshSize</code>
 
          <td>The size of the current mesh in terms of tiles. The x coordinate
           provides the number of columns and the y coordinate provides the
@@ -11782,10 +11808,16 @@ void main()
        is provided, the vertex shader must compute a <code>v_texCoord</code>
        varying for the default shaders.
 
-      <table class=values-desc>
+      <table class=data>
+       <thead>
+        <tr>
+         <th>varying
+
+         <th>description
+
        <tbody>
         <tr>
-         <td>varying vec2 v_texCoord;
+         <th>varying vec2 v_texCoord;
 
          <td>The current pixel's texture coordinates (in the content
           texture).
@@ -11803,48 +11835,47 @@ void main()
       <p>The following table shows the mapping between CSS shader parameters
        and uniform types.
 
-      <div class=table>
-       <table class=values-desc>
-        <tbody>
-         <tr>
-          <th>CSS param type
+      <table class=data>
+       <thead>
+        <tr>
+         <th>CSS param type
 
-          <th>GLSL uniform type
+         <th>GLSL uniform type
 
-         <tr>
-          <td>[ true | false ]{1,4}
+       <tbody>
+        <tr>
+         <th>[ true | false ]{1,4}
 
-          <td>bool, bvec2, bvec3 or bvec4
+         <td>bool, bvec2, bvec3 or bvec4
 
-         <tr>
-          <td>&lt;number&gt;{1,4}
+        <tr>
+         <th>&lt;number&gt;{1,4}
 
-          <td>float, vec2, vec3 or vec4
+         <td>float, vec2, vec3 or vec4
 
-         <tr>
-          <td> &lt;array&gt;
+        <tr>
+         <th>&lt;array&gt;
 
-          <td> float[n]
+         <td>float[n]
 
-         <tr>
-          <td> &lt;transform-function&gt;
+        <tr>
+         <th>&lt;transform-function&gt;
 
-          <td> mat4
+         <td>mat4
 
-         <tr>
-          <td>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br>
-           mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br>
-           mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})
+        <tr>
+         <th>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br>
+          mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br>
+          mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})
 
-          <td> mat2, mat3 or mat4
+         <td>mat2, mat3 or mat4
 
-         <tr>
-          <td>texture(&lt;uri&gt; | <a class=term
-           href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>)
+        <tr>
+         <th>texture(&lt;uri&gt; | <a class=term
+          href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>)
 
-          <td>sampler2D
-       </table>
-      </div>
+         <td>sampler2D
+      </table>
 
       <p>The following code sample illustrates that mechanism.
 
@@ -11871,7 +11902,7 @@ void main()
   ...</pre>
       </div>
 
-      <p> As illustrated in the example, for each <code>&lt;textureName&gt;
+      <p>As illustrated in the example, for each <code>&lt;textureName&gt;
        texture()</code> parameter, an additional <code>vec2</code> uniform is
        passed to the shaders with the size of the corresponding texture.
 
@@ -11889,9 +11920,7 @@ void main()
   void main()
   {        
       gl_Position = u_projectionMatrix * a_position;
-  }
-
-      </pre>
+  }</pre>
       </div>
 
       <p>If no fragment shader is provided, the default one is shown below.
@@ -11911,25 +11940,29 @@ void main()
        pixel.
 
       <h2 id=FilterCSSImageValue><span class=secno>13. </span>The filter CSS
-       &lt;image&gt; value</h2>
+       <var>&lt;image&gt;</var> value</h2>
 
-      <p> The filter() function produces a CSS &lt;image&gt; value. It has
-       the following syntax:
+      <p>The filter() function produces a CSS <var>&lt;image&gt;</var> value.
+       It has the following syntax:
 
-      <h3 class=no-toc id=filter-syntax><span class=secno>13.1. </span>
-       filter() syntax</h3>
+      <h3 class=no-toc id=filter-syntax><span class=secno>13.1.
+       </span>filter() syntax</h3>
 
       <pre class=prod><code><dfn id=ltfilter>&lt;filter></dfn> = filter(
-  &lt;image>, 
-  none | &lt;filter-function&gt; [ &lt;filter-function&gt; ]*
-)
-</code></pre>
+  <var>&lt;image></var>, 
+  none | <a
+       href="#ltfilter-functiongt"><var>&lt;filter-function&gt;</var></a>+
+)</code></pre>
 
-      <p> The function takes two parameters. The first is a CSS &lt;image&gt;
-       value. The second is the value of a ‘<a href="#filter"><code
-       class=property>filter</code></a>’ property. The function take the
-       input image parameter and apply the filter rules, returning a
-       processing image.
+      <p>The function takes two parameters. The first is a CSS
+       <var>&lt;image&gt;</var> value. The second is the value of a ‘<a
+       href="#filter"><code class=property>filter</code></a>’ property. The
+       function take the input image parameter and apply the filter rules,
+       returning a processing image.
+
+      <p class=issue>The filter functions may increase the dimension of the
+       image in comparison to the original image. Does it influence the
+       offset when passed to a CSS property?
 
       <h2 id=ShorthandEquivalents><span class=secno>14. </span>Shorthands
        defined in terms of the <a class=element-name href="#filter">‘<code
@@ -12231,7 +12264,8 @@ void main()
         background image available to E.
       </ul>
 
-      <pre class=xml>&lt;?xml version="1.0" standalone="no"?&gt;
+      <div class=example>
+       <pre class=xml>&lt;?xml version="1.0" standalone="no"?&gt;
 &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg width="13.5cm" height="2.7cm" viewBox="0 0 1350 270"
@@ -12320,78 +12354,77 @@ void main()
   &lt;/g&gt;
 &lt;/svg&gt;</pre>
 
-      <table summary="Example ">
-       <caption>Example</caption>
+       <div class=figure> <img alt="Example "
+        src="examples/enable-background-01.png">
+        <p class=caption>Example of ‘<a href="#enable-background"><code
+         class=property>enable-background</code></a>’ in use
+       </div>
 
-       <tbody>
-        <tr>
-         <td><img alt="Example " src="examples/enable-background-01.png">
-      </table>
+       <p class=view-as-svg><a href="examples/enable-background-01.svg">View
+        this example as SVG (SVG-enabled browsers only)</a>
 
-      <p class=view-as-svg><a href="examples/enable-background-01.svg">View
-       this example as SVG (SVG-enabled browsers only)</a>
+       <p> The example above contains five parts, described as follows:
 
-      <p> The example above contains five parts, described as follows:
+       <ol>
+        <li>The first set is the reference graphic. The reference graphic
+         consists of a red rectangle followed by a 50% transparent <span
+         class=element-name>‘<code class=property>g</code>’</span>
+         element. Inside the <span class=element-name>‘<code
+         class=property>g</code>’</span> is a green circle that partially
+         overlaps the rectangle and a a blue triangle that partially overlaps
+         the circle. The three objects are then outlined by a rectangle
+         stroked with a thin blue line. No filters are applied to the
+         reference graphic.
 
-      <ol>
-       <li>The first set is the reference graphic. The reference graphic
-        consists of a red rectangle followed by a 50% transparent <span
-        class=element-name>‘<code class=property>g</code>’</span>
-        element. Inside the <span class=element-name>‘<code
-        class=property>g</code>’</span> is a green circle that partially
-        overlaps the rectangle and a a blue triangle that partially overlaps
-        the circle. The three objects are then outlined by a rectangle
-        stroked with a thin blue line. No filters are applied to the
-        reference graphic.
+        <li>The second set enables background image processing and adds an
+         empty <span class=element-name>‘<code
+         class=property>g</code>’</span> element which invokes the
+         ShiftBGAndBlur filter. This filter takes the current accumulated
+         background image (i.e., the entire reference graphic) as input,
+         shifts its offscreen down, blurs it, and then writes the result to
+         the canvas. Note that the offscreen for the filter is initialized to
+         transparent black, which allows the already rendered rectangle,
+         circle and triangle to show through after the filter renders its own
+         result to the canvas.
 
-       <li>The second set enables background image processing and adds an
-        empty <span class=element-name>‘<code
-        class=property>g</code>’</span> element which invokes the
-        ShiftBGAndBlur filter. This filter takes the current accumulated
-        background image (i.e., the entire reference graphic) as input,
-        shifts its offscreen down, blurs it, and then writes the result to
-        the canvas. Note that the offscreen for the filter is initialized to
-        transparent black, which allows the already rendered rectangle,
-        circle and triangle to show through after the filter renders its own
-        result to the canvas.
+        <li>The third set enables background image processing and instead
+         invokes the ShiftBGAndBlur filter on the inner <span
+         class=element-name>‘<code class=property>g</code>’</span>
+         element. The accumulated background at the time the filter is
+         applied contains only the red rectangle. Because the children of the
+         inner <span class=element-name>‘<code
+         class=property>g</code>’</span> (i.e., the circle and triangle)
+         are not part of the inner <span class=element-name>‘<code
+         class=property>g</code>’</span> element's background and because
+         ShiftBGAndBlur ignores SourceGraphic, the children of the inner
+         <span class=element-name>‘<code class=property>g</code>’</span>
+         do not appear in the result.
 
-       <li>The third set enables background image processing and instead
-        invokes the ShiftBGAndBlur filter on the inner <span
-        class=element-name>‘<code class=property>g</code>’</span>
-        element. The accumulated background at the time the filter is applied
-        contains only the red rectangle. Because the children of the inner
-        <span class=element-name>‘<code class=property>g</code>’</span>
-        (i.e., the circle and triangle) are not part of the inner <span
-        class=element-name>‘<code class=property>g</code>’</span>
-        element's background and because ShiftBGAndBlur ignores
-        SourceGraphic, the children of the inner <span
-        class=element-name>‘<code class=property>g</code>’</span> do not
-        appear in the result.
+        <li>The fourth set enables background image processing and invokes
+         the ShiftBGAndBlur on the <span class=element-name>‘<code
+         class=property>polygon</code>’</span> element that draws the
+         triangle. The accumulated background at the time the filter is
+         applied contains the red rectangle plus the green circle ignoring
+         the effect of the <span class=prop-name>‘<code
+         class=property>opacity</code>’</span> property on the inner <span
+         class=element-name>‘<code class=property>g</code>’</span>
+         element. (Note that the blurred green circle at the bottom does not
+         let the red rectangle show through on its left side. This is due to
+         ignoring the effect of the <span class=prop-name>‘<code
+         class=property>opacity</code>’</span> property.) Because the
+         triangle itself is not part of the accumulated background and
+         because ShiftBGAndBlur ignores SourceGraphic, the triangle does not
+         appear in the result.
 
-       <li>The fourth set enables background image processing and invokes the
-        ShiftBGAndBlur on the <span class=element-name>‘<code
-        class=property>polygon</code>’</span> element that draws the
-        triangle. The accumulated background at the time the filter is
-        applied contains the red rectangle plus the green circle ignoring the
-        effect of the <span class=prop-name>‘<code
-        class=property>opacity</code>’</span> property on the inner <span
-        class=element-name>‘<code class=property>g</code>’</span>
-        element. (Note that the blurred green circle at the bottom does not
-        let the red rectangle show through on its left side. This is due to
-        ignoring the effect of the <span class=prop-name>‘<code
-        class=property>opacity</code>’</span> property.) Because the
-        triangle itself is not part of the accumulated background and because
-        ShiftBGAndBlur ignores SourceGraphic, the triangle does not appear in
-        the result.
-
-       <li>The fifth set is the same as the fourth except that filter
-        ShiftBGAndBlur_WithSourceGraphic is invoked instead of
-        ShiftBGAndBlur. ShiftBGAndBlur_WithSourceGraphic performs the same
-        effect as ShiftBGAndBlur, but then renders the SourceGraphic on top
-        of the shifted, blurred background image. In this case, SourceGraphic
-        is the blue triangle; thus, the result is the same as in the fourth
-        case except that the blue triangle now appears.
-      </ol>
+        <li>The fifth set is the same as the fourth except that filter
+         ShiftBGAndBlur_WithSourceGraphic is invoked instead of
+         ShiftBGAndBlur. ShiftBGAndBlur_WithSourceGraphic performs the same
+         effect as ShiftBGAndBlur, but then renders the SourceGraphic on top
+         of the shifted, blurred background image. In this case,
+         SourceGraphic is the blue triangle; thus, the result is the same as
+         in the fourth case except that the blue triangle now appears.
+       </ol>
+      </div>
 
       <h2 id=integration-with-css-animations-transitions><span
        class=secno>16. </span>Integration with CSS Animations and CSS
