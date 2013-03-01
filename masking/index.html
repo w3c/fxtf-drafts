@@ -337,7 +337,7 @@
    title="Visual formatting model">stacking context</a>.
 
   <p> Definitions of CSS properties and values in this specification comply
-   with CSS Backgrounds and Borders <a href="#CSS3BG"
+   with defintions in CSS Backgrounds and Borders <a href="#CSS3BG"
    rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>. To avoid redundancy, this
    specification relies on descriptions and definitions of CSS Backgrounds
    and Borders. Every reference will be marked clearly. The following terms
@@ -536,43 +536,15 @@
    of comma-separated values in the ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ property. Note that a value of
    ‘<a href="#none"><code class=property>none</code></a>’ still creates a
-   layer.
+   layer. See <a
+   href="http://www.w3.org/TR/css3-background/#layering">Layering Multiple
+   Background Images</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
 
-  <p>Each of the images is sized, positioned, and tiled according to the
-   corresponding value in the other mask properties. The lists are matched up
-   from the first value: excess values at the end are not used. If a property
-   doesn't have enough comma-separated values to match the number of layers,
-   the <span>UA</span> must calculate its used value by repeating the list of
-   values until there are enough.
-
-  <div class=example>
-   <p>For example, this set of declarations:
-
-   <pre>
-mask-image: url(flower.png), url(ball.png), url(grass.png);
-mask-position: center center, 20% 80%, top left, bottom right;
-mask-origin: border-box, content-box;
-mask-repeat: no-repeat;
-</pre>
-
-   <p>has exactly the same effect as this set with the extra position dropped
-    and the missing values for ‘<a href="#mask-origin"><code
-    class=property>mask-origin</code></a>’ and ‘<a
-    href="#mask-repeat"><code class=property>mask-repeat</code></a>’ filled
-    in (emphasized for clarity):
-
-   <pre>
-mask-image: url(flower.png), url(ball.png), url(grass1.png);
-mask-position: center center, 20% 80%, top left;
-mask-origin: border-box, content-box<strong>, border-box</strong>;
-mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
-</pre>
-  </div>
-
-  <p>The first image in the list is the layer closest to the user, the next
-   one is painted behind the first, and so on. All mask images are
-   transformed to alpha masks (if necessary) and combined by compositing on
-   the <a href="#TermMask">mask</a>.
+  <p>The first layer is the layer closest to the user, the next one is
+   painted behind the first, and so on. All mask images are transformed to
+   alpha masks (if necessary) and combined by compositing on the <a
+   href="#TermMask">mask</a>.
 
   <h3 id=MaskValues><span class=secno>5.2. </span>Calculating mask values</h3>
 
@@ -742,19 +714,21 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
 
    <dt>‘<code class=css>child</code>’
 
-   <dd> A keyword to indicate that the last child <a class=element-name
-    href="#MaskElement">‘<code class=property>mask</code>’</a> element
-    should be used as the mask source. It is equivalent to ‘<code
-    class=css>select(mask:last-of-type)</code>’.
+   <dd> A keyword to indicate that the last direct sibling <a
+    class=element-name href="#MaskElement">‘<code
+    class=property>mask</code>’</a> element of the element the ‘<a
+    href="#mask-image"><code class=property>mask-image</code></a>’ property
+    is applied should be used as the mask source. It is equivalent to
+    ‘<code class=css>select(mask:last-of-type)</code>’.
 
    <dt>‘<a href="#ltchild-selectorgt"><code
     class=css>&lt;child-selector&gt;</code></a>’
 
    <dd> A comma-separated list of <a
     href="http://dev.w3.org/csswg/selectors4/#compound">compound
-    selector</a>s scoped at the element to which the ‘<a href="#mask"><code
-    class=property>mask</code></a>’ property is applied. The first matching
-    element in <a
+    selector</a>s scoped at the element to which the ‘<a
+    href="#mask-image"><code class=property>mask-image</code></a>’ property
+    is applied. The first matching element in <a
     href="http://www.w3.org/TR/2012/WD-dom-20120405/#concept-tree-order">tree
     order</a> (as defined in <a href="#DOM"
     rel=biblioentry>[DOM]<!--{{!DOM}}--></a>) as a result of evaluating the
@@ -2698,10 +2672,12 @@ div {
 
    <dt>‘<code class=css>child</code>’
 
-   <dd> A keyword to indicate that the last child <a class=element-name
-    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-    element should be used as the clip source. It is equivalent to ‘<code
-    class=css>select(clipPath:last-of-type)</code>’.
+   <dd> A keyword to indicate that the last direct sibling <a
+    class=element-name href="#ClipPathElement">‘<code
+    class=property>clipPath</code>’</a> element of the element the ‘<a
+    href="#clip-path"><code class=property>clip-path</code></a>’ property
+    is applied should be used as the clip source. It is equivalent to
+    ‘<code class=css>select(clipPath:last-of-type)</code>’.
 
    <dt>‘<a href="#ltchild-selectorgt"><code
     class=css>&lt;child-selector&gt;</code></a>’
