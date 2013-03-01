@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-02-28 name=dcterms.issued>
+  <meta content=2013-03-01 name=dcterms.issued>
   <meta content="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html"
    name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
@@ -33,15 +33,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 28 February
-    2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 1 March 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/tip/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130228/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130301/-->
 
     <dt>Latest version:
 
@@ -719,9 +718,8 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
 
   <pre class=prod><var><dfn
    id=ltmask-elementgt>&lt;mask-element&gt;</dfn></var> = <a
-   href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
-   href="#child"><var>child</var></a> | <a
-   href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a></pre>
+   href="#lturlgt"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
+   href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a></pre>
 
   <pre class=prod><dfn
    id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(<a
@@ -742,15 +740,15 @@ mask-repeat: no-repeat<strong>, no-repeat, no-repeat</strong>;
     (for example ‘<code class=css>url(commonmasks.xml#mask)</code>’) or
     an <a href="#ltimagegt"><var>&lt;image&gt;</var></a>.
 
-   <dt><dfn id=child>‘<code class=css>child</code>’</dfn>
+   <dt>‘<code class=css>child</code>’
 
    <dd> A keyword to indicate that the last child <a class=element-name
     href="#MaskElement">‘<code class=property>mask</code>’</a> element
     should be used as the mask source. It is equivalent to ‘<code
     class=css>select(mask:last-of-type)</code>’.
 
-   <dt><dfn id=ltchild-selectorgt0>‘<code
-    class=css>&lt;child-selector&gt;</code>’</dfn>
+   <dt>‘<a href="#ltchild-selectorgt"><code
+    class=css>&lt;child-selector&gt;</code></a>’
 
    <dd> A comma-separated list of <a
     href="http://dev.w3.org/csswg/selectors4/#compound">compound
@@ -2683,9 +2681,8 @@ div {
   </table>
 
   <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
-   href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
-   href="#child"><var>child</var></a> | <a
-   href="#ltchild-selectorgt0"><var>&lt;child-selector&gt;</var></a>
+   href="#lturlgt"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
+   href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a>
 </pre>
 
   <dl>
@@ -2698,6 +2695,27 @@ div {
     href="#bounding-client-rect" id=bounding-client-rect1>bounding client
     rect</a> width and height. (See <a href="#CSS3-EXCLUSIONS"
     rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>.)
+
+   <dt>‘<code class=css>child</code>’
+
+   <dd> A keyword to indicate that the last child <a class=element-name
+    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+    element should be used as the clip source. It is equivalent to ‘<code
+    class=css>select(clipPath:last-of-type)</code>’.
+
+   <dt>‘<a href="#ltchild-selectorgt"><code
+    class=css>&lt;child-selector&gt;</code></a>’
+
+   <dd> A comma-separated list of <a
+    href="http://dev.w3.org/csswg/selectors4/#compound">compound
+    selector</a>s scoped at the element to which the ‘<a
+    href="#clip-path"><code class=property>clip-path</code></a>’ property
+    is applied. The first matching element in <a
+    href="http://www.w3.org/TR/2012/WD-dom-20120405/#concept-tree-order">tree
+    order</a> (as defined in <a href="#DOM"
+    rel=biblioentry>[DOM]<!--{{!DOM}}--></a>) as a result of evaluating the
+    list of selectors is taken as the clip source. If there are no matching
+    elements the clip source is invalid.
   </dl>
 
   <h3 id=the-clip-rule><span class=secno>8.2. </span>The ‘<a
@@ -3773,15 +3791,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
     title="section 6.5."><strong>6.5.</strong></a>
 
-   <li>‘<a href="#child"><code class=css>child</code></a>’, <a
-    href="#child" title="section 6.1."><strong>6.1.</strong></a>
-
    <li>&lt;child-selector&gt;, <a href="#ltchild-selectorgt"
-    title="section 6.1."><strong>6.1.</strong></a>
-
-   <li>‘<a href="#ltchild-selectorgt0"><code
-    class=css>&lt;child-selector&gt;</code></a>’, <a
-    href="#ltchild-selectorgt0"
     title="section 6.1."><strong>6.1.</strong></a>
 
    <li>clip, <a href="#ClipProperty"
