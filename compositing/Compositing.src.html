@@ -220,7 +220,7 @@
 
 <h1>Compositing and Blending Level 1</h1>
 
-<h2 class="no-num no-toc">25 February 2013</h2>
+<h2 class="no-num no-toc">^ March 2013</h2>
 <dl>
     <dt>This version:</dt>
     <dd>
@@ -1189,9 +1189,12 @@ The compositing model must follow the <a href="http://www.w3.org/TR/SVG11/render
 <h3 id="csscompositingrules_CSS">Behavior specific to CSS</h3>
 <p>
 If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> and that of all of its children must revert to 'flat'.<br/>
-The application of non-default blending or compositing to an element formatted with the CSS box model must also establishe a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
+The application of non-default blending or compositing to an <var>'<a href="#area-element">element</a>'</var> must also establishe a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
 Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered a group. HTML elements themselves should not create groups.
 </p>
+<p class="issue">
+This spec assumes that a stacking context creates an offscreen buffer which is not always the case. We need to clarify what stacking contexts create offscreen buffers or come up with another description.
+</p> 
 
 <h3 id="csscompositingrules_SVG">Behavior specific to SVG</h3>
 <p>
@@ -1199,6 +1202,9 @@ In SVG, every element must create a group.<br/>
 This seems costly but implementations can optimize this by not treating elements with default arguments as groups.<br/>
 The compositing model follows the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing</a> model: first any filter effect is applied, then any clipping, masking,  blending and compositing
 </p>
+<p class="issue">
+This SVG spec states that every element creates an 'accumulating' group. In practice, few (no) browsers implemented this. We should update the SVG spec so it follows CSS' rules for stacking contexts/offscreen buffers.
+</p> 
 
 <h3 id="csscompositingkeyword">Properties</h3>
 <h4 id="mix-composite">The <span class="prop-name">'mix-composite'</span> property</h4>
@@ -1297,6 +1303,10 @@ as follows:</p>
 <p>The syntax of the property of <var>&lt;composite-mode&gt;</var> is given with:</p>
 <pre class="composite"><dfn id="ltcompositegt"><var>&lt;composite-mode&gt;</var></dfn> = <a href="#porterduffcompositingoperators_clear">clear</a> | <a href="#porterduffcompositingoperators_src">copy</a> | <a href="#porterduffcompositingoperators_dst">destination</a> | <a href="#porterduffcompositingoperators_srcover">source-over</a> | <a href="#porterduffcompositingoperators_dstover">destination-over</a> | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a href="#porterduffcompositingoperators_dstin">destination-in</a> | <a href="#porterduffcompositingoperators_srcout">source-out</a> | <a href="#porterduffcompositingoperators_dstout">destination-out</a> | <a href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a href="#porterduffcompositingoperators_xor">xor</a> | <a href="#porterduffcompositingoperators_plus">lighter</a></pre>
  
+<p class="note">Applying a non-default compositing mode to the <var>'<a href="#area-element">element</a>'</var> area must establish a new stacking context.</p>
+
+<p class="note">Applying a non-default compositing mode to areas other than <var>'<a href="#area-element">element</a>'</var> must render those areas in an offscreen buffer first. This buffer will then be composited.</p>
+
 <p class="note">An area must always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'true'.</p>
 
 <h4 id="mix-blend-mode">The <span class="prop-name">'mix-blend-mode'</span> property</h4>
@@ -1359,6 +1369,8 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <pre class="blendmode"><dfn id="ltblendmodegt"><var>&lt;blend-mode&gt;</var></dfn> = <a href="#blendingnormal">normal</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a></pre>
 
 <p class="note">Applying a non-default blendmode to the <var>'<a href="#area-element">element</a>'</var> area must establish a new stacking context.</p>
+
+<p class="note">Applying a non-default blendmode to an area other than <var>'<a href="#area-element">element</a>'</var> must render those areas in an offscreen buffer first. This buffer will then be blended and composited.</p>
 
 <h4 id="isolation">The <span class="prop-name">'isolation'</span> property</h4>
 <p>
@@ -1587,7 +1599,7 @@ as follows:</p>
 
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
 
-<p>This attribute sets the blending mode of each background image. <br/>
+<p>This attribute sets the blending mode of each background image and the background color. <br/>
 Each background image will blend with the element's background and the background images at a lower z-index. This must follow the <a href="http://www.w3.org/TR/CSS21/zindex.html">CSS drawing model</a>.
   The description of the <span class="prop-name">'background-blend-mode'</span> property is
 as follows:</p>
@@ -1636,6 +1648,8 @@ as follows:</p>
     </dd>
 </dl>
 </div>
+<p class="note">The <span class="prop-name">'background-blend-mode'</span> list will apply to images in reverse z-order. This means that the first element in the list will apply to the image that is on top. The first element in the list that doesn't correspond with a background image, will apply to the background color. If there are fewer items in the list than there are background images, the remaining background images will use the initial value.</p>
+
 
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas 2D</h2>
 <p>The <a href="http://www.w3.org/TR/2dcontext">canvas 2d</a> context has the <a href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a> attribute that is used to set the current compositing and blending operator.<p>

@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="Compositing and Blending Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-03-05 name=dcterms.issued>
+  <meta content=2013-03-06 name=dcterms.issued>
   <meta content="Rik Cabanier" name=dcterms.creator>
   <meta content="Nikos Andronikos" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
@@ -231,14 +231,14 @@
 
    <h1>Compositing and Blending Level 1</h1>
 
-   <h2 class="no-num no-toc" id=february-2013>25 February 2013</h2>
+   <h2 class="no-num no-toc" id=march-2013>^ March 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-compositing-20130305/-->
+     <!--http://www.w3.org/TR/2013/WD-compositing-20130306/-->
 
     <dt>Latest version:
 
@@ -1825,10 +1825,10 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a>
    and that of all of its children must revert to ‘<code
    class=property>flat</code>’.<br>
-   The application of non-default blending or compositing to an element
-   formatted with the CSS box model must also establishe a <a
-   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the
-   same way that CSS <a
+   The application of non-default blending or compositing to an <var>‘<code
+   class=css><a href="#area-element">element</a></code>’</var> must also
+   establishe a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking
+   context</a> the same way that CSS <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a> does. One of the consequences is that
    elements with z-index must not honor the depth of elements outside of the
@@ -1836,6 +1836,11 @@ components having the minimum, middle, and maximum values upon entry to the func
    Everything in CSS that creates a <a
    href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be
    considered a group. HTML elements themselves should not create groups.
+
+  <p class=issue> This spec assumes that a stacking context creates an
+   offscreen buffer which is not always the case. We need to clarify what
+   stacking contexts create offscreen buffers or come up with another
+   description.
 
   <h3 id="csscompositingrules_SVG"><span class=secno>7.3. </span>Behavior
    specific to SVG</h3>
@@ -1847,6 +1852,11 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG
    compositing</a> model: first any filter effect is applied, then any
    clipping, masking, blending and compositing
+
+  <p class=issue> This SVG spec states that every element creates an ‘<code
+   class=property>accumulating</code>’ group. In practice, few (no)
+   browsers implemented this. We should update the SVG spec so it follows
+   CSS' rules for stacking contexts/offscreen buffers.
 
   <h3 id=csscompositingkeyword><span class=secno>7.4. </span>Properties</h3>
 
@@ -1996,6 +2006,15 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="#porterduffcompositingoperators_xor">xor</a> | <a
    href="#porterduffcompositingoperators_plus">lighter</a></pre>
 
+  <p class=note>Applying a non-default compositing mode to the <var>‘<code
+   class=css><a href="#area-element">element</a></code>’</var> area must
+   establish a new stacking context.
+
+  <p class=note>Applying a non-default compositing mode to areas other than
+   <var>‘<code class=css><a
+   href="#area-element">element</a></code>’</var> must render those areas
+   in an offscreen buffer first. This buffer will then be composited.
+
   <p class=note>An area must always composite with <a
    href="#groupcompositingcliptoself">‘<code
    class=property>clip-to-self</code>’</a> set to ‘<code
@@ -2099,6 +2118,12 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p class=note>Applying a non-default blendmode to the <var>‘<code
    class=css><a href="#area-element">element</a></code>’</var> area must
    establish a new stacking context.
+
+  <p class=note>Applying a non-default blendmode to an area other than
+   <var>‘<code class=css><a
+   href="#area-element">element</a></code>’</var> must render those areas
+   in an offscreen buffer first. This buffer will then be blended and
+   composited.
 
   <h4 id=isolation><span class=secno>7.4.3. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
@@ -2417,7 +2442,8 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=prop-name>‘<code
    class=property>background-blend-mode</code>’</span> property</h4>
 
-  <p>This attribute sets the blending mode of each background image. <br>
+  <p>This attribute sets the blending mode of each background image and the
+   background color. <br>
    Each background image will blend with the element's background and the
    background images at a lower z-index. This must follow the <a
    href="http://www.w3.org/TR/CSS21/zindex.html">CSS drawing model</a>. The
@@ -2477,6 +2503,14 @@ components having the minimum, middle, and maximum values upon entry to the func
      </table>
    </dl>
   </div>
+
+  <p class=note>The <span class=prop-name>‘<code
+   class=property>background-blend-mode</code>’</span> list will apply to
+   images in reverse z-order. This means that the first element in the list
+   will apply to the image that is on top. The first element in the list that
+   doesn't correspond with a background image, will apply to the background
+   color. If there are fewer items in the list than there are background
+   images, the remaining background images will use the initial value.
 
   <h2 id=canvascompositingandblending><span class=secno>8. </span>Specifying
    Compositing and Blending in Canvas 2D</h2>
