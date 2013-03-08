@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-03-04 name=dcterms.issued>
+  <meta content=2013-03-08 name=dcterms.issued>
   <meta
    content="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html"
    name=dcterms.creator>
@@ -34,14 +34,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 4 March 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 8 March 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130304/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130308/-->
 
     <dt>Latest version:
 
@@ -601,10 +601,11 @@
    referencing a single-channel grayscale image file), the effect is as if
    the object were converted into a four-channel RGBA image, where the single
    channel from the referenced object is used to compute the three color
-   channels and the alpha channel is uniformly set to 1. Note that when
-   referencing a grayscale image file, the transfer curve relating the
-   encoded grayscale values to linear light values must be taken into account
-   when computing the color channels.
+   channels and the alpha channel is uniformly set to 1.
+
+  <p class=note>Note that when referencing a grayscale image file, the
+   transfer curve relating the encoded grayscale values to linear light
+   values must be taken into account when computing the color channels.
 
   <p class=note>Note that SVG <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
@@ -2010,16 +2011,17 @@ body {
      "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"
 
     <dd>The x-axis coordinate of one corner of the rectangle for the largest
-     possible offscreen buffer. Note that the clipping path used to render
-     any graphics within the mask will consist of the intersection of the
-     current clipping path associated with the given object and the rectangle
-     defined by <a class=attr-name href="#MaskElementXAttribute">‘<code
-     class=property>x</code>’</a>, <a class=attr-name
-     href="#MaskElementYAttribute">‘<code class=property>y</code>’</a>,
-     <a class=attr-name href="#MaskElementWidthAttribute">‘<code
-     class=property>width</code>’</a> and <a class=attr-name
-     href="#MaskElementHeightAttribute">‘<code
-     class=property>height</code>’</a>.<br>
+     possible offscreen buffer.
+     <p class=note>Note that the clipping path used to render any graphics
+      within the mask will consist of the intersection of the current
+      clipping path associated with the given object and the rectangle
+      defined by <a class=attr-name href="#MaskElementXAttribute">‘<code
+      class=property>x</code>’</a>, <a class=attr-name
+      href="#MaskElementYAttribute">‘<code class=property>y</code>’</a>,
+      <a class=attr-name href="#MaskElementWidthAttribute">‘<code
+      class=property>width</code>’</a> and <a class=attr-name
+      href="#MaskElementHeightAttribute">‘<code
+      class=property>height</code>’</a>.</p>
      If the attribute is not specified, the effect is as if a value of <span
      class=attr-value>‘<code class=css>-10%</code>’</span> were
      specified.<br>
@@ -2038,23 +2040,24 @@ body {
     <dt id=MaskElementWidthAttribute><span class=adef>width</span> =
      "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"
 
-    <dd>The width of the largest possible offscreen buffer. Note that the
-     clipping path used to render any graphics within the mask will consist
-     of the intersection of the current clipping path associated with the
-     given object and the rectangle defined by <a class=attr-name
-     href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>,
-     <a class=attr-name href="#MaskElementYAttribute">‘<code
-     class=property>y</code>’</a>, <a class=attr-name
-     href="#MaskElementWidthAttribute">‘<code
-     class=property>width</code>’</a> and <a class=attr-name
-     href="#MaskElementHeightAttribute">‘<code
-     class=property>height</code>’</a>.<br>
-     A negative value or a value of zero disables rendering of the
-     element.<br>
-     If the attribute is not specified, the effect is as if a value of <span
-     class=attr-value>‘<code class=css>120%</code>’</span> were
-     specified.<br>
-     <span class=anim-target>Animatable: yes.</span>
+    <dd>The width of the largest possible offscreen buffer.
+     <p class=note>Note that the clipping path used to render any graphics
+      within the mask will consist of the intersection of the current
+      clipping path associated with the given object and the rectangle
+      defined by <a class=attr-name href="#MaskElementXAttribute">‘<code
+      class=property>x</code>’</a>, <a class=attr-name
+      href="#MaskElementYAttribute">‘<code class=property>y</code>’</a>,
+      <a class=attr-name href="#MaskElementWidthAttribute">‘<code
+      class=property>width</code>’</a> and <a class=attr-name
+      href="#MaskElementHeightAttribute">‘<code
+      class=property>height</code>’</a>.
+
+     <p> A negative value or a value of zero disables rendering of the
+      element.<br>
+      If the attribute is not specified, the effect is as if a value of <span
+      class=attr-value>‘<code class=css>120%</code>’</span> were
+      specified.<br>
+      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=MaskElementHeightAttribute><span class=adef>height</span> =
      "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"
@@ -3325,38 +3328,40 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    property on the elements which establish a new viewport. (See <a
    href="#SVG11" rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>)
 
-  <p>A couple of notes:
+  <div class=note>
+   <p>A couple of notes:
 
-  <ul>
-   <li>The <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element itself and its child
-    elements do <em>not</em> inherit clipping paths from the ancestors of the
-    <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element.
+   <ul>
+    <li>The <a class=element-name href="#ClipPathElement">‘<code
+     class=property>clipPath</code>’</a> element itself and its child
+     elements do <em>not</em> inherit clipping paths from the ancestors of
+     the <a class=element-name href="#ClipPathElement">‘<code
+     class=property>clipPath</code>’</a> element.
 
-   <li>The <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element or any of its children can
-    specify property ‘<a href="#clip-path"><code
-    class=property>clip-path</code></a>’.<br>
-    If a valid ‘<a href="#clip-path"><code
-    class=property>clip-path</code></a>’ reference is placed on a <a
-    class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element, the resulting clipping
-    path is the intersection of the contents of the <a class=element-name
-    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-    element with the referenced clipping path.<br>
-    If a valid ‘<a href="#clip-path"><code
-    class=property>clip-path</code></a>’ reference is placed on one of the
-    children of a <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element, then the given child
-    element is clipped by the referenced clipping path before OR'ing the
-    silhouette of the child element with the silhouettes of the other child
-    elements.
+    <li>The <a class=element-name href="#ClipPathElement">‘<code
+     class=property>clipPath</code>’</a> element or any of its children can
+     specify property ‘<a href="#clip-path"><code
+     class=property>clip-path</code></a>’.<br>
+     If a valid ‘<a href="#clip-path"><code
+     class=property>clip-path</code></a>’ reference is placed on a <a
+     class=element-name href="#ClipPathElement">‘<code
+     class=property>clipPath</code>’</a> element, the resulting clipping
+     path is the intersection of the contents of the <a class=element-name
+     href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+     element with the referenced clipping path.<br>
+     If a valid ‘<a href="#clip-path"><code
+     class=property>clip-path</code></a>’ reference is placed on one of the
+     children of a <a class=element-name href="#ClipPathElement">‘<code
+     class=property>clipPath</code>’</a> element, then the given child
+     element is clipped by the referenced clipping path before OR'ing the
+     silhouette of the child element with the silhouettes of the other child
+     elements.
 
-   <li>An empty clipping path will completely clip away the element that had
-    the ‘<a href="#clip-path"><code class=property>clip-path</code></a>’
-    property applied.
-  </ul>
+    <li>An empty clipping path will completely clip away the element that had
+     the ‘<a href="#clip-path"><code class=property>clip-path</code></a>’
+     property applied.
+   </ul>
+  </div>
 
   <h3 id=clipPath-geometry><span class=secno>8.5. </span>Clipping paths,
    geometry, and pointer events</h3>
