@@ -194,8 +194,7 @@ Table of contents</h2>
 
 <p>
   This specification follows the <a href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property definition
-  conventions</a> from [[!CSS21]]. Value types not defined in this specification are defined in CSS Level 2 Revision 1
-  [[!CSS21]].
+  conventions</a> from [[!CSS21]]. Value types not defined in this specification are defined in CSS Values and Units Module Level 3 [[!CSS3VAL]].
 </p>
 
 <p>
@@ -430,7 +429,7 @@ Where:
     <dfn>'&lt;url&gt;'</dfn>
   </dt>
   <dd>
-    A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.xml#mask)'') or an <var>&lt;image&gt;</var>.
+    A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.svg#mask)'') or an <var>&lt;image&gt;</var>.
   </dd>
   <dt>''child''</dt>
   <dd>
@@ -523,7 +522,7 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
       <td>as specified
     <tr>
       <th>Animatable:
-      <td>yes except keyword values
+      <td>no
 </table>
 
 <p>The 'mask-source-type' property indicates whether the <var>&lt;mask-reference&gt;</var>
@@ -678,7 +677,7 @@ layer.
         otherwise as a percentage.
     <tr>
       <th>Animatable:
-      <td>yes
+      <td>as <a href="http://dev.w3.org/csswg/css3-transitions/#animtype-repeatable-list">repeatable list</a> of <a href="http://dev.w3.org/csswg/css3-transitions/#animtype-simple-list">simple list</a> of <a href="http://dev.w3.org/csswg/css3-transitions/#animtype-lpcalc">length, percentage, or calc</a>
 </table>
 
 <p>Where
@@ -884,7 +883,8 @@ layer.
       <td>as specified, but with lengths made absolute
     <tr>
       <th>Animatable:
-      <td>yes except keyword values
+      <td>as <a href="http://dev.w3.org/csswg/css3-transitions/#animtype-repeatable-list">repeatable list</a> of <a href="http://dev.w3.org/csswg/css3-transitions/#animtype-simple-list">simple list</a> of <a href="http://dev.w3.org/csswg/css3-transitions/#animtype-lpcalc">length, percentage, or calc</a>
+      (<span class="note">This means keyword values are not animatable.</span>)
 </table>
 
 <p>Specifies the size of the mask images. Where
@@ -979,7 +979,7 @@ layer.
       <td>as specified
     <tr>
       <th>Animatable:
-      <td>yes except keyword values
+      <td>no
 </table>
 
 <p>The 'mask-type' property defines whether the content of the
@@ -1473,7 +1473,7 @@ If the second keyword is absent, it is assumed to be the same as the first.
   </tr>
   <tr>
     <th>Animatable:</th>
-    <td>yes</td>
+    <td>See <a href="http://dev.w3.org/csswg/css3-exclusions/#shape-inside">'shape-inside'</a> and <a href="http://dev.w3.org/csswg/css3-exclusions/#shape-outside">'shape-outside'</a> [[!CSS3-EXCLUSIONS]]</td>
   </tr>
 </table>
 
@@ -1541,7 +1541,7 @@ If the second keyword is absent, it is assumed to be the same as the first.
   </tr>
   <tr>
     <th>Animatable:</th>
-    <td>yes</td>
+    <td>no</td>
   </tr>
 </table>
 
@@ -1625,7 +1625,7 @@ clipping shape:</p>
   </tr>
   <tr>
     <th>Animatable:</th>
-    <td>yes</td>
+    <td>as <a href="http://dev.w3.org/csswg/css3-transitions/#animtype-rect">rectangle</a></td>
   </tr>
 </table>
 
@@ -1873,11 +1873,6 @@ Corresponds to attribute <a>'transform'</a> on the given element.
 <p>The <a>SVGMaskElement</a> interface corresponds to the <a>'mask element'</a> element.</p>
 
 <pre class="idl">interface <b>SVGMaskElement</b> : <a>SVGElement</a> {
-
-  // Mask Types
-  const unsigned short <a href="#SVGMaskElement__SVG_MASKTYPE_LUMINANCE">SVG_MASKTYPE_LUMINANCE</a> = 0;
-  const unsigned short <a href="#SVGMaskElement__SVG_MASKTYPE_ALPHA">SVG_MASKTYPE_ALPHA</a> = 1;
-
   readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGMaskElement__maskUnits">maskUnits</a>;
   readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGMaskElement__maskContentUnits">maskContentUnits</a>;
   readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGMaskElement__x">x</a>;
@@ -1889,28 +1884,6 @@ Corresponds to attribute <a>'transform'</a> on the given element.
 <a>SVGMaskElement</a> implements <a>SVGUnitTypes</a>;</pre>
 
 <dl class="interface">
-<dt class="constants-header">Constants in group “Mask Types”:</dt>
-<dd>
-<dl class="constants">
-
-<dt id="SVGMaskElement__SVG_MASKTYPE_LUMINANCE" class="constant first-child"><b>SVG_MASKTYPE_LUMINANCE</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
-<dd class="constant">
-<div>
-Corresponds to value <span class="attr-value">'luminance'</span>.
-
-
-</div>
-</dd>
-
-<dt id="SVGMaskElement__SVG_MASKTYPE_ALPHA" class="constant"><b>SVG_MASKTYPE_ALPHA</b><span class="idl-type-parenthetical"> (unsigned short)</span></dt>
-<dd class="constant">
-<div>
-Corresponds to value <span class="attr-value">'alpha'</span>.
-
-
-</div>
-</dd>
-</dl>
 </dd>
 <dt class="attributes-header">Attributes:</dt>
 <dd>
@@ -1983,7 +1956,7 @@ Normative references</h3>
 <dl>
   <dt id="ref-svg2"><strong class="normref">[SVG2]</strong></dt>
     <dd>
-      Cameron McCormack; <a href="http://www.w3.org/TR/2012/WD-SVG2-20120828/"><cite>Scalable
+      Cameron McCormack; et al. <a href="http://www.w3.org/TR/2012/WD-SVG2-20120828/"><cite>Scalable
       Vector Graphics (SVG) 2</cite>.</a> 28 August 2012. W3C Working Draft. (Work in progress.) URL:
       <a href="http://www.w3.org/TR/2012/WD-SVG2-20120828/">http://www.w3.org/TR/2012/WD-SVG2-20120828/</a>
     </dd>

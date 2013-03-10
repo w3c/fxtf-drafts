@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-03-08 name=dcterms.issued>
+  <meta content=2013-03-10 name=dcterms.issued>
   <meta
    content="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html"
    name=dcterms.creator>
@@ -34,14 +34,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 8 March 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 10 March 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130308/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130310/-->
 
     <dt>Latest version:
 
@@ -408,8 +408,8 @@
    href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
    definition conventions</a> from <a href="#CSS21"
    rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
-   this specification are defined in CSS Level 2 Revision 1 <a
-   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
+   this specification are defined in CSS Values and Units Module Level 3 <a
+   href="#CSS3VAL" rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a>.
 
   <p> In addition to the property-specific values listed in their
    definitions, all properties defined in this specification also accept the
@@ -711,7 +711,7 @@
 
    <dd> A URL reference to a <a class=element-name
     href="#MaskElement">‘<code class=property>mask</code>’</a> element
-    (for example ‘<code class=css>url(commonmasks.xml#mask)</code>’) or
+    (for example ‘<code class=css>url(commonmasks.svg#mask)</code>’) or
     an <a href="#ltimagegt"><var>&lt;image&gt;</var></a>.
 
    <dt>‘<code class=css>child</code>’
@@ -860,7 +860,7 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
     <tr>
      <th>Animatable:
 
-     <td>yes except keyword values
+     <td>no
   </table>
 
   <p>The ‘<a href="#mask-source-type"><code
@@ -1098,7 +1098,13 @@ body {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>as <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-repeatable-list">repeatable
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-simple-list">simple
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-lpcalc">length,
+      percentage, or calc</a>
   </table>
 
   <p>Where
@@ -1410,7 +1416,14 @@ body {
     <tr>
      <th>Animatable:
 
-     <td>yes except keyword values
+     <td>as <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-repeatable-list">repeatable
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-simple-list">simple
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-lpcalc">length,
+      percentage, or calc</a> (<span class=note>This means keyword values are
+      not animatable.</span>)
   </table>
 
   <p>Specifies the size of the mask images. Where
@@ -1563,7 +1576,7 @@ body {
     <tr>
      <th>Animatable:
 
-     <td>yes except keyword values
+     <td>no
   </table>
 
   <p>The ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
@@ -2675,7 +2688,12 @@ div {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>See <a
+      href="http://dev.w3.org/csswg/css3-exclusions/#shape-inside">‘<code
+      class=property>shape-inside</code>’</a> and <a
+      href="http://dev.w3.org/csswg/css3-exclusions/#shape-outside">‘<code
+      class=property>shape-outside</code>’</a> <a href="#CSS3-EXCLUSIONS"
+      rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>
   </table>
 
   <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
@@ -2770,7 +2788,7 @@ div {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>no
   </table>
 
   <dl>
@@ -2880,7 +2898,8 @@ div {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>as <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-rect">rectangle</a>
   </table>
 
   <p class=note>With this specification the ‘<a href="#ClipProperty"><code
@@ -3500,13 +3519,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
   <pre class=idl>interface <b>SVGMaskElement</b> : <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGElement">SVGElement</a> {
-
-  // Mask Types
-  const unsigned short <a
-   href="#SVGMaskElement__SVG_MASKTYPE_LUMINANCE">SVG_MASKTYPE_LUMINANCE</a> = 0;
-  const unsigned short <a
-   href="#SVGMaskElement__SVG_MASKTYPE_ALPHA">SVG_MASKTYPE_ALPHA</a> = 1;
-
   readonly attribute <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedEnumeration">SVGAnimatedEnumeration</a> <a
    href="#SVGMaskElement__maskUnits">maskUnits</a>;
@@ -3532,27 +3544,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGUnitTypes">SVGUnitTypes</a>;</pre>
 
   <dl class=interface>
-   <dt class=constants-header>Constants in group “Mask Types”:
-
-   <dd>
-    <dl class=constants>
-     <dt class="constant first-child"
-      id="SVGMaskElement__SVG_MASKTYPE_LUMINANCE"><b>SVG_MASKTYPE_LUMINANCE</b><span
-      class=idl-type-parenthetical> (unsigned short)</span>
-
-     <dd class=constant>
-      <div> Corresponds to value <a class=attr-value
-       href="#luminance">‘<code class=property>luminance</code>’</a>.</div>
-
-     <dt class=constant
-      id="SVGMaskElement__SVG_MASKTYPE_ALPHA"><b>SVG_MASKTYPE_ALPHA</b><span
-      class=idl-type-parenthetical> (unsigned short)</span>
-
-     <dd class=constant>
-      <div> Corresponds to value <a class=attr-value href="#alpha">‘<code
-       class=property>alpha</code>’</a>.</div>
-    </dl>
-
    <dt class=attributes-header>Attributes:
 
    <dd>
@@ -3689,6 +3680,16 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    </dd>
    <!---->
 
+   <dt id=CSS3VAL>[CSS3VAL]
+
+   <dd>Håkon Wium Lie; Tab Atkins; Elika J. Etemad. <a
+    href="http://www.w3.org/TR/2012/CR-css3-values-20120828/"><cite>CSS
+    Values and Units Module Level 3.</cite></a> 28 August 2012. W3C Candidate
+    Recommendation. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2012/CR-css3-values-20120828/">http://www.w3.org/TR/2012/CR-css3-values-20120828/</a>
+   </dd>
+   <!---->
+
    <dt id=DOM>[DOM]
 
    <dd>Anne van Kesteren; et al. <a
@@ -3723,7 +3724,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <dl>
    <dt id=ref-svg2><strong class=normref>[SVG2]</strong>
 
-   <dd> Cameron McCormack; <a
+   <dd> Cameron McCormack; et al. <a
     href="http://www.w3.org/TR/2012/WD-SVG2-20120828/"><cite>Scalable Vector
     Graphics (SVG) 2</cite>.</a> 28 August 2012. W3C Working Draft. (Work in
     progress.) URL: <a
