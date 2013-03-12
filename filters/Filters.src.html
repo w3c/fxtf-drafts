@@ -3313,7 +3313,7 @@ class="prop-name">'image-rendering'</span> property setting.</p>
 </div>
 
 <div class="example">
-<p>The followinf example illustrates how images are placed relative
+<p>The following example illustrates how images are placed relative
 to an object. From left to right:</p>
 <ul>
  <li>
@@ -4433,7 +4433,7 @@ color of the light source for <span class="term">filter primitives</span> <a>'fe
 <p class="issue">
   The following section is a proposal and under discussion on the
   <a href="http://lists.w3.org/Archives/Public/public-fx/2012OctDec/0029.html">public-fx</a> mailing list. Please send
-  feedback and suggestions to the mailing list and be aware of fundamental changes.
+  feedback and suggestions to the mailing list and be aware of modifications.
 </p>
 
 <p>
@@ -4627,6 +4627,7 @@ descriptor: value;</pre>
   <dt><dfn>texture(&lt;url&gt;)</dfn><dt>
   <dd>
     Specifies a function that takes an image reference as input.
+    <p class="issue">Allow input from previous filter primitive results on SVG Filters.
   </dd>
 </dl>
 
@@ -4679,7 +4680,6 @@ descriptor: value;</pre>
         takes a value equal to the first. A value of ''n m'' results in a vertex mesh that has n columns and m rows. This
         results in a total of (n + 1) * (m + 1) vertices.
         If one of the passed parameters is zero or negative, the UA must use the initial mesh.
-
         <div class="figure" id="vertexMesh56">
           <img src="images/shader-concept-granular-mesh.svg" width="372" height="252">
           <p class="caption">
@@ -4689,14 +4689,15 @@ descriptor: value;</pre>
       </dd>
       <dt><dfn>''detached''</dfn></dt>
       <dd>
-        Implies that the triangles are detached. The geometry provided to the vertex shader is made of triangles which do
-        not share adjacent edges' vertices.
+        The geometry provided to the vertex shader is made of triangles which do not share adjacent edges' vertices.
+        A value of ''detached'' implies that the vertices are detached.
       </dd>
       <dt><dfn>''attached''</dfn></dt>
       <dd>
-        Implies that the triangles are attached. The geometry provided to the vertex shader is made of triangles which share
-        adjacent edges' vertices.
+        The geometry provided to the vertex shader is made of triangles which do not share adjacent edges' vertices.
+        A value of ''attached'' implies that the vertices are attached.
       </dd>
+      <p>If no value for attachmeny of verices is specified, it computes to ''attached''.
     </dl>
   </dd>
 </dl>
@@ -4914,27 +4915,29 @@ descriptor: value;</pre>
 
   <h4 id="fragment-shaders-differences-with-glsl">Fragment Shaders Differences with GLSL</h4>
   
-  <p>A normal GLSL shader requires that the fragment shaders computes a <code>gl_FragColor</code> value which
+  <p>A normal GLSL shader requires that the fragment shader computes a <code>gl_FragColor</code> value which
      is the color value for the processed fragment (pixel). 
   </p>
   
   <p>Because of the <a href="#security">security restrictions</a>, fragment shaders are not allowed to 
       access rendered content pixel values directly. However, fragment shaders in this specification
-      have the option to compute a value that is automatically mixed with the rendered content values (but without
+      have the option to compute a value that is automatically mixed with the rendered content pixel values (but without
       ever providing direct access to these values to the shader code).</p>
       
   <p>In the context of this specification, fragment shaders have the options to compute the following values:</p>
   
   <ul>
-      <li><code>gl_FragColor</code>. When the fragment shader parameter is a direct reference to a source file,
-          that shader should compute a <code>gl_FragColor</code>. This may be userful, for example, to compute
-          complex patterns.</li>
-      <li><code>css_MixColor</code>. When the 'mix'
-          descriptor is set, then it can compute a <i>mix color</i> value that is composited with the rendered
-          content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
-      <li><code>css_ColorMatrix</code>. When the 'mix'
-          descriptor is set, then it can computes a <i>color matrix</i> value that is multiplied with the rendered
-              content as explained in the <a href="#shader-processing-model">shaders processing model</a>.</li>
+      <li><code>gl_FragColor</code>. If the compositing and blending values for the 'mix' descriptor compute
+          to ''none'' the shader computes a <code>gl_FragColor</code> value. This may be useful, for example,
+          to compute complex patterns.</li>
+      <li><code>css_MixColor</code>. If the compositing and blending values for the 'mix' descriptor do not
+          compute to ''none'', then the shader computes a <var>mix color</var> value that is composited with
+          the rendered content as explained in the <a href="#shader-processing-model">shaders processing
+          model</a>.</li>
+      <li><code>css_ColorMatrix</code>. If the compositing and blending values for the 'mix' descriptor do
+          not compute to ''none'', then the shader computes a <var>color matrix</var> value that is multiplied
+          with the rendered content as explained in the <a href="#shader-processing-model">shaders processing
+          model</a>.</li>
   </ul>
   
   <div class="example">
@@ -4950,13 +4953,24 @@ descriptor: value;</pre>
     filter: custom(red);
 }
       </pre>
-      
+
+      <p>simple.vs</p>
+      <pre>
+  attribute vec4 a_position;
+
+  uniform mat4 u_projectionMatrix;
+
+  void main()
+  {        
+      gl_Position = u_projectionMatrix * a_position;
+  }</pre>
+
       <p>simple.fs</p>
       <pre>
 void main()
 {  
     gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-}      </pre>
+}</pre>
   </div>
 
 
@@ -5744,12 +5758,9 @@ referenced by E is defined as follows:</p>
 </ul>
 
 <p>
-  For content that falls under this restriction, it should not be rendered into
-  the input image. For example, a filter effect that is applying to a cross-origin
-  'iframe' element would receive a completely blank input image.
+  For content that falls under this restriction, the filter has no affect. For example, a filter effect that is applying to a cross-origin
+  'iframe' element does not have any affect on this element.
 </p>
-
-<div class="issue" id="issue-cors">It might be better to specify that if a CORS violation is attempted, then the filter is disabled (instead of running the filter with an empty canvas).</div>
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 

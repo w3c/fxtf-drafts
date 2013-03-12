@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="CSS Masking" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-03-04 name=dcterms.issued>
+  <meta content=2013-03-11 name=dcterms.issued>
   <meta
    content="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html"
    name=dcterms.creator>
@@ -34,14 +34,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 4 March 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 11 March 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130304/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130311/-->
 
     <dt>Latest version:
 
@@ -264,6 +264,24 @@
       </span>Interface SVGMaskElement</a>
     </ul>
 
+   <li><a href="#conformance"><span class=secno>11. </span> Conformance</a>
+    <ul class=toc>
+     <li><a href="#conventions"><span class=secno>11.1. </span> Document
+      conventions</a>
+
+     <li><a href="#conformance-classes"><span class=secno>11.2. </span>
+      Conformance classes</a>
+
+     <li><a href="#partial"><span class=secno>11.3. </span> Partial
+      implementations</a>
+
+     <li><a href="#experimental"><span class=secno>11.4. </span> Experimental
+      implementations</a>
+
+     <li><a href="#testing"><span class=secno>11.5. </span> Non-experimental
+      implementations</a>
+    </ul>
+
    <li class=no-num><a href="#references"> References</a>
     <ul class=toc>
      <li class=no-num><a href="#normative-references"> Normative
@@ -388,17 +406,17 @@
   <p> Some property and element definitions in this specification require an
    SVG 1.1 implementation <a href="#SVG11"
    rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>. UAs without support for SVG
-   must not implement the ‘<a href="#mask-type"><code
-   class=property>mask-type</code></a>’ and ‘<a href="#clip-rule"><code
-   class=property>clip-rule</code></a>’ properties as well as the <a
-   class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> and <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-   elements. Furthermore, the ‘<a href="#mask"><code
+   must not implement any of the following properties and elements: ‘<a
+   href="#mask-type"><code class=property>mask-type</code></a>’, ‘<a
+   href="#clip-rule"><code class=property>clip-rule</code></a>’, <a
+   class=element-name href="#ClipPathElement">‘<code
+   class=property>clipPath</code>’</a> element, <a class=element-name
+   href="#MaskElement">‘<code class=property>mask</code>’</a> element.
+   For UAs without support for SVG, the ‘<a href="#mask"><code
    class=property>mask</code></a>’ and ‘<a href="#clip-path"><code
-   class=property>clip-path</code></a>’ properties must not support
+   class=property>clip-path</code></a>’ properties must neither support
    references to <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> and <a class=element-name
+   class=property>mask</code>’</a> elements nor to <a class=element-name
    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
    elements.
 
@@ -408,8 +426,8 @@
    href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
    definition conventions</a> from <a href="#CSS21"
    rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
-   this specification are defined in CSS Level 2 Revision 1 <a
-   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
+   this specification are defined in CSS Values and Units Module Level 3 <a
+   href="#CSS3VAL" rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a>.
 
   <p> In addition to the property-specific values listed in their
    definitions, all properties defined in this specification also accept the
@@ -430,7 +448,7 @@
    <dd>
     <p> The union of all border boxes for the element that has an associated
      CSS layout box and is not in the <code>http://www.w3.org/2000/svg</code>
-     namespace and it's descendant elements. Or the object bounding box <a
+     namespace and its descendant elements. Or the object bounding box <a
      href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>, if the
      element does not have an associated CSS layout box and is in the
      <code>http://www.w3.org/2000/svg</code> namespace (See <a
@@ -464,8 +482,9 @@
    <dt id=TermUserCoordinateSystem><dfn id=user-coordinate-system>user
     coordinate system</dfn>
 
-   <dd> See definition of <a class=term href="#local-coordinate-system">local
-    coordinate system</a>.
+   <dd> The term <a href="#user-coordinate-system"><var>user coordinate
+    system</var></a> is equivalent to the term <a
+    href="#local-coordinate-system"><var>local coordinate system</var></a>.
 
    <dt id=TermObjectBoundingBoxUnits><dfn id=object-bounding-box-units>object
     bounding box units</dfn>
@@ -511,15 +530,14 @@
    class=property>clip-path</code></a>’, ‘<a href="#mask"><code
    class=property>mask</code></a>’ or ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ properties to an element formatted
-   with the CSS box model establishes a stacking context the same way that
+   with the CSS box model establishes a stacking context in the same way that
    CSS ‘<code class=property>opacity</code>’ does, and all the element's
    descendants are rendered together as a group with the masking applied to
    the group as a whole.
 
   <p> The ‘<a href="#mask"><code class=property>mask</code></a>’ and
    ‘<a href="#mask-image"><code class=property>mask-image</code></a>’
-   properties have no effect on the geometry of the target element's CSS
-   boxes.
+   properties have no effect on the geometry of any element's CSS boxes.
 
   <p> The compositing model follows the SVG compositing model <a
    href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>: first any
@@ -601,10 +619,11 @@
    referencing a single-channel grayscale image file), the effect is as if
    the object were converted into a four-channel RGBA image, where the single
    channel from the referenced object is used to compute the three color
-   channels and the alpha channel is uniformly set to 1. Note that when
-   referencing a grayscale image file, the transfer curve relating the
-   encoded grayscale values to linear light values must be taken into account
-   when computing the color channels.
+   channels and the alpha channel is uniformly set to 1.
+
+  <p class=note>Note that when referencing a grayscale image file, the
+   transfer curve relating the encoded grayscale values to linear light
+   values must be taken into account when computing the color channels.
 
   <p class=note>Note that SVG <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
@@ -710,7 +729,7 @@
 
    <dd> A URL reference to a <a class=element-name
     href="#MaskElement">‘<code class=property>mask</code>’</a> element
-    (for example ‘<code class=css>url(commonmasks.xml#mask)</code>’) or
+    (for example ‘<code class=css>url(commonmasks.svg#mask)</code>’) or
     an <a href="#ltimagegt"><var>&lt;image&gt;</var></a>.
 
    <dt>‘<code class=css>child</code>’
@@ -859,7 +878,7 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
     <tr>
      <th>Animatable:
 
-     <td>yes except keyword values
+     <td>no
   </table>
 
   <p>The ‘<a href="#mask-source-type"><code
@@ -1097,7 +1116,13 @@ body {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>as <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-repeatable-list">repeatable
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-simple-list">simple
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-lpcalc">length,
+      percentage, or calc</a>
   </table>
 
   <p>Where
@@ -1409,7 +1434,14 @@ body {
     <tr>
      <th>Animatable:
 
-     <td>yes except keyword values
+     <td>as <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-repeatable-list">repeatable
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-simple-list">simple
+      list</a> of <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-lpcalc">length,
+      percentage, or calc</a> (<span class=note>This means keyword values are
+      not animatable.</span>)
   </table>
 
   <p>Specifies the size of the mask images. Where
@@ -1562,7 +1594,7 @@ body {
     <tr>
      <th>Animatable:
 
-     <td>yes except keyword values
+     <td>no
   </table>
 
   <p>The ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
@@ -2010,19 +2042,15 @@ body {
      "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"
 
     <dd>The x-axis coordinate of one corner of the rectangle for the largest
-     possible offscreen buffer. Note that the clipping path used to render
-     any graphics within the mask will consist of the intersection of the
-     current clipping path associated with the given object and the rectangle
-     defined by <a class=attr-name href="#MaskElementXAttribute">‘<code
-     class=property>x</code>’</a>, <a class=attr-name
+     possible offscreen buffer. If the attribute is not specified but at
+     least one of the attributes <a class=attr-name
      href="#MaskElementYAttribute">‘<code class=property>y</code>’</a>,
      <a class=attr-name href="#MaskElementWidthAttribute">‘<code
-     class=property>width</code>’</a> and <a class=attr-name
+     class=property>width</code>’</a> or <a class=attr-name
      href="#MaskElementHeightAttribute">‘<code
-     class=property>height</code>’</a>.<br>
-     If the attribute is not specified, the effect is as if a value of <span
-     class=attr-value>‘<code class=css>-10%</code>’</span> were
-     specified.<br>
+     class=property>height</code>’</a> are specified, the effect is as if a
+     value of <span class=attr-value>‘<code class=css>-10%</code>’</span>
+     were specified.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=MaskElementYAttribute><span class=adef>y</span> =
@@ -2030,30 +2058,30 @@ body {
 
     <dd>The y-axis coordinate of one corner of the rectangle for the largest
      possible offscreen buffer.<br>
-     If the attribute is not specified, the effect is as if a value of <span
-     class=attr-value>‘<code class=css>-10%</code>’</span> were
-     specified.<br>
+     If the attribute is not specified but at least one of the attributes <a
+     class=attr-name href="#MaskElementXAttribute">‘<code
+     class=property>x</code>’</a>, <a class=attr-name
+     href="#MaskElementWidthAttribute">‘<code
+     class=property>width</code>’</a> or <a class=attr-name
+     href="#MaskElementHeightAttribute">‘<code
+     class=property>height</code>’</a> are specified, the effect is as if a
+     value of <span class=attr-value>‘<code class=css>-10%</code>’</span>
+     were specified.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=MaskElementWidthAttribute><span class=adef>width</span> =
      "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"
 
-    <dd>The width of the largest possible offscreen buffer. Note that the
-     clipping path used to render any graphics within the mask will consist
-     of the intersection of the current clipping path associated with the
-     given object and the rectangle defined by <a class=attr-name
-     href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>,
-     <a class=attr-name href="#MaskElementYAttribute">‘<code
-     class=property>y</code>’</a>, <a class=attr-name
-     href="#MaskElementWidthAttribute">‘<code
-     class=property>width</code>’</a> and <a class=attr-name
-     href="#MaskElementHeightAttribute">‘<code
-     class=property>height</code>’</a>.<br>
-     A negative value or a value of zero disables rendering of the
-     element.<br>
-     If the attribute is not specified, the effect is as if a value of <span
-     class=attr-value>‘<code class=css>120%</code>’</span> were
-     specified.<br>
+    <dd>The width of the largest possible offscreen buffer. A negative value
+     or a value of zero disables rendering of the element.<br>
+     If the attribute is not specified but at least one of the attributes <a
+     class=attr-name href="#MaskElementXAttribute">‘<code
+     class=property>x</code>’</a>, <a class=attr-name
+     href="#MaskElementYAttribute">‘<code class=property>y</code>’</a> or
+     <a class=attr-name href="#MaskElementHeightAttribute">‘<code
+     class=property>height</code>’</a> are specified, the effect is as if a
+     value of <span class=attr-value>‘<code class=css>120%</code>’</span>
+     were specified.<br>
      <span class=anim-target>Animatable: yes.</span>
 
     <dt id=MaskElementHeightAttribute><span class=adef>height</span> =
@@ -2062,12 +2090,38 @@ body {
     <dd>The height of the largest possible offscreen buffer.<br>
      A negative value or a value of zero disables rendering of the
      element.<br>
-     If the attribute is not specified, the effect is as if a value of <span
-     class=attr-value>‘<code class=css>120%</code>’</span> were
-     specified.<br>
+     If the attribute is not specified but at least one of the attributes <a
+     class=attr-name href="#MaskElementXAttribute">‘<code
+     class=property>x</code>’</a>, <a class=attr-name
+     href="#MaskElementYAttribute">‘<code class=property>y</code>’</a> or
+     <a class=attr-name href="#MaskElementWidthAttribute">‘<code
+     class=property>width</code>’</a> are specified, the effect is as if a
+     value of <span class=attr-value>‘<code class=css>120%</code>’</span>
+     were specified.<br>
      <span class=anim-target>Animatable: yes.</span>
    </dl>
   </div>
+
+  <p>If at least one of the attributes <a class=attr-name
+   href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>, <a
+   class=attr-name href="#MaskElementYAttribute">‘<code
+   class=property>y</code>’</a>, <a class=attr-name
+   href="#MaskElementWidthAttribute">‘<code
+   class=property>width</code>’</a> or <a class=attr-name
+   href="#MaskElementHeightAttribute">‘<code
+   class=property>height</code>’</a> are specified, the given object and
+   the rectangle defined by <a class=attr-name
+   href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>, <a
+   class=attr-name href="#MaskElementYAttribute">‘<code
+   class=property>y</code>’</a>, <a class=attr-name
+   href="#MaskElementWidthAttribute">‘<code
+   class=property>width</code>’</a> and <a class=attr-name
+   href="#MaskElementHeightAttribute">‘<code
+   class=property>height</code>’</a> establish a current clipping path. The
+   rendered content of the mask must be clipped by this current clipping
+   path.
+
+  <p>
 
   <p>CSS properties inherit into the <a class=element-name
    href="#MaskElement">‘<code class=property>mask</code>’</a> element
@@ -2652,7 +2706,12 @@ div {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>See <a
+      href="http://dev.w3.org/csswg/css3-exclusions/#shape-inside">‘<code
+      class=property>shape-inside</code>’</a> and <a
+      href="http://dev.w3.org/csswg/css3-exclusions/#shape-outside">‘<code
+      class=property>shape-outside</code>’</a> <a href="#CSS3-EXCLUSIONS"
+      rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>
   </table>
 
   <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
@@ -2747,7 +2806,7 @@ div {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>no
   </table>
 
   <dl>
@@ -2857,7 +2916,8 @@ div {
     <tr>
      <th>Animatable:
 
-     <td>yes
+     <td>as <a
+      href="http://dev.w3.org/csswg/css3-transitions/#animtype-rect">rectangle</a>
   </table>
 
   <p class=note>With this specification the ‘<a href="#ClipProperty"><code
@@ -3325,7 +3385,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    property on the elements which establish a new viewport. (See <a
    href="#SVG11" rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>)
 
-  <p>A couple of notes:
+  <p>A couple of additions:
 
   <ul>
    <li>The <a class=element-name href="#ClipPathElement">‘<code
@@ -3475,13 +3535,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
   <pre class=idl>interface <b>SVGMaskElement</b> : <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGElement">SVGElement</a> {
-
-  // Mask Types
-  const unsigned short <a
-   href="#SVGMaskElement__SVG_MASKTYPE_LUMINANCE">SVG_MASKTYPE_LUMINANCE</a> = 0;
-  const unsigned short <a
-   href="#SVGMaskElement__SVG_MASKTYPE_ALPHA">SVG_MASKTYPE_ALPHA</a> = 1;
-
   readonly attribute <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedEnumeration">SVGAnimatedEnumeration</a> <a
    href="#SVGMaskElement__maskUnits">maskUnits</a>;
@@ -3507,27 +3560,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGUnitTypes">SVGUnitTypes</a>;</pre>
 
   <dl class=interface>
-   <dt class=constants-header>Constants in group “Mask Types”:
-
-   <dd>
-    <dl class=constants>
-     <dt class="constant first-child"
-      id="SVGMaskElement__SVG_MASKTYPE_LUMINANCE"><b>SVG_MASKTYPE_LUMINANCE</b><span
-      class=idl-type-parenthetical> (unsigned short)</span>
-
-     <dd class=constant>
-      <div> Corresponds to value <a class=attr-value
-       href="#luminance">‘<code class=property>luminance</code>’</a>.</div>
-
-     <dt class=constant
-      id="SVGMaskElement__SVG_MASKTYPE_ALPHA"><b>SVG_MASKTYPE_ALPHA</b><span
-      class=idl-type-parenthetical> (unsigned short)</span>
-
-     <dd class=constant>
-      <div> Corresponds to value <a class=attr-value href="#alpha">‘<code
-       class=property>alpha</code>’</a>.</div>
-    </dl>
-
    <dt class=attributes-header>Attributes:
 
    <dd>
@@ -3604,6 +3636,127 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     </dl>
   </dl>
 
+  <h2 id=conformance><span class=secno>11. </span> Conformance</h2>
+
+  <h3 id=conventions><span class=secno>11.1. </span> Document conventions</h3>
+
+  <p>Conformance requirements are expressed with a combination of descriptive
+   assertions and RFC 2119 terminology. The key words “MUST”, “MUST
+   NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”,
+   “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in the
+   normative parts of this document are to be interpreted as described in RFC
+   2119. However, for readability, these words do not appear in all uppercase
+   letters in this specification.
+
+  <p>All of the text of this specification is normative except sections
+   explicitly marked as non-normative, examples, and notes. <a
+   href="#RFC2119" rel=biblioentry>[RFC2119]<!--{{!RFC2119}}--></a>
+
+  <p>Examples in this specification are introduced with the words “for
+   example” or are set apart from the normative text with
+   <code>class="example"</code>, like this:
+
+  <div class=example>
+   <p>This is an example of an informative example.
+  </div>
+
+  <p>Informative notes begin with the word “Note” and are set apart from
+   the normative text with <code>class="note"</code>, like this:
+
+  <p class=note>Note, this is an informative note.
+
+  <h3 id=conformance-classes><span class=secno>11.2. </span> Conformance
+   classes</h3>
+
+  <p>Conformance to CSS Masking is defined for three conformance classes:
+
+  <dl>
+   <dt><dfn id=style-sheet title="style sheet!!as conformance class">style
+    sheet</dfn>
+
+   <dd>A <a href="http://www.w3.org/TR/CSS21/conform.html#style-sheet">CSS
+    style sheet</a>.
+
+   <dt><dfn id=renderer>renderer</dfn>
+
+   <dd>A <a href="http://www.w3.org/TR/CSS21/conform.html#user-agent">UA</a>
+    that interprets the semantics of a style sheet and renders documents that
+    use them.
+
+   <dt><dfn id=authoring-tool>authoring tool</dfn>
+
+   <dd>A <a href="http://www.w3.org/TR/CSS21/conform.html#user-agent">UA</a>
+    that writes a style sheet.
+  </dl>
+
+  <p>A style sheet is conformant to CSS Masking if all of its statements that
+   use syntax defined in this module are valid according to the generic CSS
+   grammar and the individual grammars of each feature defined in this
+   module.
+
+  <p>A renderer is conformant to CSS Masking if, in addition to interpreting
+   the style sheet as defined by the appropriate specifications, it supports
+   all the features defined by CSS Masking by parsing them correctly and
+   rendering the document accordingly. However, the inability of a UA to
+   correctly render a document due to limitations of the device does not make
+   the UA non-conformant. (For example, a UA is not required to render color
+   on a monochrome monitor.)
+
+  <p>An authoring tool is conformant to CSS Masking if it writes style sheets
+   that are syntactically correct according to the generic CSS grammar and
+   the individual grammars of each feature in this module, and meet all other
+   conformance requirements of style sheets as described in this module.
+
+  <h3 id=partial><span class=secno>11.3. </span> Partial implementations</h3>
+
+  <p>So that authors can exploit the forward-compatible parsing rules to
+   assign fallback values, CSS renderers <strong>must</strong> treat as
+   invalid (and <a
+   href="http://www.w3.org/TR/CSS21/conform.html#ignore">ignore as
+   appropriate</a>) any at-rules, properties, property values, keywords, and
+   other syntactic constructs for which they have no usable level of support.
+   In particular, user agents <strong>must not</strong> selectively ignore
+   unsupported component values and honor supported values in a single
+   multi-value property declaration: if any value is considered invalid (as
+   unsupported values must be), CSS requires that the entire declaration be
+   ignored.
+
+  <h3 id=experimental><span class=secno>11.4. </span> Experimental
+   implementations</h3>
+
+  <p>To avoid clashes with future CSS features, the CSS2.1 specification
+   reserves a <a
+   href="http://www.w3.org/TR/CSS21/syndata.html#vendor-keywords">prefixed
+   syntax</a> for proprietary and experimental extensions to CSS.
+
+  <p>Prior to a specification reaching the Candidate Recommendation stage in
+   the W3C process, all implementations of a CSS feature are considered
+   experimental. The CSS Working Group recommends that implementations use a
+   vendor-prefixed syntax for such features, including those in W3C Working
+   Drafts. This avoids incompatibilities with future changes in the draft.
+
+  <h3 id=testing><span class=secno>11.5. </span> Non-experimental
+   implementations</h3>
+
+  <p>Once a specification reaches the Candidate Recommendation stage,
+   non-experimental implementations are possible, and implementors should
+   release an unprefixed implementation of any CR-level feature they can
+   demonstrate to be correctly implemented according to spec.
+
+  <p>To establish and maintain the interoperability of CSS across
+   implementations, the CSS Working Group requests that non-experimental CSS
+   renderers submit an implementation report (and, if necessary, the
+   testcases used for that implementation report) to the W3C before releasing
+   an unprefixed implementation of any CSS features. Testcases submitted to
+   W3C are subject to review and correction by the CSS Working Group.
+
+  <p>Further information on submitting testcases and implementation reports
+   can be found from on the CSS Working Group's website at <a
+   href="http://www.w3.org/Style/CSS/Test/">http://www.w3.org/Style/CSS/Test/</a>.
+   Questions should be directed to the <a
+   href="http://lists.w3.org/Archives/Public/public-css-testsuite">public-css-testsuite@w3.org</a>
+   mailing list.
+
   <h2 class=no-num id=references> References</h2>
 
   <h3 class=no-num id=normative-references> Normative references</h3>
@@ -3664,12 +3817,31 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    </dd>
    <!---->
 
+   <dt id=CSS3VAL>[CSS3VAL]
+
+   <dd>Håkon Wium Lie; Tab Atkins; Elika J. Etemad. <a
+    href="http://www.w3.org/TR/2012/CR-css3-values-20120828/"><cite>CSS
+    Values and Units Module Level 3.</cite></a> 28 August 2012. W3C Candidate
+    Recommendation. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2012/CR-css3-values-20120828/">http://www.w3.org/TR/2012/CR-css3-values-20120828/</a>
+   </dd>
+   <!---->
+
    <dt id=DOM>[DOM]
 
    <dd>Anne van Kesteren; et al. <a
     href="http://www.w3.org/TR/2012/WD-dom-20121206/"><cite>DOM4.</cite></a>
     6 December 2012. W3C Working Draft. (Work in progress.) URL: <a
     href="http://www.w3.org/TR/2012/WD-dom-20121206/">http://www.w3.org/TR/2012/WD-dom-20121206/</a>
+   </dd>
+   <!---->
+
+   <dt id=RFC2119>[RFC2119]
+
+   <dd>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key
+    words for use in RFCs to Indicate Requirement Levels.</cite></a> Internet
+    RFC 2119. URL: <a
+    href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a>
    </dd>
    <!---->
 
@@ -3698,7 +3870,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <dl>
    <dt id=ref-svg2><strong class=normref>[SVG2]</strong>
 
-   <dd> Cameron McCormack; <a
+   <dd> Cameron McCormack; et al. <a
     href="http://www.w3.org/TR/2012/WD-SVG2-20120828/"><cite>Scalable Vector
     Graphics (SVG) 2</cite>.</a> 28 August 2012. W3C Working Draft. (Work in
     progress.) URL: <a
@@ -3741,6 +3913,9 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <ul class=indexlist>
    <li>‘<a href="#alpha"><code class=css>alpha</code></a>’, <a
     href="#alpha" title="section 6.2."><strong>6.2.</strong></a>
+
+   <li>authoring tool, <a href="#authoring-tool"
+    title="section 11.2."><strong>11.2.</strong></a>
 
    <li>‘<a href="#auto"><code class=css>auto</code></a>’, <a href="#auto"
     title="section 6.2."><strong>6.2.</strong></a>
@@ -3928,6 +4103,9 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li><a href="#ltpositiongt"><var>&lt;position&gt;</var></a>, <a
     href="#ltpositiongt" title="section 6.4."><strong>6.4.</strong></a>
 
+   <li>renderer, <a href="#renderer"
+    title="section 11.2."><strong>11.2.</strong></a>
+
    <li><a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a>, <a
     href="#ltrepeat-stylegt" title="section 6.3."><strong>6.3.</strong></a>
 
@@ -3939,6 +4117,12 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li><a href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>, <a
     href="#ltsource-typegt" title="section 6.2."><strong>6.2.</strong></a>
+
+   <li>style sheet
+    <ul>
+     <li>as conformance class, <a href="#style-sheet"
+      title="section 11.2."><strong>11.2.</strong></a>
+    </ul>
 
    <li>&lt;top&gt;, <a href="#lttopgt"
     title="section 8.3."><strong>8.3.</strong></a>

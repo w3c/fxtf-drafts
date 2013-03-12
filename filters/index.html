@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-03-04 name=dcterms.issued>
+  <meta content=2013-03-09 name=dcterms.issued>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -35,14 +35,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 4 March 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 9 March 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130304/-->
+     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130309/-->
 
     <dt>Latest version:
 
@@ -8081,7 +8081,7 @@ A' = <a
       </div>
 
       <div class=example>
-       <p>The followinf example illustrates how images are placed relative to
+       <p>The following example illustrates how images are placed relative to
         an object. From left to right:
 
        <ul>
@@ -11025,7 +11025,7 @@ double turbulence(int nColorChannel, double *point, double <a
        discussion on the <a
        href="http://lists.w3.org/Archives/Public/public-fx/2012OctDec/0029.html">public-fx</a>
        mailing list. Please send feedback and suggestions to the mailing list
-       and be aware of fundamental changes.
+       and be aware of modifications.
 
       <p> The custom-filter function allows extending this specification with
        a customized filter effect. Customized filter effects are described by
@@ -11277,6 +11277,8 @@ descriptor: value;</pre>
        <dt>
 
        <dd> Specifies a function that takes an image reference as input.
+        <p class=issue>Allow input from previous filter primitive results on
+         SVG Filters.
       </dl>
 
       <p> The following function definitions describe matrices in
@@ -11360,16 +11362,21 @@ descriptor: value;</pre>
 
          <dt><dfn id=detached>‘<code class=css>detached</code>’</dfn>
 
-         <dd> Implies that the triangles are detached. The geometry provided
-          to the vertex shader is made of triangles which do not share
-          adjacent edges' vertices.
+         <dd> The geometry provided to the vertex shader is made of triangles
+          which do not share adjacent edges' vertices. A value of ‘<a
+          href="#detached"><code class=css>detached</code></a>’ implies
+          that the vertices are detached.
 
          <dt><dfn id=attached>‘<code class=css>attached</code>’</dfn>
 
-         <dd> Implies that the triangles are attached. The geometry provided
-          to the vertex shader is made of triangles which share adjacent
-          edges' vertices.
+         <dd> The geometry provided to the vertex shader is made of triangles
+          which do not share adjacent edges' vertices. A value of ‘<a
+          href="#attached"><code class=css>attached</code></a>’ implies
+          that the vertices are attached.
         </dl>
+
+        <p>If no value for attachmeny of verices is specified, it computes to
+         ‘<a href="#attached"><code class=css>attached</code></a>’.
       </dl>
 
       <h3 id=custom-filter-mix><span class=secno>11.6. </span>Custom filter
@@ -11669,7 +11676,7 @@ descriptor: value;</pre>
       <h4 id=fragment-shaders-differences-with-glsl><span class=secno>12.4.1.
        </span>Fragment Shaders Differences with GLSL</h4>
 
-      <p>A normal GLSL shader requires that the fragment shaders computes a
+      <p>A normal GLSL shader requires that the fragment shader computes a
        <code>gl_FragColor</code> value which is the color value for the
        processed fragment (pixel).
 
@@ -11677,28 +11684,32 @@ descriptor: value;</pre>
        fragment shaders are not allowed to access rendered content pixel
        values directly. However, fragment shaders in this specification have
        the option to compute a value that is automatically mixed with the
-       rendered content values (but without ever providing direct access to
-       these values to the shader code).
+       rendered content pixel values (but without ever providing direct
+       access to these values to the shader code).
 
       <p>In the context of this specification, fragment shaders have the
        options to compute the following values:
 
       <ul>
-       <li><code>gl_FragColor</code>. When the fragment shader parameter is a
-        direct reference to a source file, that shader should compute a
-        <code>gl_FragColor</code>. This may be userful, for example, to
-        compute complex patterns.
+       <li><code>gl_FragColor</code>. If the compositing and blending values
+        for the ‘<a href="#mix"><code class=property>mix</code></a>’
+        descriptor compute to ‘<code class=css>none</code>’ the shader
+        computes a <code>gl_FragColor</code> value. This may be useful, for
+        example, to compute complex patterns.
 
-       <li><code>css_MixColor</code>. When the ‘<a href="#mix"><code
-        class=property>mix</code></a>’ descriptor is set, then it can
-        compute a <a href="#mix-color"><i>mix color</i></a> value that is
-        composited with the rendered content as explained in the <a
-        href="#shader-processing-model">shaders processing model</a>.
+       <li><code>css_MixColor</code>. If the compositing and blending values
+        for the ‘<a href="#mix"><code class=property>mix</code></a>’
+        descriptor do not compute to ‘<code class=css>none</code>’, then
+        the shader computes a <a href="#mix-color"><var>mix color</var></a>
+        value that is composited with the rendered content as explained in
+        the <a href="#shader-processing-model">shaders processing model</a>.
 
-       <li><code>css_ColorMatrix</code>. When the ‘<a href="#mix"><code
-        class=property>mix</code></a>’ descriptor is set, then it can
-        computes a <a href="#color-matrix"><i>color matrix</i></a> value that
-        is multiplied with the rendered content as explained in the <a
+       <li><code>css_ColorMatrix</code>. If the compositing and blending
+        values for the ‘<a href="#mix"><code
+        class=property>mix</code></a>’ descriptor do not compute to
+        ‘<code class=css>none</code>’, then the shader computes a <a
+        href="#color-matrix"><var>color matrix</var></a> value that is
+        multiplied with the rendered content as explained in the <a
         href="#shader-processing-model">shaders processing model</a>.
       </ul>
 
@@ -11718,13 +11729,25 @@ descriptor: value;</pre>
 }
       </pre>
 
+       <p>simple.vs
+
+       <pre>
+  attribute vec4 a_position;
+
+  uniform mat4 u_projectionMatrix;
+
+  void main()
+  {        
+      gl_Position = u_projectionMatrix * a_position;
+  }</pre>
+
        <p>simple.fs
 
        <pre>
 void main()
 {  
     gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-}      </pre>
+}</pre>
       </div>
 
       <div class=example>
@@ -12647,14 +12670,10 @@ void main()
         href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span>
       </ul>
 
-      <p> For content that falls under this restriction, it should not be
-       rendered into the input image. For example, a filter effect that is
-       applying to a cross-origin ‘<code class=property>iframe</code>’
-       element would receive a completely blank input image.
-
-      <div class=issue id=issue-cors>It might be better to specify that if a
-       CORS violation is attempted, then the filter is disabled (instead of
-       running the filter with an empty canvas).</div>
+      <p> For content that falls under this restriction, the filter has no
+       affect. For example, a filter effect that is applying to a
+       cross-origin ‘<code class=property>iframe</code>’ element does not
+       have any affect on this element.
 
       <h2 id=DOMInterfaces><span class=secno>18. </span>DOM interfaces</h2>
 
