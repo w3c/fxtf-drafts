@@ -144,8 +144,89 @@ Table of contents</h2>
   context</a>.
 </p>
 
+<h2 id="values">Values</h2>
+
 <p>
-  Definitions of CSS properties and values in this specification comply with defintions in CSS Backgrounds and Borders [[!CSS3BG]]. To avoid redundancy, this specification relies on descriptions and definitions of CSS Backgrounds and Borders. Every reference will be marked clearly. The following terms in CSS Backgrounds and Borders have the following meaning in this specification:
+  This specification follows the <a href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property definition
+  conventions</a> from [[!CSS21]]. Value types not defined in this specification are defined in CSS Values and Units Module Level 3 [[!CSS3VAL]].
+</p>
+
+<p>
+  In addition to the property-specific values listed in their definitions, all properties defined in this specification
+  also accept the <a href="http://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a> keyword as their
+  property value. For readability it has not been repeated explicitly.
+</p>
+
+<h2 id="terminology">Terminology</h2>
+
+<p>
+  When used in this specification, terms have the meanings assigned in this section.
+</p>
+
+<dl>
+<dt id="TermClientBoundingRect"><dfn>bounding client rect</dfn></dt>
+<dd>
+  <p>
+    The union of all border boxes for the element that has an associated CSS layout box and is not
+    in the <code>http://www.w3.org/2000/svg</code> namespace and its descendant elements. Or the
+    object bounding box [[!SVG11]], if the element does not have
+    an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace
+    (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
+    [[CSSOM-VIEW]]).
+  </p>
+</dd>
+<dt id="TermLocalCoordinateSystem"><dfn>local coordinate system</dfn></dt>
+<dt id="TermUserCoordinateSystem"><dfn>user coordinate system</dfn></dt>
+<dd>
+  <p>
+    In general, a coordinate system defines locations and distances on the current
+    canvas. The current local coordinate system (also user coordinate system) is the
+    coordinate system that is currently active and which is used to define how
+    coordinates and lengths are located and computed, respectively, on the current
+    canvas [[CSS3-TRANSFORMS]].
+  </p>
+  <p>
+    For elements that have an associated CSS layout box, the current user coordinate system has its origin at
+    the top-left corner of the <span class="term">bounding client rect</span> and one unit equals one CSS pixel.
+    The viewport for resolving percentage values is defined by the width and height of the
+    <span class="term">bounding client rect</span>.
+  </p>
+  <p>
+    If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code>
+    namespace, the current local coordinate system has its origin at the top-left corner of the element's
+    nearest viewport.
+  </p>
+</dd>
+<dt id="TermObjectBoundingBoxUnits"><dfn>object bounding box units</dfn></dt>
+<dd>
+  The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as
+  defined in <a>object bounding box units</a> [[!SVG11]].
+</dd>
+<dt id="TermMask"><dfn>mask</dfn></dt>
+<dd>
+  An off-screen image which has been initialized to transparent
+  black.
+  The graphical object to which the mask is applied
+  will be painted onto the background through the
+  mask, thus completely or partially masking out parts of the graphical
+  object.
+</dd>
+<dt id="TermMaskSource"><dfn>mask source</dfn></dt>
+<dd>
+  A mask defined by a <a>'mask element'</a> element.
+</dd>
+<dt id="TermClippingPath">clipping path</dt>
+<dd>
+  A combination of the SVG elements <a>'path'</a>, <a>'text'</a>
+  and <a>basic shapes</a> which serve as the
+  outline of a (in the absence of anti-aliasing) 1-bit <a href="#TermMask">mask</a>,
+  where everything on the "inside" of the outline is allowed to
+  show through but everything on the outside is masked out. See 'clip-path'.
+</dd>
+</dl>
+
+<p>
+  Definitions of CSS properties and values in this specification are analogous to definitions in CSS Backgrounds and Borders [[!CSS3BG]]. To avoid redundancy, this specification relies on descriptions and definitions of CSS Backgrounds and Borders. The following terms in CSS Backgrounds and Borders have the following meaning in this specification:
 </p>
 
 <table class="data" id="term-matching">
@@ -182,97 +263,6 @@ Table of contents</h2>
     </tr>
   </tbody>
 </table>
-
-<p>
-  Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without
-  support for SVG must not implement any of the following properties and elements: 'mask-type', 'clip-rule', <a>'clipPath element'</a> element, <a>'mask element'</a> element. For UAs without
-  support for SVG, the 'mask' and 'clip-path' properties must neither support references to
-  <a>'mask element'</a> elements nor to <a>'clipPath element'</a> elements.
-</p>
-
-<h2 id="values">Values</h2>
-
-<p>
-  This specification follows the <a href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property definition
-  conventions</a> from [[!CSS21]]. Value types not defined in this specification are defined in CSS Values and Units Module Level 3 [[!CSS3VAL]].
-</p>
-
-<p>
-  In addition to the property-specific values listed in their definitions, all properties defined in this specification
-  also accept the <a href="http://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a> keyword as their
-  property value. For readability it has not been repeated explicitly.
-</p>
-
-<h2 id="definitions">Definitions</h2>
-
-<p>
-  When used in this specification, terms have the meanings assigned in this section.
-</p>
-
-<dl>
-<dt id="TermClientBoundingRect"><dfn>bounding client rect</dfn></dt>
-<dd>
-  <p>
-    The union of all border boxes for the element that has an associated CSS layout box and is not
-    in the <code>http://www.w3.org/2000/svg</code> namespace and its descendant elements. Or the
-    object bounding box [[!SVG11]], if the element does not have
-    an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace
-    (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
-    [[CSSOM-VIEW]]).
-  </p>
-</dd>
-<dt id="TermLocalCoordinateSystem"><dfn>local coordinate system</dfn></dt>
-<dd>
-  <p>
-    In general, a coordinate system defines locations and distances on the current
-    canvas. The current local coordinate system (also user coordinate system) is the
-    coordinate system that is currently active and which is used to define how
-    coordinates and lengths are located and computed, respectively, on the current
-    canvas [[CSS3-TRANSFORMS]].
-  </p>
-  <p>
-    For elements that have an associated CSS layout box, the current user coordinate system has its origin at
-    the top-left corner of the <span class="term">bounding client rect</span> and one unit equals one CSS pixel.
-    The viewport for resolving percentage values is defined by the width and height of the
-    <span class="term">bounding client rect</span>.
-  </p>
-  <p>
-    If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code>
-    namespace, the current local coordinate system has its origin at the top-left corner of the element's
-    nearest viewport.
-  </p>
-</dd>
-<dt id="TermUserCoordinateSystem"><dfn>user coordinate system</dfn></dt>
-<dd>
-  The term <var>user coordinate system</var> is equivalent to the term <var>local coordinate system</var>.
-</dd>
-<dt id="TermObjectBoundingBoxUnits"><dfn>object bounding box units</dfn></dt>
-<dd>
-  The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as
-  defined in <a>object bounding box units</a> [[!SVG11]].
-</dd>
-<dt id="TermMask"><dfn>mask</dfn></dt>
-<dd>
-  An off-screen image which has been initialized to transparent
-  black.
-  The graphical object to which the mask is applied
-  will be painted onto the background through the
-  mask, thus completely or partially masking out parts of the graphical
-  object.
-</dd>
-<dt id="TermMaskSource"><dfn>mask source</dfn></dt>
-<dd>
-  A mask defined by a <a>'mask element'</a> element.
-</dd>
-<dt id="TermClippingPath">clipping path</dt>
-<dd>
-  A combination of the SVG elements <a>'path'</a>, <a>'text'</a>
-  and <a>basic shapes</a> which serve as the
-  outline of a (in the absence of anti-aliasing) 1-bit <a href="#TermMask">mask</a>,
-  where everything on the "inside" of the outline is allowed to
-  show through but everything on the outside is masked out. See 'clip-path'.
-</dd>
-</dl>
 
 <h2>The Mask Rendering Model</h2>
 
@@ -618,7 +608,7 @@ is treated as luminance mask or alpha mask. (See <a href="#MaskValues">Calculati
 Where
 <pre class=prod><dfn><var>&lt;repeat-style&gt;</var></dfn> = repeat-x | repeat-y | [repeat | space | round | no-repeat]{1,2}</pre>
 
-<p>See <a href="http://www.w3.org/TR/css3-background/#the-background-repeat">Tiling Images: the 'background-repeat' property</a> [[!CSS3BG]] for the defintions of the property values.
+<p>See <a href="http://www.w3.org/TR/css3-background/#the-background-repeat">Tiling Images: the 'background-repeat' property</a> [[!CSS3BG]] for the definitions of the property values.
 
 <div class=example>
   <p style="display:none">Example(s):
@@ -691,7 +681,7 @@ layer.
   [ center | [ top | bottom ] [ <var>&lt;percentage&gt;</var> | <var>&lt;length&gt;</var> ]? ]
 ]</pre>
 
-<p>See <a href="http://www.w3.org/TR/css3-background/#the-background-position">Positioning Images: the 'background-position' property</a> [[!CSS3BG]] for the defintions of the property values.
+<p>See <a href="http://www.w3.org/TR/css3-background/#the-background-position">Positioning Images: the 'background-position' property</a> [[!CSS3BG]] for the definitions of the property values.
 
 <div class="example">
   <p>In the example below, the (single) image is placed in the lower-right
@@ -891,7 +881,7 @@ layer.
 
 <pre class=prod><dfn><var>&lt;mask-size&gt;</var></dfn> = [ <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | auto ]{1,2} | cover | contain</pre>
 
-<p>See <a href="http://www.w3.org/TR/css3-background/#the-background-size">Sizing Images: the ‘background-size’ property</a> [[!CSS3BG]] for the defintions of the property values.
+<p>See <a href="http://www.w3.org/TR/css3-background/#the-background-size">Sizing Images: the ‘background-size’ property</a> [[!CSS3BG]] for the definitions of the property values.
 
 <p>See the section <a href="#layering">“Layering multiple mask
 images”</a> for how 'mask-size' interacts with other
@@ -1232,7 +1222,7 @@ four edges and a middle.
 The middle image part is discarded (treated as fully transparent black)
 unless the ''fill'' keyword is present.
 
-<p>See <a href="http://www.w3.org/TR/css3-background/#the-border-image-slice">Image Slicing: the 'border-image-slice' property</a> [[!CSS3BG]] for the defintions of the property values.
+<p>See <a href="http://www.w3.org/TR/css3-background/#the-border-image-slice">Image Slicing: the 'border-image-slice' property</a> [[!CSS3BG]] for the definitions of the property values.
 
 <h3 id="the-mask-box-image-width">The 'mask-box-image-width' property</h3>
 
@@ -1270,7 +1260,7 @@ unless the ''fill'' keyword is present.
 <em>mask box image area</em>. This is an area whose boundaries
 by default correspond to the mask box, see 'mask-box-image-outset'.
 
-<p>See <a href="http://www.w3.org/TR/css3-background/#the-border-image-width">Drawing Areas: the ‘border-image-width’ property</a> [[!CSS3BG]] for the defintions of the property values.
+<p>See <a href="http://www.w3.org/TR/css3-background/#the-border-image-width">Drawing Areas: the ‘border-image-width’ property</a> [[!CSS3BG]] for the definitions of the property values.
 
 <p class=note>
   Note that for SVG elements without an associated layout box the 'border-width'
@@ -1359,7 +1349,7 @@ part of the mask image are scaled and tiled. The first keyword applies
 to the horizontal sides, the second to the vertical ones.
 If the second keyword is absent, it is assumed to be the same as the first.
 
-<p>See <a href="http://www.w3.org/TR/css3-background/#the-border-image-repeat">Image Tiling: the 'border-image-repeat' property</a> [[!CSS3BG]] for the defintions of the property values.
+<p>See <a href="http://www.w3.org/TR/css3-background/#the-border-image-repeat">Image Tiling: the 'border-image-repeat' property</a> [[!CSS3BG]] for the definitions of the property values.
 
 <p>The exact process for scaling and tiling the mask box image parts is given in the section <a href="#masking-with-the-mask-box-image">Masking with the mask-box-image</a>.
 
@@ -1946,6 +1936,15 @@ Corresponds to attribute <a>'mask/height'</a> on the given
 </dl>
 
 <h2>Conformance</h2>
+
+<h3 class="no-ref">Conformance to CSS Background and Borders</h3>
+
+<p>
+  Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without
+  support for SVG must not implement any of the following properties and elements: 'mask-type', 'clip-rule', <a>'clipPath element'</a> element, <a>'mask element'</a> element. For UAs without
+  support for SVG, the 'mask' and 'clip-path' properties must neither support references to
+  <a>'mask element'</a> elements nor to <a>'clipPath element'</a> elements.
+</p>
 
 <!--conformance-->
 
