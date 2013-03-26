@@ -1047,15 +1047,13 @@ primitives:</p>
       <dd>
         <p>
           This keyword represents an image snapshot of the canvas under the <a>filter region</a> at the time that the
-          <a>'filter element'</a> element was invoked. See
-          <a href="#AccessingBackgroundImage">accessing the background image</a>.
+          <a>'filter element'</a> element was invoked. See 'enable-background' property.
         </p>
       </dd>
       <dt id="BackgroundAlpha"><span class="attr-value">BackgroundAlpha</span></dt>
       <dd>
         <p>
-          Same as <a>BackgroundImage</a> except only the alpha channel is used. See <a>SourceAlpha</a> and <a
-          href="#AccessingBackgroundImage">accessing the background image</a>.
+          Same as <a>BackgroundImage</a> except only the alpha channel is used. See <a>SourceAlpha</a> and the 'enable-background' property.
         </p>
       </dd>
       <dt id="FillPaint"><span class="attr-value">FillPaint</span></dt>
@@ -5359,38 +5357,8 @@ void main()
 
 
 
-<h2 id="AccessBackgroundImage">Accessing the background image</h2>
+<h2 id="AccessBackgroundImage">The 'enable-background' property</h2>
 
-<p id="AccessingBackgroundImage">Two possible pseudo input images for filter effects are <a>BackgroundImage</a> and <a>BackgroundAlpha</a>, which each represent an image
-snapshot of the canvas under the <a>filter region</a> at the time that the <a
-href="#FilterElement"><span class="element-name">'filter'</span></a> element
-is invoked. <a>BackgroundImage</a> represents both
-the color values and alpha channel of the canvas (i.e., RGBA pixel values),
-whereas <a>BackgroundAlpha</a> represents only the
-alpha channel.</p>
-
-<p>
-  Implementations <!--of SVG user agents often-->
-will often need to maintain supplemental background image buffers in order to
-support the <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images. Sometimes,
-the background image buffers will contain an in-memory copy of the
-accumulated painting operations on the current canvas.</p>
-
-<p>
-  Because in-memory image buffers can take up significant system resources, <!--SVG-->
-content must explicitly indicate to the <!--SVG-->
-user agent that the document needs access to the background image before <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images can be used.
-</p>
-
-A background image is what's been <i>rendered before</i> the current element.
-The host language is responsible for defining what <i>rendered before</i> in
-this context means. For SVG, that uses the painter's algorithm, <i>rendered before</i> means
-all of the prior elements in pre order traversal previous to the element to
-which the filter is applied.
-
-<p>
-  The property which enables access to the background image is
-'enable-background':</p>
 
 <table summary="enable-background property" class="propdef" id="EnableBackgroundProperty">
   <tbody>
@@ -5436,10 +5404,9 @@ which the filter is applied.
   </tbody>
 </table>
 
-<p>'enable-background' is only
-  applicable to <a>container elements</a>
-  and specifies how the <a>SVG user agent</a> manages the accumulation
-  of the background image.</p>
+<p>
+  The property which enables access to the background image is
+'enable-background':</p>
 
 <p>
   <strong>new</strong>
@@ -5466,6 +5433,37 @@ which the filter is applied.
     the renderable elements onto the target device. (No need to render to the
     background image canvas.)</li>
 </ul>
+
+<p>
+  The 'enable-background' property has no affect if the 'isolation' property has a value of ''isolate'' [[!COMPOSITING]]. The isolation group defined by the 'isolation' property will establish a new background image canvas.
+</p>
+
+<p id="AccessingBackgroundImage">Two possible pseudo input images for filter effects are <a>BackgroundImage</a> and <a>BackgroundAlpha</a>, which each represent an image
+snapshot of the canvas under the <a>filter region</a> at the time that the <a
+href="#FilterElement"><span class="element-name">'filter'</span></a> element
+is invoked. <a>BackgroundImage</a> represents both
+the color values and alpha channel of the canvas (i.e., RGBA pixel values),
+whereas <a>BackgroundAlpha</a> represents only the
+alpha channel.</p>
+
+<p>
+  Implementations <!--of SVG user agents often-->
+will often need to maintain supplemental background image buffers in order to
+support the <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images. Sometimes,
+the background image buffers will contain an in-memory copy of the
+accumulated painting operations on the current canvas.</p>
+
+<p>
+  Because in-memory image buffers can take up significant system resources, <!--SVG-->
+content must explicitly indicate to the <!--SVG-->
+user agent that the document needs access to the background image before <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images can be used.
+</p>
+
+A background image is what's been <i>rendered before</i> the current element.
+The host language is responsible for defining what <i>rendered before</i> in
+this context means. For SVG, that uses the painter's algorithm, <i>rendered before</i> means
+all of the prior elements in pre order traversal previous to the element to
+which the filter is applied.
 
 <p>
   If a filter effect specifies either the <a>BackgroundImage</a> or the 
