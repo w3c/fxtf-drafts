@@ -324,7 +324,7 @@ transparent; i.e. there is no color contribution from any geometry because the g
 </p>
 </p>
 
-<h3 id="simplealphacompositing">simple alpha compositing</h3>
+<h3 id="simplealphacompositing">Simple alpha compositing</h3>
 <p>
 The simple alpha compositing model used in previous versions of SVG allowed for the illusion of partial or full transparency.
 While this specification provides the author the choice of many Porter Duff compositing operators and many blending modes, the simple alpha compositing 
@@ -338,10 +338,10 @@ co = Cs x αs + Cb x αb x (1 - αs)
 </pre>
 Where 
 <br/>
-co: the pixel value after compositing<br/>
+co: the premultiplied pixel value after compositing<br/>
 Cs: the color value of the source graphic element being composited<br/>
 αs: the alpha value of the source graphic element being composited<br />
-Cb: the pixel value of the <a href="#backdrop">backdrop</a><br/>
+Cb: the color value of the <a href="#backdrop">backdrop</a><br/>
 αb: the alpha value of the <a href="#backdrop">backdrop</a><br/>
 <p class="note">
 All values are between 0 and 1 inclusive.<br/>
@@ -591,8 +591,7 @@ within a group will interact with the content that is already in the scene (the 
 Compositing groups may be made up of any number of elements, and may contain other compositing groups.
 </p>
 <p>
-The default properties of a compositing group shall cause no visual difference compared to no groups. See <a href="#groupinvariance">Group Invariance</a>.
-The result of this is that single elements behave as if they were in a group by themselves.
+The default properties of a compositing group shall cause no visual difference compared to having no group. See <a href="#groupinvariance">Group Invariance</a>.
 </p>
 <p>
 A compositing group is rendered by first compositing the elements of the group onto the inital backdrop. The result of this is a single element containing
@@ -601,7 +600,7 @@ Steps shall be taken to ensure the group backdrop makes only a single contributi
 <dl>
 <dt id="initialbackdrop">initial backdrop</dt>
 <dd>
-The intial backdrop is the backdrop selected for compositing the group's first element. This will be the same as the group backdrop in a non-isolated
+The intial backdrop is the backdrop used for compositing the group's first element. This will be the same as the group backdrop in a non-isolated
 group, or a fully transparent backdrop for an isolated group.
 </dd>
 <dt id="groupbackdrop">group backdrop</dt>
@@ -614,10 +613,10 @@ The use of <a href="#knockoutgroups">knockout groups</a> changes this definition
 
 <h3 id="groupinvariance">Group invariance</h3>
 <p>
-An important behavior of simple alpha compositing is its group invariance. This behavior is preserved in the more complex model described in this specification.
+An important property of simple alpha compositing is its group invariance. This behavior is preserved in the more complex model described in this specification.
 Adding or removing grouping with default attributes shall not show visual differences.<br/>
 <pre>so: A + B + C = A + (B + C) = (A + B) + C</pre>
-When adding attributes to the group such as knockout, isolate, blending modes other than normal or Porter Duff compositing operators other than source-over, groups may no longer be invariant.
+When adding attributes to the group such as 'knockout', 'isolate', blending modes other than 'normal' or Porter Duff compositing operators other than 'source-over', groups may no longer be invariant.
 </p>
 
 <h3 id="isolatedgroups">Isolated Groups</h3>
@@ -653,9 +652,9 @@ The page group is composited with a backdrop color defined by the User Agent. Ty
 The page group may be used as an element in another graphical composition.
 </p>
 <p>
-For example, <br />
-an SVG file contains a red object at 50% opacity, <br />
-The user agent composites the page group onto a white background with 100% opacity. <br />
+For example,
+this is an SVG file that contains a red object at 50% opacity. <br />
+The user agent will composite the page group onto a white background with 100% opacity. <br />
 The results are as follows:
 <pre>
 co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
@@ -668,7 +667,7 @@ which is the color value ultimately displayed by the user agent.
 <h2 id="advancedcompositing">Advanced compositing features</h2>
 <p>
 <a href="#simplealphacompositing">Simple alpha compositing</a> uses the source-over Porter Duff compositing operator. Additional compositing operators exist and may be specified with the <a href="#propdef-mix-composite">mix-composite property</a>.
-The additional compositing operators allow for more complex interactions between the shapes of elements being composited. The compositing operators are described in <a href="#porterduffcompositingoperators">'The Porter Duff compositing operators'</a>.
+The additional compositing operators allow for more complex interactions between the shapes of elements being composited. The compositing operators are described in the <a href="#porterduffcompositingoperators">Porter Duff compositing operators</a>.
 The operators that applies to an element or group is selected using the <a href="#propdef-mix-composite">mix-composite</a> property.
 </p>
 <p>
@@ -742,7 +741,7 @@ and incorporating color gives the general Porter Duff equation
 <pre>
     co = αs x Fa x Cs + αb x Fb x Cb
 </pre>
-Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1] αs is the coverage of the source Fa is defined by the operator and controls inclusion of the source Cs is the color of the source (not multiplied by alpha) αb is the coverage of the destination Fb is defined by the operator and controls inclusion of the destination Cb is the color of the destination (not multiplied by alpha)
+Where:<br/>co is the output color pre-multiplied with the output alpha [0 <= co <= 1]<br/>αs is the coverage of the source Fa is defined by the operator and controls inclusion of the source Cs is the color of the source (not multiplied by alpha)<br/>αb is the coverage of the destination Fb is defined by the operator and controls inclusion of the destination Cb is the color of the destination (not multiplied by alpha)
 <h4 id="porterduffcompositingoperators_clear">Clear</h4>
 <p>No regions are enabled.</p>
 <img src="examples/PD_clr.svg" alt="example of porter duff clear"/>
@@ -851,8 +850,8 @@ Where: co is the output color pre-multiplied with the output alpha [0 <= co <= 1
 <h4 id="groupcompositingisolation">Isolated groups and Porter Duff modes</h4>
 <p>
 When compositing the elements within an isolated group, the elements are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the bottom element in the group uses a Porter Duff compositing operator
-which is dependent on the backdrop, such as <a href="#porterduffcompositingoperators_dest">destination</a>, <a href="#porterduffcompositingoperators_srcin">source-in</a>, 
-<a href="#porterduffcompositingoperators_destin">destination-in</a>, <a href="#porterduffcompositingoperators_dest_out">destination-out</a> or <a href="#porterduffcompositingoperators_srcatop">source-atop</a>, 
+which is dependent on the backdrop, such as <a href="#porterduffcompositingoperators_dst">destination</a>, <a href="#porterduffcompositingoperators_srcin">source-in</a>, 
+<a href="#porterduffcompositingoperators_dstin">destination-in</a>, <a href="#porterduffcompositingoperators_dstout">destination-out</a> or <a href="#porterduffcompositingoperators_srcatop">source-atop</a>, 
 then the result of the composite will be empty. Subsequent elements within the group are composited with the result of the first composite.
 </p>
 
@@ -1008,6 +1007,7 @@ The <a href="#backdrop">backdrop</a> is replaced with the source where the sourc
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
 </p>
+<p class="note">The result must be rounded down if it exceeds the range.</p>
 <img src="examples/lighten.png" alt="example of lighten blending"/>
 
 <h4 id="blendingcolordodge">'color-dodge' blend mode</h4>
