@@ -11,7 +11,7 @@
    rel=dc.rights>
   <meta content="Compositing and Blending Level 1" name=dc.title>
   <meta content=text name=dc.type>
-  <meta content=2013-03-22 name=dc.date>
+  <meta content=2013-03-26 name=dc.date>
   <meta content="Rik Cabanier" name=dc.creator>
   <meta content="Nikos Andronikos" name=dc.creator>
   <meta content=W3C name=dc.publisher>
@@ -230,14 +230,14 @@
 
    <h1>Compositing and Blending Level 1</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 22 March 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 26 March 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-compositing-20130322/-->
+     <!--http://www.w3.org/TR/2013/WD-compositing-20130326/-->
 
     <dt>Latest version:
 
@@ -361,7 +361,7 @@
       compositing?</a>
 
      <li><a href="#simplealphacompositing"><span class=secno>1.2.
-      </span>simple alpha compositing</a>
+      </span>Simple alpha compositing</a>
 
      <li><a href="#simplealphacompositingexamples"><span class=secno>1.3.
       </span>Examples of simple alpha compositing</a>
@@ -625,7 +625,7 @@
    pixel. A value of 1 means that the pixel is fully opaque; the geometry
    completely overlaps the pixel.
 
-  <h3 id=simplealphacompositing><span class=secno>1.2. </span>simple alpha
+  <h3 id=simplealphacompositing><span class=secno>1.2. </span>Simple alpha
    compositing</h3>
 
   <p> The simple alpha compositing model used in previous versions of SVG
@@ -642,10 +642,10 @@ co = Cs x αs + Cb x αb x (1 - αs)
 </pre>
 
   <p>Where <br>
-   co: the pixel value after compositing<br>
+   co: the premultiplied pixel value after compositing<br>
    Cs: the color value of the source graphic element being composited<br>
    αs: the alpha value of the source graphic element being composited<br>
-   Cb: the pixel value of the <a href="#backdrop">backdrop</a><br>
+   Cb: the color value of the <a href="#backdrop">backdrop</a><br>
    αb: the alpha value of the <a href="#backdrop">backdrop</a><br>
 
   <p class=note> All values are between 0 and 1 inclusive.<br>
@@ -909,9 +909,8 @@ Co = αs x Fa x Cs + αb x Fb x Cb
    contain other compositing groups.
 
   <p> The default properties of a compositing group shall cause no visual
-   difference compared to no groups. See <a href="#groupinvariance">Group
-   Invariance</a>. The result of this is that single elements behave as if
-   they were in a group by themselves.
+   difference compared to having no group. See <a
+   href="#groupinvariance">Group Invariance</a>.
 
   <p> A compositing group is rendered by first compositing the elements of
    the group onto the inital backdrop. The result of this is a single element
@@ -922,8 +921,8 @@ Co = αs x Fa x Cs + αb x Fb x Cb
   <dl>
    <dt id=initialbackdrop>initial backdrop
 
-   <dd> The intial backdrop is the backdrop selected for compositing the
-    group's first element. This will be the same as the group backdrop in a
+   <dd> The intial backdrop is the backdrop used for compositing the group's
+    first element. This will be the same as the group backdrop in a
     non-isolated group, or a fully transparent backdrop for an isolated
     group.
 
@@ -936,16 +935,19 @@ Co = αs x Fa x Cs + αb x Fb x Cb
 
   <h3 id=groupinvariance><span class=secno>4.1. </span>Group invariance</h3>
 
-  <p> An important behavior of simple alpha compositing is its group
+  <p> An important property of simple alpha compositing is its group
    invariance. This behavior is preserved in the more complex model described
    in this specification. Adding or removing grouping with default attributes
    shall not show visual differences.<br>
 
   <pre>so: A + B + C = A + (B + C) = (A + B) + C</pre>
 
-  <p>When adding attributes to the group such as knockout, isolate, blending
-   modes other than normal or Porter Duff compositing operators other than
-   source-over, groups may no longer be invariant.
+  <p>When adding attributes to the group such as ‘<code
+   class=property>knockout</code>’, ‘<code
+   class=property>isolate</code>’, blending modes other than ‘<code
+   class=property>normal</code>’ or Porter Duff compositing operators other
+   than ‘<code class=property>source-over</code>’, groups may no longer
+   be invariant.
 
   <h3 id=isolatedgroups><span class=secno>4.2. </span>Isolated Groups</h3>
 
@@ -998,10 +1000,10 @@ Co = αs x Fa x Cs + αb x Fb x Cb
    Agent. Typically this will be white with 100% opacity.<br>
    The page group may be used as an element in another graphical composition.
 
-  <p> For example, <br>
-   an SVG file contains a red object at 50% opacity, <br>
-   The user agent composites the page group onto a white background with 100%
+  <p> For example, this is an SVG file that contains a red object at 50%
    opacity. <br>
+   The user agent will composite the page group onto a white background with
+   100% opacity. <br>
    The results are as follows:
 
   <pre>
@@ -1021,9 +1023,9 @@ co = RGB(255, 127, 127)
    href="#propdef-mix-composite">mix-composite property</a>. The additional
    compositing operators allow for more complex interactions between the
    shapes of elements being composited. The compositing operators are
-   described in <a href="#porterduffcompositingoperators">‘<code
-   class=css>The Porter Duff compositing operators</code>’</a>. The
-   operators that applies to an element or group is selected using the <a
+   described in the <a href="#porterduffcompositingoperators">Porter Duff
+   compositing operators</a>. The operators that applies to an element or
+   group is selected using the <a
    href="#propdef-mix-composite">mix-composite</a> property.
 
   <p> Porter Duff compositing is based on a model of a pixel in which two
@@ -1147,12 +1149,15 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
     co = αs x Fa x Cs + αb x Fb x Cb
 </pre>
 
-  <p>Where: co is the output color pre-multiplied with the output alpha [0 <=
-   co <= 1] αs is the coverage of the source Fa is defined by the operator
-   and controls inclusion of the source Cs is the color of the source (not
-   multiplied by alpha) αb is the coverage of the destination Fb is defined
-   by the operator and controls inclusion of the destination Cb is the color
-   of the destination (not multiplied by alpha)
+  <p>Where:<br>
+   co is the output color pre-multiplied with the output alpha [0 <= co <=
+   1]<br>
+   αs is the coverage of the source Fa is defined by the operator and
+   controls inclusion of the source Cs is the color of the source (not
+   multiplied by alpha)<br>
+   αb is the coverage of the destination Fb is defined by the operator and
+   controls inclusion of the destination Cb is the color of the destination
+   (not multiplied by alpha)
 
   <h4 id="porterduffcompositingoperators_clear"><span class=secno>5.1.1.
    </span>Clear</h4>
@@ -1343,10 +1348,10 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the
    bottom element in the group uses a Porter Duff compositing operator which
    is dependent on the backdrop, such as <a
-   href="#porterduffcompositingoperators_dest">destination</a>, <a
+   href="#porterduffcompositingoperators_dst">destination</a>, <a
    href="#porterduffcompositingoperators_srcin">source-in</a>, <a
-   href="#porterduffcompositingoperators_destin">destination-in</a>, <a
-   href="#porterduffcompositingoperators_dest_out">destination-out</a> or <a
+   href="#porterduffcompositingoperators_dstin">destination-in</a>, <a
+   href="#porterduffcompositingoperators_dstout">destination-out</a> or <a
    href="#porterduffcompositingoperators_srcatop">source-atop</a>, then the
    result of the composite will be empty. Subsequent elements within the
    group are composited with the result of the first composite.
@@ -1566,6 +1571,8 @@ now subsitute the result of blending for Cs:
   <pre>
     B(Cb, Cs) = max(Cb, Cs)
 </pre>
+
+  <p class=note>The result must be rounded down if it exceeds the range.
 
   <p><img alt="example of lighten blending" src="examples/lighten.png">
 
