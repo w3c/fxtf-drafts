@@ -877,8 +877,7 @@ Some of the Porter Duff operators are unchanged, because they normally have no e
 
 <h2 id="blending">Blending</h2>
 <p>
-Blending is the aspect of compositing that calculates the mixing of colors where the source element and backdrop overlap.
-Blending takes the colors of the source element and mixes them with the <a href="#backdrop">backdrop</a> in areas where the source element and backdrop overlap.
+Blending is the aspect of compositing that calculates the mixing of colors where the source element and <a href="#backdrop">backdrop</a> overlap.<br/>
 Conceptually, the colors in the source element are blended in place with the backdrop.
 After blending, the modified source element is composited with the backdrop.
 In practice, this is usually all performed in one step.
@@ -1190,7 +1189,7 @@ The compositing model must follow the <a href="http://www.w3.org/TR/SVG11/render
 <h3 id="csscompositingrules_CSS">Behavior specific to CSS</h3>
 <p>
 If an element specifies non-default blending, compositing or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> and that of all of its children must revert to 'flat'.<br/>
-The application of non-default blending or compositing to an <var>'<a href="#area-element">element</a>'</var> must also establishe a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
+The application of non-default blending or compositing to an <var>'<a href="#area-element">element</a>'</var> must also establish a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
 Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered a group. HTML elements themselves should not create groups.
 </p>
 <p class="issue">
@@ -1300,6 +1299,7 @@ as follows:</p>
   </dl>
  <p class="note">If <var>&lt;area&gt;</var> is omitted, <var>'<a href="#area-element">element</a>'</var> must be assumed. An area can only be set once in the CSS property; an attempt to list it more than once must be ignored.</p>
  <p class="note">In SVG, <var>'<a href="#area-element">element</a>'</var> will be used, regardless of what area is specified.</p>
+ <p class="issue">We need to define more clearly what 'content' means.</p>
  
 <p>The syntax of the property of <var>&lt;composite-mode&gt;</var> is given with:</p>
 <pre class="composite"><dfn id="ltcompositegt"><var>&lt;composite-mode&gt;</var></dfn> = <a href="#porterduffcompositingoperators_clear">clear</a> | <a href="#porterduffcompositingoperators_src">copy</a> | <a href="#porterduffcompositingoperators_dst">destination</a> | <a href="#porterduffcompositingoperators_srcover">source-over</a> | <a href="#porterduffcompositingoperators_dstover">destination-over</a> | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a href="#porterduffcompositingoperators_dstin">destination-in</a> | <a href="#porterduffcompositingoperators_srcout">source-out</a> | <a href="#porterduffcompositingoperators_dstout">destination-out</a> | <a href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a href="#porterduffcompositingoperators_xor">xor</a> | <a href="#porterduffcompositingoperators_plus">lighter</a></pre>
@@ -1503,7 +1503,7 @@ Omitted values are set to their initial values.
         <tbody>
           <tr valign="baseline">
             <td><em>Value:</em>  </td>
-            <td><a href="#ltmixareagt"><var>&lt;mixa-rea&gt;</var></a>#</td>
+            <td><a href="#ltmixareagt"><var>&lt;mix-area&gt;</var></a>#</td>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
@@ -1539,14 +1539,13 @@ Omitted values are set to their initial values.
 </dl>
 </div>
 
-<p>The syntax of the property of <var>&lt;mixa-rea&gt;</var> is given with:</p>
+<p>The syntax of the property of <var>&lt;mix-area&gt;</var> is given with:</p>
 <pre class="blendarea"><dfn id="ltmixareagt"><var>&lt;mix-area&gt;</var></dfn> = <a href="#ltareagt"><var>&lt;area&gt;</var></a>? [<a href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>]</pre>
 
 
 
 <h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
-<h4 id="background-composite">The <span class="prop-name">'background-composite'</span> property</h4>
-<p><span class="prop-name">'background-composite'</span> defines how background images composite with each other.<br/>
+Defines how background images composite with each other.<br/>
 Background images must always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'true'.<br/>
 </p>
 <p>
@@ -1599,8 +1598,7 @@ as follows:</p>
 </div>
 
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
-
-<p>This attribute sets the blending mode of each background image and the background color. <br/>
+<p>Defines the blending mode of each background image and the background color. <br/>
 Each background image must blend with the element's background images that are at a lower z-index, the element's background color and the element's backdrop. The background color must blend with the element's backdrop. This must follow the <a href="http://www.w3.org/TR/CSS21/zindex.html">CSS drawing model</a>.
 <br/>The description of the <span class="prop-name">'background-blend-mode'</span> property is
 as follows:</p>
