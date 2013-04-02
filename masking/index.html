@@ -6,18 +6,19 @@
   <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
   <title>CSS Masking</title>
 
-  <link href="http://purl.org/dc/terms/" rel=schema.dcterms>
+  <link href="http://purl.org/dc/terms/" rel=schema.dc>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-   rel=dcterms.rights>
-  <meta content="CSS Masking" name=dcterms.title>
-  <meta content=text name=dcterms.type>
-  <meta content=2013-03-13 name=dcterms.issued>
+   rel=dc.rights>
+  <meta content="CSS Masking" name=dc.title>
+  <meta content=text name=dc.type>
+  <meta content=2013-04-02 name=dc.date>
+  <meta content="Dirk Schulze" name=dc.creator>
+  <meta content="Brian Birtles" name=dc.creator>
   <meta
-   content="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html"
-   name=dcterms.creator>
-  <meta content=W3C name=dcterms.publisher>
-  <meta content="http://dev.w3.org/csswg/css-masking/"
-   name=dcterms.identifier>
+   content="<a href=&quot;http://www.xanthir.com/contact/&quot;>Tab Atkins Jr.</a>"
+   name=dc.creator>
+  <meta content=W3C name=dc.publisher>
+  <meta content="http://dev.w3.org/csswg/css-masking/" name=dc.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
   <link href=default.css rel=stylesheet type="text/css">
@@ -34,14 +35,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 13 March 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 2 April 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130313/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130402/-->
 
     <dt>Latest version:
 
@@ -375,10 +376,10 @@
      namespace and its descendant elements. Or the object bounding box <a
      href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>, if the
      element does not have an associated CSS layout box and is in the
-     <code>http://www.w3.org/2000/svg</code> namespace (See <a
+     <code>http://www.w3.org/2000/svg</code> namespace. (See <a
      href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
      <a href="#CSSOM-VIEW"
-     rel=biblioentry>[CSSOM-VIEW]<!--{{CSSOM-VIEW}}--></a>).
+     rel=biblioentry>[CSSOM-VIEW]<!--{{CSSOM-VIEW}}--></a>.)
 
    <dt id=TermLocalCoordinateSystem><dfn id=local-coordinate-system>local
     coordinate system</dfn>
@@ -453,41 +454,41 @@
   <table class=data id=term-matching>
    <thead>
     <tr>
+     <th>Term in CSS Masking
+
      <th>Term in <a href="#CSS3BG"
       rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>
 
-     <th>Term in CSS Masking
-
    <tbody>
     <tr>
-     <th>background images
+     <th><dfn id=mask-images>mask images</dfn>
 
-     <td>mask images
-
-    <tr>
-     <th>background painting area
-
-     <td>mask painting area
+     <td>background images
 
     <tr>
-     <th>background-size
+     <th><dfn id=mask-painting-area0>mask painting area</dfn>
 
-     <td>mask-size
-
-    <tr>
-     <th>background-position
-
-     <td>mask-position
+     <td>background painting area
 
     <tr>
-     <th>background positioning area
+     <th><dfn id=mask-size>mask-size</dfn>
 
-     <td>mask positioning area
+     <td>background-size
 
     <tr>
-     <th>border image area
+     <th><dfn id=mask-position>mask-position</dfn>
 
-     <td>mask box image area
+     <td>background-position
+
+    <tr>
+     <th><dfn id=mask-positioning-area0>mask positioning area</dfn>
+
+     <td>background positioning area
+
+    <tr>
+     <th><dfn id=mask-box-image-area>mask box image area</dfn>
+
+     <td>border image area
   </table>
 
   <h2 id=the-mask-rendering-model><span class=secno>5. </span>The Mask
@@ -521,8 +522,8 @@
    id=layers>layers</span>. The number of layers is determined by the number
    of comma-separated values in the ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ property. Note that a value of
-   ‘<a href="#none"><code class=property>none</code></a>’ still creates a
-   layer. See <a
+   ‘<a href="#lsquononersquo"><code class=property>none</code></a>’ still
+   creates a layer. See <a
    href="http://www.w3.org/TR/css3-background/#layering">Layering Multiple
    Background Images</a> <a href="#CSS3BG"
    rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
@@ -677,12 +678,12 @@
 
   <pre class=prod><var><dfn
    id=ltmask-elementgt>&lt;mask-element&gt;</dfn></var> = <a
-   href="#lturlgt"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
+   href="#lsquolturlgtrsquo"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
    href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a></pre>
 
   <pre class=prod><dfn
    id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(<a
-   href="#ltcompound-selectorgt"><var>&lt;compound-selector&gt;</var></a>#)</pre>
+   href="#lsquoltcompound-selectorgtrsquo"><var>&lt;compound-selector&gt;</var></a>#)</pre>
 
   <p class=note>A <a
    href="#ltmask-elementgt"><var>&lt;mask-element&gt;</var></a> can just be
@@ -692,7 +693,8 @@
    below.)
 
   <dl>
-   <dt> <dfn id=lturlgt>‘<code class=css>&lt;url&gt;</code>’</dfn>
+   <dt> <dfn id=lsquolturlgtrsquo>‘<code
+    class=css>&lt;url&gt;</code>’</dfn>
 
    <dd> A URL reference to a <a class=element-name
     href="#MaskElement">‘<code class=property>mask</code>’</a> element
@@ -722,7 +724,7 @@
     list of selectors is taken as the mask source. If there are no matching
     elements the mask source is invalid.
 
-   <dt><dfn id=ltcompound-selectorgt>‘<code
+   <dt><dfn id=lsquoltcompound-selectorgtrsquo>‘<code
     class=css>&lt;compound-selector&gt;</code>’</dfn>
 
    <dd> A <a href="http://dev.w3.org/csswg/selectors4/#compound">compound
@@ -736,10 +738,11 @@
    <dd> A 2D image. (See <a href="#CSS3-IMAGES"
     rel=biblioentry>[CSS3-IMAGES]<!--{{!CSS3-IMAGES}}--></a>.)
 
-   <dt><dfn id=none>‘<code class=css>none</code>’</dfn>
+   <dt><dfn id=lsquononersquo>‘<code class=css>none</code>’</dfn>
 
-   <dd> A value of ‘<a href="#none"><code class=css>none</code></a>’
-    counts as an image layer but does not mask the element.
+   <dd> A value of ‘<a href="#lsquononersquo"><code
+    class=css>none</code></a>’ counts as an image layer but does not mask
+    the element.
   </dl>
 
   <p class=note>If the URI in the ‘<code class=css>url()</code>’ function
@@ -860,20 +863,22 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
   <p>Values have the following meanings:
 
   <dl>
-   <dt><dfn id=alpha>‘<code class=css>alpha</code>’</dfn>
+   <dt><dfn id=lsquoalpharsquo>‘<code class=css>alpha</code>’</dfn>
 
-   <dd> A value of ‘<a href="#alpha"><code class=css>alpha</code></a>’
-    indicates that the alpha values of the mask image should be used as the
-    mask values. See <a href="#MaskValues">Calculating mask values</a>.
+   <dd> A value of ‘<a href="#lsquoalpharsquo"><code
+    class=css>alpha</code></a>’ indicates that the alpha values of the mask
+    image should be used as the mask values. See <a
+    href="#MaskValues">Calculating mask values</a>.
 
-   <dt><dfn id=luminance>‘<code class=css>luminance</code>’</dfn>
+   <dt><dfn id=lsquoluminancersquo>‘<code
+    class=css>luminance</code>’</dfn>
 
-   <dd> A value of ‘<a href="#luminance"><code
+   <dd> A value of ‘<a href="#lsquoluminancersquo"><code
     class=css>luminance</code></a>’ indicates that the luminance values of
     the mask image should be used as the mask values. See <a
     href="#MaskValues">Calculating mask values</a>.
 
-   <dt><dfn id=auto>‘<code class=css>auto</code>’</dfn>
+   <dt><dfn id=lsquoautorsquo>‘<code class=css>auto</code>’</dfn>
 
    <dd>
     <p> If the <a
@@ -895,19 +900,20 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
    <p> In the following example, the ‘<a href="#mask-type"><code
     class=property>mask-type</code></a>’ property sets the mask type value
     for the <a class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element to ‘<a href="#alpha"><code
-    class=css>alpha</code></a>’. The ‘<a href="#mask-image"><code
-    class=property>mask-image</code></a>’ property has a reference to this
-    <a class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element and the ‘<a
-    href="#mask-source-type"><code
+    class=property>mask</code>’</a> element to ‘<a
+    href="#lsquoalpharsquo"><code class=css>alpha</code></a>’. The ‘<a
+    href="#mask-image"><code class=property>mask-image</code></a>’ property
+    has a reference to this <a class=element-name
+    href="#MaskElement">‘<code class=property>mask</code>’</a> element
+    and the ‘<a href="#mask-source-type"><code
     class=property>mask-source-type</code></a>’ property has a value of
-    ‘<a href="#luminance"><code class=css>luminance</code></a>’. The
-    ‘<a href="#mask-source-type"><code
+    ‘<a href="#lsquoluminancersquo"><code
+    class=css>luminance</code></a>’. The ‘<a
+    href="#mask-source-type"><code
     class=property>mask-source-type</code></a>’ property will override the
     definition of ‘<a href="#mask-type"><code
-    class=property>mask-type</code></a>’ to ‘<a href="#luminance"><code
-    class=css>luminance</code></a>’.
+    class=property>mask-type</code></a>’ to ‘<a
+    href="#lsquoluminancersquo"><code class=css>luminance</code></a>’.
 
    <pre>
 &lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
@@ -1016,7 +1022,7 @@ body {
 
     <p class=caption>The effect of ‘<code class=property>space</code>’:
      the mask image of a dot is tiled to cover the whole <a class=index
-     href="#mask-painting-area" id=mask-painting-area0>mask painting area</a>
+     href="#mask-painting-area" id=mask-painting-area1>mask painting area</a>
      and the mask images are equally spaced.
    </div>
   </div>
@@ -1027,7 +1033,7 @@ body {
    comma-separated mask properties to form each mask image layer.
 
   <h3 id=the-mask-position><span class=secno>6.4. </span>The ‘<a
-   href="#mask-position"><code class=property>mask-position</code></a>’
+   href="#mask-position0"><code class=property>mask-position</code></a>’
    property</h3>
 
   <table class=propdef>
@@ -1035,7 +1041,7 @@ body {
     <tr>
      <th>Name:
 
-     <td><dfn id=mask-position>mask-position</dfn>
+     <td><dfn id=mask-position0>mask-position</dfn>
 
     <tr>
      <th><a href="#values">Value</a>:
@@ -1065,7 +1071,7 @@ body {
      <th>Percentages:
 
      <td>refer to size of <a class=index href="#mask-painting-area"
-      id=mask-painting-area1>mask painting area</a> <em>minus</em> size of
+      id=mask-painting-area2>mask painting area</a> <em>minus</em> size of
       mask image; see text
 
     <tr>
@@ -1133,7 +1139,7 @@ body {
   </div>
 
   <p>See the section <a href="#layering">“Layering multiple mask
-   images”</a> for how ‘<a href="#mask-position"><code
+   images”</a> for how ‘<a href="#mask-position0"><code
    class=property>mask-position</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
@@ -1206,29 +1212,32 @@ body {
   <p>Values have the following meanings:
 
   <dl>
-   <dt><dfn id=border-box title="''border-box''!!'mask-clip' value"> ‘<code
+   <dt><dfn id=lsquoborder-boxrsquo
+    title="''border-box''!!'mask-clip' value"> ‘<code
     class=css>border-box</code>’</dfn>
 
    <dd>The painted content is rectricted to (clipped to) the <span>border
     box</span> respectively <span>painting box</span> for objects without
     associated layout box.
 
-   <dt><dfn id=padding-box title="''padding-box''!!'mask-clip' value">
-    ‘<code class=css>padding-box</code>’</dfn>
+   <dt><dfn id=lsquopadding-boxrsquo
+    title="''padding-box''!!'mask-clip' value"> ‘<code
+    class=css>padding-box</code>’</dfn>
 
    <dd>The painted content is rectricted to (clipped to) the <span>padding
     box.</span>
 
-   <dt><dfn id=content-box title="''content-box''!!'mask-clip' value">
-    ‘<code class=css>content-box</code>’</dfn>
+   <dt><dfn id=lsquocontent-boxrsquo
+    title="''content-box''!!'mask-clip' value"> ‘<code
+    class=css>content-box</code>’</dfn>
 
    <dd>The painted content is rectricted to (clipped to) the <span>content
     box</span> respectively <span>object bounding box</span> <a href="#SVG11"
     rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a> for objects without
     associated layout box.
 
-   <dt><dfn id=no-clip title="''no-clip''!!'mask-clip' value"> ‘<code
-    class=css>no-clip</code>’</dfn>
+   <dt><dfn id=lsquono-cliprsquo title="''no-clip''!!'mask-clip' value">
+    ‘<code class=css>no-clip</code>’</dfn>
 
    <dd>The painted content is not restricted (not clipped). The <a
     href="#mask-painting-area">mask painting area</a> is set to the <a
@@ -1237,8 +1246,8 @@ body {
 
   <p class=note>Note that there is no corresponding box for ‘<code
    class=css>padding-box</code>’ on objects without associated layout box
-   and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
-   is choosen instead.
+   and ‘<a href="#lsquocontent-boxrsquo0"><code
+   class=css>content-box</code></a>’ is choosen instead.
 
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-clip"><code
@@ -1309,20 +1318,23 @@ body {
    mask positioning area(s).
 
   <dl>
-   <dt><dfn id=padding-box0 title="''padding-box''!!'mask-origin' value">
-    ‘<code class=css>padding-box</code>’</dfn>
+   <dt><dfn id=lsquopadding-boxrsquo0
+    title="''padding-box''!!'mask-origin' value"> ‘<code
+    class=css>padding-box</code>’</dfn>
 
    <dd>The position is relative to the padding box. (For single boxes
     ‘<code class=css>0 0</code>’ is the upper left corner of the padding
     edge, ‘<code class=css>100% 100%</code>’ is the lower right corner.)
 
-   <dt><dfn id=border-box0 title="''border-box''!!'mask-origin' value">
-    ‘<code class=css>border-box</code>’</dfn>
+   <dt><dfn id=lsquoborder-boxrsquo0
+    title="''border-box''!!'mask-origin' value"> ‘<code
+    class=css>border-box</code>’</dfn>
 
    <dd>The position is relative to the border box respectively <span>painting
     box</span> for objects without associated layout box.
 
-   <dt><dfn id=content-box0>‘<code class=css>content-box</code>’</dfn>
+   <dt><dfn id=lsquocontent-boxrsquo0>‘<code
+    class=css>content-box</code>’</dfn>
 
    <dd>The position is relative to the content box respectively object
     bounding box <a href="#SVG11"
@@ -1332,14 +1344,14 @@ body {
 
   <p class=note>Note that there is no corresponding box for ‘<code
    class=css>padding-box</code>’ on objects without associated layout box
-   and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
-   is choosen instead.
+   and ‘<a href="#lsquocontent-boxrsquo0"><code
+   class=css>content-box</code></a>’ is choosen instead.
 
   <p class=note>Note that if ‘<a href="#mask-clip"><code
    class=property>mask-clip</code></a>’ is ‘<code
    class=css>padding-box</code>’, ‘<a href="#mask-origin"><code
    class=property>mask-origin</code></a>’ is ‘<code
-   class=css>border-box</code>’, ‘<a href="#mask-position"><code
+   class=css>border-box</code>’, ‘<a href="#mask-position0"><code
    class=property>mask-position</code></a>’ is ‘<code class=css>top
    left</code>’ (the initial value), and the element has a non-zero border,
    then the top and left of the mask image will be clipped.
@@ -1350,14 +1362,14 @@ body {
    comma-separated mask properties to form each mask image layer.
 
   <h3 id=the-mask-size><span class=secno>6.7. </span>The ‘<a
-   href="#mask-size"><code class=property>mask-size</code></a>’ property</h3>
+   href="#mask-size0"><code class=property>mask-size</code></a>’ property</h3>
 
   <table class=propdef>
    <tbody>
     <tr>
      <th>Name:
 
-     <td><dfn id=mask-size>mask-size</dfn>
+     <td><dfn id=mask-size0>mask-size</dfn>
 
     <tr>
      <th><a href="#values">Value</a>:
@@ -1423,7 +1435,7 @@ body {
    property values.
 
   <p>See the section <a href="#layering">“Layering multiple mask
-   images”</a> for how ‘<a href="#mask-size"><code
+   images”</a> for how ‘<a href="#mask-size0"><code
    class=property>mask-size</code></a>’ interacts with other
    comma-separated mask properties to form each mask image layer.
 
@@ -1505,10 +1517,10 @@ body {
   <p class=note> Note that the properties ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’, ‘<a href="#mask-repeat"><code
    class=property>mask-repeat</code></a>’, ‘<a
-   href="#mask-position"><code class=property>mask-position</code></a>’,
+   href="#mask-position0"><code class=property>mask-position</code></a>’,
    ‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’,
    ‘<a href="#mask-origin"><code class=property>mask-origin</code></a>’
-   and ‘<a href="#mask-size"><code class=property>mask-size</code></a>’
+   and ‘<a href="#mask-size0"><code class=property>mask-size</code></a>’
    have no affect on <a class=element-name href="#MaskElement">‘<code
    class=property>mask</code>’</a> elements.
 
@@ -1573,11 +1585,12 @@ body {
   <p>Values have the following meanings:
 
   <dl>
-   <dt>‘<a href="#luminance"><code class=css>luminance</code></a>’
+   <dt>‘<a href="#lsquoluminancersquo"><code
+    class=css>luminance</code></a>’
 
    <dd>Indicates that the luminance values of the mask should be used.
 
-   <dt>‘<a href="#alpha"><code class=css>alpha</code></a>’
+   <dt>‘<a href="#lsquoalpharsquo"><code class=css>alpha</code></a>’
 
    <dd>Indicates that the alpha values of the mask should be used.
   </dl>
@@ -2108,13 +2121,13 @@ body {
    href="#MaskElement">‘<code class=property>mask</code>’</a> elements
    are not directly rendered even if the ‘<code
    class=property>display</code>’ property is set to a value other than
-   ‘<a href="#none"><code class=property>none</code></a>’, and <a
-   class=element-name href="#MaskElement">‘<code
+   ‘<a href="#lsquononersquo"><code class=property>none</code></a>’, and
+   <a class=element-name href="#MaskElement">‘<code
    class=property>mask</code>’</a> elements are available for referencing
    even when the ‘<code class=property>display</code>’ property on the <a
    class=element-name href="#MaskElement">‘<code
    class=property>mask</code>’</a> element or any of its ancestors is set
-   to <a class=prop-value href="#none">none</a>.
+   to <a class=prop-value href="#lsquononersquo">none</a>.
 
   <h2 id=mask-box-image><span class=secno>7. </span>Mask Box Image</h2>
 
@@ -2205,8 +2218,8 @@ div {
     <tr>
      <th>Computed value:
 
-     <td>‘<a href="#none"><code class=css>none</code></a>’ or the image
-      with its URI made absolute
+     <td>‘<a href="#lsquononersquo"><code class=css>none</code></a>’ or
+      the image with its URI made absolute
 
     <tr>
      <th>Animatable:
@@ -2215,8 +2228,9 @@ div {
   </table>
 
   <p>Specifies an image to be used as mask. If the value is ‘<a
-   href="#none"><code class=css>none</code></a>’ or if the image cannot be
-   displayed (or the property doesn't apply), the content won't get masked.
+   href="#lsquononersquo"><code class=css>none</code></a>’ or if the image
+   cannot be displayed (or the property doesn't apply), the content won't get
+   masked.
 
   <h3 id=the-mask-box-image-slice><span class=secno>7.2. </span>The ‘<a
    href="#mask-box-image-slice"><code
@@ -2328,7 +2342,7 @@ div {
      <th>Percentages:
 
      <td>relative to width/height of the <a
-      href="#mask-box-image-area"><em>mask box image area</em></a>
+      href="#mask-box-image-area0"><em>mask box image area</em></a>
 
     <tr>
      <th>Media:
@@ -2347,7 +2361,7 @@ div {
   </table>
 
   <p>The mask image is drawn inside an area called the <a
-   href="#mask-box-image-area"><em>mask box image area</em></a>. This is an
+   href="#mask-box-image-area0"><em>mask box image area</em></a>. This is an
    area whose boundaries by default correspond to the mask box, see ‘<a
    href="#mask-box-image-outset"><code
    class=property>mask-box-image-outset</code></a>’.
@@ -2419,11 +2433,11 @@ div {
   </table>
 
   <p>The values specify the amount by which the <dfn
-   id=mask-box-image-area>mask box image area</dfn> extends beyond the border
-   box. If it has four values, they set the outsets on the top, right, bottom
-   and left sides in that order. If the left is missing, it is the same as
-   the right; if the bottom is missing, it is the same as the top; if the
-   right is missing, it is the same as the top.
+   id=mask-box-image-area0>mask box image area</dfn> extends beyond the
+   border box. If it has four values, they set the outsets on the top, right,
+   bottom and left sides in that order. If the left is missing, it is the
+   same as the right; if the bottom is missing, it is the same as the top; if
+   the right is missing, it is the same as the top.
 
   <p>As with ‘<a href="#mask-box-image-width"><code
    class=property>mask-box-image-width</code></a>’, a &lt;number&gt;
@@ -2631,7 +2645,7 @@ div {
     <tr>
      <th>Value:
 
-     <td><a href="#ltshapegt"><var>&lt;shape&gt;</var></a> | <a
+     <td><a href="#lsquoltshapegtrsquo"><var>&lt;shape&gt;</var></a> | <a
       href="#ltclip-sourcegt"><var>&lt;clip-source&gt;</var></a> | none
 
     <tr>
@@ -2667,8 +2681,9 @@ div {
     <tr>
      <th>Computed value:
 
-     <td>as specified, but with <a href="#lturlgt"><var>&lt;url&gt;</var></a>
-      values made absolute
+     <td>as specified, but with <a
+      href="#lsquolturlgtrsquo"><var>&lt;url&gt;</var></a> values made
+      absolute
 
     <tr>
      <th>Animatable:
@@ -2682,12 +2697,13 @@ div {
   </table>
 
   <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
-   href="#lturlgt"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
+   href="#lsquolturlgtrsquo"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
    href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a>
 </pre>
 
   <dl>
-   <dt> <dfn id=ltshapegt>‘<code class=css>&lt;shape&gt;</code>’</dfn>
+   <dt> <dfn id=lsquoltshapegtrsquo>‘<code
+    class=css>&lt;shape&gt;</code>’</dfn>
 
    <dd> A basic shape function as defined in CSS3 Exclusions. The origin of
     clipping shapes is on the top left of the <a class=index
@@ -2777,14 +2793,14 @@ div {
   </table>
 
   <dl>
-   <dt><dfn id=nonzero>‘<code class=css>nonzero</code>’</dfn>
+   <dt><dfn id=lsquononzerorsquo>‘<code class=css>nonzero</code>’</dfn>
 
    <dd>See description of <a class=property
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty">‘<code
     class=property>fill-rule</code>’</a> property <a href="#SVG11"
     rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>.
 
-   <dt><dfn id=evenodd>‘<code class=css>evenodd</code>’</dfn>
+   <dt><dfn id=lsquoevenoddrsquo>‘<code class=css>evenodd</code>’</dfn>
 
    <dd>See description of <a class=property
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty">‘<code
@@ -2842,7 +2858,7 @@ div {
     <tr>
      <th>Value:
 
-     <td><a href="#ltshapegt"><var>&lt;shape&gt;</var></a> | auto
+     <td><a href="#lsquoltshapegtrsquo"><var>&lt;shape&gt;</var></a> | auto
 
     <tr>
      <th>Initial:
@@ -2906,11 +2922,11 @@ div {
    meanings:
 
   <dl>
-   <dt>‘<a href="#auto"><code class=css>auto</code></a>’
+   <dt>‘<a href="#lsquoautorsquo"><code class=css>auto</code></a>’
 
    <dd>The element does not clip.
 
-   <dt><a href="#ltshapegt"><var>&lt;shape&gt;</var></a>
+   <dt><a href="#lsquoltshapegtrsquo"><var>&lt;shape&gt;</var></a>
 
    <dd>
     <p> In CSS 2.1, the only valid &lt;shape&gt; value is: rect(<a
@@ -2932,21 +2948,22 @@ div {
      id=ltrightgt>&lt;right&gt;</dfn>, <dfn
      id=ltbottomgt>&lt;bottom&gt;</dfn>, and <dfn
      id=ltleftgt>&lt;left&gt;</dfn> may either have a
-     <var>&lt;length&gt;</var> value or ‘<a href="#auto"><code
+     <var>&lt;length&gt;</var> value or ‘<a href="#lsquoautorsquo"><code
      class=css>auto</code></a>’. Negative lengths are permitted. The value
-     ‘<a href="#auto"><code class=css>auto</code></a>’ means that a given
-     edge of the clipping region will be the same as the edge of the
-     element's generated border box (i.e., ‘<a href="#auto"><code
-     class=css>auto</code></a>’ means the same as ‘<code
-     class=css>0</code>’ for <a href="#lttopgt"><var>&lt;top&gt;</var></a>
-     and <a href="#ltleftgt"><var>&lt;left&gt;</var></a>, the same as the
-     used value of the height plus the sum of vertical padding and border
-     widths for <a href="#ltbottomgt"><var>&lt;bottom&gt;</var></a>, and the
-     same as the used value of the width plus the sum of the horizontal
-     padding and border widths for <a
-     href="#ltrightgt"><var>&lt;right&gt;</var></a>, such that four ‘<a
-     href="#auto"><code class=property>auto</code></a>’ values result in
-     the clipping region being the same as the element's border box).
+     ‘<a href="#lsquoautorsquo"><code class=css>auto</code></a>’ means
+     that a given edge of the clipping region will be the same as the edge of
+     the element's generated border box (i.e., ‘<a
+     href="#lsquoautorsquo"><code class=css>auto</code></a>’ means the same
+     as ‘<code class=css>0</code>’ for <a
+     href="#lttopgt"><var>&lt;top&gt;</var></a> and <a
+     href="#ltleftgt"><var>&lt;left&gt;</var></a>, the same as the used value
+     of the height plus the sum of vertical padding and border widths for <a
+     href="#ltbottomgt"><var>&lt;bottom&gt;</var></a>, and the same as the
+     used value of the width plus the sum of the horizontal padding and
+     border widths for <a href="#ltrightgt"><var>&lt;right&gt;</var></a>,
+     such that four ‘<a href="#lsquoautorsquo"><code
+     class=property>auto</code></a>’ values result in the clipping region
+     being the same as the element's border box).
 
     <p> When coordinates are rounded to pixel coordinates, care should be
      taken that no pixels remain visible when <a
@@ -2955,7 +2972,7 @@ div {
      <a href="#lttopgt"><var>&lt;top&gt;</var></a> and <a
      href="#ltbottomgt"><var>&lt;bottom&gt;</var></a> have the same value),
      and conversely that no pixels within the element's border box remain
-     hidden when these values are ‘<a href="#auto"><code
+     hidden when these values are ‘<a href="#lsquoautorsquo"><code
      class=css>auto</code></a>’.
   </dl>
 
@@ -3288,14 +3305,15 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
    elements are not directly rendered even if the ‘<code
    class=property>display</code>’ property is set to a value other than <a
-   class=prop-value href="#none">none</a>, and <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-   elements are available for referencing even when the <a class=property
+   class=prop-value href="#lsquononersquo">none</a>, and <a
+   class=element-name href="#ClipPathElement">‘<code
+   class=property>clipPath</code>’</a> elements are available for
+   referencing even when the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty">‘<code
    class=property>display</code>’</a> property on the <a class=element-name
    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
    element or any of its ancestors is set to <a class=prop-value
-   href="#none">none</a>.
+   href="#lsquononersquo">none</a>.
 
   <p>A <a class=element-name href="#ClipPathElement">‘<code
    class=property>clipPath</code>’</a> element can contain <a
@@ -3436,7 +3454,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    The element is drawn as if the resource was not specified (i.e. the ‘<a
    href="#clip-path"><code class=property>clip-path</code></a>’ or ‘<a
    href="#mask"><code class=property>mask</code></a>’ property were set to
-   ‘<a href="#none"><code class=css>none</code></a>’).
+   ‘<a href="#lsquononersquo"><code class=css>none</code></a>’).
 
   <h2 id=DOMInterfaces><span class=secno>10. </span>DOM interfaces</h2>
 
@@ -3766,10 +3784,10 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <dt id=CSS21>[CSS21]
 
    <dd>Bert Bos; et al. <a
-    href="http://www.w3.org/TR/2011/REC-CSS2-20110607/"><cite>Cascading Style
+    href="http://www.w3.org/TR/2011/REC-CSS2-20110607"><cite>Cascading Style
     Sheets Level 2 Revision 1 (CSS 2.1) Specification.</cite></a> 7 June
     2011. W3C Recommendation. URL: <a
-    href="http://www.w3.org/TR/2011/REC-CSS2-20110607/">http://www.w3.org/TR/2011/REC-CSS2-20110607/</a>
+    href="http://www.w3.org/TR/2011/REC-CSS2-20110607">http://www.w3.org/TR/2011/REC-CSS2-20110607</a>
    </dd>
    <!---->
 
@@ -3897,23 +3915,21 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <!--begin-index-->
 
   <ul class=indexlist>
-   <li>‘<a href="#alpha"><code class=css>alpha</code></a>’, <a
-    href="#alpha" title="section 6.2."><strong>6.2.</strong></a>
+   <li>‘<code class=css>alpha</code>’, <a href="#lsquoalpharsquo"
+    title="section 6.2."><strong>6.2.</strong></a>
 
    <li>authoring tool, <a href="#authoring-tool"
     title="section 11.1."><strong>11.1.</strong></a>
 
-   <li>‘<a href="#auto"><code class=css>auto</code></a>’, <a href="#auto"
+   <li>‘<code class=css>auto</code>’, <a href="#lsquoautorsquo"
     title="section 6.2."><strong>6.2.</strong></a>
 
-   <li>‘<code class=css>border-box</code>’
+   <li>''border-box''
     <ul>
-     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
-      value, <a href="#border-box"
+     <li>'mask-clip' value, <a href="#lsquoborder-boxrsquo"
       title="section 6.5."><strong>6.5.</strong></a>
 
-     <li>‘<a href="#mask-origin"><code
-      class=property>mask-origin</code></a>’ value, <a href="#border-box0"
+     <li>'mask-origin' value, <a href="#lsquoborder-boxrsquo0"
       title="section 6.6."><strong>6.6.</strong></a>
     </ul>
 
@@ -3926,7 +3942,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     href="#bounding-client-rect1" title="section 8.1.">8.1.</a>, <a
     href="#bounding-client-rect2" title="section 8.5.">8.5.</a>
 
-   <li><a href="#ltboxgt"><var>&lt;box&gt;</var></a>, <a href="#ltboxgt"
+   <li><var>&lt;box&gt;</var>, <a href="#ltboxgt"
     title="section 6.5."><strong>6.5.</strong></a>
 
    <li>&lt;child-selector&gt;, <a href="#ltchild-selectorgt"
@@ -3935,8 +3951,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>clip, <a href="#ClipProperty"
     title="section 8.3."><strong>8.3.</strong></a>
 
-   <li><a href="#ltclip-boxgt"><var>&lt;clip-box&gt;</var></a>, <a
-    href="#ltclip-boxgt" title="section 6.5."><strong>6.5.</strong></a>
+   <li><var>&lt;clip-box&gt;</var>, <a href="#ltclip-boxgt"
+    title="section 6.5."><strong>6.5.</strong></a>
 
    <li>clipPath, <a href="#clippath"
     title="section 8.4."><strong>8.4.</strong></a>
@@ -3950,21 +3966,22 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>&lt;clip-source&gt;, <a href="#ltclip-sourcegt"
     title="section 8.1."><strong>8.1.</strong></a>
 
-   <li>‘<a href="#ltcompound-selectorgt"><code
-    class=css>&lt;compound-selector&gt;</code></a>’, <a
-    href="#ltcompound-selectorgt"
+   <li>‘<code class=css>&lt;compound-selector&gt;</code>’, <a
+    href="#lsquoltcompound-selectorgtrsquo"
     title="section 6.1."><strong>6.1.</strong></a>
 
-   <li>‘<a href="#content-box0"><code class=css>content-box</code></a>’,
-    <a href="#content-box0" title="section 6.6."><strong>6.6.</strong></a>
+   <li>''content-box''
     <ul>
-     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
-      value, <a href="#content-box"
+     <li>'mask-clip' value, <a href="#lsquocontent-boxrsquo"
       title="section 6.5."><strong>6.5.</strong></a>
     </ul>
 
-   <li>‘<a href="#evenodd"><code class=css>evenodd</code></a>’, <a
-    href="#evenodd" title="section 8.2."><strong>8.2.</strong></a>
+   <li>‘<code class=css>content-box</code>’, <a
+    href="#lsquocontent-boxrsquo0"
+    title="section 6.6."><strong>6.6.</strong></a>
+
+   <li>‘<code class=css>evenodd</code>’, <a href="#lsquoevenoddrsquo"
+    title="section 8.2."><strong>8.2.</strong></a>
 
    <li>&lt;image&gt;, <a href="#ltimagegt"
     title="section 6.1."><strong>6.1.</strong></a>
@@ -3977,8 +3994,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="section 4."><strong>4.</strong></a>
 
-   <li>‘<a href="#luminance"><code class=css>luminance</code></a>’, <a
-    href="#luminance" title="section 6.2."><strong>6.2.</strong></a>
+   <li>‘<code class=css>luminance</code>’, <a href="#lsquoluminancersquo"
+    title="section 6.2."><strong>6.2.</strong></a>
 
    <li>mask, <a href="#MaskProperty"
     title="section 6.8."><strong>6.8.</strong></a>, <a href="#mask"
@@ -3989,6 +4006,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     title="section 7.6."><strong>7.6.</strong></a>
 
    <li>mask box image area, <a href="#mask-box-image-area"
+    title="section 4."><strong>4.</strong></a>, <a
+    href="#mask-box-image-area0"
     title="section 7.4."><strong>7.4.</strong></a>
 
    <li>mask-box-image-outset, <a href="#mask-box-image-outset"
@@ -4020,6 +4039,9 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>mask image area, <a href="#mask-image-area" title="section 7.">7.</a>
 
+   <li>mask images, <a href="#mask-images"
+    title="section 4."><strong>4.</strong></a>
+
    <li>&lt;mask-layer&gt;, <a href="#ltmask-layergt"
     title="section 6.8."><strong>6.8.</strong></a>
 
@@ -4028,14 +4050,17 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>mask painting area, <a href="#mask-painting-area"
     title="section 6.5."><strong>6.5.</strong></a>, <a
-    href="#mask-painting-area0" title="section 6.3.">6.3.</a>, <a
-    href="#mask-painting-area1" title="section 6.4.">6.4.</a>
+    href="#mask-painting-area0" title="section 4."><strong>4.</strong></a>,
+    <a href="#mask-painting-area1" title="section 6.3.">6.3.</a>, <a
+    href="#mask-painting-area2" title="section 6.4.">6.4.</a>
 
    <li>mask-position, <a href="#mask-position"
+    title="section 4."><strong>4.</strong></a>, <a href="#mask-position0"
     title="section 6.4."><strong>6.4.</strong></a>
 
    <li>mask positioning area, <a href="#mask-positioning-area"
-    title="section 6.6."><strong>6.6.</strong></a>
+    title="section 6.6."><strong>6.6.</strong></a>, <a
+    href="#mask-positioning-area0" title="section 4."><strong>4.</strong></a>
 
    <li>&lt;mask-reference&gt;, <a href="#ltmask-referencegt"
     title="section 6.1."><strong>6.1.</strong></a>
@@ -4043,10 +4068,11 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>mask-repeat, <a href="#mask-repeat"
     title="section 6.3."><strong>6.3.</strong></a>
 
-   <li><a href="#ltmask-sizegt"><var>&lt;mask-size&gt;</var></a>, <a
-    href="#ltmask-sizegt" title="section 6.7."><strong>6.7.</strong></a>
+   <li><var>&lt;mask-size&gt;</var>, <a href="#ltmask-sizegt"
+    title="section 6.7."><strong>6.7.</strong></a>
 
    <li>mask-size, <a href="#mask-size"
+    title="section 4."><strong>4.</strong></a>, <a href="#mask-size0"
     title="section 6.7."><strong>6.7.</strong></a>
 
    <li>mask source, <a href="#mask-source"
@@ -4058,51 +4084,49 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>mask-type, <a href="#mask-type"
     title="section 6.9."><strong>6.9.</strong></a>
 
-   <li>‘<code class=css>no-clip</code>’
+   <li>''no-clip''
     <ul>
-     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
-      value, <a href="#no-clip"
+     <li>'mask-clip' value, <a href="#lsquono-cliprsquo"
       title="section 6.5."><strong>6.5.</strong></a>
     </ul>
 
-   <li>‘<a href="#none"><code class=css>none</code></a>’, <a href="#none"
+   <li>‘<code class=css>none</code>’, <a href="#lsquononersquo"
     title="section 6.1."><strong>6.1.</strong></a>
 
-   <li>‘<a href="#nonzero"><code class=css>nonzero</code></a>’, <a
-    href="#nonzero" title="section 8.2."><strong>8.2.</strong></a>
+   <li>‘<code class=css>nonzero</code>’, <a href="#lsquononzerorsquo"
+    title="section 8.2."><strong>8.2.</strong></a>
 
    <li>object bounding box units, <a href="#object-bounding-box-units"
     title="section 4."><strong>4.</strong></a>, <a
     href="#object-bounding-box-units0" title="section 8.4.">8.4.</a>
 
-   <li>‘<code class=css>padding-box</code>’
+   <li>''padding-box''
     <ul>
-     <li>‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’
-      value, <a href="#padding-box"
+     <li>'mask-clip' value, <a href="#lsquopadding-boxrsquo"
       title="section 6.5."><strong>6.5.</strong></a>
 
-     <li>‘<a href="#mask-origin"><code
-      class=property>mask-origin</code></a>’ value, <a href="#padding-box0"
+     <li>'mask-origin' value, <a href="#lsquopadding-boxrsquo0"
       title="section 6.6."><strong>6.6.</strong></a>
     </ul>
 
-   <li><a href="#ltpositiongt"><var>&lt;position&gt;</var></a>, <a
-    href="#ltpositiongt" title="section 6.4."><strong>6.4.</strong></a>
+   <li><var>&lt;position&gt;</var>, <a href="#ltpositiongt"
+    title="section 6.4."><strong>6.4.</strong></a>
 
    <li>renderer, <a href="#renderer"
     title="section 11.1."><strong>11.1.</strong></a>
 
-   <li><a href="#ltrepeat-stylegt"><var>&lt;repeat-style&gt;</var></a>, <a
-    href="#ltrepeat-stylegt" title="section 6.3."><strong>6.3.</strong></a>
+   <li><var>&lt;repeat-style&gt;</var>, <a href="#ltrepeat-stylegt"
+    title="section 6.3."><strong>6.3.</strong></a>
 
    <li>&lt;right&gt;, <a href="#ltrightgt"
     title="section 8.3."><strong>8.3.</strong></a>
 
-   <li>‘<a href="#ltshapegt"><code class=css>&lt;shape&gt;</code></a>’,
-    <a href="#ltshapegt" title="section 8.1."><strong>8.1.</strong></a>
+   <li>‘<code class=css>&lt;shape&gt;</code>’, <a
+    href="#lsquoltshapegtrsquo"
+    title="section 8.1."><strong>8.1.</strong></a>
 
-   <li><a href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>, <a
-    href="#ltsource-typegt" title="section 6.2."><strong>6.2.</strong></a>
+   <li><var>&lt;source-type&gt;</var>, <a href="#ltsource-typegt"
+    title="section 6.2."><strong>6.2.</strong></a>
 
    <li>style sheet
     <ul>
@@ -4113,8 +4137,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>&lt;top&gt;, <a href="#lttopgt"
     title="section 8.3."><strong>8.3.</strong></a>
 
-   <li>‘<a href="#lturlgt"><code class=css>&lt;url&gt;</code></a>’, <a
-    href="#lturlgt" title="section 6.1."><strong>6.1.</strong></a>
+   <li>‘<code class=css>&lt;url&gt;</code>’, <a href="#lsquolturlgtrsquo"
+    title="section 6.1."><strong>6.1.</strong></a>
 
    <li>user coordinate system, <a href="#user-coordinate-system"
     title="section 4."><strong>4.</strong></a>
@@ -4390,7 +4414,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <td>visual
 
     <tr>
-     <th><a class=property href="#mask-position">mask-position</a>
+     <th><a class=property href="#mask-position0">mask-position</a>
 
      <td>&lt;position&gt;#
 
@@ -4423,7 +4447,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <td>visual
 
     <tr>
-     <th><a class=property href="#mask-size">mask-size</a>
+     <th><a class=property href="#mask-size0">mask-size</a>
 
      <td>&lt;mask-size&gt;#
 
