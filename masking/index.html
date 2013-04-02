@@ -302,39 +302,54 @@
   <h2 id=intro><span class=secno>1. </span> Introduction</h2>
 
   <p> With CSS Masking it is possible to specify another graphics element,
-   shape or file to be used as clipping region or an luminance or alpha mask
-   for compositing the current object into the background.
+   shape or image file to be used as clipping region or an luminance or alpha
+   mask for compositing the current object into the background.
 
-  <p> A mask is applied using the ‘<a href="#mask"><code
-   class=property>mask</code></a>’, ‘<a href="#mask-image"><code
+  <p> The effect of applying a mask is as if the mask images or <a
+   href="#mask-source"><var>mask sources</var></a> are rendered into an
+   off-screen image which has been initialized to transparent black. The
+   graphical object to which the mask is applied will be painted onto the
+   background through the mask, thus completely or partially masking out
+   parts of the graphical object.
+
+  <p> Masks are applied using the ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ or ‘<a
-   href="#mask-box-image0"><code class=property>mask-box-image</code></a>’
-   properties. The mask source may be defined using a <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> element
-   referenced by the ‘<a href="#mask"><code
-   class=property>mask</code></a>’ property. Alternatively, for many simple
-   uses, the ‘<a href="#mask-image"><code
+   href="#mask-box-image-source"><code
+   class=property>mask-box-image-source</code></a>’ properties.
+
+  <p> The ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ property may reference a <a
+   class=element-name href="#MaskElement">‘<code
+   class=property>mask</code>’</a> element as the mask source.
+   Alternatively, for many simple uses, the ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ property may refer directly to
-   graphical elements or images to be used as mask forgoing the need for an
-   explicit <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element. The ‘<a href="#mask"><code
-   class=property>mask</code></a>’ property is also a shorthand for other
-   masking properties. ‘<a href="#mask-box-image0"><code
-   class=property>mask-box-image</code></a>’ splits a mask image into 9
-   pieces. The pieces may be sliced, scaled and stretched in various ways to
-   fit the size of the mask image area.
+   images to be used as mask forgoing the need for an explicit <a
+   class=element-name href="#MaskElement">‘<code
+   class=property>mask</code>’</a> element.<br>
+   The ‘<a href="#mask"><code class=property>mask</code></a>’ property
+   serves as a shorthand property for ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ and other characterizing
+   properties.
 
-  <p> The effect of applying a mask is as if the mask images or mask source
-   elements are rendered into an off-screen image which has been initialized
-   to transparent black. The graphical object to which the mask is applied
-   will be painted onto the background through the mask, thus completely or
-   partially masking out parts of the graphical object.
+  <p> The ‘<a href="#mask-box-image-source"><code
+   class=property>mask-box-image-source</code></a>’ property splits a mask
+   image into 9 pieces. The pieces may be sliced, scaled and stretched in
+   various ways to fit the size of the mask image area.<br>
+   The ‘<a href="#mask-box-image0"><code
+   class=property>mask-box-image</code></a>’ property serves as a shorthand
+   property for ‘<a href="#mask-box-image-source"><code
+   class=property>mask-box-image-source</code></a>’ and other
+   characterizing properties.
 
-  <p> Clipping defines a visible region of a visual element. The region can
-   be specified with SVG <a
+  <p> Clipping path defines an outline (in the absence of anti-aliasing) of a
+   visual element where everything on the "inside" of the outline is allowed
+   to show through but everything on the outside is masked out. A clipping
+   path is specified by vector paths or shapes.
+
+  <p> The ‘<a href="#clip-path"><code
+   class=property>clip-path</code></a>’ property can reference SVG <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-   element</a> or basic shapes. Everything outside of a region does not get
-   rendered.
+   element</a> or use specified basic shapes as clipping path.
 
   <div class=example>
    <div class=figure> <img alt="Example Mask" height=260px
@@ -363,9 +378,12 @@
   <p> This specification follows the <a
    href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
    definition conventions</a> from <a href="#CSS21"
-   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
-   this specification are defined in CSS Values and Units Module Level 3 <a
-   href="#CSS3VAL" rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a>.
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Basic shapes are defined in
+   CSS Exclusions and Shapes Module Level 3 <a href="#CSS3-EXCLUSIONS"
+   rel=biblioentry>[CSS3-EXCLUSIONS]<!--{{!CSS3-EXCLUSIONS}}--></a>. Value
+   types not defined in these specifications are defined in CSS Values and
+   Units Module Level 3 <a href="#CSS3VAL"
+   rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a>.
 
   <p> In addition to the property-specific values listed in their
    definitions, all properties defined in this specification also accept the
@@ -444,17 +462,12 @@
 
    <dt id=TermClippingPath>clipping path
 
-   <dd> A combination of the SVG elements <a class=element-name
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
-    class=property>path</code>’</a>, <a class=element-name
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
-    class=property>text</code>’</a> and <a
-    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermBasicShapeElement">basic
-    shapes</a> which serve as the outline of a (in the absence of
-    anti-aliasing) 1-bit <a href="#TermMask">mask</a>, where everything on
-    the "inside" of the outline is allowed to show through but everything on
-    the outside is masked out. See ‘<a href="#clip-path"><code
-    class=property>clip-path</code></a>’.
+   <dd> A combination of the SVG SVG <a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
+    element</a> or <var>basic shapes</var> which serve as the outline of a
+    visual element where everything on the "inside" of the outline is allowed
+    to show through but everything on the outside is masked out. (See ‘<a
+    href="#clip-path"><code class=property>clip-path</code></a>’.)
   </dl>
 
   <p> Definitions of CSS properties and values in this specification are
@@ -512,9 +525,10 @@
    class=property>mask</code></a>’ or ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ properties to an element formatted
    with the CSS box model establishes a stacking context in the same way that
-   CSS ‘<code class=property>opacity</code>’ does, and all the element's
-   descendants are rendered together as a group with the masking applied to
-   the group as a whole.
+   CSS ‘<code class=property>opacity</code>’ <a href="#CSS3COLOR"
+   rel=biblioentry>[CSS3COLOR]<!--{{CSS3COLOR}}--></a> does, and all the
+   element's descendants are rendered together as a group with the masking
+   applied to the group as a whole.
 
   <p> The ‘<a href="#mask"><code class=property>mask</code></a>’ and
    ‘<a href="#mask-image"><code class=property>mask-image</code></a>’
@@ -3909,6 +3923,15 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     Transforms.</cite></a> 11 September 2012. W3C Working Draft. (Work in
     progress.) URL: <a
     href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/">http://www.w3.org/TR/2012/WD-css3-transforms-20120911/</a>
+   </dd>
+   <!---->
+
+   <dt id=CSS3COLOR>[CSS3COLOR]
+
+   <dd>Tantek Çelik; Chris Lilley; L. David Baron. <a
+    href="http://www.w3.org/TR/2011/REC-css3-color-20110607"><cite>CSS Color
+    Module Level 3.</cite></a> 7 June 2011. W3C Recommendation. URL: <a
+    href="http://www.w3.org/TR/2011/REC-css3-color-20110607">http://www.w3.org/TR/2011/REC-css3-color-20110607</a>
    </dd>
    <!---->
 
