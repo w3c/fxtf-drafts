@@ -287,106 +287,6 @@ Table of contents</h2>
   </tbody>
 </table>
 
-<h2>The Mask Rendering Model</h2>
-
-<p>
-  The application of the 'clip-path', 'mask' or 'mask-image' properties to an element formatted with the CSS box model
-  establishes a stacking context in the same way that CSS 'opacity' [[CSS3COLOR]] does, and all the element's descendants are rendered
-  together as a group with the masking applied to the group as a whole.
-</p>
-
-<p>
-  The 'mask' and 'mask-image' properties have no effect on the geometry of any element's CSS boxes.
-</p>
-
-<p>
-  As per SVG, the application of 'mask' or 'mask-image' has no effect on hit-testing.
-</p>
-
-<h3 id="layering">Layering Multiple Mask Images</h3>
-
-<p>The mask of a box can have multiple <span
-class=index>layers</span>. The number
-of layers is determined by the number of comma-separated values in the
-'mask-image' property. Note that a value of 'none' still creates
-a layer.
-
-See <a href="http://www.w3.org/TR/css3-background/#layering">Layering Multiple Background Images</a> [[!CSS3BG]].
-
-<p>The first layer is the layer closest to the user,
-the next one is painted behind the first, and so on. All mask images
-are transformed to alpha masks (if necessary) and combined by compositing
-on the <a href="#TermMask">mask</a>.
-
-<h3 id="MaskValues">Calculating mask values</h3>
-
-<p>
-A mask may be interpreted using one of two different methods with regards
-to calculating the mask values that will be multiplied with the target alpha
-values.
-</p>
-
-<p>
-The first and simplest method of calculating the mask values is to use the alpha
-channel of the mask source.
-In this case the mask value at a given point is simply the value of the alpha channel at that point.
-The color channels do not contribute to the mask value.
-</p>
-
-<p>
-  The second method of calculating the mask values is to use the luminance of the mask source.
-  In this case the mask value at a given point is computed from the color channel values and alpha channel value using
-  the following procedure.
-</p>
-
-<ol>
-<li>Compute a luminance value from the color channel values.
-  <ul>
-    <li>
-    If the computed value of 'color-interpolation' on the <a>'mask element'</a> element is 'linearRGB', convert the
-  original image color values (potentially in the sRGB color space) to the linear
-  RGB color space.
-    </li>
-    <li>Then, using non-premultiplied RGB color values, apply the
-    luminance-to-alpha coefficients (as defined in the <a>'feColorMatrix'</a>
-    filter primitive [[!SVG11]]) to convert the RGB color values to luminance
-    values.
-    </li>
-  </ul>
-</li>
-<li>Multiply the computed luminance value by the corresponding alpha
-value to produce the mask value.</li>
-</ol>
-
-<p>Regardless of the method used, the procedure for calculating
-mask values assumes the content of the mask is a four-channel RGBA graphics
-object.
-For other types of graphics objects, special handling is required as
-follows.</p>
-
-<p>For a three-channel RGB graphics object that is used in a mask (e.g.,
-when referencing a three-channel image file), the effect is as if the object
-were converted into a four-channel RGBA image with the alpha channel
-uniformly set to 1.</p>
-
-<p>For a single-channel image that is used in a mask (e.g., when
-referencing a single-channel grayscale image file), the effect is as if the
-object were converted into a four-channel RGBA image, where the single
-channel from the referenced object is used to compute the three color
-channels and the alpha channel is uniformly set to 1.</p>
-<p class="note">Note that when
-referencing a grayscale image file, the transfer curve relating the
-encoded grayscale values to linear light values must be taken into
-account when computing the color channels.</p>
-
-<p class="note">Note that SVG <a>graphics elements</a> (e.g., <a>'circle'</a> or <a>'text'</a>)
-are all treated as four-channel RGBA images for the purposes
-of masking operations.</p>
-
-<p>The effect of a mask is identical to what would have happened if
-there were no mask but instead the alpha channel of the given object
-were multiplied with the mask's resulting mask values.</p>
-
 <h2 id="masking">Mask</h2>
 <h3 id="the-mask-image">The 'mask-image' property</h3>
 
@@ -1128,6 +1028,102 @@ elements are available for referencing even when the 'display' property
 on the <a>'mask element'</a> element or any of its ancestors is set to
 <span class="prop-value">none</span>.</p>
 
+<h3>The Mask Image Rendering Model</h3>
+
+<p>
+  The application of the 'mask-image' property to an element formatted with the CSS box model
+  establishes a stacking context in the same way that CSS 'opacity' [[CSS3COLOR]] does, and all
+  the element's descendants are rendered together as a group with the masking applied to the group
+  as a whole.
+</p>
+
+<p>
+  The 'mask-image' property has no effect on the geometry or hit-testing of any element's CSS boxes.
+</p>
+
+<h4 id="layering">Layering Multiple Mask Images</h4>
+
+<p>The mask of a box can have multiple <span
+class=index>layers</span>. The number
+of layers is determined by the number of comma-separated values in the
+'mask-image' property. Note that a value of 'none' still creates
+a layer.
+
+See <a href="http://www.w3.org/TR/css3-background/#layering">Layering Multiple Background Images</a> [[!CSS3BG]].
+
+<p>All mask images are transformed to alpha masks (if necessary) and combined by compositing
+on the <a href="#TermMask">mask</a>.
+
+<h4 id="MaskValues">Mask Source values</h4>
+
+<p>
+A mask may be interpreted using one of two different methods with regards
+to calculating the mask values that will be multiplied with the target alpha
+values.
+</p>
+
+<p>
+The first and simplest method of calculating the mask values is to use the alpha
+channel of the mask source.
+In this case the mask value at a given point is simply the value of the alpha channel at that point.
+The color channels do not contribute to the mask value.
+</p>
+
+<p>
+  The second method of calculating the mask values is to use the luminance of the mask source.
+  In this case the mask value at a given point is computed from the color channel values and alpha channel value using
+  the following procedure.
+</p>
+
+<ol>
+<li>Compute a luminance value from the color channel values.
+  <ul>
+    <li>
+    If the computed value of 'color-interpolation' on the <a>'mask element'</a> element is 'linearRGB', convert the
+  original image color values (potentially in the sRGB color space) to the linear
+  RGB color space.
+    </li>
+    <li>Then, using non-premultiplied RGB color values, apply the
+    luminance-to-alpha coefficients (as defined in the <a>'feColorMatrix'</a>
+    filter primitive [[!SVG11]]) to convert the RGB color values to luminance
+    values.
+    </li>
+  </ul>
+</li>
+<li>Multiply the computed luminance value by the corresponding alpha
+value to produce the mask value.</li>
+</ol>
+
+<p>Regardless of the method used, the procedure for calculating
+mask values assumes the content of the mask is a four-channel RGBA graphics
+object.
+For other types of graphics objects, special handling is required as
+follows.</p>
+
+<p>For a three-channel RGB graphics object that is used in a mask (e.g.,
+when referencing a three-channel image file), the effect is as if the object
+were converted into a four-channel RGBA image with the alpha channel
+uniformly set to 1.</p>
+
+<p>For a single-channel image that is used in a mask (e.g., when
+referencing a single-channel grayscale image file), the effect is as if the
+object were converted into a four-channel RGBA image, where the single
+channel from the referenced object is used to compute the three color
+channels and the alpha channel is uniformly set to 1.</p>
+<p class="note">Note that when
+referencing a grayscale image file, the transfer curve relating the
+encoded grayscale values to linear light values must be taken into
+account when computing the color channels.</p>
+
+<p class="note">Note that SVG <a>graphics elements</a> (e.g., <a>'circle'</a> or <a>'text'</a>)
+are all treated as four-channel RGBA images for the purposes
+of masking operations.</p>
+
+<p>The effect of a mask is identical to what would have happened if
+there were no mask but instead the alpha channel of the given object
+were multiplied with the mask's resulting mask values.</p>
+
+
 <h2>Mask Box Image</h2>
 
 <p>
@@ -1422,6 +1418,16 @@ If the second keyword is absent, it is assumed to be the same as the first.
   positioned, and tiled into their corresponding mask image regions
   in four steps as described in the section <a href="http://www.w3.org/TR/css3-background/#border-image-process">Drawing the Border Image</a> [[!CSS3BG]].
 
+<p>
+  The application of the 'mask-box-image-source' property to an element formatted with the CSS box model
+  establishes a stacking context in the same way that CSS 'opacity' [[CSS3COLOR]] does, and all
+  the element's descendants are rendered together as a group with the masking applied to the group
+  as a whole.
+</p>
+
+<p>
+  The 'mask-box-image-source' property has no effect on the geometry or hit-testing of any element's CSS boxes.
+</p>
 
 <h2>Clipping paths</h2>
 
