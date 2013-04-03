@@ -422,27 +422,27 @@ were multiplied with the mask's resulting mask values.</p>
       <td>no
 </table>
 
-<p>This property sets the mask image(s) or the mask source of an element. Images
+<p>This property sets the mask image(s) or the <var>mask source</var> of an element. Images
 are drawn with the first specified one on top (closest to the user)
 and each subsequent image behind the previous one.
 Where:
 
-<pre class=prod><var><dfn>&lt;mask-reference&gt;</dfn></var> = <var>&lt;mask-image&gt;</var># | <var>&lt;mask-element&gt;</var></pre>
+<pre class=prod><var><dfn>&lt;mask-reference&gt;</dfn></var> = <var>&lt;mask-image&gt;</var># | <var>&lt;mask-source&gt;</var></pre>
 
 <pre class=prod><var><dfn>&lt;mask-image&gt;</dfn></var> = <var>&lt;image&gt;</var> | none </pre>
 
-<pre class=prod><var><dfn>&lt;mask-element&gt;</dfn></var> = <var>&lt;url&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var></pre>
+<pre class=prod><var><dfn>&lt;mask-source&gt;</dfn></var> = <var>&lt;url&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var></pre>
 
 <pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(<var>&lt;compound-selector&gt;</var>#)</pre>
 
-<p class="note">A <var>&lt;mask-element&gt;</var> can just be specified as a single value and can not contibute to a list of <var>&lt;mask-reference&gt;</var> values. Otherwise the specified value of the property is invalid. (See examples below.)</p>
+<p class="note">A <var>&lt;mask-element&gt;</var> can just be specified as a single value and can not contribute to a list of <var>&lt;mask-reference&gt;</var> values. Otherwise the specified value of the property is invalid. (See examples below.)</p>
 
 <dl>
   <dt>
     <dfn>'&lt;url&gt;'</dfn>
   </dt>
   <dd>
-    A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.svg#mask)'') or an <var>&lt;image&gt;</var>.
+    A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.svg#mask)'').
   </dd>
   <dt>''child''</dt>
   <dd>
@@ -451,16 +451,16 @@ Where:
     ''select(mask:last-of-type)''.</dd>
   <dt>'&lt;child-selector&gt;'</dt>
   <dd>
-    A comma-separated list of <a>compound selector</a>s scoped at the element to
-    which the 'mask-image' property is applied.
-    The first matching element in <a>tree order</a> (as defined in [[!DOM]]) as
-    a result of evaluating the list of selectors is taken as the mask source.
-    If there are no matching elements the mask source is invalid.
+    A functional notation [[!CSS3VAL]] accepting a comma-separated
+    list of compound selectors that represents first matching child
+    <a>'mask element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
+    <dl>
+      <dt><dfn>'&lt;compound-selector&gt;'</dfn></dt>
+      <dd>
+        A <a>compound selector</a> as defined in [[!SELECTORS4]].
+      <dd>
+    </dl>
   </dd>
-  <dt><dfn>'&lt;compound-selector&gt;'</dfn></dt>
-  <dd>
-    A <a>compound selector</a> as defined in [[!SELECTORS4]].
-  <dd>
   <dt><dfn>&lt;image&gt;</dfn></dt>
   <dd>
     A 2D image. (See [[!CSS3-IMAGES]].)
@@ -471,9 +471,9 @@ Where:
   </dd>
 </dl>
 
-<p class="note">If the URI in the ''url()'' function has a fragment identifier, the <var>&lt;mask-reference&gt;</var> is treated as <var>&lt;mask-element&gt;</var>, otherwise as <var>&lt;mask-image&gt;</var>.</p>
+<p class="note">If the URI in the ''url()'' function has a fragment identifier, the <var>&lt;mask-reference&gt;</var> is treated as <var>&lt;mask-source&gt;</var>, otherwise as <var>&lt;mask-image&gt;</var>.</p>
 
-<p>An invalid or non-existent mask source is ignored and no masking is applied.</p>
+<p>If the URI reference of a mask source is not valid (e.g it points to an object that doesn't exist or the object is not a <a>'mask element'</a> element), no masking is applied.
 
 <p>A mask image that is empty (zero width or zero height), that fails to
 download, is non-existent, or that cannot be displayed (e.g. because it is not
@@ -1509,13 +1509,13 @@ If the second keyword is absent, it is assumed to be the same as the first.
     ''select(clipPath:last-of-type)''.</dd>
   <dt>'&lt;child-selector&gt;'</dt>
   <dd>
-    A comma-separated list of <a>compound selector</a>s scoped at the element to
-    which the 'clip-path' property is applied.
-    The first matching element in <a>tree order</a> (as defined in [[!DOM]]) as
-    a result of evaluating the list of selectors is taken as the clip source.
-    If there are no matching elements the clip source is invalid.
+    A functional notation [[!CSS3VAL]] accepting a comma-separated
+    list of compound selectors that represents first matching child
+    <a>'clipPath element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
   </dd>
 </dl>
+
+<p>If the URI reference is not valid (e.g it points to an object that doesn't exist or the object is not a <a>'clipPath element'</a> element), no clipping is applied.
 
 <h3 id="the-clip-rule">The 'clip-rule' property</h3>
 
