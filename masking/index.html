@@ -11,7 +11,7 @@
    rel=dc.rights>
   <meta content="CSS Masking" name=dc.title>
   <meta content=text name=dc.type>
-  <meta content=2013-04-03 name=dc.date>
+  <meta content=2013-04-04 name=dc.date>
   <meta content="Dirk Schulze" name=dc.creator>
   <meta content="Brian Birtles" name=dc.creator>
   <meta
@@ -48,14 +48,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 3 April 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 4 April 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130403/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130404/-->
 
     <dt>Latest version:
 
@@ -169,7 +169,7 @@
 
    <li><a href="#terminology"><span class=secno>4. </span>Terminology</a>
 
-   <li><a href="#masking"><span class=secno>5. </span>Mask</a>
+   <li><a href="#masking"><span class=secno>5. </span>Layered Masks</a>
     <ul class=toc>
      <li><a href="#the-mask-image"><span class=secno>5.1. </span>The ‘<code
       class=property>mask-image</code>’ property</a>
@@ -213,8 +213,8 @@
       </ul>
     </ul>
 
-   <li><a href="#mask-box-image"><span class=secno>6. </span>Mask Box
-    Image</a>
+   <li><a href="#box-image-masks"><span class=secno>6. </span>Box-Image
+    Masks</a>
     <ul class=toc>
      <li><a href="#the-mask-box-image-source"><span class=secno>6.1.
       </span>The ‘<code class=property>mask-box-image-source</code>’
@@ -335,7 +335,7 @@
    class=property>mask-box-image-source</code></a>’ property splits a mask
    image into 9 pieces. The pieces may be sliced, scaled and stretched in
    various ways to fit the size of the mask image area.<br>
-   The ‘<a href="#mask-box-image0"><code
+   The ‘<a href="#mask-box-image"><code
    class=property>mask-box-image</code></a>’ property serves as a shorthand
    property for ‘<a href="#mask-box-image-source"><code
    class=property>mask-box-image-source</code></a>’ and other
@@ -525,7 +525,7 @@
      <td>border image area
   </table>
 
-  <h2 id=masking><span class=secno>5. </span>Mask</h2>
+  <h2 id=masking><span class=secno>5. </span>Layered Masks</h2>
 
   <h3 id=the-mask-image><span class=secno>5.1. </span>The ‘<a
    href="#mask-image"><code class=property>mask-image</code></a>’ property</h3>
@@ -771,8 +771,8 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
   <p>The ‘<a href="#mask-source-type"><code
    class=property>mask-source-type</code></a>’ property indicates whether
    the <a href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> is
-   treated as luminance mask or alpha mask. (See <a
-   href="#MaskValues">Calculating mask values</a>.)
+   treated as luminance mask or alpha mask. (See <a href="#MaskValues">Mask
+   Source values</a>.)
 
   <pre class=prod><dfn
    id=ltsource-typegt><var>&lt;source-type&gt;</var></dfn> = alpha | luminance | auto</pre>
@@ -2149,9 +2149,9 @@ body {
    were no mask but instead the alpha channel of the given object were
    multiplied with the mask's resulting mask values.
 
-  <h2 id=mask-box-image><span class=secno>6. </span>Mask Box Image</h2>
+  <h2 id=box-image-masks><span class=secno>6. </span>Box-Image Masks</h2>
 
-  <p> With ‘<a href="#mask-box-image0"><code
+  <p> With ‘<a href="#mask-box-image"><code
    class=property>mask-box-image</code></a>’ a mask can be split into nine
    pieces: four corners, four edges and the middle piece as demonstrated in
    the figure below.
@@ -2163,7 +2163,7 @@ body {
 
   <p> These pieces may be sliced, scaled and stretched in various ways to fit
    the size of the <span class=index id=mask-image-area>mask image
-   area</span>. The usage of ‘<a href="#mask-box-image0"><code
+   area</span>. The usage of ‘<a href="#mask-box-image"><code
    class=property>mask-box-image</code></a>’ corresponds to the ‘<code
    class=property>border-image</code>’ property of CSS Background and
    Borders <a href="#CSS3BG" rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
@@ -2175,7 +2175,7 @@ body {
 
    <div class=figure> <img alt="Example for 'mask-box-image'" height=240
     src="images/mask-box-image.svg" width=720>
-    <p class=caption> Example for ‘<a href="#mask-box-image0"><code
+    <p class=caption> Example for ‘<a href="#mask-box-image"><code
      class=property>mask-box-image</code></a>’. The object on the left is
      the object to mask. The second image is the alpha mask and the last
      image the masked object.
@@ -2543,7 +2543,7 @@ div {
    with the mask-box-image</a>.
 
   <h3 id=the-mask-box-image><span class=secno>6.6. </span>The ‘<a
-   href="#mask-box-image0"><code class=property>mask-box-image</code></a>’
+   href="#mask-box-image"><code class=property>mask-box-image</code></a>’
    property</h3>
 
   <table class=propdef>
@@ -2551,7 +2551,7 @@ div {
     <tr>
      <th>Name:
 
-     <td><dfn id=mask-box-image0>mask-box-image</dfn>
+     <td><dfn id=mask-box-image>mask-box-image</dfn>
 
     <tr>
      <th><a href="#values">Value</a>:
@@ -4056,7 +4056,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     title="section 5.10."><strong>5.10.</strong></a>, <a href="#mask0"
     title="section 4."><strong>4.</strong></a>
 
-   <li>mask-box-image, <a href="#mask-box-image0"
+   <li>mask-box-image, <a href="#mask-box-image"
     title="section 6.6."><strong>6.6.</strong></a>
 
    <li>mask box image area, <a href="#mask-box-image-area"
@@ -4315,7 +4315,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <td>visual
 
     <tr>
-     <th><a class=property href="#mask-box-image0">mask-box-image</a>
+     <th><a class=property href="#mask-box-image">mask-box-image</a>
 
      <td>&lt;‘mask-box-image-source’&gt; ||
       &lt;‘mask-box-image-slice’&gt; [ /
