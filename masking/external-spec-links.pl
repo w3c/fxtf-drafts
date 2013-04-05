@@ -377,7 +377,7 @@ sub elementSummary {
     for my $cat (@{$elements{$name}{attributecategories}}) {
       if ($cat eq 'presentation') {
         $attributes .= "<li><a href='$attributeCategories{$cat}{href}'>$cat attributes</a><span class=expanding> — ";
-        $attributes .= join(', ', map { "<a href='$properties{$_}{href}'><span class=attr-name>‘$_’</span></a>" }
+        $attributes .= join(', ', map { "<a href='$properties{$_}{href}'>‘<code class=property>$_</code>’</a>" }
                             sort keys(%properties));
         $attributes .= '</span></li>';
       } elsif (defined $attributeCategories{$cat}{href}) {
