@@ -11,7 +11,7 @@
    rel=dc.rights>
   <meta content="CSS Masking" name=dc.title>
   <meta content=text name=dc.type>
-  <meta content=2013-04-04 name=dc.date>
+  <meta content=2013-04-05 name=dc.date>
   <meta content="Dirk Schulze" name=dc.creator>
   <meta content="Brian Birtles" name=dc.creator>
   <meta
@@ -30,15 +30,12 @@
   <style type="text/css">
   /* Style elements like the specification SVG2 does. */
   .element-name {
+    font: inherit;
+    white-space: nowrap;
     font-size: 90%;
     font-weight: bold;
-    color: #A52A2A;
+    color: #005A9C;
   }
-
-  .element-name .property {
-    color: #A52A2A;
-  }
-
   </style>
 
  <body>
@@ -48,14 +45,14 @@
 
    <h1>CSS Masking</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 4 April 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 5 April 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130404/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130405/-->
 
     <dt>Latest version:
 
@@ -198,9 +195,8 @@
      <li><a href="#the-mask-type"><span class=secno>5.9. </span>The ‘<code
       class=property>mask-type</code>’ property</a>
 
-     <li><a href="#MaskElement"><span class=secno>5.10. </span>The <span
-      class=element-name>‘<code class=property>mask</code>’</span>
-      element</a>
+     <li><a href="#MaskElement"><span class=secno>5.10. </span>The <code
+      class=element-name>&lt;mask></code> element</a>
 
      <li><a href="#the-mask-image-rendering-model"><span class=secno>5.11.
       </span>The Mask Image Rendering Model</a>
@@ -255,8 +251,8 @@
      <li><a href="#clip-property"><span class=secno>7.3. </span>The ‘<code
       class=property>clip</code>’ property</a>
 
-     <li><a href="#ClipPathElement"><span class=secno>7.4. </span>The
-      ‘<code class=property>clipPath</code>’ element</a>
+     <li><a href="#ClipPathElement"><span class=secno>7.4. </span>The <code
+      class=element-name>&lt;clipPath></code> element</a>
 
      <li><a href="#clipPath-geometry"><span class=secno>7.5. </span>Clipping
       paths, geometry, and pointer events</a>
@@ -319,13 +315,12 @@
 
   <p> The ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ property may reference a <a
-   class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element as the mask source.
-   Alternatively, for many simple uses, the ‘<a href="#mask-image"><code
-   class=property>mask-image</code></a>’ property may refer directly to
-   images to be used as mask forgoing the need for an explicit <a
-   class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element.<br>
+   href="#MaskElement"><code class=element-name>&lt;mask></code></a> element
+   as the mask source. Alternatively, for many simple uses, the ‘<a
+   href="#mask-image"><code class=property>mask-image</code></a>’ property
+   may refer directly to images to be used as mask forgoing the need for an
+   explicit <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> element.<br>
    The ‘<a href="#mask"><code class=property>mask</code></a>’ property
    serves as a shorthand property for ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’ and other characterizing
@@ -465,8 +460,8 @@
 
    <dt id=TermMaskSource><dfn id=mask-source>mask source</dfn>
 
-   <dd> A mask defined by a <a class=element-name
-    href="#MaskElement">‘<code class=property>mask</code>’</a> element.
+   <dd> A mask defined by a <a href="#MaskElement"><code
+    class=element-name>&lt;mask></code></a> element.
 
    <dt id=TermClippingPath>clipping path
 
@@ -615,18 +610,18 @@
    <dt> <dfn id=lsquolturlgtrsquo>‘<code
     class=css>&lt;url&gt;</code>’</dfn>
 
-   <dd> A URL reference to a <a class=element-name
-    href="#MaskElement">‘<code class=property>mask</code>’</a> element
-    (for example ‘<code class=css>url(commonmasks.svg#mask)</code>’).
+   <dd> A URL reference to a <a href="#MaskElement"><code
+    class=element-name>&lt;mask></code></a> element (for example ‘<code
+    class=css>url(commonmasks.svg#mask)</code>’).
 
    <dt>‘<code class=css>child</code>’
 
    <dd> A keyword to indicate that the last direct child <a
-    class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element of the element the ‘<a
-    href="#mask-image"><code class=property>mask-image</code></a>’ property
-    is applied should be used as the mask source. It is equivalent to
-    ‘<code class=css>select(mask:last-of-type)</code>’.
+    href="#MaskElement"><code class=element-name>&lt;mask></code></a> element
+    of the element the ‘<a href="#mask-image"><code
+    class=property>mask-image</code></a>’ property is applied should be
+    used as the mask source. It is equivalent to ‘<code
+    class=css>select(mask:last-of-type)</code>’.
 
    <dt>‘<a href="#ltchild-selectorgt"><code
     class=css>&lt;child-selector&gt;</code></a>’
@@ -634,8 +629,8 @@
    <dd> A functional notation <a href="#CSS3VAL"
     rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a> accepting a
     comma-separated list of compound selectors that represents first matching
-    child <a class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element in <a
+    child <a href="#MaskElement"><code
+    class=element-name>&lt;mask></code></a> element in <a
     href="http://www.w3.org/TR/2012/WD-dom-20120405/#concept-tree-order">tree
     order</a> (as defined in <a href="#DOM"
     rel=biblioentry>[DOM]<!--{{!DOM}}--></a>).
@@ -669,9 +664,9 @@
    otherwise as <a href="#ltmask-imagegt"><var>&lt;mask-image&gt;</var></a>.
 
   <p>If the URI reference of a mask source is not valid (e.g it points to an
-   object that doesn't exist or the object is not a <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> element),
-   no masking is applied.
+   object that doesn't exist or the object is not a <a
+   href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+   element), no masking is applied.
 
   <p>A mask image that is empty (zero width or zero height), that fails to
    download, is non-existent, or that cannot be displayed (e.g. because it is
@@ -815,13 +810,13 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
   <div class=example>
    <p> In the following example, the ‘<a href="#mask-type"><code
     class=property>mask-type</code></a>’ property sets the mask type value
-    for the <a class=element-name href="#MaskElement">‘<code
-    class=property>mask</code>’</a> element to ‘<a
+    for the <a href="#MaskElement"><code
+    class=element-name>&lt;mask></code></a> element to ‘<a
     href="#lsquoalpharsquo"><code class=css>alpha</code></a>’. The ‘<a
     href="#mask-image"><code class=property>mask-image</code></a>’ property
-    has a reference to this <a class=element-name
-    href="#MaskElement">‘<code class=property>mask</code>’</a> element
-    and the ‘<a href="#mask-source-type"><code
+    has a reference to this <a href="#MaskElement"><code
+    class=element-name>&lt;mask></code></a> element and the ‘<a
+    href="#mask-source-type"><code
     class=property>mask-source-type</code></a>’ property has a value of
     ‘<a href="#lsquoluminancersquo"><code
     class=css>luminance</code></a>’. The ‘<a
@@ -1417,8 +1412,8 @@ body {
    ‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’,
    ‘<a href="#mask-origin"><code class=property>mask-origin</code></a>’
    and ‘<a href="#mask-size0"><code class=property>mask-size</code></a>’
-   have no affect on <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> elements.
+   have no affect on <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> elements.
 
   <h3 id=the-mask-type><span class=secno>5.9. </span>The ‘<a
    href="#mask-type"><code class=property>mask-type</code></a>’ property</h3>
@@ -1443,8 +1438,8 @@ body {
     <tr>
      <th>Applies to:
 
-     <td><a class=element-name href="#MaskElement">‘<code
-      class=property>mask</code>’</a> elements
+     <td><a href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+      elements
 
     <tr>
      <th>Inherited:
@@ -1473,10 +1468,10 @@ body {
   </table>
 
   <p>The ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
-   property defines whether the content of the <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> is treated
-   as as luminance mask or alpha mask, as described in <a
-   href="#MaskValues">Calculating mask values</a>.
+   property defines whether the content of the <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> is treated as as luminance mask or
+   alpha mask, as described in <a href="#MaskValues">Calculating mask
+   values</a>.
 
   <p>Values have the following meanings:
 
@@ -1494,8 +1489,8 @@ body {
   <p>The ‘<a href="#mask-type"><code class=property>mask-type</code></a>’
    property is a presentation attribute for SVG elements.
 
-  <h3 id=MaskElement><span class=secno>5.10. </span>The <a class=element-name
-   href="#mask">‘<code class=property>mask</code>’</a> element</h3>
+  <h3 id=MaskElement><span class=secno>5.10. </span>The <a
+   href="#MaskElement"><code class=element-name>&lt;mask></code></a> element</h3>
 
   <table class=propdef summary="mask element">
    <tbody>
@@ -1520,135 +1515,135 @@ body {
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermAnimationElement">animation</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateElement"><span
-        class=element-name>‘animate’</span></a>, <a
+        class=element-name>&lt;animate></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateColorElement"><span
-        class=element-name>‘animateColor’</span></a>, <a
+        class=element-name>&lt;animateColor></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateMotionElement"><span
-        class=element-name>‘animateMotion’</span></a>, <a
+        class=element-name>&lt;animateMotion></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateTransformElement"><span
-        class=element-name>‘animateTransform’</span></a>, <a
+        class=element-name>&lt;animateTransform></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#SetElement"><span
-        class=element-name>‘set’</span></a></span>
+        class=element-name>&lt;set></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermDescriptiveElement">descriptive</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DescElement"><span
-        class=element-name>‘desc’</span></a>, <a
+        class=element-name>&lt;desc></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#TitleElement"><span
-        class=element-name>‘title’</span></a>, <a
+        class=element-name>&lt;title></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/metadata.html#MetadataElement"><span
-        class=element-name>‘metadata’</span></a></span>
+        class=element-name>&lt;metadata></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermShapeElement">shape</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement"><span
-        class=element-name>‘circle’</span></a>, <a
+        class=element-name>&lt;circle></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#EllipseElement"><span
-        class=element-name>‘ellipse’</span></a>, <a
+        class=element-name>&lt;ellipse></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#LineElement"><span
-        class=element-name>‘line’</span></a>, <a
+        class=element-name>&lt;line></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement"><span
-        class=element-name>‘path’</span></a>, <a
+        class=element-name>&lt;path></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#PolygonElement"><span
-        class=element-name>‘polygon’</span></a>, <a
+        class=element-name>&lt;polygon></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#PolylineElement"><span
-        class=element-name>‘polyline’</span></a>, <a
+        class=element-name>&lt;polyline></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement"><span
-        class=element-name>‘rect’</span></a></span>
+        class=element-name>&lt;rect></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermStructuralElement">structural</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><span
-        class=element-name>‘defs’</span></a>, <a
+        class=element-name>&lt;defs></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><span
-        class=element-name>‘g’</span></a>, <a
+        class=element-name>&lt;g></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#SVGElement"><span
-        class=element-name>‘svg’</span></a>, <a
+        class=element-name>&lt;svg></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#SymbolElement"><span
-        class=element-name>‘symbol’</span></a>, <a
+        class=element-name>&lt;symbol></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement"><span
-        class=element-name>‘use’</span></a></span>
+        class=element-name>&lt;use></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGradientElement">gradient</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#LinearGradientElement"><span
-        class=element-name>‘linearGradient’</span></a>, <a
+        class=element-name>&lt;linearGradient></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#RadialGradientElement"><span
-        class=element-name>‘radialGradient’</span></a></span>
+        class=element-name>&lt;radialGradient></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#AElement"><span
-        class=element-name>‘a’</span></a>
+        class=element-name>&lt;a></span></a>
 
        <li><a href="#ClipPathElement"><span
-        class=element-name>‘clipPath’</span></a>
+        class=element-name>&lt;clipPath></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/color.html#ColorProfileElement"><span
-        class=element-name>‘color-profile’</span></a>
+        class=element-name>&lt;color-profile></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#CursorElement"><span
-        class=element-name>‘cursor’</span></a>
+        class=element-name>&lt;cursor></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#FilterElement"><span
-        class=element-name>‘filter’</span></a>
+        class=element-name>&lt;filter></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/fonts.html#FontElement"><span
-        class=element-name>‘font’</span></a>
+        class=element-name>&lt;font></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/fonts.html#FontFaceElement"><span
-        class=element-name>‘font-face’</span></a>
+        class=element-name>&lt;font-face></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/extend.html#ForeignObjectElement"><span
-        class=element-name>‘foreignObject’</span></a>
+        class=element-name>&lt;foreignObject></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement"><span
-        class=element-name>‘image’</span></a>
+        class=element-name>&lt;image></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement"><span
-        class=element-name>‘marker’</span></a>
+        class=element-name>&lt;marker></span></a>
 
        <li><a href="#MaskElement"><span
-        class=element-name>‘mask’</span></a>
+        class=element-name>&lt;mask></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement"><span
-        class=element-name>‘pattern’</span></a>
+        class=element-name>&lt;pattern></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/script.html#ScriptElement"><span
-        class=element-name>‘script’</span></a>
+        class=element-name>&lt;script></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/styling.html#StyleElement"><span
-        class=element-name>‘style’</span></a>
+        class=element-name>&lt;style></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#SwitchElement"><span
-        class=element-name>‘switch’</span></a>
+        class=element-name>&lt;switch></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/linking.html#ViewElement"><span
-        class=element-name>‘view’</span></a>
+        class=element-name>&lt;view></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement"><span
-        class=element-name>‘text’</span></a>
+        class=element-name>&lt;text></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#AltGlyphDefElement"><span
-        class=element-name>‘altGlyphDef’</span></a>
+        class=element-name>&lt;altGlyphDef></span></a>
       </ul>
 
     <tr>
@@ -1860,11 +1855,11 @@ body {
      class=property>width</code>’</a> and <a class=attr-name
      href="#MaskElementHeightAttribute">‘<code
      class=property>height</code>’</a> represent values in the current user
-     coordinate system in place at the time when the <a class=element-name
-     href="#MaskElement">‘<code class=property>mask</code>’</a> element
-     is referenced (i.e., the user coordinate system for the element
-     referencing the <a class=element-name href="#MaskElement">‘<code
-     class=property>mask</code>’</a> element via the ‘<a
+     coordinate system in place at the time when the <a
+     href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+     element is referenced (i.e., the user coordinate system for the element
+     referencing the <a href="#MaskElement"><code
+     class=element-name>&lt;mask></code></a> element via the ‘<a
      href="#mask"><code class=property>mask</code></a>’ property).<br>
      If <span class=attr-value>maskUnits="objectBoundingBox"</span>, <a
      class=attr-name href="#MaskElementXAttribute">‘<code
@@ -1889,21 +1884,19 @@ body {
      <em>objectBoundingBox</em>"
 
     <dd>Defines the coordinate system for the contents of the <a
-     class=element-name href="#MaskElement">‘<code
-     class=property>mask</code>’</a>.<br>
+     href="#MaskElement"><code class=element-name>&lt;mask></code></a>.<br>
      If <span class=attr-value>maskContentUnits="userSpaceOnUse"</span>, the
-     user coordinate system for the contents of the <a class=element-name
-     href="#MaskElement">‘<code class=property>mask</code>’</a> element
-     is the current user coordinate system in place at the time when the <a
-     class=element-name href="#MaskElement">‘<code
-     class=property>mask</code>’</a> element is referenced (i.e., the user
-     coordinate system for the element referencing the <a class=element-name
-     href="#MaskElement">‘<code class=property>mask</code>’</a> element
-     via the ‘<a href="#mask"><code class=property>mask</code></a>’
-     property).<br>
+     user coordinate system for the contents of the <a
+     href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+     element is the current user coordinate system in place at the time when
+     the <a href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+     element is referenced (i.e., the user coordinate system for the element
+     referencing the <a href="#MaskElement"><code
+     class=element-name>&lt;mask></code></a> element via the ‘<a
+     href="#mask"><code class=property>mask</code></a>’ property).<br>
      If <span class=attr-value>maskContentUnits="objectBoundingBox"</span>,
-     the user coordinate system for the contents of the <a class=element-name
-     href="#MaskElement">‘<code class=property>mask</code>’</a> is
+     the user coordinate system for the contents of the <a
+     href="#MaskElement"><code class=element-name>&lt;mask></code></a> is
      established using the bounding box of the element to which the mask is
      applied. (See <a class=term href="#object-bounding-box-units">object
      bounding box units</a>.)<br>
@@ -1999,31 +1992,28 @@ body {
 
   <p>
 
-  <p>CSS properties inherit into the <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> element
-   from its ancestors; properties do <em>not</em> inherit from the element
-   referencing the <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element.
+  <p>CSS properties inherit into the <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> element from its ancestors;
+   properties do <em>not</em> inherit from the element referencing the <a
+   href="#MaskElement"><code class=element-name>&lt;mask></code></a> element.
 
-  <p><a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> elements are never rendered directly;
-   their only usage is as something that can be referenced using the ‘<a
-   href="#mask"><code class=property>mask</code></a>’ property. The
-   ‘<code class=property>opacity</code>’, ‘<code
-   class=property>filter</code>’ and ‘<code
-   class=property>display</code>’ properties do not apply to the <a
-   class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element; thus, <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> elements
-   are not directly rendered even if the ‘<code
-   class=property>display</code>’ property is set to a value other than
-   ‘<a href="#lsquononersquo"><code class=property>none</code></a>’, and
-   <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> elements are available for referencing
-   even when the ‘<code class=property>display</code>’ property on the <a
-   class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element or any of its ancestors is set
-   to <a class=prop-value href="#lsquononersquo">none</a>.
+  <p><a href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+   elements are never rendered directly; their only usage is as something
+   that can be referenced using the ‘<a href="#mask"><code
+   class=property>mask</code></a>’ property. The ‘<code
+   class=property>opacity</code>’, ‘<code class=property>filter</code>’
+   and ‘<code class=property>display</code>’ properties do not apply to
+   the <a href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+   element; thus, <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> elements are not directly rendered
+   even if the ‘<code class=property>display</code>’ property is set to a
+   value other than ‘<a href="#lsquononersquo"><code
+   class=property>none</code></a>’, and <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> elements are available for
+   referencing even when the ‘<code class=property>display</code>’
+   property on the <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> element or any of its ancestors is
+   set to <a class=prop-value href="#lsquononersquo">none</a>.
 
   <h3 id=the-mask-image-rendering-model><span class=secno>5.11. </span>The
    Mask Image Rendering Model</h3>
@@ -2077,17 +2067,15 @@ body {
     <ul>
      <li> If the computed value of ‘<code
       class=property>color-interpolation</code>’ on the <a
-      class=element-name href="#MaskElement">‘<code
-      class=property>mask</code>’</a> element is ‘<code
-      class=property>linearRGB</code>’, convert the original image color
-      values (potentially in the sRGB color space) to the linear RGB color
-      space.
+      href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+      element is ‘<code class=property>linearRGB</code>’, convert the
+      original image color values (potentially in the sRGB color space) to
+      the linear RGB color space.
 
      <li>Then, using non-premultiplied RGB color values, apply the
       luminance-to-alpha coefficients (as defined in the <a
-      class=element-name
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#feColorMatrixElement">‘<code
-      class=property>feColorMatrix</code>’</a> filter primitive <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#feColorMatrixElement"><code
+      class=element-name>&lt;feColorMatrix></code></a> filter primitive <a
       href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>) to convert
       the RGB color values to luminance values.
     </ul>
@@ -2118,12 +2106,12 @@ body {
 
   <p class=note>Note that SVG <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-   elements</a> (e.g., <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement">‘<code
-   class=property>circle</code>’</a> or <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
-   class=property>text</code>’</a>) are all treated as four-channel RGBA
-   images for the purposes of masking operations.
+   elements</a> (e.g., <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement"><code
+   class=element-name>&lt;circle></code></a> or <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement"><code
+   class=element-name>&lt;text></code></a>) are all treated as four-channel
+   RGBA images for the purposes of masking operations.
 
   <p>The effect of a mask is identical to what would have happened if there
    were no mask but instead the alpha channel of the given object were
@@ -2673,8 +2661,8 @@ div {
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
       elements</a>, <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a> and <a class=element-name href="#ClipPathElement">‘<code
-      class=property>clipPath</code>’</a>
+      elements</a> and <a href="#ClipPathElement"><code
+      class=element-name>&lt;clipPath></code></a>
 
     <tr>
      <th>Inherited:
@@ -2730,11 +2718,11 @@ div {
    <dt>‘<code class=css>child</code>’
 
    <dd> A keyword to indicate that the last direct child <a
-    class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element of the element the ‘<a
-    href="#clip-path"><code class=property>clip-path</code></a>’ property
-    is applied should be used as the clip source. It is equivalent to
-    ‘<code class=css>select(clipPath:last-of-type)</code>’.
+    href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+    element of the element the ‘<a href="#clip-path"><code
+    class=property>clip-path</code></a>’ property is applied should be used
+    as the clip source. It is equivalent to ‘<code
+    class=css>select(clipPath:last-of-type)</code>’.
 
    <dt>‘<a href="#ltchild-selectorgt"><code
     class=css>&lt;child-selector&gt;</code></a>’
@@ -2742,17 +2730,17 @@ div {
    <dd> A functional notation <a href="#CSS3VAL"
     rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a> accepting a
     comma-separated list of compound selectors that represents first matching
-    child <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element in <a
+    child <a href="#ClipPathElement"><code
+    class=element-name>&lt;clipPath></code></a> element in <a
     href="http://www.w3.org/TR/2012/WD-dom-20120405/#concept-tree-order">tree
     order</a> (as defined in <a href="#DOM"
     rel=biblioentry>[DOM]<!--{{!DOM}}--></a>).
   </dl>
 
   <p>If the URI reference is not valid (e.g it points to an object that
-   doesn't exist or the object is not a <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-   element), no clipping is applied.
+   doesn't exist or the object is not a <a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> element), no clipping is
+   applied.
 
   <h3 id=the-clip-rule><span class=secno>7.2. </span>The ‘<a
    href="#clip-rule"><code class=property>clip-rule</code></a>’ property</h3>
@@ -2779,9 +2767,8 @@ div {
 
      <td><a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a> within a <a class=element-name
-      href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-      element
+      elements</a> within a <a href="#ClipPathElement"><code
+      class=element-name>&lt;clipPath></code></a> element
 
     <tr>
      <th>Inherited:
@@ -2827,16 +2814,16 @@ div {
 
   <p>The ‘<a href="#clip-rule"><code class=property>clip-rule</code></a>’
    property only applies to graphics elements that are contained within a <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element.
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   element.
 
   <div class=example> The following fragment of code will cause an evenodd
    clipping rule to be applied to the clipping path because ‘<a
    href="#clip-rule"><code class=property>clip-rule</code></a>’ is
-   specified on the <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
-   class=property>path</code>’</a> element that defines the clipping shape:
-
+   specified on the <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement"><code
+   class=element-name>&lt;path></code></a> element that defines the clipping
+   shape:
    <pre>
 &lt;g clip-rule="nonzero"&gt;
   &lt;clipPath id="MyClip"&gt;
@@ -2887,11 +2874,11 @@ div {
 
      <td>Absolutely positioned elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements
-      which establish a new viewport</a>, <a class=element-name
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement">‘<code
-      class=property>pattern</code>’</a> elements and <a class=element-name
-      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement">‘<code
-      class=property>marker</code>’</a> elements.
+      which establish a new viewport</a>, <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement"><code
+      class=element-name>&lt;pattern></code></a> elements and <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement"><code
+      class=element-name>&lt;marker></code></a> elements.
 
     <tr>
      <th>Inherited:
@@ -2931,12 +2918,12 @@ div {
    property applies only to absolutely positioned elements. In SVG, it
    applies to <a
    href="http://www.w3.org/TR/SVG2/coords.html#EstablishingANewViewport">elements
-   which establish a new viewport</a>, <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement">‘<code
-   class=property>pattern</code>’</a> elements and <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement">‘<code
-   class=property>marker</code>’</a> elements. Values have the following
-   meanings:
+   which establish a new viewport</a>, <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/pservers.html#PatternElement"><code
+   class=element-name>&lt;pattern></code></a> elements and <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#MarkerElement"><code
+   class=element-name>&lt;marker></code></a> elements. Values have the
+   following meanings:
 
   <dl>
    <dt>‘<a href="#lsquoautorsquo"><code class=css>auto</code></a>’
@@ -3014,8 +3001,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   </div>
 
   <h3 id=ClipPathElement><span class=secno>7.4. </span>The <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element</h3>
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   element</h3>
 
   <table class=propdef summary="clipPath element">
    <tbody>
@@ -3038,51 +3025,51 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermDescriptiveElement">descriptive</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DescElement"><span
-        class=element-name>‘desc’</span></a>, <a
+        class=element-name>&lt;desc></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#TitleElement"><span
-        class=element-name>‘title’</span></a>, <a
+        class=element-name>&lt;title></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/metadata.html#MetadataElement"><span
-        class=element-name>‘metadata’</span></a></span>
+        class=element-name>&lt;metadata></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermAnimationElement">animation</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateElement"><span
-        class=element-name>‘animate’</span></a>, <a
+        class=element-name>&lt;animate></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateColorElement"><span
-        class=element-name>‘animateColor’</span></a>, <a
+        class=element-name>&lt;animateColor></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateMotionElement"><span
-        class=element-name>‘animateMotion’</span></a>, <a
+        class=element-name>&lt;animateMotion></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#AnimateTransformElement"><span
-        class=element-name>‘animateTransform’</span></a>, <a
+        class=element-name>&lt;animateTransform></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#SetElement"><span
-        class=element-name>‘set’</span></a></span>
+        class=element-name>&lt;set></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermShapeElement">shape</a>
         <span class=expanding> — <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement"><span
-        class=element-name>‘circle’</span></a>, <a
+        class=element-name>&lt;circle></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#EllipseElement"><span
-        class=element-name>‘ellipse’</span></a>, <a
+        class=element-name>&lt;ellipse></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#LineElement"><span
-        class=element-name>‘line’</span></a>, <a
+        class=element-name>&lt;line></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement"><span
-        class=element-name>‘path’</span></a>, <a
+        class=element-name>&lt;path></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#PolygonElement"><span
-        class=element-name>‘polygon’</span></a>, <a
+        class=element-name>&lt;polygon></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#PolylineElement"><span
-        class=element-name>‘polyline’</span></a>, <a
+        class=element-name>&lt;polyline></span></a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#RectElement"><span
-        class=element-name>‘rect’</span></a></span>
+        class=element-name>&lt;rect></span></a></span>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement"><span
-        class=element-name>‘text’</span></a>
+        class=element-name>&lt;text></span></a>
 
        <li><a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement"><span
-        class=element-name>‘use’</span></a>
+        class=element-name>&lt;use></span></a>
       </ul>
 
     <tr>
@@ -3273,26 +3260,27 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <em>objectBoundingBox</em>"
 
     <dd>Defines the coordinate system for the contents of the <a
-     class=element-name href="#ClipPathElement">‘<code
-     class=property>clipPath</code>’</a>.<br>
+     href="#ClipPathElement"><code
+     class=element-name>&lt;clipPath></code></a>.<br>
      If <span class=attr-value>clipPathUnits="userSpaceOnUse"</span>, the
-     contents of the <a class=element-name href="#ClipPathElement">‘<code
-     class=property>clipPath</code>’</a> represent values in the current
-     user coordinate system in place at the time when the <a
-     class=element-name href="#ClipPathElement">‘<code
-     class=property>clipPath</code>’</a> element is referenced (i.e., the
-     user coordinate system for the element referencing the <a
-     class=element-name href="#ClipPathElement">‘<code
-     class=property>clipPath</code>’</a> element via the <a class=property
+     contents of the <a href="#ClipPathElement"><code
+     class=element-name>&lt;clipPath></code></a> represent values in the
+     current user coordinate system in place at the time when the <a
+     href="#ClipPathElement"><code
+     class=element-name>&lt;clipPath></code></a> element is referenced (i.e.,
+     the user coordinate system for the element referencing the <a
+     href="#ClipPathElement"><code
+     class=element-name>&lt;clipPath></code></a> element via the <a
+     class=property
      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipPathProperty">‘<code
      class=property>clip-path</code>’</a> property).<br>
      If <span class=attr-value>clipPathUnits="objectBoundingBox"</span>, then
-     the user coordinate system for the contents of the <a class=element-name
-     href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-     element is established using the bounding box of the element to which
-     the clipping path is applied (see <a class=index
-     href="#object-bounding-box-units" id=object-bounding-box-units0>object
-     bounding box units</a>).<br>
+     the user coordinate system for the contents of the <a
+     href="#ClipPathElement"><code
+     class=element-name>&lt;clipPath></code></a> element is established using
+     the bounding box of the element to which the clipping path is applied
+     (see <a class=index href="#object-bounding-box-units"
+     id=object-bounding-box-units0>object bounding box units</a>).<br>
      If attribute <a class=attr-name
      href="#ClipPathElementClipPathUnitsAttribute">‘<code
      class=property>clipPathUnits</code>’</a> is not specified, then the
@@ -3302,82 +3290,77 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    </dl>
   </div>
 
-  <p>CSS properties inherit into the <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-   element from its ancestors; properties do <em>not</em> inherit from the
-   element referencing the <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+  <p>CSS properties inherit into the <a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> element from its ancestors;
+   properties do <em>not</em> inherit from the element referencing the <a
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
    element.
 
-  <p><a class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> elements are never rendered
+  <p><a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> elements are never rendered
    directly; their only usage is as something that can be referenced using
    the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipPathProperty">‘<code
    class=property>clip-path</code>’</a> property. The <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty">‘<code
    class=property>display</code>’</a> property does not apply to the <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element; thus, <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-   elements are not directly rendered even if the ‘<code
-   class=property>display</code>’ property is set to a value other than <a
-   class=prop-value href="#lsquononersquo">none</a>, and <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> elements are available for
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   element; thus, <a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> elements are not directly
+   rendered even if the ‘<code class=property>display</code>’ property is
+   set to a value other than <a class=prop-value
+   href="#lsquononersquo">none</a>, and <a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> elements are available for
    referencing even when the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#DisplayProperty">‘<code
-   class=property>display</code>’</a> property on the <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+   class=property>display</code>’</a> property on the <a
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
    element or any of its ancestors is set to <a class=prop-value
    href="#lsquononersquo">none</a>.
 
-  <p>A <a class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element can contain <a
-   class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
-   class=property>path</code>’</a> elements, <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
-   class=property>text</code>’</a> elements, <a
+  <p>A <a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> element can contain <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement"><code
+   class=element-name>&lt;path></code></a> elements, <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement"><code
+   class=element-name>&lt;text></code></a> elements, <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermBasicShapeElement">basic
-   shapes</a> (such as <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement">‘<code
-   class=property>circle</code>’</a>) or a <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement">‘<code
-   class=property>use</code>’</a> element. If a <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement">‘<code
-   class=property>use</code>’</a> element is a child of a <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element, it must directly reference
-   <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement">‘<code
-   class=property>path</code>’</a>, <a class=element-name
-   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement">‘<code
-   class=property>text</code>’</a> or <a
+   shapes</a> (such as <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#CircleElement"><code
+   class=element-name>&lt;circle></code></a>) or a <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement"><code
+   class=element-name>&lt;use></code></a> element. If a <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement"><code
+   class=element-name>&lt;use></code></a> element is a child of a <a
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   element, it must directly reference <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement"><code
+   class=element-name>&lt;path></code></a>, <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#TextElement"><code
+   class=element-name>&lt;text></code></a> or <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermBasicShapeElement">basic
    shapes</a> elements. Indirect references are an error and the <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element must be ignored.
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   element must be ignored.
 
   <p>The raw geometry of each child element exclusive of rendering properties
    such as ‘<code class=property>fill</code>’, ‘<code
    class=property>stroke</code>’, ‘<code
-   class=property>stroke-width</code>’ within a <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+   class=property>stroke-width</code>’ within a <a
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
    conceptually defines a 1-bit mask (with the possible exception of
    anti-aliasing along the edge of the geometry) which represents the
    silhouette of the graphics associated with that element. Anything outside
    the outline of the object is masked out. If a child element is made
    invisible by ‘<code class=property>display</code>’ or ‘<code
    class=property>visibility</code>’ it does not contribute to the clipping
-   path. When the <a class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element contains multiple child
-   elements, the silhouettes of the child elements are logically OR'd
+   path. When the <a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> element contains multiple
+   child elements, the silhouettes of the child elements are logically OR'd
    together to create a single silhouette which is then used to restrict the
    region onto which paint can be applied. Thus, a point is inside the
    clipping path if it is inside any of the children of the <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a>.
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>.
 
   <p>For a given graphics element, the actual clipping path used will be the
    intersection of the clipping path specified by its ‘<a
@@ -3390,27 +3373,27 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <p>A couple of additions:
 
   <ul>
-   <li>The <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element itself and its child
+   <li>The <a href="#ClipPathElement"><code
+    class=element-name>&lt;clipPath></code></a> element itself and its child
     elements do <em>not</em> inherit clipping paths from the ancestors of the
-    <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element.
+    <a href="#ClipPathElement"><code
+    class=element-name>&lt;clipPath></code></a> element.
 
-   <li>The <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element or any of its children can
-    specify property ‘<a href="#clip-path"><code
+   <li>The <a href="#ClipPathElement"><code
+    class=element-name>&lt;clipPath></code></a> element or any of its
+    children can specify property ‘<a href="#clip-path"><code
     class=property>clip-path</code></a>’.<br>
     If a valid ‘<a href="#clip-path"><code
     class=property>clip-path</code></a>’ reference is placed on a <a
-    class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element, the resulting clipping
-    path is the intersection of the contents of the <a class=element-name
-    href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-    element with the referenced clipping path.<br>
+    href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+    element, the resulting clipping path is the intersection of the contents
+    of the <a href="#ClipPathElement"><code
+    class=element-name>&lt;clipPath></code></a> element with the referenced
+    clipping path.<br>
     If a valid ‘<a href="#clip-path"><code
     class=property>clip-path</code></a>’ reference is placed on one of the
-    children of a <a class=element-name href="#ClipPathElement">‘<code
-    class=property>clipPath</code>’</a> element, then the given child
+    children of a <a href="#ClipPathElement"><code
+    class=element-name>&lt;clipPath></code></a> element, then the given child
     element is clipped by the referenced clipping path before OR'ing the
     silhouette of the child element with the silhouettes of the other child
     elements.
@@ -3428,11 +3411,10 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    the element's inherent geometry. The <a class=index
    href="#bounding-client-rect" id=bounding-client-rect2>bounding client
    rect</a> of a clipped element (that is, an element which references a <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element via a ‘<a
-   href="#clip-path"><code class=property>clip-path</code></a>’ property,
-   or a child of the referencing element) must remain the same as if it were
-   not clipped.
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   element via a ‘<a href="#clip-path"><code
+   class=property>clip-path</code></a>’ property, or a child of the
+   referencing element) must remain the same as if it were not clipped.
 
   <p>By default, <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/interact.html#PointerEventsProperty">pointer
@@ -3449,11 +3431,11 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <h3 id=origin-restrictions><span class=secno>8.1. </span>Origin
    Restrictions</h3>
 
-  <p> External references to resources like <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> or <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> must not violate the same origin
-   restrictions <a href="#CORS" rel=biblioentry>[CORS]<!--{{!CORS}}--></a>.
+  <p> External references to resources like <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> or <a
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   must not violate the same origin restrictions <a href="#CORS"
+   rel=biblioentry>[CORS]<!--{{!CORS}}--></a>.
 
   <p>This restriction includes:
 
@@ -3479,9 +3461,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    SVGClipPathElement</h3>
 
   <p>The <a href="#InterfaceSVGClipPathElement">SVGClipPathElement</a>
-   interface corresponds to the <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
-   element.
+   interface corresponds to the <a href="#ClipPathElement"><code
+   class=element-name>&lt;clipPath></code></a> element.
 
   <pre class=idl>interface <b>SVGClipPathElement</b> : <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGElement">SVGElement</a> {
@@ -3511,8 +3492,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
       <div> Corresponds to attribute <a class=attr-name
        href="#ClipPathElementClipPathUnitsAttribute">‘<code
        class=property>clipPathUnits</code>’</a> on the given <a
-       class=element-name href="#ClipPathElement">‘<code
-       class=property>clipPath</code>’</a> element. Takes one of the
+       href="#ClipPathElement"><code
+       class=element-name>&lt;clipPath></code></a> element. Takes one of the
        constants defined in <a
        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGUnitTypes">SVGUnitTypes</a>.</div>
 
@@ -3532,8 +3513,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    SVGMaskElement</h3>
 
   <p>The <a href="#InterfaceSVGMaskElement">SVGMaskElement</a> interface
-   corresponds to the <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> element.
+   corresponds to the <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> element.
 
   <pre class=idl>interface <b>SVGMaskElement</b> : <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGElement">SVGElement</a> {
@@ -3575,9 +3556,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
       <div> Corresponds to attribute <a class=attr-name
        href="#MaskElementMaskUnitsAttribute">‘<code
        class=property>maskUnits</code>’</a> on the given <a
-       class=element-name href="#MaskElement">‘<code
-       class=property>mask</code>’</a> element. Takes one of the constants
-       defined in <a
+       href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+       element. Takes one of the constants defined in <a
        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGUnitTypes">SVGUnitTypes</a>.</div>
 
      <dt class=attribute
@@ -3589,9 +3569,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
       <div> Corresponds to attribute <a class=attr-name
        href="#MaskElementMaskContentUnitsAttribute">‘<code
        class=property>maskContentUnits</code>’</a> on the given <a
-       class=element-name href="#MaskElement">‘<code
-       class=property>mask</code>’</a> element. Takes one of the constants
-       defined in <a
+       href="#MaskElement"><code class=element-name>&lt;mask></code></a>
+       element. Takes one of the constants defined in <a
        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGUnitTypes">SVGUnitTypes</a>.</div>
 
      <dt class=attribute id="SVGMaskElement__x"><b>x</b><span
@@ -3601,8 +3580,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <dd class=attribute>
       <div> Corresponds to attribute <a class=attr-name
        href="#MaskElementXAttribute">‘<code class=property>x</code>’</a>
-       on the given <a class=element-name href="#MaskElement">‘<code
-       class=property>mask</code>’</a> element.</div>
+       on the given <a href="#MaskElement"><code
+       class=element-name>&lt;mask></code></a> element.</div>
 
      <dt class=attribute id="SVGMaskElement__y"><b>y</b><span
       class=idl-type-parenthetical> (readonly <a
@@ -3611,8 +3590,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <dd class=attribute>
       <div> Corresponds to attribute <a class=attr-name
        href="#MaskElementYAttribute">‘<code class=property>y</code>’</a>
-       on the given <a class=element-name href="#MaskElement">‘<code
-       class=property>mask</code>’</a> element.</div>
+       on the given <a href="#MaskElement"><code
+       class=element-name>&lt;mask></code></a> element.</div>
 
      <dt class=attribute id="SVGMaskElement__width"><b>width</b><span
       class=idl-type-parenthetical> (readonly <a
@@ -3621,8 +3600,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <dd class=attribute>
       <div> Corresponds to attribute <a class=attr-name
        href="#MaskElementWidthAttribute">‘<code
-       class=property>width</code>’</a> on the given <a class=element-name
-       href="#MaskElement">‘<code class=property>mask</code>’</a>
+       class=property>width</code>’</a> on the given <a
+       href="#MaskElement"><code class=element-name>&lt;mask></code></a>
        element.</div>
 
      <dt class=attribute id="SVGMaskElement__height"><b>height</b><span
@@ -3632,8 +3611,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <dd class=attribute>
       <div> Corresponds to attribute <a class=attr-name
        href="#MaskElementHeightAttribute">‘<code
-       class=property>height</code>’</a> on the given <a class=element-name
-       href="#MaskElement">‘<code class=property>mask</code>’</a>
+       class=property>height</code>’</a> on the given <a
+       href="#MaskElement"><code class=element-name>&lt;mask></code></a>
        element.</div>
     </dl>
   </dl>
@@ -3649,15 +3628,14 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    must not implement any of the following properties and elements: ‘<a
    href="#mask-type"><code class=property>mask-type</code></a>’, ‘<a
    href="#clip-rule"><code class=property>clip-rule</code></a>’, <a
-   class=element-name href="#ClipPathElement">‘<code
-   class=property>clipPath</code>’</a> element, <a class=element-name
-   href="#MaskElement">‘<code class=property>mask</code>’</a> element.
-   For UAs without support for SVG, the ‘<a href="#mask"><code
-   class=property>mask</code></a>’ and ‘<a href="#clip-path"><code
-   class=property>clip-path</code></a>’ properties must neither support
-   references to <a class=element-name href="#MaskElement">‘<code
-   class=property>mask</code>’</a> elements nor to <a class=element-name
-   href="#ClipPathElement">‘<code class=property>clipPath</code>’</a>
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   element, <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> element. For UAs without support
+   for SVG, the ‘<a href="#mask"><code class=property>mask</code></a>’
+   and ‘<a href="#clip-path"><code class=property>clip-path</code></a>’
+   properties must neither support references to <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> elements nor to <a
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
    elements.</p>
   <!--begin-conformance-->
 
@@ -4191,7 +4169,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <td>see individual properties
 
      <td>Absolutely positioned elements. In SVG, it applies to elements which
-      establish a new viewport, ‘pattern’ elements and ‘marker’
+      establish a new viewport, &lt;pattern> elements and &lt;marker>
       elements.
 
      <td>no
@@ -4223,7 +4201,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <td>none
 
      <td>All elements. SVG container elements, graphics elements and
-      ‘clipPath’
+      &lt;clipPath>
 
      <td>no
 
@@ -4238,7 +4216,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>nonzero
 
-     <td>graphics elements within a ‘clipPath’ element
+     <td>graphics elements within a &lt;clipPath> element
 
      <td>yes
 
@@ -4502,7 +4480,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>luminance
 
-     <td>‘mask’ elements
+     <td>&lt;mask> elements
 
      <td>no
 
