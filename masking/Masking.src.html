@@ -872,7 +872,7 @@ layer.
 </table>
 
 <p>The 'mask-type' property defines whether the content of the
-<a>'mask element'</a> is treated as as luminance mask or alpha mask, as
+<a>'mask element'</a> element is treated as as luminance mask or alpha mask, as
 described in <a href="#MaskValues">Calculating mask values</a>.</p>
 
 <p>Values have the following meanings:
@@ -884,6 +884,46 @@ described in <a href="#MaskValues">Calculating mask values</a>.</p>
   <dt>''alpha''</dt>
   <dd>Indicates that the alpha values of the mask should be used.</dd>
 </dl>
+
+<p>The 'mask-type' property allows the author of the <a>'mask element'</a> element
+to specify the preferred masking operation. However, the author can override this
+preference by setting the 'mask-source-type' value to something different than ''auto''
+on the masked content.
+
+<div class=example>
+
+<p>In the following example the computed value of 'mask-type' is ''luminance'' and the
+computed value of 'mask-source-type' is ''auto''. The UA must follow the preferred masking
+operation defined on the <a>'mask element'</a> element.
+
+<pre><code>
+&lt;svg>
+  &lt;mask style="mask-type: luminance;" id="mask">
+    ...
+  &lt;/mask>
+&lt;/svg>
+
+&lt;p style="mask-image: url(#mask); mask-source-type: auto;">
+  This is the masked content.
+&lt;/p>
+</code></pre>
+
+<p>In the next example the computed value of 'mask-source-type' is ''alpha'' and
+overrides the preference on the <a>'mask element'</a> element that is computed to
+''luminance''. The mask source is used as an alpha mask.
+
+<pre><code>
+&lt;svg>
+  &lt;mask style="mask-type: luminance;" id="mask2">
+    ...
+  &lt;/mask>
+&lt;/svg>
+
+&lt;p style="mask-image: url(#mask2); mask-source-type: alpha;">
+  This is the masked content.
+&lt;/p>
+</code></pre>
+</div>
 
 <p>The 'mask-type' property is a presentation attribute for SVG elements.</p>
 
