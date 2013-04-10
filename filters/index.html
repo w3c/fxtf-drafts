@@ -11739,11 +11739,9 @@ descriptor: value;</pre>
        <pre>
   attribute vec4 a_position;
 
-  uniform mat4 u_projectionMatrix;
-
   void main()
   {        
-      gl_Position = u_projectionMatrix * a_position;
+      gl_Position = a_position;
   }</pre>
 
        <p>simple.fs
@@ -11834,21 +11832,9 @@ void main()
          <th><code>attribute vec4 a_position</code>
 
          <td>The vertex coordinates in the <a
-          href="#FilterEffectsRegion">filter region</a> box. Coordinates are
-          normalized to the [-0.5, 0.5] range along the x, y and z axis.
-
-        <tr>
-         <th><code>attribute vec2 a_texCoord</code>
-
-         <td>The vertex's texture coordinate. Coordinates are in the [0, 1]
-          range on both axis
-
-        <tr>
-         <th><code>attribute vec2 a_meshCoord</code>
-
-         <td>The vertex's coordinate in the <a
-          href="#gridltintegergt12-detached-attached-">mesh box</a>.
-          Coordinates are in the [0, 1] range on both axis.
+          href="#FilterPrimitiveSubRegion">Filter primitive subregion</a>.
+          Coordinates are normalized to the [0, 1] range along the x, y and z
+          axis.
 
         <tr>
          <th><code>attribute vec3 a_triangleCoord</code>
@@ -11887,27 +11873,11 @@ void main()
 
        <tbody>
         <tr>
-         <th><code>uniform mat4 u_projectionMatrix</code>
-
-         <td>The current projection matrix to the destination texture's
-          coordinate space). <em>Note that the ‘<code class=css>model
-          matrix</code>’ which the ‘<code
-          class=property>transform</code>’ property sets, is not passed to
-          the shaders. It is applied to the filtered element's
-          rendering.</em>
-
-        <tr>
          <th><code>uniform vec2 u_textureSize</code>
 
          <td>The input texture's size. Includes the filter margins. The
           texture size is given in the actual device pixels and incorporates
           the device pixel ratio.
-
-        <tr>
-         <th><code>uniform vec2 u_tileSize</code>
-
-         <td>The size of the current mesh tile, in the same coordinate space
-          as the vertices.
 
         <tr>
          <th><code>uniform vec2 u_meshSize</code>
