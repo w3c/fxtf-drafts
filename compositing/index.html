@@ -1820,22 +1820,23 @@ components having the minimum, middle, and maximum values upon entry to the func
    <!--Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered a group. HTML elements themselves should not create groups.-->
 
   <p class=issue> This spec assumes that a stacking context creates an
-   offscreen buffer which is not always the case. Sometimes elements even
-   have internal grouping (ie background-attachment: fixed). We need to
-   clarify when groups are created so we can have interoperable behavior.
-   Ideally it would be a new spec or an extension of the spec that describes
-   <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking contexts</a>.
+   offscreen buffer (also known as a group) which is not always the case.
+   Sometimes elements even have internal grouping (for instance with ‘<code
+   class=css>background-attachment: fixed</code>’). We need to clarify when
+   groups are created so we can have interoperable behavior. Ideally it would
+   be a new spec or an extension of the spec that describes <a
+   href="http://www.w3.org/TR/CSS21/zindex.html">stacking contexts</a>.
 
   <h3 id="csscompositingrules_SVG"><span class=secno>7.3. </span>Behavior
    specific to SVG</h3>
 
-  <p> In SVG, every element must create a group.<br>
-   This seems costly but implementations can optimize this by not treating
-   elements with default arguments as groups.<br>
-   The compositing model follows the <a
-   href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG
-   compositing</a> model: first any filter effect is applied, then any
-   clipping, masking, blending and compositing
+  <p> In SVG, every element must create a non-isolated group. This seems
+   costly but implementations can optimize this by not treating elements with
+   default arguments as groups.<br>
+   SVG has the following <a
+   href="http://www.w3.org/TR/SVG11/render.html#Introduction">compositing
+   model</a>: first any filter effect is applied, then any clipping, masking,
+   blending and compositing
 
   <p class=issue> This SVG spec states that every element creates an ‘<code
    class=property>accumulating</code>’ group. In practice, few (no)
@@ -2104,8 +2105,7 @@ as follows:</p>
   <p class=note>Applying a non-default blendmode to an area other than
    <var>‘<code class=css><a
    href="#area-element">element</a></code>’</var> must render those areas
-   in an offscreen buffer first. This buffer will then be blended and
-   composited.
+   to a group. This group will then be blended and composited.
 
   <h4 id=isolation><span class=secno>7.4.2. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
