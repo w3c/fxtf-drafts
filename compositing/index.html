@@ -6,16 +6,17 @@
   profile="http://dublincore.org/documents/2008/08/04/dc-html/ http://www.w3.org/2006/03/hcard">
   <title>Compositing and Blending Level 1</title>
 
-  <link href="http://purl.org/dc/terms/" rel=schema.dc>
+  <link href="http://purl.org/dc/terms/" rel=schema.dcterms>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-   rel=dc.rights>
-  <meta content="Compositing and Blending Level 1" name=dc.title>
-  <meta content=text name=dc.type>
-  <meta content=2013-04-08 name=dc.date>
-  <meta content="Rik Cabanier" name=dc.creator>
-  <meta content="Nikos Andronikos" name=dc.creator>
-  <meta content=W3C name=dc.publisher>
-  <meta content="http://dev.w3.org/csswg/compositing/" name=dc.identifier>
+   rel=dcterms.rights>
+  <meta content="Compositing and Blending Level 1" name=dcterms.title>
+  <meta content=text name=dcterms.type>
+  <meta content=2013-04-19 name=dcterms.date>
+  <meta content="Rik Cabanier" name=dcterms.creator>
+  <meta content="Nikos Andronikos" name=dcterms.creator>
+  <meta content=W3C name=dcterms.publisher>
+  <meta content="http://dev.w3.org/csswg/compositing/"
+   name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="style/default.css" rel=stylesheet type="text/css">
   <style type="text/css">
@@ -230,14 +231,14 @@
 
    <h1>Compositing and Blending Level 1</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 8 April 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 19 April 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-compositing-20130408/-->
+     <!--http://www.w3.org/TR/2013/WD-compositing-20130419/-->
 
     <dt>Latest version:
 
@@ -529,36 +530,18 @@
      <li><a href="#csscompositingkeyword"><span class=secno>7.4.
       </span>Properties</a>
       <ul class=toc>
-       <li><a href="#mix-composite"><span class=secno>7.4.1. </span>The <span
-        class=prop-name>‘<code
-        class=property>mix-composite</code>’</span> property</a>
-
-       <li><a href="#mix-blend-mode"><span class=secno>7.4.2. </span>The
+       <li><a href="#mix-blend-mode"><span class=secno>7.4.1. </span>The
         <span class=prop-name>‘<code
         class=property>mix-blend-mode</code>’</span> property</a>
 
-       <li><a href="#isolation"><span class=secno>7.4.3. </span>The <span
+       <li><a href="#isolation"><span class=secno>7.4.2. </span>The <span
         class=prop-name>‘<code class=property>isolation</code>’</span>
         property</a>
-
-       <li><a href="#knock-out"><span class=secno>7.4.4. </span>The <span
-        class=prop-name>‘<code class=property>knock-out</code>’</span>
-        property</a>
-
-       <li><a href="#mix-shorthand"><span class=secno>7.4.5.
-        </span>Compositing and blending shorthand: the <span
-        class=prop-name>‘<code class=property>mix</code>’</span>
-        property</a>
       </ul>
 
-     <li><a href="#cssbackgroundsyntax"><span class=secno>7.5.
-      </span>Specifying blending and compositing in the element
-      background</a>
-      <ul class=toc>
-       <li><a href="#background-blend-mode"><span class=secno>7.5.1.
-        </span>The <span class=prop-name>‘<code
-        class=property>background-blend-mode</code>’</span> property</a>
-      </ul>
+     <li><a href="#background-blend-mode"><span class=secno>7.5. </span>The
+      <span class=prop-name>‘<code
+      class=property>background-blend-mode</code>’</span> property</a>
     </ul>
 
    <li><a href="#canvascompositingandblending"><span class=secno>8.
@@ -1819,28 +1802,29 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h3 id="csscompositingrules_CSS"><span class=secno>7.2. </span>Behavior
    specific to CSS</h3>
 
-  <p> If an element specifies non-default blending, compositing or <a
+  <p> If an element specifies non-default blending<!--, compositing--> or <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a>, its <a
    href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a>
    and that of all of its children must revert to ‘<code
    class=property>flat</code>’.<br>
-   The application of non-default blending or compositing to an <var>‘<code
-   class=css><a href="#area-element">element</a></code>’</var> must also
-   establish a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking
-   context</a> the same way that CSS <a
+   The application of non-default blending<!-- or compositing--> to an
+   <var>‘<code class=css><a
+   href="#area-element">element</a></code>’</var> must also establish a <a
+   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the
+   same way that CSS <a
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a> does. One of the consequences is that
    elements with z-index must not honor the depth of elements outside of the
    group.<br>
-   Everything in CSS that creates a <a
-   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be
-   considered a group. HTML elements themselves should not create groups.
+   <!--Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered a group. HTML elements themselves should not create groups.-->
 
   <p class=issue> This spec assumes that a stacking context creates an
-   offscreen buffer which is not always the case. We need to clarify what
-   stacking contexts create offscreen buffers or come up with another
-   description.
+   offscreen buffer which is not always the case. Sometimes elements even
+   have internal grouping (ie background-attachment: fixed). We need to
+   clarify when groups are created so we can have interoperable behavior.
+   Ideally it would be a new spec or an extension of the spec that describes
+   <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking contexts</a>.
 
   <h3 id="csscompositingrules_SVG"><span class=secno>7.3. </span>Behavior
    specific to SVG</h3>
@@ -1856,174 +1840,115 @@ components having the minimum, middle, and maximum values upon entry to the func
   <p class=issue> This SVG spec states that every element creates an ‘<code
    class=property>accumulating</code>’ group. In practice, few (no)
    browsers implemented this. We should update the SVG spec so it follows
-   CSS' rules for stacking contexts/offscreen buffers.
+   CSS' rules for grouping.
 
   <h3 id=csscompositingkeyword><span class=secno>7.4. </span>Properties</h3>
+  <!--
+<h4 id="mix-composite">The <span class="prop-name">'mix-composite'</span> property</h4>
+<p>
+Defines the compositing mode that must be used on the area of an element.<br/>
+This behavior is described in more detail in <a href="#advancedcompositing">Advanced compositing features</a>.<br/>
+The description of the <span class="prop-name">'mix-composite'</span> property is
+as follows:</p>
 
-  <h4 id=mix-composite><span class=secno>7.4.1. </span>The <span
-   class=prop-name>‘<code class=property>mix-composite</code>’</span>
-   property</h4>
-
-  <p> Defines the compositing mode that must be used on the area of an
-   element.<br>
-   This behavior is described in more detail in <a
-   href="#advancedcompositing">Advanced compositing features</a>.<br>
-   The description of the <span class=prop-name>‘<code
-   class=property>mix-composite</code>’</span> property is as follows:
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-mix-composite><span
-     class="propdef-title prop-name">‘<code
-     class=property>mix-composite</code>’</span>
-
+<div class="propdef">
+<dl>
+  <dt id='propdef-mix-composite'><span class='propdef-title prop-name'>'mix-composite'</span></dt>
     <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="mix-composite property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
+      <table summary="mix-composite property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td><a href="#ltcompositeareagt"><var>&lt;composite-area&gt;</var></a># </td>      
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>source-over</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All elements. In SVG, it applies to svg, g, use, image, path, rect, circle, ellipse, line, polyline, polygon, text, tspan, and marker.</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>no</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Computed value:</em>  </td>
+          	<td>same as the specified value</td>
+          </tr>          
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>no</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+<p>The syntax of the property of <var>&lt;composite-area&gt;</var> is given with:</p>
+<pre class="compositearea"><dfn id="ltcompositeareagt"><var>&lt;composite-area&gt;</var></dfn> = <a href="#ltareagt">&lt;area&gt;</a>? <a href="#ltcompositegt">&lt;composite-mode&gt;</a></pre>
 
-        <td><a
-         href="#ltcompositeareagt"><var>&lt;composite-area&gt;</var></a>#
 
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>source-over
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>All elements. In SVG, it applies to svg, g, use, image, path,
-         rect, circle, ellipse, line, polyline, polygon, text, tspan, and
-         marker.
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>no
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Computed value:</em>  
-
-        <td>same as the specified value
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>no
-     </table>
-   </dl>
-  </div>
-
-  <p>The syntax of the property of <a
-   href="#ltcompositeareagt"><var>&lt;composite-area&gt;</var></a> is given
-   with:
-
-  <pre class=compositearea><dfn
-   id=ltcompositeareagt><var>&lt;composite-area&gt;</var></dfn> = <a
-   href="#ltareagt">&lt;area&gt;</a>? <a
-   href="#ltcompositegt">&lt;composite-mode&gt;</a></pre>
-
-  <p>The syntax of the property of <a
-   href="#ltareagt"><var>&lt;area&gt;</var></a> is given with:
-
-  <pre class=area><dfn
-   id=ltareagt><var>&lt;area&gt;</var></dfn> = element | box-shadow | text-shadow | background | border | content</pre>
-
-  <p>Values have the following meanings:
+<p>The syntax of the property of <var>&lt;area&gt;</var> is given with:</p>
+<pre class="area"><dfn id="ltareagt"><var>&lt;area&gt;</var></dfn> = element | box-shadow | text-shadow | background | border | content</pre>
+<p>Values have the following meanings:</p>
 
   <dl>
-   <dt><dfn id=area-element title="''element'' value"> ‘<code
-    class=css>element</code>’</dfn>
+   <dt><dfn id='area-element' title="''element'' value">
+    ‘<code class=css>element</code>’</dfn></dt>
 
-   <dd>The area is the whole element, including shadows, background and
-    content
+   <dd>The area is the whole element, including shadows, background and content</dd>
 
-   <dt><dfn id=area-box-shadow title="''box-shadow'' value"> ‘<code
-    class=css>box-shadow</code>’</dfn>
+   <dt><dfn id='area-box-shadow' title="''box-shadow'' value">
+    ‘<code class=css>box-shadow</code>’</dfn></dt>
 
-   <dd>The area is the box shadow
+   <dd>The area is the box shadow</dd>
+   
+   <dt><dfn id='area-text-shadow' title="''text-shadow'' value">
+    ‘<code class=css>text-shadow</code>’</dfn></dt>
 
-   <dt><dfn id=area-text-shadow title="''text-shadow'' value"> ‘<code
-    class=css>text-shadow</code>’</dfn>
+   <dd>The area is the shadow of the text</dd>
+   
+   <dt><dfn id='area-background' title="''background'' value">
+    ‘<code class=css>background</code>’</dfn></dt>
 
-   <dd>The area is the shadow of the text
+   <dd>The area is the composited result of all the background images.</dd>
+   
+   <dt><dfn id='area-border' title="''border'' value">
+    ‘<code class=css>border</code>’</dfn></dt>
 
-   <dt><dfn id=area-background title="''background'' value"> ‘<code
-    class=css>background</code>’</dfn>
+   <dd>The area is the composited result of all the borders.</dd>
+   
+   <dt><dfn id='area-content' title="''content'' value">
+    ‘<code class=css>content</code>’</dfn></dt>
 
-   <dd>The area is the composited result of all the background images.
-
-   <dt><dfn id=area-border title="''border'' value"> ‘<code
-    class=css>border</code>’</dfn>
-
-   <dd>The area is the composited result of all the borders.
-
-   <dt><dfn id=area-content title="''content'' value"> ‘<code
-    class=css>content</code>’</dfn>
-
-   <dd>The area is the content of the element (such as the text).
+   <dd>The area is the content of the element (such as the text).</dd>              
   </dl>
+ <p class="note">If <var>&lt;area&gt;</var> is omitted, <var>'<a href="#area-element">element</a>'</var> must be assumed. An area can only be set once in the CSS property; an attempt to list it more than once must be ignored.</p>
+ <p class="note">In SVG, <var>'<a href="#area-element">element</a>'</var> will be used, regardless of what area is specified.</p>
+ <p class="issue">We need to define more clearly what 'content' means.</p>
+ 
+<p>The syntax of the property of <var>&lt;composite-mode&gt;</var> is given with:</p>
+<pre class="composite"><dfn id="ltcompositegt"><var>&lt;composite-mode&gt;</var></dfn> = <a href="#porterduffcompositingoperators_clear">clear</a> | <a href="#porterduffcompositingoperators_src">copy</a> | <a href="#porterduffcompositingoperators_dst">destination</a> | <a href="#porterduffcompositingoperators_srcover">source-over</a> | <a href="#porterduffcompositingoperators_dstover">destination-over</a> | <a href="#porterduffcompositingoperators_srcin">source-in</a> | <a href="#porterduffcompositingoperators_dstin">destination-in</a> | <a href="#porterduffcompositingoperators_srcout">source-out</a> | <a href="#porterduffcompositingoperators_dstout">destination-out</a> | <a href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a href="#porterduffcompositingoperators_xor">xor</a> | <a href="#porterduffcompositingoperators_plus">lighter</a></pre>
+ 
+<p class="note">Applying a non-default compositing mode to the <var>'<a href="#area-element">element</a>'</var> area must establish a new stacking context.</p>
 
-  <p class=note>If <a href="#ltareagt"><var>&lt;area&gt;</var></a> is
-   omitted, <var>‘<code class=css><a
-   href="#area-element">element</a></code>’</var> must be assumed. An area
-   can only be set once in the CSS property; an attempt to list it more than
-   once must be ignored.
+<p class="note">Applying a non-default compositing mode to areas other than <var>'<a href="#area-element">element</a>'</var> must render those areas in an offscreen buffer first. This buffer will then be composited.</p>
 
-  <p class=note>In SVG, <var>‘<code class=css><a
-   href="#area-element">element</a></code>’</var> will be used, regardless
-   of what area is specified.
+<p class="note">An area must always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'true'.</p>
+-->
 
-  <p class=issue>We need to define more clearly what ‘<code
-   class=property>content</code>’ means.
-
-  <p>The syntax of the property of <a
-   href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> is given with:
-
-  <pre class=composite><dfn
-   id=ltcompositegt><var>&lt;composite-mode&gt;</var></dfn> = <a
-   href="#porterduffcompositingoperators_clear">clear</a> | <a
-   href="#porterduffcompositingoperators_src">copy</a> | <a
-   href="#porterduffcompositingoperators_dst">destination</a> | <a
-   href="#porterduffcompositingoperators_srcover">source-over</a> | <a
-   href="#porterduffcompositingoperators_dstover">destination-over</a> | <a
-   href="#porterduffcompositingoperators_srcin">source-in</a> | <a
-   href="#porterduffcompositingoperators_dstin">destination-in</a> | <a
-   href="#porterduffcompositingoperators_srcout">source-out</a> | <a
-   href="#porterduffcompositingoperators_dstout">destination-out</a> | <a
-   href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a
-   href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a
-   href="#porterduffcompositingoperators_xor">xor</a> | <a
-   href="#porterduffcompositingoperators_plus">lighter</a></pre>
-
-  <p class=note>Applying a non-default compositing mode to the <var>‘<code
-   class=css><a href="#area-element">element</a></code>’</var> area must
-   establish a new stacking context.
-
-  <p class=note>Applying a non-default compositing mode to areas other than
-   <var>‘<code class=css><a
-   href="#area-element">element</a></code>’</var> must render those areas
-   in an offscreen buffer first. This buffer will then be composited.
-
-  <p class=note>An area must always composite with <a
-   href="#groupcompositingcliptoself">‘<code
-   class=property>clip-to-self</code>’</a> set to ‘<code
-   class=property>true</code>’.
-
-  <h4 id=mix-blend-mode><span class=secno>7.4.2. </span>The <span
+  <h4 id=mix-blend-mode><span class=secno>7.4.1. </span>The <span
    class=prop-name>‘<code class=property>mix-blend-mode</code>’</span>
    property</h4>
 
@@ -2097,6 +2022,60 @@ components having the minimum, middle, and maximum values upon entry to the func
    href="#ltblendmodegt">&lt;blend-mode&gt;</a></pre>
 
   <p>The syntax of the property of <a
+   href="#ltareagt"><var>&lt;area&gt;</var></a> is given with:
+
+  <pre class=area><dfn
+   id=ltareagt><var>&lt;area&gt;</var></dfn> = element | box-shadow | text-shadow | background | border | content</pre>
+
+  <p>Values have the following meanings:
+
+  <dl>
+   <dt><dfn id=area-element title="''element'' value"> ‘<code
+    class=css>element</code>’</dfn>
+
+   <dd>The area is the whole element, including shadows, background and
+    content
+
+   <dt><dfn id=area-box-shadow title="''box-shadow'' value"> ‘<code
+    class=css>box-shadow</code>’</dfn>
+
+   <dd>The area is the box shadow
+
+   <dt><dfn id=area-text-shadow title="''text-shadow'' value"> ‘<code
+    class=css>text-shadow</code>’</dfn>
+
+   <dd>The area is the shadow of the text
+
+   <dt><dfn id=area-background title="''background'' value"> ‘<code
+    class=css>background</code>’</dfn>
+
+   <dd>The area is the composited result of all the background images.
+
+   <dt><dfn id=area-border title="''border'' value"> ‘<code
+    class=css>border</code>’</dfn>
+
+   <dd>The area is the composited result of all the borders.
+
+   <dt><dfn id=area-content title="''content'' value"> ‘<code
+    class=css>content</code>’</dfn>
+
+   <dd>The area is the content of the element (such as the text).
+  </dl>
+
+  <p class=note>If <a href="#ltareagt"><var>&lt;area&gt;</var></a> is
+   omitted, <var>‘<code class=css><a
+   href="#area-element">element</a></code>’</var> must be assumed. An area
+   can only be set once in the CSS property; an attempt to list it more than
+   once must be ignored.
+
+  <p class=note>In SVG, <var>‘<code class=css><a
+   href="#area-element">element</a></code>’</var> will be used, regardless
+   of what area is specified.
+
+  <p class=issue>We need to define more clearly what ‘<code
+   class=property>content</code>’ means.
+
+  <p>The syntax of the property of <a
    href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> is given with:
 
   <pre class=blendmode><dfn
@@ -2128,7 +2107,7 @@ components having the minimum, middle, and maximum values upon entry to the func
    in an offscreen buffer first. This buffer will then be blended and
    composited.
 
-  <h4 id=isolation><span class=secno>7.4.3. </span>The <span
+  <h4 id=isolation><span class=secno>7.4.2. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
    property</h4>
 
@@ -2137,8 +2116,9 @@ components having the minimum, middle, and maximum values upon entry to the func
    replaced with transparent black.<br>
    Groups can be set to non-isolated with the ‘<code
    class=property>auto</code>’ keyword. However certain operations that
-   cause the creation of stacking context (such as 3D transforms) will still
-   cause a group to be isolated.<br>
+   cause the creation of stacking context (such as 3D transforms or a
+   non-default blend mode on the ‘<code class=property>element</code>’ <a
+   href="#ltareagt">area</a>) will cause a group to be isolated.<br>
    This behavior is described in more detail in <a
    href="#isolatedgroups">Isolated Gropus</a>.
 
@@ -2215,230 +2195,175 @@ components having the minimum, middle, and maximum values upon entry to the func
    class=property>mask</code>’</a> always creates an isolated group.
 
   <p class=note>‘<code class=property>Isolation</code>’ is always applied
-   to the <a href="#ltareagt">area</a> of the element
+   to the ‘<code class=property>element</code>’ <a
+   href="#ltareagt">area</a></p>
+  <!--
+<h4 id="knock-out">The <span class="prop-name">'knock-out'</span> property</h4>
+<p>
+Defines whether a group is a knock-out group.<br/>
+When a group is set to 'knock-out', the elements within the group must only composite and blend with elements outside that group. This effectively 'knocks out' any element from within the group that is already drawn. The end result is as if every shape composites with a 'clear' operation (with clip-to-self enabled) first before it blends and composites.<br/>
+When 'knock-out' is set to 'preserve', the group must not be a knock-out group and its elements composite normally.<br/>
+The behavior of this keyword is described in more detail in <a href="#knockoutgroups">Knockout Groups</a>.
 
-  <h4 id=knock-out><span class=secno>7.4.4. </span>The <span
-   class=prop-name>‘<code class=property>knock-out</code>’</span>
-   property</h4>
-
-  <p> Defines whether a group is a knock-out group.<br>
-   When a group is set to ‘<code class=property>knock-out</code>’, the
-   elements within the group must only composite and blend with elements
-   outside that group. This effectively ‘<code class=css>knocks
-   out</code>’ any element from within the group that is already drawn. The
-   end result is as if every shape composites with a ‘<code
-   class=property>clear</code>’ operation (with clip-to-self enabled) first
-   before it blends and composites.<br>
-   When ‘<code class=property>knock-out</code>’ is set to ‘<code
-   class=property>preserve</code>’, the group must not be a knock-out group
-   and its elements composite normally.<br>
-   The behavior of this keyword is described in more detail in <a
-   href="#knockoutgroups">Knockout Groups</a>.
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-knock-out><span class="propdef-title prop-name">‘<code
-     class=property>knock-out</code>’</span>
-
+<div class="propdef">
+<dl>
+  <dt id='propdef-knock-out'><span class='propdef-title prop-name'>'knock-out'</span></dt>
     <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="knock-out property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
+      <table summary="knock-out property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td><a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>preserve</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All HTML elements. In SVG, it applies to all container elements except 'mask'</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>yes</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Computed value:</em>  </td>
+          	<td>same as the specified value</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>no</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+<p>The syntax of the property of <var>&lt;knock-out-mode&gt;</var> is given with:</p>
+<pre class="knockout-prop"><dfn id="knockout-propid"><var>&lt;knock-out-mode&gt;</var></dfn> = preserve | knock-out</pre>
+<p class="note">'Knock-out' is always applied to the area of the element</p>
 
-        <td><a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>
-
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>preserve
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>All HTML elements. In SVG, it applies to all container elements
-         except ‘<code class=property>mask</code>’
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>yes
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Computed value:</em>  
-
-        <td>same as the specified value
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>no
-     </table>
-   </dl>
-  </div>
-
-  <p>The syntax of the property of <a
-   href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a> is given
-   with:
-
-  <pre class=knockout-prop><dfn
-   id=knockout-propid><var>&lt;knock-out-mode&gt;</var></dfn> = preserve | knock-out</pre>
-
-  <p class=note>‘<code class=property>Knock-out</code>’ is always applied
-   to the area of the element
-
-  <h4 id=mix-shorthand><span class=secno>7.4.5. </span>Compositing and
-   blending shorthand: the <span class=prop-name>‘<code
-   class=property>mix</code>’</span> property</h4>
-
-  <p> The ‘<code class=property>mix</code>’ property is a shorthand
-   property for setting blending and compositing properties at the same place
-   in the style sheet.<br>
-   Omitted values are set to their initial values.
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-mix><span class="propdef-title prop-name">‘<code
-     class=property>mix</code>’</span>
-
+<h4 id="mix-shorthand">Compositing and blending shorthand: the <span class="prop-name">'mix'</span> property</h4>
+<p>
+The 'mix' property is a shorthand property for setting blending and compositing properties at the same place in the style sheet.<br/>
+Omitted values are set to their initial values.
+</p>
+<div class="propdef">
+<dl>
+  <dt id='propdef-mix'><span class='propdef-title prop-name'>'mix'</span></dt>
     <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="knock-out property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
+      <table summary="knock-out property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td><a href="#ltmixareagt"><var>&lt;mix-area&gt;</var></a>#</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>source-over</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>See individual properties</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>See individual properties</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+           <tr valign="baseline">
+            <td><em>Computed value:</em>  </td>
+          	<td>same as the specified value</td>
+          </tr>         
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
 
-        <td><a href="#ltmixareagt"><var>&lt;mix-area&gt;</var></a>#
+<p>The syntax of the property of <var>&lt;mix-area&gt;</var> is given with:</p>
+<pre class="blendarea"><dfn id="ltmixareagt"><var>&lt;mix-area&gt;</var></dfn> = <a href="#ltareagt"><var>&lt;area&gt;</var></a>? [<a href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>]</pre>
+-->
+  <!--
+<h3 id="cssbackgroundsyntax">Specifying blending and compositing in the element background</h3>
+Defines how background images composite with each other.<br/>
+Background images must always composite with <a href="#groupcompositingcliptoself">'clip-to-self'</a> set to 'true'.<br/>
+</p>
+<p>
+  The description of the <span class="prop-name">'background-composite'</span> property is
+as follows:</p>
 
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>source-over
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>See individual properties
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>See individual properties
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Computed value:</em>  
-
-        <td>same as the specified value
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>No
-     </table>
-   </dl>
-  </div>
-
-  <p>The syntax of the property of <a
-   href="#ltmixareagt"><var>&lt;mix-area&gt;</var></a> is given with:
-
-  <pre class=blendarea><dfn
-   id=ltmixareagt><var>&lt;mix-area&gt;</var></dfn> = <a
-   href="#ltareagt"><var>&lt;area&gt;</var></a>? [<a
-   href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a
-   href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a
-   href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a
-   href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>]</pre>
-
-  <h3 id=cssbackgroundsyntax><span class=secno>7.5. </span>Specifying
-   blending and compositing in the element background</h3>
-
-  <p>Defines how background images composite with each other.<br>
-   Background images must always composite with <a
-   href="#groupcompositingcliptoself">‘<code
-   class=property>clip-to-self</code>’</a> set to ‘<code
-   class=property>true</code>’.<br>
-
-  <p> The description of the <span class=prop-name>‘<code
-   class=property>background-composite</code>’</span> property is as
-   follows:
-
-  <div class=propdef>
-   <dl>
-    <dt id=propdef-background-composite><span
-     class="propdef-title prop-name">‘<code
-     class=property>background-composite</code>’</span>
-
+<div class="propdef">
+<dl>
+  <dt id='propdef-background-composite'><span class='propdef-title prop-name'>'background-composite'</span></dt>
     <dd>
-     <table cellpadding=0 cellspacing=0 class=propinfo
-      summary="background-composite property">
-      <tbody>
-       <tr valign=baseline>
-        <td><em>Value:</em>  
+      <table summary="background-composite property" class="propinfo" cellspacing="0"
+      cellpadding="0">
+        <tbody>
+          <tr valign="baseline">
+            <td><em>Value:</em>  </td>
+            <td> <a href="#ltcompositegt">&lt;composite-mode&gt;</a># </td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Initial:</em>  </td>
+            <td>source-over</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Applies to:</em>  </td>
+            <td>All HTML elements</span></td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Inherited:</em>  </td>
+            <td>no</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Percentages:</em>  </td>
+            <td>N/A</td>
+          </tr>
+          <tr valign="baseline">
+            <td><em>Media:</em>  </td>
+            <td>visual</td>
+          </tr>
+           <tr valign="baseline">
+            <td><em>Computed value:</em>  </td>
+          	<td>same as the specified value</td>
+          </tr>         
+          <tr valign="baseline">
+            <td><em>Animatable:</em>  </td>
+            <td>no</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+</dl>
+</div>
+-->
 
-        <td> <a href="#ltcompositegt">&lt;composite-mode&gt;</a>#
-
-       <tr valign=baseline>
-        <td><em>Initial:</em>  
-
-        <td>source-over
-
-       <tr valign=baseline>
-        <td><em>Applies to:</em>  
-
-        <td>All HTML elements
-
-       <tr valign=baseline>
-        <td><em>Inherited:</em>  
-
-        <td>no
-
-       <tr valign=baseline>
-        <td><em>Percentages:</em>  
-
-        <td>N/A
-
-       <tr valign=baseline>
-        <td><em>Media:</em>  
-
-        <td>visual
-
-       <tr valign=baseline>
-        <td><em>Computed value:</em>  
-
-        <td>same as the specified value
-
-       <tr valign=baseline>
-        <td><em>Animatable:</em>  
-
-        <td>no
-     </table>
-   </dl>
-  </div>
-
-  <h4 id=background-blend-mode><span class=secno>7.5.1. </span>The <span
+  <h3 id=background-blend-mode><span class=secno>7.5. </span>The <span
    class=prop-name>‘<code
-   class=property>background-blend-mode</code>’</span> property</h4>
+   class=property>background-blend-mode</code>’</span> property</h3>
 
   <p>Defines the blending mode of each background image and the background
    color. <br>
@@ -2521,16 +2446,9 @@ components having the minimum, middle, and maximum values upon entry to the func
    attribute that is used to set the current compositing and blending
    operator.
 
-  <p>
-
-  <p><a
-   href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a>
-   takes the same arguments as the ‘<code class=css><a
-   href="#mix-shorthand">mix</a></code>’ shorthand property except that it
-   doesn't support the <a href="#ltareagt">&lt;area&gt;</a>. The ‘<code
-   class=property>isolation</code>’ and ‘<code
-   class=property>knock-out</code>’ values are ignored in a canvas 2d
-   context. If a value is not specified, it is assumed to be the default.
+  <p> <!--
+<p><a href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a> takes the same arguments as the '<a href='#mix-shorthand'>mix</a>' shorthand property except that it doesn't support the <a href="#ltareagt">&lt;area&gt;</a>. The 'isolation' and 'knock-out' values are ignored in a canvas 2d context. If a value is not specified, it is assumed to be the default.</p>
+-->
 
   <p>Compositing and blending in canvas 2d must always done with <a
    href="#groupcompositingcliptoself">‘<code
@@ -2552,10 +2470,9 @@ components having the minimum, middle, and maximum values upon entry to the func
        <tr valign=baseline>
         <td><em>Value:</em>  
 
-        <td> <a href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> || <a
-         href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> || <a
-         href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a
-         href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>
+        <td> <a href="#ltblendmodegt"><var>&lt;blend-mode&gt;</var></a> | <a
+         href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a>
+         <!--|| <a href="#isolated-propid"><var>&lt;isolation-mode&gt;</var></a> || <a href="#knockout-propid"><var>&lt;knock-out-mode&gt;</var></a>-->
 
        <tr valign=baseline>
         <td><em>Initial:</em>  
@@ -2564,6 +2481,25 @@ components having the minimum, middle, and maximum values upon entry to the func
      </table>
    </dl>
   </div>
+
+  <p>The syntax of the property of <a
+   href="#ltcompositegt"><var>&lt;composite-mode&gt;</var></a> is given with:
+
+  <pre class=composite><dfn
+   id=ltcompositegt><var>&lt;composite-mode&gt;</var></dfn> = <a
+   href="#porterduffcompositingoperators_clear">clear</a> | <a
+   href="#porterduffcompositingoperators_src">copy</a> | <a
+   href="#porterduffcompositingoperators_dst">destination</a> | <a
+   href="#porterduffcompositingoperators_srcover">source-over</a> | <a
+   href="#porterduffcompositingoperators_dstover">destination-over</a> | <a
+   href="#porterduffcompositingoperators_srcin">source-in</a> | <a
+   href="#porterduffcompositingoperators_dstin">destination-in</a> | <a
+   href="#porterduffcompositingoperators_srcout">source-out</a> | <a
+   href="#porterduffcompositingoperators_dstout">destination-out</a> | <a
+   href="#porterduffcompositingoperators_srcatop">source-atop</a> | <a
+   href="#porterduffcompositingoperators_dstatop">destination-atop</a> | <a
+   href="#porterduffcompositingoperators_xor">xor</a> | <a
+   href="#porterduffcompositingoperators_plus">lighter</a></pre>
 
   <h2 id=security><span class=secno>9. </span>Security issues with
    compositing and blending</h2>
