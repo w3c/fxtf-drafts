@@ -2377,7 +2377,7 @@ considerably smaller than a device pixel.</p>
     </dd>
     <dt id="feCustomParamTypeAttribute">
       <span class="adef">type</span> = "<em>number | array | vec2 | vec3 | vec4 | mat2 | mat3 | mat4 | color |
-      texture | transform</em>"
+      image | transform</em>"
     </dt>
     <dd>
       Indicates the type of the parameter passed to the shaders. For the types ''number'', ''array'', ''vec2'', ''vec3'',
@@ -2450,10 +2450,10 @@ considerably smaller than a device pixel.</p>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feCustomParamTextureAttribute">
-      <span class="adef">texture</span> = "<em><a>&lt;URL&gt;</a> | <a>&lt;filter-primitive-reference&gt;</a></em>"
+      <span class="adef">image</span> = "<em><a>&lt;URI&gt;</a></em>"
     </dt>
     <dd>
-      Indicates that a texture is passed as parameter to the shaders.
+      Indicates that a image is passed as parameter to the shaders.
       <br />
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -4562,7 +4562,7 @@ descriptor: value;</pre>
 
 <pre class=prod><dfn>&lt;param&gt;</dfn> = IDENT <var>&lt;param-value&gt;</var></pre>
 
-<pre class=prod><dfn>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | <var>&lt;boolean&gt;</var> | &lt;number&gt;{1,4} | <var>&lt;array&gt;</var> |  <var>&lt;mat&gt;</var> | <var>&lt;color&gt;</var> | <var>texture(&lt;URL&gt;)</var></pre>
+<pre class=prod><dfn>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | <var>&lt;boolean&gt;</var> | &lt;number&gt;{1,4} | <var>&lt;array&gt;</var> |  <var>&lt;mat&gt;</var> | <var>&lt;color&gt;</var> | <a href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a></pre>
 
 <pre class=prod><dfn>&lt;boolean&gt;</dfn> = true | false</pre>
 
@@ -4582,11 +4582,6 @@ descriptor: value;</pre>
   <dt><dfn>&lt;transform-function&gt;</dfn><dt>
   <dd>
     A CSS transform function value. (See [[!CSS3-TRANSFORMS]].) 
-  </dd>
-  <dt><dfn>texture(&lt;url&gt;)</dfn><dt>
-  <dd>
-    Specifies a function that takes an image reference as input.
-    <p class="issue">Allow input from previous filter primitive results on SVG Filters.
   </dd>
 </dl>
 
@@ -5083,8 +5078,12 @@ void main()
   </thead>
   <tbody>
     <tr>
-      <th>[ true | false ]{1,4}
-      <td>bool, bvec2, bvec3 or bvec4
+      <th>&lt;boolean&gt;
+      <td>bool
+    </tr>
+      <th>&lt;color>
+      <td><span class=issue>Not specified yet
+    <tr>
     </tr>
     <tr>
       <th>&lt;number&gt;{1,4}
@@ -5095,7 +5094,7 @@ void main()
       <td>float[n]
     </tr>
     <tr>
-      <th>&lt;transform-function&gt;
+      <th>&lt;transform-function>+
       <td>mat4
     </tr>
     <tr>
@@ -5105,7 +5104,7 @@ void main()
       <td>mat2, mat3 or mat4
     </tr>
     <tr>
-      <th>texture(&lt;uri&gt; | <span class="term">&lt;filter-primitive-reference&gt;</span>)
+      <th><a href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a>
       <td>sampler2D
     </tr>
 </table>

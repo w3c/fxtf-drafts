@@ -6,17 +6,18 @@
   profile="http://dublincore.org/documents/2008/08/04/dc-html/ http://www.w3.org/2006/03/hcard">
   <title>Filter Effects 1.0</title>
 
-  <link href="http://purl.org/dc/terms/" rel=schema.dc>
+  <link href="http://purl.org/dc/terms/" rel=schema.dcterms>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-   rel=dc.rights>
-  <meta content="Filter Effects 1.0" name=dc.title>
-  <meta content=text name=dc.type>
-  <meta content=2013-04-10 name=dc.date>
-  <meta content="Dean Jackson" name=dc.creator>
-  <meta content="Erik Dahlström" name=dc.creator>
-  <meta content="Dirk Schulze" name=dc.creator>
-  <meta content=W3C name=dc.publisher>
-  <meta content="http://dev.w3.org/csswg/filter-effects/" name=dc.identifier>
+   rel=dcterms.rights>
+  <meta content="Filter Effects 1.0" name=dcterms.title>
+  <meta content=text name=dcterms.type>
+  <meta content=2013-04-20 name=dcterms.date>
+  <meta content="Dean Jackson" name=dcterms.creator>
+  <meta content="Erik Dahlström" name=dcterms.creator>
+  <meta content="Dirk Schulze" name=dcterms.creator>
+  <meta content=W3C name=dcterms.publisher>
+  <meta content="http://dev.w3.org/csswg/filter-effects/"
+   name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="https://www.w3.org/StyleSheets/TR/W3C-ED.css" rel=stylesheet
    type="text/css">
@@ -34,14 +35,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 10 April 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 April 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130410/-->
+     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130420/-->
 
     <dt>Latest version:
 
@@ -5579,7 +5580,7 @@ A' = <a
 
         <dt id=feCustomParamTypeAttribute> <span class=adef>type</span> =
          "<em>number | array | vec2 | vec3 | vec4 | mat2 | mat3 | mat4 |
-         color | texture | transform</em>"
+         color | image | transform</em>"
 
         <dd> Indicates the type of the parameter passed to the shaders. For
          the types ‘<code class=css>number</code>’, ‘<code
@@ -5668,11 +5669,10 @@ A' = <a
          shaders. <br>
          <span class=anim-target>Animatable: yes.</span>
 
-        <dt id=feCustomParamTextureAttribute> <span class=adef>texture</span>
-         = "<em><a class=xxx href="#lturlgt">&lt;URL&gt;</a> | <a class=xxx
-         href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a></em>"
+        <dt id=feCustomParamTextureAttribute> <span class=adef>image</span> =
+         "<em><span class=xxx>&lt;URI&gt;</span></em>"
 
-        <dd> Indicates that a texture is passed as parameter to the shaders.
+        <dd> Indicates that a image is passed as parameter to the shaders.
          <br>
          <span class=anim-target>Animatable: yes.</span>
 
@@ -11193,7 +11193,7 @@ descriptor: value;</pre>
        href="#ltarraygt"><var>&lt;array&gt;</var></a> |  <a
        href="#ltmatgt"><var>&lt;mat&gt;</var></a> | <a
        href="#ltcolorgt"><var>&lt;color&gt;</var></a> | <a
-       href="#texturelturlgt"><var>texture(&lt;URL&gt;)</var></a></pre>
+       href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a></pre>
 
       <pre class=prod><dfn
        id=ltbooleangt>&lt;boolean&gt;</dfn> = true | false</pre>
@@ -11226,14 +11226,6 @@ descriptor: value;</pre>
 
        <dd> A CSS transform function value. (See <a href="#CSS3-TRANSFORMS"
         rel=biblioentry>[CSS3-TRANSFORMS]<!--{{!CSS3-TRANSFORMS}}--></a>.)
-
-       <dt><dfn id=texturelturlgt>texture(&lt;url&gt;)</dfn>
-
-       <dt>
-
-       <dd> Specifies a function that takes an image reference as input.
-        <p class=issue>Allow input from previous filter primitive results on
-         SVG Filters.
       </dl>
 
       <p> The following function definitions describe matrices in
@@ -11883,9 +11875,16 @@ void main()
 
        <tbody>
         <tr>
-         <th>[ true | false ]{1,4}
+         <th>&lt;boolean&gt;
 
-         <td>bool, bvec2, bvec3 or bvec4
+         <td>bool
+
+        <tr>
+         <th>&lt;color>
+
+         <td><span class=issue>Not specified yet </span>
+
+        <tr>
 
         <tr>
          <th>&lt;number&gt;{1,4}
@@ -11898,7 +11897,7 @@ void main()
          <td>float[n]
 
         <tr>
-         <th>&lt;transform-function&gt;
+         <th>&lt;transform-function>+
 
          <td>mat4
 
@@ -11910,8 +11909,8 @@ void main()
          <td>mat2, mat3 or mat4
 
         <tr>
-         <th>texture(&lt;uri&gt; | <a class=term
-          href="#ltfilter-primitive-referencegt">&lt;filter-primitive-reference&gt;</a>)
+         <th><a
+          href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a>
 
          <td>sampler2D
       </table>
@@ -16664,9 +16663,6 @@ interface <b>SVGFEBlendElement</b> : <a
          <li>as conformance class, <a href="#style-sheet"
           title="section 19."><strong>19.</strong></a>
         </ul>
-
-       <li>texture(&lt;url&gt;), <a href="#texturelturlgt"
-        title="section 11.4."><strong>11.4.</strong></a>
 
        <li>transfer function elements, <a href="#transfer-function-elements"
         title="section 4."><strong>4.</strong></a>
