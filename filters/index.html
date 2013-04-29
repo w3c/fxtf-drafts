@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-04-20 name=dcterms.date>
+  <meta content=2013-04-29 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -35,14 +35,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 20 April 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 29 April 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130420/-->
+     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130429/-->
 
     <dt>Latest version:
 
@@ -318,37 +318,43 @@
       </span>Custom filter margins: the <span>margin</span> descriptor</a>
     </ul>
 
-   <li><a href="#shading-language"><span class=secno>12. </span>Shading
-    language</a>
+   <li><a href="#shading-language"><span class=secno>12. </span>Custom
+    Shaders</a>
     <ul class=toc>
-     <li><a href="#precedents"><span class=secno>12.1. </span>Precedents</a>
+     <li><a href="#introduction0"><span class=secno>12.1.
+      </span>Introduction</a>
 
-     <li><a href="#recommendation"><span class=secno>12.2. </span>Recommended
+     <li><a href="#precedents"><span class=secno>12.2. </span>Precedents</a>
+
+     <li><a href="#recommendation"><span class=secno>12.3. </span>Recommended
       shading language</a>
 
-     <li><a href="#shader-processing-model"><span class=secno>12.3.
+     <li><a href="#integration-into-custom-filter-functions"><span
+      class=secno>12.4. </span>Integration into Custom Filter Functions</a>
+
+     <li><a href="#shader-processing-model"><span class=secno>12.5.
       </span>Shader Processing Model</a>
 
-     <li><a href="#differences-to-webgl"><span class=secno>12.4.
+     <li><a href="#differences-to-webgl"><span class=secno>12.6.
       </span>Differences to GLSL</a>
       <ul class=toc>
        <li><a href="#fragment-shaders-differences-with-glsl"><span
-        class=secno>12.4.1. </span>Fragment Shaders Differences with GLSL</a>
+        class=secno>12.6.1. </span>Fragment Shaders Differences with GLSL</a>
 
-       <li><a href="#vertex-attribute-variables"><span class=secno>12.4.2.
+       <li><a href="#vertex-attribute-variables"><span class=secno>12.6.2.
         </span>Vertex attribute variables</a>
 
-       <li><a href="#shader-uniform-variables"><span class=secno>12.4.3.
+       <li><a href="#shader-uniform-variables"><span class=secno>12.6.3.
         </span>Shader uniform variables</a>
 
        <li><a href="#other-uniform-variables-the-css-shaders-"><span
-        class=secno>12.4.4. </span>Other uniform variables: the CSS shaders
+        class=secno>12.6.4. </span>Other uniform variables: the CSS shaders
         parameters</a>
 
-       <li><a href="#default-shaders"><span class=secno>12.4.5.
+       <li><a href="#default-shaders"><span class=secno>12.6.5.
         </span>Default shaders</a>
 
-       <li><a href="#texture-access"><span class=secno>12.4.6. </span>Texture
+       <li><a href="#texture-access"><span class=secno>12.6.6. </span>Texture
         access</a>
       </ul>
     </ul>
@@ -10976,18 +10982,12 @@ double turbulence(int nColorChannel, double *point, double <a
       <h2 id=custom-filter><span class=secno>11. </span>Custom Filter
        Function</h2>
 
-      <p class=issue> The following section is a proposal and under
-       discussion on the <a
-       href="http://lists.w3.org/Archives/Public/public-fx/2012OctDec/0029.html">public-fx</a>
-       mailing list. Please send feedback and suggestions to the mailing list
-       and be aware of modifications.
-
       <p> The custom-filter function allows extending this specification with
        a customized filter effect. Customized filter effects are described by
        the @filter rule or <span class=xxx>feCustom element</span> element
-       and referenced internal or external resources. Each @filter rule has a
-       unique identifier that can be referenced by the custom-filter
-       function.
+       and referenced internal or external resources. External resource must
+       be described by a host language. Each @filter rule has a unique
+       identifier that can be referenced by the custom-filter function.
 
       <h3 id=support-condition-filter><span class=secno>11.1. </span>The
        ‘<code class=css>@supports</code>’ condition: ‘<a
@@ -11188,15 +11188,11 @@ descriptor: value;</pre>
        href="#ltparam-valuegt"><var>&lt;param-value&gt;</var></a></pre>
 
       <pre class=prod><dfn id=ltparam-valuegt>&lt;param-value&gt;</dfn> = <a
-       href="#lttransform-functiongt"><var>&lt;transform-function&gt;</var></a>+ | <a
-       href="#ltbooleangt"><var>&lt;boolean&gt;</var></a> | &lt;number&gt;{1,4} | <a
+       href="#lttransform-functiongt"><var>&lt;transform-function&gt;</var></a>+ | &lt;number&gt;{1,4} | <a
        href="#ltarraygt"><var>&lt;array&gt;</var></a> |  <a
        href="#ltmatgt"><var>&lt;mat&gt;</var></a> | <a
        href="#ltcolorgt"><var>&lt;color&gt;</var></a> | <a
        href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a></pre>
-
-      <pre class=prod><dfn
-       id=ltbooleangt>&lt;boolean&gt;</dfn> = true | false</pre>
 
       <pre class=prod><dfn id=ltarraygt>&lt;array&gt;</dfn> = <a
        href="#arrayltnumbergt"><var>array(&lt;number&gt;#)</var></a></pre>
@@ -11342,36 +11338,29 @@ descriptor: value;</pre>
         <tr>
          <td>Value:
 
-         <td>none | [&lt;blend-mode&gt; || &lt;composite-mode&gt;]
+         <td>auto | [&lt;blend-mode&gt; || &lt;composite-mode&gt;]
 
         <tr>
          <td><em>Initial:</em>
 
-         <td>normal source-atop
+         <td>auto
       </table>
 
       <dl>
+       <dt><dfn id=lsquoautorsquo title="''auto''!!'mix' value">‘<code
+        class=css>auto</code>’</dfn>
+
+       <dd> The UA must follow the host language's recommendation.
+
        <dt> <dfn id=ltblend-modegt>&lt;blend-mode&gt;</dfn>
 
-       <dd> For fragment shaders, each pixel is blended with the
-        <var>mix-color</var> by using one of the predefined blend modes and
-        it's appropriate blend mode keyword (See <a href="#COMPOSITING"
-        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
+       <dd> Specifies blending mechanisms for the filter primitive. The host
+        language must define the meaning.
 
        <dt> <dfn id=ltcomposite-modegt>&lt;composite-mode&gt;</dfn>
 
-       <dd> For fragment shaders, each pixel is composed with the
-        <var>mix-color</var> by using one of the predefined alpha-compositing
-        operators and it's appropriate alpha-compositing keyword (See <a
-        href="#COMPOSITING"
-        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
-
-       <dt><dfn id=lsquononersquo title="''none''!!'mix' value">‘<code
-        class=css>none</code>’</dfn>
-
-       <dd> No alpha-compositing nor blending will be applied in the
-        custom-filter. (E.g. a pixel in a fragment shader is not composed
-        with the <var>mix-color</var>.)
+       <dd> Specifies composition mechanisms for the filter primitive. The
+        host language must define the meaning.
       </dl>
 
       <h3 id=custom-filter-margin><span class=secno>11.7. </span>Custom
@@ -11410,13 +11399,20 @@ descriptor: value;</pre>
       <pre class=prod><dfn
        id=ltmargin-widthgt>&lt;margin-width&gt;</dfn> = <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>auto</var></pre>
 
-      <p> For the definiton of the <a
+      <p> For the definition of the <a
        href="#ltmargin-widthgt">&lt;margin-width&gt;</a> values see CSS Box
        Model <a href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
 
-      <h2 id=shading-language><span class=secno>12. </span>Shading language</h2>
+      <h2 id=shading-language><span class=secno>12. </span>Custom Shaders</h2>
 
-      <h3 id=precedents><span class=secno>12.1. </span>Precedents</h3>
+      <h3 id=introduction0><span class=secno>12.1. </span>Introduction</h3>
+
+      <p>With Custom Shaders, authors can manipulate the color and shape of a
+       graphical element in granular ways. The following sections describe
+       the host language Custom Shaders as extension for <a
+       href="#custom-filter">Custom Filter Functions</a>.
+
+      <h3 id=precedents><span class=secno>12.2. </span>Precedents</h3>
 
       <p>There are many precedents for shading languages, for example:
 
@@ -11439,7 +11435,7 @@ descriptor: value;</pre>
         CoreImage Filters</a>
       </ul>
 
-      <h3 id=recommendation><span class=secno>12.2. </span>Recommended
+      <h3 id=recommendation><span class=secno>12.3. </span>Recommended
        shading language</h3>
 
       <p> This document recommends the adoption of the subset of GLSL ES [<a
@@ -11474,9 +11470,45 @@ descriptor: value;</pre>
        In particular, a vertex shader can provide specific data to the
        fragment shader in the form of "varying" parameters (parameters that
        vary per pixel). The following sections describe particular variables
-       that are assumed for the vertex and fragment shaders in CSS shaders.
+       that are assumed for the vertex and fragment shaders.
 
-      <h3 id=shader-processing-model><span class=secno>12.3. </span>Shader
+      <h3 id=integration-into-custom-filter-functions><span class=secno>12.4.
+       </span>Integration into Custom Filter Functions</h3>
+
+      <p>Custom Filter Function values have the following meaning for Custom
+       Shaders:
+
+      <dl>
+       <dt>Values for ‘<a href="#mix"><code
+        class=property>mix</code></a>’ descriptor
+
+       <dd>
+        <dl>
+         <dt> <dfn id=ltblend-modegt0>&lt;blend-mode&gt;</dfn>
+
+         <dd> For fragment shaders, each pixel is blended with the
+          <var>mix-color</var> by using one of the predefined blend modes and
+          it's appropriate blend mode keyword (See <a href="#COMPOSITING"
+          rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
+
+         <dt> <dfn id=ltcomposite-modegt0>&lt;composite-mode&gt;</dfn>
+
+         <dd> For fragment shaders, each pixel is composed with the
+          <var>mix-color</var> by using one of the predefined
+          alpha-compositing operators and it's appropriate alpha-compositing
+          keyword (See <a href="#COMPOSITING"
+          rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
+
+         <dt><var>‘<code class=css>auto</code>’</var>
+
+         <dd> If the ‘<a href="#mix"><code class=css>mix</code></a>’
+          descriptor value computes to ‘<code class=css>auto</code>’, the
+          effect is as if ‘<code class=css>normal source-atop</code>’ was
+          specified.
+        </dl>
+      </dl>
+
+      <h3 id=shader-processing-model><span class=secno>12.5. </span>Shader
        Processing Model</h3>
 
       <p> This section illustrates the shader processing model as it applies
@@ -11489,14 +11521,14 @@ descriptor: value;</pre>
       </div>
 
       <p> Prior to the shader processing, the input of the filter primitive
-       gets rendered into an offscreen image (the source texture). The
-       offscreen size and position is controlled by the <a
+       gets rendered into an off-screen image (the source texture). The
+       off-screen size and position is controlled by the <a
        href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
 
       <div class=figure> <img height=252
        src="images/shader-concept-image-raster.svg" width=372>
        <p class=caption>Source texture created by rendering<br>
-        the element offscreen and adding filter primitive margins
+        the element off-screen and adding filter primitive margins
       </div>
 
       <p> An <a href="#feCustomElement"><code
@@ -11555,13 +11587,11 @@ descriptor: value;</pre>
        <p class=caption>Transformed vertices after applying the vertex shader
       </div>
 
-      <p class=note> Note that the fragment shader may be called several time
-       for what corresponds to the same pixel coordinate on the output, for
-       example when the vertex mesh folds over itself.
-
-      <p class=issue id=issue-shader-application-order> There is no guarantee
-       which shader gets applied first. Because the depth buffer is used
-       there's no guarantee that blending will happen.
+      <p class=note> Note that the fragment shader may be called several
+       times for what corresponds to the same pixel coordinate on the output,
+       for example when the vertex mesh folds over itself. Overlaying pixel
+       values do neither composite nor blend. The pixel value with the least
+       depth will be choosen.
 
       <p> The ‘<a href="#mix"><code class=property>mix</code></a>’
        descriptor provides basic functionalities for color manipulation like
@@ -11580,11 +11610,6 @@ descriptor: value;</pre>
        initialized to an identity matrix, but can be set by a fragment
        shader. The resulting color is the <a
        href="#multiplied-color"><i>multiplied color</i></a>.
-
-      <p class=issue id=issue-5x4or4x4matrix>Note that color matrices usually
-       operate on 5x4 values, where the last column defines an offset that is
-       added to the color value. The WG may consider to turn the current 4x4
-       matrix into a 5x4 matrix.
 
       <p> The <dfn id=mix-color>mix color</dfn> is a second, predefined
        fragment shader variable and represents an ‘<code
@@ -11620,10 +11645,10 @@ descriptor: value;</pre>
        the output of the primitive becomes the input to the next filter
        primitive using it.
 
-      <h3 id=differences-to-webgl><span class=secno>12.4. </span>Differences
+      <h3 id=differences-to-webgl><span class=secno>12.6. </span>Differences
        to GLSL</h3>
 
-      <h4 id=fragment-shaders-differences-with-glsl><span class=secno>12.4.1.
+      <h4 id=fragment-shaders-differences-with-glsl><span class=secno>12.6.1.
        </span>Fragment Shaders Differences with GLSL</h4>
 
       <p>A normal GLSL shader requires that the fragment shader computes a
@@ -11781,7 +11806,7 @@ void main()
 }      </pre>
       </div>
 
-      <h4 id=vertex-attribute-variables><span class=secno>12.4.2.
+      <h4 id=vertex-attribute-variables><span class=secno>12.6.2.
        </span>Vertex attribute variables</h4>
 
       <p>The following attribute variables are available to the vertex
@@ -11825,7 +11850,7 @@ void main()
        <p class=caption>The a_triangleCoord.z value
       </div>
 
-      <h4 id=shader-uniform-variables><span class=secno>12.4.3. </span>Shader
+      <h4 id=shader-uniform-variables><span class=secno>12.6.3. </span>Shader
        uniform variables</h4>
 
       <p>The following uniform variables are set to specific values by the
@@ -11855,7 +11880,7 @@ void main()
       </table>
 
       <h4 id=other-uniform-variables-the-css-shaders-><span
-       class=secno>12.4.4. </span>Other uniform variables: the CSS shaders
+       class=secno>12.6.4. </span>Other uniform variables: the CSS shaders
        parameters</h4>
 
       <p>When there parameters are passed to the custom filter function or
@@ -11875,24 +11900,17 @@ void main()
 
        <tbody>
         <tr>
-         <th>&lt;boolean&gt;
-
-         <td>bool
-
-        <tr>
          <th>&lt;color>
 
-         <td><span class=issue>Not specified yet </span>
+         <td>vec4
 
         <tr>
-
-        <tr>
-         <th>&lt;number&gt;{1,4}
+         <th>&lt;number>{1,4}
 
          <td>float, vec2, vec3 or vec4
 
         <tr>
-         <th>&lt;array&gt;
+         <th>&lt;array>
 
          <td>float[n]
 
@@ -11902,9 +11920,9 @@ void main()
          <td>mat4
 
         <tr>
-         <th>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br>
-          mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br>
-          mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})
+         <th>mat2(&lt;number> [ , &lt;number> ]{3,3}) | <br>
+          mat3(&lt;number> [ , &lt;number> ]{8,8}) | <br>
+          mat4(&lt;number> [ , &lt;number> ]{15,15})
 
          <td>mat2, mat3 or mat4
 
@@ -11944,7 +11962,7 @@ void main()
        texture()</code> parameter, an additional <code>vec2</code> uniform is
        passed to the shaders with the size of the corresponding texture.
 
-      <h4 id=default-shaders><span class=secno>12.4.5. </span>Default shaders</h4>
+      <h4 id=default-shaders><span class=secno>12.6.5. </span>Default shaders</h4>
 
       <p>If no vertex shader is provided, the default one is as shown below.
 
@@ -11969,7 +11987,7 @@ void main()
   }</pre>
       </div>
 
-      <h4 id=texture-access><span class=secno>12.4.6. </span>Texture access</h4>
+      <h4 id=texture-access><span class=secno>12.6.6. </span>Texture access</h4>
 
       <p>If shaders access texture values outside the <code>[0, 1]</code>
        range on both axis, the returned value is a fully translucent black
@@ -16380,17 +16398,22 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>authoring tool, <a href="#authoring-tool"
         title="section 19."><strong>19.</strong></a>
 
+       <li>''auto''
+        <ul>
+         <li>'mix' value, <a href="#lsquoautorsquo"
+          title="section 11.6."><strong>11.6.</strong></a>
+        </ul>
+
        <li>blended color, <a href="#blended-color"
-        title="section 12.3."><strong>12.3.</strong></a>
+        title="section 12.5."><strong>12.5.</strong></a>
 
        <li>&lt;blend-mode&gt;, <a href="#ltblend-modegt"
-        title="section 11.6."><strong>11.6.</strong></a>
+        title="section 11.6."><strong>11.6.</strong></a>, <a
+        href="#ltblend-modegt0"
+        title="section 12.4."><strong>12.4.</strong></a>
 
        <li>blur(&lt;length&gt;), <a href="#blurltlengthgt"
         title="section 5."><strong>5.</strong></a>
-
-       <li>&lt;boolean&gt;, <a href="#ltbooleangt"
-        title="section 11.4."><strong>11.4.</strong></a>
 
        <li>bounding client rect, <a href="#bounding-client-rect"
         title="section 4."><strong>4.</strong></a>
@@ -16407,10 +16430,12 @@ interface <b>SVGFEBlendElement</b> : <a
         title="section 9."><strong>9.</strong></a>
 
        <li>color matrix, <a href="#color-matrix"
-        title="section 12.3."><strong>12.3.</strong></a>
+        title="section 12.5."><strong>12.5.</strong></a>
 
        <li>&lt;composite-mode&gt;, <a href="#ltcomposite-modegt"
-        title="section 11.6."><strong>11.6.</strong></a>
+        title="section 11.6."><strong>11.6.</strong></a>, <a
+        href="#ltcomposite-modegt0"
+        title="section 12.4."><strong>12.4.</strong></a>
 
        <li>contrast(&lt;number&gt; | &lt;percentage&gt;), <a
         href="#contrastltnumbergt-ltpercentagegt"
@@ -16614,16 +16639,10 @@ interface <b>SVGFEBlendElement</b> : <a
         title="section 11.6."><strong>11.6.</strong></a>
 
        <li>mix color, <a href="#mix-color"
-        title="section 12.3."><strong>12.3.</strong></a>
+        title="section 12.5."><strong>12.5.</strong></a>
 
        <li>multiplied color, <a href="#multiplied-color"
-        title="section 12.3."><strong>12.3.</strong></a>
-
-       <li>''none''
-        <ul>
-         <li>'mix' value, <a href="#lsquononersquo"
-          title="section 11.6."><strong>11.6.</strong></a>
-        </ul>
+        title="section 12.5."><strong>12.5.</strong></a>
 
        <li>null filter, <a href="#null-filter"
         title="section 4."><strong>4.</strong></a>

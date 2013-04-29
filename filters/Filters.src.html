@@ -4389,14 +4389,8 @@ color of the light source for <span class="term">filter primitives</span> <a>'fe
 
 <h2 id="custom-filter">Custom Filter Function</h2>
 
-<p class="issue">
-  The following section is a proposal and under discussion on the
-  <a href="http://lists.w3.org/Archives/Public/public-fx/2012OctDec/0029.html">public-fx</a> mailing list. Please send
-  feedback and suggestions to the mailing list and be aware of modifications.
-</p>
-
 <p>
-  The custom-filter function allows extending this specification with a customized filter effect. Customized filter effects are described by the @filter rule or <a>feCustom element</a> element and referenced internal or external resources. Each @filter rule has a unique identifier that can be referenced by the custom-filter function. 
+  The custom-filter function allows extending this specification with a customized filter effect. Customized filter effects are described by the @filter rule or <a>feCustom element</a> element and referenced internal or external resources. External resource must be described by a host language. Each @filter rule has a unique identifier that can be referenced by the custom-filter function. 
 </p>
 
 <h3 id="support-condition-filter">The '@supports' condition: ''filter''</h3>
@@ -4562,9 +4556,7 @@ descriptor: value;</pre>
 
 <pre class=prod><dfn>&lt;param&gt;</dfn> = IDENT <var>&lt;param-value&gt;</var></pre>
 
-<pre class=prod><dfn>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | <var>&lt;boolean&gt;</var> | &lt;number&gt;{1,4} | <var>&lt;array&gt;</var> |  <var>&lt;mat&gt;</var> | <var>&lt;color&gt;</var> | <a href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a></pre>
-
-<pre class=prod><dfn>&lt;boolean&gt;</dfn> = true | false</pre>
+<pre class=prod><dfn>&lt;param-value&gt;</dfn> = <var>&lt;transform-function&gt;</var>+ | &lt;number&gt;{1,4} | <var>&lt;array&gt;</var> |  <var>&lt;mat&gt;</var> | <var>&lt;color&gt;</var> | <a href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a></pre>
 
 <pre class=prod><dfn>&lt;array&gt;</dfn> = <var>array(&lt;number&gt;#)</var></pre>
 
@@ -4665,33 +4657,30 @@ descriptor: value;</pre>
       <td><dfn>mix</dfn>
     <tr>
       <td>Value:
-      <td>none | [&lt;blend-mode&gt; || &lt;composite-mode&gt;]
+      <td>auto | [&lt;blend-mode&gt; || &lt;composite-mode&gt;]
     <tr>
       <td><em>Initial:</em>
-      <td>normal source-atop
+      <td>auto
 </table>
 
 <dl>
+  <dt><dfn title="''auto''!!'mix' value">''auto''</dfn></dt>
+  <dd>
+    The UA must follow the host language's recommendation.
+  </dd>
   <dt>
     <dfn>&lt;blend-mode&gt;</dfn>
   </dt>
   <dd>
-    For fragment shaders, each pixel is blended with the <var>mix-color</var> by using one of the predefined blend
-    modes and it's appropriate blend mode keyword (See [[!COMPOSITING]]).
+    Specifies blending mechanisms for the filter primitive. The host language must define the meaning.
   </dd>
   <dt>
     <dfn>&lt;composite-mode&gt;</dfn>
   </dt>
   <dd>
-    For fragment shaders, each pixel is composed with the <var>mix-color</var> by using one of the predefined
-    alpha-compositing operators and it's appropriate alpha-compositing keyword (See [[!COMPOSITING]]).
-  </dd>
-  <dt><dfn title="''none''!!'mix' value">''none''</dfn></dt>
-  <dd>
-    No alpha-compositing nor blending will be applied in the custom-filter. (E.g. a pixel in a fragment shader is not composed with the <var>mix-color</var>.)
+    Specifies composition mechanisms for the filter primitive. The host language must define the meaning.
   </dd>
 </dl>
-
 
 <h3 id="custom-filter-margin">Custom filter margins: the <span>margin</span> descriptor</h3>
 
@@ -4718,10 +4707,14 @@ descriptor: value;</pre>
 <pre class=prod><dfn>&lt;margin-width&gt;</dfn> = <var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var> | <var>auto</var></pre>
 
 <p>
-  For the definiton of the <span>&lt;margin-width&gt;</span> values see CSS Box Model [[!CSS21]].
+  For the definition of the <span>&lt;margin-width&gt;</span> values see CSS Box Model [[!CSS21]].
 </p>
 
-<h2 id="shading-language">Shading language</h2>
+<h2 id="shading-language">Custom Shaders</h2>
+
+<h3>Introduction</h3>
+
+<p>With Custom Shaders, authors can manipulate the color and shape of a graphical element in granular ways. The following sections describe the host language Custom Shaders as extension for <a href="#custom-filter">Custom Filter Functions</a>.
 
   <h3 id="precedents">Precedents</h3>
 
@@ -4756,9 +4749,39 @@ descriptor: value;</pre>
 </p>
 
 <p>
-  The OpenGL ES shading language provides a number of variables that can be passed to shaders, exchanged between shaders or set by shaders. In particular, a vertex shader can provide specific data to the fragment shader in the form of "varying" parameters (parameters that vary per pixel). The following sections describe particular variables that are assumed for the vertex and fragment shaders in CSS shaders.
+  The OpenGL ES shading language provides a number of variables that can be passed to shaders, exchanged between shaders or set by shaders. In particular, a vertex shader can provide specific data to the fragment shader in the form of "varying" parameters (parameters that vary per pixel). The following sections describe particular variables that are assumed for the vertex and fragment shaders.
 </p>
 
+
+<h3>Integration into Custom Filter Functions</h3>
+
+<p>Custom Filter Function values have the following meaning for Custom Shaders:</p>
+
+<dl>
+  <dt>Values for 'mix' descriptor
+  <dd>
+    <dl>
+      <dt>
+        <dfn>&lt;blend-mode&gt;</dfn>
+      </dt>
+      <dd>
+        For fragment shaders, each pixel is blended with the <var>mix-color</var> by using one of the predefined blend
+        modes and it's appropriate blend mode keyword (See [[!COMPOSITING]]).
+      </dd>
+      <dt>
+        <dfn>&lt;composite-mode&gt;</dfn>
+      </dt>
+      <dd>
+        For fragment shaders, each pixel is composed with the <var>mix-color</var> by using one of the predefined
+        alpha-compositing operators and it's appropriate alpha-compositing keyword (See [[!COMPOSITING]]).
+      </dd>
+      <dt><var>''auto''</var></dt>
+      <dd>
+        If the ''mix'' descriptor value computes to ''auto'', the effect is as if ''normal source-atop'' was specified.
+      </dd>
+    </dl>
+  </dd>
+</dl>
 
 <h3 id="shader-processing-model">Shader Processing Model</h3>
 
@@ -4772,13 +4795,13 @@ descriptor: value;</pre>
 </div>
 
 <p>
-  Prior to the shader processing, the input of the filter primitive gets rendered into an offscreen image (the source texture). The offscreen size and 
+  Prior to the shader processing, the input of the filter primitive gets rendered into an off-screen image (the source texture). The off-screen size and 
   position is controlled by the <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
 </p>
 
 <div class="figure">
   <img src="images/shader-concept-image-raster.svg" width="372" height="252">
-  <p class="caption">Source texture created by rendering<br />the element offscreen and adding filter primitive margins</p>
+  <p class="caption">Source texture created by rendering<br />the element off-screen and adding filter primitive margins</p>
 </div>
 
 <p>
@@ -4827,12 +4850,7 @@ descriptor: value;</pre>
 </div>
 
 <p class="note">
-  Note that the fragment shader may be called several time for what corresponds to the same pixel coordinate on the output, for example when the vertex mesh folds over itself.
-</p>
-
-<p class="issue" id="issue-shader-application-order">
-  There is no guarantee which shader gets applied first. Because the depth buffer is used there's no guarantee that
-  blending will happen.
+  Note that the fragment shader may be called several times for what corresponds to the same pixel coordinate on the output, for example when the vertex mesh folds over itself. Overlaying pixel values do neither composite nor blend. The pixel value with the least depth will be choosen.
 </p>
 
 <p>
@@ -4848,7 +4866,6 @@ descriptor: value;</pre>
   Each color value passed to the fragment shader gets multiplied with the <dfn>color matrix</dfn>, a predefined fragment shader variable that represents a
   4x4 matrix. The matrix is initialized to an identity matrix, but can be set by a fragment shader. The resulting color is the <i>multiplied color</i>.
 </p>
-<p class="issue" id="issue-5x4or4x4matrix">Note that color matrices usually operate on 5x4 values, where the last column defines an offset that is added to the color value. The WG may consider to turn the current 4x4 matrix into a 5x4 matrix.</p>
 
 <p>
   The <dfn>mix color</dfn> is a second, predefined fragment shader variable and represents an ''RGBA'' <var>&lt;color&gt;</var> value. The <i>mix color</i> can be set
@@ -5078,19 +5095,15 @@ void main()
   </thead>
   <tbody>
     <tr>
-      <th>&lt;boolean&gt;
-      <td>bool
-    </tr>
       <th>&lt;color>
-      <td><span class=issue>Not specified yet
-    <tr>
+      <td>vec4
     </tr>
     <tr>
-      <th>&lt;number&gt;{1,4}
+      <th>&lt;number>{1,4}
       <td>float, vec2, vec3 or vec4
     </tr>
     <tr>
-      <th>&lt;array&gt;
+      <th>&lt;array>
       <td>float[n]
     </tr>
     <tr>
@@ -5098,9 +5111,9 @@ void main()
       <td>mat4
     </tr>
     <tr>
-      <th>mat2(&lt;number&gt; [ , &lt;number&gt; ]{3,3}) | <br />
-          mat3(&lt;number&gt; [ , &lt;number&gt; ]{8,8}) | <br />    
-          mat4(&lt;number&gt; [ , &lt;number&gt; ]{15,15})
+      <th>mat2(&lt;number> [ , &lt;number> ]{3,3}) | <br />
+          mat3(&lt;number> [ , &lt;number> ]{8,8}) | <br />    
+          mat4(&lt;number> [ , &lt;number> ]{15,15})
       <td>mat2, mat3 or mat4
     </tr>
     <tr>
