@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-04-29 name=dcterms.date>
+  <meta content=2013-05-09 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -35,19 +35,24 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 29 April 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 9 May 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130429/-->
+     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130509/-->
 
     <dt>Latest version:
 
     <dd> <a
      href="http://www.w3.org/TR/filter-effects/">http://www.w3.org/TR/filter-effects/</a>
+
+    <dt>Editor's draft:
+
+    <dd><a
+     href="http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
 
     <dt>Editors:
 
@@ -81,7 +86,8 @@
 
     <dt>Test suite:
 
-    <dd> none yet
+    <dd> <a
+     href="http://test.csswg.org/harness/test/FILTER-EFFECTS_DEV/">http://test.csswg.org/harness/test/FILTER-EFFECTS_DEV/</a>
    </dl>
    <!--begin-copyright-->
    <p class=copyright><a
@@ -535,6 +541,8 @@
 
      <li class=no-num><a href="#other-references">Other references</a>
     </ul>
+
+   <li class=no-num><a href="#changes">Changes</a>
 
    <li class=no-num><a href="#property-index">Property index</a>
 
@@ -11192,7 +11200,7 @@ descriptor: value;</pre>
        href="#ltarraygt"><var>&lt;array&gt;</var></a> |  <a
        href="#ltmatgt"><var>&lt;mat&gt;</var></a> | <a
        href="#ltcolorgt"><var>&lt;color&gt;</var></a> | <a
-       href="http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list></var></a></pre>
+       href="#lturi"><var>&lt;URI></var></a></pre>
 
       <pre class=prod><dfn id=ltarraygt>&lt;array&gt;</dfn> = <a
        href="#arrayltnumbergt"><var>array(&lt;number&gt;#)</var></a></pre>
@@ -11222,6 +11230,10 @@ descriptor: value;</pre>
 
        <dd> A CSS transform function value. (See <a href="#CSS3-TRANSFORMS"
         rel=biblioentry>[CSS3-TRANSFORMS]<!--{{!CSS3-TRANSFORMS}}--></a>.)
+
+       <dt><dfn id=lturi>&lt;URI></dfn>
+
+       <dd> A URL reference to an image source.
       </dl>
 
       <p> The following function definitions describe matrices in
@@ -11303,26 +11315,23 @@ descriptor: value;</pre>
             shader.
           </div>
 
-         <dt><dfn id=lsquodetachedrsquo>‘<code
-          class=css>detached</code>’</dfn>
+         <dt><dfn id=detached>‘<code class=css>detached</code>’</dfn>
 
          <dd> The geometry provided to the vertex shader is made of triangles
           which do not share adjacent edges' vertices. A value of ‘<a
-          href="#lsquodetachedrsquo"><code class=css>detached</code></a>’
-          implies that the vertices are detached.
+          href="#detached"><code class=css>detached</code></a>’ implies
+          that the vertices are detached.
 
-         <dt><dfn id=lsquoattachedrsquo>‘<code
-          class=css>attached</code>’</dfn>
+         <dt><dfn id=attached>‘<code class=css>attached</code>’</dfn>
 
          <dd> The geometry provided to the vertex shader is made of triangles
           which do not share adjacent edges' vertices. A value of ‘<a
-          href="#lsquoattachedrsquo"><code class=css>attached</code></a>’
-          implies that the vertices are attached.
+          href="#attached"><code class=css>attached</code></a>’ implies
+          that the vertices are attached.
         </dl>
 
         <p>If no value for attachmeny of verices is specified, it computes to
-         ‘<a href="#lsquoattachedrsquo"><code
-         class=css>attached</code></a>’.
+         ‘<a href="#attached"><code class=css>attached</code></a>’.
       </dl>
 
       <h3 id=custom-filter-mix><span class=secno>11.6. </span>Custom filter
@@ -11347,7 +11356,7 @@ descriptor: value;</pre>
       </table>
 
       <dl>
-       <dt><dfn id=lsquoautorsquo title="''auto''!!'mix' value">‘<code
+       <dt><dfn id=auto title="''auto''!!'mix' value">‘<code
         class=css>auto</code>’</dfn>
 
        <dd> The UA must follow the host language's recommendation.
@@ -12568,6 +12577,11 @@ void main()
        issue of animating properties that have multiple components to them.</div>
 
       <h2 id=security><span class=secno>17. </span>Security</h2>
+
+      <p class=issue>The following description of the security model is not
+       sufficient and detailed enough. See <a
+       href="http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
+       mailing list.
 
       <h3 id=rendered-content-access-from-fragment-shaders><span
        class=secno>17.1. </span>Rendered Content Access in custom filter
@@ -15827,6 +15841,30 @@ interface <b>SVGFEBlendElement</b> : <a
         <!---->
       </dl>
       <!--end-informative-->
+      <h2 class=no-num id=changes>Changes</h2>
+
+      <p>The following significant changes were made since the <a
+       href="http://www.w3.org/TR/2012/WD-filter-effects-20121025/">25
+       October 2012 Working Draft</a>.
+
+      <ul>
+       <li>Correction of brightness short hand filter.
+
+       <li>New syntax for Custom Filter function.
+
+       <li>Add at-function rule for Custom Filters.
+
+       <li>Allow Custom Filter function to be used as extension for future
+        filter features.
+
+       <li>Remove unnecessary attributes and uniforms on shaders.
+
+       <li>Redefine origin of shader coordinate space to bottom left.
+      </ul>
+
+      <p>See more detailed and longterm changes in the <a
+       href=ChangeLog>ChangeLog</a>.
+
       <h2 class=no-num id=property-index>Property index</h2>
       <!--begin-properties-->
       <table class=proptable>
@@ -16391,8 +16429,7 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>array(&lt;number&gt;#), <a href="#arrayltnumbergt"
         title="section 11.4."><strong>11.4.</strong></a>
 
-       <li>‘<code class=css>attached</code>’, <a
-        href="#lsquoattachedrsquo"
+       <li>‘<code class=css>attached</code>’, <a href="#attached"
         title="section 11.5."><strong>11.5.</strong></a>
 
        <li>authoring tool, <a href="#authoring-tool"
@@ -16400,7 +16437,7 @@ interface <b>SVGFEBlendElement</b> : <a
 
        <li>''auto''
         <ul>
-         <li>'mix' value, <a href="#lsquoautorsquo"
+         <li>'mix' value, <a href="#auto"
           title="section 11.6."><strong>11.6.</strong></a>
         </ul>
 
@@ -16447,8 +16484,7 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>custom(IDENT [, &lt;param&gt;]*), <a href="#customident-ltparamgt"
         title="section 5."><strong>5.</strong></a>
 
-       <li>‘<code class=css>detached</code>’, <a
-        href="#lsquodetachedrsquo"
+       <li>‘<code class=css>detached</code>’, <a href="#detached"
         title="section 11.5."><strong>11.5.</strong></a>
 
        <li>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#), <a
@@ -16690,6 +16726,9 @@ interface <b>SVGFEBlendElement</b> : <a
         title="section 8.6.">8.6.</a>
 
        <li>&lt;transform-function&gt;, <a href="#lttransform-functiongt"
+        title="section 11.4."><strong>11.4.</strong></a>
+
+       <li>&lt;URI>, <a href="#lturi"
         title="section 11.4."><strong>11.4.</strong></a>
 
        <li>&lt;URL&gt;, <a href="#lturlgt"
