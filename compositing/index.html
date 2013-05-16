@@ -1750,7 +1750,7 @@ co = RGB(255, 127, 127)
   <p>The contribution from each region to the final pixel color is defined by
    the coverage of the shape at that pixel, and the operator in use. Coverage
    is specified in terms of alpha. Full alpha (1) implies full coverage,
-   while zero alpha implies no coverage. This means that the area of each
+   while zero alpha (0) implies no coverage. This means that the area of each
    region within the sub-pixel is dependent on the coverage of each shape
    contributing to the pixel. The area of each region can be calculated with
    the following equations:
@@ -1766,17 +1766,17 @@ co = RGB(255, 127, 127)
      <tr>
       <th>Source only
 
-      <th>αs(1 – αb)
+      <th>αs x (1 – αb)
 
      <tr>
       <th>Destination only
 
-      <th>αb(1 – αs)
+      <th>αb x (1 – αs)
 
      <tr>
       <th>None
 
-      <th>(1 – αs)(1 – αb)
+      <th>(1 – αs) x (1 – αb)
    </table>
   </div>
 
@@ -1790,13 +1790,13 @@ Destination Only = 0.5(1 – 0.5) = 0.25
 None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
-  <p>Therefore, the area of each region is 25% in this example.
+  <p>Therefore, the coverage of each region is 0.25 in this example.
 
   <h3 id=porterduffcompositingoperators><span class=secno>9.1. </span>The
    Porter Duff Compositing Operators</h3>
 
-  <p> The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked
-   for Lucasfilm, defined the algebra of compositing and developed the twelve
+  <p> The landmark paper by Thomas Porter and Tom Duff, who worked for
+   Lucasfilm, defined the algebra of compositing and developed the twelve
    "Porter Duff" operators. These operators control the results of mixing the
    four sub-pixel regions formed by the overlapping of graphical objects that
    have an alpha or pixel coverage channel/value. The operators use all
@@ -2026,9 +2026,9 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    groups and Porter Duff modes</h4>
 
   <p> When compositing the elements within an isolated group, the elements
-   are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the
-   bottom element in the group uses a Porter Duff compositing operator which
-   is dependent on the backdrop, such as <a
+   are composited over a transparent black initial backdrop. If the bottom
+   element in the group uses a Porter Duff compositing operator which is
+   dependent on the backdrop, such as <a
    href="#porterduffcompositingoperators_dst">destination</a>, <a
    href="#porterduffcompositingoperators_srcin">source-in</a>, <a
    href="#porterduffcompositingoperators_dstin">destination-in</a>, <a
@@ -2064,10 +2064,10 @@ None = (1 – 0.5)(1 – 0.5) = 0.25
    the compositing operation, must fall within the shape of the element being
    composited (i.e. where α > 0). This is known as "clip to self" in some
    graphics libraries. The alternative is to not clip the compositing
-   operation at all. The results can be seen below. Some of the Porter Duff
-   operators are unchanged, because they normally have no effect outside the
-   source region. The changes can be seen in the clear, source, source-in,
-   destination-in, source-out and destination-atop.
+   operation at all. The results can be seen in the figure below. Some of the
+   Porter Duff operators are unchanged, because they normally have no effect
+   outside the source region. The changes can be seen in the clear, source,
+   source-in, destination-in, source-out and destination-atop.
 
   <div class=figure><img alt="example of clip to self with porter duff"
    src="examples/clip-to-self.png"></div>
@@ -2365,13 +2365,18 @@ with
    as opposed to the seperable ones that look at each component
    individually.<br>
    All of these blend modes conceptually entail the following steps:<br>
-   a) Convert the <a href="#backdrop">backdrop</a> and source colors from the
-   blending color space to an intermediate hue-saturation-luminosity
-   representation.<br>
-   b) Create a new color from some combination of hue, saturation, and
-   luminosity components selected from the <a href="#backdrop">backdrop</a>
-   and source colors.<br>
-   c) Convert the result back to the original color space.<br>
+
+  <ol>
+   <li>Convert the <a href="#backdrop">backdrop</a> and source colors from
+    the blending color space to an intermediate hue-saturation-luminosity
+    representation.
+
+   <li>Create a new color from some combination of hue, saturation, and
+    luminosity components selected from the <a href="#backdrop">backdrop</a>
+    and source colors.
+
+   <li>Convert the result back to the original color space.
+  </ol>
 
   <p> The nonseparable blend mode formulas make use of several auxiliary
    functions:
@@ -2470,9 +2475,8 @@ components having the minimum, middle, and maximum values upon entry to the func
    isolation on blending</h3>
 
   <p> In the following example, the elements used to construct the paper
-   aeroplane are within a group. Each of these elements has the <a
-   href="#propdef-mix-blend-mode">mix-blend-mode</a> property set to
-   multiply.<br>
+   aeroplane are within a group. Each of these elements has their blend mode
+   set to multiply.<br>
    The aeroplane on the left is a normal group, the aeroplane on the right is
    an <a href="#isolatedgroups">isolated group</a>.<br>
    In the isolated group, the elements within the group are composited onto

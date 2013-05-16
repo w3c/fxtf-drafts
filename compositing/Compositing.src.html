@@ -1234,7 +1234,7 @@ The four regions are:
 <p style="text-align:center"><img src="examples/PD_regions.svg" alt="overview of the regions affected by porter duff"/></p>
 </div>
 The contribution from each region to the final pixel color is defined by the coverage of the shape at that pixel, and the operator in use.
-Coverage is specified in terms of alpha. Full alpha (1) implies full coverage, while zero alpha implies no coverage.
+Coverage is specified in terms of alpha. Full alpha (1) implies full coverage, while zero alpha (0) implies no coverage.
 This means that the area of each region within the sub-pixel is dependent on the coverage of each shape contributing to the pixel.
 The area of each region can be calculated with the following equations:
 <div class="data">
@@ -1245,15 +1245,15 @@ The area of each region can be calculated with the following equations:
 </tr>
 <tr>
 <th>Source only</th>
-<th>αs(1 – αb)</th>
+<th>αs x (1 – αb)</th>
 </tr>
 <tr>
 <th>Destination only</th>
-<th>αb(1 – αs)</th>
+<th>αb x (1 – αs)</th>
 </tr>
 <tr>
 <th>None</th>
-<th>(1 – αs)(1 – αb)</th>
+<th>(1 – αs) x (1 – αb)</th>
 </tr>
 </table>
 </div>
@@ -1265,12 +1265,12 @@ Destination Only = 0.5(1 – 0.5) = 0.25
 None = (1 – 0.5)(1 – 0.5) = 0.25
 </pre>
 
-Therefore, the area of each region is 25% in this example.
+Therefore, the coverage of each region is 0.25 in this example.
 </p>
 
 <h3 id="porterduffcompositingoperators">The Porter Duff Compositing Operators</h3>
 <p>
-The landmark 1984 paper [3] by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
+The landmark paper by Thomas Porter and Tom Duff, who worked for Lucasfilm, defined the algebra of compositing and developed the twelve "Porter Duff" operators. These operators control the results of mixing the four sub-pixel regions formed by the overlapping of graphical objects that have an alpha or pixel coverage channel/value. The operators use all practical combinations of the four regions.
 <br/>
 There are 12 basic Porter Duff operators, satisfying all possible combinations of source and destination.<br/>
 
@@ -1396,7 +1396,7 @@ Where:<br/>co is the output color pre-multiplied with the output alpha [0 <= co 
 <h3 id="groupcompositing">Group compositing behavior with Porter Duff modes</h3>
 <h4 id="groupcompositingisolation">Isolated groups and Porter Duff modes</h4>
 <p>
-When compositing the elements within an isolated group, the elements are composited over an empty (RGBA(0, 0, 0, 0)) initial backdrop. If the bottom element in the group uses a Porter Duff compositing operator
+When compositing the elements within an isolated group, the elements are composited over a transparent black initial backdrop. If the bottom element in the group uses a Porter Duff compositing operator
 which is dependent on the backdrop, such as <a href="#porterduffcompositingoperators_dst">destination</a>, <a href="#porterduffcompositingoperators_srcin">source-in</a>, 
 <a href="#porterduffcompositingoperators_dstin">destination-in</a>, <a href="#porterduffcompositingoperators_dstout">destination-out</a> or <a href="#porterduffcompositingoperators_srcatop">source-atop</a>, 
 then the result of the composite will be empty. Subsequent elements within the group are composited with the result of the first composite.
@@ -1417,7 +1417,7 @@ Additionally, because the source-atop Porter Duff operator is used, the source s
 <p>
 When compositing, the areas of the composite that may be modified by the compositing operation, must fall within the shape of the element being composited (i.e. where α > 0).
 This is known as "clip to self" in some graphics libraries.
-The alternative is to not clip the compositing operation at all. The results can be seen below.
+The alternative is to not clip the compositing operation at all. The results can be seen in the figure below.
 Some of the Porter Duff operators are unchanged, because they normally have no effect outside the source region. The changes can be seen in the clear, source, source-in, destination-in, source-out and destination-atop.
 <div class="figure"><img src="examples/clip-to-self.png" alt="example of clip to self with porter duff"/></div>
 </p>
@@ -1639,9 +1639,11 @@ Produces an effect similar to that of the Difference mode but lower in contrast.
 <p>
 Nonseparable blend modes consider all color components in combination as opposed to the seperable ones that look at each component individually.<br/>
 All of these blend modes conceptually entail the following steps:<br/>
-a) Convert the <a href="#backdrop">backdrop</a> and source colors from the blending color space to an intermediate hue-saturation-luminosity representation.<br/>
-b) Create a new color from some combination of hue, saturation, and luminosity components selected from the <a href="#backdrop">backdrop</a> and source colors.<br/>
-c) Convert the result back to the original color space.<br/>
+<ol>
+ <li>Convert the <a href="#backdrop">backdrop</a> and source colors from the blending color space to an intermediate hue-saturation-luminosity representation.</li>
+ <li>Create a new color from some combination of hue, saturation, and luminosity components selected from the <a href="#backdrop">backdrop</a> and source colors.</li>
+ <li>Convert the result back to the original color space.</li>
+</ol>
 </p>
 <p>
 The nonseparable blend mode formulas make use of several auxiliary functions:
@@ -1720,7 +1722,7 @@ Creates a color with the luminosity of the source color and the hue and saturati
 
 <h3 id="isolationblending">Effect of group isolation on blending</h3>
 <p>
-In the following example, the elements used to construct the paper aeroplane are within a group. Each of these elements has the <a href="#propdef-mix-blend-mode">mix-blend-mode</a> property set to multiply.<br />
+In the following example, the elements used to construct the paper aeroplane are within a group. Each of these elements has their blend mode set to multiply.<br />
 The aeroplane on the left is a normal group, the aeroplane on the right is an <a href="#isolatedgroups">isolated group</a>.<br />
 In the isolated group, the elements within the group are composited onto an empty initial backdrop, this stops the elements within the group multiplying with the backdrop.<br />
 In the normal group, the elements within the group are composited onto the initial backdrop containing the land and sky. Therefore the elements of the aeroplane multiply with the land and sky.<br />
