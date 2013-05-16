@@ -321,7 +321,7 @@ This spec assumes that a stacking context creates an offscreen buffer (also know
 
 <h3 id="csscompositingrules_SVG">Behavior specific to SVG</h3>
 <p>
-In SVG, every element must create a non-isolated group.</p><p class="note">This seems costly but implementations can optimize this by not treating elements with default arguments as groups.</p><br/>
+In SVG, every element must create a non-isolated group.</p><p class="note">This seems costly but UAs can optimize this by not treating elements with default arguments as groups.</p><br/>
 <!-- SVG has the following <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">compositing model</a>: first any filter effect is applied, then any clipping, masking,  blending and compositing -->
 </p>
 <p class="issue">
@@ -358,7 +358,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Inherited:</em>  </td>
-            <td>no</td>
+            <td>no</td>uch as 3D transforms or a non-default blenduch as 3D transforms or a non-default blend
           </tr>
           <tr valign="baseline">
             <td><em>Percentages:</em>  </td>
@@ -370,7 +370,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Computed value:</em>  </td>
-          	<td>same as the specified value</td>
+          	<td>as specified</td>
           </tr>          
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
@@ -437,7 +437,7 @@ as follows:</p>
 <h4 id="mix-blend-mode">The <span class="prop-name">'mix-blend-mode'</span> property</h4>
 
 <p>
-Defines the blend mode that must be used on an area of the element. 
+Defines the blend mode that must be used on an element. 
 The blend mode defines the formula that must be used to mix the colors with the backdrop.<br/>
 This behavior is described in more detail in <a href="#blending">Blending</a>.
 </p>
@@ -455,7 +455,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
-            <td>normal</td>
+            <td><var>normal</var></td>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
@@ -475,7 +475,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
           </tr>
           <tr valign="baseline">
             <td><em>Computed value:</em>  </td>
-          	<td>same as the specified value</td>
+          	<td>as specified</td>
           </tr>          
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
@@ -541,7 +541,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <p>
 Defines whether a group is isolated or not.<br />
 When a group is isolated, the group's backdrop must be replaced with transparent black.<br/>
-Groups can be set to non-isolated with the 'auto' keyword. However certain operations that cause the creation of stacking context (such as 3D transforms or a non-default blend mode on the 'element' <a href="#ltareagt">area</a>) will cause a group to be isolated.<br/>
+Groups can be set to non-isolated with the 'auto' keyword. However certain operations that cause the creation of stacking context (such as 3D transforms or a non-default blend mode) will cause a group to be isolated.<br/>
 This behavior is described in more detail in <a href="#isolatedgroups">Isolated Gropus</a>.
 </p>
 
@@ -578,7 +578,7 @@ This behavior is described in more detail in <a href="#isolatedgroups">Isolated 
           </tr>
           <tr valign="baseline">
             <td><em>Computed value:</em>  </td>
-          	<td>same as the specified value</td>
+          	<td>as specified</td>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
@@ -639,7 +639,7 @@ The behavior of this keyword is described in more detail in <a href="#knockoutgr
           </tr>
           <tr valign="baseline">
             <td><em>Computed value:</em>  </td>
-          	<td>same as the specified value</td>
+          	<td>as specified</td>
           </tr>
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
@@ -692,7 +692,7 @@ Omitted values are set to their initial values.
           </tr>
            <tr valign="baseline">
             <td><em>Computed value:</em>  </td>
-          	<td>same as the specified value</td>
+          	<td>as specified</td>
           </tr>         
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
@@ -749,7 +749,7 @@ as follows:</p>
           </tr>
            <tr valign="baseline">
             <td><em>Computed value:</em>  </td>
-          	<td>same as the specified value</td>
+          	<td>as specified</td>
           </tr>         
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
@@ -780,7 +780,7 @@ as follows:</p>
           </tr>
           <tr valign="baseline">
             <td><em>Initial:</em>  </td>
-            <td>normal</td>
+            <td><var>normal</var></td>
           </tr>
           <tr valign="baseline">
             <td><em>Applies to:</em>  </td>
@@ -800,7 +800,7 @@ as follows:</p>
           </tr>
            <tr valign="baseline">
             <td><em>Computed value:</em>  </td>
-          	<td>same as the specified value</td>
+          	<td>as specified</td>
           </tr>         
           <tr valign="baseline">
             <td><em>Animatable:</em>  </td>
@@ -818,7 +818,7 @@ as follows:</p>
 <!--
 <p><a href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a> takes the same arguments as the '<a href='#mix-shorthand'>mix</a>' shorthand property except that it doesn't support the <a href="#ltareagt">&lt;area&gt;</a>. The 'isolation' and 'knock-out' values are ignored in a canvas 2d context. If a value is not specified, it is assumed to be the default.</p>
 -->
-<p>Compositing and blending in canvas 2d must always done with <a href="#groupcompositingcliptoself">'clip-to-self'</a> assumed false. This means that a compositing operation may affect the entire canvas and not just be limited to the shape that is being composited.
+<p>Compositing and blending in canvas 2D must always done with <a href="#groupcompositingcliptoself">clip-to-self</a> assumed false. This means that a compositing operation may affect the entire canvas and not just be limited to the shape that is being composited.
 However, the <a href="http://www.w3.org/TR/2dcontext/#clipping-region">clipping region</a> will still be in effect and limit the affected area.</p>
 <div class="propdef">
 <dl>
@@ -847,18 +847,20 @@ However, the <a href="http://www.w3.org/TR/2dcontext/#clipping-region">clipping 
 <h2 id="whatiscompositing">Introduction to compositing</h2>
 <p><em>This subsection is non-normative.</em><br/>
 Compositing is the combining of a graphic element with its backdrop.
+<!--
 <p>
-The figure below, gives a basic example of compositing. The graphic element, a ... in this case, is overlaid on top of the backdrop to produce a composite image.
+The figure below, gives a basic example of compositing. The graphic element is overlaid on top of the backdrop to produce a composite image.
 Where the graphic element is opaque, it obscures the backdrop and where the graphic element is partially transparent, some of the backdrop can be seen through.
 </p>
+-->
 <p>
-In the model described in this specification there are two steps to the overall compositing operation - <a href="#advancedcompositing">Porter Duff compositing</a> and <a href="blending">blending</a>.
+In the model described in this specification there are two steps to the overall compositing operation - <a href="#advancedcompositing">Porter-Duff compositing</a> and <a href="blending">blending</a>.
 Porter Duff compositing takes into account the overall shape of the graphic element and its opacity, as well as the opacity and shape of the backdrop, and 
 determines where the backdrop is visible, where the graphic element is visible and where one is visible through the other.
 The blending step determines how the colors from the graphic element and the backdrop interact.
 </p>
 <p>
-Typically, the blending step is performed first, followed by the PD compositing step.
+Typically, the blending step is performed first, followed by the Porter-Duff compositing step.
 In the blending step, the resultant color from the mix of the element and the the <a href="#backdrop">backdrop</a> is calculated. The graphic element's color is replaced with this resultant color.
 The graphic element is then composited with the <a href="#backdrop">backdrop</a> using the specified compositing operator.
 </p>
@@ -874,7 +876,7 @@ transparent; i.e. there is no color contribution from any geometry because the g
 <p>
 The simple alpha compositing model used in previous versions of SVG allowed for the illusion of partial or full transparency.
 While this specification provides the author the choice of many Porter Duff compositing operators and many blending modes, the simple alpha compositing 
-    model forced a single Porter Duff compositing operator and a single blend mode.
+    model enforces a single Porter Duff compositing operator and a single blend mode.
 </p>
 
 <p>
@@ -943,7 +945,7 @@ Co = co / αo
 </pre>
 </p>
 
-<h3 id="simplealphacompositingexamples">Examples of simple alpha compositing</h3>
+<h4 id="simplealphacompositingexamples">Examples of simple alpha compositing</h4>
 <div class="example">
 <p style="text-align:center"><img src="examples/simple_box.svg" alt="Simple box showing alpha compositing"/>
 <br/>
@@ -1167,8 +1169,7 @@ When adding attributes to the group such as 'knockout', 'isolate', blending mode
 
 <h3 id="isolatedgroups">Isolated Groups</h3>
 <p>
-Isolated groups are controlled with the <a href="#propdef-isolation">isolation</a> property.<br />
-In an isolated group, the initial backdrop shall be black and fully transparent - RGBA(0, 0, 0, 0).<br />
+In an isolated group, the initial backdrop shall be black and fully transparent.<br />
 In this instance, the initial backdrop is different than the group backdrop. The only interaction with the group backdrop shall occur when the group's
 computed color, shape and alpha are composited with it.
 </p>
@@ -1186,28 +1187,28 @@ When calculating the <a href="#backdrop">backdrop</a> for an element inside a kn
 </div>
 <p>
 The above example demonstrates two versions of a group containing three squares (red, green, blue) that are 50% opaque. The group is composited over a grey striped background.<br />
-On the left, the group has the 'knock-out' property set to 'knock-out'. On the right, the group has the 'knock-out' property set to 'preserve'.<br />
-If the 'knock-out' property has the value 'knock-out', each element within the group is only composited with the elements underneath the group.
+On the left, the group has the 'knock-out' property activated. On the right, the group has the 'knock-out' property disabled'.<br />
+If the 'knock-out' property is disabled, each element within the group is only composited with the elements underneath the group.
 </p>
 
 <h3 id="pagebackdrop">The Page Group</h3>
 <p>
 The top level group is the page group. All other elements and groups are composited into this group.
 The page group is an <a href="#isolatedgroups">isolated group</a>.<br />
-The page group is composited with a backdrop color defined by the User Agent. Typically this will be white with 100% opacity.<br />
+The page group is composited with a backdrop color defined by the UA. Typically this will be white with 100% opacity.<br />
 The page group may be used as an element in another graphical composition.
 </p>
 <p>
 For example,
 this is an SVG file that contains a red object at 50% opacity. <br />
-The user agent will composite the page group onto a white background with 100% opacity. <br />
+The UA will composite the page group onto a white background with 100% opacity. <br />
 The results are as follows:
 <pre>
 co = RGB(255, 0, 0) * .5 + RGB(255, 255, 255) * 1 * (1 - .5)
 co = RGB(127, 0, 0) + RGB(127, 127, 127)
 co = RGB(255, 127, 127)
 </pre>
-which is the color value ultimately displayed by the user agent.
+which is the color value ultimately displayed by the UA.
 </p>
 
 <h2 id="advancedcompositing">Advanced compositing features</h2>
@@ -1485,7 +1486,7 @@ Each of the following blend modes will apply the blending function B(Cb, Cs) on 
 For simplicity, all the examples in this chapter use <a href="#porterduffcompositingoperators_srcover">source-over</a> compositing.
 </p>
 
-<h4 id="blendingnormal">'normal' blend mode</h4>
+<h4 id="blendingnormal"><dfn>'normal'</dfn> blend mode</h4>
 <p>
 This is the default attribute which specifies no blending. The blending formula simply selects the source color.
 <pre>
