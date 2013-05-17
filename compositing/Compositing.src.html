@@ -486,6 +486,9 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
     </dd>
 </dl>
 </div>
+
+
+
 <!--
 <p>The syntax of the property of <var>&lt;blend-area&gt;</var> is given with:</p>
 <pre class="blendarea"><dfn id="ltblendareagt"><var>&lt;blend-area&gt;</var></dfn> = <a href="#ltareagt">&lt;area&gt;</a>? <a href="#ltblendmodegt">&lt;blend-mode&gt;</a></pre>
@@ -536,6 +539,72 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <p class="note">Applying a non-default blendmode to the element must establish a new stacking context.</p>
 
 <p class="note">Applying a non-default blendmode to an area must render it to a group. This group will then be blended and composited.</p>
+
+<div class="example">
+<p>Given the following sample markup:</p>
+<pre>
+<!-- -->&lt;body>
+<!-- -->   &lt;img src="ducky.png"/>
+<!-- -->&lt;/body>"
+</pre>
+<p>And the following style rule:</p>
+<pre>
+body { background-color: green; }
+img { mix-blend-mode: multiply; }
+</pre>
+<div class="figure">
+<p>
+<img alt="example of an image of duck blending with the green color of the document" class="example" src="examples/ducky_multiply.png" style="width:40%"/>
+</p>
+</div>
+</div>
+
+<div class="example">
+<p>Given the following svg code:</p>
+<pre>
+<!-- -->&lt;svg>
+<!-- -->  &lt;circle cx="40" cy="40" r="40" fill="red"/>
+<!-- -->  &lt;circle cx="80" cy="40" r="40" fill="green"/>
+<!-- -->  &lt;circle cx="60" cy="80" r="40" fill="blue"/>
+<!-- -->&lt;/svg>
+</pre>
+<p>And the following style rule:</p>
+<pre>
+circle { mix-blend-mode: screen; }
+</pre>
+<div class="figure">
+<p>
+<img alt="example of 3 circles blending with a screen blend mode" class="example" src="examples/screen_example.svg" style="width:40%"/>
+</p>
+</div>
+
+</div>
+
+<div class="example">
+<p>In the following style sheet and document fragment:</p>
+<pre>
+body { background-color: green; }
+div { background-color: red; width: 200px; opacity: .95}
+img { mix-blend-mode: difference; }
+
+<!-- -->&lt;body>
+<!-- -->  &lt;div>
+<!-- -->     &lt;img src="ducky.png"/>
+<!-- -->  &lt;/div>
+<!-- -->&lt;/body>
+</pre>
+<p>
+... the 'opacity' on the &lt;div> element is causing the creation of a stacking context. This causes the creation of a new group so the image no blends with the color of the &lt;body>.
+</p>
+<div class="figure">
+<p>
+<img alt="example of an image of duck blending with the green color of the document" class="example" src="examples/ducky_difference.png" style="width:40%"/>
+</p>
+</div>
+<p>
+Note how the image is not blending with the green color.
+</p>
+</div>
 
 <h4 id="isolation">The <span class="prop-name">'isolation'</span> property</h4>
 <p>
@@ -812,6 +881,35 @@ as follows:</p>
 </dl>
 </div>
 <p class="note">The <span class="prop-name">'background-blend-mode'</span> list must apply to images in reverse order. This means that the first element in the list will apply to the image that is on top. If there are fewer items in the list than there are background images, the remaining background images must use the initial value.</p>
+
+<div class="example">
+<p>Given the following sample markup:</p>
+<pre>
+<!-- -->&lt;body>
+<!-- -->   &lt;div>&lt;/div>>
+<!-- -->&lt;/body>"
+</pre>
+<p>And the following style rule:</p>
+<pre>
+body { background-color: green; }
+div { 
+  width: 200px;
+  height: 200px;
+  background-size: 200px 200px;
+  background-repeat:no-repeat;
+  background-image: linear-gradient(to right, #000000 0%,#ffffff 100%), url('ducky.png');
+  background-blend-mode: difference, normal;
+}
+</pre>
+<div class="figure">
+<p>
+<img alt="example of div that has an image of a duck and a gradient that is blending" class="example" src="examples/ducky_background_blend.png" style="width:40%"/>
+</p>
+</div>
+<p>
+Note that the gradient is not blending with the color of &lt;body>.
+</div>
+
 
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas 2D</h2>
 <p>The <a href="http://www.w3.org/TR/2dcontext">canvas 2d</a> context has the <a href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a> attribute that is used to set the current compositing and blending operator.<p>

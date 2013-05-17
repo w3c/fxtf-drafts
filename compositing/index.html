@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="Compositing and Blending Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-05-16 name=dcterms.date>
+  <meta content=2013-05-17 name=dcterms.date>
   <meta content="Rik Cabanier" name=dcterms.creator>
   <meta content="Nikos Andronikos" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
@@ -231,14 +231,14 @@
 
    <h1>Compositing and Blending Level 1</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 16 May 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 17 May 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-compositing-20130516/-->
+     <!--http://www.w3.org/TR/2013/WD-compositing-20130517/-->
 
     <dt>Latest version:
 
@@ -880,6 +880,81 @@ as follows:</p>
   <p class=note>Applying a non-default blendmode to an area must render it to
    a group. This group will then be blended and composited.
 
+  <div class=example>
+   <p>Given the following sample markup:
+
+   <pre>
+<!-- -->&lt;body>
+<!-- -->   &lt;img src="ducky.png"/>
+<!-- -->&lt;/body>"
+</pre>
+
+   <p>And the following style rule:
+
+   <pre>
+body { background-color: green; }
+img { mix-blend-mode: multiply; }
+</pre>
+
+   <div class=figure>
+    <p> <img
+     alt="example of an image of duck blending with the green color of the document"
+     class=example src="examples/ducky_multiply.png" style="width:40%">
+   </div>
+  </div>
+
+  <div class=example>
+   <p>Given the following svg code:
+
+   <pre>
+<!-- -->&lt;svg>
+<!-- -->  &lt;circle cx="40" cy="40" r="40" fill="red"/>
+<!-- -->  &lt;circle cx="80" cy="40" r="40" fill="green"/>
+<!-- -->  &lt;circle cx="60" cy="80" r="40" fill="blue"/>
+<!-- -->&lt;/svg>
+</pre>
+
+   <p>And the following style rule:
+
+   <pre>
+circle { mix-blend-mode: screen; }
+</pre>
+
+   <div class=figure>
+    <p> <img alt="example of 3 circles blending with a screen blend mode"
+     class=example src="examples/screen_example.svg" style="width:40%">
+   </div>
+  </div>
+
+  <div class=example>
+   <p>In the following style sheet and document fragment:
+
+   <pre>
+body { background-color: green; }
+div { background-color: red; width: 200px; opacity: .95}
+img { mix-blend-mode: difference; }
+
+<!-- -->&lt;body>
+<!-- -->  &lt;div>
+<!-- -->     &lt;img src="ducky.png"/>
+<!-- -->  &lt;/div>
+<!-- -->&lt;/body>
+</pre>
+
+   <p> ... the ‘<code class=property>opacity</code>’ on the &lt;div>
+    element is causing the creation of a stacking context. This causes the
+    creation of a new group so the image no blends with the color of the
+    &lt;body>.
+
+   <div class=figure>
+    <p> <img
+     alt="example of an image of duck blending with the green color of the document"
+     class=example src="examples/ducky_difference.png" style="width:40%">
+   </div>
+
+   <p> Note how the image is not blending with the green color.
+  </div>
+
   <h4 id=isolation><span class=secno>3.4.2. </span>The <span
    class=prop-name>‘<code class=property>isolation</code>’</span>
    property</h4>
@@ -1204,6 +1279,39 @@ as follows:</p>
    will apply to the image that is on top. If there are fewer items in the
    list than there are background images, the remaining background images
    must use the initial value.
+
+  <div class=example>
+   <p>Given the following sample markup:
+
+   <pre>
+<!-- -->&lt;body>
+<!-- -->   &lt;div>&lt;/div>>
+<!-- -->&lt;/body>"
+</pre>
+
+   <p>And the following style rule:
+
+   <pre>
+body { background-color: green; }
+div { 
+  width: 200px;
+  height: 200px;
+  background-size: 200px 200px;
+  background-repeat:no-repeat;
+  background-image: linear-gradient(to right, #000000 0%,#ffffff 100%), url('ducky.png');
+  background-blend-mode: difference, normal;
+}
+</pre>
+
+   <div class=figure>
+    <p> <img
+     alt="example of div that has an image of a duck and a gradient that is blending"
+     class=example src="examples/ducky_background_blend.png"
+     style="width:40%">
+   </div>
+
+   <p> Note that the gradient is not blending with the color of &lt;body>.
+  </div>
 
   <h2 id=canvascompositingandblending><span class=secno>4. </span>Specifying
    Compositing and Blending in Canvas 2D</h2>
