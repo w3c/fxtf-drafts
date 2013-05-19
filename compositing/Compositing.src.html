@@ -536,9 +536,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <p>The syntax of the property of <var>&lt;blend-mode&gt;</var> is given with:</p>
 <pre class="blendmode"><dfn id="ltblendmodegt"><var>&lt;blend-mode&gt;</var></dfn> = <a href="#blendingnormal">normal</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a></pre>
 
-<p class="note">Applying a non-default blendmode to the element must establish a new stacking context.</p>
-
-<p class="note">Applying a non-default blendmode to an area must render it to a group. This group will then be blended and composited.</p>
+<p class="note">Applying a non-default blendmode to the element must establish a new stacking context/group. This group will then be blended and composited.</p>
 
 <div class="example">
 <p>Given the following sample markup:</p>
@@ -552,6 +550,9 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 body { background-color: green; }
 img { mix-blend-mode: multiply; }
 </pre>
+<p>
+... the output will be the image blending with the green background of &lt;body since it is its ancestor.
+</p>
 <div class="figure">
 <p>
 <img alt="example of an image of duck blending with the green color of the document" class="example" src="examples/ducky_multiply.png" style="width:40%"/>
@@ -572,6 +573,9 @@ img { mix-blend-mode: multiply; }
 <pre>
 circle { mix-blend-mode: screen; }
 </pre>
+<p>
+... the output will be blending of the 3 circles since they're siblings..
+</p>
 <div class="figure">
 <p>
 <img alt="example of 3 circles blending with a screen blend mode" class="example" src="examples/screen_example.svg" style="width:40%"/>
@@ -907,7 +911,7 @@ div {
 </p>
 </div>
 <p>
-Note that the gradient is not blending with the color of &lt;body>.
+Note that the gradient is not blending with the color of &lt;body>. Instead it retains its original color.
 </div>
 
 

@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="Compositing and Blending Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-05-18 name=dcterms.date>
+  <meta content=2013-05-19 name=dcterms.date>
   <meta content="Rik Cabanier" name=dcterms.creator>
   <meta content="Nikos Andronikos" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
@@ -231,14 +231,14 @@
 
    <h1>Compositing and Blending Level 1</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 18 May 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 19 May 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html">https://dvcs.w3.org/hg/FXTF/rawfile/default/compositing/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-compositing-20130518/-->
+     <!--http://www.w3.org/TR/2013/WD-compositing-20130519/-->
 
     <dt>Latest version:
 
@@ -875,10 +875,8 @@ as follows:</p>
    href="#blendingluminosity">luminosity</a></pre>
 
   <p class=note>Applying a non-default blendmode to the element must
-   establish a new stacking context.
-
-  <p class=note>Applying a non-default blendmode to an area must render it to
-   a group. This group will then be blended and composited.
+   establish a new stacking context/group. This group will then be blended
+   and composited.
 
   <div class=example>
    <p>Given the following sample markup:
@@ -895,6 +893,9 @@ as follows:</p>
 body { background-color: green; }
 img { mix-blend-mode: multiply; }
 </pre>
+
+   <p> ... the output will be the image blending with the green background of
+    &lt;body since it is its ancestor.
 
    <div class=figure>
     <p> <img
@@ -919,6 +920,9 @@ img { mix-blend-mode: multiply; }
    <pre>
 circle { mix-blend-mode: screen; }
 </pre>
+
+   <p> ... the output will be blending of the 3 circles since they're
+    siblings..
 
    <div class=figure>
     <p> <img alt="example of 3 circles blending with a screen blend mode"
@@ -1311,6 +1315,7 @@ div {
    </div>
 
    <p> Note that the gradient is not blending with the color of &lt;body>.
+    Instead it retains its original color.
   </div>
 
   <h2 id=canvascompositingandblending><span class=secno>4. </span>Specifying
