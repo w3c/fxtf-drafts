@@ -551,11 +551,24 @@ body { background-color: green; }
 img { mix-blend-mode: multiply; }
 </pre>
 <p>
-... the output will be the image blending with the green background of &lt;body since it is its ancestor.
+... will produce the following result:
 </p>
 <div class="figure">
 <p>
-<img alt="example of an image of duck blending with the green color of the document" class="example" src="examples/ducky_multiply.png" style="width:40%"/>
+<img alt="example of an image of duck with the green color of the document" class="example" src="examples/ducky_normal.png" style="width:30%"/>
+</p>
+</div>
+<p>If we change the style rule to include blending:</p>
+<pre>
+body { background-color: green; }
+img { mix-blend-mode: multiply; }
+</pre>
+<p>
+... the output will be the image blending with the green background of the &lt;body> element.
+</p>
+<div class="figure">
+<p>
+<img alt="example of an image of duck blending with the green color of the document" class="example" src="examples/ducky_multiply.png" style="width:30%"/>
 </p>
 </div>
 </div>
@@ -578,7 +591,7 @@ circle { mix-blend-mode: screen; }
 </p>
 <div class="figure">
 <p>
-<img alt="example of 3 circles blending with a screen blend mode" class="example" src="examples/screen_example.svg" style="width:40%"/>
+<img alt="example of 3 circles blending with a screen blend mode" class="example" src="examples/screen_example.svg" style="width:30%"/>
 </p>
 </div>
 
@@ -602,12 +615,41 @@ img { mix-blend-mode: difference; }
 </p>
 <div class="figure">
 <p>
-<img alt="example of an image of duck blending with the green color of the document" class="example" src="examples/ducky_difference.png" style="width:40%"/>
+<img alt="example of an image of duck blending with the green color of the document" class="example" src="examples/ducky_difference.png" style="width:30%"/>
 </p>
 </div>
 <p>
 Note how the image is not blending with the green color.
 </p>
+</div>
+
+<div class="example">
+<p>Given the following sample markup:</p>
+<pre>
+<pre>
+<!-- -->&lt;body>
+<!-- -->   &lt;div>
+<!-- -->     &lt;p>'overlay' blending on text&lt;/p>
+<!-- -->   &lt;/div>
+<!-- -->&lt;/body>
+</pre>
+<p>And the following style rule:</p>
+<pre>
+div { background-image: url('texture.png'); }
+@font-face {
+  font-family: "Mythos Std";
+  src: url("http://myfontvendor.com/mythos.otf");
+}
+p {
+  mix-blend-mode: overlay;
+  font-family: "Mythos Std" 
+}
+</pre>
+<div class="figure">
+<p>
+<img alt="example of text that has an overlay blend on top of a texture" class="example" src="examples/overlay_text.png" style="width:75%"/>
+</p>
+</div>
 </div>
 
 <h4 id="isolation">The <span class="prop-name">'isolation'</span> property</h4>
@@ -892,8 +934,8 @@ as follows:</p>
 <p>Given the following sample markup:</p>
 <pre>
 <!-- -->&lt;body>
-<!-- -->   &lt;div>&lt;/div>>
-<!-- -->&lt;/body>"
+<!-- -->   &lt;div>&lt;/div>
+<!-- -->&lt;/body>
 </pre>
 <p>And the following style rule:</p>
 <pre>
@@ -909,13 +951,13 @@ div {
 </pre>
 <div class="figure">
 <p>
-<img alt="example of div that has an image of a duck and a gradient that is blending" class="example" src="examples/ducky_background_blend.png" style="width:40%"/>
+<img alt="example of div that has an image of a duck and a gradient that is blending" class="example" src="examples/ducky_background_blend.png" style="width:30%"/>
 </p>
 </div>
 <p>
 Note that the gradient is not blending with the color of &lt;body>. Instead it retains its original color.
+</p>
 </div>
-
 
 <h2 id="canvascompositingandblending">Specifying Compositing and Blending in Canvas 2D</h2>
 <p>The <a href="http://www.w3.org/TR/2dcontext">canvas 2d</a> context has the <a href="http://www.w3.org/TR/2dcontext/#dom-context-2d-globalcompositeoperation">globalCompositeOperation</a> attribute that is used to set the current compositing and blending operator.<p>

@@ -894,13 +894,28 @@ body { background-color: green; }
 img { mix-blend-mode: multiply; }
 </pre>
 
+   <p> ... will produce the following result:
+
+   <div class=figure>
+    <p> <img
+     alt="example of an image of duck with the green color of the document"
+     class=example src="examples/ducky_normal.png" style="width:30%">
+   </div>
+
+   <p>If we change the style rule to include blending:
+
+   <pre>
+body { background-color: green; }
+img { mix-blend-mode: multiply; }
+</pre>
+
    <p> ... the output will be the image blending with the green background of
-    &lt;body since it is its ancestor.
+    the &lt;body> element.
 
    <div class=figure>
     <p> <img
      alt="example of an image of duck blending with the green color of the document"
-     class=example src="examples/ducky_multiply.png" style="width:40%">
+     class=example src="examples/ducky_multiply.png" style="width:30%">
    </div>
   </div>
 
@@ -926,7 +941,7 @@ circle { mix-blend-mode: screen; }
 
    <div class=figure>
     <p> <img alt="example of 3 circles blending with a screen blend mode"
-     class=example src="examples/screen_example.svg" style="width:40%">
+     class=example src="examples/screen_example.svg" style="width:30%">
    </div>
   </div>
 
@@ -953,10 +968,45 @@ img { mix-blend-mode: difference; }
    <div class=figure>
     <p> <img
      alt="example of an image of duck blending with the green color of the document"
-     class=example src="examples/ducky_difference.png" style="width:40%">
+     class=example src="examples/ducky_difference.png" style="width:30%">
    </div>
 
    <p> Note how the image is not blending with the green color.
+  </div>
+
+  <div class=example>
+   <p>Given the following sample markup:
+
+   <pre>
+</pre>
+
+   <pre>
+<!-- -->&lt;body>
+<!-- -->   &lt;div>
+<!-- -->     &lt;p>'overlay' blending on text&lt;/p>
+<!-- -->   &lt;/div>
+<!-- -->&lt;/body>
+</pre>
+
+   <p>And the following style rule:
+
+   <pre>
+div { background-image: url('texture.png'); }
+@font-face {
+  font-family: "Mythos Std";
+  src: url("http://myfontvendor.com/mythos.otf");
+}
+p {
+  mix-blend-mode: overlay;
+  font-family: "Mythos Std" 
+}
+</pre>
+
+   <div class=figure>
+    <p> <img
+     alt="example of text that has an overlay blend on top of a texture"
+     class=example src="examples/overlay_text.png" style="width:75%">
+   </div>
   </div>
 
   <h4 id=isolation><span class=secno>3.4.2. </span>The <span
@@ -1288,8 +1338,8 @@ as follows:</p>
 
    <pre>
 <!-- -->&lt;body>
-<!-- -->   &lt;div>&lt;/div>>
-<!-- -->&lt;/body>"
+<!-- -->   &lt;div>&lt;/div>
+<!-- -->&lt;/body>
 </pre>
 
    <p>And the following style rule:
@@ -1310,7 +1360,7 @@ div {
     <p> <img
      alt="example of div that has an image of a duck and a gradient that is blending"
      class=example src="examples/ducky_background_blend.png"
-     style="width:40%">
+     style="width:30%">
    </div>
 
    <p> Note that the gradient is not blending with the color of &lt;body>.
