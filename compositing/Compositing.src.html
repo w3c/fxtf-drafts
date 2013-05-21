@@ -302,6 +302,24 @@ The second part will describe the algorithms of Porter Duff compositing and blen
 <p>
 Each section of this document is normative unless otherwise specified.<br/>
 </p>
+
+<h3>Module interactions</h3>
+
+<p>This specification defines a set of CSS properties that affect the visual rendering of elements to which
+  those properties are applied; these effects are applied after elements have been sized and positioned according
+  to the <a href="http://www.w3.org/TR/CSS2/visuren.html" title="Visual formatting model">Visual formatting model</a>
+  from [[!CSS21]]. Some values of these properties result in the creation of a
+  <a href="http://www.w3.org/TR/CSS2/visuren.html#containing-block" title="Visual formatting model">containing block</a>,
+  and/or the creation of a <a href="http://www.w3.org/TR/CSS2/visuren.html#z-index" title="Visual formatting model">stacking
+  context</a>.
+</p>
+
+<p>The 'background-blend-mode' property also builds upon the properties defined in the <a href="http://www.w3.org/TR/css3-background/#placement" title="Backgrounds and Borders">CSS  Backgrounds and Borders</a> module.
+</p>
+
+<p>Blending extends the rules in <a href="http://www.w3.org/TR/2003/REC-SVG11-20030114/masking.html#SimpleAlphaBlending" title="simple alpha blending">Section 14.2 Simple alpha compositing</a> of [[SVG11]] and <a href="http://www.w3.org/TR/css3-color/#alpha" title="simple alpha compositing">simple alpha compositing</a> of [[!CSS3COLOR]].
+</p>
+
 <h3>Values</h3>
  <p>This specification follows the <a
    href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
@@ -321,6 +339,8 @@ Each section of this document is normative unless otherwise specified.<br/>
    keyword as their property value. For readability it has not been repeated
    explicitly.
    </p>
+   
+   <p>This module also extends the <a href="http://www.w3.org/TR/2dcontext2/#dom-context-2d-globalcompositeoperation" title= "canvas 2d globalcompositeoperation">'globalcompositeoperation'</a> as defined in [[!2DCONTEXT2]].
    
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="compositingandblendingorder">Order of graphical operations</h3>
@@ -566,7 +586,6 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <p>And the following style rule:</p>
 <pre>
 body { background-color: green; }
-img { mix-blend-mode: multiply; }
 </pre>
 <p>
 ... will produce the following result:
