@@ -360,6 +360,9 @@
 
    <li><a href="#reading-this-document"><span class=secno>2. </span>Reading
     This Document</a>
+    <ul class=toc>
+     <li><a href="#values"><span class=secno>2.1. </span>Values</a>
+    </ul>
 
    <li><a href="#csscompositingandblending"><span class=secno>3.
     </span>Specifying Compositing and Blending in CSS </a>
@@ -581,6 +584,25 @@
   <p> Each section of this document is normative unless otherwise
    specified.<br>
 
+  <h3 id=values><span class=secno>2.1. </span>Values</h3>
+
+  <p>This specification follows the <a
+   href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
+   definition conventions</a> from <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
+   this specification are defined in CSS Level 2 Revision 1 <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Other CSS modules may expand
+   the definitions of these value types: for example <a href="#CSS3COLOR"
+   rel=biblioentry>[CSS3COLOR]<!--{{CSS3COLOR}}--></a>, when combined with
+   this module, expands the definition of the &lt;color> value type as used
+   in this specification.
+
+  <p>In addition to the property-specific values listed in their definitions,
+   all properties defined in this specification also accept the <a
+   href="http://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a>
+   keyword as their property value. For readability it has not been repeated
+   explicitly.
+
   <h2 id=csscompositingandblending><span class=secno>3. </span>Specifying
    Compositing and Blending in CSS</h2>
 
@@ -589,8 +611,9 @@
 
   <p>The compositing model must follow the <a
    href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG
-   compositing</a> model: first any filter effect is applied, then any
-   clipping, masking, blending and compositing.
+   compositing</a> model <a href="#SVG11"
+   rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>: first any filter effect is
+   applied, then any clipping, masking, blending and compositing.
 
   <h3 id="csscompositingrules_CSS"><span class=secno>3.2. </span>Behavior
    specific to CSS</h3>
@@ -599,13 +622,15 @@
    href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a>, its <a
    href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a>
-   and that of all of its children must revert to ‘<code
+   <a href="#CSS3-TRANSFORMS"
+   rel=biblioentry>[CSS3-TRANSFORMS]<!--{{CSS3-TRANSFORMS}}--></a> and that
+   of all of its children must revert to ‘<code
    class=property>flat</code>’.<br>
    The application of non-default blending<!-- or compositing--> to an
    element must also establish a <a
-   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the
-   same way that CSS <a
-   href="http://www.w3.org/TR/css3-color/#transparency">‘<code
+   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> <a
+   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a> the same way
+   that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a> does. One of the consequences is that
    elements with z-index must not honor the depth of elements outside of the
    group.<br>
@@ -872,8 +897,9 @@ as follows:</p>
    href="#blendingluminosity">luminosity</a></pre>
 
   <p class=note>Applying a non-default blendmode to the element must
-   establish a new stacking context/group. This group will then be blended
-   and composited.
+   establish a new stacking context/group <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. This group will then be
+   blended and composited.
 
   <div class=example>
    <p>Given the following sample markup:
@@ -1017,7 +1043,9 @@ p {
    Groups can be set to non-isolated with the ‘<code
    class=property>auto</code>’ keyword. However certain operations that
    cause the creation of stacking context (such as 3D transforms or a
-   non-default blend mode) will cause a group to be isolated.<br>
+   non-default blend mode) <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a> will cause a group to be
+   isolated.<br>
    This behavior is described in more detail in <a
    href="#isolatedgroups">Isolated Gropus</a>.
 
@@ -2789,21 +2817,45 @@ components having the minimum, middle, and maximum values upon entry to the func
   <h2 id=references1><span class=secno>13. </span>References</h2>
 
   <h3 id=normref><span class=secno>13.1. </span>Normative References</h3>
+  <!--begin-normative-->
+  <!-- Sorted by label -->
+
+  <dl class=bibliography>
+   <dd style="display: none"><!-- keeps the doc valid if the DL is empty -->
+    <!---->
+
+   <dt id=CSS21>[CSS21]
+
+   <dd>Bert Bos; et al. <a
+    href="http://www.w3.org/TR/2011/REC-CSS2-20110607"><cite>Cascading Style
+    Sheets Level 2 Revision 1 (CSS 2.1) Specification.</cite></a> 7 June
+    2011. W3C Recommendation. URL: <a
+    href="http://www.w3.org/TR/2011/REC-CSS2-20110607">http://www.w3.org/TR/2011/REC-CSS2-20110607</a>
+   </dd>
+   <!---->
+
+   <dt id=RFC2119>[RFC2119]
+
+   <dd>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key
+    words for use in RFCs to Indicate Requirement Levels.</cite></a> Internet
+    RFC 2119. URL: <a
+    href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a>
+   </dd>
+   <!---->
+
+   <dt id=SVG11>[SVG11]
+
+   <dd>Erik Dahlström; et al. <a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/"><cite>Scalable
+    Vector Graphics (SVG) 1.1 (Second Edition).</cite></a> 16 August 2011.
+    W3C Recommendation. URL: <a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/">http://www.w3.org/TR/2011/REC-SVG11-20110816/</a>
+   </dd>
+   <!---->
+  </dl>
+  <!--end-normative-->
 
   <dl>
-   <dt id=ref-CSS21><strong class=normref>[CSS21]</strong>
-
-   <dd><strong>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1)
-    Specification</strong>, Bert Bos, Tantek Çelik, Ian Hickson, Håkon Wium
-    Lie, eds., W3C, 23 April 2009, (Candidate Recommendation)
-
-   <dt id=ref-NVDL><strong class=normref>[NVDL]</strong>
-
-   <dd><strong>Document Schema Definition Languages (DSDL) — Part 4:
-    Namespace-based Validation Dispatching Language — NVDL. ISO/IEC FCD
-    19757-4</strong>, See <a
-    href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/</a>
-
    <dt id=ref-PORTERDUFF><strong class=normref>[PORTERDUFF]</strong>
 
    <dd><strong>Compositing Digital Images</strong>, T. Porter, T. Duff,
@@ -2819,12 +2871,6 @@ components having the minimum, middle, and maximum values upon entry to the func
     Consortium, 30 April 2009. <br>
     The <a href="http://www.w3.org/TR/SVGCompositing/">latest edition of SVG
     Compositing</a> is available at http://www.w3.org/TR/SVGCompositing/.
-
-   <dt id=ref-svg11><strong class=normref>[SVG11]</strong>
-
-   <dd><strong>Scalable Vector Graphics (SVG) 1.1 Specification</strong>,
-    Dean Jackson editor, W3C, 14 January 2003 (Recommendation). See <a
-    href="http://www.w3.org/TR/2003/REC-SVG11-20030114/">http://www.w3.org/TR/2003/REC-SVG11-20030114/</a>
 
    <dt id=ref-svgt12><strong class=normref>[SVGT12]</strong>
 
@@ -2847,3 +2893,30 @@ components having the minimum, middle, and maximum values upon entry to the func
     (Working Draft). See <a
     href="http://www.w3.org/TR/2008/WD-html5-20080610/">http://www.w3.org/TR/2008/WD-html5-20080610/</a>
   </dl>
+  <!--begin-informative-->
+  <!-- Sorted by label -->
+
+  <dl class=bibliography>
+   <dd style="display: none"><!-- keeps the doc valid if the DL is empty -->
+    <!---->
+
+   <dt id=CSS3-TRANSFORMS>[CSS3-TRANSFORMS]
+
+   <dd>Simon Fraser; et al. <a
+    href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/"><cite>CSS
+    Transforms.</cite></a> 11 September 2012. W3C Working Draft. (Work in
+    progress.) URL: <a
+    href="http://www.w3.org/TR/2012/WD-css3-transforms-20120911/">http://www.w3.org/TR/2012/WD-css3-transforms-20120911/</a>
+   </dd>
+   <!---->
+
+   <dt id=CSS3COLOR>[CSS3COLOR]
+
+   <dd>Tantek Çelik; Chris Lilley; L. David Baron. <a
+    href="http://www.w3.org/TR/2011/REC-css3-color-20110607"><cite>CSS Color
+    Module Level 3.</cite></a> 7 June 2011. W3C Recommendation. URL: <a
+    href="http://www.w3.org/TR/2011/REC-css3-color-20110607">http://www.w3.org/TR/2011/REC-css3-color-20110607</a>
+   </dd>
+   <!---->
+  </dl>
+  <!--end-informative-->

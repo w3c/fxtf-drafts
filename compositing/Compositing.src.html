@@ -302,16 +302,35 @@ The second part will describe the algorithms of Porter Duff compositing and blen
 <p>
 Each section of this document is normative unless otherwise specified.<br/>
 </p>
+<h3>Values</h3>
+ <p>This specification follows the <a
+   href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
+   definition conventions</a> from <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
+   this specification are defined in CSS Level 2 Revision 1 <a
+   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Other CSS
+   modules may expand the definitions of these value types: for example <a
+   href="#CSS3COLOR" rel=biblioentry>[CSS3COLOR]<!--{{CSS3COLOR}}--></a>,
+   when combined with this module, expands the definition of the &lt;color>
+   value type as used in this specification.
+  </p>
 
+  <p>In addition to the property-specific values listed in their definitions,
+   all properties defined in this specification also accept the <a
+   href="http://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a>
+   keyword as their property value. For readability it has not been repeated
+   explicitly.
+   </p>
+   
 <h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
 <h3 id="compositingandblendingorder">Order of graphical operations</h3>
-The compositing model must follow the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing</a> model: first any filter effect is applied, then any clipping, masking,  blending and compositing.
+The compositing model must follow the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing</a> model [[!SVG11]]: first any filter effect is applied, then any clipping, masking,  blending and compositing.
 </h3>
 
 <h3 id="csscompositingrules_CSS">Behavior specific to CSS</h3>
 <p>
-If an element specifies non-default blending<!--, compositing--> or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> and that of all of its children must revert to 'flat'.<br/>
-The application of non-default blending<!-- or compositing--> to an element must also establish a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
+If an element specifies non-default blending<!--, compositing--> or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> [[CSS3-TRANSFORMS]] and that of all of its children must revert to 'flat'.<br/>
+The application of non-default blending<!-- or compositing--> to an element must also establish a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
 <!--Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered a group. HTML elements themselves should not create groups.-->
 </p>
 <p class="issue">
@@ -535,7 +554,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <p>The syntax of the property of <var>&lt;blend-mode&gt;</var> is given with:</p>
 <pre class="blendmode"><dfn id="ltblendmodegt"><var>&lt;blend-mode&gt;</var></dfn> = <a href="#blendingnormal">normal</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a></pre>
 
-<p class="note">Applying a non-default blendmode to the element must establish a new stacking context/group. This group will then be blended and composited.</p>
+<p class="note">Applying a non-default blendmode to the element must establish a new stacking context/group [[!CSS21]]. This group will then be blended and composited.</p>
 
 <div class="example">
 <p>Given the following sample markup:</p>
@@ -658,7 +677,7 @@ Text with a blend overlay on top of an image.
 <p>
 Defines whether a group is isolated or not.<br />
 When a group is isolated, the group's backdrop must be replaced with transparent black.<br/>
-Groups can be set to non-isolated with the 'auto' keyword. However certain operations that cause the creation of stacking context (such as 3D transforms or a non-default blend mode) will cause a group to be isolated.<br/>
+Groups can be set to non-isolated with the 'auto' keyword. However certain operations that cause the creation of stacking context (such as 3D transforms or a non-default blend mode)  [[!CSS21]] will cause a group to be isolated.<br/>
 This behavior is described in more detail in <a href="#isolatedgroups">Isolated Gropus</a>.
 </p>
 
@@ -1897,19 +1916,8 @@ If this rule is not followed, an attacker could infer information and mount a ti
 
 <h2 id="references1">References</h2>
 <h3 id="normref">Normative References</h3>
+<!--normative-->
 <dl>
-  <dt id="ref-CSS21"><strong class="normref">[CSS21]</strong></dt>
-    <dd><strong>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</strong>, 
-    Bert Bos, Tantek Çelik, Ian Hickson, Håkon Wium Lie, eds.,
-    W3C, 23 April 2009, (Candidate Recommendation) </dd>
-
-  <dt id="ref-NVDL"><strong class="normref">[NVDL]</strong></dt>
-    <dd><strong>Document Schema Definition Languages (DSDL) — Part 4:
-      Namespace-based Validation Dispatching Language — NVDL. ISO/IEC FCD
-      19757-4</strong>, See <a
-      href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/</a>
-    </dd>
-
   <dt id="ref-PORTERDUFF"><strong class="normref">[PORTERDUFF]</strong></dt>
     <dd><strong>Compositing Digital Images</strong>, T. Porter, T. Duff,
       SIGGRAPH '84 Conference Proceedings, Association for Computing
@@ -1922,12 +1930,6 @@ If this rule is not followed, an attacker could infer information and mount a ti
     <br/>The <a href="http://www.w3.org/TR/SVGCompositing/">latest edition of SVG Compositing</a> is available at
     http://www.w3.org/TR/SVGCompositing/.
   </dd>
-
-  <dt id="ref-svg11"><strong class="normref">[SVG11]</strong></dt>
-    <dd><strong>Scalable Vector Graphics (SVG) 1.1 Specification</strong>,
-      Dean Jackson editor, W3C, 14 January 2003 (Recommendation). See <a
-      href="http://www.w3.org/TR/2003/REC-SVG11-20030114/">http://www.w3.org/TR/2003/REC-SVG11-20030114/</a>
-    </dd>
   <dt id="ref-svgt12"><strong class="normref">[SVGT12]</strong></dt>
     <dd><strong>Scalable Vector Graphics (SVG) Tiny 1.2 Specification</strong>,
       Dean Jackson editor, W3C, 22 December 2008 (Recommendation). See <a
@@ -1946,6 +1948,7 @@ If this rule is not followed, an attacker could infer information and mount a ti
       href="http://www.w3.org/TR/2008/WD-html5-20080610/">http://www.w3.org/TR/2008/WD-html5-20080610/</a>
     </dd>
 </dl>
+<!--informative-->
 
 </body>
 </html>
