@@ -6,19 +6,20 @@
   <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
   <title>CSS Masking</title>
 
-  <link href="http://purl.org/dc/terms/" rel=schema.dc>
+  <link href="http://purl.org/dc/terms/" rel=schema.dcterms>
   <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
-   rel=dc.rights>
-  <meta content="CSS Masking" name=dc.title>
-  <meta content=text name=dc.type>
-  <meta content=2013-04-10 name=dc.date>
-  <meta content="Dirk Schulze" name=dc.creator>
-  <meta content="Brian Birtles" name=dc.creator>
+   rel=dcterms.rights>
+  <meta content="CSS Masking" name=dcterms.title>
+  <meta content=text name=dcterms.type>
+  <meta content=2013-05-22 name=dcterms.date>
+  <meta content="Dirk Schulze" name=dcterms.creator>
+  <meta content="Brian Birtles" name=dcterms.creator>
   <meta
    content="<a href=&quot;http://www.xanthir.com/contact/&quot;>Tab Atkins Jr.</a>"
-   name=dc.creator>
-  <meta content=W3C name=dc.publisher>
-  <meta content="http://dev.w3.org/csswg/css-masking/" name=dc.identifier>
+   name=dcterms.creator>
+  <meta content=W3C name=dcterms.publisher>
+  <meta content="http://dev.w3.org/csswg/css-masking/"
+   name=dcterms.identifier>
   <link href="#contents" rel=contents>
   <link href="#index" rel=index>
   <link href=default.css rel=stylesheet type="text/css">
@@ -35,14 +36,14 @@
 
    <h1>CSS Masking Level 1</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 10 April 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 22 May 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd><a
      href="http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html">http://dvcs.w3.org/hg/FXTF/raw-file/default/masking/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-css-masking-20130410/-->
+     <!--http://www.w3.org/TR/2013/WD-css-masking-20130522/-->
 
     <dt>Latest version:
 
@@ -271,6 +272,8 @@
       class=secno>10.1. </span>Conformance to CSS Background and Borders</a>
     </ul>
 
+   <li class=no-num><a href="#acknowledgments">Acknowledgments</a>
+
    <li class=no-num><a href="#references"> References</a>
     <ul class=toc>
      <li class=no-num><a href="#normative-references"> Normative
@@ -354,7 +357,11 @@
    href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Some values of
    these properties result in the creation of a <a
    href="http://www.w3.org/TR/CSS2/visuren.html#z-index"
-   title="Visual formatting model">stacking context</a>.
+   title="Visual formatting model">stacking context</a>. Furthermore, this
+   specification replaces the section <a
+   href="http://www.w3.org/TR/CSS2/visufx.html#clipping">Clipping: the
+   ‘<code class=property>clip</code>’ property</a> from <a href="#CSS21"
+   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
 
   <p>The compositing model follows the SVG compositing model <a href="#SVG11"
    rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>: first any filter effect <a
@@ -536,9 +543,11 @@
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -582,12 +591,12 @@
 
   <pre class=prod><var><dfn
    id=ltmask-sourcegt>&lt;mask-source&gt;</dfn></var> = <a
-   href="#lsquolturlgtrsquo"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
+   href="#lturlgt"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
    href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a></pre>
 
   <pre class=prod><dfn
    id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(<a
-   href="#lsquoltcompound-selectorgtrsquo"><var>&lt;compound-selector&gt;</var></a>#)</pre>
+   href="#ltcompound-selectorgt"><var>&lt;compound-selector&gt;</var></a>#)</pre>
 
   <p class=note>A <a
    href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a> can just be
@@ -597,8 +606,7 @@
    below.)
 
   <dl>
-   <dt> <dfn id=lsquolturlgtrsquo>‘<code
-    class=css>&lt;url&gt;</code>’</dfn>
+   <dt> <dfn id=lturlgt>‘<code class=css>&lt;url&gt;</code>’</dfn>
 
    <dd> A URL reference to a <a href="#MaskElement"><code
     class=element-name>&lt;mask></code></a> element (for example ‘<code
@@ -625,7 +633,7 @@
     order</a> (as defined in <a href="#DOM"
     rel=biblioentry>[DOM]<!--{{!DOM}}--></a>).
     <dl>
-     <dt><dfn id=lsquoltcompound-selectorgtrsquo>‘<code
+     <dt><dfn id=ltcompound-selectorgt>‘<code
       class=css>&lt;compound-selector&gt;</code>’</dfn>
 
      <dd> A <a href="http://dev.w3.org/csswg/selectors4/#compound">compound
@@ -730,9 +738,11 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -772,22 +782,20 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
   <p>Values have the following meanings:
 
   <dl>
-   <dt><dfn id=lsquoalpharsquo>‘<code class=css>alpha</code>’</dfn>
+   <dt><dfn id=alpha>‘<code class=css>alpha</code>’</dfn>
 
-   <dd> A value of ‘<a href="#lsquoalpharsquo"><code
-    class=css>alpha</code></a>’ indicates that the alpha values of the mask
-    image should be used as the mask values. See <a
-    href="#MaskValues">Calculating mask values</a>.
+   <dd> A value of ‘<a href="#alpha"><code class=css>alpha</code></a>’
+    indicates that the alpha values of the mask image should be used as the
+    mask values. See <a href="#MaskValues">Calculating mask values</a>.
 
-   <dt><dfn id=lsquoluminancersquo>‘<code
-    class=css>luminance</code>’</dfn>
+   <dt><dfn id=luminance>‘<code class=css>luminance</code>’</dfn>
 
-   <dd> A value of ‘<a href="#lsquoluminancersquo"><code
+   <dd> A value of ‘<a href="#luminance"><code
     class=css>luminance</code></a>’ indicates that the luminance values of
     the mask image should be used as the mask values. See <a
     href="#MaskValues">Calculating mask values</a>.
 
-   <dt><dfn id=lsquoautorsquo>‘<code class=css>auto</code>’</dfn>
+   <dt><dfn id=auto>‘<code class=css>auto</code>’</dfn>
 
    <dd>
     <p> If the <a
@@ -810,19 +818,18 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
     class=property>mask-type</code></a>’ property sets the mask type value
     for the <a href="#MaskElement"><code
     class=element-name>&lt;mask></code></a> element to ‘<a
-    href="#lsquoalpharsquo"><code class=css>alpha</code></a>’. The ‘<a
+    href="#alpha"><code class=css>alpha</code></a>’. The ‘<a
     href="#mask-image"><code class=property>mask-image</code></a>’ property
     has a reference to this <a href="#MaskElement"><code
     class=element-name>&lt;mask></code></a> element and the ‘<a
     href="#mask-source-type"><code
     class=property>mask-source-type</code></a>’ property has a value of
-    ‘<a href="#lsquoluminancersquo"><code
-    class=css>luminance</code></a>’. The ‘<a
-    href="#mask-source-type"><code
+    ‘<a href="#luminance"><code class=css>luminance</code></a>’. The
+    ‘<a href="#mask-source-type"><code
     class=property>mask-source-type</code></a>’ property will override the
     definition of ‘<a href="#mask-type"><code
-    class=property>mask-type</code></a>’ to ‘<a
-    href="#lsquoluminancersquo"><code class=css>luminance</code></a>’.
+    class=property>mask-type</code></a>’ to ‘<a href="#luminance"><code
+    class=css>luminance</code></a>’.
 
    <pre>
 &lt;mask id="SVGMask" mask-type="alpha" maskContentUnits="objectBoundingBox"&gt;
@@ -871,9 +878,11 @@ img { mask-image: url(#mask), url(resources.svg#mask2) }
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -966,9 +975,11 @@ body {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -1066,9 +1077,11 @@ body {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -1103,32 +1116,29 @@ body {
   <p>Values have the following meanings:
 
   <dl>
-   <dt><dfn id=lsquoborder-boxrsquo
-    title="''border-box''!!'mask-clip' value"> ‘<code
+   <dt><dfn id=border-box title="''border-box''!!'mask-clip' value"> ‘<code
     class=css>border-box</code>’</dfn>
 
    <dd>The painted content is rectricted to (clipped to) the <span>border
     box</span> respectively <span>painting box</span> for objects without
     associated layout box.
 
-   <dt><dfn id=lsquopadding-boxrsquo
-    title="''padding-box''!!'mask-clip' value"> ‘<code
-    class=css>padding-box</code>’</dfn>
+   <dt><dfn id=padding-box title="''padding-box''!!'mask-clip' value">
+    ‘<code class=css>padding-box</code>’</dfn>
 
    <dd>The painted content is rectricted to (clipped to) the <span>padding
     box.</span>
 
-   <dt><dfn id=lsquocontent-boxrsquo
-    title="''content-box''!!'mask-clip' value"> ‘<code
-    class=css>content-box</code>’</dfn>
+   <dt><dfn id=content-box title="''content-box''!!'mask-clip' value">
+    ‘<code class=css>content-box</code>’</dfn>
 
    <dd>The painted content is rectricted to (clipped to) the <span>content
     box</span> respectively <span>object bounding box</span> <a href="#SVG11"
     rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a> for objects without
     associated layout box.
 
-   <dt><dfn id=lsquono-cliprsquo title="''no-clip''!!'mask-clip' value">
-    ‘<code class=css>no-clip</code>’</dfn>
+   <dt><dfn id=no-clip title="''no-clip''!!'mask-clip' value"> ‘<code
+    class=css>no-clip</code>’</dfn>
 
    <dd>The painted content is not restricted (not clipped). The <a
     href="#mask-painting-area">mask painting area</a> is set to the <a
@@ -1137,8 +1147,8 @@ body {
 
   <p class=note>Note that there is no corresponding box for ‘<code
    class=css>padding-box</code>’ on objects without associated layout box
-   and ‘<a href="#lsquocontent-boxrsquo0"><code
-   class=css>content-box</code></a>’ is choosen instead.
+   and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
+   is choosen instead.
 
   <p>See the section <a href="#layering">“Layering multiple mask
    images”</a> for how ‘<a href="#mask-clip"><code
@@ -1172,9 +1182,11 @@ body {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -1210,23 +1222,20 @@ body {
    mask positioning area(s).
 
   <dl>
-   <dt><dfn id=lsquopadding-boxrsquo0
-    title="''padding-box''!!'mask-origin' value"> ‘<code
-    class=css>padding-box</code>’</dfn>
+   <dt><dfn id=padding-box0 title="''padding-box''!!'mask-origin' value">
+    ‘<code class=css>padding-box</code>’</dfn>
 
    <dd>The position is relative to the padding box. (For single boxes
     ‘<code class=css>0 0</code>’ is the upper left corner of the padding
     edge, ‘<code class=css>100% 100%</code>’ is the lower right corner.)
 
-   <dt><dfn id=lsquoborder-boxrsquo0
-    title="''border-box''!!'mask-origin' value"> ‘<code
-    class=css>border-box</code>’</dfn>
+   <dt><dfn id=border-box0 title="''border-box''!!'mask-origin' value">
+    ‘<code class=css>border-box</code>’</dfn>
 
    <dd>The position is relative to the border box respectively <span>painting
     box</span> for objects without associated layout box.
 
-   <dt><dfn id=lsquocontent-boxrsquo0>‘<code
-    class=css>content-box</code>’</dfn>
+   <dt><dfn id=content-box0>‘<code class=css>content-box</code>’</dfn>
 
    <dd>The position is relative to the content box respectively object
     bounding box <a href="#SVG11"
@@ -1236,8 +1245,8 @@ body {
 
   <p class=note>Note that there is no corresponding box for ‘<code
    class=css>padding-box</code>’ on objects without associated layout box
-   and ‘<a href="#lsquocontent-boxrsquo0"><code
-   class=css>content-box</code></a>’ is choosen instead.
+   and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
+   is choosen instead.
 
   <p class=note>Note that if ‘<a href="#mask-clip"><code
    class=property>mask-clip</code></a>’ is ‘<code
@@ -1279,9 +1288,11 @@ body {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -1354,9 +1365,11 @@ body {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-      elements</a>
+      elements</a>.
 
     <tr>
      <th>Inherited:
@@ -1469,12 +1482,11 @@ body {
   <p>Values have the following meanings:
 
   <dl>
-   <dt>‘<a href="#lsquoluminancersquo"><code
-    class=css>luminance</code></a>’
+   <dt>‘<a href="#luminance"><code class=css>luminance</code></a>’
 
    <dd>Indicates that the luminance values of the mask should be used.
 
-   <dt>‘<a href="#lsquoalpharsquo"><code class=css>alpha</code></a>’
+   <dt>‘<a href="#alpha"><code class=css>alpha</code></a>’
 
    <dd>Indicates that the alpha values of the mask should be used.
   </dl>
@@ -1485,19 +1497,18 @@ body {
    masking operation. However, the author can override this preference by
    setting the ‘<a href="#mask-source-type"><code
    class=property>mask-source-type</code></a>’ value to something different
-   than ‘<a href="#lsquoautorsquo"><code class=css>auto</code></a>’ on
-   the masked content.
+   than ‘<a href="#auto"><code class=css>auto</code></a>’ on the masked
+   content.
 
   <div class=example>
    <p>In the following example the computed value of ‘<a
     href="#mask-type"><code class=property>mask-type</code></a>’ is ‘<a
-    href="#lsquoluminancersquo"><code class=css>luminance</code></a>’ and
-    the computed value of ‘<a href="#mask-source-type"><code
-    class=property>mask-source-type</code></a>’ is ‘<a
-    href="#lsquoautorsquo"><code class=css>auto</code></a>’. The UA must
-    follow the preferred masking operation defined on the <a
-    href="#MaskElement"><code class=element-name>&lt;mask></code></a>
-    element.
+    href="#luminance"><code class=css>luminance</code></a>’ and the
+    computed value of ‘<a href="#mask-source-type"><code
+    class=property>mask-source-type</code></a>’ is ‘<a href="#auto"><code
+    class=css>auto</code></a>’. The UA must follow the preferred masking
+    operation defined on the <a href="#MaskElement"><code
+    class=element-name>&lt;mask></code></a> element.
 
    <pre><code>
 &lt;svg>
@@ -1514,11 +1525,11 @@ body {
    <p>In the next example the computed value of ‘<a
     href="#mask-source-type"><code
     class=property>mask-source-type</code></a>’ is ‘<a
-    href="#lsquoalpharsquo"><code class=css>alpha</code></a>’ and overrides
-    the preference on the <a href="#MaskElement"><code
+    href="#alpha"><code class=css>alpha</code></a>’ and overrides the
+    preference on the <a href="#MaskElement"><code
     class=element-name>&lt;mask></code></a> element that is computed to ‘<a
-    href="#lsquoluminancersquo"><code class=css>luminance</code></a>’. The
-    mask source is used as an alpha mask.
+    href="#luminance"><code class=css>luminance</code></a>’. The mask
+    source is used as an alpha mask.
 
    <pre><code>
 &lt;svg>
@@ -2298,7 +2309,9 @@ div {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
       elements</a>.
 
@@ -2368,7 +2381,9 @@ div {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
       elements</a>.
 
@@ -2441,7 +2456,9 @@ div {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
       elements</a>.
 
@@ -2515,7 +2532,9 @@ div {
 
      <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a> and <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element and all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
       elements</a>.
 
@@ -2696,9 +2715,8 @@ div {
     <tr>
      <th>Value:
 
-     <td><a
-      href="#lsquoltbasic-shapegtrsquo"><var>&lt;basic-shape&gt;</var></a> |
-      <a href="#ltclip-sourcegt"><var>&lt;clip-source&gt;</var></a> | none
+     <td><a href="#ltbasic-shapegt"><var>&lt;basic-shape&gt;</var></a> | <a
+      href="#ltclip-sourcegt"><var>&lt;clip-source&gt;</var></a> | none
 
     <tr>
      <th>Initial:
@@ -2708,13 +2726,20 @@ div {
     <tr>
      <th>Applies to:
 
-     <td>All elements. SVG <a
+     <td>All elements. In SVG, it applies to <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-      elements</a>, <a
+      elements</a> without the <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement"><code
+      class=element-name>&lt;defs></code></a> element, all <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
       elements</a> and <a href="#ClipPathElement"><code
       class=element-name>&lt;clipPath></code></a>
+  </table>
 
+  <p>.
+
+  <table>
+   <tbody>
     <tr>
      <th>Inherited:
 
@@ -2733,9 +2758,8 @@ div {
     <tr>
      <th>Computed value:
 
-     <td>as specified, but with <a
-      href="#lsquolturlgtrsquo"><var>&lt;url&gt;</var></a> values made
-      absolute
+     <td>as specified, but with <a href="#lturlgt"><var>&lt;url&gt;</var></a>
+      values made absolute
 
     <tr>
      <th>Animatable:
@@ -2753,12 +2777,12 @@ div {
    <var>clipping path</var>.
 
   <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
-   href="#lsquolturlgtrsquo"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
+   href="#lturlgt"><var>&lt;url&gt;</var></a> | <var>child</var> | <a
    href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a>
 </pre>
 
   <dl>
-   <dt> <dfn id=lsquoltbasic-shapegtrsquo>‘<code
+   <dt> <dfn id=ltbasic-shapegt>‘<code
     class=css>&lt;basic-shape&gt;</code>’</dfn>
 
    <dd> A <a href="http://www.w3.org/TR/css3-exclusions/#ltshapegt">basic
@@ -2863,14 +2887,14 @@ div {
   </table>
 
   <dl>
-   <dt><dfn id=lsquononzerorsquo>‘<code class=css>nonzero</code>’</dfn>
+   <dt><dfn id=nonzero>‘<code class=css>nonzero</code>’</dfn>
 
    <dd>See description of <a class=property
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty">‘<code
     class=property>fill-rule</code>’</a> property <a href="#SVG11"
     rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>.
 
-   <dt><dfn id=lsquoevenoddrsquo>‘<code class=css>evenodd</code>’</dfn>
+   <dt><dfn id=evenodd>‘<code class=css>evenodd</code>’</dfn>
 
    <dd>See description of <a class=property
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillRuleProperty">‘<code
@@ -2993,7 +3017,7 @@ div {
    following meanings:
 
   <dl>
-   <dt>‘<a href="#lsquoautorsquo"><code class=css>auto</code></a>’
+   <dt>‘<a href="#auto"><code class=css>auto</code></a>’
 
    <dd>The element does not clip.
 
@@ -3019,22 +3043,21 @@ div {
      id=ltrightgt>&lt;right&gt;</dfn>, <dfn
      id=ltbottomgt>&lt;bottom&gt;</dfn>, and <dfn
      id=ltleftgt>&lt;left&gt;</dfn> may either have a
-     <var>&lt;length&gt;</var> value or ‘<a href="#lsquoautorsquo"><code
+     <var>&lt;length&gt;</var> value or ‘<a href="#auto"><code
      class=css>auto</code></a>’. Negative lengths are permitted. The value
-     ‘<a href="#lsquoautorsquo"><code class=css>auto</code></a>’ means
-     that a given edge of the clipping region will be the same as the edge of
-     the element's generated border box (i.e., ‘<a
-     href="#lsquoautorsquo"><code class=css>auto</code></a>’ means the same
-     as ‘<code class=css>0</code>’ for <a
-     href="#lttopgt"><var>&lt;top&gt;</var></a> and <a
-     href="#ltleftgt"><var>&lt;left&gt;</var></a>, the same as the used value
-     of the height plus the sum of vertical padding and border widths for <a
-     href="#ltbottomgt"><var>&lt;bottom&gt;</var></a>, and the same as the
-     used value of the width plus the sum of the horizontal padding and
-     border widths for <a href="#ltrightgt"><var>&lt;right&gt;</var></a>,
-     such that four ‘<a href="#lsquoautorsquo"><code
-     class=property>auto</code></a>’ values result in the clipping region
-     being the same as the element's border box).
+     ‘<a href="#auto"><code class=css>auto</code></a>’ means that a given
+     edge of the clipping region will be the same as the edge of the
+     element's generated border box (i.e., ‘<a href="#auto"><code
+     class=css>auto</code></a>’ means the same as ‘<code
+     class=css>0</code>’ for <a href="#lttopgt"><var>&lt;top&gt;</var></a>
+     and <a href="#ltleftgt"><var>&lt;left&gt;</var></a>, the same as the
+     used value of the height plus the sum of vertical padding and border
+     widths for <a href="#ltbottomgt"><var>&lt;bottom&gt;</var></a>, and the
+     same as the used value of the width plus the sum of the horizontal
+     padding and border widths for <a
+     href="#ltrightgt"><var>&lt;right&gt;</var></a>, such that four ‘<a
+     href="#auto"><code class=property>auto</code></a>’ values result in
+     the clipping region being the same as the element's border box).
 
     <p> When coordinates are rounded to pixel coordinates, care should be
      taken that no pixels remain visible when <a
@@ -3043,7 +3066,7 @@ div {
      <a href="#lttopgt"><var>&lt;top&gt;</var></a> and <a
      href="#ltbottomgt"><var>&lt;bottom&gt;</var></a> have the same value),
      and conversely that no pixels within the element's border box remain
-     hidden when these values are ‘<a href="#lsquoautorsquo"><code
+     hidden when these values are ‘<a href="#auto"><code
      class=css>auto</code></a>’.
   </dl>
 
@@ -3494,6 +3517,11 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
   <h2 id=security><span class=secno>8. </span>Security</h2>
 
+  <p class=issue>The following description of the security model is not
+   sufficient and detailed enough. See <a
+   href="http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
+   mailing list.
+
   <h3 id=origin-restrictions><span class=secno>8.1. </span>Origin
    Restrictions</h3>
 
@@ -3821,6 +3849,11 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    href="http://lists.w3.org/Archives/Public/public-css-testsuite">public-css-testsuite@w3.org</a>
    mailing list. <!--end-conformance-->
 
+  <h2 class=no-num id=acknowledgments>Acknowledgments</h2>
+
+  <p>Thanks to Elika J. Etemad, Liam R. E. Quin, Björn Höhrmann for their
+   careful reviews, comments, and corrections.
+
   <h2 class=no-num id=references> References</h2>
 
   <h3 class=no-num id=normative-references> Normative references</h3>
@@ -3984,25 +4017,24 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <!--begin-index-->
 
   <ul class=indexlist>
-   <li>‘<code class=css>alpha</code>’, <a href="#lsquoalpharsquo"
+   <li>‘<code class=css>alpha</code>’, <a href="#alpha"
     title="section 5.2."><strong>5.2.</strong></a>
 
    <li>authoring tool, <a href="#authoring-tool"
     title="section 10.1."><strong>10.1.</strong></a>
 
-   <li>‘<code class=css>auto</code>’, <a href="#lsquoautorsquo"
+   <li>‘<code class=css>auto</code>’, <a href="#auto"
     title="section 5.2."><strong>5.2.</strong></a>
 
    <li>‘<code class=css>&lt;basic-shape&gt;</code>’, <a
-    href="#lsquoltbasic-shapegtrsquo"
-    title="section 7.1."><strong>7.1.</strong></a>
+    href="#ltbasic-shapegt" title="section 7.1."><strong>7.1.</strong></a>
 
    <li>''border-box''
     <ul>
-     <li>'mask-clip' value, <a href="#lsquoborder-boxrsquo"
+     <li>'mask-clip' value, <a href="#border-box"
       title="section 5.5."><strong>5.5.</strong></a>
 
-     <li>'mask-origin' value, <a href="#lsquoborder-boxrsquo0"
+     <li>'mask-origin' value, <a href="#border-box0"
       title="section 5.6."><strong>5.6.</strong></a>
     </ul>
 
@@ -4034,20 +4066,19 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     title="section 7.1."><strong>7.1.</strong></a>
 
    <li>‘<code class=css>&lt;compound-selector&gt;</code>’, <a
-    href="#lsquoltcompound-selectorgtrsquo"
+    href="#ltcompound-selectorgt"
     title="section 5.1."><strong>5.1.</strong></a>
 
    <li>''content-box''
     <ul>
-     <li>'mask-clip' value, <a href="#lsquocontent-boxrsquo"
+     <li>'mask-clip' value, <a href="#content-box"
       title="section 5.5."><strong>5.5.</strong></a>
     </ul>
 
-   <li>‘<code class=css>content-box</code>’, <a
-    href="#lsquocontent-boxrsquo0"
+   <li>‘<code class=css>content-box</code>’, <a href="#content-box0"
     title="section 5.6."><strong>5.6.</strong></a>
 
-   <li>‘<code class=css>evenodd</code>’, <a href="#lsquoevenoddrsquo"
+   <li>‘<code class=css>evenodd</code>’, <a href="#evenodd"
     title="section 7.2."><strong>7.2.</strong></a>
 
    <li>&lt;image&gt;, <a href="#ltimagegt"
@@ -4061,7 +4092,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>local coordinate system, <a href="#local-coordinate-system"
     title="section 4."><strong>4.</strong></a>
 
-   <li>‘<code class=css>luminance</code>’, <a href="#lsquoluminancersquo"
+   <li>‘<code class=css>luminance</code>’, <a href="#luminance"
     title="section 5.2."><strong>5.2.</strong></a>
 
    <li>mask, <a href="#MaskProperty"
@@ -4150,11 +4181,11 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>''no-clip''
     <ul>
-     <li>'mask-clip' value, <a href="#lsquono-cliprsquo"
+     <li>'mask-clip' value, <a href="#no-clip"
       title="section 5.5."><strong>5.5.</strong></a>
     </ul>
 
-   <li>‘<code class=css>nonzero</code>’, <a href="#lsquononzerorsquo"
+   <li>‘<code class=css>nonzero</code>’, <a href="#nonzero"
     title="section 7.2."><strong>7.2.</strong></a>
 
    <li>object bounding box units, <a href="#object-bounding-box-units"
@@ -4163,10 +4194,10 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>''padding-box''
     <ul>
-     <li>'mask-clip' value, <a href="#lsquopadding-boxrsquo"
+     <li>'mask-clip' value, <a href="#padding-box"
       title="section 5.5."><strong>5.5.</strong></a>
 
-     <li>'mask-origin' value, <a href="#lsquopadding-boxrsquo0"
+     <li>'mask-origin' value, <a href="#padding-box0"
       title="section 5.6."><strong>5.6.</strong></a>
     </ul>
 
@@ -4188,7 +4219,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <li>&lt;top&gt;, <a href="#lttopgt"
     title="section 7.3."><strong>7.3.</strong></a>
 
-   <li>‘<code class=css>&lt;url&gt;</code>’, <a href="#lsquolturlgtrsquo"
+   <li>‘<code class=css>&lt;url&gt;</code>’, <a href="#lturlgt"
     title="section 5.1."><strong>5.1.</strong></a>
 
    <li>user coordinate system, <a href="#user-coordinate-system"
@@ -4256,14 +4287,14 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>none
 
-     <td>All elements. SVG container elements, graphics elements and
-      &lt;clipPath>
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element, all graphics elements and &lt;clipPath>
 
-     <td>no
+     <td>
 
-     <td>as specified
+     <td>
 
-     <td>visual
+     <td>
 
     <tr>
      <th><a class=property href="#clip-rule">clip-rule</a>
@@ -4302,8 +4333,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>see individual properties
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4339,8 +4370,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>0
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements.
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4356,8 +4387,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>stretch
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements.
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4373,8 +4404,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>0 fill
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements.
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4407,8 +4438,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>auto
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements.
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4423,8 +4454,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>border-box
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4439,8 +4470,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>none
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4455,8 +4486,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>padding-box
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4471,8 +4502,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>0% 0%
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4488,8 +4519,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>repeat
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4504,8 +4535,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>auto
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
@@ -4520,8 +4551,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
      <td>auto
 
-     <td>All elements. In SVG, it applies to container elements and graphics
-      elements
+     <td>All elements. In SVG, it applies to container elements without the
+      &lt;defs> element and all graphics elements.
 
      <td>no
 
