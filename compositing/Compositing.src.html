@@ -355,9 +355,9 @@ If an element specifies non-default blending<!--, compositing--> or <a href="htt
 The application of non-default blending<!-- or compositing--> to an element must also establish a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
 <!--Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered a group. HTML elements themselves should not create groups.-->
 </p>
-<p class="issue">
-This spec assumes that a stacking context creates an offscreen buffer (also known as a group) which is not always the case. Sometimes elements even have internal grouping (for instance with 'background-attachment: fixed'). We need to clarify when groups are created so we can have interoperable behavior. Ideally it would be a new spec or an extension of the spec that describes <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking contexts</a>.
-</p> 
+<p>
+An element that has blending applied, must blend with all the underlying content of the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] that that element belongs to.
+</p>
 
 <h3 id="csscompositingrules_SVG">Behavior specific to SVG</h3>
 <p>
@@ -576,7 +576,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <p>The syntax of the property of <var>&lt;blend-mode&gt;</var> is given with:</p>
 <pre class="blendmode"><dfn id="ltblendmodegt"><var>&lt;blend-mode&gt;</var></dfn> = <a href="#blendingnormal">normal</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a></pre>
 
-<p class="note">Applying a non-default blendmode to the element must establish a new stacking context/group [[!CSS21]]. This group will then be blended and composited.</p>
+<p class="note">Applying a non-default blendmode to the element must establish a new <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]]. This group must then be blended and composited with the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> that contains the element.</p>
 
 <div class="example">
 <p>Given the following sample markup:</p>
