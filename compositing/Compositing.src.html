@@ -344,29 +344,36 @@ Each section of this document is normative unless otherwise specified.<br/>
    explicitly.
    </p>
    
-<h2 id="csscompositingandblending">Specifying Compositing and Blending in CSS </h2>
+<h2 id="csscompositingandblending">Specifying Blending in CSS </h2>
 <h3 id="compositingandblendingorder">Order of graphical operations</h3>
-The compositing model must follow the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing</a> model [[!SVG11]]: first any filter effect is applied, then any clipping, masking,  blending and compositing.
+The compositing model must follow the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing</a> model [[!SVG11]]: first any filter effect is applied, then any clipping, masking, blending and compositing.
 </h3>
 
-<h3 id="csscompositingrules_CSS">Behavior specific to CSS</h3>
-<p>
-If an element specifies non-default blending<!--, compositing--> or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> [[CSS3-TRANSFORMS]] and that of all of its children must revert to 'flat'.<br/>
-The application of non-default blending<!-- or compositing--> to an element must also establish a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/>
-<!--Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered a group. HTML elements themselves should not create groups.-->
+<h3 id="csscompositingrules_CSS">Behavior specific to HTML</h3>
+<!-- <p>
+If an element specifies non-default blending or <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="http://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> [[CSS3-TRANSFORMS]] and that of all of its children must revert to 'flat'.<br/>
+The application of blending other than 'normal' to an element must also establish a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br/> -->
+<p>Everything in CSS that creates a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered an <a href="#isolatedgroups">'isolated' group</a>. HTML elements themselves should not create groups.
 </p>
 <p>
 An element that has blending applied, must blend with all the underlying content of the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] that that element belongs to.
 </p>
 
 <h3 id="csscompositingrules_SVG">Behavior specific to SVG</h3>
-<p>
-In SVG, every element must create a non-isolated group.</p><p class="note">This seems costly but UAs can optimize this by not treating elements with default arguments as groups.</p><br/>
+<p>By default, every element must create a <a href="#isolatedgroups">non-isolated group</a>.</p>
 <!-- SVG has the following <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">compositing model</a>: first any filter effect is applied, then any clipping, masking,  blending and compositing -->
+<br/>
+However, certain operations in SVG will create <a href="#isolatedgroups">isolated groups</a>. The following features must force a group to become isolated:
+<ul>
+<li>opacity</li>
+<li>filters</li>
+<li>transforms</li>
+<li>blending</li>
+<li>masking</li>
+<li>clipping</li>
+</ul>
 </p>
-<p class="issue">
-This SVG spec states that every element creates an 'accumulating' group. In practice, few (no) browsers implemented this. We should update the SVG spec so it follows CSS' rules for grouping.
-</p> 
+
 
 <h3 id="csskeywords">CSS Properties</h3>
 <!--
@@ -477,7 +484,6 @@ as follows:</p>
 <h4 id="mix-blend-mode">The <span class="prop-name">'mix-blend-mode'</span> property</h4>
 
 <p>
-Defines the blend mode that must be used on an element. 
 The blend mode defines the formula that must be used to mix the colors with the backdrop.<br/>
 This behavior is described in more detail in <a href="#blending">Blending</a>.
 </p>
@@ -576,7 +582,7 @@ This behavior is described in more detail in <a href="#blending">Blending</a>.
 <p>The syntax of the property of <var>&lt;blend-mode&gt;</var> is given with:</p>
 <pre class="blendmode"><dfn id="ltblendmodegt"><var>&lt;blend-mode&gt;</var></dfn> = <a href="#blendingnormal">normal</a> | <a href="#blendingmultiply">multiply</a> | <a href="#blendingscreen">screen</a> | <a href="#blendingoverlay">overlay</a> | <a href="#blendingdarken">darken</a> | <a href="#blendinglighten">lighten</a> | <a href="#blendingcolordodge">color-dodge</a> | <a href="#blendingcolorburn">color-burn</a> | <a href="#blendinghardlight">hard-light</a> | <a href="#blendingsoftlight">soft-light</a> | <a href="#blendingdifference">difference</a> | <a href="#blendingexclusion">exclusion</a> | <a href="#blendinghue">hue</a> | <a href="#blendingsaturation">saturation</a> | <a href="#blendingcolor">color</a> | <a href="#blendingluminosity">luminosity</a></pre>
 
-<p class="note">Applying a non-default blendmode to the element must establish a new <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]]. This group must then be blended and composited with the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> that contains the element.</p>
+<p class="note">Applying a blendmode other than <a href="#blendingnormal">'normal'</a> to the element must establish a new <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]]. This group must then be blended and composited with the <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> that contains the element.</p>
 
 <div class="example">
 <p>Given the following sample markup:</p>
@@ -696,10 +702,9 @@ Text with a blend overlay on top of an image.
 
 <h4 id="isolation">The <span class="prop-name">'isolation'</span> property</h4>
 <p>
-Defines whether a group is isolated or not.<br />
-When a group is isolated, the group's backdrop must be replaced with transparent black.<br/>
-Groups can be set to non-isolated with the 'auto' keyword. However certain operations that cause the creation of stacking context (such as 3D transforms or a non-default blend mode)  [[!CSS21]] will cause a group to be isolated.<br/>
-This behavior is described in more detail in <a href="#isolatedgroups">Isolated Gropus</a>.
+In SVG, this defines whether an element is isolated or not.<br />For CSS, setting 'isolation' to 'isolate' will turn the element into a stacking context.<br/> 
+
+By default, elements use the 'auto' keyword which implies that they are not isolation. However operations that cause the creation of stacking context [[!CSS21]] must cause a group to be isolated. These operations are described in <a href="#csscompositingrules_CSS">'behavior specific to HTML'</a> and <a href="#csscompositingrules_SVG">'behavior specific to SVG'</a>.
 </p>
 
 <div class="propdef">
@@ -922,7 +927,7 @@ as follows:</p>
 -->
 <h4 id="background-blend-mode">The <span class="prop-name">'background-blend-mode'</span> property</h4>
 <p>Defines the blending mode of each background image. <br/>
-Each background image must blend with the element's background images that are below it and the element's background color. Background image must not blend with the content that is behind the element.
+Each background image must blend with the element's background images that are below it and the element's background color. Background images must not blend with the content that is behind the element instead they must act as if they are rendered into an isolated group. 
 <br/>The description of the <span class="prop-name">'background-blend-mode'</span> property is
 as follows:</p>
 
@@ -970,7 +975,7 @@ as follows:</p>
     </dd>
 </dl>
 </div>
-<p class="note">The <span class="prop-name">'background-blend-mode'</span> list must apply to images in reverse order. This means that the first element in the list will apply to the image that is on top. If there are fewer items in the list than there are background images, the remaining background images must use the initial value.</p>
+<p>The <span class="prop-name">'background-blend-mode'</span> list must be applied in the same order as <a href="http://www.w3.org/TR/css3-background/#the-background-image">'background-image'</a>[CSS3BG]. This means that the first element in the list will apply to the image that is on top. If there are fewer items in the list than there are background images, the remaining background images must use the initial value.</p>
 
 <div class="example">
 <p>Given the following sample markup:</p>
