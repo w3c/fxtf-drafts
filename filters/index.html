@@ -10,19 +10,18 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-06-08 name=dcterms.date>
+  <meta content=2013-06-12 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
   <meta content=W3C name=dcterms.publisher>
-  <meta content="http://dev.w3.org/csswg/filter-effects/"
-   name=dcterms.identifier>
+  <meta content="http://dev.w3.org/csswg/filters/" name=dcterms.identifier>
   <meta content="text/html; charset=UTF-8" http-equiv=content-type>
   <link href="https://www.w3.org/StyleSheets/TR/W3C-ED.css" rel=stylesheet
    type="text/css">
   <link href="style/default.css" rel=stylesheet type="text/css">
   <script defer=defer
-   src="http://test.csswg.org/harness/annotate.js#FILTER-EFFECTS_DEV"
+   src="https://test.csswg.org/harness/annotate.js#FILTER-EFFECTS_DEV"
    type="text/javascript"></script>
   <script src="../shared/MathJax/MathJax.js?config=MML_SVGorMML,local/local"
    type="text/javascript"></script>
@@ -34,24 +33,24 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 8 June 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 12 June 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
-     href="https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
-     <!--http://www.w3.org/TR/2013/WD-filter-effects-20130608/-->
+     href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
+     <!--http://www.w3.org/TR/2013/WD-filters-20130612/-->
 
     <dt>Latest version:
 
     <dd> <a
-     href="http://www.w3.org/TR/filter-effects/">http://www.w3.org/TR/filter-effects/</a>
+     href="http://www.w3.org/TR/filter-effects/">http://www.w3.org/TR/filters/</a>
 
     <dt>Editor's draft:
 
     <dd><a
-     href="https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
+     href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
 
     <dt>Editors:
 
@@ -141,8 +140,8 @@
    mailing list <a href="mailto:public-fx@w3.org">public-fx@w3.org</a> (see
    <a href="http://www.w3.org/Mail/Request">instructions</a>) is preferred
    for discussion of this specification. When sending e-mail, please put the
-   text “filter-effects” in the subject, preferably like this:
-   “[<!---->filter-effects<!---->] <em>…summary of comment…</em>”
+   text “filters” in the subject, preferably like this:
+   “[<!---->filters<!---->] <em>…summary of comment…</em>”
 
   <p>This document was produced by the <a
    href="http://www.w3.org/Style/CSS/members">CSS Working Group</a> (part of
@@ -405,10 +404,6 @@
 
    <li><a href="#AccessBackgroundImage"><span class=secno>15. </span>The
     ‘<code class=property>enable-background</code>’ property</a>
-    <ul class=toc>
-     <li><a href="#AccessBackgroundImageSVG"><span class=secno>15.1.
-      </span>Accessing the background image in SVG</a>
-    </ul>
 
    <li><a href="#integration-with-css-animations-transitions"><span
     class=secno>16. </span>Integration with CSS Animations and CSS
@@ -1321,7 +1316,7 @@
         class=property>display</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
         class=property>dominant-baseline</code>’</a>, <a
-        href="#EnableBackgroundProperty">‘<code
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
         class=property>enable-background</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
         class=property>fill</code>’</a>, <a
@@ -1356,6 +1351,8 @@
         class=property>glyph-orientation-vertical</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
         class=property>image-rendering</code>’</a>, <a
+        href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+        class=property>isolation</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
         class=property>kerning</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -2050,20 +2047,22 @@
       <dt id=BackgroundImage><span class=attr-value>BackgroundImage</span>
 
       <dd>
-       <p> This keyword represents an image snapshot of the canvas under the
-        <a href="#FilterEffectsRegion">filter region</a> at the time that the
-        <a href="#FilterElement"><code
+       <p> This keyword represents the back drop defined by the current
+        isolation group under the <a href="#FilterEffectsRegion">filter
+        region</a> at the time that the <a href="#FilterElement"><code
         class=element-name>&lt;filter></code></a> element was invoked. See
-        ‘<a href="#enable-background"><code
-        class=property>enable-background</code></a>’ property.
+        ‘<code class=property>isolation</code>’ property <a
+        href="#COMPOSITING"
+        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
       <dt id=BackgroundAlpha><span class=attr-value>BackgroundAlpha</span>
 
       <dd>
        <p> Same as <a href="#BackgroundImage">BackgroundImage</a> except only
         the alpha channel is used. See <a href="#SourceAlpha">SourceAlpha</a>
-        and the ‘<a href="#enable-background"><code
-        class=property>enable-background</code></a>’ property.
+        and the ‘<code class=property>isolation</code>’ property <a
+        href="#COMPOSITING"
+        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
       <dt id=FillPaint><span class=attr-value>FillPaint</span>
 
@@ -2346,7 +2345,7 @@
         class=property>display</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
         class=property>dominant-baseline</code>’</a>, <a
-        href="#EnableBackgroundProperty">‘<code
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
         class=property>enable-background</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
         class=property>fill</code>’</a>, <a
@@ -2381,6 +2380,8 @@
         class=property>glyph-orientation-vertical</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
         class=property>image-rendering</code>’</a>, <a
+        href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+        class=property>isolation</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
         class=property>kerning</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -2614,7 +2615,7 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
   &lt;/defs&gt;
   &lt;rect fill="none" stroke="blue"  
         x="1" y="1" width="498" height="498"/&gt;
-  &lt;g enable-background="new" &gt;
+  &lt;g isolation="isolate" &gt;
     &lt;rect x="100" y="20" width="300" height="460" fill="url(#MyGradient)" /&gt;
     &lt;g font-family="Verdana" font-size="75" fill="#888888" fill-opacity=".6" &gt;
       &lt;text x="50" y="90" filter="url(#Normal)" &gt;Normal&lt;/text&gt;
@@ -2712,7 +2713,7 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
         class=property>display</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
         class=property>dominant-baseline</code>’</a>, <a
-        href="#EnableBackgroundProperty">‘<code
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
         class=property>enable-background</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
         class=property>fill</code>’</a>, <a
@@ -2747,6 +2748,8 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
         class=property>glyph-orientation-vertical</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
         class=property>image-rendering</code>’</a>, <a
+        href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+        class=property>isolation</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
         class=property>kerning</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -3207,7 +3210,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
         class=property>display</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
         class=property>dominant-baseline</code>’</a>, <a
-        href="#EnableBackgroundProperty">‘<code
+        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
         class=property>enable-background</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
         class=property>fill</code>’</a>, <a
@@ -3242,6 +3245,8 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
         class=property>glyph-orientation-vertical</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
         class=property>image-rendering</code>’</a>, <a
+        href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+        class=property>isolation</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
         class=property>kerning</code>’</a>, <a
         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -4006,7 +4011,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -4042,6 +4047,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -4358,7 +4365,7 @@ A' = <a
   &lt;g font-family="Verdana" font-size="40" shape-rendering="crispEdges"&gt;
     &lt;desc&gt;Render the examples using the filters that draw on top of
           an opaque white surface, thus obliterating the background.&lt;/desc&gt;
-    &lt;g enable-background="new"&gt;
+    &lt;g isolation="isolate"&gt;
       &lt;text x="15" y="75"&gt;opacity 1.0&lt;/text&gt;
       &lt;text x="15" y="115" font-size="27"&gt;(with feFlood)&lt;/text&gt;
       &lt;text x="15" y="200"&gt;opacity 0.5&lt;/text&gt;
@@ -4395,7 +4402,7 @@ A' = <a
         &lt;text x="-25" y="275"&gt;arithmetic&lt;/text&gt;
       &lt;/g&gt;
     &lt;/g&gt;
-    &lt;g transform="translate(0,325)" enable-background="new"&gt;
+    &lt;g transform="translate(0,325)" isolation="isolate"&gt;
     &lt;desc&gt;Render the examples using the filters that do not obliterate
           the background, thus sometimes causing the background to continue
           to appear in some cases, and in other cases the background
@@ -4527,7 +4534,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -4563,6 +4570,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -5244,7 +5253,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -5280,6 +5289,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -5745,7 +5756,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -5781,6 +5792,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -6354,7 +6367,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -6390,6 +6403,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -6720,7 +6735,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -6756,6 +6771,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -7112,7 +7129,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -7148,6 +7165,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -7455,7 +7474,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -7491,6 +7510,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -7789,7 +7810,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -7825,6 +7846,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -8148,7 +8171,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -8184,6 +8207,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -8451,7 +8476,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -8487,6 +8512,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -8687,7 +8714,7 @@ A' = <a
   &lt;/defs&gt;
   &lt;rect fill="none" stroke="blue" stroke-width="2"  
         x="1" y="1" width="698" height="498"/&gt;
-  &lt;g enable-background="new" &gt;
+  &lt;g isolation="isolate" &gt;
     &lt;g font-family="Verdana" font-size="75" 
               fill="none" stroke="black" stroke-width="6" &gt;
       &lt;text x="50" y="90"&gt;Unfiltered&lt;/text&gt;
@@ -8787,7 +8814,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -8823,6 +8850,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -9051,7 +9080,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -9087,6 +9116,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -9424,7 +9455,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -9460,6 +9491,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -9667,7 +9700,7 @@ A' = <a
             class=property>display</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#DominantBaselineProperty">‘<code
             class=property>dominant-baseline</code>’</a>, <a
-            href="#EnableBackgroundProperty">‘<code
+            href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
             class=property>enable-background</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#FillProperty">‘<code
             class=property>fill</code>’</a>, <a
@@ -9703,6 +9736,8 @@ A' = <a
             class=property>glyph-orientation-vertical</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
             class=property>image-rendering</code>’</a>, <a
+            href="http://www.w3.org/TR/2012/WD-compositing-20120816/#enable-background">‘<code
+            class=property>isolation</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#KerningProperty">‘<code
             class=property>kerning</code>’</a>, <a
             href="http://www.w3.org/TR/2011/REC-SVG11-20110816/text.html#LetterSpacingProperty">‘<code
@@ -12063,363 +12098,32 @@ void main()
     &lt;/feCustom&gt;
   &lt;/filter&gt; </pre>
 
-      <h2 id=AccessBackgroundImage><span class=secno>15. </span>The ‘<a
-       href="#enable-background"><code
-       class=property>enable-background</code></a>’ property</h2>
+      <h2 id=AccessBackgroundImage><span class=secno>15. </span>The ‘<code
+       class=property>enable-background</code>’ property</h2>
 
-      <table class=propdef id=EnableBackgroundProperty
-       summary="enable-background property">
-       <tbody>
-        <tr>
-         <th>Name:
-
-         <td><dfn id=enable-background>enable-background</dfn>
-
-        <tr>
-         <th>Value:
-
-         <td>accumulate | new
-
-        <tr>
-         <th>Initial:
-
-         <td>accumulate
-
-        <tr>
-         <th>Applies to:
-
-         <td>Typically elements that can contain renderable elements.
-          language is responsible for defining the applicable set of
-          elements. For SVG: <a
-          href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement">container
-          elements</a>
-
-        <tr>
-         <th>Inherited:
-
-         <td>no
-
-        <tr>
-         <th>Percentages:
-
-         <td>N/A
-
-        <tr>
-         <th>Media:
-
-         <td>visual
-
-        <tr>
-         <th>Computed value:
-
-         <td>as specified
-
-        <tr>
-         <th>Animatable:
-
-         <td>no
-      </table>
-
-      <p> The property which enables access to the background image is ‘<a
-       href="#enable-background"><code
-       class=property>enable-background</code></a>’:
-
-      <p> <strong>new</strong>
-
-      <ul>
-       <li>Indicates that a new (i.e., initially transparent black)
-        background image canvas is established and that (in effect) all
-        children of the current <a
-        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">container
-        element</a> element shall be rendered into the new background image
-        canvas in addition to being rendered onto the target device.
-      </ul>
-
-      <p> <strong>accumulate</strong> (the initial/default value)
-
-      <ul>
-       <li>If an ancestor <a
-        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">container
-        element</a> element has a property value of ‘<code
-        class=css>enable-background: new</code>’, then all renderable child
-        elements of the current <a
-        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">container
-        element</a> element are rendered both onto the parent <a
-        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">container
-        element</a> element's background image canvas and onto the target
-        device.
-
-       <li>Otherwise, there is no current background image canvas, so it is
-        only necessary to render <a
-        href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-        elements</a> the renderable elements onto the target device. (No need
-        to render to the background image canvas.)
-      </ul>
-
-      <p> The ‘<a href="#enable-background"><code
-       class=property>enable-background</code></a>’ property has no affect
-       if the ‘<code class=property>isolation</code>’ property has a
-       value of ‘<code class=css>isolate</code>’ <a href="#COMPOSITING"
-       rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>. The
-       isolation group defined by the ‘<code
-       class=property>isolation</code>’ property will establish a new
-       background image canvas.
-
-      <p id=AccessingBackgroundImage>Two possible pseudo input images for
-       filter effects are <a href="#BackgroundImage">BackgroundImage</a> and
-       <a href="#BackgroundAlpha">BackgroundAlpha</a>, which each represent
-       an image snapshot of the canvas under the <a
+      <p>SVG 1.1 introduced the <a class=property
+       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
+       class=property>enable-background</code>’</a> property <a
+       href="#SVG11" rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>. The
+       property defined the back drop under the <a
        href="#FilterEffectsRegion">filter region</a> at the time that the <a
        href="#FilterElement"><code class=element-name>&lt;filter></code></a>
-       element is invoked. <a href="#BackgroundImage">BackgroundImage</a>
-       represents both the color values and alpha channel of the canvas
-       (i.e., RGBA pixel values), whereas <a
-       href="#BackgroundAlpha">BackgroundAlpha</a> represents only the alpha
-       channel.
+       element was invoked. The concept defined by this property was
+       identified to be incompatible with the model of stacking context in
+       CSS at the time writing this specification. UAs can choose to
+       implement the <a class=property
+       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
+       class=property>enable-background</code>’</a> property as defined in
+       SVG 1.1 but will not be compatible to this specification or to CSS
+       Compositing and Blending <a href="#COMPOSITING"
+       rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
-      <p> Implementations <!--of SVG user agents often--> will often need to
-       maintain supplemental background image buffers in order to support the
-       <a href="#BackgroundImage">BackgroundImage</a> and <a
-       href="#BackgroundAlpha">BackgroundAlpha</a> pseudo input images.
-       Sometimes, the background image buffers will contain an in-memory copy
-       of the accumulated painting operations on the current canvas.
-
-      <p> Because in-memory image buffers can take up significant system
-       resources, <!--SVG--> content must explicitly indicate to the
-       <!--SVG--> user agent that the document needs access to the background
-       image before <a href="#BackgroundImage">BackgroundImage</a> and <a
-       href="#BackgroundAlpha">BackgroundAlpha</a> pseudo input images can be
-       used.</p>
-      A background image is what's been <i>rendered before</i> the current
-      element. The host language is responsible for defining what <i>rendered
-      before</i> in this context means. For SVG, that uses the painter's
-      algorithm, <i>rendered before</i> means all of the prior elements in
-      pre order traversal previous to the element to which the filter is
-      applied.
-      <p> If a filter effect specifies either the <a
-       href="#BackgroundImage">BackgroundImage</a> or the <a
-       href="#BackgroundAlpha">BackgroundAlpha</a> pseudo input images and no
-       ancestor <a
-       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">container
-       element</a> element has a property value of ‘<code
-       class=css>enable-background: new</code>’, then the background image
-       request is technically in error. Processing will proceed without
-       interruption (i.e., no error message) and a transparent black image
-       shall be provided in response to the request.
-
-      <h3 id=AccessBackgroundImageSVG><span class=secno>15.1.
-       </span>Accessing the background image in SVG</h3>
-
-      <p> This section only applies to the SVG definition of
-       enable-background.
-
-      <p> Assume you have an element E in the document and that E has a
-       series of ancestors A<sub>1</sub> (its immediate parent),
-       A<sub>2</sub>, etc. (Note: A<sub>0</sub> is E.) Each ancestor
-       A<sub>i</sub> will have a corresponding temporary background image
-       offscreen buffer BUF<sub>i</sub>. The contents of the <em>background
-       image</em> available to a <a href="#FilterElement"><code
-       class=element-name>&lt;filter></code></a> referenced by E is defined
-       as follows:
-
-      <ul>
-       <li>Find the element A<sub>i</sub> with the smallest subscript i
-        (including A<sub>0</sub>=E) for which the ‘<a
-        href="#enable-background"><code
-        class=property>enable-background</code></a>’ property has the value
-        ‘<code class=css>new</code>’.
-        <p class=note>Note that if there is no such ancestor element, then
-         the outermost element A<sub>n</sub> will be chosen.
-
-       <li>For each A<sub>i</sub> (from i=n to 1), initialize BUF<sub>i</sub>
-        to transparent black. Render all children of A<sub>i</sub> up to but
-        not including A<sub>i-1</sub> into BUF<sub>i</sub>. The children are
-        painted, then filtered, clipped, masked and composited using the
-        various painting, filtering, clipping, masking and object opacity
-        settings on the given child. Any filter effects, masking and group
-        opacity that might be set on A<sub>i</sub> do <em>not</em> apply when
-        rendering the children of A<sub>i</sub> into BUF<sub>i</sub>.<br>
-        (Note that for the case of A<sub>0</sub>=E, the graphical contents of
-        E are not rendered into BUF<sub>1</sub> and thus are not part of the
-        background image available to E. Instead, the graphical contents of E
-        are available via the <a href="#SourceGraphic">SourceGraphic</a> and
-        <a href="#SourceAlpha">SourceAlpha</a> pseudo input images.)
-
-       <li>Then, for each A<sub>i</sub> (from i=1 to n-1), composite
-        BUF<sub>i</sub> into BUF<sub>i+1</sub>.
-
-       <li>The accumulated result (i.e., BUF<sub>n</sub>) represents the
-        background image available to E.
-      </ul>
-
-      <div class=example>
-       <pre class=xml>&lt;?xml version="1.0" standalone="no"?&gt;
-&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
-  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
-&lt;svg width="13.5cm" height="2.7cm" viewBox="0 0 1350 270"
-     xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
-  &lt;title&gt;Example enable-background01&lt;/title&gt;
-  &lt;desc&gt;This test case shows five pictures which illustrate the rules
-        for background image processing.&lt;/desc&gt;
-
-  &lt;defs&gt;
-    &lt;filter id="ShiftBGAndBlur" 
-            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
-      &lt;desc&gt;
-        This filter discards the SourceGraphic, if any, and just produces
-        a result consisting of the BackgroundImage shifted down 125 units
-        and then blurred.
-      &lt;/desc&gt;
-      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
-      &lt;feGaussianBlur stdDeviation="8" /&gt;
-    &lt;/filter&gt;
-    &lt;filter id="ShiftBGAndBlur_WithSourceGraphic" 
-            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
-      &lt;desc&gt;
-        This filter takes the BackgroundImage, shifts it down 125 units, blurs it,
-        and then renders the SourceGraphic on top of the shifted/blurred background.
-      &lt;/desc&gt;
-      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
-      &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
-      &lt;feMerge&gt;
-        &lt;feMergeNode in="blur"/&gt;
-        &lt;feMergeNode in="SourceGraphic"/&gt;
-      &lt;/feMerge&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-
-  &lt;g transform="translate(0,0)"&gt;
-    &lt;desc&gt;The first picture is our reference graphic without filters.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(270,0)"&gt;
-    &lt;desc&gt;The second adds an empty 'g' element which invokes ShiftBGAndBlur.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;g filter="url(#ShiftBGAndBlur)"/&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(540,0)"&gt;
-    &lt;desc&gt;The third invokes ShiftBGAndBlur on the inner group.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g filter="url(#ShiftBGAndBlur)" opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(810,0)"&gt;
-    &lt;desc&gt;The fourth invokes ShiftBGAndBlur on the triangle.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"
-               filter="url(#ShiftBGAndBlur)"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(1080,0)"&gt;
-    &lt;desc&gt;The fifth invokes ShiftBGAndBlur_WithSourceGraphic on the triangle.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"
-               filter="url(#ShiftBGAndBlur_WithSourceGraphic)"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
-
-       <div class=figure> <img alt="Example "
-        src="examples/enable-background-01.png">
-        <p class=caption>Example of ‘<a href="#enable-background"><code
-         class=property>enable-background</code></a>’ in use
-       </div>
-
-       <p class=view-as-svg><a href="examples/enable-background-01.svg">View
-        this example as SVG (SVG-enabled browsers only)</a>
-
-       <p> The example above contains five parts, described as follows:
-
-       <ol>
-        <li>The first set is the reference graphic. The reference graphic
-         consists of a red rectangle followed by a 50% transparent <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> element. Inside the <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> is a green circle that
-         partially overlaps the rectangle and a a blue triangle that
-         partially overlaps the circle. The three objects are then outlined
-         by a rectangle stroked with a thin blue line. No filters are applied
-         to the reference graphic.
-
-        <li>The second set enables background image processing and adds an
-         empty <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> element which invokes the
-         ShiftBGAndBlur filter. This filter takes the current accumulated
-         background image (i.e., the entire reference graphic) as input,
-         shifts its offscreen down, blurs it, and then writes the result to
-         the canvas. Note that the offscreen for the filter is initialized to
-         transparent black, which allows the already rendered rectangle,
-         circle and triangle to show through after the filter renders its own
-         result to the canvas.
-
-        <li>The third set enables background image processing and instead
-         invokes the ShiftBGAndBlur filter on the inner <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> element. The accumulated
-         background at the time the filter is applied contains only the red
-         rectangle. Because the children of the inner <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> (i.e., the circle and triangle)
-         are not part of the inner <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> element's background and
-         because ShiftBGAndBlur ignores SourceGraphic, the children of the
-         inner <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> do not appear in the result.
-
-        <li>The fourth set enables background image processing and invokes
-         the ShiftBGAndBlur on the <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/shapes.html#PolygonElement"><code
-         class=element-name>&lt;polygon></code></a> element that draws the
-         triangle. The accumulated background at the time the filter is
-         applied contains the red rectangle plus the green circle ignoring
-         the effect of the <span class=prop-name>‘<code
-         class=property>opacity</code>’</span> property on the inner <a
-         href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#GElement"><code
-         class=element-name>&lt;g></code></a> element. (Note that the blurred
-         green circle at the bottom does not let the red rectangle show
-         through on its left side. This is due to ignoring the effect of the
-         <span class=prop-name>‘<code
-         class=property>opacity</code>’</span> property.) Because the
-         triangle itself is not part of the accumulated background and
-         because ShiftBGAndBlur ignores SourceGraphic, the triangle does not
-         appear in the result.
-
-        <li>The fifth set is the same as the fourth except that filter
-         ShiftBGAndBlur_WithSourceGraphic is invoked instead of
-         ShiftBGAndBlur. ShiftBGAndBlur_WithSourceGraphic performs the same
-         effect as ShiftBGAndBlur, but then renders the SourceGraphic on top
-         of the shifted, blurred background image. In this case,
-         SourceGraphic is the blue triangle; thus, the result is the same as
-         in the fourth case except that the blue triangle now appears.
-       </ol>
-      </div>
+      <p>This specification does not support the <a class=property
+       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
+       class=property>enable-background</code>’</a> property. UAs must
+       support the ‘<code class=property>isolation</code>’ property
+       instead <a href="#COMPOSITING"
+       rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
       <h2 id=integration-with-css-animations-transitions><span
        class=secno>16. </span>Integration with CSS Animations and CSS
@@ -15827,24 +15531,6 @@ interface <b>SVGFEBlendElement</b> : <a
          <td>visual
 
         <tr>
-         <th><a class=property
-          href="#enable-background">enable-background</a>
-
-         <td>accumulate | new
-
-         <td>accumulate
-
-         <td>Typically elements that can contain renderable elements.
-          language is responsible for defining the applicable set of
-          elements. For SVG: container elements
-
-         <td>no
-
-         <td>N/A
-
-         <td>visual
-
-        <tr>
          <th><a class=property href="#feblend">feBlend</a>
 
          <td>
@@ -16415,9 +16101,6 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#), <a
         href="#drop-shadowltlengthgt23-ltcolorgt"
         title="section 5."><strong>5.</strong></a>
-
-       <li>enable-background, <a href="#enable-background"
-        title="section 15."><strong>15.</strong></a>
 
        <li>feBlend, <a href="#feblend"
         title="section 8.4."><strong>8.4.</strong></a>

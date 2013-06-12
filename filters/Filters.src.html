@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="https://www.w3.org/StyleSheets/TR/W3C-ED.css">
   <link rel="stylesheet" type="text/css" href="style/default.css">
   <script defer=defer
-   src="http://test.csswg.org/harness/annotate.js#FILTER-EFFECTS_DEV"
+   src="https://test.csswg.org/harness/annotate.js#FILTER-EFFECTS_DEV"
    type="text/javascript"></script>
   <script type="text/javascript" src="../shared/MathJax/MathJax.js?config=MML_SVGorMML,local/local"></script>
 </head>
@@ -24,7 +24,7 @@
 <dl>
   <dt>This version:</dt>
   <dd>
-    <a href="https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
+    <a href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
     <!--http://www.w3.org/TR/[YEAR]/WD-[SHORTNAME]-[CDATE]/-->
   </dd>
   <dt>Latest version:
@@ -32,7 +32,7 @@
     <a href="http://www.w3.org/TR/filter-effects/">[LATEST]</a>
   </dd>
   <dt>Editor's draft:
-    <dd><a href="https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html">https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html</a>
+    <dd><a href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
   <dt>Editors:</dt>
   <dd class="vcard">
     <span class="fn">Dean Jackson</span>,
@@ -1045,14 +1045,13 @@ primitives:</p>
       <dt id="BackgroundImage"><span class="attr-value">BackgroundImage</span></dt>
       <dd>
         <p>
-          This keyword represents an image snapshot of the canvas under the <a>filter region</a> at the time that the
-          <a>'filter element'</a> element was invoked. See 'enable-background' property.
+          This keyword represents the back drop defined by the current isolation group under the <a>filter region</a> at the time that the <a>'filter element'</a> element was invoked. See 'isolation' property [[!COMPOSITING]].
         </p>
       </dd>
       <dt id="BackgroundAlpha"><span class="attr-value">BackgroundAlpha</span></dt>
       <dd>
         <p>
-          Same as <a>BackgroundImage</a> except only the alpha channel is used. See <a>SourceAlpha</a> and the 'enable-background' property.
+          Same as <a>BackgroundImage</a> except only the alpha channel is used. See <a>SourceAlpha</a> and the 'isolation' property [[!COMPOSITING]].
         </p>
       </dd>
       <dt id="FillPaint"><span class="attr-value">FillPaint</span></dt>
@@ -1324,7 +1323,7 @@ the <a>simple alpha compositing</a> technique used in SVG for all compositing ou
   &lt;/defs&gt;
   &lt;rect fill="none" stroke="blue"  
         x="1" y="1" width="498" height="498"/&gt;
-  &lt;g enable-background="new" &gt;
+  &lt;g isolation="isolate" &gt;
     &lt;rect x="100" y="20" width="300" height="460" fill="url(#MyGradient)" /&gt;
     &lt;g font-family="Verdana" font-size="75" fill="#888888" fill-opacity=".6" &gt;
       &lt;text x="50" y="90" filter="url(#Normal)" &gt;Normal&lt;/text&gt;
@@ -1977,7 +1976,7 @@ described in the section that describes the <a>filter primitive subregion</a>.</
   &lt;g font-family="Verdana" font-size="40" shape-rendering="crispEdges"&gt;
     &lt;desc&gt;Render the examples using the filters that draw on top of
           an opaque white surface, thus obliterating the background.&lt;/desc&gt;
-    &lt;g enable-background="new"&gt;
+    &lt;g isolation="isolate"&gt;
       &lt;text x="15" y="75"&gt;opacity 1.0&lt;/text&gt;
       &lt;text x="15" y="115" font-size="27"&gt;(with feFlood)&lt;/text&gt;
       &lt;text x="15" y="200"&gt;opacity 0.5&lt;/text&gt;
@@ -2014,7 +2013,7 @@ described in the section that describes the <a>filter primitive subregion</a>.</
         &lt;text x="-25" y="275"&gt;arithmetic&lt;/text&gt;
       &lt;/g&gt;
     &lt;/g&gt;
-    &lt;g transform="translate(0,325)" enable-background="new"&gt;
+    &lt;g transform="translate(0,325)" isolation="isolate"&gt;
     &lt;desc&gt;Render the examples using the filters that do not obliterate
           the background, thus sometimes causing the background to continue
           to appear in some cases, and in other cases the background
@@ -3490,7 +3489,7 @@ equal to the alpha channel.</p>
   &lt;/defs&gt;
   &lt;rect fill="none" stroke="blue" stroke-width="2"  
         x="1" y="1" width="698" height="498"/&gt;
-  &lt;g enable-background="new" &gt;
+  &lt;g isolation="isolate" &gt;
     &lt;g font-family="Verdana" font-size="75" 
               fill="none" stroke="black" stroke-width="6" &gt;
       &lt;text x="50" y="90"&gt;Unfiltered&lt;/text&gt;
@@ -5309,307 +5308,13 @@ void main()
     &lt;/feCustom&gt;
   &lt;/filter&gt; </pre>
 
-
-
 <h2 id="AccessBackgroundImage">The 'enable-background' property</h2>
 
+<p>SVG 1.1 introduced the <a>'enable-background'</a> property [[SVG11]]. The property defined the back drop under the <a>filter region</a> at the time that the <a>'filter element'</a> element was invoked. The concept defined by this property was identified to be incompatible with the model of stacking context in CSS at the time writing this specification. UAs can choose to implement the <a>'enable-background'</a> property as defined in SVG 1.1 but will not be compatible to this specification or to CSS Compositing and Blending [[!COMPOSITING]].</p>
 
-<table summary="enable-background property" class="propdef" id="EnableBackgroundProperty">
-  <tbody>
-    <tr>
-      <th>Name:</th>
-      <td><dfn>enable-background</dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td>accumulate | new</td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>accumulate</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td>Typically elements that can contain renderable elements. 
-        language is responsible for defining the applicable set of
-        elements.
-        For SVG: <a>container elements</a></td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Computed value:</th>
-      <td>as specified</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>no</td>
-    </tr>
-  </tbody>
-</table>
+<p>This specification does not support the <a>'enable-background'</a> property. UAs must support the 'isolation' property instead [[!COMPOSITING]].</p>
 
-<p>
-  The property which enables access to the background image is
-'enable-background':</p>
-
-<p>
-  <strong>new</strong>
-</p>
-<ul>
-  <li>Indicates that a new (i.e., initially transparent black) background
-    image canvas is established and that (in effect) all children of the
-    current <a>container element</a>
-    element shall be rendered into the new background image canvas in
-    addition to being rendered onto the target device.</li>
-</ul>
-
-<p>
-  <strong>accumulate</strong> (the initial/default value)
-</p>
-<ul>
-  <li>If an ancestor <a>container element</a>
-    element has a property value of ''enable-background: new'', then all
-    renderable child elements of the current <a>container element</a>
-    element are rendered both onto the parent <a>container element</a>
-    element's background image canvas and onto the target device.</li>
-  <li>Otherwise, there is no current background image canvas, so it is only
-    necessary to render <a>graphics elements</a>
-    the renderable elements onto the target device. (No need to render to the
-    background image canvas.)</li>
-</ul>
-
-<p>
-  The 'enable-background' property has no affect if the 'isolation' property has a value of ''isolate'' [[!COMPOSITING]]. The isolation group defined by the 'isolation' property will establish a new background image canvas.
-</p>
-
-<p id="AccessingBackgroundImage">Two possible pseudo input images for filter effects are <a>BackgroundImage</a> and <a>BackgroundAlpha</a>, which each represent an image
-snapshot of the canvas under the <a>filter region</a> at the time that the <a>'filter element'</a> element
-is invoked. <a>BackgroundImage</a> represents both
-the color values and alpha channel of the canvas (i.e., RGBA pixel values),
-whereas <a>BackgroundAlpha</a> represents only the
-alpha channel.</p>
-
-<p>
-  Implementations <!--of SVG user agents often-->
-will often need to maintain supplemental background image buffers in order to
-support the <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images. Sometimes,
-the background image buffers will contain an in-memory copy of the
-accumulated painting operations on the current canvas.</p>
-
-<p>
-  Because in-memory image buffers can take up significant system resources, <!--SVG-->
-content must explicitly indicate to the <!--SVG-->
-user agent that the document needs access to the background image before <a>BackgroundImage</a> and <a>BackgroundAlpha</a> pseudo input images can be used.
-</p>
-
-A background image is what's been <i>rendered before</i> the current element.
-The host language is responsible for defining what <i>rendered before</i> in
-this context means. For SVG, that uses the painter's algorithm, <i>rendered before</i> means
-all of the prior elements in pre order traversal previous to the element to
-which the filter is applied.
-
-<p>
-  If a filter effect specifies either the <a>BackgroundImage</a> or the 
-  <a>BackgroundAlpha</a> pseudo input images and no
-ancestor <a>container element</a>
- element has a property value of ''enable-background: new'', then the background
-image request is technically in error. Processing will proceed without
-interruption (i.e., no error message) and a transparent black image shall be
-provided in response to the request.</p>
-
-<h3 id="AccessBackgroundImageSVG">Accessing the background image in SVG</h3>
-<p>
-  This section only applies to the SVG definition of enable-background.</p>
-
-<p>
-  Assume you have an element E in the document and that E has a series of
-ancestors A<sub>1</sub> (its immediate parent), A<sub>2</sub>, etc. (Note:
-A<sub>0</sub> is E.) Each ancestor A<sub>i</sub> will have a corresponding
-temporary background image offscreen buffer BUF<sub>i</sub>. The contents of
-the <em>background image</em> available to a <a>'filter element'</a>
-referenced by E is defined as follows:</p>
-<ul>
-  <li>Find the element A<sub>i</sub> with the smallest subscript i (including
-    A<sub>0</sub>=E) for which the 'enable-background' property has the value
-    ''new''.
-    <p class="note">Note that if there is no such ancestor
-    element, then the outermost element A<sub>n</sub> will be chosen.</li>
-  <li>For each A<sub>i</sub> (from i=n to 1), initialize BUF<sub>i</sub> to
-    transparent black. Render all children of A<sub>i</sub> up to but not
-    including A<sub>i-1</sub> into BUF<sub>i</sub>. The children are painted,
-    then filtered, clipped, masked and composited using the various painting,
-    filtering, clipping, masking and object opacity settings on the given
-    child. Any filter effects, masking and group opacity that might be set on
-    A<sub>i</sub> do <em>not</em> apply when rendering the children of
-    A<sub>i</sub> into BUF<sub>i</sub>.<br />
-    (Note that for the case of A<sub>0</sub>=E, the graphical contents of E
-    are not rendered into BUF<sub>1</sub> and thus are not part of the
-    background image available to E. Instead, the graphical contents of E are
-    available via the <a href="#SourceGraphic">SourceGraphic</a> and
-    <a>SourceAlpha</a> pseudo input images.)</li>
-  <li>Then, for each A<sub>i</sub> (from i=1 to n-1), composite
-    BUF<sub>i</sub> into BUF<sub>i+1</sub>.</li>
-  <li>The accumulated result (i.e., BUF<sub>n</sub>) represents the
-    background image available to E.</li>
-</ul>
-
-<div class="example">
-<pre class="xml">&lt;?xml version="1.0" standalone="no"?&gt;
-&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
-  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
-&lt;svg width="13.5cm" height="2.7cm" viewBox="0 0 1350 270"
-     xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
-  &lt;title&gt;Example enable-background01&lt;/title&gt;
-  &lt;desc&gt;This test case shows five pictures which illustrate the rules
-        for background image processing.&lt;/desc&gt;
-
-  &lt;defs&gt;
-    &lt;filter id="ShiftBGAndBlur" 
-            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
-      &lt;desc&gt;
-        This filter discards the SourceGraphic, if any, and just produces
-        a result consisting of the BackgroundImage shifted down 125 units
-        and then blurred.
-      &lt;/desc&gt;
-      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
-      &lt;feGaussianBlur stdDeviation="8" /&gt;
-    &lt;/filter&gt;
-    &lt;filter id="ShiftBGAndBlur_WithSourceGraphic" 
-            filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"&gt;
-      &lt;desc&gt;
-        This filter takes the BackgroundImage, shifts it down 125 units, blurs it,
-        and then renders the SourceGraphic on top of the shifted/blurred background.
-      &lt;/desc&gt;
-      &lt;feOffset in="BackgroundImage" dx="0" dy="125" /&gt;
-      &lt;feGaussianBlur stdDeviation="8" result="blur" /&gt;
-      &lt;feMerge&gt;
-        &lt;feMergeNode in="blur"/&gt;
-        &lt;feMergeNode in="SourceGraphic"/&gt;
-      &lt;/feMerge&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-
-  &lt;g transform="translate(0,0)"&gt;
-    &lt;desc&gt;The first picture is our reference graphic without filters.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(270,0)"&gt;
-    &lt;desc&gt;The second adds an empty 'g' element which invokes ShiftBGAndBlur.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;g filter="url(#ShiftBGAndBlur)"/&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(540,0)"&gt;
-    &lt;desc&gt;The third invokes ShiftBGAndBlur on the inner group.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g filter="url(#ShiftBGAndBlur)" opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(810,0)"&gt;
-    &lt;desc&gt;The fourth invokes ShiftBGAndBlur on the triangle.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"
-               filter="url(#ShiftBGAndBlur)"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-
-  &lt;g enable-background="new" transform="translate(1080,0)"&gt;
-    &lt;desc&gt;The fifth invokes ShiftBGAndBlur_WithSourceGraphic on the triangle.&lt;/desc&gt;
-    &lt;rect x="25" y="25" width="100" height="100" fill="red"/&gt;
-    &lt;g opacity=".5"&gt;
-      &lt;circle cx="125" cy="75" r="45" fill="green"/&gt;
-      &lt;polygon points="160,25 160,125 240,75" fill="blue"
-               filter="url(#ShiftBGAndBlur_WithSourceGraphic)"/&gt;
-    &lt;/g&gt;
-    &lt;rect x="5" y="5" width="260" height="260" fill="none" stroke="blue"/&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
-
-<div class="figure">
-  <img alt="Example " src="examples/enable-background-01.png"/>
-  <p class="caption">Example of 'enable-background' in use
-</div>
-
-<p class="view-as-svg"><a href="examples/enable-background-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
-
-<p>
-  The example above contains five parts, described as follows:</p>
-<ol>
-  <li>The first set is the reference graphic. The reference graphic consists
-    of a red rectangle followed by a 50% transparent <a>'g element'</a>
-    element. Inside the <a>'g element'</a>
-    is a green circle that partially overlaps the rectangle and a a blue
-    triangle that partially overlaps the circle. The three objects are then
-    outlined by a rectangle stroked with a thin blue line. No filters are
-    applied to the reference graphic.</li>
-  <li>The second set enables background image processing and adds an empty
-    <a>'g element'</a>
-    element which invokes the ShiftBGAndBlur filter. This filter takes the
-    current accumulated background image (i.e., the entire reference graphic)
-    as input, shifts its offscreen down, blurs it, and then writes the result
-    to the canvas. Note that the offscreen for the filter is initialized to
-    transparent black, which allows the already rendered rectangle, circle
-    and triangle to show through after the filter renders its own result to
-    the canvas.</li>
-  <li>The third set enables background image processing and instead invokes
-    the ShiftBGAndBlur filter on the inner <a>'g element'</a>
-    element. The accumulated background at the time the filter is applied
-    contains only the red rectangle. Because the children of the inner <a>'g element'</a>
-    (i.e., the circle and triangle) are not part of the inner <a>'g element'</a>
-    element's background and because ShiftBGAndBlur ignores SourceGraphic,
-    the children of the inner <a>'g element'</a>
-    do not appear in the result.</li>
-  <li>The fourth set enables background image processing and invokes the
-    ShiftBGAndBlur on the <a>'polygon element'</a>
-    element that draws the triangle. The accumulated background at the time
-    the filter is applied contains the red rectangle plus the green circle
-    ignoring the effect of the <span class="prop-name">'opacity'</span>
-    property on the inner <a>'g element'</a>
-    element. (Note that the blurred green circle at the bottom does not let
-    the red rectangle show through on its left side. This is due to ignoring
-    the effect of the <span class="prop-name">'opacity'</span>
-    property.) Because the triangle itself is not part of the accumulated
-    background and because ShiftBGAndBlur ignores SourceGraphic, the triangle
-    does not appear in the result.</li>
-  <li>The fifth set is the same as the fourth except that filter
-    ShiftBGAndBlur_WithSourceGraphic is invoked instead of ShiftBGAndBlur.
-    ShiftBGAndBlur_WithSourceGraphic performs the same effect as
-    ShiftBGAndBlur, but then renders the SourceGraphic on top of the shifted,
-    blurred background image. In this case, SourceGraphic is the blue
-    triangle; thus, the result is the same as in the fourth case except that
-    the blue triangle now appears.</li>
-</ol>
-</div>
-
-  <h2 id="integration-with-css-animations-transitions">Integration with CSS Animations and CSS Transitions</h2>
+<h2 id="integration-with-css-animations-transitions">Integration with CSS Animations and CSS Transitions</h2>
 
   <p>The CSS 'filter' property is animatable. Interpolation happens between the filter functions 
       only if the 'filter' values have the same number of filter functions, and the same functions appearing in the same order.</p>
