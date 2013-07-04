@@ -471,7 +471,7 @@
     </tr>
     <tr>
       <th>Value:</th>
-      <td>none | <var>&lt;filter-function&gt;</var>+</td>
+      <td>none | [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> | <var>&lt;child-selector&gt;</var> ]+</td>
     </tr>
     <tr>
       <th>Initial:</th>
@@ -509,21 +509,19 @@
   is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 </p>
 
-<pre class=prod><dfn><var>&lt;filter-function&gt;</var></dfn> = <var>&lt;URL&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var> | <var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var>
+<pre class=prod><dfn><var>&lt;filter-function&gt;</var></dfn> = <var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>saturate(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>hue-rotate(&lt;angle&gt;)</var> | <var>invert(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>opacity(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>brightness(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>blur(&lt;length&gt;)</var> | <var>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#)</var>
  | <var>custom(IDENT [, &lt;param&gt;]*)</var></pre>
 
- </pre>
-
-<pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(<var>&lt;compound-selector&gt;</var>#)</pre>
+<pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(<var>&lt;compound-selector&gt;</var>#) | <var>child</var></pre>
 
 <dl id="FilterFunction">
-  <dt><dfn>&lt;URL&gt;</dfn></dt>
+  <dt><dfn>&lt;url&gt;</dfn></dt>
   <dd>
-    A URL reference to a <a>'filter element'</a> element. For example ''url(commonmasks.xml#mask)''.
+    A URL reference to a <a>'filter element'</a> element. For example ''url(commonmasks.svg#mask)''.
     If the URL references a non-existent object or the referenced  
     object is not a <a>'filter element'</a> element, then the <span>null 
     filter</span> will be applied instead. 
@@ -654,19 +652,18 @@
 </dl>
 
 <p>
-  The first function in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as
+  The first filter function or 'filter element' reference in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as
   the input image. Subsequent operations take the output from the 
-  previous function as the input image. The exception is the function
-  that references a <a>'filter element'</a> element, which can specify an
+  previous filter function as the input image. <a>'filter element'</a> element reference functions can specify an
   alternate input, but still uses the previous output as its
   <a href="#SourceGraphic">SourceGraphic</a>.
 </p>
 
-<p>
-  The application of the 'filter' property to an element formatted with the CSS box model establishes a new stacking
-  context the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does, and all the
-  element's descendants are rendered together as a group with the filter effect applied to the group as a whole.
-</p>
+<p>Filter functions operate in the sRGB color space.</p>
+
+<p class="note">Note: The <var>grayscale</var>, <var>sepia</var>, <var>saturate</var>, <var>hue-rotate</var>, <var>invert</var>, <var>opacity</var>, <var>brightness</var> and <var>contrast</var> filter functions can be represented by color matrices. If the former named filter functions are chained together, UAs can optimize the performance by multiplying these filter functions to one color matrix and apply the resulting color matrix instead of each filter function separately.</p>
+
+<p>A computed value of other than 'none' results in the creation of a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. All the elements descendants are rendered together as a group with the filter effect applied to the group as a whole.</p>
 
 <p>
   The 'filter' property has no effect on the geometry of the target element's CSS boxes, even though 'filter' can cause
@@ -5209,7 +5206,7 @@ void main()
 
 <pre class='prod'><code><dfn>&lt;filter></dfn> = filter(
   <var>&lt;image></var>, 
-  none | <var>&lt;filter-function&gt;</var>+
+  none | [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> | <var>&lt;child-selector&gt;</var> ]+
 )</code></pre>
 
 <p>The function takes two parameters. The first is a CSS <var>&lt;image&gt;</var> value. The second is the value of a 'filter' property. The function take the input image parameter and apply the filter rules, returning a processing image. Dimension and origin of the passed image must be preserved.
@@ -5334,18 +5331,38 @@ void main()
 
 <p>This specification does not support the <a>'enable-background'</a> property. UAs must support the 'isolation' property instead [[!COMPOSITING]].</p>
 
-<h2 id="integration-with-css-animations-transitions">Integration with CSS Animations and CSS Transitions</h2>
+<h2 id="interpolation-of-filters">Interpolation of Filters</h2>
 
-  <p>The CSS 'filter' property is animatable. Interpolation happens between the filter functions 
-      only if the 'filter' values have the same number of filter functions, and the same functions appearing in the same order.</p>
+<p>For interpolation between one filter <em>from-filter</em> and a second filter <em>to-filter</em>, the rules described below are applied.</p>
+
+<ul>
+  <li id="none-none-animation">
+    If both, the <em>from-</em> and <em>to-filter</em> are ''none'':
+    <ul><li>There is no interpolation necessary. The computed value stays ''none''.</li></ul>
+  </li>
+  <li id="reference-animation">
+    If the <em>from-</em> or the <em>to-filter</em> consists of at least one <var>&lt;url&gt;</var> or <var>&lt;child-selector&gt;</var>:
+    <ul><li>There is no interpolation possible.</li></ul>
+  </li>
+  <li>
+    If <em>from-</em> and <em>to-filter</em> have the same number of filter functions and each filter function pair is of the same type:
+    <ul><li>Interpolate each filter function pair value numerically. (See <a href="shader-params-interpolation">"Interpolating the shader-params component in the custom() function"</a> for interpolation of the <var>custom</var> filter function.)</li></ul>
+  </li>
+  <li>
+    If <em>from-</em> and <em>to-filter</em> have the different number of filter functions but the possible filter function pairs are of the same type:
+    <ul>
+      <li>Add the corresponding filter functions with their initial value of the filter with more filter functions to the end of the list of the filter with less filter functions.</li>
+      <li>Interpolate each filter function pair value numerically. (See <a href="shader-params-interpolation">"Interpolating the shader-params component in the custom() function"</a> for interpolation of the <var>custom</var> filter function.)</li>
+    </ul>
+  </li>
+  <li>
+    In all other cases:
+    <ul><li>There is no interpolation possible.</li></ul>
+  </li>
 
   <p class="issue" id="issue-css-transitions">The CSS WG may define different fading transitions in the future.</p>
-      
-  <h3 id="filter-params-interpolation">Interpolating filter function parameters</h3>
-  
-  <p>All properties defined as animatable, provided they are one of the property types listed in CSS3 Transitions [[!CSS3-TRANSITIONS]], can be animated.</p>
 
-  <h3 id="shader-params-interpolation">Interpolating the shader-params component in the custom() function.</h3>
+  <h3 id="shader-params-interpolation">Interpolating the shader-params component in the custom() function</h3>
 
   <p>To interpolate between 'parameters' values in a
       <code>custom()</code> filter function or between 

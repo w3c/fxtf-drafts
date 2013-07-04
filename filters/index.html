@@ -405,16 +405,12 @@
    <li><a href="#AccessBackgroundImage"><span class=secno>15. </span>The
     ‘<code class=property>enable-background</code>’ property</a>
 
-   <li><a href="#integration-with-css-animations-transitions"><span
-    class=secno>16. </span>Integration with CSS Animations and CSS
-    Transitions</a>
+   <li><a href="#interpolation-of-filters"><span class=secno>16.
+    </span>Interpolation of Filters</a>
     <ul class=toc>
-     <li><a href="#filter-params-interpolation"><span class=secno>16.1.
-      </span>Interpolating filter function parameters</a>
-
-     <li><a href="#shader-params-interpolation"><span class=secno>16.2.
+     <li><a href="#shader-params-interpolation"><span class=secno>16.1.
       </span>Interpolating the shader-params component in the custom()
-      function.</a>
+      function</a>
     </ul>
 
    <li><a href="#security"><span class=secno>17. </span>Security</a>
@@ -953,8 +949,10 @@
     <tr>
      <th>Value:
 
-     <td>none | <a
-      href="#ltfilter-functiongt"><var>&lt;filter-function&gt;</var></a>+
+     <td>none | [ <a
+      href="#ltfilter-functiongt"><var>&lt;filter-function&gt;</var></a> | <a
+      href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
+      href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a> ]+
 
     <tr>
      <th>Initial:
@@ -1000,8 +998,6 @@
 
   <pre class=prod><dfn
    id=ltfilter-functiongt><var>&lt;filter-function&gt;</var></dfn> = <a
-   href="#lturlgt"><var>&lt;URL&gt;</var></a> | <var>child</var> | <a
-   href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a> | <a
    href="#grayscaleltnumbergt-ltpercentagegt"><var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var></a>
  | <a
    href="#sepialtnumbergt-ltpercentagegt"><var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var></a> | <a
@@ -1021,14 +1017,14 @@
 
   <pre class=prod><dfn
    id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(<a
-   href="#ltcompound-selectorgt"><var>&lt;compound-selector&gt;</var></a>#)</pre>
+   href="#ltcompound-selectorgt"><var>&lt;compound-selector&gt;</var></a>#) | <var>child</var></pre>
 
   <dl id=FilterFunction>
-   <dt><dfn id=lturlgt>&lt;URL&gt;</dfn>
+   <dt><dfn id=lturlgt>&lt;url&gt;</dfn>
 
    <dd> A URL reference to a <a href="#FilterElement"><code
     class=element-name>&lt;filter></code></a> element. For example ‘<code
-    class=css>url(commonmasks.xml#mask)</code>’. If the URL references a
+    class=css>url(commonmasks.svg#mask)</code>’. If the URL references a
     non-existent object or the referenced object is not a <a
     href="#FilterElement"><code class=element-name>&lt;filter></code></a>
     element, then the <a href="#null-filter">null filter</a> will be applied
@@ -1184,21 +1180,33 @@
     href="#custom-filter">Custom Filter Function</a> for details.
   </dl>
 
-  <p> The first function in the list takes the element (<a
+  <p> The first filter function or ‘<code class=css>filter
+   element</code>’ reference in the list takes the element (<a
    href="#SourceGraphic">SourceGraphic</a>) as the input image. Subsequent
-   operations take the output from the previous function as the input image.
-   The exception is the function that references a <a
-   href="#FilterElement"><code class=element-name>&lt;filter></code></a>
-   element, which can specify an alternate input, but still uses the previous
-   output as its <a href="#SourceGraphic">SourceGraphic</a>.
+   operations take the output from the previous filter function as the input
+   image. <a href="#FilterElement"><code
+   class=element-name>&lt;filter></code></a> element reference functions can
+   specify an alternate input, but still uses the previous output as its <a
+   href="#SourceGraphic">SourceGraphic</a>.
 
-  <p> The application of the ‘<a href="#filter"><code
-   class=property>filter</code></a>’ property to an element formatted with
-   the CSS box model establishes a new stacking context the same way that CSS
-   <a href="http://www.w3.org/TR/css3-color/#transparency">‘<code
-   class=property>opacity</code>’</a> does, and all the element's
-   descendants are rendered together as a group with the filter effect
-   applied to the group as a whole.
+  <p>Filter functions operate in the sRGB color space.
+
+  <p class=note>Note: The <var>grayscale</var>, <var>sepia</var>,
+   <var>saturate</var>, <var>hue-rotate</var>, <var>invert</var>,
+   <var>opacity</var>, <var>brightness</var> and <var>contrast</var> filter
+   functions can be represented by color matrices. If the former named filter
+   functions are chained together, UAs can optimize the performance by
+   multiplying these filter functions to one color matrix and apply the
+   resulting color matrix instead of each filter function separately.
+
+  <p>A computed value of other than ‘<code class=property>none</code>’
+   results in the creation of a <a
+   href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> <a
+   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a> the same way
+   that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">‘<code
+   class=property>opacity</code>’</a> does. All the elements descendants
+   are rendered together as a group with the filter effect applied to the
+   group as a whole.
 
   <p> The ‘<a href="#filter"><code class=property>filter</code></a>’
    property has no effect on the geometry of the target element's CSS boxes,
@@ -12004,8 +12012,10 @@ void main()
 
       <pre class=prod><code><dfn id=ltfilter>&lt;filter></dfn> = filter(
   <var>&lt;image></var>, 
-  none | <a
-       href="#ltfilter-functiongt"><var>&lt;filter-function&gt;</var></a>+
+  none | [ <a
+       href="#ltfilter-functiongt"><var>&lt;filter-function&gt;</var></a> | <a
+       href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
+       href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a> ]+
 )</code></pre>
 
       <p>The function takes two parameters. The first is a CSS
@@ -12159,31 +12169,64 @@ void main()
        instead <a href="#COMPOSITING"
        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
-      <h2 id=integration-with-css-animations-transitions><span
-       class=secno>16. </span>Integration with CSS Animations and CSS
-       Transitions</h2>
+      <h2 id=interpolation-of-filters><span class=secno>16.
+       </span>Interpolation of Filters</h2>
 
-      <p>The CSS ‘<a href="#filter"><code
-       class=property>filter</code></a>’ property is animatable.
-       Interpolation happens between the filter functions only if the ‘<a
-       href="#filter"><code class=property>filter</code></a>’ values have
-       the same number of filter functions, and the same functions appearing
-       in the same order.
+      <p>For interpolation between one filter <em>from-filter</em> and a
+       second filter <em>to-filter</em>, the rules described below are
+       applied.
+
+      <ul>
+       <li id=none-none-animation> If both, the <em>from-</em> and
+        <em>to-filter</em> are ‘<code class=css>none</code>’:
+        <ul>
+         <li>There is no interpolation necessary. The computed value stays
+          ‘<code class=css>none</code>’.
+        </ul>
+
+       <li id=reference-animation> If the <em>from-</em> or the
+        <em>to-filter</em> consists of at least one <a
+        href="#lturlgt"><var>&lt;url&gt;</var></a> or <a
+        href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a>:
+        <ul>
+         <li>There is no interpolation possible.
+        </ul>
+
+       <li> If <em>from-</em> and <em>to-filter</em> have the same number of
+        filter functions and each filter function pair is of the same type:
+        <ul>
+         <li>Interpolate each filter function pair value numerically. (See <a
+          href=shader-params-interpolation>"Interpolating the shader-params
+          component in the custom() function"</a> for interpolation of the
+          <var>custom</var> filter function.)
+        </ul>
+
+       <li> If <em>from-</em> and <em>to-filter</em> have the different
+        number of filter functions but the possible filter function pairs are
+        of the same type:
+        <ul>
+         <li>Add the corresponding filter functions with their initial value
+          of the filter with more filter functions to the end of the list of
+          the filter with less filter functions.
+
+         <li>Interpolate each filter function pair value numerically. (See <a
+          href=shader-params-interpolation>"Interpolating the shader-params
+          component in the custom() function"</a> for interpolation of the
+          <var>custom</var> filter function.)
+        </ul>
+
+       <li> In all other cases:
+        <ul>
+         <li>There is no interpolation possible.
+        </ul>
+      </ul>
 
       <p class=issue id=issue-css-transitions>The CSS WG may define different
        fading transitions in the future.
 
-      <h3 id=filter-params-interpolation><span class=secno>16.1.
-       </span>Interpolating filter function parameters</h3>
-
-      <p>All properties defined as animatable, provided they are one of the
-       property types listed in CSS3 Transitions <a href="#CSS3-TRANSITIONS"
-       rel=biblioentry>[CSS3-TRANSITIONS]<!--{{!CSS3-TRANSITIONS}}--></a>,
-       can be animated.
-
-      <h3 id=shader-params-interpolation><span class=secno>16.2.
+      <h3 id=shader-params-interpolation><span class=secno>16.1.
        </span>Interpolating the shader-params component in the custom()
-       function.</h3>
+       function</h3>
 
       <p>To interpolate between ‘<a href="#parameters"><code
        class=property>parameters</code></a>’ values in a
@@ -15385,16 +15428,6 @@ interface <b>SVGFEBlendElement</b> : <a
        </dd>
        <!---->
 
-       <dt id=CSS3-TRANSITIONS>[CSS3-TRANSITIONS]
-
-       <dd>Dean Jackson; et al. <a
-        href="http://www.w3.org/TR/2013/WD-css3-transitions-20130212/"><cite>CSS
-        Transitions.</cite></a> 12 February 2013. W3C Working Draft. (Work in
-        progress.) URL: <a
-        href="http://www.w3.org/TR/2013/WD-css3-transitions-20130212/">http://www.w3.org/TR/2013/WD-css3-transitions-20130212/</a>
-       </dd>
-       <!---->
-
        <dt id=CSS3BG>[CSS3BG]
 
        <dd>Bert Bos; Elika J. Etemad; Brad Kemper. <a
@@ -16020,7 +16053,8 @@ interface <b>SVGFEBlendElement</b> : <a
         <tr>
          <th><a class=property href="#effects">filter</a>
 
-         <td>none | &lt;filter-function&gt;+
+         <td>none | [ &lt;filter-function&gt; | &lt;url&gt; |
+          &lt;child-selector&gt; ]+
 
          <td>none
 
@@ -16408,7 +16442,7 @@ interface <b>SVGFEBlendElement</b> : <a
        <li>&lt;URI>, <a href="#lturi"
         title="section 11.4."><strong>11.4.</strong></a>
 
-       <li>&lt;URL&gt;, <a href="#lturlgt"
+       <li>&lt;url&gt;, <a href="#lturlgt"
         title="section 5."><strong>5.</strong></a>
 
        <li>user coordinate system, <a href="#user-coordinate-system"
