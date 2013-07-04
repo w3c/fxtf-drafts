@@ -509,12 +509,16 @@
   is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 </p>
 
-<pre class=prod><dfn><var>&lt;filter-function&gt;</var></dfn> = <var>&lt;URL&gt;</var> | <var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var>
+<pre class=prod><dfn><var>&lt;filter-function&gt;</var></dfn> = <var>&lt;URL&gt;</var> | <var>child</var> | <var>&lt;child-selector&gt;</var> | <var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>saturate(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>hue-rotate(&lt;angle&gt;)</var> | <var>invert(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>opacity(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>brightness(&lt;number&gt; | &lt;percentage&gt;)</var>
  | <var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>blur(&lt;length&gt;)</var> | <var>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#)</var>
  | <var>custom(IDENT [, &lt;param&gt;]*)</var></pre>
+
+ </pre>
+
+<pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(<var>&lt;compound-selector&gt;</var>#)</pre>
 
 <dl id="FilterFunction">
   <dt><dfn>&lt;URL&gt;</dfn></dt>
@@ -524,7 +528,23 @@
     object is not a <a>'filter element'</a> element, then the <span>null 
     filter</span> will be applied instead. 
   </dd>
-
+  <dt>''child''</dt>
+  <dd>
+    A keyword to indicate that the last direct child <a>'filter element'</a>
+    element of the element the 'filter' property is applied should be used as the filter source. It is equivalent to
+    ''select(filter:last-of-type)''.</dd>
+  <dt>&lt;child-selector&gt;</dt>
+  <dd>
+    A functional notation [[!CSS3VAL]] accepting a comma-separated
+    list of compound selectors that represents first matching child
+    <a>'filter element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
+    <dl>
+      <dt><dfn>&lt;compound-selector&gt;</dfn></dt>
+      <dd>
+        A <a>compound selector</a> as defined in [[!SELECTORS4]].
+      <dd>
+    </dl>
+  </dd>
   <dt><dfn>grayscale(&lt;number&gt; | &lt;percentage&gt;)</dfn></dt>
   <dd>
     Converts the input image to grayscale. The passed parameter defines the proportion

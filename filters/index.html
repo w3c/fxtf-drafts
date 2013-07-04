@@ -1000,7 +1000,8 @@
 
   <pre class=prod><dfn
    id=ltfilter-functiongt><var>&lt;filter-function&gt;</var></dfn> = <a
-   href="#lturlgt"><var>&lt;URL&gt;</var></a> | <a
+   href="#lturlgt"><var>&lt;URL&gt;</var></a> | <var>child</var> | <a
+   href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a> | <a
    href="#grayscaleltnumbergt-ltpercentagegt"><var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var></a>
  | <a
    href="#sepialtnumbergt-ltpercentagegt"><var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var></a> | <a
@@ -1018,6 +1019,10 @@
  | <a
    href="#customident-ltparamgt"><var>custom(IDENT [, &lt;param&gt;]*)</var></a></pre>
 
+  <pre class=prod><dfn
+   id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(<a
+   href="#ltcompound-selectorgt"><var>&lt;compound-selector&gt;</var></a>#)</pre>
+
   <dl id=FilterFunction>
    <dt><dfn id=lturlgt>&lt;URL&gt;</dfn>
 
@@ -1028,6 +1033,34 @@
     href="#FilterElement"><code class=element-name>&lt;filter></code></a>
     element, then the <a href="#null-filter">null filter</a> will be applied
     instead.
+
+   <dt>‘<code class=css>child</code>’
+
+   <dd> A keyword to indicate that the last direct child <a
+    href="#FilterElement"><code class=element-name>&lt;filter></code></a>
+    element of the element the ‘<a href="#filter"><code
+    class=property>filter</code></a>’ property is applied should be used as
+    the filter source. It is equivalent to ‘<code
+    class=css>select(filter:last-of-type)</code>’.
+
+   <dt>&lt;child-selector&gt;
+
+   <dd> A functional notation <a href="#CSS3VAL"
+    rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a> accepting a
+    comma-separated list of compound selectors that represents first matching
+    child <a href="#FilterElement"><code
+    class=element-name>&lt;filter></code></a> element in <span class=xxx>tree
+    order</span> (as defined in <a href="#DOM"
+    rel=biblioentry>[DOM]<!--{{!DOM}}--></a>).
+    <dl>
+     <dt><dfn id=ltcompound-selectorgt>&lt;compound-selector&gt;</dfn>
+
+     <dd> A <span class=xxx>compound selector</span> as defined in <a
+      href="#SELECTORS4"
+      rel=biblioentry>[SELECTORS4]<!--{{!SELECTORS4}}--></a>.
+
+     <dd>
+    </dl>
 
    <dt><dfn id=grayscaleltnumbergt-ltpercentagegt>grayscale(&lt;number&gt; |
     &lt;percentage&gt;)</dfn>
@@ -15382,12 +15415,31 @@ interface <b>SVGFEBlendElement</b> : <a
        </dd>
        <!---->
 
+       <dt id=CSS3VAL>[CSS3VAL]
+
+       <dd>Håkon Wium Lie; Tab Atkins; Elika J. Etemad. <a
+        href="http://www.w3.org/TR/2013/CR-css3-values-20130404/"><cite>CSS
+        Values and Units Module Level 3.</cite></a> 4 April 2013. W3C
+        Candidate Recommendation. (Work in progress.) URL: <a
+        href="http://www.w3.org/TR/2013/CR-css3-values-20130404/">http://www.w3.org/TR/2013/CR-css3-values-20130404/</a>
+       </dd>
+       <!---->
+
        <dt id=CSSOM>[CSSOM]
 
        <dd>Anne van Kesteren. <a
         href="http://www.w3.org/TR/2011/WD-cssom-20110712/"><cite>CSSOM.</cite></a>
         12 July 2011. W3C Working Draft. (Work in progress.) URL: <a
         href="http://www.w3.org/TR/2011/WD-cssom-20110712/">http://www.w3.org/TR/2011/WD-cssom-20110712/</a>
+       </dd>
+       <!---->
+
+       <dt id=DOM>[DOM]
+
+       <dd>Anne van Kesteren; et al. <a
+        href="http://www.w3.org/TR/2012/WD-dom-20121206/"><cite>DOM4.</cite></a>
+        6 December 2012. W3C Working Draft. (Work in progress.) URL: <a
+        href="http://www.w3.org/TR/2012/WD-dom-20121206/">http://www.w3.org/TR/2012/WD-dom-20121206/</a>
        </dd>
        <!---->
 
@@ -15398,6 +15450,16 @@ interface <b>SVGFEBlendElement</b> : <a
         RFCs to Indicate Requirement Levels.</cite></a> Internet RFC 2119.
         URL: <a
         href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a>
+       </dd>
+       <!---->
+
+       <dt id=SELECTORS4>[SELECTORS4]
+
+       <dd>Elika J. Etemad; Tab Atkins Jr. <a
+        href="http://www.w3.org/TR/2013/WD-selectors4-20130502/"><cite>Selectors
+        Level 4.</cite></a> 2 May 2013. W3C Working Draft. (Work in
+        progress.) URL: <a
+        href="http://www.w3.org/TR/2013/WD-selectors4-20130502/">http://www.w3.org/TR/2013/WD-selectors4-20130502/</a>
        </dd>
        <!---->
 
@@ -16071,6 +16133,9 @@ interface <b>SVGFEBlendElement</b> : <a
         href="#brightnessltnumbergt-ltpercentagegt"
         title="section 5."><strong>5.</strong></a>
 
+       <li>&lt;child-selector&gt;, <a href="#ltchild-selectorgt"
+        title="section 5."><strong>5.</strong></a>
+
        <li>&lt;color&gt;, <a href="#ltcolorgt"
         title="section 11.4."><strong>11.4.</strong></a>
 
@@ -16085,6 +16150,9 @@ interface <b>SVGFEBlendElement</b> : <a
         title="section 11.6."><strong>11.6.</strong></a>, <a
         href="#ltcomposite-modegt0"
         title="section 12.4."><strong>12.4.</strong></a>
+
+       <li>&lt;compound-selector&gt;, <a href="#ltcompound-selectorgt"
+        title="section 5."><strong>5.</strong></a>
 
        <li>contrast(&lt;number&gt; | &lt;percentage&gt;), <a
         href="#contrastltnumbergt-ltpercentagegt"
