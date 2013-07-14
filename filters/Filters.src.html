@@ -519,136 +519,144 @@
 <pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(<var>&lt;compound-selector&gt;</var>#) | <var>child</var></pre>
 
 <dl id="FilterFunction">
-  <dt><dfn>&lt;url&gt;</dfn></dt>
-  <dd>
-    A URL reference to a <a>'filter element'</a> element. For example ''url(commonmasks.svg#mask)''.
-    If the URL references a non-existent object or the referenced  
-    object is not a <a>'filter element'</a> element, then the <span>null 
-    filter</span> will be applied instead. 
-  </dd>
-  <dt>''child''</dt>
-  <dd>
-    A keyword to indicate that the last direct child <a>'filter element'</a>
-    element of the element the 'filter' property is applied should be used as the filter source. It is equivalent to
-    ''select(filter:last-of-type)''.</dd>
-  <dt>&lt;child-selector&gt;</dt>
-  <dd>
-    A functional notation [[!CSS3VAL]] accepting a comma-separated
-    list of compound selectors that represents first matching child
-    <a>'filter element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
-    <dl>
-      <dt><dfn>&lt;compound-selector&gt;</dfn></dt>
-      <dd>
-        A <a>compound selector</a> as defined in [[!SELECTORS4]].
-      <dd>
-    </dl>
-  </dd>
-  <dt><dfn>grayscale( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
-  <dd>
-    Converts the input image to grayscale. The passed parameter defines the proportion
-    of the conversion. A value of 100% is completely grayscale. A value of 0% leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
-  </dd>
+<dt><dfn>&lt;url&gt;</dfn></dt>
+<dd>
+  A URL reference to a <a>'filter element'</a> element. For example ''url(commonmasks.svg#mask)''.
+  If the URL references a non-existent object or the referenced  
+  object is not a <a>'filter element'</a> element, then the <span>null 
+  filter</span> will be applied instead. 
+</dd>
+<dt>''child''</dt>
+<dd>
+  A keyword to indicate that the last direct child <a>'filter element'</a>
+  element of the element the 'filter' property is applied should be used as the filter source. It is equivalent to
+  ''select(filter:last-of-type)''.</dd>
+<dt>&lt;child-selector&gt;</dt>
+<dd>
+  A functional notation [[!CSS3VAL]] accepting a comma-separated
+  list of compound selectors that represents first matching child
+  <a>'filter element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
+  <dl>
+    <dt><dfn>&lt;compound-selector&gt;</dfn></dt>
+    <dd>
+      A <a>compound selector</a> as defined in [[!SELECTORS4]].
+    <dd>
+  </dl>
+</dd>
+<dt><dfn>blur( &lt;length&gt; )</dfn></dt>
+<dd>
+  <p>Applies a Gaussian blur to the input image.
+  The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function.
+  If no parameter is provided, then a value 0 is used. The parameter is
+  specified a CSS length, but does not accept percentage values.
+  The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''0''.</p>
+  <p class=issue>The FXTF is looking into distinguish between vertical and horizontal blur radii.</p>
+</dd>
+<dt><dfn>brightness( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
+<dd>
+  <p>Applies a linear multiplier to input image, making it appear more
+  or less bright.
+  A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the
+  input unchanged. Other values are linear multipliers on the effect.
+  Values of amount over 100% are allowed, providing brighter results.
+  If the parameter is missing, a value of 100% is used.
+  The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
+  <p>The lacuna value for interpolation is ''100%''.</p>
+</dd>
+<dt><dfn>contrast( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
+<dd>
+  <p>Adjusts the contrast of the input.
+  A value of ''0%'' will create an image that is completely gray. A value of ''100%'' leaves the
+  input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
+  If the parameter is missing, a value of 100% is used.
+  The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''100%''.</p>
+</dd>
+<dt><dfn>custom( IDENT [, &lt;param&gt;]* )</dfn></dt>
+<dd>
+   References a custom filter at-rule by the given identifier. See <a
+   href="#custom-filter">Custom Filter Function</a> for details.
+</dd>
+<dt><dfn>drop-shadow( &lt;length&gt;{2,3} && &lt;color&gt;? )</dfn></dt>
+<dd>
+  Applies a drop shadow effect to the input image. A drop shadow is
+  effectively a blurred, offset version of the input image's alpha mask
+  drawn in a particular color, composited below the image. Values are interpreted
+  as for 'box-shadow' [[!CSS3BG]]. (But note that spread values are not allowed.)
+  The markup
+  equivalent of this function is <a href="#dropshadowEquivalent">given
+  below</a>.
+  <p>The lacuna value for interpolation is ''0 0 0 black''.</p>
+</dd>
+<dt><dfn>grayscale( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
+<dd>
+  <p>Converts the input image to grayscale. The passed parameter defines the proportion
+  of the conversion. A value of 100% is completely grayscale. A value of 0% leaves the
+  input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+  If the parameter is missing, a value of 100% is used.
+  The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''100%''.</p>
+</dd>
 
-  <dt><dfn>sepia( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
-  <dd>
-    Converts the input image to sepia. The passed parameter defines the proportion
-    of the conversion. A value of 100% is completely sepia. A value of 0 leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
-  </dd>
-
-  <dt><dfn>saturate( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
-  <dd>
-    Saturates the input image. The passed parameter defines the proportion
-    of the conversion. A value of 0% is completely un-saturated. A value of 100% leaves the
-    input unchanged. Other values are linear multipliers on the effect.
-    Values of amount over 100% are allowed, providing super-saturated results.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
-  </dd>
-
-  <dt><dfn>hue-rotate( &lt;angle&gt; )</dfn></dt>
-  <dd>
-    Applies a hue rotation on the input image. The passed parameter defines the 
-    number of degrees around the color circle the input samples will be adjusted.
-    A value of 0deg leaves the input unchanged. If the parameter is missing,
-    a value of 0deg is used. Implementations should not normalize this value in order
-    to allow animations beyond 360deg.
-    The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
-  </dd>
-
-  <dt><dfn>invert( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
-  <dd>
-    Inverts the samples in the input image. The passed parameter defines the proportion
-    of the conversion. A value of 100% is completely inverted. A value of 0% leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
-  </dd>
-
-  <dt><dfn>opacity( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
-  <dd>
-    Applies transparency to the samples in the input image. The passed parameter defines the proportion
-    of the conversion. A value of 0% is completely transparent. A value of 100% leaves the
-    input unchanged. Values between 0% and 100% are linear multipliers on the effect.
-    This is equivalent to multiplying the input image samples by amount.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
-    <p class="note">
-      The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
-    </p>
-  </dd>
-
-  <dt><dfn>brightness( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
-  <dd>
-    Applies a linear multiplier to input image, making it appear more
-    or less bright.
-    A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the
-    input unchanged. Other values are linear multipliers on the effect.
-    Values of amount over 100% are allowed, providing brighter results.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
-  </dd>
-
-  <dt><dfn>contrast( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
-  <dd>
-    Adjusts the contrast of the input.
-    A value of ''0%'' will create an image that is completely gray. A value of ''100%'' leaves the
-    input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
-    If the parameter is missing, a value of 100% is used.
-    The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
-  </dd>
-
-  <dt><dfn>blur( &lt;length&gt; )</dfn></dt>
-  <dd>
-    Applies a Gaussian blur to the input image.
-    The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function.
-    If no parameter is provided, then a value 0 is used. The parameter is
-    specified a CSS length, but does not accept percentage values.
-    The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
-    <p class=issue>The FXTF is looking into distinguish between vertical and horizontal blur radii.</p>
-  </dd>
-
-  <dt><dfn>drop-shadow( &lt;length&gt;{2,3} && &lt;color&gt;? )</dfn></dt>
-  <dd>
-    Applies a drop shadow effect to the input image. A drop shadow is
-    effectively a blurred, offset version of the input image's alpha mask
-    drawn in a particular color, composited below the image. Values are interpreted
-    as for 'box-shadow' [[!CSS3BG]]. (But note that spread values are not allowed.)
-    The markup
-    equivalent of this function is <a href="#dropshadowEquivalent">given
-    below</a>.
-  </dd>
-  
-  <dt><dfn>custom( IDENT [, &lt;param&gt;]* )</dfn></dt>
-  <dd>
-     References a custom filter at-rule by the given identifier. See <a
-     href="#custom-filter">Custom Filter Function</a> for details.
-  </dd>
+<dt><dfn>hue-rotate( &lt;angle&gt; )</dfn></dt>
+<dd>
+  Applies a hue rotation on the input image. The passed parameter defines the 
+  number of degrees around the color circle the input samples will be adjusted.
+  A value of 0deg leaves the input unchanged. If the parameter is missing,
+  a value of 0deg is used. Implementations should not normalize this value in order
+  to allow animations beyond 360deg.
+  The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
+  <p>The lacuna value for interpolation is ''0''.</p>
+</dd>
+<dt><dfn>invert( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
+<dd>
+  <p>Inverts the samples in the input image. The passed parameter defines the proportion
+  of the conversion. A value of 100% is completely inverted. A value of 0% leaves the
+  input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+  If the parameter is missing, a value of 100% is used.
+  The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''100%''.</p>
+</dd>
+<dt><dfn>opacity( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
+<dd>
+  <p>Applies transparency to the samples in the input image. The passed parameter defines the proportion
+  of the conversion. A value of 0% is completely transparent. A value of 100% leaves the
+  input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+  This is equivalent to multiplying the input image samples by amount.
+  If the parameter is missing, a value of 100% is used.
+  The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p class="note">
+    The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
+  </p>
+</dd>
+<dt><dfn>saturate( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
+<dd>
+  <p>Saturates the input image. The passed parameter defines the proportion
+  of the conversion. A value of 0% is completely un-saturated. A value of 100% leaves the
+  input unchanged. Other values are linear multipliers on the effect.
+  Values of amount over 100% are allowed, providing super-saturated results.
+  If the parameter is missing, a value of 100% is used.
+  The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''100%''.</p>
+</dd>
+<dt><dfn>sepia( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
+<dd>
+  <p>Converts the input image to sepia. The passed parameter defines the proportion
+  of the conversion. A value of 100% is completely sepia. A value of 0 leaves the
+  input unchanged. Values between 0% and 100% are linear multipliers on the effect.
+  If the parameter is missing, a value of 100% is used.
+  The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''100%''.</p>
+</dd>
 </dl>
 
 <p>
