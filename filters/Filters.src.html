@@ -509,12 +509,12 @@
   is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 </p>
 
-<pre class=prod><dfn><var>&lt;filter-function&gt;</var></dfn> = <var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>saturate(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>hue-rotate(&lt;angle&gt;)</var> | <var>invert(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>opacity(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>brightness(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>blur(&lt;length&gt;)</var> | <var>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#)</var>
- | <var>custom(IDENT [, &lt;param&gt;]*)</var></pre>
+<pre class=prod><dfn><var>&lt;filter-function&gt;</var></dfn> = <var>grayscale( &lt;number&gt; | &lt;percentage&gt; )</var>
+ | <var>sepia( &lt;number&gt; | &lt;percentage&gt; )</var> | <var>saturate( &lt;number&gt; | &lt;percentage&gt; )</var>
+ | <var>hue-rotate( &lt;angle&gt; )</var> | <var>invert( &lt;number&gt; | &lt;percentage&gt; )</var>
+ | <var>opacity( &lt;number&gt; | &lt;percentage&gt; )</var> | <var>brightness( &lt;number&gt; | &lt;percentage&gt; )</var>
+ | <var>contrast( &lt;number&gt; | &lt;percentage&gt; )</var> | <var>blur( &lt;length&gt; )</var> | <var>drop-shadow( &lt;length&gt;{2,3} && &lt;color&gt;? )</var>
+ | <var>custom( IDENT [, &lt;param&gt;]* )</var></pre>
 
 <pre class=prod><dfn>&lt;child-selector&gt;</dfn> = select(<var>&lt;compound-selector&gt;</var>#) | <var>child</var></pre>
 
@@ -550,7 +550,7 @@
   The parameter is specified a CSS length, but does not accept percentage values.
   The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
   <p>Negative values are not allowed.</p>
-  <p>The lacuna value for interpolation is ''0''.</p>
+  <p>The lacuna value for interpolation is ''0px''.</p>
   <p class=issue>The FXTF is looking into distinguish between vertical and horizontal blur radii.</p>
 </dd>
 <dt><dfn>brightness( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
@@ -561,7 +561,7 @@
   input unchanged. Other values are linear multipliers on the effect.
   Values of amount over 100% are allowed, providing brighter results.
   The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
-  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 <dt><dfn>contrast( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
 <dd>
@@ -570,7 +570,7 @@
   input unchanged. Values of amount over 100% are allowed, providing results with less contrast.
   The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
   <p>Negative values are not allowed.</p>
-  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 <dt><dfn>custom( IDENT [, &lt;param&gt;]* )</dfn></dt>
 <dd>
@@ -586,7 +586,8 @@
   The markup
   equivalent of this function is <a href="#dropshadowEquivalent">given
   below</a>.
-  <p>The lacuna value for interpolation is ''0 0 0 black''.</p>
+  <p>The lacuna value for interpolation is all length values set to ''0'' and the used
+    color is taken from the 'color' property.</p>
 </dd>
 <dt><dfn>grayscale( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
 <dd>
@@ -596,7 +597,7 @@
   Values of amount over 100% are allowed but UAs must clamp the values to 100%.
   The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
   <p>Negative values are not allowed.</p>
-  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 
 <dt><dfn>hue-rotate( &lt;angle&gt; )</dfn></dt>
@@ -607,7 +608,7 @@
   a value of 0deg is used. Implementations should not normalize this value in order
   to allow animations beyond 360deg.
   The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
-  <p>The lacuna value for interpolation is ''0''.</p>
+  <p>The lacuna value for interpolation is ''0deg''.</p>
 </dd>
 <dt><dfn>invert( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
 <dd>
@@ -617,7 +618,7 @@
   Values of amount over 100% are allowed but UAs must clamp the values to 100%.
   The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
   <p>Negative values are not allowed.</p>
-  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 <dt><dfn>opacity( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
 <dd>
@@ -628,7 +629,7 @@
   Values of amount over 100% are allowed but UAs must clamp the values to 100%.
   The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
   <p>Negative values are not allowed.</p>
-  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
   <p class="note">
     The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
   </p>
@@ -641,7 +642,7 @@
   Values of amount over 100% are allowed, providing super-saturated results.
   The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
   <p>Negative values are not allowed.</p>
-  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 <dt><dfn>sepia( &lt;number&gt; | &lt;percentage&gt; )</dfn></dt>
 <dd>
@@ -651,7 +652,7 @@
   Values of amount over 100% are allowed but UAs must clamp the values to 100%.
   The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
   <p>Negative values are not allowed.</p>
-  <p>The lacuna value for interpolation is ''100%''.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 </dl>
 
@@ -665,7 +666,7 @@
 
 <p>Filter functions operate in the sRGB color space.</p>
 
-<p class="note">Note: The <var>grayscale</var>, <var>sepia</var>, <var>saturate</var>, <var>hue-rotate</var>, <var>invert</var>, <var>opacity</var>, <var>brightness</var> and <var>contrast</var> filter functions can be represented by color matrices. If the former named filter functions are chained together, UAs can optimize the performance by multiplying these filter functions to one color matrix and apply the resulting color matrix instead of each filter function separately.</p>
+<p class="note">Note: The <var>grayscale</var>, <var>sepia</var>, <var>saturate</var>, <var>hue-rotate</var>, <var>invert</var>, <var>opacity</var>, <var>brightness</var> and <var>contrast</var> filter functions can be represented by color matrices. If the former named filter functions are chained together, UAs can optimize the performance by multiplying these filter functions to one color matrix and apply the resulting color matrix instead of each filter function separately.<span class="issue">This does imply that no clamping is needed between two filter effects.</span></p>
 
 <p>A computed value of other than 'none' results in the creation of a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. All the elements descendants are rendered together as a group with the filter effect applied to the group as a whole.</p>
 

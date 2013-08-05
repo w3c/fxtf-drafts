@@ -10,7 +10,7 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-07-24 name=dcterms.date>
+  <meta content=2013-08-05 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -33,14 +33,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 24 July 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 5 August 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
-     <!--http://www.w3.org/TR/2013/WD-filters-20130724/-->
+     <!--http://www.w3.org/TR/2013/WD-filters-20130805/-->
 
     <dt>Latest version:
 
@@ -997,12 +997,23 @@
    Otherwise, the list of functions are applied in the order provided.
 
   <pre class=prod><dfn
-   id=ltfilter-functiongt><var>&lt;filter-function&gt;</var></dfn> = <var>grayscale(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>sepia(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>saturate(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>hue-rotate(&lt;angle&gt;)</var> | <var>invert(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>opacity(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>brightness(&lt;number&gt; | &lt;percentage&gt;)</var>
- | <var>contrast(&lt;number&gt; | &lt;percentage&gt;)</var> | <var>blur(&lt;length&gt;)</var> | <var>drop-shadow([&lt;length&gt;{2,3} && &lt;color&gt;?]#)</var>
- | <var>custom(IDENT [, &lt;param&gt;]*)</var></pre>
+   id=ltfilter-functiongt><var>&lt;filter-function&gt;</var></dfn> = <a
+   href="#grayscale-ltnumbergt-ltpercentagegt-"><var>grayscale( &lt;number&gt; | &lt;percentage&gt; )</var></a>
+ | <a
+   href="#sepia-ltnumbergt-ltpercentagegt-"><var>sepia( &lt;number&gt; | &lt;percentage&gt; )</var></a> | <a
+   href="#saturate-ltnumbergt-ltpercentagegt-"><var>saturate( &lt;number&gt; | &lt;percentage&gt; )</var></a>
+ | <a
+   href="#hue-rotate-ltanglegt-"><var>hue-rotate( &lt;angle&gt; )</var></a> | <a
+   href="#invert-ltnumbergt-ltpercentagegt-"><var>invert( &lt;number&gt; | &lt;percentage&gt; )</var></a>
+ | <a
+   href="#opacity-ltnumbergt-ltpercentagegt-"><var>opacity( &lt;number&gt; | &lt;percentage&gt; )</var></a> | <a
+   href="#brightness-ltnumbergt-ltpercentagegt-"><var>brightness( &lt;number&gt; | &lt;percentage&gt; )</var></a>
+ | <a
+   href="#contrast-ltnumbergt-ltpercentagegt-"><var>contrast( &lt;number&gt; | &lt;percentage&gt; )</var></a> | <a
+   href="#blur-ltlengthgt-"><var>blur( &lt;length&gt; )</var></a> | <a
+   href="#drop-shadow-ltlengthgt23-ltcolorgt-"><var>drop-shadow( &lt;length&gt;{2,3} && &lt;color&gt;? )</var></a>
+ | <a
+   href="#custom-ident-ltparamgt-"><var>custom( IDENT [, &lt;param&gt;]* )</var></a></pre>
 
   <pre class=prod><dfn
    id=ltchild-selectorgt>&lt;child-selector&gt;</dfn> = select(<a
@@ -1058,7 +1069,8 @@
 
     <p>Negative values are not allowed.
 
-    <p>The lacuna value for interpolation is ‘<code class=css>0</code>’.
+    <p>The lacuna value for interpolation is ‘<code
+     class=css>0px</code>’.
 
     <p class=issue>The FXTF is looking into distinguish between vertical and
      horizontal blur radii.
@@ -1075,8 +1087,7 @@
      allowed, providing brighter results. The markup equivalent of this
      function is <a href="#brightnessEquivalent">given below</a>.
 
-    <p>The lacuna value for interpolation is ‘<code
-     class=css>100%</code>’.
+    <p>The lacuna value for interpolation is ‘<code class=css>1</code>’.
 
    <dt><dfn id=contrast-ltnumbergt-ltpercentagegt->contrast( &lt;number&gt; |
     &lt;percentage&gt; )</dfn>
@@ -1091,8 +1102,7 @@
 
     <p>Negative values are not allowed.
 
-    <p>The lacuna value for interpolation is ‘<code
-     class=css>100%</code>’.
+    <p>The lacuna value for interpolation is ‘<code class=css>1</code>’.
 
    <dt><dfn id=custom-ident-ltparamgt->custom( IDENT [, &lt;param&gt;]*
     )</dfn>
@@ -1110,8 +1120,9 @@
     href="#CSS3BG" rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>. (But note
     that spread values are not allowed.) The markup equivalent of this
     function is <a href="#dropshadowEquivalent">given below</a>.
-    <p>The lacuna value for interpolation is ‘<code class=css>0 0 0
-     black</code>’.
+    <p>The lacuna value for interpolation is all length values set to
+     ‘<code class=css>0</code>’ and the used color is taken from the
+     ‘<code class=property>color</code>’ property.
 
    <dt><dfn id=grayscale-ltnumbergt-ltpercentagegt->grayscale( &lt;number&gt;
     | &lt;percentage&gt; )</dfn>
@@ -1127,8 +1138,7 @@
 
     <p>Negative values are not allowed.
 
-    <p>The lacuna value for interpolation is ‘<code
-     class=css>100%</code>’.
+    <p>The lacuna value for interpolation is ‘<code class=css>1</code>’.
 
    <dt><dfn id=hue-rotate-ltanglegt->hue-rotate( &lt;angle&gt; )</dfn>
 
@@ -1139,7 +1149,8 @@
     normalize this value in order to allow animations beyond 360deg. The
     markup equivalent of this function is <a
     href="#huerotateEquivalent">given below</a>.
-    <p>The lacuna value for interpolation is ‘<code class=css>0</code>’.
+    <p>The lacuna value for interpolation is ‘<code
+     class=css>0deg</code>’.
 
    <dt><dfn id=invert-ltnumbergt-ltpercentagegt->invert( &lt;number&gt; |
     &lt;percentage&gt; )</dfn>
@@ -1155,8 +1166,7 @@
 
     <p>Negative values are not allowed.
 
-    <p>The lacuna value for interpolation is ‘<code
-     class=css>100%</code>’.
+    <p>The lacuna value for interpolation is ‘<code class=css>1</code>’.
 
    <dt><dfn id=opacity-ltnumbergt-ltpercentagegt->opacity( &lt;number&gt; |
     &lt;percentage&gt; )</dfn>
@@ -1173,8 +1183,7 @@
 
     <p>Negative values are not allowed.
 
-    <p>The lacuna value for interpolation is ‘<code
-     class=css>100%</code>’.
+    <p>The lacuna value for interpolation is ‘<code class=css>1</code>’.
 
     <p class=note> The opacity filter function is not meant to be a shorthand
      of the ‘<code class=property>opacity</code>’ property. Furthermore,
@@ -1198,8 +1207,7 @@
 
     <p>Negative values are not allowed.
 
-    <p>The lacuna value for interpolation is ‘<code
-     class=css>100%</code>’.
+    <p>The lacuna value for interpolation is ‘<code class=css>1</code>’.
 
    <dt><dfn id=sepia-ltnumbergt-ltpercentagegt->sepia( &lt;number&gt; |
     &lt;percentage&gt; )</dfn>
@@ -1214,8 +1222,7 @@
 
     <p>Negative values are not allowed.
 
-    <p>The lacuna value for interpolation is ‘<code
-     class=css>100%</code>’.
+    <p>The lacuna value for interpolation is ‘<code class=css>1</code>’.
   </dl>
 
   <p> The first filter function or ‘<code class=css>filter
@@ -1235,7 +1242,9 @@
    functions can be represented by color matrices. If the former named filter
    functions are chained together, UAs can optimize the performance by
    multiplying these filter functions to one color matrix and apply the
-   resulting color matrix instead of each filter function separately.
+   resulting color matrix instead of each filter function separately.<span
+   class=issue>This does imply that no clamping is needed between two filter
+   effects.</span>
 
   <p>A computed value of other than ‘<code class=property>none</code>’
    results in the creation of a <a
