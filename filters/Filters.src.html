@@ -5351,19 +5351,23 @@ void main()
   </li>
   <li>
     If <em>from-</em> and <em>to-filter</em> have the same number of filter functions and each filter function pair is of the same type:
-    <ul><li>Interpolate each filter function pair value numerically. (See <a href="shader-params-interpolation">"Interpolating the shader-params component in the custom() function"</a> for interpolation of the <var>custom</var> filter function.)</li></ul>
+    <ul><li>Interpolate each filter function pair value numerically. (See <a href="#shader-params-interpolation">"Interpolating the shader-params component in the custom() function"</a> for interpolation of the <var>custom</var> filter function.)</li></ul>
   </li>
   <li>
-    If <em>from-</em> and <em>to-filter</em> have the different number of filter functions but the possible filter function pairs are of the same type:
+    If <em>from-</em> and <em>to-filter</em> have a different number of filter functions. And all filter function pairs between <em>from-</em> and <em>to-filter</em> are compatible up to the length of the filter list with the least filter functions:
     <ul>
-      <li>Add the corresponding filter functions with their initial value of the filter with more filter functions to the end of the list of the filter with less filter functions.</li>
-      <li>Interpolate each filter function pair value numerically. (See <a href="shader-params-interpolation">"Interpolating the shader-params component in the custom() function"</a> for interpolation of the <var>custom</var> filter function.)</li>
+      <li>Add the corresponding filter functions with their initial value to the filter list with least filter functions and proceed with the previous step.</li>
     </ul>
   </li>
   <li>
     In all other cases:
     <ul><li>There is no interpolation possible.</li></ul>
   </li>
+
+  <p class="issue" id="matrix-interpolation">Some filter functions can be represented as color matrices. Is it possible
+    to interpolate between color matrices? See <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22583">Bug 22583</a>.</p>
+
+  <p class="issue" id="url-interpolation">CSS filter function lists that have at least one SVG Filter reference can not be interpolated. Is it still possible to interpolate the other filter functions? See <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22951">Bug 22951</a>.</p>
 
   <p class="issue" id="issue-css-transitions">The CSS WG may define different fading transitions in the future.</p>
 

@@ -10,7 +10,7 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-08-13 name=dcterms.date>
+  <meta content=2013-08-14 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -33,14 +33,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 13 August 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 14 August 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
-     <!--http://www.w3.org/TR/2013/WD-filters-20130813/-->
+     <!--http://www.w3.org/TR/2013/WD-filters-20130814/-->
 
     <dt>Latest version:
 
@@ -12243,23 +12243,19 @@ void main()
         filter functions and each filter function pair is of the same type:
         <ul>
          <li>Interpolate each filter function pair value numerically. (See <a
-          href=shader-params-interpolation>"Interpolating the shader-params
-          component in the custom() function"</a> for interpolation of the
-          <var>custom</var> filter function.)
+          href="#shader-params-interpolation">"Interpolating the
+          shader-params component in the custom() function"</a> for
+          interpolation of the <var>custom</var> filter function.)
         </ul>
 
-       <li> If <em>from-</em> and <em>to-filter</em> have the different
-        number of filter functions but the possible filter function pairs are
-        of the same type:
+       <li> If <em>from-</em> and <em>to-filter</em> have a different number
+        of filter functions. And all filter function pairs between
+        <em>from-</em> and <em>to-filter</em> are compatible up to the length
+        of the filter list with the least filter functions:
         <ul>
          <li>Add the corresponding filter functions with their initial value
-          of the filter with more filter functions to the end of the list of
-          the filter with less filter functions.
-
-         <li>Interpolate each filter function pair value numerically. (See <a
-          href=shader-params-interpolation>"Interpolating the shader-params
-          component in the custom() function"</a> for interpolation of the
-          <var>custom</var> filter function.)
+          to the filter list with least filter functions and proceed with the
+          previous step.
         </ul>
 
        <li> In all other cases:
@@ -12267,6 +12263,18 @@ void main()
          <li>There is no interpolation possible.
         </ul>
       </ul>
+
+      <p class=issue id=matrix-interpolation>Some filter functions can be
+       represented as color matrices. Is it possible to interpolate between
+       color matrices? See <a
+       href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22583">Bug
+       22583</a>.
+
+      <p class=issue id=url-interpolation>CSS filter function lists that have
+       at least one SVG Filter reference can not be interpolated. Is it still
+       possible to interpolate the other filter functions? See <a
+       href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22951">Bug
+       22951</a>.
 
       <p class=issue id=issue-css-transitions>The CSS WG may define different
        fading transitions in the future.
