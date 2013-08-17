@@ -5203,20 +5203,20 @@ void main()
 <p>If shaders access texture values outside the <code>[0, 1]</code> range on both axis, the returned value is a fully translucent black pixel.
 
 
-<h2 id="FilterCSSImageValue">The filter CSS <var>&lt;image&gt;</var> value</h2>
+<h2 id="FilterCSSImageValue">Filter CSS <var>&lt;image&gt;</var> values</h2>
 
-<p>The filter() function produces a CSS <var>&lt;image&gt;</var> value. It has the following syntax:
-
-<h3 class='no-toc' id='filter-syntax'>filter() syntax</h3>
+<p>CSS <var>&lt;image></var> values can be filtered with the filter functions specified for the CSS 'filter' property. This specificaton introduces the <var>&lt;image></var> <dfn>filter()</dfn> function with the following syntax:
 
 <pre class='prod'><code><dfn>&lt;filter></dfn> = filter(
-  <var>&lt;image></var>, 
-  none | [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> | <var>&lt;child-selector&gt;</var> ]+
+  <var>&lt;image></var>, [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> | <var>&lt;child-selector&gt;</var> ]+
 )</code></pre>
 
-<p>The function takes two parameters. The first is a CSS <var>&lt;image&gt;</var> value. The second is the value of a 'filter' property. The function take the input image parameter and apply the filter rules, returning a processing image. Dimension and origin of the passed image must be preserved.
+<p>The filter() function takes two arguments. The first argument is an <var>&lt;image></var>. The second is a filter function list as specified for the CSS 'filter' property. The function takes the <var>&lt;image></var> parameter and applies the filter rules, returning a processing image. Dimension and origin of the passed image must be preserved. Filter- and filter effect regions are sized according to the input image size.
 
-<p class="note">Note: Since the dimension and origin of the original image must be preserved, some filter effects like <var>drop-shadow</var> on a fully opaque image do not have any affect.
+<p class="note">Note: Since the dimension and origin of the original image must be preserved, some filter effects like <var>drop-shadow</var> on a fully opaque image may not have any affect.
+
+<h3 id="interpolating-filter-image">Interpolating filter()</h3>
+If both the starting and ending image are <var>filter()</var>s which may only differ by their used filter functions, they must be interpolated by interpolating their filter function lists as described in section <a href="#interpolation-of-filters">Interpolation of Filters</a>. Otherwise, they must be interpolated as generic <var>&lt;image></var>s. If the filter function interpolation can not be performed, the images must be interpolated as generic <var>&lt;image></var>s.
 
 <h2 id="ShorthandEquivalents">Shorthands defined in terms of the <a>'filter element'</a> element</h2>
 

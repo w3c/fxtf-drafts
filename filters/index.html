@@ -10,7 +10,7 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-08-14 name=dcterms.date>
+  <meta content=2013-08-17 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -33,14 +33,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 14 August 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 17 August 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
-     <!--http://www.w3.org/TR/2013/WD-filters-20130814/-->
+     <!--http://www.w3.org/TR/2013/WD-filters-20130817/-->
 
     <dt>Latest version:
 
@@ -363,8 +363,12 @@
       </ul>
     </ul>
 
-   <li><a href="#FilterCSSImageValue"><span class=secno>13. </span>The filter
-    CSS <var>&lt;image&gt;</var> value</a>
+   <li><a href="#FilterCSSImageValue"><span class=secno>13. </span>Filter CSS
+    <var>&lt;image&gt;</var> values</a>
+    <ul class=toc>
+     <li><a href="#interpolating-filter-image"><span class=secno>13.1.
+      </span>Interpolating filter()</a>
+    </ul>
 
    <li><a href="#ShorthandEquivalents"><span class=secno>14.
     </span>Shorthands defined in terms of the <code
@@ -12048,34 +12052,46 @@ void main()
        range on both axis, the returned value is a fully translucent black
        pixel.
 
-      <h2 id=FilterCSSImageValue><span class=secno>13. </span>The filter CSS
-       <var>&lt;image&gt;</var> value</h2>
+      <h2 id=FilterCSSImageValue><span class=secno>13. </span>Filter CSS
+       <var>&lt;image&gt;</var> values</h2>
 
-      <p>The filter() function produces a CSS <var>&lt;image&gt;</var> value.
-       It has the following syntax:
-
-      <h3 class=no-toc id=filter-syntax><span class=secno>13.1.
-       </span>filter() syntax</h3>
+      <p>CSS <var>&lt;image></var> values can be filtered with the filter
+       functions specified for the CSS ‘<a href="#filter"><code
+       class=property>filter</code></a>’ property. This specificaton
+       introduces the <var>&lt;image></var> <dfn id=filter0>filter()</dfn>
+       function with the following syntax:
 
       <pre class=prod><code><dfn id=ltfilter>&lt;filter></dfn> = filter(
-  <var>&lt;image></var>, 
-  none | [ <a
+  <var>&lt;image></var>, [ <a
        href="#ltfilter-functiongt"><var>&lt;filter-function&gt;</var></a> | <a
        href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
        href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a> ]+
 )</code></pre>
 
-      <p>The function takes two parameters. The first is a CSS
-       <var>&lt;image&gt;</var> value. The second is the value of a ‘<a
-       href="#filter"><code class=property>filter</code></a>’ property. The
-       function take the input image parameter and apply the filter rules,
+      <p>The filter() function takes two arguments. The first argument is an
+       <var>&lt;image></var>. The second is a filter function list as
+       specified for the CSS ‘<a href="#filter"><code
+       class=property>filter</code></a>’ property. The function takes the
+       <var>&lt;image></var> parameter and applies the filter rules,
        returning a processing image. Dimension and origin of the passed image
-       must be preserved.
+       must be preserved. Filter- and filter effect regions are sized
+       according to the input image size.
 
       <p class=note>Note: Since the dimension and origin of the original
        image must be preserved, some filter effects like
-       <var>drop-shadow</var> on a fully opaque image do not have any affect.
+       <var>drop-shadow</var> on a fully opaque image may not have any
+       affect.
 
+      <h3 id=interpolating-filter-image><span class=secno>13.1.
+       </span>Interpolating filter()</h3>
+      If both the starting and ending image are <a
+      href="#filter0"><var>filter()</var></a>s which may only differ by their
+      used filter functions, they must be interpolated by interpolating their
+      filter function lists as described in section <a
+      href="#interpolation-of-filters">Interpolation of Filters</a>.
+      Otherwise, they must be interpolated as generic <var>&lt;image></var>s.
+      If the filter function interpolation can not be performed, the images
+      must be interpolated as generic <var>&lt;image></var>s.
       <h2 id=ShorthandEquivalents><span class=secno>14. </span>Shorthands
        defined in terms of the <a href="#FilterElement"><code
        class=element-name>&lt;filter></code></a> element</h2>
@@ -15506,10 +15522,10 @@ interface <b>SVGFEBlendElement</b> : <a
        <dt id=CSS3VAL>[CSS3VAL]
 
        <dd>Håkon Wium Lie; Tab Atkins; Elika J. Etemad. <a
-        href="http://www.w3.org/TR/2013/CR-css3-values-20130404/"><cite>CSS
-        Values and Units Module Level 3.</cite></a> 4 April 2013. W3C
+        href="http://www.w3.org/TR/2013/CR-css3-values-20130730/"><cite>CSS
+        Values and Units Module Level 3.</cite></a> 30 July 2013. W3C
         Candidate Recommendation. (Work in progress.) URL: <a
-        href="http://www.w3.org/TR/2013/CR-css3-values-20130404/">http://www.w3.org/TR/2013/CR-css3-values-20130404/</a>
+        href="http://www.w3.org/TR/2013/CR-css3-values-20130730/">http://www.w3.org/TR/2013/CR-css3-values-20130730/</a>
        </dd>
        <!---->
 
@@ -16350,7 +16366,10 @@ interface <b>SVGFEBlendElement</b> : <a
         title="section 6."><strong>6.</strong></a>
 
        <li>&lt;filter>, <a href="#ltfilter"
-        title="section 13.1."><strong>13.1.</strong></a>
+        title="section 13."><strong>13.</strong></a>
+
+       <li>filter(), <a href="#filter0"
+        title="section 13."><strong>13.</strong></a>
 
        <li><var>&lt;filter-function&gt;</var>, <a href="#ltfilter-functiongt"
         title="section 5."><strong>5.</strong></a>
