@@ -248,7 +248,7 @@ sub readdefs {
 
 sub link {
   my $text = dec(shift);
-  if ($text =~ /^'([^ \/]*)'$/) {
+  if ($text =~ /^'([^\s\/]*)'$/) {
     my $name = $1;
     if (defined $elements{$name}) {
       return "<a href='$elements{$name}{href}'><code class='element-name'>&lt;$name></code></a>";
@@ -265,14 +265,14 @@ sub link {
     }
     print STDERR "unknown element, attribute or property '$1'\n";
     return "<span class='xxx'>$text</span>";
-  } elsif ($text =~ /^'([^ \/]*) element'$/) {
+  } elsif ($text =~ /^'([^\s\/]*)\s+element'$/) {
     my $name = $1;
     unless (defined $elements{$name}) {
       print STDERR "unknown element '$1'\n";
       return "<span class='xxx'>$text</span>";
     }
     return "<a href='$elements{$name}{href}'><code class='element-name'>&lt;$name></code></a>";
-  } elsif ($text =~ /^'([^ \/]*) attribute'$/) {
+  } elsif ($text =~ /^'([^\s\/]*)\s+attribute'$/) {
     my $name = $1;
     unless (defined $attributes{$name}) {
       print STDERR "unknown attribute '$1'\n";
@@ -285,14 +285,14 @@ sub link {
       my $href = join('', values(%{$attributes{$name}}));
       return "<a class='attr-name' href='$href'>'$name'</a>";
     }
-  } elsif ($text =~ /^'([^ \/]*) property'$/) {
+  } elsif ($text =~ /^'([^\s\/]*)\s+property'$/) {
     my $name = $1;
     unless (defined $properties{$name}) {
-      print STDERR "unknown element '$1'\n";
+      print STDERR "unknown property '$1'\n";
       return "<span class='xxx'>$text</span>";
     }
     return "<a class='property' href='$properties{$name}{href}'>'$name'</a>";
-  } elsif ($text =~ /^'([^ ]*)\/([^ ]*)'$/) {
+  } elsif ($text =~ /^'(\S+)\/(\S+)'$/) {
     my $eltname = $1;
     my $attrname = $2;
     unless (defined $elements{$eltname} && defined $elements{$eltname}{attributes}{$attrname}) {
@@ -309,9 +309,9 @@ sub link {
     my $href = $terms{"<$symname>"};
     return "<a href='$href'>&lt;$symname&gt;</a>";
   } else {
-    $text =~ s/^\s+//;
-    $text =~ s/\s+$//;
-    $text =~ s/\s/ /gs;
+    $text =~ s/\s+/ /gs;
+    $text =~ s/^ +//;
+    $text =~ s/ $//;
     unless (defined $terms{$text}) {
       print STDERR "unknown term '$text'\n";
       return "<span class='xxx'>$text</span>";
