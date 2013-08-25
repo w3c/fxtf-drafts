@@ -430,7 +430,7 @@
       does not have an associated CSS layout box and is in the
       <code>http://www.w3.org/2000/svg</code> namespace (See <a href= 
       "http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
-      [[!CSSOM]]]).
+      [[!CSSOM]]).
     </p>
   </dd>
   <dt id="TermLocalCoordinateSystem">
@@ -446,8 +446,8 @@
     </p>
     <p>
       For elements that have an associated CSS layout box, the current user
-      coordinate system has its origin at the top-left corner of the <span class=
-      "term">bounding client rect</span> and one unit equals one CSS pixel. The
+      coordinate system has its origin at the top-left corner of the 
+      <span>bounding client rect</span> and one unit equals one CSS pixel. The
       viewport for resolving percentage values is defined by the width and height of
       the <span class="term">bounding client rect</span>.
     </p>
@@ -461,7 +461,7 @@
     <dfn>user coordinate system</dfn>
   </dt>
   <dd>
-    See definition of <span class="term">local coordinate system</span>.
+    See definition of <span>local coordinate system</span>.
   </dd>
   <dt id="TermObjectBoundingBoxUnits">
     <dfn>object bounding box units</dfn>
@@ -534,8 +534,7 @@
         Value:
       </th>
       <td>
-        none | [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> |
-        <var>&lt;child-selector&gt;</var> ]+
+        none | <var>&lt;filter-function-list&gt;</var>
       </td>
     </tr>
     <tr>
@@ -602,6 +601,11 @@
   applied. Otherwise, the list of functions are applied in the order provided.
 </p>
 <pre class="prod">
+<dfn><var>&lt;filter-function-list&gt;</var></dfn> = [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> |
+        <var>&lt;child-selector&gt;</var> ]+
+</pre>
+
+<pre class="prod">
 <dfn><var>&lt;filter-function&gt;</var></dfn> = <var>grayscale( &lt;number&gt; | &lt;percentage&gt; )</var>
 | <var>sepia( &lt;number&gt; | &lt;percentage&gt; )</var> | <var>saturate( &lt;number&gt; | &lt;percentage&gt; )</var>
 | <var>hue-rotate( &lt;angle&gt; )</var> | <var>invert( &lt;number&gt; | &lt;percentage&gt; )</var>
@@ -624,7 +628,7 @@
     the URL reference instead of null filter?</span>
   </dd>
   <dt>
-    ''child''
+    ''<dfn>child</dfn>''
   </dt>
   <dd>
     A keyword to indicate that the last direct child <a>'filter element'</a> element
@@ -1155,7 +1159,9 @@
   for <a>'filter/x'</a>, <a>'filter/y'</a> and percentages values greater than
   ''100%'' for <a>'filter/width'</a>, <a>'filter/height'</a>. This, for example, is
   why the defaults for the filter effects region are ''x="-10%" y="-10%" width="120%"
-  height="120%"''.
+  height="120%"''. <span class="issue">The value of ''auto'' should take care of
+  that unless the authors wants to clip explicitly. Given that, do we need it at
+  all? You can clip with the 'clip-path' property.</span>
 </p>
 
 <h2 id="FilterPrimitivesOverview">Filter primitives</h2>
@@ -1299,8 +1305,9 @@
     </dt>
     <dd>
       <p>
-        &lt;filter-primitive-reference&gt; is an <a href="">&lt;author-ident&gt;</a>
-        <span class="issue">link missing</span> and an assigned name for this
+        &lt;filter-primitive-reference&gt; is an <a
+        href="http://www.w3.org/TR/css3-values/#custom-idents">&lt;custom-ident&gt;</a>
+        [[CSS3VAL]] and an assigned name for this
         <a>filter primitive</a>. If supplied, then graphics that result from
         processing this <a>filter primitive</a> can be referenced by an <a>'in'</a>
         attribute on a subsequent filter primitive within the same <a>'filter
@@ -2534,34 +2541,15 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
   </p>
 </div>
 
-<!--
-          _____                    _____                    _____                    _____          
-         /\    \                  /\    \                  /\    \                  /\    \         
-        /::\    \                /::\    \                /::\    \                /::\    \        
-       /::::\    \              /::::\    \              /::::\    \              /::::\    \       
-      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \      
-     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
-    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \    
-   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \   
-  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \  
- /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\ 
-/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |
-\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|
- \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    / 
-       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /  
-       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /   
-       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /    
-       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /     
-       |::|   |                \:::\    \                  /:::/    /            \::::::/    /      
-       \::|   |                 \:::\____\                /:::/    /              \::::/    /       
-        \:|   |                  \::/    /                \::/    /                \::/____/        
-         \|___|                   \/____/                  \/____/                  ~~              
-                                                                                                    
--->
-
 <h3 id="feConvolveMatrixElement">Filter primitive <a>'feConvolveMatrix'</a></h3>
 
 <!--elementsummary feConvolveMatrix-->
+
+<p class="issue">
+  feConvolveMatrix is device pixel dependent. The spec suggests to use 'filterRes' or
+  'kernelUnitLength' to make it mostly platform independent. Is a platform dependent
+  result ever in the interest of the user?
+</p>
 
 <p>
   feConvolveMatrix applies a matrix convolution filter effect. A convolution combines
@@ -2594,7 +2582,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
   In the above formulas that the values in the kernel matrix are applied such
   that the kernel matrix is rotated 180 degrees relative to the source and
   destination images in order to match convolution theory as described in many
-  computer graphics textbooks.
+  computer graphics textbooks. <span class="issue">Sounds strange.</span>
 </p>
 <p>
   To illustrate, suppose you have a input image which is 5 pixels by 5 pixels, whose
@@ -2657,7 +2645,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
   implementations might choose approaches that minimize or eliminate resampling when
   not necessary to produce proper results, such as when the document is zoomed out
   such that <a>'feConvolveMatrix/kernelUnitLength'</a> is considerably smaller than a
-  device pixel.
+  device pixel. <span class="issue">Require for all UAs.</span>
 </p>
 
 <div class="adef-list">
@@ -2677,7 +2665,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
       in the matrix. The second number, &lt;orderY&gt;, indicates the number of rows
       in the matrix. If &lt;orderY&gt; is not provided, it defaults to
       &lt;orderX&gt;.<br>
-      It is recommended that only small values (e.g., 3) be used; higher values may
+      It is recommended that only small values (e.g., ''3'') be used; higher values may
       result in very high CPU overhead and usually do not produce results that
       justify the impact on performance.<br>
       The <a>lacuna value</a> for <a>'order'</a> is <span class=
@@ -2758,7 +2746,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
         near the edge of the input image.
       </p>
       <p>
-        "duplicate" indicates that the input image is extended along each of its
+        ''duplicate'' indicates that the input image is extended along each of its
         borders as necessary by duplicating the color values at the given edge of the
         input image.
       </p>
@@ -2797,6 +2785,30 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
         <span class="anim-target">Animatable: yes.</span>
       </p>
     </dd>
+<!--
+          _____                    _____                    _____                    _____          
+         /\    \                  /\    \                  /\    \                  /\    \         
+        /::\    \                /::\    \                /::\    \                /::\    \        
+       /::::\    \              /::::\    \              /::::\    \              /::::\    \       
+      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \      
+     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
+    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \    
+   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \   
+  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \  
+ /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\ 
+/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |
+\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|
+ \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    / 
+       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /  
+       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /   
+       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /    
+       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /     
+       |::|   |                \:::\    \                  /:::/    /            \::::::/    /      
+       \::|   |                 \:::\____\                /:::/    /              \::::/    /       
+        \:|   |                  \::/    /                \::/    /                \::/____/        
+         \|___|                   \/____/                  \/____/                  ~~              
+                                                                                                    
+-->
     <dt id="feConvolveMatrixElementKernelUnitLengthAttribute">
       <span class="adef">kernelUnitLength</span> = "<span class=
       "attr-value"><a>&lt;number-optional-number&gt;</a></span>"
@@ -2862,31 +2874,6 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
     </dd>
   </dl>
 </div>
-
-<!--
-          _____                    _____            _____                    _____                    _____          
-         /\    \                  /\    \          /\    \                  /\    \                  /\    \         
-        /::\    \                /::\____\        /::\    \                /::\    \                /::\    \        
-       /::::\    \              /:::/    /       /::::\    \              /::::\    \              /::::\    \       
-      /::::::\    \            /:::/    /       /::::::\    \            /::::::\    \            /::::::\    \      
-     /:::/\:::\    \          /:::/    /       /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
-    /:::/  \:::\    \        /:::/    /       /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \    
-   /:::/    \:::\    \      /:::/    /       /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \   
-  /:::/    / \:::\    \    /:::/    /       /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \  
- /:::/    /   \:::\    \  /:::/    /       /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\____\ 
-/:::/____/     \:::\____\/:::/____/       /:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/  \:::\   \:::|    |
-\:::\    \      \::/    /\:::\    \       \:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\::/   |::::\  /:::|____|
- \:::\    \      \/____/  \:::\    \       \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \/____|:::::\/:::/    / 
-  \:::\    \               \:::\    \       \:::\   \:::\    \               \::::::/    /         |:::::::::/    /  
-   \:::\    \               \:::\    \       \:::\   \:::\____\               \::::/    /          |::|\::::/    /   
-    \:::\    \               \:::\    \       \:::\   \::/    /               /:::/    /           |::| \::/____/    
-     \:::\    \               \:::\    \       \:::\   \/____/               /:::/    /            |::|  ~|          
-      \:::\    \               \:::\    \       \:::\    \                  /:::/    /             |::|   |          
-       \:::\____\               \:::\____\       \:::\____\                /:::/    /              \::|   |          
-        \::/    /                \::/    /        \::/    /                \::/    /                \:|   |          
-         \/____/                  \/____/          \/____/                  \/____/                  \|___|          
-                                                                                                                     
--->
 
 <h3 id="feCustomElement">Filter primitive <a>'feCustom'</a></h3>
 
@@ -3838,6 +3825,10 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 <h3 id="feGaussianBlurElement">Filter primitive <a>'feGaussianBlur'</a></h3>
 
 <!--elementsummary feGaussianBlur-->
+
+<p class="issue">
+  Should we allow 'edgeMode' for feGaussianBlur as well?
+</p>
 
 <p>
   This filter primitive performs a Gaussian blur on the input image.
@@ -6624,9 +6615,11 @@ uniform vec2 dispSize;
    id="issue-css-transitions">
   The CSS WG may define different fading transitions in the future.
 </p>
+
 <h3 id="shader-params-interpolation">
   Interpolating the shader-params component in the custom() function
 </h3>
+
 <p>
   To interpolate between 'parameters' values in a <code>custom()</code> filter
   function or between <a>'feCustomParam element'</a> attribute values, the user agent
@@ -6687,6 +6680,60 @@ uniform vec2 dispSize;
   different keyframes. This is a generic issue of animating properties that have
   multiple components to them.
 </div>
+
+<h2 id="svg-animation">SVG Animation</h2>
+
+<h3 id="svg-animate-and-set-element">
+  The <a>'animate element'</a> and <a>'set element'</a> element
+</h3>
+
+<p>
+  With this specification <var>&lt;filter-function-list&gt;</var> gets a new SVG basic
+  data type.
+  <var>&lt;filter-function-list&gt;</var> is animatable and additive. The data type can be
+  animated using the SVG <a>'animate element'</a> element and
+  the SVG <a>'set element'</a>
+  element. SVG animations must run the same animation steps as described in section <a
+  href="#interpolation-of-filters">Interpolation of Filters</a>.
+</p>
+
+<p>
+  The set of animatable data types gets extended by <em>&lt;filter-function-list&gt;</em>.
+  The new data type is animatable and additive.
+</p>
+
+<table class="data">
+  <caption>Animatable data types</caption>
+  <thead>
+    <tr>
+      <th>Data type</th>
+      <th>Additive?</th>
+      <th><a>'animate element'</a></th>
+      <th><a>'set element'</a></th>
+      <th><a>'animateColor element'</a></th>
+      <th><a>'animateTransform'</a></th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th><var>&lt;filter-function-list&gt;</var></th>
+      <td>yes</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="issue">
+  It needs to be researched and defined how additive animations are supposed to work.
+</p>
+<p class="issue">
+  The specification needs to define a distance() function for paced animations.
+</p>
 
 <h2 id="security">Security</h2>
 
@@ -7153,7 +7200,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feBlend element'</a> element.
         </div>
       </dd>
@@ -7279,7 +7326,7 @@ readonly attribute <a>SVGAnimatedNumberList</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feColorMatrix element'</a> element.
         </div>
       </dd>
@@ -7334,7 +7381,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feComponentTransfer element'</a> element.
         </div>
       </dd>
@@ -7702,7 +7749,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feComposite element'</a> element.
         </div>
       </dd>
@@ -7875,7 +7922,7 @@ readonly attribute <a>SVGAnimatedBoolean</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feConvolveMatrix element'</a> element.
         </div>
       </dd>
@@ -8022,7 +8069,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feCustom element'</a> element.
         </div>
       </dd>
@@ -8313,7 +8360,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feDiffuseLighting element'</a> element.
         </div>
       </dd>
@@ -8683,7 +8730,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feDisplacementMap element'</a> element.
         </div>
       </dd>
@@ -8773,7 +8820,7 @@ void <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feDropShadow element'</a> element.
         </div>
       </dd>
@@ -8930,7 +8977,7 @@ void <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feGaussianBlur element'</a> element.
         </div>
       </dd>
@@ -9097,7 +9144,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feMergeNode element'</a>element.
         </div>
       </dd>
@@ -9185,7 +9232,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feMorphology element'</a> element.
         </div>
       </dd>
@@ -9254,7 +9301,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dy">dy
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feOffset element'</a> element.
         </div>
       </dd>
@@ -9320,7 +9367,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feSpecularLighting element'</a> element.
         </div>
       </dd>
@@ -9406,7 +9453,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFETileElement__in1">in1
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'filter primitive/in'</a> on the given
+          Corresponds to attribute <a>'in'</a> on the given
           <a>'feTile element'</a> element.
         </div>
       </dd>
