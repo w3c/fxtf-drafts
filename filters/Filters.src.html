@@ -3770,7 +3770,7 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 
 <p>
   The 'flood-opacity' property defines the opacity value to use across the entire
-  <a>filter primitive subregion</a>. If the 'fill-color' value includes an alpha
+  <a>filter primitive subregion</a>. If the 'flood-color' value includes an alpha
   channel, the alpha channel gets multiplied with the computed value of the
   'flood-opacity' property.
 </p>
@@ -3962,7 +3962,7 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   element'</a> element. In either case, the current user coordinate system depends on
   the value of attribute <a>'filter/primitiveUnits'</a> on the <a>'filter
   element'</a> element. The processing of the ''preserveAspectRatio'' attribute on
-  the <a>'feImage'</a> element is identical to that of the <a>'image'</a> element.
+  the <a>'feImage'</a> element is identical to that of the <a>'image'</a> element. <span class="issue">should it still be xlink:href or just href?</span>
 </p>
 
 <p>
@@ -4172,7 +4172,7 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   Frequently this operation will take place on alpha-only images, such as that
   produced by the built-in input, <a href="#SourceAlpha"><span class=
   "attr-value">SourceAlpha</span></a>. In that case, the implementation might want to
-  optimize the single channel case.
+  optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section Security for more details.)
 </p>
 <p>
   If the input has infinite extent and is constant (e.g <span class=
@@ -4224,7 +4224,8 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
       A negative or zero value disables the effect of the given filter primitive
       (i.e., the result is a transparent black image).<br>
       If the attribute is not specified, then the effect is as if a value of ''0''
-      were specified.<br>
+      were specified.<span class="issue">Do not disable rendering
+      on negative or zero length?<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
@@ -4469,7 +4470,7 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
       actually want to have device dependent results? Maybe the default shouldn't
       be ''1''.<br>
       If a negative or zero value is specified the default value will be used
-      instead.</span><br>
+      instead.</span> <span class="issue">'filterRes' is deprecated</span><br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
@@ -4743,7 +4744,9 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
   }
   return fSum;
 }</pre>
-
+<p class="issue">
+  Use pseudo code instead of C.
+</p>
 <div class="adef-list">
   <p>
     <em>Attribute definitions:</em>
@@ -5029,6 +5032,11 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
   operations performed via filter effects.
 </p>
 <p class="note">
+  Note that the 'color-interpolation-filters' property just has an effect on filter
+  operations. Therefore, it has no effect on filter primitives like <a>'feOffset'</a>,
+  <a>'feImage'</a>, <a>'feTile'</a>, <a>'feFlood'</a> or <a>'feTurbulence'</a>.
+</p>
+<p class="note">
   Note that 'color-interpolation-filters' has a different initial value than
   'color-interpolation'. 'color-interpolation-filters' has an initial value of
   ''linearRGB'', where as 'color-interpolation' has an initial value of ''sRGB''.
@@ -5037,7 +5045,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
   space.
 </p>
 <p class="note">
-  Note that the 'color-interpolation-filters' propert has no effect on <span>Filter
+  Note that the 'color-interpolation-filters' property has no effect on <span>Filter
   Functions</span>, which operate in the sRGB color space.
 </p>
 
@@ -6429,6 +6437,10 @@ uniform vec2 dispSize;
   and applies the filter rules, returning a processing image. Dimension and origin of
   the passed image must be preserved. Filter- and filter effect regions are sized
   according to the input image size.
+</p>
+<p class="issue">
+  We probably want to have a different edgeMode for the blur() function to avoid
+  clipping on the edges. The dimension of the image shall not be affected.
 </p>
 <p class="note">
   Note: Since the dimension and origin of the original image must be preserved, some

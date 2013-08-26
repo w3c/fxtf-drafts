@@ -7484,9 +7484,9 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   <p> The ‘<a href="#flood-opacity"><code
    class=property>flood-opacity</code></a>’ property defines the opacity
    value to use across the entire <a href="#FilterPrimitiveSubRegion">filter
-   primitive subregion</a>. If the ‘<code
-   class=property>fill-color</code>’ value includes an alpha channel, the
-   alpha channel gets multiplied with the computed value of the ‘<a
+   primitive subregion</a>. If the ‘<a href="#flood-color"><code
+   class=property>flood-color</code></a>’ value includes an alpha channel,
+   the alpha channel gets multiplied with the computed value of the ‘<a
    href="#flood-opacity"><code class=property>flood-opacity</code></a>’
    property.
 
@@ -8126,7 +8126,8 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
    href="#feImageElement"><code class=element-name>&lt;feImage></code></a>
    element is identical to that of the <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement"><code
-   class=element-name>&lt;image></code></a> element.
+   class=element-name>&lt;image></code></a> element. <span class=issue>should
+   it still be xlink:href or just href?</span>
 
   <p> <span class=requirement id="assert_hqImageResampling">When the
    referenced image must be resampled to match the device coordinate system,
@@ -8776,7 +8777,9 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   <p> Frequently this operation will take place on alpha-only images, such as
    that produced by the built-in input, <a href="#SourceAlpha"><span
    class=attr-value>SourceAlpha</span></a>. In that case, the implementation
-   might want to optimize the single channel case.
+   might want to optimize the single channel case. This optimization must be
+   omitted if it leads to privacy concerns of any matter. (See section
+   Security for more details.)
 
   <p> If the input has infinite extent and is constant (e.g <span
    class=attr-value><a href="#FillPaint">FillPaint</a></span> where the fill
@@ -8830,8 +8833,9 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
      A negative or zero value disables the effect of the given filter
      primitive (i.e., the result is a transparent black image).<br>
      If the attribute is not specified, then the effect is as if a value of
-     ‘<code class=css>0</code>’ were specified.<br>
-     <span class=anim-target>Animatable: yes.</span>
+     ‘<code class=css>0</code>’ were specified.<span class=issue>Do not
+     disable rendering on negative or zero length?<br>
+     <span class=anim-target>Animatable: yes.</span> </span>
    </dl>
   </div>
 
@@ -9493,7 +9497,8 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
      actually want to have device dependent results? Maybe the default
      shouldn't be ‘<code class=css>1</code>’.<br>
      If a negative or zero value is specified the default value will be used
-     instead.</span><br>
+     instead.</span> <span class=issue>‘<code
+     class=property>filterRes</code>’ is deprecated</span><br>
      <span class=anim-target>Animatable: yes.</span>
    </dl>
   </div>
@@ -10201,6 +10206,8 @@ double turbulence(int nColorChannel, double *point, double <a
   return fSum;
 }</pre>
 
+  <p class=issue> Use pseudo code instead of C.
+
   <div class=adef-list>
    <p> <em>Attribute definitions:</em>
 
@@ -10490,6 +10497,18 @@ double turbulence(int nColorChannel, double *point, double <a
    specifies the color space for imaging operations performed via filter
    effects.
 
+  <p class=note> Note that the ‘<a
+   href="#color-interpolation-filters"><code
+   class=property>color-interpolation-filters</code></a>’ property just has
+   an effect on filter operations. Therefore, it has no effect on filter
+   primitives like <a href="#feOffsetElement"><code
+   class=element-name>&lt;feOffset></code></a>, <a
+   href="#feImageElement"><code class=element-name>&lt;feImage></code></a>,
+   <a href="#feTileElement"><code class=element-name>&lt;feTile></code></a>,
+   <a href="#feFloodElement"><code class=element-name>&lt;feFlood></code></a>
+   or <a href="#feTurbulenceElement"><code
+   class=element-name>&lt;feTurbulence></code></a>.
+
   <p class=note> Note that ‘<a href="#color-interpolation-filters"><code
    class=property>color-interpolation-filters</code></a>’ has a different
    initial value than ‘<code class=property>color-interpolation</code>’.
@@ -10503,7 +10522,7 @@ double turbulence(int nColorChannel, double *point, double <a
 
   <p class=note> Note that the ‘<a
    href="#color-interpolation-filters"><code
-   class=property>color-interpolation-filters</code></a>’ propert has no
+   class=property>color-interpolation-filters</code></a>’ property has no
    effect on <span>Filter Functions</span>, which operate in the sRGB color
    space.
 
