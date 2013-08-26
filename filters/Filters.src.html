@@ -1181,6 +1181,11 @@
   on the particular filter primitive. <span class="issue">Is there even a primitive
   that has different behavior?</span>
 </p>
+<p class="note">
+  Note that all input images are assumed to be in premultiplied RGBA. However,
+  implementations can optimize performance by using non-premultiplied data
+  buffering.
+</p>
 <p>All raster effect
   filtering operations take 1 to N input RGBA images, additional attributes as
   parameters, and produce a single output RGBA image.
@@ -2785,30 +2790,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
         <span class="anim-target">Animatable: yes.</span>
       </p>
     </dd>
-<!--
-          _____                    _____                    _____                    _____          
-         /\    \                  /\    \                  /\    \                  /\    \         
-        /::\    \                /::\    \                /::\    \                /::\    \        
-       /::::\    \              /::::\    \              /::::\    \              /::::\    \       
-      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \      
-     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
-    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \    
-   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \   
-  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \  
- /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\ 
-/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |
-\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|
- \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    / 
-       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /  
-       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /   
-       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /    
-       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /     
-       |::|   |                \:::\    \                  /:::/    /            \::::::/    /      
-       \::|   |                 \:::\____\                /:::/    /              \::::/    /       
-        \:|   |                  \::/    /                \::/    /                \::/____/        
-         \|___|                   \/____/                  \/____/                  ~~              
-                                                                                                    
--->
+
     <dt id="feConvolveMatrixElementKernelUnitLengthAttribute">
       <span class="adef">kernelUnitLength</span> = "<span class=
       "attr-value"><a>&lt;number-optional-number&gt;</a></span>"
@@ -2828,7 +2810,8 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
       <a>'filter/filterRes'</a> and <a>'feConvolveMatrix/kernelUnitLength'</a>. In some
       implementations, the most consistent results and the fastest performance will be
       achieved if the pixel grid of the temporary offscreen images aligns with the
-      pixel grid of the kernel.<br>
+      pixel grid of the kernel. <span class="issue">Does the user even want device
+      dependent results? Maybe the initial value shouldn't be ''1''.</span><br>
       If a negative or zero value is specified the default value will be used
       instead.<br>
       <span class="anim-target">Animatable: yes.</span>
@@ -2862,8 +2845,8 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
       </p><br>
       A value of <span class="attr-value">true</span> indicates that the convolution
       will only apply to the color channels. In this case, the filter will temporarily
-      unpremultiply the color component values, apply the kernel, and then
-      re-premultiply at the end. In this case the <code>ALPHA<sub>X,Y</sub></code> of
+      unpremultiply the color component values and apply the kernel
+      In this case the <code>ALPHA<sub>X,Y</sub></code> of
       the <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given
       pixel is:
       <p class="filterformula">
@@ -3065,6 +3048,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
   produce resolution-independent results, an explicit value should be provided for
   either the <a>'filter/filterRes'</a> attribute on the <a>'filter element'</a>
   element and/or attribute <a>'feDiffuseLighting/kernelUnitLength'</a>.
+  <span class="issue">Remove filterRes.</span>
 </p>
 <p>
   <a>'feDiffuseLighting/kernelUnitLength'</a>, in combination with the other
@@ -3472,6 +3456,13 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
   <a>'feDisplacementMap/in2'</a> to spatially displace the image from <a>'in'</a>.
   This is the transformation to be performed:
 </p>
+<!--
+<p class="issue">
+  We need to make sure that the primitive can not reveal any privacy concerns
+  due to timing channel attacks. Possibly we do not allow tainted input resources
+  as displacement map.
+</p>
+-->
 <pre>
 P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 </pre>
@@ -3490,12 +3481,9 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   mapping performed.
 </p>
 <p>
-  The input image in is to remain premultiplied for this filter primitive. The
+  The input image <a>'in'</a> is to remain premultiplied for this filter primitive. The
   calculations using the pixel values from <a>'feDisplacementMap/in2'</a> are
-  performed using non-premultiplied color values. If the image from
-  <a>'feDisplacementMap/in2'</a> consists of premultiplied color values, those values
-  are automatically converted into non-premultiplied color values before performing
-  this operation.
+  performed using non-premultiplied color values.
 </p>
 <p>
   This filter can have arbitrary non-localized effect on the input which might
@@ -3510,7 +3498,10 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   interpolent on the surrounding pixels, for example bilinear or bicubic, rather than
   simply selecting the nearest source pixel. Depending on the speed of the available
   interpolents, this choice may be affected by the <a>'image-rendering'</a> property
-  setting.
+  setting.<span class="issue">Should be common by all browsers.</span><span
+  class="issue">Interpolation of surrounding pixels on the source? Not rather on
+  the output? Also, this just handles subpixel on the source, what about destination?
+  </span>
 </p>
 <p>
   The <a>'color-interpolation-filters'</a> property only applies to the
@@ -3727,7 +3718,7 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 <h4 id="FloodColorProperty">The 'flood-color' property</h4>
 
 <p>
-  The 'flood-color' property indicates what color to use to flood the current
+  The 'flood-color' property indicates what color to used to flood the current
   <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. The keyword
   ''currentColor'' and ICC colors can be specified in the same manner as within a
   &lt;paint&gt; specification for the 'fill' and 'stroke' properties.
@@ -3778,7 +3769,9 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 
 <p>
   The 'flood-opacity' property defines the opacity value to use across the entire
-  <a>filter primitive subregion</a>.
+  <a>filter primitive subregion</a>. If the 'fill-color' value includes an alpha
+  channel, the alpha channel gets multiplied with the computed value of the
+  'flood-opacity' property.
 </p>
 
 <table summary="flood-opacity property" class="propdef">
@@ -3852,7 +3845,7 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   I(y) = exp(-y<sup>2</sup>/ (2t<sup>2</sup>)) / sqrt(2* pi*t<sup>2</sup>)
 </p>
 <p>
-  with 's' being the standard deviation in the x direction and 't' being the standard
+  with "s" being the standard deviation in the x direction and "t" being the standard
   deviation in the y direction, as specified by <a>'feGaussianBlur/stdDeviation'</a>.
 </p>
 <p>
@@ -3868,7 +3861,7 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 </p>
 
 <p>
-  For larger values of 's' (s &gt;= 2.0), an approximation can be used: Three
+  For larger values of "s" (s &gt;= 2.0), an approximation can be used: Three
   successive box-blurs build a piece-wise quadratic convolution kernel, which
   approximates the Gaussian kernel to within roughly 3%.
 </p>
@@ -3876,23 +3869,25 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   let d = floor(s * 3*sqrt(2*pi)/4 + 0.5)
 </p>
 <p>
-  ... if d is odd, use three box-blurs of size 'd', centered on the output pixel.
+  ... if d is odd, use three box-blurs of size "d", centered on the output pixel.
 </p>
 <p>
-  ... if d is even, two box-blurs of size 'd' (the first one centered on the pixel
+  ... if d is even, two box-blurs of size "d" (the first one centered on the pixel
   boundary between the output pixel and the one to the left, the second one centered
   on the pixel boundary between the output pixel and the one to the right) and one
-  box blur of size 'd+1' centered on the output pixel.
+  box blur of size "d+1" centered on the output pixel.
 </p>
 <p>
-  The approximation formula also applies correspondingly to 't'.
+  The approximation formula also applies correspondingly to "t".
 </p>
 
 <p>
   Frequently this operation will take place on alpha-only images, such as that
   produced by the built-in input, <a href="#SourceAlpha"><span class=
   "attr-value">SourceAlpha</span></a>. The implementation may notice this and
-  optimize the single channel case. If the input has infinite extent and is constant
+  optimize the single channel case. This optimization must be omitted if it leads
+  to privacy concerns of any matter. (See section <a href="#security">Security
+  for more details.) If the input has infinite extent and is constant
   (e.g <span class="attr-value"><a href="#FillPaint">FillPaint</a></span> where the
   fill is a solid color), this operation has no effect. If the input has infinite
   extent and the filter result where the fill is a solid color) is the input to an
@@ -3926,8 +3921,8 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
       <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The
       second value represents a standard deviation in Y. If one number is provided,
       then that value is used for both X and Y.<br>
-      A value of zero disables the effect of the given filter primitive (i.e., the
-      result is the filter input image).<br>
+      A negative value or a value of zero disables the effect of the given filter
+      primitive (i.e., the result is the filter input image).<br>
       If <a>'feGaussianBlur/stdDeviation'</a> is ''0'' in only one of X or Y, then
       the effect is that the blur is only applied in the direction that has a
       non-zero value.<br>
@@ -4009,6 +4004,38 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
     </dd>
   </dl>
 </div>
+
+
+
+
+<!--
+          _____                    _____                    _____                    _____          
+         /\    \                  /\    \                  /\    \                  /\    \         
+        /::\    \                /::\    \                /::\    \                /::\    \        
+       /::::\    \              /::::\    \              /::::\    \              /::::\    \       
+      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \      
+     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
+    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \    
+   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \   
+  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \  
+ /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\ 
+/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |
+\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|
+ \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    / 
+       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /  
+       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /   
+       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /    
+       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /     
+       |::|   |                \:::\    \                  /:::/    /            \::::::/    /      
+       \::|   |                 \:::\____\                /:::/    /              \::::/    /       
+        \:|   |                  \::/    /                \::/    /                \::/____/        
+         \|___|                   \/____/                  \/____/                  ~~              
+                                                                                                    
+-->
+
+
+
+
 
 <div class="example">
   <p>
@@ -4437,9 +4464,11 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
       "attr-name">filterRes</span> and <span class=
       "attr-name">kernelUnitLength</span>. Discussion of intermediate images are in
       the <a href="#introduction">Introduction</a> and in the description of
-      attribute <a>'filter/filterRes'</a>.<br>
+      attribute <a>'filter/filterRes'</a>. <span class="issue">Does the user
+      actually want to have device dependent results? Maybe the default shouldn't
+      be ''1''.<br>
       If a negative or zero value is specified the default value will be used
-      instead.<br>
+      instead.</span><br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>

@@ -10,7 +10,7 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-08-25 name=dcterms.date>
+  <meta content=2013-08-26 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -33,14 +33,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 25 August 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 26 August 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
-     <!--http://www.w3.org/TR/2013/WD-filters-20130825/-->
+     <!--http://www.w3.org/TR/2013/WD-filters-20130826/-->
 
     <dt>Latest version:
 
@@ -1975,6 +1975,10 @@
    multiplication of the current filter unless stated differently on the
    particular filter primitive. <span class=issue>Is there even a primitive
    that has different behavior?</span>
+
+  <p class=note> Note that all input images are assumed to be in
+   premultiplied RGBA. However, implementations can optimize performance by
+   using non-premultiplied data buffering.
 
   <p>All raster effect filtering operations take 1 to N input RGBA images,
    additional attributes as parameters, and produce a single output RGBA
@@ -5230,31 +5234,6 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
       class=css>duplicate</code>’.
 
      <p> <span class=anim-target>Animatable: yes.</span>
-    </dd>
-    <!--
-          _____                    _____                    _____                    _____          
-         /\    \                  /\    \                  /\    \                  /\    \         
-        /::\    \                /::\    \                /::\    \                /::\    \        
-       /::::\    \              /::::\    \              /::::\    \              /::::\    \       
-      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \      
-     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
-    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \    
-   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \   
-  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \  
- /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\ 
-/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |
-\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|
- \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    / 
-       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /  
-       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /   
-       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /    
-       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /     
-       |::|   |                \:::\    \                  /:::/    /            \::::::/    /      
-       \::|   |                 \:::\____\                /:::/    /              \::::/    /       
-        \:|   |                  \::/    /                \::/    /                \::/____/        
-         \|___|                   \/____/                  \/____/                  ~~              
-                                                                                                    
--->
 
     <dt id=feConvolveMatrixElementKernelUnitLengthAttribute> <span
      class=adef>kernelUnitLength</span> = "<span class=attr-value><a
@@ -5286,7 +5265,9 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
      class=property>kernelUnitLength</code>’</a>. In some implementations,
      the most consistent results and the fastest performance will be achieved
      if the pixel grid of the temporary offscreen images aligns with the
-     pixel grid of the kernel.<br>
+     pixel grid of the kernel. <span class=issue>Does the user even want
+     device dependent results? Maybe the initial value shouldn't be ‘<code
+     class=css>1</code>’.</span><br>
      If a negative or zero value is specified the default value will be used
      instead.<br>
      <span class=anim-target>Animatable: yes.</span>
@@ -5329,11 +5310,10 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
      <br>
      A value of <span class=attr-value>true</span> indicates that the
      convolution will only apply to the color channels. In this case, the
-     filter will temporarily unpremultiply the color component values, apply
-     the kernel, and then re-premultiply at the end. In this case the
-     <code>ALPHA<sub>X,Y</sub></code> of the <a
-     href="#feConvolveMatrixElementFormula">convolution formula</a> for a
-     given pixel is:
+     filter will temporarily unpremultiply the color component values and
+     apply the kernel In this case the <code>ALPHA<sub>X,Y</sub></code> of
+     the <a href="#feConvolveMatrixElementFormula">convolution formula</a>
+     for a given pixel is:
      <p class=filterformula> ALPHA<sub>X,Y</sub> = SOURCE<sub>X,Y</sub></p>
      The <a
      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
@@ -6082,7 +6062,8 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
    href="#FilterElement"><code class=element-name>&lt;filter></code></a>
    element and/or attribute <a class=attr-name
    href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
-   class=property>kernelUnitLength</code>’</a>.
+   class=property>kernelUnitLength</code>’</a>. <span class=issue>Remove
+   filterRes.</span>
 
   <p> <a class=attr-name
    href="#feDiffuseLightingKernelUnitLengthAttribute">‘<code
@@ -6678,7 +6659,14 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
    class=css>in2</code>’</a> to spatially displace the image from <a
    class=attr-name href="#FilterPrimitiveInAttribute">‘<code
    class=property>in</code>’</a>. This is the transformation to be
-   performed:
+   performed:</p>
+  <!--
+<p class="issue">
+  We need to make sure that the primitive can not reveal any privacy concerns
+  due to timing channel attacks. Possibly we do not allow tainted input resources
+  as displacement map.
+</p>
+-->
 
   <pre>
 P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
@@ -6708,14 +6696,12 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
    href="#feDisplacementMapIn2Attribute">‘<code
    class=css>in2</code>’</a>, defines the inverse of the mapping performed.
 
-  <p> The input image in is to remain premultiplied for this filter
+  <p> The input image <a class=attr-name
+   href="#FilterPrimitiveInAttribute">‘<code
+   class=property>in</code>’</a> is to remain premultiplied for this filter
    primitive. The calculations using the pixel values from <a class=attr-name
    href="#feDisplacementMapIn2Attribute">‘<code class=css>in2</code>’</a>
-   are performed using non-premultiplied color values. If the image from <a
-   class=attr-name href="#feDisplacementMapIn2Attribute">‘<code
-   class=css>in2</code>’</a> consists of premultiplied color values, those
-   values are automatically converted into non-premultiplied color values
-   before performing this operation.
+   are performed using non-premultiplied color values.
 
   <p> This filter can have arbitrary non-localized effect on the input which
    might require substantial buffering in the processing pipeline. However
@@ -6731,7 +6717,11 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
    source pixel. Depending on the speed of the available interpolents, this
    choice may be affected by the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty">‘<code
-   class=property>image-rendering</code>’</a> property setting.
+   class=property>image-rendering</code>’</a> property setting.<span
+   class=issue>Should be common by all browsers.</span><span
+   class=issue>Interpolation of surrounding pixels on the source? Not rather
+   on the output? Also, this just handles subpixel on the source, what about
+   destination? </span>
 
   <p> The <a class=property
    href="#ColorInterpolationFiltersProperty">‘<code
@@ -7426,7 +7416,7 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 
   <p> The ‘<a href="#flood-color"><code
    class=property>flood-color</code></a>’ property indicates what color to
-   use to flood the current <a href="#FilterPrimitiveSubRegion">filter
+   used to flood the current <a href="#FilterPrimitiveSubRegion">filter
    primitive subregion</a>. The keyword ‘<code
    class=css>currentColor</code>’ and ICC colors can be specified in the
    same manner as within a &lt;paint&gt; specification for the ‘<code
@@ -7494,7 +7484,11 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   <p> The ‘<a href="#flood-opacity"><code
    class=property>flood-opacity</code></a>’ property defines the opacity
    value to use across the entire <a href="#FilterPrimitiveSubRegion">filter
-   primitive subregion</a>.
+   primitive subregion</a>. If the ‘<code
+   class=property>fill-color</code>’ value includes an alpha channel, the
+   alpha channel gets multiplied with the computed value of the ‘<a
+   href="#flood-opacity"><code class=property>flood-opacity</code></a>’
+   property.
 
   <table class=propdef summary="flood-opacity property">
    <tbody>
@@ -7778,10 +7772,9 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
   <p class=filterformula> I(y) = exp(-y<sup>2</sup>/ (2t<sup>2</sup>)) /
    sqrt(2* pi*t<sup>2</sup>)
 
-  <p> with ‘<code class=property>s</code>’ being the standard deviation
-   in the x direction and ‘<code class=property>t</code>’ being the
-   standard deviation in the y direction, as specified by <a class=attr-name
-   href="#feGaussianBlurStdDeviationAttribute">‘<code
+  <p> with "s" being the standard deviation in the x direction and "t" being
+   the standard deviation in the y direction, as specified by <a
+   class=attr-name href="#feGaussianBlurStdDeviationAttribute">‘<code
    class=property>stdDeviation</code>’</a>.
 
   <p> The value of <a class=attr-name
@@ -7797,34 +7790,33 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
    class=property>stdDeviation</code>’</a>, this can be implemented as a
    separable convolution.
 
-  <p> For larger values of ‘<code class=property>s</code>’ (s &gt;= 2.0),
-   an approximation can be used: Three successive box-blurs build a
-   piece-wise quadratic convolution kernel, which approximates the Gaussian
-   kernel to within roughly 3%.
+  <p> For larger values of "s" (s &gt;= 2.0), an approximation can be used:
+   Three successive box-blurs build a piece-wise quadratic convolution
+   kernel, which approximates the Gaussian kernel to within roughly 3%.
 
   <p class=filterformula> let d = floor(s * 3*sqrt(2*pi)/4 + 0.5)
 
-  <p> ... if d is odd, use three box-blurs of size ‘<code
-   class=property>d</code>’, centered on the output pixel.
-
-  <p> ... if d is even, two box-blurs of size ‘<code
-   class=property>d</code>’ (the first one centered on the pixel boundary
-   between the output pixel and the one to the left, the second one centered
-   on the pixel boundary between the output pixel and the one to the right)
-   and one box blur of size ‘<code class=css>d+1</code>’ centered on the
+  <p> ... if d is odd, use three box-blurs of size "d", centered on the
    output pixel.
 
-  <p> The approximation formula also applies correspondingly to ‘<code
-   class=property>t</code>’.
+  <p> ... if d is even, two box-blurs of size "d" (the first one centered on
+   the pixel boundary between the output pixel and the one to the left, the
+   second one centered on the pixel boundary between the output pixel and the
+   one to the right) and one box blur of size "d+1" centered on the output
+   pixel.
+
+  <p> The approximation formula also applies correspondingly to "t".
 
   <p> Frequently this operation will take place on alpha-only images, such as
    that produced by the built-in input, <a href="#SourceAlpha"><span
    class=attr-value>SourceAlpha</span></a>. The implementation may notice
-   this and optimize the single channel case. If the input has infinite
+   this and optimize the single channel case. This optimization must be
+   omitted if it leads to privacy concerns of any matter. (See section <a
+   href="#security">Security for more details.) If the input has infinite
    extent and is constant (e.g <span class=attr-value><a
    href="#FillPaint">FillPaint</a></span> where the fill is a solid color),
    this operation has no effect. If the input has infinite extent and the
-   filter result where the fill is a solid color) is the input to an <a
+   filter result where the fill is a solid color) is the input to an </a><a
    href="#feTileElement"><code class=element-name>&lt;feTile></code></a>, the
    filter is evaluated with periodic boundary conditions.
 
@@ -7854,8 +7846,8 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
      href="#FilterElement"><code class=element-name>&lt;filter></code></a>
      element. The second value represents a standard deviation in Y. If one
      number is provided, then that value is used for both X and Y.<br>
-     A value of zero disables the effect of the given filter primitive (i.e.,
-     the result is the filter input image).<br>
+     A negative value or a value of zero disables the effect of the given
+     filter primitive (i.e., the result is the filter input image).<br>
      If <a class=attr-name
      href="#feGaussianBlurStdDeviationAttribute">‘<code
      class=property>stdDeviation</code>’</a> is ‘<code
@@ -8173,6 +8165,30 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
      <p> <span class=anim-target>Animatable: yes.</span>
    </dl>
   </div>
+  <!--
+          _____                    _____                    _____                    _____          
+         /\    \                  /\    \                  /\    \                  /\    \         
+        /::\    \                /::\    \                /::\    \                /::\    \        
+       /::::\    \              /::::\    \              /::::\    \              /::::\    \       
+      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \      
+     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
+    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \    
+   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \   
+  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \  
+ /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\ 
+/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |
+\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|
+ \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    / 
+       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /  
+       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /   
+       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /    
+       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /     
+       |::|   |                \:::\    \                  /:::/    /            \::::::/    /      
+       \::|   |                 \:::\____\                /:::/    /              \::::/    /       
+        \:|   |                  \::/    /                \::/    /                \::/____/        
+         \|___|                   \/____/                  \/____/                  ~~              
+                                                                                                    
+-->
 
   <div class=example>
    <p> The following example illustrates how images are placed relative to an
@@ -9473,9 +9489,11 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
      images are in the <a href="#introduction">Introduction</a> and in the
      description of attribute <a class=attr-name
      href="#FilterElementFilterResAttribute">‘<code
-     class=property>filterRes</code>’</a>.<br>
+     class=property>filterRes</code>’</a>. <span class=issue>Does the user
+     actually want to have device dependent results? Maybe the default
+     shouldn't be ‘<code class=css>1</code>’.<br>
      If a negative or zero value is specified the default value will be used
-     instead.<br>
+     instead.</span><br>
      <span class=anim-target>Animatable: yes.</span>
    </dl>
   </div>
