@@ -2786,7 +2786,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
         zero for R, G, B and A.
       </p>
       <p>
-        The <a>lacuna value</a> for <a>'edgeMode'</a> is ''duplicate''.
+        The <a>lacuna value</a> for <a>'feConvolveMatrix/edgeMode'</a> is ''duplicate''.
       </p>
       <p>
         <span class="anim-target">Animatable: yes.</span>
@@ -3821,10 +3821,6 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 
 <!--elementsummary feGaussianBlur-->
 
-<p class="issue">
-  Should we allow 'edgeMode' for feGaussianBlur as well?
-</p>
-
 <p>
   This filter primitive performs a Gaussian blur on the input image.
 </p>
@@ -3930,6 +3926,39 @@ P'(x,y) &#8592; P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
       non-zero value.<br>
       The <a>lacuna value</a> for <a>'feGaussianBlur/stdDeviation'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
+    </dd>
+    <dt id="feGaussianBlurEdgeModeAttribute">
+      <span class="adef">edgeMode</span> = "<span class="attr-value">duplicate | wrap
+      | none</span>"
+    </dt>
+    <dd>
+      <p>
+        Determines how to extend the input image as necessary with color values so
+        that the matrix operations can be applied when the kernel is positioned at or
+        near the edge of the input image.
+      </p>
+      <p>
+        ''duplicate'' indicates that the input image is extended along each of its
+        borders as necessary by duplicating the color values at the given edge of the
+        input image.
+      </p>
+      <p>
+        Original N-by-M image, where m=M-1 and n=N-1:
+      </p>
+      <p>
+        "wrap" indicates that the input image is extended by taking the color values from
+        the opposite edge of the image.
+      </p>
+      <p>
+        The value ''none'' indicates that the input image is extended with pixel values of
+        zero for R, G, B and A.
+      </p>
+      <p>
+        The <a>lacuna value</a> for <a>'feGaussianBlur/edgeMode'</a> is ''none''.
+      </p>
+      <p>
+        <span class="anim-target">Animatable: yes.</span>
+      </p>
     </dd>
   </dl>
 </div>
@@ -6552,8 +6581,13 @@ uniform vec2 dispSize;
 <h3 id="blurEquivalent">blur</h3>
 
 <pre class="examplesource"> &lt;filter id="blur"&gt;
-    &lt;feGaussianBlur stdDeviation="[radius radius]"&gt;
+    &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
   &lt;/filter&gt; </pre>
+
+<p>
+  Where edge mode computes to ''none'' for the 'filter' property and to ''duplicate''
+  for the CSS Image filter() function. 
+</p>
 
 <h3 id="dropshadowEquivalent">drop-shadow</h3>
 
@@ -8050,7 +8084,7 @@ readonly attribute <a>SVGAnimatedBoolean</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feConvolveMatrix/edgeMode'</a> on the given
+          Corresponds to attribute <a>'feConvolveMatrixElement/edgeMode'</a> on the given
           <a>'feConvolveMatrix element'</a> element. Takes one of the SVG_EDGEMODE_*
           constants defined on this interface.
         </div>
@@ -8999,12 +9033,25 @@ interface <b>SVGFEFloodElement</b> : <a>SVGElement</a> {
 
 <pre class="idl">
 interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
+
+// Edge Mode Values
+const unsigned short <a href=
+"#SVGFEGaussianBlurElement__SVG_EDGEMODE_UNKNOWN">SVG_EDGEMODE_UNKNOWN</a> = 0;
+const unsigned short <a href=
+"#SVGFEGaussianBlurElement__SVG_EDGEMODE_DUPLICATE">SVG_EDGEMODE_DUPLICATE</a> = 1;
+const unsigned short <a href=
+"#SVGFEGaussianBlurElement__SVG_EDGEMODE_WRAP">SVG_EDGEMODE_WRAP</a> = 2;
+const unsigned short <a href=
+"#SVGFEGaussianBlurElement__SVG_EDGEMODE_NONE">SVG_EDGEMODE_NONE</a> = 3;
+
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFEGaussianBlurElement__in1">in1</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href= 
 "#SVGFEGaussianBlurElement__stdDeviationX">stdDeviationX</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href= 
 "#SVGFEGaussianBlurElement__stdDeviationY">stdDeviationY</a>;
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+"#SVGFEGaussianBlurElement__edgeMode">edgeMode</a>;
 
 void <a href=
 "#SVGFEGaussianBlurElement__setStdDeviation">setStdDeviation</a>(in float stdDeviationX, in float stdDeviationY);
@@ -9014,6 +9061,51 @@ void <a href=
 </pre>
 
 <dl class="interface">
+  <dt>
+    Constants in group &ldquo;Edge Mode Values&rdquo;:
+  </dt>
+  <dd>
+    <dl class="constants">
+      <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_UNKNOWN">
+        <b>SVG_EDGEMODE_UNKNOWN</b> <span class="idl-type-parenthetical">(unsigned
+        short)</span>
+      </dt>
+      <dd>
+        <div>
+          The type is not one of predefined types. It is invalid to attempt to define
+          a new value of this type or to attempt to switch an existing value to this
+          type.
+        </div>
+      </dd>
+      <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_DUPLICATE">
+        <b>SVG_EDGEMODE_DUPLICATE</b> <span class="idl-type-parenthetical">(unsigned
+        short)</span>
+      </dt>
+      <dd>
+        <div>
+          Corresponds to value ''duplicate''.
+        </div>
+      </dd>
+      <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_WRAP">
+        <b>SVG_EDGEMODE_WRAP</b> <span class="idl-type-parenthetical">(unsigned
+        short)</span>
+      </dt>
+      <dd>
+        <div>
+          Corresponds to value ''wrap''.
+        </div>
+      </dd>
+      <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_NONE">
+        <b>SVG_EDGEMODE_NONE</b> <span class="idl-type-parenthetical">(unsigned
+        short)</span>
+      </dt>
+      <dd>
+        <div>
+          Corresponds to value ''none''.
+        </div>
+      </dd>
+    </dl>
+  </dd>
   <dt>
     Attributes:
   </dt>
@@ -9049,6 +9141,17 @@ void <a href=
           Corresponds to attribute <a>'feGaussianBlur/stdDeviation'</a> on the given
           <a>'feGaussianBlur element'</a> element. Contains the Y component (possibly
           computed automatically) of attribute <a>'feGaussianBlur/stdDeviation'</a>.
+        </div>
+      </dd>
+      <dt id="SVGFEGaussianBlurElement__edgeMode">
+        <b>edgeMode</b> <span class="idl-type-parenthetical">(readonly
+        <a>SVGAnimatedEnumeration</a>)</span>
+      </dt>
+      <dd>
+        <div>
+          Corresponds to attribute <a>'feGaussianBlur/edgeMode'</a> on the given
+          <a>'feGaussianBlur element'</a> element. Takes one of the SVG_EDGEMODE_*
+          constants defined on this interface.
         </div>
       </dd>
     </dl>

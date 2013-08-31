@@ -10,7 +10,7 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-08-27 name=dcterms.date>
+  <meta content=2013-08-31 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -33,14 +33,14 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 27 August 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 31 August 2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
-     <!--http://www.w3.org/TR/2013/WD-filters-20130827/-->
+     <!--http://www.w3.org/TR/2013/WD-filters-20130831/-->
 
     <dt>Latest version:
 
@@ -7746,6 +7746,9 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
 
        <li><a href="#feGaussianBlurStdDeviationAttribute"><span
         class=attr-name>‘stdDeviation’</span></a>
+
+       <li><a href="#feGaussianBlurEdgeModeAttribute"><span
+        class=attr-name>‘edgeMode’</span></a>
       </ul>
 
     <tr>
@@ -7754,9 +7757,6 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
      <td><a class=idlinterface
       href="#InterfaceSVGFEGaussianBlurElement">SVGFEGaussianBlurElement</a>
   </table>
-
-  <p class=issue> Should we allow ‘<code class=property>edgeMode</code>’
-   for feGaussianBlur as well?
 
   <p> This filter primitive performs a Gaussian blur on the input image.
 
@@ -7863,6 +7863,35 @@ P'(x,y) ← P( x + scale * (XC(x,y) - .5), y + scale * (YC(x,y) - .5))
      class=property>stdDeviation</code>’</a> is ‘<code
      class=css>0</code>’.<br>
      <span class=anim-target>Animatable: yes.</span>
+
+    <dt id=feGaussianBlurEdgeModeAttribute> <span class=adef>edgeMode</span>
+     = "<span class=attr-value>duplicate | wrap | none</span>"
+
+    <dd>
+     <p> Determines how to extend the input image as necessary with color
+      values so that the matrix operations can be applied when the kernel is
+      positioned at or near the edge of the input image.
+
+     <p> ‘<code class=css>duplicate</code>’ indicates that the input
+      image is extended along each of its borders as necessary by duplicating
+      the color values at the given edge of the input image.
+
+     <p> Original N-by-M image, where m=M-1 and n=N-1:
+
+     <p> "wrap" indicates that the input image is extended by taking the
+      color values from the opposite edge of the image.
+
+     <p> The value ‘<code class=css>none</code>’ indicates that the input
+      image is extended with pixel values of zero for R, G, B and A.
+
+     <p> The <a
+      href="http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue">lacuna
+      value</a> for <a class=attr-name
+      href="#feGaussianBlurEdgeModeAttribute">‘<code
+      class=property>edgeMode</code>’</a> is ‘<code
+      class=css>none</code>’.
+
+     <p> <span class=anim-target>Animatable: yes.</span>
    </dl>
   </div>
 
@@ -12205,8 +12234,13 @@ uniform vec2 dispSize;
   <h3 id=blurEquivalent><span class=secno>14.9. </span>blur</h3>
 
   <pre class=examplesource> &lt;filter id="blur"&gt;
-    &lt;feGaussianBlur stdDeviation="[radius radius]"&gt;
+    &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
   &lt;/filter&gt; </pre>
+
+  <p> Where edge mode computes to ‘<code class=css>none</code>’ for the
+   ‘<a href="#filter"><code class=property>filter</code></a>’ property
+   and to ‘<code class=css>duplicate</code>’ for the CSS Image filter()
+   function.
 
   <h3 id=dropshadowEquivalent><span class=secno>14.10. </span>drop-shadow</h3>
 
@@ -13722,10 +13756,9 @@ readonly attribute <a
       href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedEnumeration">SVGAnimatedEnumeration</a>)</span>
 
      <dd>
-      <div> Corresponds to attribute <a class=attr-name
-       href="#feConvolveMatrixElementEdgeModeAttribute">‘<code
-       class=property>edgeMode</code>’</a> on the given <a
-       href="#feConvolveMatrixElement"><code
+      <div> Corresponds to attribute <span class=xxx>‘<code
+       class=css>feConvolveMatrixElement/edgeMode</code>’</span> on the
+       given <a href="#feConvolveMatrixElement"><code
        class=element-name>&lt;feConvolveMatrix></code></a> element. Takes one
        of the SVG_EDGEMODE_* constants defined on this interface.</div>
 
@@ -14713,6 +14746,17 @@ interface <b>SVGFEFloodElement</b> : <a
   <pre class=idl>
 interface <b>SVGFEGaussianBlurElement</b> : <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGElement">SVGElement</a> {
+
+// Edge Mode Values
+const unsigned short <a
+   href="#SVGFEGaussianBlurElement__SVG_EDGEMODE_UNKNOWN">SVG_EDGEMODE_UNKNOWN</a> = 0;
+const unsigned short <a
+   href="#SVGFEGaussianBlurElement__SVG_EDGEMODE_DUPLICATE">SVG_EDGEMODE_DUPLICATE</a> = 1;
+const unsigned short <a
+   href="#SVGFEGaussianBlurElement__SVG_EDGEMODE_WRAP">SVG_EDGEMODE_WRAP</a> = 2;
+const unsigned short <a
+   href="#SVGFEGaussianBlurElement__SVG_EDGEMODE_NONE">SVG_EDGEMODE_NONE</a> = 3;
+
 readonly attribute <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedString">SVGAnimatedString</a> <a
    href="#SVGFEGaussianBlurElement__in1">in1</a>;
@@ -14722,6 +14766,9 @@ readonly attribute <a
 readonly attribute <a
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedNumber">SVGAnimatedNumber</a> <a
    href="#SVGFEGaussianBlurElement__stdDeviationY">stdDeviationY</a>;
+readonly attribute <a
+   href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedEnumeration">SVGAnimatedEnumeration</a> <a
+   href="#SVGFEGaussianBlurElement__edgeMode">edgeMode</a>;
 
 void <a
    href="#SVGFEGaussianBlurElement__setStdDeviation">setStdDeviation</a>(in float stdDeviationX, in float stdDeviationY);
@@ -14733,6 +14780,41 @@ void <a
 </pre>
 
   <dl class=interface>
+   <dt> Constants in group “Edge Mode Values”:
+
+   <dd>
+    <dl class=constants>
+     <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_UNKNOWN">
+      <b>SVG_EDGEMODE_UNKNOWN</b> <span
+      class=idl-type-parenthetical>(unsigned short)</span>
+
+     <dd>
+      <div> The type is not one of predefined types. It is invalid to attempt
+       to define a new value of this type or to attempt to switch an existing
+       value to this type.</div>
+
+     <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_DUPLICATE">
+      <b>SVG_EDGEMODE_DUPLICATE</b> <span
+      class=idl-type-parenthetical>(unsigned short)</span>
+
+     <dd>
+      <div> Corresponds to value ‘<code class=css>duplicate</code>’.</div>
+
+     <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_WRAP">
+      <b>SVG_EDGEMODE_WRAP</b> <span class=idl-type-parenthetical>(unsigned
+      short)</span>
+
+     <dd>
+      <div> Corresponds to value ‘<code class=css>wrap</code>’.</div>
+
+     <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_NONE">
+      <b>SVG_EDGEMODE_NONE</b> <span class=idl-type-parenthetical>(unsigned
+      short)</span>
+
+     <dd>
+      <div> Corresponds to value ‘<code class=css>none</code>’.</div>
+    </dl>
+
    <dt> Attributes:
 
    <dd>
@@ -14775,6 +14857,18 @@ void <a
        the Y component (possibly computed automatically) of attribute <a
        class=attr-name href="#feGaussianBlurStdDeviationAttribute">‘<code
        class=property>stdDeviation</code>’</a>.</div>
+
+     <dt id="SVGFEGaussianBlurElement__edgeMode"> <b>edgeMode</b> <span
+      class=idl-type-parenthetical>(readonly <a
+      href="http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#InterfaceSVGAnimatedEnumeration">SVGAnimatedEnumeration</a>)</span>
+
+     <dd>
+      <div> Corresponds to attribute <a class=attr-name
+       href="#feGaussianBlurEdgeModeAttribute">‘<code
+       class=property>edgeMode</code>’</a> on the given <a
+       href="#feGaussianBlurElement"><code
+       class=element-name>&lt;feGaussianBlur></code></a> element. Takes one
+       of the SVG_EDGEMODE_* constants defined on this interface.</div>
     </dl>
 
    <dt> Operations:
