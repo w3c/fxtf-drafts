@@ -10,7 +10,7 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-08-31 name=dcterms.date>
+  <meta content=2013-09-05 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -33,14 +33,15 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 31 August 2013</h2>
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 5 September
+    2013</h2>
 
    <dl>
     <dt>This version:
 
     <dd> <a
      href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
-     <!--http://www.w3.org/TR/2013/WD-filters-20130831/-->
+     <!--http://www.w3.org/TR/2013/WD-filters-20130905/-->
 
     <dt>Latest version:
 
@@ -12105,15 +12106,15 @@ uniform vec2 dispSize;
   <h2 id=FilterCSSImageValue><span class=secno>13. </span>Filter CSS
    <var>&lt;image&gt;</var> values</h2>
 
-  <p> CSS <var>&lt;image&gt;</var> values can be filtered with the filter
+  <p> CSS <var>&lt;image></var> values can be filtered with the filter
    functions specified for the CSS ‘<a href="#filter"><code
    class=property>filter</code></a>’ property. This specification
-   introduces the <var>&lt;image&gt;</var> <dfn id=filter0>filter()</dfn>
+   introduces the <var>&lt;image></var> <dfn id=filter0>filter()</dfn>
    function with the following syntax:
 
   <pre class=prod>
 <code><dfn id=ltfiltergt>&lt;filter&gt;</dfn> = filter(
-<var>&lt;image&gt;</var>, [ <a
+    [ <var>&lt;image></var> | <var>&lt;string></var> ], [ <a
    href="#ltfilter-functiongt"><var>&lt;filter-function&gt;</var></a> | <a
    href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
    href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a> ]+
@@ -12121,21 +12122,24 @@ uniform vec2 dispSize;
 </pre>
 
   <p> The filter() function takes two arguments. The first argument is an
-   <var>&lt;image&gt;</var>. The second is a filter function list as
-   specified for the CSS ‘<a href="#filter"><code
-   class=property>filter</code></a>’ property. The function takes the
-   <var>&lt;image&gt;</var> parameter and applies the filter rules, returning
-   a processing image. Dimension and origin of the passed image must be
-   preserved. Filter- and filter effect regions are sized according to the
-   input image size.
-
-  <p class=issue> We probably want to have a different edgeMode for the
-   blur() function to avoid clipping on the edges. The dimension of the image
-   shall not be affected.
+   <var>&lt;image></var>. The second is a filter function list as specified
+   for the CSS ‘<a href="#filter"><code class=property>filter</code></a>’
+   property. The function takes the <var>&lt;image></var> parameter and
+   applies the filter rules, returning a processing image. Dimension and
+   origin of the passed image must be preserved. Filter- and filter effect
+   regions are sized according to the input image size.
 
   <p class=note> Note: Since the dimension and origin of the original image
    must be preserved, some filter effects like <var>drop-shadow</var> on a
    fully opaque image may not have any affect.
+
+  <p class=note> Note that for the blur() function the <a class=attr-name
+   href="#feGaussianBlurEdgeModeAttribute">‘<code
+   class=property>edgeMode</code>’</a> attribute on the <a
+   href="#feGaussianBlurElement"><code
+   class=element-name>&lt;feGaussianBlur></code></a> element is set to
+   ‘<code class=css>duplicate</code>’. This produces more pleasant
+   results on the edges of the filtered input image.
 
   <h3 id=interpolating-filter-image><span class=secno>13.1.
    </span>Interpolating filter()</h3>

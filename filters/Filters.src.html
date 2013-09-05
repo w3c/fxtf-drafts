@@ -6456,31 +6456,32 @@ uniform vec2 dispSize;
 <h2 id="FilterCSSImageValue">Filter CSS <var>&lt;image&gt;</var> values</h2>
 
 <p>
-  CSS <var>&lt;image&gt;</var> values can be filtered with the filter functions
+  CSS <var>&lt;image></var> values can be filtered with the filter functions
   specified for the CSS 'filter' property. This specification introduces the
-  <var>&lt;image&gt;</var> <dfn>filter()</dfn> function with the following syntax:
+  <var>&lt;image></var> <dfn>filter()</dfn> function with the following syntax:
 </p>
 <pre class='prod'>
 <code><dfn>&lt;filter&gt;</dfn> = filter(
-<var>&lt;image&gt;</var>, [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> | <var>&lt;child-selector&gt;</var> ]+
+    [ <var>&lt;image></var> | <var>&lt;string></var> ], [ <var>&lt;filter-function&gt;</var> | <var>&lt;url&gt;</var> | <var>&lt;child-selector&gt;</var> ]+
 )</code>
 </pre>
 <p>
   The filter() function takes two arguments. The first argument is an
-  <var>&lt;image&gt;</var>. The second is a filter function list as specified for the
-  CSS 'filter' property. The function takes the <var>&lt;image&gt;</var> parameter
+  <var>&lt;image></var>. The second is a filter function list as specified for the
+  CSS 'filter' property. The function takes the <var>&lt;image></var> parameter
   and applies the filter rules, returning a processing image. Dimension and origin of
   the passed image must be preserved. Filter- and filter effect regions are sized
   according to the input image size.
-</p>
-<p class="issue">
-  We probably want to have a different edgeMode for the blur() function to avoid
-  clipping on the edges. The dimension of the image shall not be affected.
 </p>
 <p class="note">
   Note: Since the dimension and origin of the original image must be preserved, some
   filter effects like <var>drop-shadow</var> on a fully opaque image may not have any
   affect.
+</p>
+<p class="note">
+  Note that for the blur() function the <a>'feGaussianBlur/edgeMode'</a> attribute
+  on the <a>'feGaussianBlur'</a> element is set to ''duplicate''. This produces more
+  pleasant results on the edges of the filtered input image.
 </p>
 
 <h3 id="interpolating-filter-image">Interpolating filter()</h3>
