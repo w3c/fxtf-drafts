@@ -108,7 +108,7 @@ partially masking out parts of the graphical object.
 
 <p>The 'mask-image' property may reference a <a>'mask element'</a> element as
 the mask source. Alternatively, for many simple uses, the 'mask-image' property
-may refer directly to an image to be used as mask forgoing the need for an
+may refer directly to an image to be used as mask, forgoing the need for an
 explicit <a>'mask element'</a> element.<br>
 The 'mask' property serves as a shorthand property for 'mask-box-image', 'mask-image'
 and other characterizing properties.
@@ -119,7 +119,7 @@ the mask image area.<br>
 The 'mask-box-image' property serves as a shorthand property for
 'mask-box-image-source' and other characterizing properties.
 
-<p>Clipping path defines an outline (in the absence of anti-aliasing) of a
+<p>A clipping path defines an outline (in the absence of anti-aliasing) of a
 visual element where everything on the "inside" of the outline is allowed to
 show through but everything on the outside is masked out. A clipping path is
 specified by vector paths or shapes.
@@ -131,7 +131,7 @@ specified basic shapes as clipping path.
   <div class=figure>
     <img src="images/luminance-mask.svg" width="655px" height="260px" alt="Example Mask">
     <p class=caption>
-      A luminance mask (middle) is applied on a shape filled with a gradient
+      A luminance mask (middle) is applied on an element filled with a gradient
       (left). This results in a masked shape (right).
     </p>
   </div>
@@ -148,8 +148,8 @@ from [[!CSS21]]. Some values of these properties result in the creation of a
 
 <p>The compositing model follows the SVG compositing model [[!SVG11]]: first any
 filter effect [[FILTER-EFFECTS]] is applied, then any clipping, masking and
-opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such
-as 'border' [[!CSS3BG]].
+opacity [[CSS3COLOR]]. These effects all apply after any element drawing
+operations from CSS properties such as 'border' [[!CSS3BG]].
 
 <h2 id="values">Values</h2>
 
@@ -192,7 +192,7 @@ explicitly.
   </p>
   <p>
     For elements that have an associated CSS layout box, the current user coordinate system has its origin at
-    the top-left corner of the <span class="term">bounding client rect</span> and one unit equals one CSS pixel.
+    the top-left corner of the <span class="term">bounding client rect</span>.
     The viewport for resolving percentage values is defined by the width and height of the
     <span class="term">bounding client rect</span>.
   </p>
@@ -218,7 +218,7 @@ explicitly.
 </dd>
 <dt id="TermClippingPath">clipping path</dt>
 <dd>
-  A combination of SVG <a>graphics element</a> or <var>basic shapes</var> which serve as the outline of a
+  A combination of SVG <a>graphics element</a>s or a <var>basic shape</var> which serve as the outline of a
   visual element where everything on the "inside" of the outline is allowed to show through but everything on the
   outside is masked out. (See 'clip-path'.)
 </dd>
@@ -309,7 +309,7 @@ element. Where:
 
 <dl>
   <dt>
-    <dfn>&lt;url&gt;</dfn>
+    <var>&lt;url&gt;</var>
   </dt>
   <dd>
     A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.svg#mask)'') or to a
@@ -349,7 +349,7 @@ element. Where:
 <p>A mask reference that is an empty image (zero width or zero height), that fails to
 download, is not a reference to an <a>'mask element'</a> element, is non-existent, or that cannot be
 displayed (e.g. because it is not
-in a supported image format) is ignored. No masking is applied.
+in a supported image format) is ignored. It still counts as an image layer but does not mask the element.
 
 <p>See the section <a href="#MaskValue">“Mask source values”</a> for how to process a <var>&lt;mask-source&gt;</var>.
 
@@ -423,7 +423,7 @@ div { mask-image: url(resources.svg#mask2) }
       image should be used as the mask values.
     <p>
       If the <var>&lt;mask-reference&gt;</var> of the 'mask-image' property is
-      of type <var>&lt;mask-image&gt;</var> the alpha values of the mask
+      of type <var>&lt;image&gt;</var> the alpha values of the mask
       image should be used as the mask values.
   </dd>
 </dl>
@@ -633,7 +633,7 @@ of an element may be restricted to this area.
 
 <p class="note">Note that there is no corresponding box for
 ''padding-box'' on objects without associated layout box
-and ''content-box'' is choosen instead.</p>
+and ''content-box'' is chosen instead.</p>
 
 
 <h3 id="the-mask-origin">The 'mask-origin' property</h3>
@@ -689,7 +689,7 @@ operates on to determine the mask positioning area(s).
 
 <p class="note">Note that there is no corresponding box for
 ''padding-box'' on objects without associated layout box
-and ''content-box'' is choosen instead.</p>
+and ''content-box'' is chosen instead.</p>
 
 <p class="note">Note that if 'mask-clip' is ''padding-box'',
 'mask-origin' is ''border-box'', 'mask-position' is
@@ -777,14 +777,16 @@ clipped.
 </table>
 <p>Where</p>
 
-<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-reference&gt;</var> <var>&lt;source-type&gt;</var>? || <var>&lt;position&gt;</var> [ / <var>&lt;bg-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var> || <var>&lt;box&gt;</var> || [ <var>&lt;box&gt;</var> | no-clip ]</pre>
+<pre class=prod><dfn>&lt;mask-layer&gt;</dfn> = <var>&lt;mask-reference&gt;</var> <var>&lt;source-type&gt;</var>?
+              || <var>&lt;position&gt;</var> [ / <var>&lt;bg-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var>
+              || <var>&lt;box&gt;</var> || [ <var>&lt;box&gt;</var> | no-clip ]</pre>
 
 <p>
   If one <var>&lt;box&gt;</var> value is present then it sets both 'mask-origin' and 'mask-clip' to that value. If two <var>&lt;box&gt;</var> values are present, then the first sets 'mask-origin' and the second 'mask-clip'.
 
 <p>
   The properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and
-  'mask-size' must have no affect if <var>&lt;mask-reference&gt;</var> references a <a>'mask element'</a> element. In this case the element defines position, sizing and clipping of the <var>mask source</var>.
+  'mask-size' must have no effect if <var>&lt;mask-reference&gt;</var> references a <a>'mask element'</a> element. In this case the element defines position, sizing and clipping of the <var>mask source</var>.
 </p>
 
 <p>
@@ -1123,7 +1125,7 @@ div {
     <td><dfn>mask-box-image-source</dfn>
   <tr>
     <th><a href="#values">Value</a>:
-    <td><var>&lt;mask-image&gt;</var>
+    <td>none | <var>&lt;image&gt;</var>
   <tr>
     <th>Initial:
     <td>none
@@ -1446,6 +1448,12 @@ create a <var>clipping path</var>.
 </pre>
 
 <dl>
+  <dt>
+    <var>&lt;url&gt;</var>
+  </dt>
+  <dd>
+    A URL reference to a <a>'clip-path'</a> element (for example ''url(commonmasks.svg#clipping)'').
+  </dd>
   <dt>
     <dfn>&lt;basic-shape&gt;</dfn>
   </dt>
@@ -1788,7 +1796,7 @@ If this rule is not followed, an attacker could infer information and mount a ti
 
 <p><var>&lt;mask-source&gt;</var>s and <var>&lt;clip-source&gt;</var>s have special requirements on fetching resources.
 
-<p>User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for all <var>&lt;mask-source&gt;</var>, <var>&lt;clip-source&gt;</var> and <var>&lt;image&gt;</var> values on the 'mask-image' property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value 'none' had been specified.
+<p>User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for all <var>&lt;mask-source&gt;</var>, <var>&lt;clip-source&gt;</var> and <var>&lt;image&gt;</var> values on the 'mask-image', 'mask-box-image-source' and 'clip-path' properties. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value 'none' had been specified.
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 
@@ -1922,7 +1930,7 @@ neither support references to <a>'mask element'</a> elements nor to
 
 <h2 class=no-num id="acknowledgments">Acknowledgments</h2>
 
-<p>Thanks to Elika J. Etemad, Liam R. E. Quin, Björn Höhrmann for their careful
+<p>Thanks to Elika J. Etemad, Liam R. E. Quin, Björn Höhrmann and Alan Stearns for their careful
 reviews, comments, and corrections.
 
 <h2 class=no-num id="references">

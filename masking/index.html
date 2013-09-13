@@ -321,8 +321,8 @@
    href="#MaskElement"><code class=element-name>&lt;mask></code></a> element
    as the mask source. Alternatively, for many simple uses, the ‘<a
    href="#mask-image"><code class=property>mask-image</code></a>’ property
-   may refer directly to an image to be used as mask forgoing the need for an
-   explicit <a href="#MaskElement"><code
+   may refer directly to an image to be used as mask, forgoing the need for
+   an explicit <a href="#MaskElement"><code
    class=element-name>&lt;mask></code></a> element.<br>
    The ‘<a href="#mask"><code class=property>mask</code></a>’ property
    serves as a shorthand property for ‘<a href="#mask-box-image"><code
@@ -340,10 +340,10 @@
    class=property>mask-box-image-source</code></a>’ and other
    characterizing properties.
 
-  <p>Clipping path defines an outline (in the absence of anti-aliasing) of a
-   visual element where everything on the "inside" of the outline is allowed
-   to show through but everything on the outside is masked out. A clipping
-   path is specified by vector paths or shapes.
+  <p>A clipping path defines an outline (in the absence of anti-aliasing) of
+   a visual element where everything on the "inside" of the outline is
+   allowed to show through but everything on the outside is masked out. A
+   clipping path is specified by vector paths or shapes.
 
   <p>The ‘<a href="#clip-path"><code class=property>clip-path</code></a>’
    property can reference SVG <a
@@ -353,8 +353,8 @@
   <div class=example>
    <div class=figure> <img alt="Example Mask" height=260px
     src="images/luminance-mask.svg" width=655px>
-    <p class=caption> A luminance mask (middle) is applied on a shape filled
-     with a gradient (left). This results in a masked shape (right).
+    <p class=caption> A luminance mask (middle) is applied on an element
+     filled with a gradient (left). This results in a masked shape (right).
    </div>
   </div>
 
@@ -380,8 +380,8 @@
    rel=biblioentry>[FILTER-EFFECTS]<!--{{FILTER-EFFECTS}}--></a> is applied,
    then any clipping, masking and opacity <a href="#CSS3COLOR"
    rel=biblioentry>[CSS3COLOR]<!--{{CSS3COLOR}}--></a>. These effects all
-   apply after any other CSS effects such as ‘<code
-   class=property>border</code>’ <a href="#CSS3BG"
+   apply after any element drawing operations from CSS properties such as
+   ‘<code class=property>border</code>’ <a href="#CSS3BG"
    rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
 
   <h2 id=values><span class=secno>3. </span>Values</h2>
@@ -438,10 +438,10 @@
 
     <p> For elements that have an associated CSS layout box, the current user
      coordinate system has its origin at the top-left corner of the <a
-     class=term href="#bounding-client-rect">bounding client rect</a> and one
-     unit equals one CSS pixel. The viewport for resolving percentage values
-     is defined by the width and height of the <a class=term
-     href="#bounding-client-rect">bounding client rect</a>.
+     class=term href="#bounding-client-rect">bounding client rect</a>. The
+     viewport for resolving percentage values is defined by the width and
+     height of the <a class=term href="#bounding-client-rect">bounding client
+     rect</a>.
 
     <p> If the element does not have an associated CSS layout box and is in
      the <code>http://www.w3.org/2000/svg</code> namespace, the current local
@@ -469,7 +469,7 @@
 
    <dd> A combination of SVG <a
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement">graphics
-    element</a> or <var>basic shapes</var> which serve as the outline of a
+    element</a>s or a <var>basic shape</var> which serve as the outline of a
     visual element where everything on the "inside" of the outline is allowed
     to show through but everything on the outside is masked out. (See ‘<a
     href="#clip-path"><code class=property>clip-path</code></a>’.)
@@ -590,8 +590,7 @@
    href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a></pre>
 
   <pre class=prod><var><dfn
-   id=ltmask-sourcegt>&lt;mask-source&gt;</dfn></var> = <a
-   href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
+   id=ltmask-sourcegt>&lt;mask-source&gt;</dfn></var> = <var>&lt;url&gt;</var> | <a
    href="#child"><var>child</var></a> | <a
    href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a></pre>
 
@@ -600,7 +599,7 @@
    href="#ltcompound-selectorgt"><var>&lt;compound-selector&gt;</var></a>#)</pre>
 
   <dl>
-   <dt> <dfn id=lturlgt>&lt;url&gt;</dfn>
+   <dt> <var>&lt;url&gt;</var>
 
    <dd> A URL reference to a <a href="#MaskElement"><code
     class=element-name>&lt;mask></code></a> element (for example ‘<code
@@ -657,7 +656,8 @@
    that fails to download, is not a reference to an <a
    href="#MaskElement"><code class=element-name>&lt;mask></code></a> element,
    is non-existent, or that cannot be displayed (e.g. because it is not in a
-   supported image format) is ignored. No masking is applied.
+   supported image format) is ignored. It still counts as an image layer but
+   does not mask the element.
 
   <p>See the section <a href="#MaskValue">“Mask source values”</a> for
    how to process a <a
@@ -769,8 +769,8 @@ div { mask-image: url(resources.svg#mask2) }
     <p> If the <a
      href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> of the
      ‘<a href="#mask-image"><code class=property>mask-image</code></a>’
-     property is of type <var>&lt;mask-image&gt;</var> the alpha values of
-     the mask image should be used as the mask values.
+     property is of type <a href="#ltimagegt"><var>&lt;image&gt;</var></a>
+     the alpha values of the mask image should be used as the mask values.
   </dl>
 
   <div class=example>
@@ -1098,7 +1098,7 @@ body {
   <p class=note>Note that there is no corresponding box for ‘<code
    class=css>padding-box</code>’ on objects without associated layout box
    and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
-   is choosen instead.
+   is chosen instead.
 
   <h3 id=the-mask-origin><span class=secno>5.6. </span>The ‘<a
    href="#mask-origin"><code class=property>mask-origin</code></a>’
@@ -1191,7 +1191,7 @@ body {
   <p class=note>Note that there is no corresponding box for ‘<code
    class=css>padding-box</code>’ on objects without associated layout box
    and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
-   is choosen instead.
+   is chosen instead.
 
   <p class=note>Note that if ‘<a href="#mask-clip"><code
    class=property>mask-clip</code></a>’ is ‘<code
@@ -1336,7 +1336,9 @@ body {
 
   <pre class=prod><dfn id=ltmask-layergt>&lt;mask-layer&gt;</dfn> = <a
    href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a> <a
-   href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>? || <var>&lt;position&gt;</var> [ / <var>&lt;bg-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var> || <var>&lt;box&gt;</var> || [ <var>&lt;box&gt;</var> | no-clip ]</pre>
+   href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>?
+              || <var>&lt;position&gt;</var> [ / <var>&lt;bg-size&gt;</var> ]? || <var>&lt;repeat-style&gt;</var>
+              || <var>&lt;box&gt;</var> || [ <var>&lt;box&gt;</var> | no-clip ]</pre>
 
   <p> If one <var>&lt;box&gt;</var> value is present then it sets both ‘<a
    href="#mask-origin"><code class=property>mask-origin</code></a>’ and
@@ -1353,7 +1355,7 @@ body {
    ‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’,
    ‘<a href="#mask-origin"><code class=property>mask-origin</code></a>’
    and ‘<a href="#mask-size0"><code class=property>mask-size</code></a>’
-   must have no affect if <a
+   must have no effect if <a
    href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a>
    references a <a href="#MaskElement"><code
    class=element-name>&lt;mask></code></a> element. In this case the element
@@ -2166,7 +2168,7 @@ div {
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td><var>&lt;mask-image&gt;</var>
+     <td>none | <a href="#ltimagegt"><var>&lt;image&gt;</var></a>
 
     <tr>
      <th>Initial:
@@ -2691,8 +2693,7 @@ div {
     <tr>
      <th>Computed value:
 
-     <td>as specified, but with <a href="#lturlgt"><var>&lt;url&gt;</var></a>
-      values made absolute
+     <td>as specified, but with <var>&lt;url&gt;</var> values made absolute
 
     <tr>
      <th>Animatable:
@@ -2707,13 +2708,20 @@ div {
    class=element-name>&lt;clipPath></code></a> element to create a
    <var>clipping path</var>.
 
-  <pre class=prod><dfn id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <a
-   href="#lturlgt"><var>&lt;url&gt;</var></a> | <a
+  <pre class=prod><dfn
+   id=ltclip-sourcegt>&lt;clip-source&gt;</dfn> = <var>&lt;url&gt;</var> | <a
    href="#child"><var>child</var></a> | <a
    href="#ltchild-selectorgt"><var>&lt;child-selector&gt;</var></a>
 </pre>
 
   <dl>
+   <dt> <var>&lt;url&gt;</var>
+
+   <dd> A URL reference to a <a class=property
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/masking.html#ClipPathProperty">‘<code
+    class=property>clip-path</code>’</a> element (for example ‘<code
+    class=css>url(commonmasks.svg#clipping)</code>’).
+
    <dt> <dfn id=ltbasic-shapegt>&lt;basic-shape&gt;</dfn>
 
    <dd> A <a
@@ -3472,7 +3480,10 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a>, <a
    href="#ltclip-sourcegt"><var>&lt;clip-source&gt;</var></a> and <a
    href="#ltimagegt"><var>&lt;image&gt;</var></a> values on the ‘<a
-   href="#mask-image"><code class=property>mask-image</code></a>’ property.
+   href="#mask-image"><code class=property>mask-image</code></a>’, ‘<a
+   href="#mask-box-image-source"><code
+   class=property>mask-box-image-source</code></a>’ and ‘<a
+   href="#clip-path"><code class=property>clip-path</code></a>’ properties.
    When fetching, user agents must use "Anonymous" mode, set the referrer
    source to the stylesheet's URL and set the origin to the URL of the
    containing document. If this results in network errors, the effect is as
@@ -3780,8 +3791,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
   <h2 class=no-num id=acknowledgments>Acknowledgments</h2>
 
-  <p>Thanks to Elika J. Etemad, Liam R. E. Quin, Björn Höhrmann for their
-   careful reviews, comments, and corrections.
+  <p>Thanks to Elika J. Etemad, Liam R. E. Quin, Björn Höhrmann and Alan
+   Stearns for their careful reviews, comments, and corrections.
 
   <h2 class=no-num id=references> References</h2>
 
@@ -4187,7 +4198,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
      <th><a class=property
       href="#mask-box-image-source">mask-box-image-source</a>
 
-     <td>&lt;mask-image&gt;
+     <td>none | &lt;image&gt;
 
      <td>none
 
@@ -4548,9 +4559,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>&lt;top&gt;, <a href="#lttopgt"
     title="section 7.3."><strong>7.3.</strong></a>
-
-   <li>&lt;url&gt;, <a href="#lturlgt"
-    title="section 5.1."><strong>5.1.</strong></a>
 
    <li>user coordinate system, <a href="#user-coordinate-system"
     title="section 4."><strong>4.</strong></a>
