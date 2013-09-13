@@ -102,7 +102,7 @@ partially masking out parts of the graphical object.
 
 <p>The 'mask-image' property may reference a <a>'mask element'</a> element as
 the mask source. Alternatively, for many simple uses, the 'mask-image' property
-may refer directly to an image to be used as mask forgoing the need for an
+may refer directly to images to be used as mask forgoing the need for an
 explicit <a>'mask element'</a> element.<br>
 The 'mask' property serves as a shorthand property for 'mask-box-image', 'mask-image'
 and other characterizing properties.
@@ -268,7 +268,7 @@ meaning in this specification:
       <td><dfn>mask-image</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var>&lt;mask-reference&gt;</var>
+      <td><var>&lt;mask-reference&gt;</var>#
     <tr>
       <th>Initial:
       <td>none
@@ -292,8 +292,9 @@ meaning in this specification:
       <td>no
 </table>
 
-<p>This property sets the mask image or the <var>mask source</var> of an
-element. Where:
+<p>This property sets the mask image(s) or the <var>mask source</var> of an
+element. Images are drawn with the first specified one on top (closest to the
+user) and each subsequent image behind the previous one. Where:
 
 <pre class=prod><var><dfn>&lt;mask-reference&gt;</dfn></var> = none | <var>&lt;image&gt;</var> | <var>&lt;mask-source&gt;</var></pre>
 
@@ -345,7 +346,10 @@ download, is not a reference to an <a>'mask element'</a> element, is non-existen
 displayed (e.g. because it is not
 in a supported image format) is ignored. No masking is applied.
 
-<p>See the section <a href="#MaskValue">“Mask source values”</a> for how to process a <var>&lt;mask-source&gt;</var>.
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-image' interacts with other
+comma-separated mask properties to form each mask image
+layer.
 
 <div class="example">
 <p>Examples for mask references:</p>
@@ -364,7 +368,7 @@ div { mask-image: url(resources.svg#mask2) }
       <td><dfn>mask-source-type</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var>&lt;source-type&gt;</var>
+      <td><var>&lt;source-type&gt;</var>#
     <tr>
       <th>Initial:
       <td>auto
@@ -457,7 +461,7 @@ override the definition of 'mask-type' to ''luminance''.
       <td><dfn>mask-repeat</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var><a href="http://www.w3.org/TR/css3-background/#ltrepeat-stylegt">&lt;repeat-style&gt;</a></var>
+      <td><var><a href="http://www.w3.org/TR/css3-background/#ltrepeat-stylegt">&lt;repeat-style&gt;</a></var>#
     <tr>
       <th>Initial:
       <td>no-repeat
@@ -508,6 +512,10 @@ body {
   </div>
 </div>
 
+<p>See the section <a href="#layering">“Layering multiple mask images”</a> for
+how 'mask-repeat' interacts with other comma-separated mask properties to form
+each mask image layer.
+
 <h3 id="the-mask-position">The 'mask-position' property</h3>
 
 <table class="propdef">
@@ -517,7 +525,7 @@ body {
     <tr>
       <th><a href="#values">Value</a>:
 
-      <td><var><a href="http://www.w3.org/TR/css3-background/#ltpositiongt">&lt;position&gt;</a></var>
+      <td><var><a href="http://www.w3.org/TR/css3-background/#ltpositiongt">&lt;position&gt;</a></var>#
     <tr>
       <th>Initial:
       <td>center
@@ -568,6 +576,11 @@ bottom and 3em from the right:
 <pre>mask-position: right 3em bottom 10px</pre>
 </div>
 
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-position' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
 <h3 id="the-mask-clip">The 'mask-clip' property</h3>
 
 <table class="propdef">
@@ -576,7 +589,7 @@ bottom and 3em from the right:
       <td><dfn>mask-clip</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td>[ <a href="http://www.w3.org/TR/css3-background/#ltboxgt"><var>&lt;box&gt;</var></a> | no-clip ]
+      <td>[ <a href="http://www.w3.org/TR/css3-background/#ltboxgt"><var>&lt;box&gt;</var></a> | no-clip ]#
     <tr>
       <th>Initial:
       <td>border-box
@@ -629,6 +642,10 @@ of an element may be restricted to this area.
 ''padding-box'' on objects without associated layout box
 and ''content-box'' is choosen instead.</p>
 
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-clip' interacts with other
+comma-separated mask properties to form each mask image
+layer.
 
 <h3 id="the-mask-origin">The 'mask-origin' property</h3>
 
@@ -638,7 +655,7 @@ and ''content-box'' is choosen instead.</p>
       <td><dfn>mask-origin</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><a href="http://www.w3.org/TR/css3-background/#ltboxgt"><var>&lt;box&gt;</var></a>
+      <td><a href="http://www.w3.org/TR/css3-background/#ltboxgt"><var>&lt;box&gt;</var></a>#
     <tr>
       <th>Initial:
       <td>border-box
@@ -691,6 +708,10 @@ and ''content-box'' is choosen instead.</p>
 non-zero border, then the top and left of the mask image will be
 clipped.
 
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-origin' interacts with other
+comma-separated mask properties to form each mask image
+layer.
 
 <h3 id="the-mask-size">The 'mask-size' property</h3>
 
@@ -700,7 +721,7 @@ clipped.
       <td><dfn>mask-size</dfn>
     <tr>
       <th><a href="#values">Value</a>:
-      <td><var><a href="http://www.w3.org/TR/css3-background/#ltbg-sizegt">&lt;bg-size&gt;</a></var>
+      <td><var><a href="http://www.w3.org/TR/css3-background/#ltbg-sizegt">&lt;bg-size&gt;</a></var>#
     <tr>
       <th>Initial:
       <td>auto
@@ -729,6 +750,11 @@ clipped.
 
 <p>See <a href="http://www.w3.org/TR/css3-background/#the-background-size">Sizing Images: the ‘background-size’ property</a> [[!CSS3BG]] for the definitions of the property values.
 
+<p>See the section <a href="#layering">“Layering multiple mask
+images”</a> for how 'mask-size' interacts with other
+comma-separated mask properties to form each mask image
+layer.
+
 <h3 id="mask-property">The 'mask' property</h3>
 
 <table class="propdef">
@@ -738,7 +764,7 @@ clipped.
   </tr>
   <tr>
     <th>Value:</th>
-    <td><var>&lt;mask-layer&gt;</var></td>
+    <td><var>&lt;mask-layer&gt;</var>#</td>
   </tr>
   <tr>
     <th>Initial:</th>
@@ -776,17 +802,13 @@ clipped.
 <p>
   If one <var>&lt;box&gt;</var> value is present then it sets both 'mask-origin' and 'mask-clip' to that value. If two <var>&lt;box&gt;</var> values are present, then the first sets 'mask-origin' and the second 'mask-clip'.
 
-<p>
-  The properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and
-  'mask-size' must have no affect if <var>&lt;mask-reference&gt;</var> references a <a>'mask element'</a> element. In this case the element defines position, sizing and clipping of the <var>mask source</var>.
+<p class="note">
+  Note that the properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and
+  'mask-size' have no affect on <a>'mask element'</a> elements.
 </p>
 
 <p>
   The 'mask' shorthand also resets 'mask-box-image' to its initial value. It is therefore recommended that authors use the 'mask' shorthand, rather than other shorthands or the individual properties, to override any mask settings earlier in the cascade. This will ensure that 'mask-box-image' has also been reset to allow the new styles to take effect.
-</p>
-
-<p class="note">
-  Note that a future level of this specification will allow different mask layers for various additional masking operations like composited mask layers masking and serial layer masking.
 </p>
 
 <h3 id="the-mask-type">The 'mask-type' property</h3>
@@ -1005,6 +1027,21 @@ as a whole.
 
 <p>The 'mask-image' property has no effect on the geometry or hit-testing
 of any element's CSS boxes.
+
+<h4 id="layering">Layering Multiple Mask Images</h4>
+
+<p class="issue">The WG wants to look into allowing creating a union of mask images before compositing (as specified now) or mask the content with each layer one after the other.</p>
+
+<p>The mask of a box can have multiple <span
+class=index>layers</span>. The number
+of layers is determined by the number of comma-separated values in the
+'mask-image' property. Note that a value of 'none' still creates
+a layer.
+
+See <a href="http://www.w3.org/TR/css3-background/#layering">Layering Multiple Background Images</a> [[!CSS3BG]].
+
+<p>All mask images are transformed to alpha masks (if necessary) and combined by compositing
+on the <a href="#TermMask">mask</a>.
 
 <h4 id="MaskValues">Mask Source values</h4>
 
@@ -1775,14 +1812,28 @@ fine-grained control over the interactions between hit testing and clipping.</p>
 
 <h2 id="security">Security</h2>
 
-<p>It is important that the timing to the masking operations is independant of the source and destination pixel. Masking operations must be implemented in such a way that they always take the same amount of time regardless of the pixel values.
-If this rule is not followed, an attacker could infer information and mount a timing attack.
+<p class=issue>The following description of the security model is not sufficient and detailed enough. See <a href="http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a> mailing list.
 
-<p>A timing attack is a method of obtaining information about content that is otherwise protected, based on studying the amount of time it takes for an operation to occur. If, for example, red pixels took longer to draw than green pixels, one might be able to reconstruct a rough image of the element being rendered, without ever having access to the content of the element.
+<h3 id="origin-restrictions">Origin Restrictions</h3>
 
-<p><var>&lt;mask-source&gt;</var>s and <var>&lt;clip-source&gt;</var>s have special requirements on fetching resources.
+<p>
+  External references to resources like <a>'mask element'</a> or <a>'clipPath element'</a>
+  must not violate the same origin restrictions [[!CORS]].
+</p>
 
-<p>User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for all <var>&lt;mask-source&gt;</var>, <var>&lt;clip-source&gt;</var> and <var>&lt;image&gt;</var> values on the 'mask-image' property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value 'none' had been specified.
+<p>This restriction includes:</p>
+
+<ul>
+  <li>Any images, either as content or via styling, that are not exposed with CORS</li>
+  <li>Any tainted canvas</li>
+  <li>Any cross-origin content referenced by ''xlink:href'' or &lt;use&gt;</li>
+</ul>
+
+<p>
+  If content falls under this restriction, the resource must be rejected. The element is
+  drawn as if the resource was not specified (i.e. the 'clip-path' or 'mask' property were
+  set to ''none'').
+</p>
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 
@@ -1931,16 +1982,6 @@ Other references</h3>
 <!--informative-->
 
 <h2 class="no-num" id="changes">Changes since last publication</h2>
-
-<p>The following significant changes were made since the <a href="http://www.w3.org/TR/2013/WD-css-masking-20130620/">20 June 2013 Working Draft</a>.</p>
-<ul>
-<li>'mask' resets 'mask-box-image' properties.</li>
-<li>Initial values for 'mask-repeat', 'mask-position' and 'mask-origin' changed to ''no-repeat'', ''center'' and ''border-box''.</li>
-<li>Multiple layers of <var>mask sources</var> were deferred to a future level of this specification.</li>
-<li>Added security model for pixel operations and fetching of masking and clipping resources.</li>
-</ul>
-
-
 <p>The following significant changes were made since the <a href="http://www.w3.org/TR/2012/WD-css-masking-20121115/">15 November 2012 Working Draft</a>.</p>
 <ul>
 <li>Better integration with terms and definitions of CSS Backgrounds and Borders module.

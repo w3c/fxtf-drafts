@@ -11,7 +11,7 @@
    rel=dcterms.rights>
   <meta content="CSS Masking Level 1" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-09-13 name=dcterms.date>
+  <meta content=2013-09-12 name=dcterms.date>
   <meta content="Dirk Schulze" name=dcterms.creator>
   <meta content="Brian Birtles" name=dcterms.creator>
   <meta
@@ -35,7 +35,7 @@
 
    <h1>CSS Masking Level 1</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 13 September
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 12 September
     2013</h2>
 
    <dl>
@@ -43,7 +43,7 @@
 
     <dd><a
      href="http://dev.w3.org/fxtf/masking/">http://dev.w3.org/fxtf/masking/</a>
-     <!--http://www.w3.org/TR/2013/WD-masking-20130913/-->
+     <!--http://www.w3.org/TR/2013/WD-masking-20130912/-->
 
     <dt>Latest version:
 
@@ -197,7 +197,10 @@
      <li><a href="#the-mask-image-rendering-model"><span class=secno>5.11.
       </span>The Mask Image Rendering Model</a>
       <ul class=toc>
-       <li><a href="#MaskValues"><span class=secno>5.11.1. </span>Mask Source
+       <li><a href="#layering"><span class=secno>5.11.1. </span>Layering
+        Multiple Mask Images</a>
+
+       <li><a href="#MaskValues"><span class=secno>5.11.2. </span>Mask Source
         values</a>
       </ul>
     </ul>
@@ -252,6 +255,10 @@
     </ul>
 
    <li><a href="#security"><span class=secno>8. </span>Security</a>
+    <ul class=toc>
+     <li><a href="#origin-restrictions"><span class=secno>8.1. </span>Origin
+      Restrictions</a>
+    </ul>
 
    <li><a href="#DOMInterfaces"><span class=secno>9. </span>DOM
     interfaces</a>
@@ -311,7 +318,7 @@
    href="#MaskElement"><code class=element-name>&lt;mask></code></a> element
    as the mask source. Alternatively, for many simple uses, the ‘<a
    href="#mask-image"><code class=property>mask-image</code></a>’ property
-   may refer directly to an image to be used as mask forgoing the need for an
+   may refer directly to images to be used as mask forgoing the need for an
    explicit <a href="#MaskElement"><code
    class=element-name>&lt;mask></code></a> element.<br>
    The ‘<a href="#mask"><code class=property>mask</code></a>’ property
@@ -527,7 +534,7 @@
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td><a href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a>
+     <td><a href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a>#
 
     <tr>
      <th>Initial:
@@ -571,8 +578,10 @@
      <td>no
   </table>
 
-  <p>This property sets the mask image or the <a
-   href="#mask-source"><var>mask source</var></a> of an element. Where:
+  <p>This property sets the mask image(s) or the <a
+   href="#mask-source"><var>mask source</var></a> of an element. Images are
+   drawn with the first specified one on top (closest to the user) and each
+   subsequent image behind the previous one. Where:
 
   <pre class=prod><var><dfn
    id=ltmask-referencegt>&lt;mask-reference&gt;</dfn></var> = none | <a
@@ -648,9 +657,10 @@
    is non-existent, or that cannot be displayed (e.g. because it is not in a
    supported image format) is ignored. No masking is applied.
 
-  <p>See the section <a href="#MaskValue">“Mask source values”</a> for
-   how to process a <a
-   href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a>.
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
 
   <div class=example>
    <p>Examples for mask references:
@@ -676,7 +686,7 @@ div { mask-image: url(resources.svg#mask2) }
     <tr>
      <th><a href="#values">Value</a>:
 
-     <td><a href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>
+     <td><a href="#ltsource-typegt"><var>&lt;source-type&gt;</var></a>#
 
     <tr>
      <th>Initial:
@@ -815,7 +825,7 @@ div { mask-image: url(resources.svg#mask2) }
      <th><a href="#values">Value</a>:
 
      <td><var><a
-      href="http://www.w3.org/TR/css3-background/#ltrepeat-stylegt">&lt;repeat-style&gt;</a></var>
+      href="http://www.w3.org/TR/css3-background/#ltrepeat-stylegt">&lt;repeat-style&gt;</a></var>#
 
     <tr>
      <th>Initial:
@@ -892,6 +902,11 @@ body {
    </div>
   </div>
 
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-repeat"><code
+   class=property>mask-repeat</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
   <h3 id=the-mask-position><span class=secno>5.4. </span>The ‘<a
    href="#mask-position0"><code class=property>mask-position</code></a>’
    property</h3>
@@ -907,7 +922,7 @@ body {
      <th><a href="#values">Value</a>:
 
      <td><var><a
-      href="http://www.w3.org/TR/css3-background/#ltpositiongt">&lt;position&gt;</a></var>
+      href="http://www.w3.org/TR/css3-background/#ltpositiongt">&lt;position&gt;</a></var>#
 
     <tr>
      <th>Initial:
@@ -989,6 +1004,11 @@ body {
    <pre>mask-position: right 3em bottom 10px</pre>
   </div>
 
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-position0"><code
+   class=property>mask-position</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
   <h3 id=the-mask-clip><span class=secno>5.5. </span>The ‘<a
    href="#mask-clip"><code class=property>mask-clip</code></a>’ property</h3>
 
@@ -1004,7 +1024,7 @@ body {
 
      <td>[ <a
       href="http://www.w3.org/TR/css3-background/#ltboxgt"><var>&lt;box&gt;</var></a>
-      | no-clip ]
+      | no-clip ]#
 
     <tr>
      <th>Initial:
@@ -1089,6 +1109,11 @@ body {
    and ‘<a href="#content-box0"><code class=css>content-box</code></a>’
    is choosen instead.
 
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-clip"><code
+   class=property>mask-clip</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
   <h3 id=the-mask-origin><span class=secno>5.6. </span>The ‘<a
    href="#mask-origin"><code class=property>mask-origin</code></a>’
    property</h3>
@@ -1104,7 +1129,7 @@ body {
      <th><a href="#values">Value</a>:
 
      <td><a
-      href="http://www.w3.org/TR/css3-background/#ltboxgt"><var>&lt;box&gt;</var></a>
+      href="http://www.w3.org/TR/css3-background/#ltboxgt"><var>&lt;box&gt;</var></a>#
 
     <tr>
      <th>Initial:
@@ -1191,6 +1216,11 @@ body {
    left</code>’ (the initial value), and the element has a non-zero border,
    then the top and left of the mask image will be clipped.
 
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-origin"><code
+   class=property>mask-origin</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
   <h3 id=the-mask-size><span class=secno>5.7. </span>The ‘<a
    href="#mask-size0"><code class=property>mask-size</code></a>’ property</h3>
 
@@ -1205,7 +1235,7 @@ body {
      <th><a href="#values">Value</a>:
 
      <td><var><a
-      href="http://www.w3.org/TR/css3-background/#ltbg-sizegt">&lt;bg-size&gt;</a></var>
+      href="http://www.w3.org/TR/css3-background/#ltbg-sizegt">&lt;bg-size&gt;</a></var>#
 
     <tr>
      <th>Initial:
@@ -1264,6 +1294,11 @@ body {
    rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a> for the definitions of the
    property values.
 
+  <p>See the section <a href="#layering">“Layering multiple mask
+   images”</a> for how ‘<a href="#mask-size0"><code
+   class=property>mask-size</code></a>’ interacts with other
+   comma-separated mask properties to form each mask image layer.
+
   <h3 id=mask-property><span class=secno>5.8. </span>The ‘<a
    href="#mask"><code class=property>mask</code></a>’ property</h3>
 
@@ -1277,7 +1312,7 @@ body {
     <tr>
      <th>Value:
 
-     <td><a href="#ltmask-layergt"><var>&lt;mask-layer&gt;</var></a>
+     <td><a href="#ltmask-layergt"><var>&lt;mask-layer&gt;</var></a>#
 
     <tr>
      <th>Initial:
@@ -1335,19 +1370,15 @@ body {
    class=property>mask-origin</code></a>’ and the second ‘<a
    href="#mask-clip"><code class=property>mask-clip</code></a>’.
 
-  <p> The properties ‘<a href="#mask-image"><code
+  <p class=note> Note that the properties ‘<a href="#mask-image"><code
    class=property>mask-image</code></a>’, ‘<a href="#mask-repeat"><code
    class=property>mask-repeat</code></a>’, ‘<a
    href="#mask-position0"><code class=property>mask-position</code></a>’,
    ‘<a href="#mask-clip"><code class=property>mask-clip</code></a>’,
    ‘<a href="#mask-origin"><code class=property>mask-origin</code></a>’
    and ‘<a href="#mask-size0"><code class=property>mask-size</code></a>’
-   must have no affect if <a
-   href="#ltmask-referencegt"><var>&lt;mask-reference&gt;</var></a>
-   references a <a href="#MaskElement"><code
-   class=element-name>&lt;mask></code></a> element. In this case the element
-   defines position, sizing and clipping of the <a
-   href="#mask-source"><var>mask source</var></a>.
+   have no affect on <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> elements.
 
   <p> The ‘<a href="#mask"><code class=property>mask</code></a>’
    shorthand also resets ‘<a href="#mask-box-image"><code
@@ -1358,10 +1389,6 @@ body {
    cascade. This will ensure that ‘<a href="#mask-box-image"><code
    class=property>mask-box-image</code></a>’ has also been reset to allow
    the new styles to take effect.
-
-  <p class=note> Note that a future level of this specification will allow
-   different mask layers for various additional masking operations like
-   composited mask layers masking and serial layer masking.
 
   <h3 id=the-mask-type><span class=secno>5.9. </span>The ‘<a
    href="#mask-type"><code class=property>mask-type</code></a>’ property</h3>
@@ -2029,7 +2056,26 @@ body {
    class=property>mask-image</code></a>’ property has no effect on the
    geometry or hit-testing of any element's CSS boxes.
 
-  <h4 id=MaskValues><span class=secno>5.11.1. </span>Mask Source values</h4>
+  <h4 id=layering><span class=secno>5.11.1. </span>Layering Multiple Mask
+   Images</h4>
+
+  <p class=issue>The WG wants to look into allowing creating a union of mask
+   images before compositing (as specified now) or mask the content with each
+   layer one after the other.
+
+  <p>The mask of a box can have multiple <span class=index
+   id=layers>layers</span>. The number of layers is determined by the number
+   of comma-separated values in the ‘<a href="#mask-image"><code
+   class=property>mask-image</code></a>’ property. Note that a value of
+   ‘<code class=property>none</code>’ still creates a layer. See <a
+   href="http://www.w3.org/TR/css3-background/#layering">Layering Multiple
+   Background Images</a> <a href="#CSS3BG"
+   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
+
+  <p>All mask images are transformed to alpha masks (if necessary) and
+   combined by compositing on the <a href="#TermMask">mask</a>.
+
+  <h4 id=MaskValues><span class=secno>5.11.2. </span>Mask Source values</h4>
 
   <p>A mask may be interpreted using one of two different methods with
    regards to calculating the mask values that will be multiplied with the
@@ -3436,35 +3482,37 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
   <h2 id=security><span class=secno>8. </span>Security</h2>
 
-  <p>It is important that the timing to the masking operations is independant
-   of the source and destination pixel. Masking operations must be
-   implemented in such a way that they always take the same amount of time
-   regardless of the pixel values. If this rule is not followed, an attacker
-   could infer information and mount a timing attack.
+  <p class=issue>The following description of the security model is not
+   sufficient and detailed enough. See <a
+   href="http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
+   mailing list.
 
-  <p>A timing attack is a method of obtaining information about content that
-   is otherwise protected, based on studying the amount of time it takes for
-   an operation to occur. If, for example, red pixels took longer to draw
-   than green pixels, one might be able to reconstruct a rough image of the
-   element being rendered, without ever having access to the content of the
-   element.
+  <h3 id=origin-restrictions><span class=secno>8.1. </span>Origin
+   Restrictions</h3>
 
-  <p><a href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a>s and <a
-   href="#ltclip-sourcegt"><var>&lt;clip-source&gt;</var></a>s have special
-   requirements on fetching resources.
+  <p> External references to resources like <a href="#MaskElement"><code
+   class=element-name>&lt;mask></code></a> or <a
+   href="#ClipPathElement"><code class=element-name>&lt;clipPath></code></a>
+   must not violate the same origin restrictions <a href="#CORS"
+   rel=biblioentry>[CORS]<!--{{!CORS}}--></a>.
 
-  <p>User agents must use the <a
-   href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially
-   CORS-enabled fetch</a> method defined by the <a href="#HTML5"
-   rel=biblioentry>[HTML5]<!--{{!HTML5}}--></a> specification for all <a
-   href="#ltmask-sourcegt"><var>&lt;mask-source&gt;</var></a>, <a
-   href="#ltclip-sourcegt"><var>&lt;clip-source&gt;</var></a> and <a
-   href="#ltimagegt"><var>&lt;image&gt;</var></a> values on the ‘<a
-   href="#mask-image"><code class=property>mask-image</code></a>’ property.
-   When fetching, user agents must use "Anonymous" mode, set the referrer
-   source to the stylesheet's URL and set the origin to the URL of the
-   containing document. If this results in network errors, the effect is as
-   if the value ‘<code class=property>none</code>’ had been specified.
+  <p>This restriction includes:
+
+  <ul>
+   <li>Any images, either as content or via styling, that are not exposed
+    with CORS
+
+   <li>Any tainted canvas
+
+   <li>Any cross-origin content referenced by ‘<code
+    class=css>xlink:href</code>’ or &lt;use&gt;
+  </ul>
+
+  <p> If content falls under this restriction, the resource must be rejected.
+   The element is drawn as if the resource was not specified (i.e. the ‘<a
+   href="#clip-path"><code class=property>clip-path</code></a>’ or ‘<a
+   href="#mask"><code class=property>mask</code></a>’ property were set to
+   ‘<code class=css>none</code>’).
 
   <h2 id=DOMInterfaces><span class=secno>9. </span>DOM interfaces</h2>
 
@@ -3781,6 +3829,16 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
    <dd style="display: none"><!-- keeps the doc valid if the DL is empty -->
     <!---->
 
+   <dt id=CORS>[CORS]
+
+   <dd>Anne van Kesteren. <a
+    href="http://www.w3.org/TR/2013/CR-cors-20130129/"><cite>Cross-Origin
+    Resource Sharing.</cite></a> 29 January 2013. W3C Candidate
+    Recommendation. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2013/CR-cors-20130129/">http://www.w3.org/TR/2013/CR-cors-20130129/</a>
+   </dd>
+   <!---->
+
    <dt id=CSS-SHAPES>[CSS-SHAPES]
 
    <dd>Vincent Hardy; Rossen Atanassov; Alan Stearns. <a
@@ -3837,15 +3895,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     href="http://www.w3.org/TR/2012/WD-dom-20121206/"><cite>DOM4.</cite></a>
     6 December 2012. W3C Working Draft. (Work in progress.) URL: <a
     href="http://www.w3.org/TR/2012/WD-dom-20121206/">http://www.w3.org/TR/2012/WD-dom-20121206/</a>
-   </dd>
-   <!---->
-
-   <dt id=HTML5>[HTML5]
-
-   <dd>Robin Berjon; et al. <a
-    href="http://www.w3.org/TR/2013/CR-html5-20130806/"><cite>HTML5.</cite></a>
-    6 August 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a
-    href="http://www.w3.org/TR/2013/CR-html5-20130806/">http://www.w3.org/TR/2013/CR-html5-20130806/</a>
    </dd>
    <!---->
 
@@ -3930,30 +3979,6 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   <!--end-informative-->
 
   <h2 class=no-num id=changes>Changes since last publication</h2>
-
-  <p>The following significant changes were made since the <a
-   href="http://www.w3.org/TR/2013/WD-css-masking-20130620/">20 June 2013
-   Working Draft</a>.
-
-  <ul>
-   <li>‘<a href="#mask"><code class=property>mask</code></a>’ resets
-    ‘<a href="#mask-box-image"><code
-    class=property>mask-box-image</code></a>’ properties.
-
-   <li>Initial values for ‘<a href="#mask-repeat"><code
-    class=property>mask-repeat</code></a>’, ‘<a
-    href="#mask-position0"><code class=property>mask-position</code></a>’
-    and ‘<a href="#mask-origin"><code
-    class=property>mask-origin</code></a>’ changed to ‘<code
-    class=css>no-repeat</code>’, ‘<code class=css>center</code>’ and
-    ‘<code class=css>border-box</code>’.
-
-   <li>Multiple layers of <a href="#mask-source"><var>mask sources</var></a>
-    were deferred to a future level of this specification.
-
-   <li>Added security model for pixel operations and fetching of masking and
-    clipping resources.
-  </ul>
 
   <p>The following significant changes were made since the <a
    href="http://www.w3.org/TR/2012/WD-css-masking-20121115/">15 November 2012
@@ -4087,7 +4112,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#MaskProperty">mask</a>
 
-     <td>&lt;mask-layer&gt;
+     <td>&lt;mask-layer&gt;#
 
      <td>see individual properties
 
@@ -4208,7 +4233,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-clip">mask-clip</a>
 
-     <td>[ &lt;box&gt; | no-clip ]
+     <td>[ &lt;box&gt; | no-clip ]#
 
      <td>border-box
 
@@ -4224,7 +4249,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-image">mask-image</a>
 
-     <td>&lt;mask-reference&gt;
+     <td>&lt;mask-reference&gt;#
 
      <td>none
 
@@ -4240,7 +4265,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-origin">mask-origin</a>
 
-     <td>&lt;box&gt;
+     <td>&lt;box&gt;#
 
      <td>border-box
 
@@ -4256,7 +4281,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-position0">mask-position</a>
 
-     <td>&lt;position&gt;
+     <td>&lt;position&gt;#
 
      <td>center
 
@@ -4273,7 +4298,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-repeat">mask-repeat</a>
 
-     <td>&lt;repeat-style&gt;
+     <td>&lt;repeat-style&gt;#
 
      <td>no-repeat
 
@@ -4289,7 +4314,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-size0">mask-size</a>
 
-     <td>&lt;bg-size&gt;
+     <td>&lt;bg-size&gt;#
 
      <td>auto
 
@@ -4305,7 +4330,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     <tr>
      <th><a class=property href="#mask-source-type">mask-source-type</a>
 
-     <td>&lt;source-type&gt;
+     <td>&lt;source-type&gt;#
 
      <td>auto
 
@@ -4404,6 +4429,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
    <li>&lt;image&gt;, <a href="#ltimagegt"
     title="section 5.1."><strong>5.1.</strong></a>
+
+   <li>layers, <a href="#layers" title="section 5.11.1.">5.11.1.</a>
 
    <li>&lt;left&gt;, <a href="#ltleftgt"
     title="section 7.3."><strong>7.3.</strong></a>
