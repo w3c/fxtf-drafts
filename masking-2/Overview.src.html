@@ -6,7 +6,7 @@ TR: http://www.w3.org/TR/css-masking/
 Previous version: http://www.w3.org/TR/2013/WD-css-masking-20130620/
 Previous version: http://www.w3.org/TR/2012/WD-css-masking-20121115/
 Shortname: css-masking
-Link Defaults: css-backgrounds-3 (type) <position>, selectors-4 (type) <compound-selector>, svg2 (property) color-interpolation, svg2 (property) fill-rule, filters-1 (property) filter, svg (property) fill, svg (property) stroke, svg (property) stroke-width
+Link Defaults: css-backgrounds-3 (type) <position>, selectors-4 (type) <compound-selector>, svg (property) color-interpolation, svg (property) fill-rule, filters-1 (property) filter, svg (property) fill, svg (property) stroke, svg (property) stroke-width, css-display-3 (property) display
 Level: 2
 Group: fxtf
 Editor: Dirk Schulze, Adobe Systems Inc., dschulze@adobe.com
@@ -92,37 +92,37 @@ In addition to the property-specific values listed in their definitions, all pro
 When used in this specification, terms have the meanings assigned in this section.
 
 <dl>
-<dt id="TermClientBoundingRect"><dfn>bounding client rect</dfn></dt>
+<dt><dfn>bounding client rect</dfn></dt>
 <dd>
   <p>
     The union of all border boxes for the element that has an associated CSS layout box and is not in the <code>http://www.w3.org/2000/svg</code> namespace and its descendant elements. Or the object bounding box [[!SVG11]], if the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace. (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
     [[CSSOM-VIEW]].)
   </p>
 </dd>
-<dt id="TermLocalCoordinateSystem"><dfn>local coordinate system</dfn></dt>
-<dt id="TermUserCoordinateSystem"><dfn>user coordinate system</dfn></dt>
+<dt><dfn>local coordinate system</dfn></dt>
+<dt><dfn>user coordinate system</dfn></dt>
 <dd>
   <p>
     In general, a coordinate system defines locations and distances on the current canvas. The current local coordinate system (also user coordinate system) is the coordinate system that is currently active and which is used to define how coordinates and lengths are located and computed, respectively, on the current canvas [[CSS3-TRANSFORMS]].
   </p>
   <p>
-    For elements that have an associated CSS layout box, the current user coordinate system has its origin at the top-left corner of the <span class="term">bounding client rect</span> and one unit equals one CSS pixel. The viewport for resolving percentage values is defined by the width and height of the <span class="term">bounding client rect</span>.
+    For elements that have an associated CSS layout box, the current user coordinate system has its origin at the top-left corner of the <i>bounding client rect</i> and one unit equals one CSS pixel. The viewport for resolving percentage values is defined by the width and height of the <i>bounding client rect</i>.
   </p>
   <p>
     If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace, the current local coordinate system has its origin at the top-left corner of the element's nearest viewport.
   </p>
 </dd>
-<dt id="TermObjectBoundingBoxUnits"><dfn>object bounding box units</dfn></dt>
+<dt><dfn>object bounding box units</dfn></dt>
 <dd>
-  The <span class="term">bounding client rect</span> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a> [[!SVG11]].
+  The <i>bounding client rect</i> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a> [[!SVG11]].
 </dd>
-<dt id="TermMaskSource"><dfn>mask source</dfn></dt>
+<dt><dfn>mask source</dfn></dt>
 <dd>
   An off-screen image which has been initialized to transparent black. The graphical object to which the mask is applied will be painted onto the background through the mask, thus completely or partially masking out parts of the graphical object.
 </dd>
-<dt id="TermClippingPath"><dfn>clipping path</dfn></dt>
+<dt><dfn>clipping path</dfn></dt>
 <dd>
-  A combination of SVG <a>graphics element</a> or <var>basic shapes</var> which serve as the outline of a visual element where everything on the "inside" of the outline is allowed to show through but everything on the outside is masked out. (See 'clip-path'.)
+  A combination of SVG <a>graphics element</a> or basic shapes which serve as the outline of a visual element where everything on the "inside" of the outline is allowed to show through but everything on the outside is masked out. (See 'clip-path'.)
 </dd>
 </dl>
 
@@ -192,19 +192,14 @@ This property sets the mask image(s) or the <i>mask source</i> of an element. Im
     <dfn><<url>></dfn>
   </dt>
   <dd>
-    A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.svg#mask)'') or to a
-    CSS image.
+    A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.svg#mask)'') or to a CSS image.
   </dd>
   <dt><dfn>child</dfn></dt>
   <dd>
-    A keyword to indicate that the last direct child <a>'mask element'</a>
-    element of the element the 'mask-image' property is applied should be used as the mask source. It is equivalent to
-    ''select(mask:last-of-type)''.</dd>
+    A keyword to indicate that the last direct child <a>'mask element'</a> element of the element the 'mask-image' property is applied should be used as the mask source. It is equivalent to ''select(mask:last-of-type)''.</dd>
   <dt><<child-selector>></dt>
   <dd>
-    A functional notation [[!CSS3VAL]] accepting a comma-separated
-    list of compound selectors that represents first matching child
-    <a>'mask element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
+    A functional notation [[!CSS3VAL]] accepting a comma-separated list of compound selectors that represents first matching child <a>'mask element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
   </dd>
   <dt>none</dt>
   <dd>
@@ -248,26 +243,18 @@ The 'mask-source-type' property indicates whether the <<mask-reference>> is trea
 <dl dfn-type=value dfn-for="<source-type>">
   <dt><dfn>alpha</dfn></dt>
   <dd>
-    A value of ''alpha'' indicates that the alpha values of the mask
-    image should be used as the mask values.
-    See <a href="#MaskValues">Calculating mask values</a>.</p>
+    A value of ''alpha'' indicates that the alpha values of the mask image should be used as the mask values. See <a href="#MaskValues">Calculating mask values</a>.</p>
   </dd>
   <dt><dfn>luminance</dfn></dt>
   <dd>
-    A value of ''luminance'' indicates that the luminance values of the mask
-    image should be used as the mask values.
-    See <a href="#MaskValues">Calculating mask values</a>.</p>
+    A value of ''luminance'' indicates that the luminance values of the mask image should be used as the mask values. See <a href="#MaskValues">Calculating mask values</a>.</p>
   </dd>
   <dt><dfn>auto</dfn></dt>
   <dd>
     <p>
-      If the <<mask-reference>> of the 'mask-image' property is
-      of type <<mask-source>> the luminance values of the mask
-      image should be used as the mask values.
+      If the <<mask-reference>> of the 'mask-image' property is of type <<mask-source>> the luminance values of the mask image should be used as the mask values.
     <p>
-      If the <<mask-reference>> of the 'mask-image' property is
-      of type <<image>> the alpha values of the mask
-      image should be used as the mask values.
+      If the <<mask-reference>> of the 'mask-image' property is of type <<image>> the alpha values of the mask image should be used as the mask values.
   </dd>
 </dl>
 
@@ -422,9 +409,7 @@ Media: visual
 Animatable: no
 </pre>
 
-For elements rendered as a single box, specifies the <i>mask positioning area</i>. For elements rendered as multiple boxes (e.g., inline boxes on several
-lines, boxes on several pages) specifies which boxes 'box-decoration-break'
-operates on to determine the mask positioning area(s).
+For elements rendered as a single box, specifies the <i>mask positioning area</i>. For elements rendered as multiple boxes (e.g., inline boxes on several lines, boxes on several pages) specifies which boxes 'box-decoration-break' operates on to determine the mask positioning area(s).
 
 <dl dfn-for="mask-origin" dfn-type=value>
   <dt><var>padding-box</var>
@@ -516,9 +501,7 @@ The 'mask-type' property allows the author of the <a>'mask element'</a> element 
 
 <div class=example>
 
-<p>In the following example the computed value of 'mask-type' is ''luminance'' and the
-computed value of 'mask-source-type' is ''auto''. The UA must follow the preferred masking
-operation defined on the <a>'mask element'</a> element.
+<p>In the following example the computed value of 'mask-type' is ''luminance'' and the computed value of 'mask-source-type' is ''auto''. The UA must follow the preferred masking operation defined on the <a>'mask element'</a> element.
 
 <pre><code>
 &lt;svg>
@@ -532,9 +515,7 @@ operation defined on the <a>'mask element'</a> element.
 &lt;/p>
 </code></pre>
 
-<p>In the next example the computed value of 'mask-source-type' is ''alpha'' and
-overrides the preference on the <a>'mask element'</a> element that is computed to
-''luminance''. The mask source is used as an alpha mask.
+<p>In the next example the computed value of 'mask-source-type' is ''alpha'' and overrides the preference on the <a>'mask element'</a> element that is computed to ''luminance''. The mask source is used as an alpha mask.
 
 <pre><code>
 &lt;svg>
@@ -562,7 +543,7 @@ The 'mask-type' property is a presentation attribute for SVG elements.
     class="adef">maskUnits</span> = "<em>userSpaceOnUse</em> |
     <em>objectBoundingBox</em>"</dt>
     <dd>Defines the coordinate system for attributes
-    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>.<br />
+    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>.<br>
      If <span
     class="attr-value">maskUnits="userSpaceOnUse"</span>,
     <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>
@@ -570,24 +551,24 @@ The 'mask-type' property is a presentation attribute for SVG elements.
     the time when the <a>'mask element'</a>
     element is referenced (i.e., the user coordinate system for
     the element referencing the <a>'mask element'</a> element via the
-    'mask' property).<br />
+    'mask' property).<br>
      If <span
     class="attr-value">maskUnits="objectBoundingBox"</span>,
     <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>
     represent fractions or percentages of the bounding box of
     the element to which the mask is applied. (See <span class="term">object bounding box
-    units</span>.)<br />
+    units</span>.)<br>
      If attribute <a>'mask/maskUnits'</a> is
     not specified, then the effect is as if a value of <span
     class="attr-value">'objectBoundingBox'</span> were
-    specified.<br />
+    specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
     <dt id="MaskElementMaskContentUnitsAttribute"><span
     class="adef">maskContentUnits</span> =
     "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"</dt>
     <dd>Defines the coordinate system for the contents of the
-    <a>'mask element'</a>.<br />
+    <a>'mask element'</a>.<br>
      If <span
     class="attr-value">maskContentUnits="userSpaceOnUse"</span>,
     the user coordinate system for the contents of the
@@ -597,17 +578,17 @@ The 'mask-type' property is a presentation attribute for SVG elements.
     (i.e., the user coordinate system for the element
     referencing the <a>'mask element'</a>
     element via the 'mask'
-    property).<br />
+    property).<br>
      If <span
     class="attr-value">maskContentUnits="objectBoundingBox"</span>,
     the user coordinate system for the contents of the <a>'mask element'</a> is established using the
     bounding box of the element to which the mask is applied.
     (See <span class="term">object bounding box
-    units</span>.)<br />
+    units</span>.)<br>
      If attribute <a>'maskContentUnits'</a> is not specified,
     then the effect is as if a value of <span
     class="attr-value">'userSpaceOnUse'</span> were
-    specified.<br />
+    specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
     <dt id="MaskElementXAttribute"><span
@@ -616,35 +597,35 @@ The 'mask-type' property is a presentation attribute for SVG elements.
     for the largest possible offscreen buffer.
     If the attribute is not specified but at least one of the attributes <a>'mask/y'</a>,
     <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'-10%'</span> were specified.<br />
+    value of <span class='attr-value'>'-10%'</span> were specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
     <dt id="MaskElementYAttribute"><span
     class="adef">y</span> = "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"</dt>
     <dd>The y-axis coordinate of one corner of the rectangle
-    for the largest possible offscreen buffer.<br />
+    for the largest possible offscreen buffer.<br>
     If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
     <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'-10%'</span> were specified.<br />
+    value of <span class='attr-value'>'-10%'</span> were specified.<br>
     <span class="anim-target">Animatable:
     yes.</span></dd>
     <dt id="MaskElementWidthAttribute"><span
     class="adef">width</span> = "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"</dt>
     <dd>The width of the largest possible offscreen buffer.
-    A negative value or a value of zero disables rendering of the element.<br />
+    A negative value or a value of zero disables rendering of the element.<br>
     If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
     <a>'mask/y'</a> or <a>'mask/height'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'120%'</span> were specified.<br />
+    value of <span class='attr-value'>'120%'</span> were specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
     <dt id="MaskElementHeightAttribute"><span
     class="adef">height</span> = "<var>&lt;length&gt;</var> | <var>&lt;percentage&gt;</var>"</dt>
     <dd>The height of the largest possible offscreen
-    buffer.<br />
-    A negative value or a value of zero disables rendering of the element.<br />
+    buffer.<br>
+    A negative value or a value of zero disables rendering of the element.<br>
     If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
     <a>'mask/y'</a> or <a>'mask/width'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'120%'</span> were specified.<br />
+    value of <span class='attr-value'>'120%'</span> were specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
   </dl>
@@ -936,9 +917,7 @@ Animatable: no
 
 The 'clip-rule' property only applies to graphics elements that are contained within a <a>'clipPath'</a> element.
 
-<div class=example><p>The following fragment of code will cause an evenodd clipping rule to be
-applied to the clipping path because 'clip-rule' is specified on the
-<a>'path'</a> element that defines the clipping shape:
+<div class=example><p>The following fragment of code will cause an evenodd clipping rule to be applied to the clipping path because 'clip-rule' is specified on the <a>'path'</a> element that defines the clipping shape:
 
 <pre>
 &lt;g clip-rule="nonzero"&gt;
@@ -949,10 +928,7 @@ applied to the clipping path because 'clip-rule' is specified on the
 &lt;/g&gt;
 </pre>
 
-<p>whereas the following fragment of code will <em>not</em> cause an
-evenodd clipping rule to be applied because the 'clip-rule' is
-specified on the referencing element, not on the object defining the
-clipping shape:</p>
+<p>whereas the following fragment of code will <em>not</em> cause an evenodd clipping rule to be applied because the 'clip-rule' is specified on the referencing element, not on the object defining the clipping shape:</p>
 
 
 <pre>
@@ -1034,72 +1010,39 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     class="adef">clipPathUnits</span> =
     "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"</dt>
     <dd>Defines the coordinate system for the contents of the
-    <a>'clipPath'</a>.<br />
+    <a>'clipPath'</a>.<br>
      If <span class="attr-value">clipPathUnits="userSpaceOnUse"</span>,
     the contents of the <a>'clipPath'</a> represent values in
     the current user coordinate system in place at the time
     when the <a>'clipPath'</a>
     element is referenced (i.e., the user coordinate system for
     the element referencing the <a>'clipPath'</a> element via the
-    'clip-path' property).<br />
+    'clip-path' property).<br>
      If <span class="attr-value">clipPathUnits="objectBoundingBox"</span>,
     then the user coordinate system for the contents of the
     <a>'clipPath'</a> element is established using the bounding box of
     the element to which the clipping path is applied (see <span class=index>object bounding box
-    units</span>).<br />
+    units</span>).<br>
      If attribute <a>'clipPathUnits'</a>
     is not specified, then the effect is as if a value of <span
     class="attr-value">'userSpaceOnUse'</span> were
-    specified.<br />
+    specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
   </dl>
 </div>
 
-<p>CSS properties inherit into the
-<a>'clipPath'</a> element from its ancestors; properties do <em>not</em>
-inherit from the element referencing the <a>'clipPath'</a> element.</p>
+CSS properties inherit into the <a>'clipPath'</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a>'clipPath'</a> element.
 
-<p><a>'clipPath'</a> elements are never rendered directly; their only usage is
-as something that can be referenced using the 'clip-path' property. The
-<a>'display'</a> property does not apply to the <a>'clipPath'</a> element;
-thus, <a>'clipPath'</a> elements are not directly rendered even if the
-'display' property is set to a value other than
-<span class="prop-value">none</span>, and <a>'clipPath'</a> elements are
-available for referencing even when the <a>'display'</a> property on the
-<a>'clipPath'</a> element or any of its ancestors is set to
-<span class="prop-value">none</span>.</p>
+<a>'clipPath'</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'clip-path' property. The 'display' property does not apply to the <a>'clipPath'</a> element; thus, <a>'clipPath'</a> elements are not directly rendered even if the 'display' property is set to a value other than ''none'', and <a>'clipPath'</a> elements are available for referencing even when the <a>'display'</a> property on the <a>'clipPath'</a> element or any of its ancestors is set to ''none''.
 
-<p>A <a>'clipPath'</a> element can contain <a>'path'</a> elements,
-<a>'text'</a> elements, <a>basic shapes</a> (such as
-<a>'circle'</a>) or a <a>'use'</a> element. If a <a>'use'</a> element is a
-child of a <a>'clipPath'</a> element, it must directly reference
-<a>'path'</a>, <a>'text'</a> or <a>basic shapes</a> elements.
-Indirect references are an error and the <a>'clipPath'</a> element must be
-ignored.</p>
+A <a>'clipPath'</a> element can contain <a>'path'</a> elements, <a>'text'</a> elements, <a>basic shapes</a> (such as <a>'circle'</a>) or a <a>'use'</a> element. If a <a>'use'</a> element is a child of a <a>'clipPath'</a> element, it must directly reference <a>'path'</a>, <a>'text'</a> or <a>basic shapes</a> elements. Indirect references are an error and the <a>'clipPath'</a> element must be ignored.
 
-<p>The raw geometry of each child element exclusive of rendering properties
-such as 'fill', 'stroke', 'stroke-width' within a
-<a>'clipPath'</a> conceptually defines a 1-bit mask (with the possible
-exception of anti-aliasing along the edge of the geometry) which represents
-the silhouette of the graphics associated with that element. Anything outside
-the outline of the object is masked out. If a child element is 
-made invisible by 'display' or 'visibility' it does not contribute
-to the clipping path. When the <a>'clipPath'</a> element
-contains multiple child elements, the silhouettes of the child elements are
-logically OR'd together to create a single silhouette which is then used to
-restrict the region onto which paint can be applied. Thus, a point is inside
-the clipping path if it is inside any of the children of the
-<a>'clipPath'</a>.</p>
+The raw geometry of each child element exclusive of rendering properties such as 'fill', 'stroke', 'stroke-width' within a <a>'clipPath'</a> conceptually defines a 1-bit mask (with the possible exception of anti-aliasing along the edge of the geometry) which represents the silhouette of the graphics associated with that element. Anything outside the outline of the object is masked out. If a child element is made invisible by 'display' or 'visibility' it does not contribute to the clipping path. When the <a>'clipPath'</a> element contains multiple child elements, the silhouettes of the child elements are logically OR'd together to create a single silhouette which is then used to restrict the region onto which paint can be applied. Thus, a point is inside the clipping path if it is inside any of the children of the <a>'clipPath'</a>.
 
-<p>For a given graphics element, the actual clipping path used
-will be the intersection of the clipping path specified by its
-'clip-path' property (if any) with any clipping paths on its
-ancestors, as specified by the 'clip-path' property on the
-elements
-which establish a new viewport. (See [[!SVG11]])</p>
+For a given graphics element, the actual clipping path used will be the intersection of the clipping path specified by its 'clip-path' property (if any) with any clipping paths on its ancestors, as specified by the 'clip-path' property on the elements which establish a new viewport. (See [[!SVG11]])
 
-<p>A couple of additions:</p>
+A couple of additions:
 
 <ul>
   <li>The <a>'clipPath'</a> element itself and its child elements do
@@ -1107,10 +1050,10 @@ which establish a new viewport. (See [[!SVG11]])</p>
   <a>'clipPath'</a> element.</li>
 
   <li>The <a>'clipPath'</a> element or any of its children can specify
-  property 'clip-path'.<br /> If a valid 'clip-path' reference
+  property 'clip-path'.<br> If a valid 'clip-path' reference
   is placed on a <a>'clipPath'</a> element, the resulting clipping path is the
   intersection of the contents of the <a>'clipPath'</a> element with the
-  referenced clipping path.<br />
+  referenced clipping path.<br>
   If a valid 'clip-path' reference is placed on one of the children of
   a <a>'clipPath'</a> element, then the given child element is clipped by the
   referenced clipping path before OR'ing the silhouette of the child element
