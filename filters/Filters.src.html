@@ -6433,6 +6433,42 @@ uniform vec2 dispSize;
   axis, the returned value is a fully translucent black pixel.
 </p>
 
+<h3 id="validate-custom-filter-shaders">Validate Custom Filter Shaders</h3>
+
+<h4 class="no-num" id="building-on-webgl">Building on WebGL</h4>
+
+<p>The author's shader is validated according to the WebGL specification, with a couple of changes for Custom Filters. Specifically, in the author’s fragment shader:</p>
+
+<ul>
+<li>The ''gl_FragColor'' and ''gl_FragData'' built-in variables are unavailable and disallowed.</li>
+<li>The ''css_MixColor'' and ''css_ColorMatrix'' built-in variables are available for reading and writing.</li>
+<li>The ''css_'' prefix is reserved, meaning the author cannot define symbols (variables or functions) with this prefix.</li>
+</ul>
+
+<h4 class="no-num" id="disallowing-unbound-samplers">Disallowing Unbound Samplers</h4>
+
+<p>Similar to WebGL, CSS Custom Filters allow authors to fetch <a href="#cors-approved-resources">CORS-approved images</a> and use it in the shader. The user agent then binds the texture to a texture unit, and finally binds a sampler variable in a shader program to the corresponding texture unit.</p>
+
+<p>When a sampler variable is not bound, GLSL gives it a default value of ''0'', which refers to texture unit 0. Depending on the implementation, texture unit 0 may contain the texture of the filtered content or some other sensitive texture.</p>
+
+<p>Thus, a Custom Filters implementation must not execute the shader with unbound samplers because they can provide unintentional access to sensitive information. In other words, an author's Custom Filter must provide <a href="#cors-approved-resource">CORS-approved images</a> for all samplers defined in the shader.
+
+<p class="note">Note that samplers are read-only in GLSL, so the author cannot change them to point to a different texture unit during the execution of the shader.</p>
+
+<h4 class="no-num" id="custom-filter-parameter-type-checking">Custom Filter Parameter Type Checking</h4>
+
+<p>CSS Custom Filters allows authors to define custom filter parameters for their filters. Custom filter parameters can be numbers, colors, arrays, transformation matrices, etc. Authors define the parameters for their Custom Filter as uniform variables (''uniforms'') in their shaders. Authors set values for these parameters in CSS (See also <a href="#custom-filter-parameters">Custom filter parameters</a>). The user agent binds the parameter values from CSS to the <a href="#shader-uniform-variables">uniforms in the shaders</a>.</p>
+
+<p>For robustness, a Custom Filters implementation must verify that the types of the CSS parameter values match the types of the uniforms in the shaders.</p>
+
+<h4 class="no-num" id="build-in-parameter-type-checking">Built-in Parameter Type Checking</h4>
+
+<p>In CSS Custom Filters, the user agent provides some built-in uniforms and attributes to the author. For example, the ''a_position'' attribute provides the author with the coordinates of the current vertex.</p>
+
+<p>An implementation must also type-check these built-in attributes and uniforms.</p>
+
+<p class="example">For example, the shader must not execute if the author defines ''a_position'' as a ''vec2'', when the user agent expects ''a_position'' to be a ''vec4''.</p>
+
 <h2 id="FilterCSSImageValue">Filter CSS <var>&lt;image></var> values</h2>
 
 <p>
@@ -6806,6 +6842,8 @@ uniform vec2 dispSize;
   mailing list.
 </p>
 
+<h3>Tainted Filter Primitives</h3>
+
 <p>It is important that the timing of any filter operation is independent of pixel values derived from the filtered content or other sources potentially containing privacy information.</p>
 
 <p>The following <a>filter primitives</a> have pixel values that potentially contain privacy information, either from the filtered object itself or other sources such as CSS styling. These primitives must be flagged as "tainted"</p>
@@ -6815,7 +6853,7 @@ uniform vec2 dispSize;
   <li><a>'feDropShadow'</a>,</li>
   <li><a>'feDiffuseLighting'</a>,</li>
   <li><a>'feSpecularLighting'</a>,</li>
-  <li><a>'feImage'</a> (when the <a>IRI reference</a> points to an element) and <span class="issue">Should image reference always be CORS protected?</span></li>
+  <li><a>'feImage'</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> <span class="issue">could break content</span> and</li>
   <li>the filter primitives: <a>SourceGraphic</a>, <a>SourceAlpha</a>, <a>BackgroundImage</a>, <a>BackgroundAlpha</a>, <a>FillPaint</a> and <a>StrokePaint</a>.</li>
 </ul>
 
@@ -6823,18 +6861,27 @@ uniform vec2 dispSize;
 
 <p>Filter operations must be implemented in such a way that they always take the same amount of time regardless of the pixel values if one of the input filter primitives is flagged as "tainted".</p>
 
+<h3>'feDisplacementMap' Restrictions</h3>
+
 <p>If <a>'feDisplacementMap'</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a>'feDisplacementMap/in2'</a>), then <a>'feDisplacementMap'</a> must not proceed with the filter operation and acts as a <var>pass through filter</var>.</p>
 
-<p><a>'feCustom'</a> is applying a processing operation on input values. It is important that no protected information leaks from that operation. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must parse and analyze shaders and explicitly verify this requirement. <span class="issue">Add normative link to documentation how to analyze the shader.</span> If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <var>pass through filter</var>.
+<h3>'feCustom' Restrictions</h3>
+
+<p><a>'feCustom'</a> is applying a processing operation on input filter primitives. It is important that no protected information leaks from that operation. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must validate each shader as described in section <a href="#validate-custom-filter-shaders">Validate custom filter shaders</a>. If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <var>pass through filter</var>.
 (See <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">security study</a> <span class="issue">Make this a normative reference.</span>)</p>
 
-<p class="note">The above restrictions to vertex and fragment shaders may just apply to "tainted" flagged input filter primitives in future versions of this specification.</p>
+<p class="note">The above restriction to color access may just apply to "tainted" flagged input filter primitives in future versions of this specification.</p>
 
-<p>If these rules are not followed, an attacker could infer information and mount a timing attack.</p>
-
-<p>A timing attack is a method of obtaining information about content that is otherwise protected, based on studying the amount of time it takes for an operation to occur. If, for example, red pixels took longer to draw than green pixels, one might be able to reconstruct a rough image of the element being rendered, without ever having access to the content of the element.</p>
+<p id="cors-approved-resource">User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for all referenced shader files and image sources.</p>
 
 <h3 id="origin-restrictions">Origin Restrictions</h3>
+
+<p>User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for the 'filter' property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value ''none'' had been specified.</p>
+
+<div class="issue">
+<p>
+  The following restrictions seem to be unnecessary with the clarification above or incorrect and probably should be removed.
+</p>
 
 <p>
   Input to a filter effect must not include anything as input that would violate
@@ -6842,8 +6889,9 @@ uniform vec2 dispSize;
   access is required, then the requested content should be explicitly marked with
   <a href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
 </p>
+
 <p>
-  This restriction includes: <span class="issue">Restricting these elements seems to be unnecessary with the clarification above.</span>
+  This restriction includes:
 </p>
 <ul>
   <li>Any <span class="code"><a href= 
@@ -6865,6 +6913,13 @@ uniform vec2 dispSize;
   example, a filter effect that is applying to a cross-origin 'iframe' element does
   not have any affect on this element.
 </p>
+</div>
+
+<h3>Timing Attacks</h3>
+
+<p>If any of the above rules are not followed, an attacker could infer information and mount a timing attack.</p>
+
+<p>A timing attack is a method of obtaining information about content that is otherwise protected, based on studying the amount of time it takes for an operation to occur. If, for example, red pixels took longer to draw than green pixels, one might be able to reconstruct a rough image of the element being rendered, without ever having access to the content of the element.</p>
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 

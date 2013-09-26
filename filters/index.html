@@ -363,6 +363,22 @@
        <li><a href="#texture-access"><span class=secno>12.6.6. </span>Texture
         access</a>
       </ul>
+
+     <li><a href="#validate-custom-filter-shaders"><span class=secno>12.7.
+      </span>Validate Custom Filter Shaders</a>
+      <ul class=toc>
+       <li class=no-num><a href="#building-on-webgl">Building on WebGL</a>
+
+       <li class=no-num><a href="#disallowing-unbound-samplers">Disallowing
+        Unbound Samplers</a>
+
+       <li class=no-num><a
+        href="#custom-filter-parameter-type-checking">Custom Filter Parameter
+        Type Checking</a>
+
+       <li class=no-num><a href="#build-in-parameter-type-checking">Built-in
+        Parameter Type Checking</a>
+      </ul>
     </ul>
 
    <li><a href="#FilterCSSImageValue"><span class=secno>13. </span>Filter CSS
@@ -429,8 +445,21 @@
 
    <li><a href="#security"><span class=secno>18. </span>Security</a>
     <ul class=toc>
-     <li><a href="#origin-restrictions"><span class=secno>18.1. </span>Origin
+     <li><a href="#tainted-filter-primitives"><span class=secno>18.1.
+      </span>Tainted Filter Primitives</a>
+
+     <li><a href="#fedisplacementmap-restrictions"><span class=secno>18.2.
+      </span>‘<code class=property>feDisplacementMap</code>’
       Restrictions</a>
+
+     <li><a href="#fecustom-restrictions"><span class=secno>18.3.
+      </span>‘<code class=property>feCustom</code>’ Restrictions</a>
+
+     <li><a href="#origin-restrictions"><span class=secno>18.4. </span>Origin
+      Restrictions</a>
+
+     <li><a href="#timing-attacks"><span class=secno>18.5. </span>Timing
+      Attacks</a>
     </ul>
 
    <li><a href="#DOMInterfaces"><span class=secno>19. </span>DOM
@@ -12087,6 +12116,84 @@ uniform vec2 dispSize;
   <p> If shaders access texture values outside the <code>[0, 1]</code> range
    on both axis, the returned value is a fully translucent black pixel.
 
+  <h3 id=validate-custom-filter-shaders><span class=secno>12.7.
+   </span>Validate Custom Filter Shaders</h3>
+
+  <h4 class=no-num id=building-on-webgl>Building on WebGL</h4>
+
+  <p>The author's shader is validated according to the WebGL specification,
+   with a couple of changes for Custom Filters. Specifically, in the
+   author’s fragment shader:
+
+  <ul>
+   <li>The ‘<code class=css>gl_FragColor</code>’ and ‘<code
+    class=css>gl_FragData</code>’ built-in variables are unavailable and
+    disallowed.
+
+   <li>The ‘<code class=css>css_MixColor</code>’ and ‘<code
+    class=css>css_ColorMatrix</code>’ built-in variables are available for
+    reading and writing.
+
+   <li>The ‘<code class=css>css_</code>’ prefix is reserved, meaning the
+    author cannot define symbols (variables or functions) with this prefix.
+  </ul>
+
+  <h4 class=no-num id=disallowing-unbound-samplers>Disallowing Unbound
+   Samplers</h4>
+
+  <p>Similar to WebGL, CSS Custom Filters allow authors to fetch <a
+   href="#cors-approved-resources">CORS-approved images</a> and use it in the
+   shader. The user agent then binds the texture to a texture unit, and
+   finally binds a sampler variable in a shader program to the corresponding
+   texture unit.
+
+  <p>When a sampler variable is not bound, GLSL gives it a default value of
+   ‘<code class=css>0</code>’, which refers to texture unit 0. Depending
+   on the implementation, texture unit 0 may contain the texture of the
+   filtered content or some other sensitive texture.
+
+  <p>Thus, a Custom Filters implementation must not execute the shader with
+   unbound samplers because they can provide unintentional access to
+   sensitive information. In other words, an author's Custom Filter must
+   provide <a href="#cors-approved-resource">CORS-approved images</a> for all
+   samplers defined in the shader.
+
+  <p class=note>Note that samplers are read-only in GLSL, so the author
+   cannot change them to point to a different texture unit during the
+   execution of the shader.
+
+  <h4 class=no-num id=custom-filter-parameter-type-checking>Custom Filter
+   Parameter Type Checking</h4>
+
+  <p>CSS Custom Filters allows authors to define custom filter parameters for
+   their filters. Custom filter parameters can be numbers, colors, arrays,
+   transformation matrices, etc. Authors define the parameters for their
+   Custom Filter as uniform variables (‘<code class=css>uniforms</code>’)
+   in their shaders. Authors set values for these parameters in CSS (See also
+   <a href="#custom-filter-parameters">Custom filter parameters</a>). The
+   user agent binds the parameter values from CSS to the <a
+   href="#shader-uniform-variables">uniforms in the shaders</a>.
+
+  <p>For robustness, a Custom Filters implementation must verify that the
+   types of the CSS parameter values match the types of the uniforms in the
+   shaders.
+
+  <h4 class=no-num id=build-in-parameter-type-checking>Built-in Parameter
+   Type Checking</h4>
+
+  <p>In CSS Custom Filters, the user agent provides some built-in uniforms
+   and attributes to the author. For example, the ‘<code
+   class=css>a_position</code>’ attribute provides the author with the
+   coordinates of the current vertex.
+
+  <p>An implementation must also type-check these built-in attributes and
+   uniforms.
+
+  <p class=example>For example, the shader must not execute if the author
+   defines ‘<code class=css>a_position</code>’ as a ‘<code
+   class=css>vec2</code>’, when the user agent expects ‘<code
+   class=css>a_position</code>’ to be a ‘<code class=css>vec4</code>’.
+
   <h2 id=FilterCSSImageValue><span class=secno>13. </span>Filter CSS
    <var>&lt;image></var> values</h2>
 
@@ -12475,6 +12582,9 @@ uniform vec2 dispSize;
    href="http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
    mailing list.
 
+  <h3 id=tainted-filter-primitives><span class=secno>18.1. </span>Tainted
+   Filter Primitives</h3>
+
   <p>It is important that the timing of any filter operation is independent
    of pixel values derived from the filtered content or other sources
    potentially containing privacy information.
@@ -12498,10 +12608,11 @@ uniform vec2 dispSize;
     class=element-name>&lt;feSpecularLighting></code></a>,
 
    <li><a href="#feImageElement"><code
-    class=element-name>&lt;feImage></code></a> (when the <a
+    class=element-name>&lt;feImage></code></a>, when the <a
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
-    reference</a> points to an element) and <span class=issue>Should image
-    reference always be CORS protected?</span>
+    reference</a> points to an element or fetches a resource with the
+    fetching mode <em>No-CORS</em> <span class=issue>could break
+    content</span> and
 
    <li>the filter primitives: <a href="#SourceGraphic">SourceGraphic</a>, <a
     href="#SourceAlpha">SourceAlpha</a>, <a
@@ -12520,6 +12631,10 @@ uniform vec2 dispSize;
    take the same amount of time regardless of the pixel values if one of the
    input filter primitives is flagged as "tainted".
 
+  <h3 id=fedisplacementmap-restrictions><span class=secno>18.2. </span>‘<a
+   href="#fedisplacementmap"><code
+   class=property>feDisplacementMap</code></a>’ Restrictions</h3>
+
   <p>If <a href="#feDisplacementMapElement"><code
    class=element-name>&lt;feDisplacementMap></code></a> has a "tainted"
    flagged filter primitive as input and this input filter primitive is used
@@ -12531,25 +12646,83 @@ uniform vec2 dispSize;
    the filter operation and acts as a <a
    href="#pass-through-filter"><var>pass through filter</var></a>.
 
+  <h3 id=fecustom-restrictions><span class=secno>18.3. </span>‘<a
+   href="#fecustom"><code class=property>feCustom</code></a>’ Restrictions</h3>
+
   <p><a href="#feCustomElement"><code
    class=element-name>&lt;feCustom></code></a> is applying a processing
-   operation on input values. It is important that no protected information
-   leaks from that operation. Therefore, vertex shader and fragment shader
-   must not have access to pixel values of the input filter primitive at any
-   time. User-agents must parse and analyze shaders and explicitly verify
-   this requirement. <span class=issue>Add normative link to documentation
-   how to analyze the shader.</span> If the vertex shader or the fragment
-   shader does not match this requirement, the particular shader acts as a <a
+   operation on input filter primitives. It is important that no protected
+   information leaks from that operation. Therefore, vertex shader and
+   fragment shader must not have access to pixel values of the input filter
+   primitive at any time. User-agents must validate each shader as described
+   in section <a href="#validate-custom-filter-shaders">Validate custom
+   filter shaders</a>. If the vertex shader or the fragment shader does not
+   match this requirement, the particular shader acts as a <a
    href="#pass-through-filter"><var>pass through filter</var></a>. (See <a
    href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">security
    study</a> <span class=issue>Make this a normative reference.</span>)
 
-  <p class=note>The above restrictions to vertex and fragment shaders may
-   just apply to "tainted" flagged input filter primitives in future versions
-   of this specification.
+  <p class=note>The above restriction to color access may just apply to
+   "tainted" flagged input filter primitives in future versions of this
+   specification.
 
-  <p>If these rules are not followed, an attacker could infer information and
-   mount a timing attack.
+  <p id=cors-approved-resource>User agents must use the <a
+   href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially
+   CORS-enabled fetch</a> method defined by the <a
+   href="#HTML5">[HTML5]<!--{{!HTML5}}--></a> specification for all
+   referenced shader files and image sources.
+
+  <h3 id=origin-restrictions><span class=secno>18.4. </span>Origin
+   Restrictions</h3>
+
+  <p>User agents must use the <a
+   href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially
+   CORS-enabled fetch</a> method defined by the <a
+   href="#HTML5">[HTML5]<!--{{!HTML5}}--></a> specification for the ‘<a
+   href="#filter"><code class=property>filter</code></a>’ property. When
+   fetching, user agents must use "Anonymous" mode, set the referrer source
+   to the stylesheet's URL and set the origin to the URL of the containing
+   document. If this results in network errors, the effect is as if the value
+   ‘<code class=css>none</code>’ had been specified.
+
+  <div class=issue>
+   <p> The following restrictions seem to be unnecessary with the
+    clarification above or incorrect and probably should be removed.
+
+   <p> Input to a filter effect must not include anything as input that would
+    violate <a href="http://www.w3.org/TR/cors/">same origin
+    restrictions</a>. If cross-origin access is required, then the requested
+    content should be explicitly marked with <a
+    href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
+
+   <p> This restriction includes:
+
+   <ul>
+    <li>Any <span class=code><a
+     href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">
+     &lt;iframe&gt;</a></span> content
+
+    <li>Any images, either as content or via styling, that are not exposed
+     with <a href="http://www.w3.org/TR/cors/">CORS</a>
+
+    <li>Any <a
+     href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted
+     canvas</a>
+
+    <li>Any cross-origin content referenced by <span class=code><a
+     href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span>
+   </ul>
+
+   <p> For content that falls under this restriction, the filter has no
+    affect. For example, a filter effect that is applying to a cross-origin
+    ‘<code class=property>iframe</code>’ element does not have any affect
+    on this element.
+  </div>
+
+  <h3 id=timing-attacks><span class=secno>18.5. </span>Timing Attacks</h3>
+
+  <p>If any of the above rules are not followed, an attacker could infer
+   information and mount a timing attack.
 
   <p>A timing attack is a method of obtaining information about content that
    is otherwise protected, based on studying the amount of time it takes for
@@ -12557,39 +12730,6 @@ uniform vec2 dispSize;
    than green pixels, one might be able to reconstruct a rough image of the
    element being rendered, without ever having access to the content of the
    element.
-
-  <h3 id=origin-restrictions><span class=secno>18.1. </span>Origin
-   Restrictions</h3>
-
-  <p> Input to a filter effect must not include anything as input that would
-   violate <a href="http://www.w3.org/TR/cors/">same origin restrictions</a>.
-   If cross-origin access is required, then the requested content should be
-   explicitly marked with <a href="http://www.w3.org/TR/cors/#syntax">CORS
-   data</a>.
-
-  <p> This restriction includes: <span class=issue>Restricting these elements
-   seems to be unnecessary with the clarification above.</span>
-
-  <ul>
-   <li>Any <span class=code><a
-    href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">
-    &lt;iframe&gt;</a></span> content
-
-   <li>Any images, either as content or via styling, that are not exposed
-    with <a href="http://www.w3.org/TR/cors/">CORS</a>
-
-   <li>Any <a
-    href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted
-    canvas</a>
-
-   <li>Any cross-origin content referenced by <span class=code><a
-    href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span>
-  </ul>
-
-  <p> For content that falls under this restriction, the filter has no
-   affect. For example, a filter effect that is applying to a cross-origin
-   ‘<code class=property>iframe</code>’ element does not have any affect
-   on this element.
 
   <h2 id=DOMInterfaces><span class=secno>19. </span>DOM interfaces</h2>
 
@@ -15799,6 +15939,15 @@ readonly attribute <a
     href="http://www.w3.org/TR/2012/WD-dom-20121206/"><cite>DOM4.</cite></a>
     6 December 2012. W3C Working Draft. (Work in progress.) URL: <a
     href="http://www.w3.org/TR/2012/WD-dom-20121206/">http://www.w3.org/TR/2012/WD-dom-20121206/</a>
+   </dd>
+   <!---->
+
+   <dt id=HTML5>[HTML5]
+
+   <dd>Robin Berjon; et al. <a
+    href="http://www.w3.org/TR/2013/CR-html5-20130806/"><cite>HTML5.</cite></a>
+    6 August 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a
+    href="http://www.w3.org/TR/2013/CR-html5-20130806/">http://www.w3.org/TR/2013/CR-html5-20130806/</a>
    </dd>
    <!---->
 
