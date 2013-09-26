@@ -429,11 +429,7 @@
 
    <li><a href="#security"><span class=secno>18. </span>Security</a>
     <ul class=toc>
-     <li><a href="#rendered-content-access-from-fragment-shaders"><span
-      class=secno>18.1. </span> Rendered Content Access in custom filter
-      primitives </a>
-
-     <li><a href="#origin-restrictions"><span class=secno>18.2. </span>Origin
+     <li><a href="#origin-restrictions"><span class=secno>18.1. </span>Origin
       Restrictions</a>
     </ul>
 
@@ -12474,6 +12470,11 @@ uniform vec2 dispSize;
 
   <h2 id=security><span class=secno>18. </span>Security</h2>
 
+  <p class=issue> The following description of the security model is under
+   discussion and may change. See <a
+   href="http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
+   mailing list.
+
   <p>It is important that the timing of any filter operation is independent
    of pixel values derived from the filtered content or other sources
    potentially containing privacy information.
@@ -12557,30 +12558,7 @@ uniform vec2 dispSize;
    element being rendered, without ever having access to the content of the
    element.
 
-  <p class=issue> The following description of the security model is not
-   sufficient and detailed enough. See <a
-   href="http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
-   mailing list.
-
-  <h3 id=rendered-content-access-from-fragment-shaders><span
-   class=secno>18.1. </span> Rendered Content Access in custom filter
-   primitives</h3>
-
-  <p> Since a <a href="#feCustomElement">custom filter primitive</a> is
-   applying a processing operation on input values, it is important that no
-   protected information leaks from that operation.
-
-  <p> A <a
-   href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of
-   the security issues</a> has led to the requirement that vertex shaders and
-   fragment shaders do not get access to the rendered content in order to
-   prevent <a href="http://en.wikipedia.org/wiki/Timing_attack">timing
-   attacks</a>.
-
-  <p> If a custom filter primitive does not fulfill these requirements, the
-   primitive is a <a href="#default-shaders">pass through</a>.
-
-  <h3 id=origin-restrictions><span class=secno>18.2. </span>Origin
+  <h3 id=origin-restrictions><span class=secno>18.1. </span>Origin
    Restrictions</h3>
 
   <p> Input to a filter effect must not include anything as input that would
@@ -12589,7 +12567,8 @@ uniform vec2 dispSize;
    explicitly marked with <a href="http://www.w3.org/TR/cors/#syntax">CORS
    data</a>.
 
-  <p> This restriction includes:
+  <p> This restriction includes: <span class=issue>Restricting these elements
+   seems to be unnecessary with the clarification above.</span>
 
   <ul>
    <li>Any <span class=code><a

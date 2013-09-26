@@ -6800,6 +6800,12 @@ uniform vec2 dispSize;
 
 <h2 id="security">Security</h2>
 
+<p class="issue">
+  The following description of the security model is under discussion and may change. See <a href= 
+  "http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
+  mailing list.
+</p>
+
 <p>It is important that the timing of any filter operation is independent of pixel values derived from the filtered content or other sources potentially containing privacy information.</p>
 
 <p>The following <a>filter primitives</a> have pixel values that potentially contain privacy information, either from the filtered object itself or other sources such as CSS styling. These primitives must be flagged as "tainted"</p>
@@ -6828,33 +6834,6 @@ uniform vec2 dispSize;
 
 <p>A timing attack is a method of obtaining information about content that is otherwise protected, based on studying the amount of time it takes for an operation to occur. If, for example, red pixels took longer to draw than green pixels, one might be able to reconstruct a rough image of the element being rendered, without ever having access to the content of the element.</p>
 
-<p class="issue">
-  The following description of the security model is not sufficient and detailed
-  enough. See <a href= 
-  "http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html">public-fx</a>
-  mailing list.
-</p>
-
-<h3 id="rendered-content-access-from-fragment-shaders">
-  Rendered Content Access in custom filter primitives
-</h3>
-
-<p>
-  Since a <a href="#feCustomElement">custom filter primitive</a> is applying a
-  processing operation on input values, it is important that no protected information
-  leaks from that operation.
-</p>
-<p>
-  A <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">study of the
-  security issues</a> has led to the requirement that vertex shaders and fragment
-  shaders do not get access to the rendered content in order to prevent <a href= 
-  "http://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.
-</p>
-<p>
-  If a custom filter primitive does not fulfill these requirements, the primitive is
-  a <a href="#default-shaders">pass through</a>.
-</p>
-
 <h3 id="origin-restrictions">Origin Restrictions</h3>
 
 <p>
@@ -6864,7 +6843,7 @@ uniform vec2 dispSize;
   <a href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
 </p>
 <p>
-  This restriction includes:
+  This restriction includes: <span class="issue">Restricting these elements seems to be unnecessary with the clarification above.</span>
 </p>
 <ul>
   <li>Any <span class="code"><a href= 
