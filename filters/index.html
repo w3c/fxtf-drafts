@@ -10,7 +10,7 @@
 
   <meta content="Filter Effects 1.0" name=dcterms.title>
   <meta content=text name=dcterms.type>
-  <meta content=2013-09-05 name=dcterms.date>
+  <meta content=2013-09-26 name=dcterms.date>
   <meta content="Dean Jackson" name=dcterms.creator>
   <meta content="Erik Dahlström" name=dcterms.creator>
   <meta content="Dirk Schulze" name=dcterms.creator>
@@ -33,7 +33,7 @@
 
    <h1>Filter Effects 1.0</h1>
 
-   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 5 September
+   <h2 class="no-num no-toc" id=longstatus-date>Editor's Draft 26 September
     2013</h2>
 
    <dl>
@@ -41,7 +41,7 @@
 
     <dd> <a
      href="http://dev.w3.org/fxtf/filters/">http://dev.w3.org/fxtf/filters/</a>
-     <!--http://www.w3.org/TR/2013/WD-filters-20130905/-->
+     <!--http://www.w3.org/TR/2013/WD-filters-20130926/-->
 
     <dt>Latest version:
 
@@ -126,7 +126,7 @@
    class=property>filter</code></a>’ property). This specification
    describes filters in a manner that allows them to be used in content
    styled by CSS, such as HTML and SVG. It also defines a CSS property value
-   function that produces a CSS &lt;image&gt; value. <span class=issue>Remove
+   function that produces a CSS &lt;image> value. <span class=issue>Remove
    the last sentence once filter() image function is in CSS Images Level
    4.</span>
 
@@ -366,7 +366,7 @@
     </ul>
 
    <li><a href="#FilterCSSImageValue"><span class=secno>13. </span>Filter CSS
-    <var>&lt;image&gt;</var> values</a>
+    <var>&lt;image></var> values</a>
     <ul class=toc>
      <li><a href="#interpolating-filter-image"><span class=secno>13.1.
       </span>Interpolating filter()</a>
@@ -762,27 +762,26 @@
    effects are applied after elements have been sized and positioned
    according to the <a href="http://www.w3.org/TR/CSS2/visuren.html"
    title="Visual formatting model">Visual formatting model</a> from <a
-   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Some values of
-   these properties result in the creation of a <a
+   href="#CSS21">[CSS21]<!--{{!CSS21}}--></a>. Some values of these
+   properties result in the creation of a <a
    href="http://www.w3.org/TR/CSS2/visuren.html#containing-block"
    title="Visual formatting model">containing block</a>, and/or the creation
    of a <a href="http://www.w3.org/TR/CSS2/visuren.html#z-index"
    title="Visual formatting model">stacking context</a>.
 
   <p> The compositing model follows the SVG compositing model <a
-   href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>: first any
-   filter effect <a href="#FILTER-EFFECTS"
-   rel=biblioentry>[FILTER-EFFECTS]<!--{{FILTER-EFFECTS}}--></a> is applied,
-   then any clipping, masking and opacity <a href="#CSS3COLOR"
-   rel=biblioentry>[CSS3COLOR]<!--{{CSS3COLOR}}--></a>. These effects all
+   href="#SVG11">[SVG11]<!--{{!SVG11}}--></a>: first any filter effect <a
+   href="#FILTER-EFFECTS">[FILTER-EFFECTS]<!--{{FILTER-EFFECTS}}--></a> is
+   applied, then any clipping, masking and opacity <a
+   href="#CSS3COLOR">[CSS3COLOR]<!--{{CSS3COLOR}}--></a>. These effects all
    apply after any other CSS effects such as ‘<code
-   class=property>border</code>’ <a href="#CSS3BG"
-   rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>.
+   class=property>border</code>’ <a
+   href="#CSS3BG">[CSS3BG]<!--{{!CSS3BG}}--></a>.
 
   <p> Some property and element definitions in this specification require an
-   SVG 1.1 implementation <a href="#SVG11"
-   rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>. UAs without support for SVG
-   must not implement the ‘<a href="#color-interpolation-filters"><code
+   SVG 1.1 implementation <a href="#SVG11">[SVG11]<!--{{!SVG11}}--></a>. UAs
+   without support for SVG must not implement the ‘<a
+   href="#color-interpolation-filters"><code
    class=property>color-interpolation-filters</code></a>’, ‘<a
    href="#flood-color"><code class=property>flood-color</code></a>’, ‘<a
    href="#flood-opacity"><code class=property>flood-opacity</code></a>’ and
@@ -801,10 +800,10 @@
 
   <p> This specification follows the <a
    href="http://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
-   definition conventions</a> from <a href="#CSS21"
-   rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
+   definition conventions</a> from <a
+   href="#CSS21">[CSS21]<!--{{!CSS21}}--></a>. Value types not defined in
    these specifications are defined in CSS Values and Units Module Level 3 <a
-   href="#CSS3VAL" rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a>.
+   href="#CSS3VAL">[CSS3VAL]<!--{{!CSS3VAL}}--></a>.
 
   <p> In addition to the property-specific values listed in their
    definitions, all properties defined in this specification also accept the
@@ -820,15 +819,18 @@
    this section.
 
   <dl>
-   <dt id=term-null-filter> <dfn id=null-filter>null filter</dfn>
+   <dt><dfn id=null-filter>null filter</dfn>
 
-   <dd>
-    <p> The null filter output is all transparent black pixels. If applied to
-     an element it means that the element (and children if any) becomes
-     invisible. Note that it does not affect event processing.
+   <dd> The null filter output is all transparent black pixels. If applied to
+    an element it means that the element (and children if any) becomes
+    invisible. Note that it does not affect event processing.
 
-   <dt id=TermTransferFunctionElement> <dfn
-    id=transfer-function-elements>transfer function elements</dfn>
+   <dt><dfn id=pass-through-filter>pass through filter</dfn>
+
+   <dd> The pass through filter output is equal to the primary input of the
+    filter.
+
+   <dt><dfn id=transfer-function-elements>transfer function elements</dfn>
 
    <dd> The set of <a href="#feFuncRElement"><code
     class=element-name>&lt;feFuncR></code></a>, <a
@@ -838,63 +840,58 @@
     href="#feFuncAElement"><code class=element-name>&lt;feFuncA></code></a>
     elements, that define the transfer function for the <a
     href="#feComponentTransferElement"><code
-    class=element-name>&lt;feComponentTransfer></code></a> <span
-    class=term>filter primitive</span>.
+    class=element-name>&lt;feComponentTransfer></code></a> <var>filter
+    primitive</var>.
 
-   <dt id=TermClientBoundingRect> <dfn id=bounding-client-rect>bounding
-    client rect</dfn>
+   <dt><dfn id=bounding-client-rect>bounding client rect</dfn>
 
    <dd>
     <p> The union of all border boxes for the element that has an associated
      CSS layout box and is not in the <code>http://www.w3.org/2000/svg</code>
      namespace and it's descendant elements. Or the object bounding box <a
-     href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>, if the
-     element does not have an associated CSS layout box and is in the
+     href="#SVG11">[SVG11]<!--{{!SVG11}}--></a>, if the element does not have
+     an associated CSS layout box and is in the
      <code>http://www.w3.org/2000/svg</code> namespace (See <a
      href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a>
-     <a href="#CSSOM" rel=biblioentry>[CSSOM]<!--{{!CSSOM}}--></a>).
+     <a href="#CSSOM">[CSSOM]<!--{{!CSSOM}}--></a>).
 
-   <dt id=TermLocalCoordinateSystem> <dfn id=local-coordinate-system>local
-    coordinate system</dfn>
+   <dt><dfn id=local-coordinate-system>local coordinate system</dfn>
 
    <dd>
     <p> In general, a coordinate system defines locations and distances on
      the current canvas. The current local coordinate system (also user
      coordinate system) is the coordinate system that is currently active and
      which is used to define how coordinates and lengths are located and
-     computed, respectively, on the current canvas <a href="#CSS3-TRANSFORMS"
-     rel=biblioentry>[CSS3-TRANSFORMS]<!--{{CSS3-TRANSFORMS}}--></a>.
+     computed, respectively, on the current canvas <a
+     href="#CSS3-TRANSFORMS">[CSS3-TRANSFORMS]<!--{{CSS3-TRANSFORMS}}--></a>.
 
     <p> For elements that have an associated CSS layout box, the current user
      coordinate system has its origin at the top-left corner of the <a
-     href="#bounding-client-rect">bounding client rect</a> and one unit
-     equals one CSS pixel. The viewport for resolving percentage values is
-     defined by the width and height of the <a class=term
-     href="#bounding-client-rect">bounding client rect</a>.
+     href="#bounding-client-rect"><var>bounding client rect</var></a> and one
+     unit equals one CSS pixel. The viewport for resolving percentage values
+     is defined by the width and height of the <a
+     href="#bounding-client-rect"><var>bounding client rect</var></a>.
 
     <p> If the element does not have an associated CSS layout box and is in
      the <code>http://www.w3.org/2000/svg</code> namespace, the current local
      coordinate system has its origin at the top-left corner of the element's
      nearest viewport.
 
-   <dt id=TermUserCoordinateSystem> <dfn id=user-coordinate-system>user
-    coordinate system</dfn>
+   <dt><dfn id=user-coordinate-system>user coordinate system</dfn>
 
-   <dd> See definition of <a href="#local-coordinate-system">local coordinate
-    system</a>.
+   <dd> See definition of <a href="#local-coordinate-system"><var>local
+    coordinate system</var></a>.
 
-   <dt id=TermObjectBoundingBoxUnits> <dfn
-    id=object-bounding-box-units>object bounding box units</dfn>
+   <dt><dfn id=object-bounding-box-units>object bounding box units</dfn>
 
-   <dd> The <a href="#bounding-client-rect">bounding client rect</a> defines
-    the coordinate system in which to resolve values, as defined in <a
+   <dd> The <a href="#bounding-client-rect"><var>bounding client
+    rect</var></a> defines the coordinate system in which to resolve values,
+    as defined in <a
     href="http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#ObjectBoundingBoxUnits">object
-    bounding box units</a> <a href="#SVG11"
-    rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>.
+    bounding box units</a> <a href="#SVG11">[SVG11]<!--{{!SVG11}}--></a>.
 
-   <dt id=TermFilterPrimitiveElement> <dfn id=filter-primitives>filter
-    primitives</dfn>, <dfn id=filter-primitive-elements>filter primitive
-    elements</dfn>
+   <dt><dfn id=filter-primitives>filter primitives</dfn>, <dfn
+    id=filter-primitive-elements>filter primitive elements</dfn>
 
    <dd>
     <p> The set of elements that control the output of a <a
@@ -934,26 +931,24 @@
      <a href="#feTurbulenceElement"><code
      class=element-name>&lt;feTurbulence></code></a>.
 
-   <dt id=TermLightSourceElement> <dfn id=light-sources>light sources</dfn>
+   <dt><dfn id=light-sources>light sources</dfn>
 
-   <dd>
-    <p> The following elements are light sources: <a
-     href="#feDistantLightElement"><code
-     class=element-name>&lt;feDistantLight></code></a>, <a
-     href="#fePointLightElement"><code
-     class=element-name>&lt;fePointLight></code></a>, <a
-     href="#feSpotLightElement"><code
-     class=element-name>&lt;feSpotLight></code></a>.
+   <dd> The following elements are light sources: <a
+    href="#feDistantLightElement"><code
+    class=element-name>&lt;feDistantLight></code></a>, <a
+    href="#fePointLightElement"><code
+    class=element-name>&lt;fePointLight></code></a>, <a
+    href="#feSpotLightElement"><code
+    class=element-name>&lt;feSpotLight></code></a>.
 
-   <dt id=TermFilterPrimitiveAttributes> <dfn
-    id=filter-primitive-attributes>filter primitive attributes</dfn>
+   <dt><dfn id=filter-primitive-attributes>filter primitive attributes</dfn>
 
    <dd> All <a href="#filter-primitives">filter primitives</a> share ‘<code
     class=property>x</code>’, ‘<code class=property>y</code>’, ‘<code
     class=property>width</code>’ and ‘<code
     class=property>height</code>’ as filter primitive attributes.
 
-   <dt id=TermVertexMesh> <dfn id=vertex-mesh>vertex mesh</dfn>
+   <dt><dfn id=vertex-mesh>vertex mesh</dfn>
 
    <dd> The vertex mesh defines the geometry that is processed by the vertex
     shader.
@@ -1086,20 +1081,19 @@
 
    <dt> &lt;child-selector&gt;
 
-   <dd> A functional notation <a href="#CSS3VAL"
-    rel=biblioentry>[CSS3VAL]<!--{{!CSS3VAL}}--></a> accepting a
+   <dd> A functional notation <a
+    href="#CSS3VAL">[CSS3VAL]<!--{{!CSS3VAL}}--></a> accepting a
     comma-separated list of compound selectors that represents first matching
     child <a href="#FilterElement"><code
     class=element-name>&lt;filter></code></a> element in <a
     href="http://www.w3.org/TR/2012/WD-dom-20120405/#concept-tree-order">tree
-    order</a> (as defined in <a href="#DOM"
-    rel=biblioentry>[DOM]<!--{{!DOM}}--></a>).
+    order</a> (as defined in <a href="#DOM">[DOM]<!--{{!DOM}}--></a>).
     <dl>
      <dt> <dfn id=ltcompound-selectorgt>&lt;compound-selector&gt;</dfn>
 
      <dd> A <a href="http://dev.w3.org/csswg/selectors4/#compound">compound
-      selector</a> as defined in <a href="#SELECTORS4"
-      rel=biblioentry>[SELECTORS4]<!--{{!SELECTORS4}}--></a>.
+      selector</a> as defined in <a
+      href="#SELECTORS4">[SELECTORS4]<!--{{!SELECTORS4}}--></a>.
     </dl>
 
    <dt> <dfn id=blur-ltlengthgt->blur( &lt;length&gt; )</dfn>
@@ -1163,9 +1157,8 @@
     effectively a blurred, offset version of the input image's alpha mask
     drawn in a particular color, composited below the image. Values are
     interpreted as for ‘<code class=property>box-shadow</code>’ <a
-    href="#CSS3BG" rel=biblioentry>[CSS3BG]<!--{{!CSS3BG}}--></a>. The markup
-    equivalent of this function is <a href="#dropshadowEquivalent">given
-    below</a>.
+    href="#CSS3BG">[CSS3BG]<!--{{!CSS3BG}}--></a>. The markup equivalent of
+    this function is <a href="#dropshadowEquivalent">given below</a>.
     <p class=note> Note that spread values or multiple shadows are not
      accepted for this level of the specification.
 
@@ -1298,8 +1291,8 @@
   <p> A computed value of other than ‘<code class=css>none</code>’
    results in the creation of a <a
    href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> <a
-   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a> the same way
-   that CSS <a href="http://www.w3.org/TR/css3-color/#transparency">‘<code
+   href="#CSS21">[CSS21]<!--{{!CSS21}}--></a> the same way that CSS <a
+   href="http://www.w3.org/TR/css3-color/#transparency">‘<code
    class=property>opacity</code>’</a> does. All the elements descendants
    are rendered together as a group with the filter effect applied to the
    group as a whole.
@@ -1320,9 +1313,9 @@
 
   <p> The compositing model follows the <a
    href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing
-   model</a> <a href="#SVG11" rel=biblioentry>[SVG11]<!--{{!SVG11}}--></a>:
-   first any filter effect is applied, then any clipping, masking and
-   opacity. As per SVG, the application of ‘<a href="#filter"><code
+   model</a> <a href="#SVG11">[SVG11]<!--{{!SVG11}}--></a>: first any filter
+   effect is applied, then any clipping, masking and opacity. As per SVG, the
+   application of ‘<a href="#filter"><code
    class=property>filter</code></a>’ has no effect on hit-testing.
 
   <p class=issue> The CSS WG wants to look into how to apply the filter to
@@ -2118,10 +2111,10 @@
     <dd>
      <p> &lt;filter-primitive-reference&gt; is an <a
       href="http://www.w3.org/TR/css3-values/#custom-idents">&lt;custom-ident&gt;</a>
-      <a href="#CSS3VAL" rel=biblioentry>[CSS3VAL]<!--{{CSS3VAL}}--></a> and
-      an assigned name for this <a href="#TermFilterPrimitiveElement">filter
-      primitive</a>. If supplied, then graphics that result from processing
-      this <a href="#TermFilterPrimitiveElement">filter primitive</a> can be
+      <a href="#CSS3VAL">[CSS3VAL]<!--{{CSS3VAL}}--></a> and an assigned name
+      for this <a href="#TermFilterPrimitiveElement">filter primitive</a>. If
+      supplied, then graphics that result from processing this <a
+      href="#TermFilterPrimitiveElement">filter primitive</a> can be
       referenced by an <a class=attr-name
       href="#FilterPrimitiveInAttribute">‘<code
       class=property>in</code>’</a> attribute on a subsequent filter
@@ -2220,8 +2213,7 @@
         region</a> at the time that the <a href="#FilterElement"><code
         class=element-name>&lt;filter></code></a> element was invoked. See
         ‘<code class=property>isolation</code>’ property <a
-        href="#COMPOSITING"
-        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
+        href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
       <dt id=BackgroundAlpha> <span class=attr-value>BackgroundAlpha</span>
 
@@ -2229,8 +2221,7 @@
        <p> Same as <a href="#BackgroundImage">BackgroundImage</a> except only
         the alpha channel is used. See <a href="#SourceAlpha">SourceAlpha</a>
         and the ‘<code class=property>isolation</code>’ property <a
-        href="#COMPOSITING"
-        rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
+        href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
       <dt id=FillPaint> <span class=attr-value>FillPaint</span>
 
@@ -2657,8 +2648,8 @@
 
   <p> This filter blends two objects together using commonly used imaging
    software blending modes. It performs a pixel-wise combination of two input
-   images. (See <a href="#COMPOSITING"
-   rel=biblioentry>[COMPOSITING]<!--{{COMPOSITING}}--></a>.)
+   images. (See <a
+   href="#COMPOSITING">[COMPOSITING]<!--{{COMPOSITING}}--></a>.)
 
   <div class=adef-list>
    <p> <em>Attribute definitions:</em>
@@ -4326,10 +4317,10 @@ A' = <a
   <p> This filter performs the combination of the two input images pixel-wise
    in image space using one of the Porter-Duff [<a
    href="#ref-PORTERDUFF">PORTERDUFF</a>] compositing operations: <em>over,
-   in, atop, out, xor</em> <a href="#COMPOSITING"
-   rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>. Additionally, a
-   component-wise <em>arithmetic</em> operation (with the result clamped
-   between [0..1]) can be applied.
+   in, atop, out, xor</em> <a
+   href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
+   Additionally, a component-wise <em>arithmetic</em> operation (with the
+   result clamped between [0..1]) can be applied.
 
   <p> The <em>arithmetic</em> operation is useful for combining the output
    from the <a href="#feDiffuseLightingElement"><code
@@ -11120,9 +11111,9 @@ double turbulence(int nColorChannel, double *point, double <a
   </table>
 
   <p> To verify if a UA supports a certain customized filter effect type, the
-   support condition syntax <a href="#CSS3-CONDITIONAL"
-   rel=biblioentry>[CSS3-CONDITIONAL]<!--{{!CSS3-CONDITIONAL}}--></a> gets
-   extended by adding the media feature ‘<a href="#filter"><code
+   support condition syntax <a
+   href="#CSS3-CONDITIONAL">[CSS3-CONDITIONAL]<!--{{!CSS3-CONDITIONAL}}--></a>
+   gets extended by adding the media feature ‘<a href="#filter"><code
    class=css>filter</code></a>’.
 
   <pre class=prod>
@@ -11172,7 +11163,7 @@ descriptor: value;</pre>
   <p> The following is the grammar for the custom-filter at-rule and extends
    the lexical scanner in the <a
    href="http://www.w3.org/TR/CSS21/grammar.html">Grammar of CSS 2.1</a> (<a
-   href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>, Appendix G):
+   href="#CSS21">[CSS21]<!--{{!CSS21}}--></a>, Appendix G):
 
   <pre><dfn id="filter_rule">filter_rule</dfn>
   : FILTER_SYM S+ IDENT S* '{' S* <a
@@ -11182,13 +11173,12 @@ descriptor: value;</pre>
 </pre>
 
   <p> <dfn id="group_rule_body">group_rule_body</dfn> as defined in <a
-   href="#CSS3-CONDITIONAL"
-   rel=biblioentry>[CSS3-CONDITIONAL]<!--{{!CSS3-CONDITIONAL}}--></a>.
+   href="#CSS3-CONDITIONAL">[CSS3-CONDITIONAL]<!--{{!CSS3-CONDITIONAL}}--></a>.
 
   <p> Furthermore, the <code>nested_statement</code> rule <a
-   href="#CSS3-CONDITIONAL"
-   rel=biblioentry>[CSS3-CONDITIONAL]<!--{{!CSS3-CONDITIONAL}}--></a> gets
-   extended by adding "<a href="#filter_rule"><code>filter_rule</code></a>".
+   href="#CSS3-CONDITIONAL">[CSS3-CONDITIONAL]<!--{{!CSS3-CONDITIONAL}}--></a>
+   gets extended by adding "<a
+   href="#filter_rule"><code>filter_rule</code></a>".
 
   <h3 id=custom-filter-src><span class=secno>11.3. </span>Custom filter
    resources: the <a href="#src">src</a> descriptor</h3>
@@ -11333,13 +11323,13 @@ src: url(#warp);
 
    <dt><dfn id=ltcolorgt>&lt;color&gt;</dfn>
 
-   <dd> A CSS color value. (See <a href="#CSS3COLOR"
-    rel=biblioentry>[CSS3COLOR]<!--{{!CSS3COLOR}}--></a>.)
+   <dd> A CSS color value. (See <a
+    href="#CSS3COLOR">[CSS3COLOR]<!--{{!CSS3COLOR}}--></a>.)
 
    <dt><dfn id=lttransform-functiongt>&lt;transform-function&gt;</dfn>
 
-   <dd> A CSS transform function value. (See <a href="#CSS3-TRANSFORMS"
-    rel=biblioentry>[CSS3-TRANSFORMS]<!--{{!CSS3-TRANSFORMS}}--></a>.)
+   <dd> A CSS transform function value. (See <a
+    href="#CSS3-TRANSFORMS">[CSS3-TRANSFORMS]<!--{{!CSS3-TRANSFORMS}}--></a>.)
 
    <dt><dfn id=lturi>&lt;URI></dfn>
 
@@ -11512,7 +11502,7 @@ src: url(#warp);
 
   <p> For the definition of the <a
    href="#ltmargin-widthgt">&lt;margin-width&gt;</a> values see CSS Box Model
-   <a href="#CSS21" rel=biblioentry>[CSS21]<!--{{!CSS21}}--></a>.
+   <a href="#CSS21">[CSS21]<!--{{!CSS21}}--></a>.
 
   <h2 id=shading-language><span class=secno>12. </span>Custom Shaders</h2>
 
@@ -11599,16 +11589,15 @@ src: url(#warp);
 
      <dd> For fragment shaders, each pixel is blended with the
       <var>mix-color</var> by using one of the predefined blend modes and
-      it's appropriate blend mode keyword (See <a href="#COMPOSITING"
-      rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
+      it's appropriate blend mode keyword (See <a
+      href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
 
      <dt> <dfn id=ltcomposite-modegt0>&lt;composite-mode&gt;</dfn>
 
      <dd> For fragment shaders, each pixel is composed with the
       <var>mix-color</var> by using one of the predefined alpha-compositing
       operators and it's appropriate alpha-compositing keyword (See <a
-      href="#COMPOSITING"
-      rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
+      href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>).
 
      <dt> <var>‘<code class=css>auto</code>’</var>
 
@@ -11731,8 +11720,7 @@ src: url(#warp);
    href="#mix-color"><i>mix color</i></a> with the <a
    href="#multiplied-color"><i>multiplied color</i></a> as destination and
    the <a href="#mix-color"><i>mix color</i></a> as source <a
-   href="#COMPOSITING"
-   rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>. The applied
+   href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>. The applied
    blend mode depends on the passed &lt;blend-mode&gt; parameter which is
    ‘<code class=css>normal</code>’ by default. The result of the blending
    and the opacity of the <a href="#mix-color"><i>mix color</i></a> define
@@ -11741,10 +11729,10 @@ src: url(#warp);
   <p> The <dfn id=multiplied-color>multiplied color</dfn> and the <a
    href="#mix-color"><i>mix color</i></a> get composed using the
    alpha-compositing rules as described in the Compositing and Blending spec
-   <a href="#COMPOSITING"
-   rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>. The applied
-   alpha-compositing mode is specified by the passed &lt;composite-mode&gt;
-   parameter and is ‘<code class=css>source-atop</code>’ by default.
+   <a href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>. The
+   applied alpha-compositing mode is specified by the passed
+   &lt;composite-mode&gt; parameter and is ‘<code
+   class=css>source-atop</code>’ by default.
 
   <p> The last step, <strong>step 4</strong>, shows rasterized output. If the
    custom filter primitive is the last primitive in the filter chain, then
@@ -12104,7 +12092,7 @@ uniform vec2 dispSize;
    on both axis, the returned value is a fully translucent black pixel.
 
   <h2 id=FilterCSSImageValue><span class=secno>13. </span>Filter CSS
-   <var>&lt;image&gt;</var> values</h2>
+   <var>&lt;image></var> values</h2>
 
   <p> CSS <var>&lt;image></var> values can be filtered with the filter
    functions specified for the CSS ‘<a href="#filter"><code
@@ -12149,9 +12137,9 @@ uniform vec2 dispSize;
    used filter functions, they must be interpolated by interpolating their
    filter function lists as described in section <a
    href="#interpolation-of-filters">Interpolation of Filters</a>. Otherwise,
-   they must be interpolated as generic <var>&lt;image&gt;</var>s. If the
-   filter function interpolation can not be performed, the images must be
-   interpolated as generic <var>&lt;image&gt;</var>s.
+   they must be interpolated as generic <var>&lt;image></var>s. If the filter
+   function interpolation can not be performed, the images must be
+   interpolated as generic <var>&lt;image></var>s.
 
   <h2 id=ShorthandEquivalents><span class=secno>14. </span> Shorthands
    defined in terms of the <a href="#FilterElement"><code
@@ -12276,8 +12264,8 @@ uniform vec2 dispSize;
 
   <p> SVG 1.1 introduced the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
-   class=property>enable-background</code>’</a> property <a href="#SVG11"
-   rel=biblioentry>[SVG11]<!--{{SVG11}}--></a>. The property defined the back
+   class=property>enable-background</code>’</a> property <a
+   href="#SVG11">[SVG11]<!--{{SVG11}}--></a>. The property defined the back
    drop under the <a href="#FilterEffectsRegion">filter region</a> at the
    time that the <a href="#FilterElement"><code
    class=element-name>&lt;filter></code></a> element was invoked. The concept
@@ -12287,15 +12275,14 @@ uniform vec2 dispSize;
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
    class=property>enable-background</code>’</a> property as defined in SVG
    1.1 but will not be compatible to this specification or to CSS Compositing
-   and Blending <a href="#COMPOSITING"
-   rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
+   and Blending <a
+   href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
   <p> This specification does not support the <a class=property
    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html#EnableBackgroundProperty">‘<code
    class=property>enable-background</code>’</a> property. UAs must support
    the ‘<code class=property>isolation</code>’ property instead <a
-   href="#COMPOSITING"
-   rel=biblioentry>[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
+   href="#COMPOSITING">[COMPOSITING]<!--{{!COMPOSITING}}--></a>.
 
   <h2 id=interpolation-of-filters><span class=secno>16. </span>Interpolation
    of Filters</h2>
@@ -12486,6 +12473,89 @@ uniform vec2 dispSize;
    paced animations.
 
   <h2 id=security><span class=secno>18. </span>Security</h2>
+
+  <p>It is important that the timing of any filter operation is independent
+   of pixel values derived from the filtered content or other sources
+   potentially containing privacy information.
+
+  <p>The following <a href="#TermFilterPrimitiveElement">filter
+   primitives</a> have pixel values that potentially contain privacy
+   information, either from the filtered object itself or other sources such
+   as CSS styling. These primitives must be flagged as "tainted"
+
+  <ul>
+   <li><a href="#feFloodElement"><code
+    class=element-name>&lt;feFlood></code></a>,
+
+   <li><a href="#feDropShadowElement"><code
+    class=element-name>&lt;feDropShadow></code></a>,
+
+   <li><a href="#feDiffuseLightingElement"><code
+    class=element-name>&lt;feDiffuseLighting></code></a>,
+
+   <li><a href="#feSpecularLightingElement"><code
+    class=element-name>&lt;feSpecularLighting></code></a>,
+
+   <li><a href="#feImageElement"><code
+    class=element-name>&lt;feImage></code></a> (when the <a
+    href="http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference">IRI
+    reference</a> points to an element) and <span class=issue>Should image
+    reference always be CORS protected?</span>
+
+   <li>the filter primitives: <a href="#SourceGraphic">SourceGraphic</a>, <a
+    href="#SourceAlpha">SourceAlpha</a>, <a
+    href="#BackgroundImage">BackgroundImage</a>, <a
+    href="#BackgroundAlpha">BackgroundAlpha</a>, <a
+    href="#FillPaint">FillPaint</a> and <a
+    href="#StrokePaint">StrokePaint</a>.
+  </ul>
+
+  <p>Furthermore, every <a href="#TermFilterPrimitiveElement">filter
+   primitive</a> that has a "tainted" flagged <a
+   href="#TermFilterPrimitiveElement">filter primitive</a> as input must be
+   flagged as "tainted" as well.
+
+  <p>Filter operations must be implemented in such a way that they always
+   take the same amount of time regardless of the pixel values if one of the
+   input filter primitives is flagged as "tainted".
+
+  <p>If <a href="#feDisplacementMapElement"><code
+   class=element-name>&lt;feDisplacementMap></code></a> has a "tainted"
+   flagged filter primitive as input and this input filter primitive is used
+   as displacement map (referenced by <a class=attr-name
+   href="#feDisplacementMapIn2Attribute">‘<code
+   class=css>in2</code>’</a>), then <a
+   href="#feDisplacementMapElement"><code
+   class=element-name>&lt;feDisplacementMap></code></a> must not proceed with
+   the filter operation and acts as a <a
+   href="#pass-through-filter"><var>pass through filter</var></a>.
+
+  <p><a href="#feCustomElement"><code
+   class=element-name>&lt;feCustom></code></a> is applying a processing
+   operation on input values. It is important that no protected information
+   leaks from that operation. Therefore, vertex shader and fragment shader
+   must not have access to pixel values of the input filter primitive at any
+   time. User-agents must parse and analyze shaders and explicitly verify
+   this requirement. <span class=issue>Add normative link to documentation
+   how to analyze the shader.</span> If the vertex shader or the fragment
+   shader does not match this requirement, the particular shader acts as a <a
+   href="#pass-through-filter"><var>pass through filter</var></a>. (See <a
+   href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">security
+   study</a> <span class=issue>Make this a normative reference.</span>)
+
+  <p class=note>The above restrictions to vertex and fragment shaders may
+   just apply to "tainted" flagged input filter primitives in future versions
+   of this specification.
+
+  <p>If these rules are not followed, an attacker could infer information and
+   mount a timing attack.
+
+  <p>A timing attack is a method of obtaining information about content that
+   is otherwise protected, based on studying the amount of time it takes for
+   an operation to occur. If, for example, red pixels took longer to draw
+   than green pixels, one might be able to reconstruct a rough image of the
+   element being rendered, without ever having access to the content of the
+   element.
 
   <p class=issue> The following description of the security model is not
    sufficient and detailed enough. See <a
@@ -15553,7 +15623,7 @@ readonly attribute <a
 
   <p>All of the text of this specification is normative except sections
    explicitly marked as non-normative, examples, and notes. <a
-   href="#RFC2119" rel=biblioentry>[RFC2119]<!--{{!RFC2119}}--></a>
+   href="#RFC2119">[RFC2119]<!--{{!RFC2119}}--></a>
 
   <p>Examples in this specification are introduced with the words “for
    example” or are set apart from the normative text with
@@ -15664,9 +15734,7 @@ readonly attribute <a
   <!--begin-normative-->
   <!-- Sorted by label -->
 
-  <dl class=bibliography>
-   <dd style="display: none"><!-- keeps the doc valid if the DL is empty -->
-    <!---->
+  <dl class=bibliography><!---->
 
    <dt id=COMPOSITING>[COMPOSITING]
 
@@ -15839,9 +15907,7 @@ readonly attribute <a
   <!--begin-informative-->
   <!-- Sorted by label -->
 
-  <dl class=bibliography>
-   <dd style="display: none"><!-- keeps the doc valid if the DL is empty -->
-    <!---->
+  <dl class=bibliography><!---->
 
    <dt id=FILTER-EFFECTS>[FILTER-EFFECTS]
 
@@ -16702,6 +16768,9 @@ readonly attribute <a
 
    <li>&lt;param-value&gt;, <a href="#ltparam-valuegt"
     title="section 11.4."><strong>11.4.</strong></a>
+
+   <li>pass through filter, <a href="#pass-through-filter"
+    title="section 4."><strong>4.</strong></a>
 
    <li>renderer, <a href="#renderer"
     title="section 20."><strong>20.</strong></a>
