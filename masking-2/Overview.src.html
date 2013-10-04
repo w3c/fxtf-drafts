@@ -3,10 +3,10 @@
 Status: ED
 ED: http://dev.w3.org/fxtf/masking/
 TR: http://www.w3.org/TR/css-masking/
-Previous version: http://www.w3.org/TR/2013/WD-css-masking-20130620/
-Previous version: http://www.w3.org/TR/2012/WD-css-masking-20121115/
+Previous Version: http://www.w3.org/TR/2013/WD-css-masking-20130620/
+Previous Version: http://www.w3.org/TR/2012/WD-css-masking-20121115/
 Shortname: css-masking
-Link Defaults: css-backgrounds-3 (type) <position>, selectors-4 (type) <compound-selector>, svg (property) color-interpolation, svg (property) fill-rule, filters-1 (property) filter, svg (property) fill, svg (property) stroke, svg (property) stroke-width, css-display-3 (property) display
+Link Defaults: css-backgrounds-3 (type) <position>, selectors-4 (type) <compound-selector>, svg (property) color-interpolation/fill-rule/fill/stroke/stroke-width, filters-1 (property) filter, css-display-3 (property) display, css-transforms-1 (property) transform
 Level: 2
 Group: fxtf
 Editor: Dirk Schulze, Adobe Systems Inc., dschulze@adobe.com
@@ -137,11 +137,11 @@ Definitions of CSS properties and values in this specification are analogous to 
   </thead>
   <tbody>
     <tr>
-      <th><dfn>mask images</dfn>
+      <th><dfn export>mask images</dfn>
       <td>background images
     </tr>
     <tr>
-      <th><dfn>mask painting area</dfn>
+      <th><dfn export>mask painting area</dfn>
       <td><a spec="css-backgrounds-3">background painting area</a>
     </tr>
     <tr>
@@ -153,11 +153,11 @@ Definitions of CSS properties and values in this specification are analogous to 
       <td>background-position
     </tr>
     <tr>
-      <th><dfn>mask positioning area</dfn>
+      <th><dfn export>mask positioning area</dfn>
       <td><a spec="css-backgrounds-3">background positioning area</a>
     </tr>
     <tr>
-      <th><dfn>mask box image area</dfn>
+      <th><dfn export>mask box image area</dfn>
       <td><a spec="css-backgrounds-3">border image area</a>
     </tr>
   </tbody>
@@ -391,7 +391,7 @@ Values have the following meanings:
     the <i>bounding client rect</i>.
 </dl>
 
-Note: There is no corresponding box for ''padding-box'' on objects without associated layout box and ''content-box'' is choosen instead.
+Note: There is no corresponding box for <a value for=mask-clip>padding-box</a> on objects without associated layout box and <a value for=mask-clip>content-box</a> is choosen instead.
 
 See the section <a href="#layering">“Layering multiple mask images”</a> for how 'mask-clip' interacts with other comma-separated mask properties to form each mask image layer.
 
@@ -412,19 +412,19 @@ Animatable: no
 For elements rendered as a single box, specifies the <i>mask positioning area</i>. For elements rendered as multiple boxes (e.g., inline boxes on several lines, boxes on several pages) specifies which boxes 'box-decoration-break' operates on to determine the mask positioning area(s).
 
 <dl dfn-for="mask-origin" dfn-type=value>
-  <dt><var>padding-box</var>
+  <dt><dfn>padding-box</dfn>
   <dd>The position is relative to the padding box. (For single boxes
     ''0 0'' is the upper left corner of the padding edge,
     ''100% 100%'' is the lower right corner.)
-  <dt><var>border-box</var>
+  <dt><dfn>border-box</dfn>
   <dd>The position is relative to the border box respectively <span>painting box</span> for objects without associated layout box.
-  <dt><var>content-box</var>
+  <dt><dfn>content-box</dfn>
   <dd>The position is relative to the content box respectively object bounding box [[!SVG11]] for objects without associated layout box.
 </dl>
 
-Note: There is no corresponding box for ''padding-box'' on objects without associated layout box and ''content-box'' is choosen instead.
+Note: There is no corresponding box for <a value for=mask-origin>padding-box</a> on objects without associated layout box and <a value for=mask-origin>content-box</a> is choosen instead.
 
-Note: If 'mask-clip' is ''padding-box'', 'mask-origin' is ''border-box'', 'mask-position' is ''top left'' (the initial value), and the element has a non-zero border, then the top and left of the mask image will be clipped.
+Note: If 'mask-clip' is <a value for=mask-origin>padding-box</a>, 'mask-origin' is <a value for=mask-origin>border-box</a>, 'mask-position' is ''top left'' (the initial value), and the element has a non-zero border, then the top and left of the mask image will be clipped.
 
 See the section <a href="#layering">“Layering multiple mask images”</a> for how 'mask-origin' interacts with other comma-separated mask properties to form each mask image layer.
 
@@ -539,8 +539,7 @@ The 'mask-type' property is a presentation attribute for SVG elements.
 <div class="adef-list">
   <p><em>Attribute definitions:</em></p>
   <dl>
-    <dt id="MaskElementMaskUnitsAttribute"><span
-    class="adef">maskUnits</span> = "<em>userSpaceOnUse</em> |
+    <dt id="MaskElementMaskUnitsAttribute"><dfn>maskUnits</dfn> = "<em>userSpaceOnUse</em> |
     <em>objectBoundingBox</em>"</dt>
     <dd>Defines the coordinate system for attributes
     <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>.<br>
@@ -559,8 +558,7 @@ The 'mask-type' property is a presentation attribute for SVG elements.
     the element to which the mask is applied. (See <span class="term">object bounding box
     units</span>.)<br>
      If attribute <a>'mask/maskUnits'</a> is
-    not specified, then the effect is as if a value of <span
-    class="attr-value">'objectBoundingBox'</span> were
+    not specified, then the effect is as if a value of ''objectBoundingBox'' were
     specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
@@ -586,8 +584,7 @@ The 'mask-type' property is a presentation attribute for SVG elements.
     (See <span class="term">object bounding box
     units</span>.)<br>
      If attribute <a>'maskContentUnits'</a> is not specified,
-    then the effect is as if a value of <span
-    class="attr-value">'userSpaceOnUse'</span> were
+    then the effect is as if a value of ''userSpaceOnUse'' were
     specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
@@ -844,7 +841,7 @@ The 'mask-box-image-source' property has no effect on the geometry or hit-testin
 
 <h2 id="clipping-paths">Clipping paths</h2>
 
-The clipping path restricts the region to which paint can be applied, the so-called clipping region. Conceptually, any parts of the drawing that lie outside of this region are not drawn. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the clipping path is applied, and those of its descendants.
+The clipping path restricts the region to which paint can be applied, the so-called <dfn export>clipping region</dfn>. Conceptually, any parts of the drawing that lie outside of this region are not drawn. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the clipping path is applied, and those of its descendants.
 
 An element's ancestors may also clip portions of their content (e.g., via their own 'clip' or 'clip-path' properties and/or if their 'overflow' property is not ''visible''). What is rendered is the cumulative intersection.
 
@@ -1024,8 +1021,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
     the element to which the clipping path is applied (see <span class=index>object bounding box
     units</span>).<br>
      If attribute <a>'clipPathUnits'</a>
-    is not specified, then the effect is as if a value of <span
-    class="attr-value">'userSpaceOnUse'</span> were
+    is not specified, then the effect is as if a value of ''userSpaceOnUse'' were
     specified.<br>
      <span class="anim-target">Animatable:
     yes.</span></dd>
@@ -1067,7 +1063,7 @@ A couple of additions:
 
 A clipping path is conceptually equivalent to a custom viewport for the referencing element.  Thus, it affects the rendering of an element, but not the element's inherent geometry. The <i>bounding client rect</i> of a clipped element (that is, an element which references a <a>'clipPath'</a> element via a 'clip-path' property, or a child of the  referencing element) must remain the same as if it were not clipped.
 
-By default, <a>pointer events</a> must not be dispatched on the clipped (non-visible) regions of a shape. For example, a circle with a radius of 10 which is clipped to a circle with a radius of 5 will not receive <span class="event-name">'click'</span> events outside the smaller radius. Later versions of this specification may define new properties to enable fine-grained control over the interactions between hit testing and clipping.
+By default, <a>pointer events</a> must not be dispatched on the clipped (non-visible) regions of a shape. For example, a circle with a radius of 10 which is clipped to a circle with a radius of 5 will not receive ''click'' events outside the smaller radius. Later versions of this specification may define new properties to enable fine-grained control over the interactions between hit testing and clipping.
 
 <h2 id="security">Security</h2>
 
@@ -1085,7 +1081,7 @@ User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html
 
 <p>The <a>SVGClipPathElement</a> interface corresponds to the <a>'clipPath'</a> element.</p>
 
-<pre class="idl">interface <b>SVGClipPathElement</b> : <a>SVGElement</a> {
+<pre class="idl" data-no-idl>interface <b>SVGClipPathElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGClipPathElement__clipPathUnits">clipPathUnits</a>;
   readonly attribute <a>SVGAnimatedTransformList</a> <a href="#SVGClipPathElement__transform">transform</a>;
 };
@@ -1120,7 +1116,7 @@ Corresponds to attribute <a>'transform'</a> on the given element.
 
 <p>The <a>SVGMaskElement</a> interface corresponds to the <a>'mask element'</a> element.</p>
 
-<pre class="idl">interface <b>SVGMaskElement</b> : <a>SVGElement</a> {
+<pre class="idl" data-no-idl>interface <b>SVGMaskElement</b> : <a>SVGElement</a> {
   readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGMaskElement__maskUnits">maskUnits</a>;
   readonly attribute <a>SVGAnimatedEnumeration</a> <a href="#SVGMaskElement__maskContentUnits">maskContentUnits</a>;
   readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGMaskElement__x">x</a>;
