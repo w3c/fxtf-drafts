@@ -248,7 +248,7 @@ sub readdefs {
 
 sub link {
   my $text = dec(shift);
-  if ($text =~ /^'([^\s\/]*)'$/) {
+  if ($text =~ /^'([^ \/]*)'$/) {
     my $name = $1;
     if (defined $elements{$name}) {
       return "<a href='$elements{$name}{href}'><code class='element-name'>&lt;$name></code></a>";
@@ -258,21 +258,21 @@ sub link {
         return "<span class='xxx'>$text</span>";
       } else {
         my $href = join('', values(%{$attributes{$name}}));
-        return "<a class='attr-name' href='$href'>'$name'</a>";
+        return "<a class='attr-name' href='$href'>‘$name‘</a>";
       }
     } elsif (defined $properties{$name}) {
-      return "<a class='property' href='$properties{$name}{href}'>'$name'</a>";
+      return "<a class='property' href='$properties{$name}{href}'>‘$name‘</a>";
     }
     print STDERR "unknown element, attribute or property '$1'\n";
     return "<span class='xxx'>$text</span>";
-  } elsif ($text =~ /^'([^\s\/]*)\s+element'$/) {
+  } elsif ($text =~ /^'([^ \/]*) element'$/) {
     my $name = $1;
     unless (defined $elements{$name}) {
       print STDERR "unknown element '$1'\n";
       return "<span class='xxx'>$text</span>";
     }
     return "<a href='$elements{$name}{href}'><code class='element-name'>&lt;$name></code></a>";
-  } elsif ($text =~ /^'([^\s\/]*)\s+attribute'$/) {
+  } elsif ($text =~ /^'([^ \/]*) attribute'$/) {
     my $name = $1;
     unless (defined $attributes{$name}) {
       print STDERR "unknown attribute '$1'\n";
@@ -283,23 +283,23 @@ sub link {
       return "<span class='xxx'>$text</span>";
     } else {
       my $href = join('', values(%{$attributes{$name}}));
-      return "<a class='attr-name' href='$href'>'$name'</a>";
+      return "<a class='attr-name' data-link-type='maybe' href='$href'>$name</a>";
     }
-  } elsif ($text =~ /^'([^\s\/]*)\s+property'$/) {
+  } elsif ($text =~ /^'([^ \/]*) property'$/) {
     my $name = $1;
     unless (defined $properties{$name}) {
-      print STDERR "unknown property '$1'\n";
+      print STDERR "unknown element '$1'\n";
       return "<span class='xxx'>$text</span>";
     }
-    return "<a class='property' href='$properties{$name}{href}'>'$name'</a>";
-  } elsif ($text =~ /^'(\S+)\/(\S+)'$/) {
+    return "<a class='property' href='$properties{$name}{href}' data-link-type='propdesc' title='$name'>$name</a>";
+  } elsif ($text =~ /^'([^ ]*)\/([^ ]*)'$/) {
     my $eltname = $1;
     my $attrname = $2;
     unless (defined $elements{$eltname} && defined $elements{$eltname}{attributes}{$attrname}) {
       print STDERR "unknown attribute '$attrname' on element '$eltname'\n";
       return "<span class='xxx'>$text</span>";
     }
-    return "<a class='attr-name' href='$elements{$eltname}{attributes}{$attrname}'>'$attrname'</a>";
+    return "<a class='attr-name' data-link-type='maybe' href='$elements{$eltname}{attributes}{$attrname}'>$attrname</a>";
   } elsif ($text =~ /^<(.*)>$/) {
     my $symname = $1;
     unless (defined $terms{"<$symname>"}) {
@@ -309,9 +309,9 @@ sub link {
     my $href = $terms{"<$symname>"};
     return "<a href='$href'>&lt;$symname&gt;</a>";
   } else {
-    $text =~ s/\s+/ /gs;
-    $text =~ s/^ +//;
-    $text =~ s/ $//;
+    $text =~ s/^\s+//;
+    $text =~ s/\s+$//;
+    $text =~ s/\s/ /gs;
     unless (defined $terms{$text}) {
       print STDERR "unknown term '$text'\n";
       return "<span class='xxx'>$text</span>";
@@ -418,7 +418,7 @@ sub elementSummary {
 <table class=propdef summary="$name element">
   <tr>
     <th>Name:</th>
-    <td><dfn id="@{[ lc $name ]}">$name</dfn>
+    <td><dfn element>$name</dfn>
   </tr>
   <tr>
     <th>Categories:</th>
