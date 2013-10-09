@@ -6,7 +6,7 @@ TR: http://www.w3.org/TR/css-masking/
 Previous Version: http://www.w3.org/TR/2013/WD-css-masking-20130620/
 Previous Version: http://www.w3.org/TR/2012/WD-css-masking-20121115/
 Shortname: css-masking
-Link Defaults: css-backgrounds-3 (type) <position>, selectors-4 (type) <compound-selector>, svg (property) color-interpolation/fill-rule/fill/stroke/stroke-width, filters-1 (property) filter, css-display-3 (property) display, css-transforms-1 (property) transform
+Link Defaults: css-backgrounds-3 (type) <position>, svg (property) color-interpolation/fill-rule/fill/stroke/stroke-width, filters-1 (property) filter, css-display-3 (property) display, css-transforms-1 (property) transform
 Level: 1
 Group: fxtf
 Editor: Dirk Schulze, Adobe Systems Inc., dschulze@adobe.com
@@ -16,7 +16,6 @@ Abstract: CSS Masking provides two means for partially or fully hiding portions 
 Abstract: Masking describes how to use another graphical element or image as a luminance or alpha mask. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer and then that buffer is composited into the element's parent. Luminance and alpha masks influence the transparency of this buffer before the compositing stage.
 Abstract: Clipping describes the visible region of visual elements. The region can be described by using certain SVG graphics elements or basic shapes. Anything outside of this region is not rendered.
 Test Suite: http://test.csswg.org/suites/css-masking/nightly-unstable/
-At Risk: The property values <em>child</em> and <<select()>> on the 'mask-image' and 'clip-path' properties.
 </pre>
 
 <script defer=defer src="https://test.csswg.org/harness/annotate.js#CSS-MASKING_DEV" type="text/javascript"></script>
@@ -183,9 +182,7 @@ This property sets the mask image or the <i>mask source</i> of an element. Where
 
 <pre class=prod><dfn>&lt;mask-reference></dfn> = none | <<image>> | <<mask-source>></pre>
 
-<pre class=prod><dfn>&lt;mask-source></dfn> = <<url>> | child | <<select()>></pre>
-
-<pre class=prod><dfn>select()</dfn> = select( <<compound-selector>># )</pre>
+<pre class=prod><dfn>&lt;mask-source></dfn> = <<url>></pre>
 
 <dl dfn-type=value dfn-for="mask-image">
   <dt>
@@ -193,13 +190,6 @@ This property sets the mask image or the <i>mask source</i> of an element. Where
   </dt>
   <dd>
     A URL reference to a <a>'mask element'</a> element (for example ''url(commonmasks.svg#mask)'') or to a CSS image.
-  </dd>
-  <dt><dfn>child</dfn></dt>
-  <dd>
-    A keyword to indicate that the last direct child <a>'mask element'</a> element of the element the 'mask-image' property is applied should be used as the mask source. It is equivalent to ''select(mask:last-of-type)''.</dd>
-  <dt><<select()>></dt>
-  <dd>
-    A functional notation [[!CSS3VAL]] accepting a comma-separated list of compound selectors that represents first matching child <a>'mask element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
   </dd>
   <dt>none</dt>
   <dd>
@@ -845,7 +835,7 @@ Animatable: See 'shape-outside' [[!CSS-SHAPES]]
 
 Specifies a basic shape or references a <a>'clipPath element'</a> element to create a <i>clipping path</i>.
 
-<pre class=prod><dfn>&lt;clip-source></dfn> = <<url>> | child | <<select()>></pre>
+<pre class=prod><dfn>&lt;clip-source></dfn> = <<url>></pre>
 
 <dl>
   <dt>
@@ -853,13 +843,6 @@ Specifies a basic shape or references a <a>'clipPath element'</a> element to cre
   </dt>
   <dd>
     A <a href="http://www.w3.org/TR/css-shapes-1/#basic-shapes-from-svg-syntax">basic shape function</a> as defined in the CSS Shapes module. The origin of clipping shapes is on the top left of the <i>bounding client rect</i>. Percentage values are resolved against the <i>bounding client rect</i> width and height. (See [[!CSS-SHAPES]].)
-  </dd>
-  <dt>child</dt>
-  <dd>
-    A keyword to indicate that the last direct child <a>'clipPath element'</a> element of the element the 'clip-path' property is applied should be used as the clip source. It is equivalent to ''select(clipPath:last-of-type)''.</dd>
-  <dt><<select()>></dt>
-  <dd>
-    A functional notation [[!CSS3VAL]] accepting a comma-separated list of compound selectors that represents first matching child <a>'clipPath element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
   </dd>
   <dt>none</dt>
   <dd>
@@ -1040,7 +1023,7 @@ A couple of additions:
 
 <h3 id="clipPath-geometry">Clipping paths, geometry, and pointer events</h3>
 
-A clipping path is conceptually equivalent to a custom viewport for the referencing element.  Thus, it affects the rendering of an element, but not the element's inherent geometry. The <i>bounding client rect</i> of a clipped element (that is, an element which references a <a>'clipPath'</a> element via a 'clip-path' property, or a child of the  referencing element) must remain the same as if it were not clipped.
+A clipping path is conceptually equivalent to a custom viewport for the referencing element.  Thus, it affects the rendering of an element, but not the element's inherent geometry. The <i>bounding client rect</i> of a clipped element (that is, an element which references a <a>'clipPath'</a> element via a 'clip-path' property, or a child of the referencing element) must remain the same as if it were not clipped.
 
 By default, <a>pointer events</a> must not be dispatched on the clipped (non-visible) regions of a shape. For example, a circle with a radius of 10 which is clipped to a circle with a radius of 5 will not receive ''click'' events outside the smaller radius. Later versions of this specification may define new properties to enable fine-grained control over the interactions between hit testing and clipping.
 
@@ -1176,7 +1159,7 @@ The following significant changes were made since the <a href="http://www.w3.org
 
 <ul>
 <li>'mask' resets 'mask-box-image' properties.</li>
-<li>Initial values for 'mask-repeat', 'mask-position' and 'mask-origin' changed to ''no-repeat'', ''center'' and ''border-box''.</li>
+<li>Initial values for 'mask-repeat', 'mask-position' and 'mask-origin' changed to ''no-repeat'', ''center'' and <a value for=mask-origin>border-box</a>.</li>
 <li>Multiple layers of <i>mask sources</i> were deferred to a future level of this specification.</li>
 <li>Added security model for pixel operations and fetching of masking and clipping resources.</li>
 </ul>

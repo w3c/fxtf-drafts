@@ -1566,7 +1566,7 @@ The following rules apply to the processing of the <a>'feComponentTransfer'</a> 
 
 <!--elementsummary feComposite-->
 
-This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [<a href="#ref-PORTERDUFF">PORTERDUFF</a>] compositing operations: ''over'', ''in'', ''atop'', ''out', ''xor'' [[!COMPOSITING]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
+This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: ''over'', ''in'', ''atop'', ''out', ''xor'' [[!COMPOSITING]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
 
 The <em>arithmetic</em> operation is useful for combining the output from the <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> filters with texture data. It is also useful for implementing <em>dissolve</em>. If the <em>arithmetic</em> operation is chosen, each result pixel is computed using the following formula:
 
@@ -1593,7 +1593,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
       <span class="adef">operator</span> = "<em>over | in | out | atop | xor | arithmetic</em>"
     </dt>
     <dd>
-      The compositing operation that is to be performed. All of the <span class="attr-name">operator</span> types except ''arithmetic'' match the corresponding operation as described in [<a href="#ref-PORTERDUFF">PORTERDUFF</a>]. The ''arithmetic'' operator is described above. The <a>lacuna value</a> for <a>'feComposite/operator'</a> is ''over''.<br>
+      The compositing operation that is to be performed. All of the <span class="attr-name">operator</span> types except ''arithmetic'' match the corresponding operation as described in [[PORTERDUFF]]. The ''arithmetic'' operator is described above. The <a>lacuna value</a> for <a>'feComposite/operator'</a> is ''over''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feCompositeK1Attribute">
@@ -2693,22 +2693,13 @@ The above divided into steps:
 
 <!--elementsummary feFlood-->
 
-<p>
-  This filter primitive creates a rectangle filled with the color and opacity values
-  from properties 'flood-color' and 'flood-opacity'. The rectangle is as large as the
-  <a>filter primitive subregion</a> established by the <a>'feFlood element'</a>
-  element.
-</p>
+This filter primitive creates a rectangle filled with the color and opacity values from properties 'flood-color' and 'flood-opacity'. The rectangle is as large as the <a>filter primitive subregion</a> established by the <a>'feFlood element'</a> element.
+
 <div class="adef-list"></div>
 
 <h4 id="FloodColorProperty">The 'flood-color' property</h4>
 
-<p>
-  The 'flood-color' property indicates what color to used to flood the current
-  <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. The keyword
-  ''currentColor'' and ICC colors can be specified in the same manner as within a
-  &lt;paint&gt; specification for the 'fill' and 'stroke' properties.
-</p>
+The 'flood-color' property indicates what color to used to flood the current <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. The keyword ''currentColor'' and ICC colors can be specified in the same manner as within a &lt;paint> specification for the 'fill' and 'stroke' properties.
 
 <table summary="flood-color property" class="propdef">
   <tbody>
@@ -2858,11 +2849,18 @@ Frequently this operation will take place on alpha-only images, such as that pro
       "<em><a>&lt;number-optional-number&gt;</a></em>"
     </dt>
     <dd>
-      The standard deviation for the blur operation. If two <<number>> s
-      are provided, the first number represents a standard deviation value along the x-axis of the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The second value represents a standard deviation in Y. If one number is provided, then that value is used for both X and Y.<br>
-      A negative value or a value of zero disables the effect of the given filter primitive (i.e., the result is the filter input image).<br>
-      If <a>'feGaussianBlur/stdDeviation'</a> is ''0'' in only one of X or Y, then the effect is that the blur is only applied in the direction that has a non-zero value.<br>
-      The <a>lacuna value</a> for <a>'feGaussianBlur/stdDeviation'</a> is ''0''.<br>
+      <p>
+        The standard deviation for the blur operation. If two <<number>> s are provided, the first number represents a standard deviation value along the x-axis of the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The second value represents a standard deviation in Y. If one number is provided, then that value is used for both X and Y.
+      </p>
+      <p>
+        A negative value or a value of zero disables the effect of the given filter primitive (i.e., the result is the filter input image).
+      </p>
+      <p>
+        If <a>'feGaussianBlur/stdDeviation'</a> is ''0'' in only one of X or Y, then the effect is that the blur is only applied in the direction that has a non-zero value.
+      </p>
+      <p>
+        The <a>lacuna value</a> for <a>'feGaussianBlur/stdDeviation'</a> is ''0''.
+      </p>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feGaussianBlurEdgeModeAttribute">
@@ -2949,38 +2947,6 @@ If the <span class="attr-name">xlink:href</span> references a stand-alone image 
     </dd>
   </dl>
 </div>
-
-
-
-
-<!--
-          _____                    _____                    _____                    _____          
-         /\    \                  /\    \                  /\    \                  /\    \         
-        /::\    \                /::\    \                /::\    \                /::\    \        
-       /::::\    \              /::::\    \              /::::\    \              /::::\    \       
-      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \      
-     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
-    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \    
-   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \   
-  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \  
- /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\ 
-/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |
-\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|
- \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    / 
-       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /  
-       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /   
-       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /    
-       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /     
-       |::|   |                \:::\    \                  /:::/    /            \::::::/    /      
-       \::|   |                 \:::\____\                /:::/    /              \::::/    /       
-        \:|   |                  \::/    /                \::/    /                \::/____/        
-         \|___|                   \/____/                  \/____/                  ~~              
-                                                                                                    
--->
-
-
-
-
 
 <div class="example">
   <p>
@@ -3102,10 +3068,14 @@ Because <a>'feMorphology'</a> operates on premultipied color values, it will alw
       "<em><a>&lt;number-optional-number&gt;</a></em>"
     </dt>
     <dd>
-      The radius (or radii) for the operation. If two <<number>> s are
-      provided, the first number represents a x-radius and the second value represents a y-radius. If one number is provided, then that value is used for both X and Y. The values are in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
-      A negative or zero value disables the effect of the given filter primitive (i.e., the result is a transparent black image).<br>
-      If the attribute is not specified, then the effect is as if a value of ''0'' were specified. <span class="issue">Do not disable rendering on negative or zero length?<br>
+      <p>
+        The radius (or radii) for the operation. If two <<number>> s are provided, the first number represents a x-radius and the second value represents a y-radius. If one number is provided, then that value is used for both X and Y. The values are in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.</p>
+      <p>
+        A negative or zero value disables the effect of the given filter primitive (i.e., the result is a transparent black image).
+      </p>
+      <p>
+        If the attribute is not specified, then the effect is as if a value of ''0'' were specified. <span class="issue">Do not disable rendering on negative or zero length?
+      </p>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
@@ -3150,8 +3120,7 @@ Because <a>'feMorphology'</a> operates on premultipied color values, it will alw
 &lt;/svg&gt;</pre>
 
   <div class="figure">
-    <img alt="Example "
-         src="examples/feMorphology.png">
+    <img alt="Example" src="examples/feMorphology.png">
     <p class="caption">
       Example of feMorphology
     </p>
@@ -3188,8 +3157,12 @@ When applying this filter, the destination location may be offset by a fraction 
       <span class="adef">dy</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      The amount to offset the input graphic along the y-axis. The offset amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
-      If the attribute is not specified, then the effect is as if a value of ''0'' were specified.<br>
+      <p>
+        The amount to offset the input graphic along the y-axis. The offset amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.
+      </p>
+      <p>
+        If the attribute is not specified, then the effect is as if a value of ''0'' were specified.
+      </p>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
@@ -3569,7 +3542,9 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
     </dt>
     <dd>
       <p>
-        If ''stitchTiles="noStitch"'', no attempt is made to achieve smooth transitions at the border of tiles which contain a turbulence function. Sometimes the result will show clear discontinuities at the tile borders.<br>
+        If ''stitchTiles="noStitch"'', no attempt is made to achieve smooth transitions at the border of tiles which contain a turbulence function. Sometimes the result will show clear discontinuities at the tile borders.
+      </p>
+      <p>
         If ''stitchTiles="stitch"'', then the user agent will automatically adjust baseFrequency-x and baseFrequency-y values such that the <a>'feTurbulence'</a> node's width and height (i.e., the width and height of the current subregion) contains an integral number of the Perlin tile width and height for the first octave. The baseFrequency will be adjusted up or down depending on which way has the smallest relative (not absolute) change as follows: Given the frequency, calculate <code>lowFreq=floor(width*frequency)/width</code> and <code>hiFreq=ceil(width*frequency)/width</code>. If frequency/lowFreq &lt; hiFreq/frequency then use lowFreq, else use hiFreq. While generating turbulence values, generate lattice vectors as normal for Perlin Noise, except for those lattice points that lie on the right or bottom edges of the active area (the size of the resulting tile). In those cases, copy the lattice vector from the opposite edge of the active area.
       </p>
       <p>
@@ -3761,6 +3736,7 @@ Note: The 'color-interpolation-filters' property has no effect on <span>Filter F
 
 The following sections define the elements that define a <i>light source</i>, <a>'feDistantLight'</a>, <a>'fePointLight'</a> and <a>'feSpotLight'</a>, and property 'lighting-color', which defines the color of the light.
 
+
 <h3 id="feDistantLightElement">Light source <a>'feDistantLight'</a></h3>
 
 <!--elementsummary feDistantLight-->
@@ -3774,16 +3750,24 @@ The following sections define the elements that define a <i>light source</i>, <a
       <span class="adef">azimuth</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Direction angle for the light source on the XY plane (clockwise), in degrees from the x axis.<br>
-      The <a>lacuna value</a> for <a>'azimuth'</a> is ''0''.<br>
+      <p>
+        Direction angle for the light source on the XY plane (clockwise), in degrees from the x axis.
+      </p>
+      <p>
+        The <a>lacuna value</a> for <a>'azimuth'</a> is ''0''.
+      </p>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feDistantLightElevationAttribute">
       <span class="adef">elevation</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Direction angle for the light source from the XY plane towards the Z-axis, in degrees. Note that the positive Z-axis points towards the viewer.<br>
-      The <a>lacuna value</a> for <a>'elevation'</a> is ''0''.<br>
+      <p>
+        Direction angle for the light source from the XY plane towards the Z-axis, in degrees. Note that the positive Z-axis points towards the viewer.
+      </p>
+      <p>
+        The <a>lacuna value</a> for <a>'elevation'</a> is ''0''.
+      </p>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
@@ -4314,7 +4298,7 @@ There are many precedents for shading languages, for example:
 
 <h3 id="recommendation">Recommended shading language</h3>
 
-This document recommends the adoption of the subset of GLSL ES [<a href="#ref-GLSLES">GLSLES</a>] defined in the WebGL 1.0 <a href="#ref-WEBGL">WEBGL</a>] specification.
+This document recommends the adoption of the subset of GLSL ES [[!GLSLES]] defined in the WebGL 1.0 [[!WEBGL]] specification.
 
 In particular, the same restrictions as defined in WebGL should apply to shaders for CSS:
 
@@ -8079,35 +8063,6 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dd>
     </dl>
   </dd>
-</dl>
-
-<h2 id="reference">References</h2>
-
-<dl>
-  <!--<dt id="ref-NVDL"><strong class="normref">[NVDL]</strong></dt>
-    <dd><strong>Document Schema Definition Languages (DSDL) - Part 4:
-      Namespace-based Validation Dispatching Language - NVDL. ISO/IEC FCD
-      19757-4</strong>, See <a
-      href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/</a>
-    </dd>-->
-
-  <dt id="ref-GLSLES"><strong class="normref">[GLSLES]</strong></dt>
-    <dd>R. J. Simpson. <a
-      href="http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf"><cite>The OpenGL® ES Shading Language</cite>.</a> 12 May 2009. The Khronos Group Inc. URL: <a
-      href="http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf">http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf</a>
-    </dd>
-    
-
-  <dt id="ref-WEBGL"><strong class="normref">[WEBGL]</strong></dt>
-    <dd>C. Marrin. <a
-      href="http://www.khronos.org/registry/webgl/specs/1.0/"><cite>WebGL Specification Version 1.0</cite>.</a> 10 February 2011. The Khronos Group Inc. URL: <a
-      href="http://www.khronos.org/registry/webgl/specs/1.0/">http://www.khronos.org/registry/webgl/specs/1.0/</a>
-    </dd>
-
-  <dt id="ref-PORTERDUFF"><strong class="normref">[PORTERDUFF]</strong></dt>
-    <dd>T. Porter, T. Duff. <cite>Compositing Digital Images</cite>. July 1984.
-      SIGGRAPH `84 Conference Proceedings, Association for Computing
-      Machinery, Volume 18, Number 3</dd>
 </dl>
 
 <h2 class="no-num" id="changes">Changes</h2>
