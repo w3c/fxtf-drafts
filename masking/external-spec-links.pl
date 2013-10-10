@@ -415,7 +415,7 @@ sub elementSummary {
   }
 
   return <<EOF;
-<table class=propdef>
+<table class="definition-table">
   <tr>
     <th>Name:</th>
     <td><dfn element>$name</dfn>
