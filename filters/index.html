@@ -9,43 +9,13 @@
 
 </head>
 <body class=h-entry>
-<style scoped type=text/css>
-.example {
-  clear:both
-}
-
-th {
-  text-align:left
-}
-
-.pseudo-code {
-  font-family:monospace
-}
-.pseudo-code > ol {
-  list-style-type:decimal
-}
-.pseudo-code > ol > li > ol {
-  list-style-type:lower-latin
-}
-.pseudo-code > ol > li > ol > li > ol {
-  list-style-type:lower-roman
-}
-.pseudo-code ul {
-  list-style-type:disc
-}
-
-dd > p:nth-child(1) {
-  margin-top:0
-}
-</style>
-
 <div class=head>
   <p data-fill-with=logo><a class=logo href=http://www.w3.org/>
     <img alt=W3C height=48 src=http://www.w3.org/Icons/w3c_home width=72>
 </a></p>
   <h1 class="p-name no-ref" id=title>Filter Effects Level 1</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131008>8 October 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20131011>11 October 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Latest version:<dd><a href=http://www.w3.org/TR/filters/>http://www.w3.org/TR/filters/</a><dt>Editor’s Draft:<dd><a href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Previous Versions:<dd><a href=http://www.w3.org/TR/2013/WD-filter-effects-20130523/ rel=previous>http://www.w3.org/TR/2013/WD-filter-effects-20130523/</a><dd><a href=http://www.w3.org/TR/2012/WD-filter-effects-20121025/ rel=previous>http://www.w3.org/TR/2012/WD-filter-effects-20121025/</a>
     <dt>Feedback:</dt>
         <dd><a href="mailto:public-fx@w3.org?subject=%5Bfilter-effects%5D%20feedback">public-fx@w3.org</a>
@@ -59,7 +29,7 @@ dd > p:nth-child(1) {
 </div>
 
 <h2 class="no-num no-toc no-ref heading settled heading" id=abstract><span class=content>Abstract</span></h2>
-<p class=p-summary data-fill-with=abstract>Filter effects are a way of processing an element’s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.<p>Although originally designed for use in SVG, filter effects are a set a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> value. <span class=issue id=issue-336cf378><a class=self-link href=#issue-336cf378></a>Remove the last sentence once <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> image function is in CSS Images Level 4.</span>
+<p class=p-summary data-fill-with=abstract>Filter effects are a way of processing an element’s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.<p>Although originally designed for use in SVG, filter effects are a set a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> value. <span class=issue id=issue-336cf378><a class=self-link href=#issue-336cf378></a>Remove the last sentence once <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> image function is in CSS Images Level 4.</span>
 <a href=http://www.w3.org/TR/CSS/>CSS</a> is a language for describing the rendering of structured documents 
 (such as HTML and XML) 
 on screen, on paper, in speech, etc.</p>
@@ -103,7 +73,7 @@ on screen, on paper, in speech, etc.</p>
   Custom filter parameters: the <span>parameters</span> descriptor
 </a><li><a href=#custom-filter-geometry><span class=secno>11.5</span>
   Custom filter geometry: the <span>geometry</span> descriptor
-</a><li><a href=#custom-filter-mix><span class=secno>11.6</span>Custom filter compositing: the <i data-link-type=dfn title=mix>mix</i> descriptor</a><li><a href=#custom-filter-margin><span class=secno>11.7</span>
+</a><li><a href=#custom-filter-mix><span class=secno>11.6</span>Custom filter compositing: the <span class=property data-link-type=propdesc title=mix>mix</span> descriptor</a><li><a href=#custom-filter-margin><span class=secno>11.7</span>
   Custom filter margins: the <span>margin</span> descriptor
 </a></ul><li><a href=#shading-language><span class=secno>12</span>Custom Shaders</a><ul class=toc><li><a href=#shading-introduction><span class=secno>12.1</span>Introduction</a><li><a href=#precedents><span class=secno>12.2</span>Precedents</a><li><a href=#recommendation><span class=secno>12.3</span>Recommended shading language</a><li><a href=#integrate-into-at-filter-rule><span class=secno>12.4</span>Integration into <span data-link-type=at-rule title=@filter>@filter</span> rule</a><li><a href=#shader-processing-model><span class=secno>12.5</span>Shader Processing Model</a><li><a href=#differences-to-webgl><span class=secno>12.6</span>Differences to GLSL</a><ul class=toc><li><a href=#fragment-shaders-differences-with-glsl><span class=secno>12.6.1</span>Fragment Shaders Differences with GLSL</a><li><a href=#vertex-attribute-variables><span class=secno>12.6.2</span>Vertex attribute variables</a><li><a href=#shader-uniform-variables><span class=secno>12.6.3</span>Shader uniform variables</a><li><a href=#other-uniform-variables><span class=secno>12.6.4</span>Other uniform variables: the CSS shaders parameters</a><li><a href=#default-shaders><span class=secno>12.6.5</span>Default shaders</a><li><a href=#texture-access><span class=secno>12.6.6</span>Texture access</a></ul><li><a href=#validate-custom-filter-shaders><span class=secno>12.7</span>Validate Custom Filter Shaders</a><ul class=toc><li><a href=#building-on-webgl><span class=secno></span>Building on WebGL</a><li><a href=#disallowing-unbound-samplers><span class=secno></span>Disallowing Unbound Samplers</a><li><a href=#custom-filter-parameter-type-checking><span class=secno></span>Custom Filter Parameter Type Checking</a><li><a href=#build-in-parameter-type-checking><span class=secno></span>Built-in Parameter Type Checking</a></ul></ul><li><a href=#FilterCSSImageValue><span class=secno>13</span>Filter CSS <span class=production data-link-type=type title="<image>">&lt;image&gt;</span> values</a><ul class=toc><li><a href=#interpolating-filter-image><span class=secno>13.1</span>Interpolating filter()</a></ul><li><a href=#ShorthandEquivalents><span class=secno>14</span>
   Shorthands defined in terms of the <span><code class=element-name>&lt;filter&gt;</code></span> element
@@ -206,7 +176,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 </ol>
 
 <div class=example>
-  <p>The following shows an example of graph of individual filter effects.
+  <p>The following shows an example of graph of individual filter effects.</p>
 
   <div class=figure>
     <img alt="Example Filter" src=examples/filters01.png>
@@ -347,6 +317,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
     </tr>
   </tbody>
 </table>
+
 <ol>
   <li>
     Filter primitive <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a> takes input <a href=#SourceAlpha>SourceAlpha</a>, which is the alpha channel of the source graphic. The result is stored in a temporary buffer named "blur". Note that "blur" is used as input to both filter primitives 2 and 3.
@@ -370,7 +341,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <h2 class="heading settled heading" data-level=2 id=placement><span class=secno>2 </span><span class=content>Module interactions</span><a class=self-link href=#placement></a></h2>
 
-<p>This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href=http://www.w3.org/TR/CSS2/visuren.html title="Visual formatting model">Visual formatting model</a> from <a data-biblio-type=normative data-link-type=biblio href=#css21 title=css21>[CSS21]</a>. Some values of these properties result in the creation of a <a href=http://www.w3.org/TR/CSS2/visuren.html#containing-block title="Visual formatting model">containing block</a>, and/or the creation of a <a data-link-spec=css21 data-link-type=dfn href=http://www.w3.org/TR/CSS21/visuren.html#x43 title="stacking context">stacking context</a>.
+<p>This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href=http://www.w3.org/TR/CSS2/visuren.html title="Visual formatting model">Visual formatting model</a> from <a data-biblio-type=normative data-link-type=biblio href=#css21 title=css21>[CSS21]</a>. Some values of these properties result in the creation of a <a data-link-spec=css21 data-link-type=dfn href=http://www.w3.org/TR/CSS21/visuren.html#x3 title="containing block">containing block</a>, and/or the creation of a <a data-link-spec=css21 data-link-type=dfn href=http://www.w3.org/TR/CSS21/visuren.html#x43 title="stacking context">stacking context</a>.
 
 <p>The compositing model follows the SVG compositing model <a data-biblio-type=normative data-link-type=biblio href=#svg11 title=svg11>[SVG11]</a>: first any filter effect is applied, then any clipping, masking and opacity <a data-biblio-type=informative data-link-type=biblio href=#css3color title=css3color>[CSS3COLOR]</a>. These effects all apply after any other CSS effects such as <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-backgrounds-4/#border title=border>border</a> <a data-biblio-type=normative data-link-type=biblio href=#css3bg title=css3bg>[CSS3BG]</a>.
 
@@ -397,7 +368,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
   </dd>
   <dt><dfn data-dfn-type=dfn data-noexport="" id=transfer-function-elements>transfer function elements<a class=self-link href=#transfer-function-elements></a></dfn></dt>
   <dd>
-    The set of <a href=#feFuncRElement><code class=element-name>&lt;feFuncR&gt;</code></a>, <a href=#feFuncGElement><code class=element-name>&lt;feFuncG&gt;</code></a>, <a href=#feFuncBElement><code class=element-name>&lt;feFuncB&gt;</code></a>, <a href=#feFuncAElement><code class=element-name>&lt;feFuncA&gt;</code></a> elements, that define the transfer function for the <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a> <i data-link-type=dfn title="filter primitive">filter primitive</i>.
+    The set of <a href=#feFuncRElement><code class=element-name>&lt;feFuncR&gt;</code></a>, <a href=#feFuncGElement><code class=element-name>&lt;feFuncG&gt;</code></a>, <a href=#feFuncBElement><code class=element-name>&lt;feFuncB&gt;</code></a>, <a href=#feFuncAElement><code class=element-name>&lt;feFuncA&gt;</code></a> elements, that define the transfer function for the <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a> <a href=#TermFilterPrimitiveElement>filter primitive</a>.
   </dd>
   <dt><dfn data-dfn-type=dfn data-noexport="" id=bounding-client-rect>bounding client rect<a class=self-link href=#bounding-client-rect></a></dfn></dt>
   <dd>
@@ -427,7 +398,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
   <dd>
     The set of elements that control the output of a <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element, particularly: <a href=#feSpotLightElement><code class=element-name>&lt;feSpotLight&gt;</code></a>, <a href=#feBlendElement><code class=element-name>&lt;feBlend&gt;</code></a>, <a href=#feColorMatrixElement><code class=element-name>&lt;feColorMatrix&gt;</code></a>, <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a>, <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a>, <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a>, <a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a>, <a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a>, <a href=#feDisplacementMapElement><code class=element-name>&lt;feDisplacementMap&gt;</code></a>, <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a>, <a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a>, <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a>, <a href=#feImageElement><code class=element-name>&lt;feImage&gt;</code></a>, <a href=#feMergeElement><code class=element-name>&lt;feMerge&gt;</code></a>, <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a>, <a href=#feOffsetElement><code class=element-name>&lt;feOffset&gt;</code></a>, <a href=#feSpecularLightingElement><code class=element-name>&lt;feSpecularLighting&gt;</code></a>, <a href=#feTileElement><code class=element-name>&lt;feTile&gt;</code></a>, <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a>.
   </dd>
-  <dt><dfn data-dfn-type=dfn data-noexport="" id=light-sources>light sources<a class=self-link href=#light-sources></a></dfn></dt>
+  <dt><dfn data-dfn-type=dfn data-noexport="" id=light-source>light source<a class=self-link href=#light-source></a></dfn></dt>
   <dd>
     The following elements are light sources: <a href=#feDistantLightElement><code class=element-name>&lt;feDistantLight&gt;</code></a>, <a href=#fePointLightElement><code class=element-name>&lt;fePointLight&gt;</code></a>, <a href=#feSpotLightElement><code class=element-name>&lt;feSpotLight&gt;</code></a>.
   </dd>
@@ -441,19 +412,19 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
   </dd>
 </dl>
 
-<h2 class="heading settled heading" data-level=5 id=FilterProperty><span class=secno>5 </span><span class=content>The <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property</span><a class=self-link href=#FilterProperty></a></h2>
+<h2 class="heading settled heading" data-level=5 id=FilterProperty><span class=secno>5 </span><span class=content>The <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property</span><a class=self-link href=#FilterProperty></a></h2>
 
-<p>The description of the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property is as follows:
+<p>The description of the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property is as follows:
 
-<table class=propdef><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-filter0>filter<a class=self-link href=#propdef-filter0></a></dfn><tr><th>Value:<td>none | <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a><tr><th>Initial:<td>none<tr><th>Applies to:<td>All elements. In SVG, it applies to <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement>container elements</a> without the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement><code class=element-name>&lt;defs&gt;</code></a> element and all <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement>graphics elements</a><tr><th>Inherited:<td>no<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>yes</table>
-<p>If the value of the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property is <span class=css data-link-type=maybe title=none>none</span> then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
+<table class=propdef><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-filter>filter<a class=self-link href=#propdef-filter></a></dfn><tr><th>Value:<td>none | <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a><tr><th>Initial:<td>none<tr><th>Applies to:<td>All elements. In SVG, it applies to <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermContainerElement>container elements</a> without the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#DefsElement><code class=element-name>&lt;defs&gt;</code></a> element and all <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement>graphics elements</a><tr><th>Inherited:<td>no<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>yes</table>
+<p>If the value of the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property is <span class=css data-link-type=maybe title=none>none</span> then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
-<pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-filter-function-list>&lt;filter-function-list&gt;<a class=self-link href=#typedef-filter-function-list></a></dfn> = [ <a class="production css-code" data-link-type=type href=#typedef-filter-function title="<filter-function>">&lt;filter-function&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-url0 title="<url>">&lt;url&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-child-selector title="<child-selector>">&lt;child-selector&gt;</a> ]+</pre>
+<pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-filter-function-list>&lt;filter-function-list&gt;<a class=self-link href=#typedef-filter-function-list></a></dfn> = [ <a class="production css-code" data-link-type=type href=#typedef-filter-function title="<filter-function>">&lt;filter-function&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-child-selector title="<child-selector>">&lt;child-selector&gt;</a> ]+</pre>
 <pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-filter-function>&lt;filter-function&gt;<a class=self-link href=#typedef-filter-function></a></dfn> = [ <a class="production css-code" data-link-type=function href=#funcdef-blur title=blur()>&lt;blur()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-brightness title=brightness()>&lt;brightness()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-contrast title=contrast()>&lt;contrast()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-custom title=custom()>&lt;custom()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-drop-shadow title=drop-shadow()>&lt;drop-shadow()&gt;</a>
   | <a class="production css-code" data-link-type=function href=#funcdef-grayscale title=grayscale()>&lt;grayscale()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-hue-rotate title=hue-rotate()>&lt;hue-rotate()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-invert title=invert()>&lt;invert()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-opacity title=opacity()>&lt;opacity()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-sepia title=sepia()>&lt;sepia()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-saturate title=saturate()>&lt;saturate()&gt;</a></pre>
-<pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-child-selector>&lt;child-selector&gt;<a class=self-link href=#typedef-child-selector></a></dfn> = <a class="production css-code" data-link-type=function title=select()>&lt;select()&gt;</a> | child</pre>
-<dl id=FilterFunction>
-  <dt><dfn class=css-code data-dfn-type=type data-export="" id=typedef-url0>&lt;url&gt;<a class=self-link href=#typedef-url0></a></dfn></dt>
+<pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-child-selector>&lt;child-selector&gt;<a class=self-link href=#typedef-child-selector></a></dfn> = <a class="production css-code" data-link-type=function href=http://dev.w3.org/fxtf/masking/#funcdef-select title=select()>&lt;select()&gt;</a> | child</pre>
+<dl data-dfn-for=filter id=FilterFunction>
+  <dt><dfn class=css-code data-dfn-type=type data-export="" id=typedef-url>&lt;url&gt;<a class=self-link href=#typedef-url></a></dfn></dt>
   <dd>
     A URL reference to a <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element. For example <span class=css data-link-type=maybe title=url(commonmasks.svg#filter)>url(commonmasks.svg#filter)</span>. If the URL references a non-existent object or the referenced object is not a <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element, then the <a data-link-type=dfn href=#null-filter title="null filter">null filter</a> will be applied instead. <span class=issue id=issue-44d24a40><a class=self-link href=#issue-44d24a40></a>Just ignore the URL reference instead of null filter?</span>
   </dd>
@@ -461,7 +432,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
     <dfn data-dfn-type=dfn data-noexport="" id=child>child<a class=self-link href=#child></a></dfn>
   </dt>
   <dd>
-    A keyword to indicate that the last direct child <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element of the element the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property is applied should be used as the filter source. It is equivalent to <span class=css data-link-type=maybe title=select(filter:last-of-type)>select(filter:last-of-type)</span>.
+    A keyword to indicate that the last direct child <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element of the element the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property is applied should be used as the filter source. It is equivalent to <span class=css data-link-type=maybe title=select(filter:last-of-type)>select(filter:last-of-type)</span>.
   </dd>
   <dt><a class="production css-code" data-link-type=type href=#typedef-child-selector title="<child-selector>">&lt;child-selector&gt;</a></dt>
   <dd>
@@ -615,11 +586,11 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <p>A computed value of other than <span class=css data-link-type=maybe title=none>none</span> results in the creation of a <a href=http://www.w3.org/TR/CSS21/zindex.html>stacking context</a> <a data-biblio-type=normative data-link-type=biblio href=#css21 title=css21>[CSS21]</a> the same way that CSS <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-color-3/#propdef-opacity title=opacity>opacity</a> does. All the elements descendants are rendered together as a group with the filter effect applied to the group as a whole.
 
-<p>The <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property has no effect on the geometry of the target element’s CSS boxes, even though <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> can cause painting outside of an element’s border box.
+<p>The <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property has no effect on the geometry of the target element’s CSS boxes, even though <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> can cause painting outside of an element’s border box.
 
 <p>Conceptually, any parts of the drawing are effected by filter operations. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the filter is applied, and those of its descendants. The filter operations are applied in the element’s <a data-link-type=dfn href=#local-coordinate-system title="local coordinate system">local coordinate system</a>. <span class=issue id=issue-668a5e0f><a class=self-link href=#issue-668a5e0f></a>Should outline really be filtered? What about focus ring?</span>
 
-<p>The compositing model follows the <a href=http://www.w3.org/TR/SVG11/render.html#Introduction>SVG compositing model</a> <a data-biblio-type=normative data-link-type=biblio href=#svg11 title=svg11>[SVG11]</a>: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> has no effect on hit-testing.
+<p>The compositing model follows the <a href=http://www.w3.org/TR/SVG11/render.html#Introduction>SVG compositing model</a> <a data-biblio-type=normative data-link-type=biblio href=#svg11 title=svg11>[SVG11]</a>: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> has no effect on hit-testing.
 
 <p class=issue id=issue-92cd9a9b><a class=self-link href=#issue-92cd9a9b></a>
   The CSS WG wants to look into how to apply the filter to certain parts of an object (background, border) instead of just the whole group with descendants.
@@ -627,10 +598,11 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <h2 class="heading settled heading" data-level=6 id=FilterElement><span class=secno>6 </span><span class=content>The <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element</span><a class=self-link href=#FilterElement></a></h2>
 
-<table class=propdef summary="filter element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-filter>filter<a class=self-link href=#propdef-filter></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-filter>filter<a class=self-link href=#elementdef-filter></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td>None.</td>
@@ -673,7 +645,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
     <dd>
       Specifies the coordinate system for the various length values within the <a data-link-type=dfn href=#filter-primitives title="filter primitives">filter primitives</a> and for the attributes that define the <a href=#FilterPrimitiveSubRegion>filter primitive subregion</a>.<br>
       If <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> is equal to <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>, any length values within the filter definitions represent values in the current <a data-link-type=dfn href=#user-coordinate-system title="user coordinate system">user coordinate system</a> in place at the time when the
-      <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element is referenced (i.e., the user coordinate system for the element referencing the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element via a <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property).<br>
+      <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element is referenced (i.e., the user coordinate system for the element referencing the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element via a <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property).<br>
       If <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> is equal to <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a data-link-type=dfn href=#object-bounding-box-units title="object bounding box units">object bounding box units</a>). Note that if only one number was specified in a <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> computation takes place.<br>
       The <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue>lacuna value</a> for <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> is <span class=attr-value>userSpaceOnUse</span>.<br>
       <span class=issue id=issue-1ed55d6f><a class=self-link href=#issue-1ed55d6f></a>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?</span><br>
@@ -726,7 +698,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <p>Properties inherit into the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element.
 
-<p><a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> elements are never rendered directly; their only usage is as something that can be referenced using the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property. The <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-flexbox-1/#propdef-display title=display>display</a> property does not apply to the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element; thus, <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> elements are not directly rendered even if the <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-flexbox-1/#propdef-display title=display>display</a> property is set to a value other than <span class=css data-link-type=maybe title=none>none</span>, and <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> elements are available for referencing even when the <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-flexbox-1/#propdef-display title=display>display</a> property on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element or any of its ancestors is set to <span class=css data-link-type=maybe title=none>none</span>.
+<p><a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> elements are never rendered directly; their only usage is as something that can be referenced using the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property. The <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-flexbox-1/#propdef-display title=display>display</a> property does not apply to the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element; thus, <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> elements are not directly rendered even if the <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-flexbox-1/#propdef-display title=display>display</a> property is set to a value other than <span class=css data-link-type=maybe title=none>none</span>, and <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> elements are available for referencing even when the <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-flexbox-1/#propdef-display title=display>display</a> property on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element or any of its ancestors is set to <span class=css data-link-type=maybe title=none>none</span>.
 
 <h2 class="heading settled heading" data-level=7 id=FilterEffectsRegion><span class=secno>7 </span><span class=content>Filter effects region</span><a class=self-link href=#FilterEffectsRegion></a></h2>
 
@@ -741,7 +713,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
       Defines the coordinate system for attributes <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>.
     </p>
     <p>
-      If <a class=attr-name data-link-type=maybe href=#FilterElementFilterUnitsAttribute title=filterunits>filterUnits</a> is equal to <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>, <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a> represent values in the current user coordinate system in place at the time when the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element is referenced (i.e., the user coordinate system for the element referencing the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element via a <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property).
+      If <a class=attr-name data-link-type=maybe href=#FilterElementFilterUnitsAttribute title=filterunits>filterUnits</a> is equal to <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>, <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a> represent values in the current user coordinate system in place at the time when the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element is referenced (i.e., the user coordinate system for the element referencing the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element via a <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property).
     </p>
     <p>
       If <a class=attr-name data-link-type=maybe href=#FilterElementFilterUnitsAttribute title=filterunits>filterUnits</a> is equal to <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>, then <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a> represent fractions or percentages of the bounding box on the referencing element (see <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#ObjectBoundingBoxUnits>object bounding box units</a>).
@@ -762,7 +734,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
       These attributes define a rectangular region on the canvas to which this filter applies.
     </p>
     <p>
-      The amount of memory and processing time required to apply the filter are related to the size of this rectangle and the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute of the filter. <span class=issue id=issue-8f534bfb><a class=self-link href=#issue-8f534bfb></a>Remove sentence about filterRes </span>
+      The amount of memory and processing time required to apply the filter are related to the size of this rectangle and the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute of the filter. <span class=issue id=issue-e4fe787f><a class=self-link href=#issue-e4fe787f></a>Remove sentence about <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a></span>
     </p>
     <p>
       The coordinate system for these attributes depends on the value for attribute <a class=attr-name href=#FilterElementFilterUnitsAttribute>‘filterUnits‘</a>.
@@ -811,7 +783,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
   Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <a href=#FilterEffectsRegion>filter region</a> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.<span class=issue id=issue-efceff62><a class=self-link href=#issue-efceff62></a>Preserve sentence about skewing</span> Explicit values for attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> can either help or harm performance. If <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is smaller than the automatic (i.e., default) filter resolution, then filter effect might have faster performance (usually at the expense of quality). If <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is larger than the automatic (i.e., default) filter resolution, then filter effects performance will usually be slower. <span class=issue id=issue-eed401d0><a class=self-link href=#issue-eed401d0></a>To be removed</span>
 </p>
 <p class="note authoring">
-  It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a> and percentages values greater than <span class=css data-link-type=maybe title=100%>100%</span> for <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>. This, for example, is why the defaults for the filter effects region are <span class=css data-link-type=maybe title='x="-10%" y="-10%" width="120%" height="120%"'>x="-10%" y="-10%" width="120%" height="120%"</span>. <span class=issue id=issue-5e7b98df><a class=self-link href=#issue-5e7b98df></a>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#clip-path title=clip-path>clip-path</a> property.</span>
+  It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a> and percentages values greater than <span class=css data-link-type=maybe title=100%>100%</span> for <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>. This, for example, is why the defaults for the filter effects region are <span class=css data-link-type=maybe title='x="-10%" y="-10%" width="120%" height="120%"'>x="-10%" y="-10%" width="120%" height="120%"</span>. <span class=issue id=issue-5e7b98df><a class=self-link href=#issue-5e7b98df></a>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.</span>
 </p>
 
 <h2 class="heading settled heading" data-level=8 id=FilterPrimitivesOverview><span class=secno>8 </span><span class=content>Filter primitives</span><a class=self-link href=#FilterPrimitivesOverview></a></h2>
@@ -1089,10 +1061,11 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <h3 class="heading settled heading" data-level=8.4 id=feBlendElement><span class=secno>8.4 </span><span class=content>Filter primitive <a href=#feBlendElement><code class=element-name>&lt;feBlend&gt;</code></a></span><a class=self-link href=#feBlendElement></a></h3>
 
-<table class=propdef summary="feBlend element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-feblend>feBlend<a class=self-link href=#propdef-feblend></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-feblend>feBlend<a class=self-link href=#elementdef-feblend></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -1244,10 +1217,11 @@ provides the list of available image blending modes:</p>
 
 <h3 class="heading settled heading" data-level=8.5 id=feColorMatrixElement><span class=secno>8.5 </span><span class=content>Filter primitive <a href=#feColorMatrixElement><code class=element-name>&lt;feColorMatrix&gt;</code></a></span><a class=self-link href=#feColorMatrixElement></a></h3>
 
-<table class=propdef summary="feColorMatrix element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fecolormatrix>feColorMatrix<a class=self-link href=#propdef-fecolormatrix></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fecolormatrix>feColorMatrix<a class=self-link href=#elementdef-fecolormatrix></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -1439,10 +1413,11 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>        </li>
 
 <h3 class="heading settled heading" data-level=8.6 id=feComponentTransferElement><span class=secno>8.6 </span><span class=content>Filter primitive <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a></span><a class=self-link href=#feComponentTransferElement></a></h3>
 
-<table class=propdef summary="feComponentTransfer element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fecomponenttransfer>feComponentTransfer<a class=self-link href=#propdef-fecomponenttransfer></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fecomponenttransfer>feComponentTransfer<a class=self-link href=#elementdef-fecomponenttransfer></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -1472,7 +1447,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>The calculations are performed on non-premultiplied color values.
 
-<p>The child elements of a <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a> element specify the <i data-link-type=dfn title="transfer functions">transfer functions</i> for the four channels:
+<p>The child elements of a <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a> element specify the transfer functions for the four channels:
 
 <p><ul id=transferFuncElements>
   <li><a href=#feFuncRElement><code class=element-name>&lt;feFuncR&gt;</code></a> - transfer function for the red component of the input graphic</li> 
@@ -1492,10 +1467,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
   
 <div id=feFuncRElement></div>
 
-<table class=propdef summary="feFuncR element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fefuncr>feFuncR<a class=self-link href=#propdef-fefuncr></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fefuncr>feFuncR<a class=self-link href=#elementdef-fefuncr></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermTransferFunctionElement>Transfer function element</a></td>
@@ -1517,10 +1493,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <div id=feFuncGElement></div>
 
-<table class=propdef summary="feFuncG element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fefuncg>feFuncG<a class=self-link href=#propdef-fefuncg></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fefuncg>feFuncG<a class=self-link href=#elementdef-fefuncg></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermTransferFunctionElement>Transfer function element</a></td>
@@ -1542,10 +1519,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <div id=feFuncBElement></div>
 
-<table class=propdef summary="feFuncB element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fefuncb>feFuncB<a class=self-link href=#propdef-fefuncb></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fefuncb>feFuncB<a class=self-link href=#elementdef-fefuncb></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermTransferFunctionElement>Transfer function element</a></td>
@@ -1567,10 +1545,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <div id=feFuncAElement></div>
 
-<table class=propdef summary="feFuncA element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fefunca>feFuncA<a class=self-link href=#propdef-fefunca></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fefunca>feFuncA<a class=self-link href=#elementdef-fefunca></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermTransferFunctionElement>Transfer function element</a></td>
@@ -1799,10 +1778,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.7 id=feCompositeElement><span class=secno>8.7 </span><span class=content>Filter primitive <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a></span><a class=self-link href=#feCompositeElement></a></h3>
 
-<table class=propdef summary="feComposite element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fecomposite>feComposite<a class=self-link href=#propdef-fecomposite></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fecomposite>feComposite<a class=self-link href=#elementdef-fecomposite></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -1827,7 +1807,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 <p>The <em>arithmetic</em> operation is useful for combining the output from the <a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a> and <a href=#feSpecularLightingElement><code class=element-name>&lt;feSpecularLighting&gt;</code></a> filters with texture data. It is also useful for implementing <em>dissolve</em>. If the <em>arithmetic</em> operation is chosen, each result pixel is computed using the following formula:
 
 <pre>result = k1*i1*i2 + k2*i1 + k3*i2 + k4
-</pre>where:<ul>
+</pre><p>where:<ul>
   <li>
     <code>i1</code> and <code>i2</code> indicate the corresponding pixel channel values of the input image, which map to <a class=attr-name href=#FilterPrimitiveInAttribute>‘in‘</a> and <a class=attr-name data-link-type=maybe href=#feCompositeIn2Attribute title=in2>in2</a> respectively
   </li>
@@ -2074,10 +2054,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.8 id=feConvolveMatrixElement><span class=secno>8.8 </span><span class=content>Filter primitive <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a></span><a class=self-link href=#feConvolveMatrixElement></a></h3>
 
-<table class=propdef summary="feConvolveMatrix element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-feconvolvematrix>feConvolveMatrix<a class=self-link href=#propdef-feconvolvematrix></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-feconvolvematrix>feConvolveMatrix<a class=self-link href=#elementdef-feconvolvematrix></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -2097,8 +2078,8 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 </table>
 
 
-<p class=issue id=issue-f3914f50><a class=self-link href=#issue-f3914f50></a>
-  feConvolveMatrix is device pixel dependent. The spec suggests to use <a class=attr-name href=#FilterElementFilterResAttribute>‘filterRes‘</a> or <span class=xxx><a class=property data-link-type=propdesc title=kernelunitlength>kernelUnitLength</a></span> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
+<p class=issue id=issue-5e7c0f30><a class=self-link href=#issue-5e7c0f30></a>
+  feConvolveMatrix is device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> or <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
 </p>
 
 <p>feConvolveMatrix applies a matrix convolution filter effect. A convolution combines pixels in the input image with neighboring pixels to produce a resulting image. A wide variety of imaging operations can be achieved through convolutions, including blurring, edge detection, sharpening, embossing and beveling.
@@ -2133,7 +2114,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> produce resolution-independent results, an explicit value should be provided for either the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element and/or attribute <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. <span class=issue id=issue-ac4da719><a class=self-link href=#issue-ac4da719></a>filterRes removed, control just over kernel size?</span>
 
-<p><a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute). If the pixel grid established by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not scaled to match the pixel grid established by attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. <span class=issue id=issue-26586564><a class=self-link href=#issue-26586564></a>So we scale the image to the coordinates of the <span class=xxx><a class=property data-link-type=propdesc title=kernelunitlength>kernelUnitLength</a></span> to produce device independent results.</span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
+<p><a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute). If the pixel grid established by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not scaled to match the pixel grid established by attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. <span class=issue id=issue-698f0bfa><a class=self-link href=#issue-698f0bfa></a>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results.</span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
 
 <p>When the image must be resampled to match the coordinate system defined by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is considerably smaller than a device pixel. <span class=issue id=issue-1a4e87b4><a class=self-link href=#issue-1a4e87b4></a>Require for all UAs.</span>
 
@@ -2246,12 +2227,12 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
       <p class=filterformula>
         ALPHA<sub>X,Y</sub> = ( <br>
                       SUM
-        <sub>I=0 to [<a href=#feConvolveMatrixElementOrderAttribute><a class=property data-link-type=propdesc title=ordery>orderY</a></a>-1]</sub> { <br>
+        <sub>I=0 to [<a href=#feConvolveMatrixElementOrderAttribute>orderY</a>-1]</sub> { <br>
                         SUM
-        <sub>J=0 to [<a href=#feConvolveMatrixElementOrderAttribute><a class=property data-link-type=propdesc title=orderx>orderX</a></a>-1]</sub> { <br>
+        <sub>J=0 to [<a href=#feConvolveMatrixElementOrderAttribute>orderX</a>-1]</sub> { <br>
                           SOURCE
         <sub>X-<a class=attr-name href=#feConvolveMatrixElementTargetXAttribute>‘targetX‘</a>+J, Y-<a class=attr-name href=#feConvolveMatrixElementTargetYAttribute>‘targetY‘</a>+I</sub> * 
-        <a class=attr-name href=#feConvolveMatrixElementKernelMatrixAttribute>‘kernelMatrix‘</a><sub><a href=#feConvolveMatrixElementOrderAttribute><a class=property data-link-type=propdesc title=orderx>orderX</a></a>-J-1,  <a href=#feConvolveMatrixElementOrderAttribute><a class=property data-link-type=propdesc title=ordery>orderY</a></a>-I-1</sub> <br>
+        <a class=attr-name href=#feConvolveMatrixElementKernelMatrixAttribute>‘kernelMatrix‘</a><sub><a href=#feConvolveMatrixElementOrderAttribute>orderX</a>-J-1,  <a href=#feConvolveMatrixElementOrderAttribute>orderY</a>-I-1</sub> <br>
                         } <br>
                       } <br>
                     ) / 
@@ -2268,10 +2249,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.9 id=feCustomElement><span class=secno>8.9 </span><span class=content>Filter primitive <a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a></span><a class=self-link href=#feCustomElement></a></h3>
 
-<table class=propdef summary="feCustom element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fecustom>feCustom<a class=self-link href=#propdef-fecustom></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fecustom>feCustom<a class=self-link href=#elementdef-fecustom></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -2310,13 +2292,14 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 <p>The calculations are performed on non-premultiplied color values.
 
 <p id=feCustomSourceElement>
-  Each <a class=property data-link-type=propdesc href=#propdef-fecustom title=fecustom>feCustom</a> element can have any number of <a class=property data-link-type=propdesc href=#propdef-fecustomsource title=fecustomsource>feCustomSource</a> subelements. Each <a class=property data-link-type=propdesc href=#propdef-fecustomsource title=fecustomsource>feCustomSource</a> references one resource.
+  Each <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fecustom title=fecustom>feCustom</a> element can have any number of <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fecustomsource title=fecustomsource>feCustomSource</a> subelements. Each <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fecustomsource title=fecustomsource>feCustomSource</a> references one resource.
 </p>
 
-<table class=propdef summary="feCustomSource element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fecustomsource>feCustomSource<a class=self-link href=#propdef-fecustomsource></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fecustomsource>feCustomSource<a class=self-link href=#elementdef-fecustomsource></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td>None.</td>
@@ -2361,13 +2344,14 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 </div>
 
 <p id=feCustomParamElement>
-  Each <a class=property data-link-type=propdesc href=#propdef-fecustom title=fecustom>feCustom</a> element can have any number of <a class=property data-link-type=propdesc href=#propdef-fecustomparam title=fecustomparam>feCustomParam</a> subelements. Each <a class=property data-link-type=propdesc href=#propdef-fecustomparam title=fecustomparam>feCustomParam</a> node passes one parameter.
+  Each <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fecustom title=fecustom>feCustom</a> element can have any number of <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fecustomparam title=fecustomparam>feCustomParam</a> subelements. Each <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fecustomparam title=fecustomparam>feCustomParam</a> node passes one parameter.
 </p>
 
-<table class=propdef summary="feCustomParam element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fecustomparam>feCustomParam<a class=self-link href=#propdef-fecustomparam></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fecustomparam>feCustomParam<a class=self-link href=#elementdef-fecustomparam></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td>None.</td>
@@ -2454,7 +2438,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
       <span class=anim-target>Animatable: yes.</span>
     </dd>
     <dt id=feCustomParamTextureAttribute><a class=self-link href=#feCustomParamTextureAttribute></a>
-      <span class=adef>image</span> = "<em><a class="production css-code" data-link-type=type href=#typedef-url0 title="<url>">&lt;url&gt;</a></em>"
+      <span class=adef>image</span> = "<em><a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a></em>"
     </dt>
     <dd>
       Indicates that a image is passed as parameter to the shaders.<br>
@@ -2472,10 +2456,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.10 id=feDiffuseLightingElement><span class=secno>8.10 </span><span class=content>Filter primitive <a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a></span><a class=self-link href=#feDiffuseLightingElement></a></h3>
 
-<table class=propdef summary="feDiffuseLighting element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fediffuselighting>feDiffuseLighting<a class=self-link href=#propdef-fediffuselighting></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fediffuselighting>feDiffuseLighting<a class=self-link href=#elementdef-fediffuselighting></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -2498,7 +2483,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>This filter primitive lights an image using the alpha channel as a bump map. The resulting image is an RGBA opaque image based on the light color with alpha = 1.0 everywhere. The lighting calculation follows the standard diffuse component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map.
 
-<p>The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> compositing method. Multiple <a data-link-type=dfn href=#light-sources title="light sources">light sources</a> can be simulated by adding several of these light maps together before applying it to the texture image.
+<p>The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> compositing method. Multiple <a data-link-type=dfn href=#light-source title="light sources">light sources</a> can be simulated by adding several of these light maps together before applying it to the texture image.
 
 <p>The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a> produce resolution-independent results, an explicit value should be provided for either the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element and/or attribute <a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. <span class=issue id=issue-2727c971><a class=self-link href=#issue-2727c971></a>Remove filterRes.</span>
 
@@ -2758,7 +2743,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>L, the unit vector from the image sample to the light, is calculated as follows:
 
-<p>For Infinite light sources it is constant:
+<p>For Infinite <a data-link-type=dfn href=#light-source title="light sources">light sources</a> it is constant:
 
 <p class=filterformula>
   L<sub>x</sub> = cos(azimuth)*cos(elevation)<br>
@@ -2832,14 +2817,15 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
   </dl>
 </div>
 
-<p>The light source is defined by one of the child elements <a href=#feDistantLightElement><code class=element-name>&lt;feDistantLight&gt;</code></a>, <a href=#fePointLightElement><code class=element-name>&lt;fePointLight&gt;</code></a> or <a href=#feSpotLightElement><code class=element-name>&lt;feSpotLight&gt;</code></a>. The light color is specified by property <a class=property href=#LightingColorProperty>‘lighting-color‘</a>.
+<p>The <a data-link-type=dfn href=#light-source title="light source">light source</a> is defined by one of the child elements <a href=#feDistantLightElement><code class=element-name>&lt;feDistantLight&gt;</code></a>, <a href=#fePointLightElement><code class=element-name>&lt;fePointLight&gt;</code></a> or <a href=#feSpotLightElement><code class=element-name>&lt;feSpotLight&gt;</code></a>. The light color is specified by property <a class=property data-link-type=propdesc href=#propdef-lighting-color title=lighting-color>lighting-color</a>.
 
 <h3 class="heading settled heading" data-level=8.11 id=feDisplacementMapElement><span class=secno>8.11 </span><span class=content>Filter primitive <a href=#feDisplacementMapElement><code class=element-name>&lt;feDisplacementMap&gt;</code></a></span><a class=self-link href=#feDisplacementMapElement></a></h3>
 
-<table class=propdef summary="feDisplacementMap element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fedisplacementmap>feDisplacementMap<a class=self-link href=#propdef-fedisplacementmap></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fedisplacementmap>feDisplacementMap<a class=self-link href=#elementdef-fedisplacementmap></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -2922,10 +2908,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.12 id=feDropShadowElement><span class=secno>8.12 </span><span class=content>Filter primitive <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a></span><a class=self-link href=#feDropShadowElement></a></h3>
 
-<table class=propdef summary="feDropShadow element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fedropshadow>feDropShadow<a class=self-link href=#propdef-fedropshadow></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fedropshadow>feDropShadow<a class=self-link href=#elementdef-fedropshadow></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -2977,7 +2964,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 </pre><br>  </li>
   <li>Composite the result of the <a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a> in step 3 with the result of the
   <a href=#feOffsetElement><code class=element-name>&lt;feOffset&gt;</code></a> in step 2 as if an <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> filter primitive with
-  <a href=#feCompositeOperatorAttribute><span class=css data-link-type=maybe title=operator>operator</span></a>=<a class=property data-link-type=propdesc title=in>in</a> was applied:
+  <a href=#feCompositeOperatorAttribute><span class=css data-link-type=maybe title=operator>operator</span></a>="in" was applied:
     <pre class=examplesource>&lt;feComposite in2="offsetblur" operator="in"/&gt;
 </pre><br>  </li>
   <li>Finally merge the result of the previous step, doing processing as if the
@@ -2988,19 +2975,10 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 &lt;/feMerge&gt;
 </pre>  </li>
 </ol>
-<p class="note implementation">
-  Note that while the definition of the <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> filter primitive says
-  that it can be expanded into an equivalent tree it is not required that it is
-  implemented like that. The expectation is that user agents can optimize the
-  handling by not having to do all the steps separately.
-</p>
 
-<p>
-  Beyond the DOM interface <a href=#InterfaceSVGFEDropShadowElement>SVGFEDropShadowElement</a> there is no way of
-  accessing the internals of the <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> filter primitive, meaning
-  <span class=requirement id=assert_dropShadowShadowTrees>if the filter primitive is implemented as an
-     equivalent tree then that tree must not be exposed to the DOM.</span>
-</p>
+<p class=note>Note: that while the definition of the <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> filter primitive says that it can be expanded into an equivalent tree it is not required that it is implemented like that. The expectation is that user agents can optimize the handling by not having to do all the steps separately.
+
+<p>Beyond the DOM interface <a href=#InterfaceSVGFEDropShadowElement>SVGFEDropShadowElement</a> there is no way of accessing the internals of the <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> filter primitive, meaning <span class=requirement id=assert_dropShadowShadowTrees>if the filter primitive is implemented as an equivalent tree then that tree must not be exposed to the DOM.</span>
 
 <div class=adef-list>
   <p>
@@ -3067,10 +3045,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.13 id=feFloodElement><span class=secno>8.13 </span><span class=content>Filter primitive <a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a></span><a class=self-link href=#feFloodElement></a></h3>
 
-<table class=propdef summary="feFlood element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-feflood>feFlood<a class=self-link href=#propdef-feflood></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-feflood>feFlood<a class=self-link href=#elementdef-feflood></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3186,10 +3165,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.14 id=feGaussianBlurElement><span class=secno>8.14 </span><span class=content>Filter primitive <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a></span><a class=self-link href=#feGaussianBlurElement></a></h3>
 
-<table class=propdef summary="feGaussianBlur element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fegaussianblur>feGaussianBlur<a class=self-link href=#propdef-fegaussianblur></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fegaussianblur>feGaussianBlur<a class=self-link href=#elementdef-fegaussianblur></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3315,10 +3295,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.15 id=feImageElement><span class=secno>8.15 </span><span class=content>Filter primitive <a href=#feImageElement><code class=element-name>&lt;feImage&gt;</code></a></span><a class=self-link href=#feImageElement></a></h3>
 
-<table class=propdef summary="feImage element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-feimage>feImage<a class=self-link href=#propdef-feimage></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-feimage>feImage<a class=self-link href=#elementdef-feimage></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3445,10 +3426,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.16 id=feMergeElement><span class=secno>8.16 </span><span class=content>Filter primitive <a href=#feMergeElement><code class=element-name>&lt;feMerge&gt;</code></a></span><a class=self-link href=#feMergeElement></a></h3>
 
-<table class=propdef summary="feMerge element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-femerge>feMerge<a class=self-link href=#propdef-femerge></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-femerge>feMerge<a class=self-link href=#elementdef-femerge></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3473,13 +3455,14 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 <p>Many effects produce a number of intermediate layers in order to create the final output image. This filter allows us to collapse those into a single image. Although this could be done by using n-1 Composite-filters, it is more convenient to have this common operation available in this form, and offers the implementation some additional flexibility.
 
 <p id=feMergeNodeElement>
-  Each <a class=property data-link-type=propdesc href=#propdef-femerge title=femerge>feMerge</a> element can have any number of <a class=property data-link-type=propdesc href=#propdef-femergenode title=femergenode>feMergeNode</a> subelements, each of which has an <a href=#CommonAttributes><span class=attr-name>in</span></a> attribute.
+  Each <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-femerge title=femerge>feMerge</a> element can have any number of <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-femergenode title=femergenode>feMergeNode</a> subelements, each of which has an <a href=#CommonAttributes><span class=attr-name>in</span></a> attribute.
 </p>
 
-<table class=propdef summary="feMergeNode element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-femergenode>feMergeNode<a class=self-link href=#propdef-femergenode></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-femergenode>feMergeNode<a class=self-link href=#elementdef-femergenode></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td>None.</td>
@@ -3507,10 +3490,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.17 id=feMorphologyElement><span class=secno>8.17 </span><span class=content>Filter primitive <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a></span><a class=self-link href=#feMorphologyElement></a></h3>
 
-<table class=propdef summary="feMorphology element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-femorphology>feMorphology<a class=self-link href=#propdef-femorphology></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-femorphology>feMorphology<a class=self-link href=#elementdef-femorphology></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3628,10 +3612,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.18 id=feOffsetElement><span class=secno>8.18 </span><span class=content>Filter primitive <a href=#feOffsetElement><code class=element-name>&lt;feOffset&gt;</code></a></span><a class=self-link href=#feOffsetElement></a></h3>
 
-<table class=propdef summary="feOffset element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-feoffset>feOffset<a class=self-link href=#propdef-feoffset></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-feoffset>feOffset<a class=self-link href=#elementdef-feoffset></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3690,10 +3675,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.19 id=feSpecularLightingElement><span class=secno>8.19 </span><span class=content>Filter primitive <a href=#feSpecularLightingElement><code class=element-name>&lt;feSpecularLighting&gt;</code></a></span><a class=self-link href=#feSpecularLightingElement></a></h3>
 
-<table class=propdef summary="feSpecularLighting element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fespecularlighting>feSpecularLighting<a class=self-link href=#propdef-fespecularlighting></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fespecularlighting>feSpecularLighting<a class=self-link href=#elementdef-fespecularlighting></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3716,7 +3702,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).
 
-<p>This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture using the <em>add</em> term of the <em>arithmetic</em> <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> method. Multiple light sources can be simulated by adding several of these light maps before applying it to the texture image.
+<p>This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture using the <em>add</em> term of the <em>arithmetic</em> <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> method. Multiple <a data-link-type=dfn href=#light-source title="light sources">light sources</a> can be simulated by adding several of these light maps before applying it to the texture image.
 
 <p>The resulting RGBA image is computed as follows:
 
@@ -3788,7 +3774,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
     </dt>
     <dd>
       The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href=#SurfaceNormalCalculations>surface normal calculation formulas</a>. By specifying value(s) for <span class=attr-name>kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class=attr-name>kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <span class=attr-name>filterRes</span> and <span class=attr-name>kernelUnitLength</span>. Discussion of intermediate images are in the <a href=#introduction>Introduction</a> and in the description of attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a>. <span class=issue id=issue-4557ad5e><a class=self-link href=#issue-4557ad5e></a>Does the user actually want to have device dependent results? Maybe the default shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.<br>
-      If a negative or zero value is specified the default value will be used instead.</span> <span class=issue id=issue-d11a9f69><a class=self-link href=#issue-d11a9f69></a><a class=property data-link-type=propdesc title=filterres>filterRes</a> is deprecated</span><br>
+      If a negative or zero value is specified the default value will be used instead.</span> <span class=issue id=issue-03cfbdcd><a class=self-link href=#issue-03cfbdcd></a><a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is deprecated</span><br>
       <span class=anim-target>Animatable: yes.</span>
     </dd>
   </dl>
@@ -3800,10 +3786,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.20 id=feTileElement><span class=secno>8.20 </span><span class=content>Filter primitive <a href=#feTileElement><code class=element-name>&lt;feTile&gt;</code></a></span><a class=self-link href=#feTileElement></a></h3>
 
-<table class=propdef summary="feTile element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fetile>feTile<a class=self-link href=#propdef-fetile></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fetile>feTile<a class=self-link href=#elementdef-fetile></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -3836,10 +3823,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h3 class="heading settled heading" data-level=8.21 id=feTurbulenceElement><span class=secno>8.21 </span><span class=content>Filter primitive <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a></span><a class=self-link href=#feTurbulenceElement></a></h3>
 
-<table class=propdef summary="feTurbulence element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-feturbulence>feTurbulence<a class=self-link href=#propdef-feturbulence></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-feturbulence>feTurbulence<a class=self-link href=#elementdef-feturbulence></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermFilterPrimitiveElement>Filter primitive element</a></td>
@@ -4310,15 +4298,16 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 
 <h3 class="heading settled heading" data-level=10.1 id=LightSourceIntro><span class=secno>10.1 </span><span class=content>Introduction</span><a class=self-link href=#LightSourceIntro></a></h3>
 
-<p>The following sections define the elements that define a <i data-link-type=dfn title="light source">light source</i>, <a href=#feDistantLightElement><code class=element-name>&lt;feDistantLight&gt;</code></a>, <a href=#fePointLightElement><code class=element-name>&lt;fePointLight&gt;</code></a> and <a href=#feSpotLightElement><code class=element-name>&lt;feSpotLight&gt;</code></a>, and property <a class=property data-link-type=propdesc href=#propdef-lighting-color title=lighting-color>lighting-color</a>, which defines the color of the light.
+<p>The following sections define the elements that define a <a data-link-type=dfn href=#light-source title="light source">light source</a>, <a href=#feDistantLightElement><code class=element-name>&lt;feDistantLight&gt;</code></a>, <a href=#fePointLightElement><code class=element-name>&lt;fePointLight&gt;</code></a> and <a href=#feSpotLightElement><code class=element-name>&lt;feSpotLight&gt;</code></a>, and property <a class=property data-link-type=propdesc href=#propdef-lighting-color title=lighting-color>lighting-color</a>, which defines the color of the light.
 
 
 <h3 class="heading settled heading" data-level=10.2 id=feDistantLightElement><span class=secno>10.2 </span><span class=content>Light source <a href=#feDistantLightElement><code class=element-name>&lt;feDistantLight&gt;</code></a></span><a class=self-link href=#feDistantLightElement></a></h3>
 
-<table class=propdef summary="feDistantLight element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fedistantlight>feDistantLight<a class=self-link href=#propdef-fedistantlight></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fedistantlight>feDistantLight<a class=self-link href=#elementdef-fedistantlight></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermLightSourceElement>Light source element</a></td>
@@ -4385,10 +4374,11 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 
 <h3 class="heading settled heading" data-level=10.3 id=fePointLightElement><span class=secno>10.3 </span><span class=content>Light source <a href=#fePointLightElement><code class=element-name>&lt;fePointLight&gt;</code></a></span><a class=self-link href=#fePointLightElement></a></h3>
 
-<table class=propdef summary="fePointLight element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fepointlight>fePointLight<a class=self-link href=#propdef-fepointlight></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fepointlight>fePointLight<a class=self-link href=#elementdef-fepointlight></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermLightSourceElement>Light source element</a></td>
@@ -4442,10 +4432,11 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 
 <h3 class="heading settled heading" data-level=10.4 id=feSpotLightElement><span class=secno>10.4 </span><span class=content>Light source <a href=#feSpotLightElement><code class=element-name>&lt;feSpotLight&gt;</code></a></span><a class=self-link href=#feSpotLightElement></a></h3>
 
-<table class=propdef summary="feSpotLight element">
+<table class=definition-table>
   <tr>
     <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-fespotlight>feSpotLight<a class=self-link href=#propdef-fespotlight></a></dfn></tr>
+    <td><dfn data-dfn-type=element data-export="" id=elementdef-fespotlight>feSpotLight<a class=self-link href=#elementdef-fespotlight></a></dfn>
+  </tr>
   <tr>
     <th>Categories:</th>
     <td><a href=#TermLightSourceElement>Light source element</a></td>
@@ -4609,7 +4600,7 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 
 <h3 class="heading settled heading" data-level=11.2 id=the-at-filter-rule><span class=secno>11.2 </span><span class=content>The @filter rule</span><a class=self-link href=#the-at-filter-rule></a></h3>
 
-<p>The @filter rule allows specifying custom-filter definitions (like <a href=#shading-language>shaders</a>) for the use of the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property. A @filter rule consists of the keyword "@filter", followed by an identifier giving a name for the custom-filter (which will be referenced using the 'custom()' filter function), followed by a set of custom-filter descriptors.
+<p>The @filter rule allows specifying custom-filter definitions (like <a href=#shading-language>shaders</a>) for the use of the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property. A @filter rule consists of the keyword "@filter", followed by an identifier giving a name for the custom-filter (which will be referenced using the 'custom()' filter function), followed by a set of custom-filter descriptors.
 
 <p>The general form of an @filter at-rule is:
 
@@ -4643,7 +4634,7 @@ descriptor: value;</pre>
     </tr>
     <tr>
       <th>Value:</th>
-      <td>[ <a class="production css-code" data-link-type=type href=#typedef-url0 title="<url>">&lt;url&gt;</a> [ format( <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#string-value title="<string>">&lt;string&gt;</a> ) ]? ]#</td>
+      <td>[ <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> [ format( <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#string-value title="<string>">&lt;string&gt;</a> ) ]? ]#</td>
     </tr>
     <tr>
       <th>Initial:</th>
@@ -4720,15 +4711,15 @@ src: url(#warp);
 
 <pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-param>&lt;param&gt;<a class=self-link href=#typedef-param></a></dfn> = IDENT <a class="production css-code" data-link-type=type href=#typedef-param-value title="<param-value>">&lt;param-value&gt;</a></pre>
 <pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-param-value>&lt;param-value&gt;<a class=self-link href=#typedef-param-value></a></dfn> = <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-transforms-1/#typedef-transform-function title="<transform-function>">&lt;transform-function&gt;</a>+ | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a>{1,4} | <a class="production css-code" data-link-type=function href=#funcdef-array title=array()>&lt;array()&gt;</a> |
-        <a class="production css-code" data-link-type=type href=#typedef-mat title="<mat>">&lt;mat&gt;</a> | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#typedef-color title="<color>">&lt;color&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-url0 title="<url>">&lt;url&gt;</a></pre>
+        <a class="production css-code" data-link-type=type href=#typedef-mat title="<mat>">&lt;mat&gt;</a> | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#typedef-color title="<color>">&lt;color&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a></pre>
 <pre class=prod><dfn class=css-code data-dfn-type=type data-export="" id=typedef-mat>&lt;mat&gt;<a class=self-link href=#typedef-mat></a></dfn> = <a class="production css-code" data-link-type=function href=#funcdef-mat2 title=mat2()>&lt;mat2()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-mat3 title=mat3()>&lt;mat3()&gt;</a> | <a class="production css-code" data-link-type=function href=#funcdef-mat4 title=mat4()>&lt;mat4()&gt;</a></pre>
-<dl>
+<dl data-dfn-for=@filter>
   <dt>
 <pre class=prod><dfn class=css-code data-dfn-type=function data-export="" id=funcdef-array title=array()>array()<a class=self-link href=#funcdef-array></a></dfn> = array( <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a># )</pre>  </dt>
   <dd>
     Specifies an array of number values. 
   </dd>
-  <dt><dfn class=css-code data-dfn-type=type data-export="" id=typedef-url>&lt;url&gt;<a class=self-link href=#typedef-url></a></dfn></dt>
+  <dt><a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a></dt>
   <dd>
     A URL reference to an image source.
   </dd>
@@ -4813,7 +4804,7 @@ src: url(#warp);
   </dd>
 </dl>
 
-<h3 class="heading settled heading" data-level=11.6 id=custom-filter-mix><span class=secno>11.6 </span><span class=content>Custom filter compositing: the <i data-link-type=dfn title=mix>mix</i> descriptor</span><a class=self-link href=#custom-filter-mix></a></h3>
+<h3 class="heading settled heading" data-level=11.6 id=custom-filter-mix><span class=secno>11.6 </span><span class=content>Custom filter compositing: the <a class=property data-link-type=propdesc href=#descdef-mix title=mix>mix</a> descriptor</span><a class=self-link href=#custom-filter-mix></a></h3>
 
 <table class=descdef data-dfn-for=@filter>
   <tbody>
@@ -4931,7 +4922,7 @@ src: url(#warp);
   </li>
 </ul>
 
-<p>All the parameters specified in the <a class="production css-code" data-link-type=type href=#typedef-param title="<param>">&lt;param&gt;</a> values (e.g., the <a href=#custom-filter>custom-filter at-rule</a> or the <a class="production css-code" data-link-type=function href=#funcdef-custom title=custom()>&lt;custom()&gt;</a> filter function) will be available as uniforms to the shader(s) referenced by the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property.
+<p>All the parameters specified in the <a class="production css-code" data-link-type=type href=#typedef-param title="<param>">&lt;param&gt;</a> values (e.g., the <a href=#custom-filter>custom-filter at-rule</a> or the <a class="production css-code" data-link-type=function href=#funcdef-custom title=custom()>&lt;custom()&gt;</a> filter function) will be available as uniforms to the shader(s) referenced by the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property.
 
 <p>The group may consider applying further restrictions to the GLSL ES language to make it easier to write vertex and fragment shaders.
 
@@ -5311,7 +5302,7 @@ css_ColorMatrix = mat4(
     </tr>
     <tr>
       <th>
-        <a class="production css-code" data-link-type=type href=http://dev.w3.org/fxtf/filters/#ltarraygt title="<array>">&lt;array&gt;</a>
+        <a class="production css-code" data-link-type=function href=#funcdef-array title=array()>&lt;array()&gt;</a>
       </th>
       <td>
         float[n]
@@ -5337,7 +5328,7 @@ css_ColorMatrix = mat4(
     </tr>
     <tr>
       <th>
-        <a href=http://www.w3.org/TR/css3-images/#image-list-type><var>&lt;image-list&gt;</var></a>
+        <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-list-type title="<image-list>">&lt;image-list&gt;</a>
       </th>
       <td>
         sampler2D
@@ -5436,12 +5427,12 @@ void main()
 
 <h2 class="heading settled heading" data-level=13 id=FilterCSSImageValue><span class=secno>13 </span><span class=content>Filter CSS <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> values</span><a class=self-link href=#FilterCSSImageValue></a></h2>
 
-<p>CSS <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> values can be filtered with the filter functions specified for the CSS <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property. This specification introduces the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> function with the following syntax:
+<p>CSS <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> values can be filtered with the filter functions specified for the CSS <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property. This specification introduces the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> function with the following syntax:
 
 <pre class=prod><dfn class=css-code data-dfn-type=function data-export="" id=funcdef-filter title=filter()>filter()<a class=self-link href=#funcdef-filter></a></dfn> = filter(
-    [ <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#string-value title="<string>">&lt;string&gt;</a> ], [ <a class="production css-code" data-link-type=type href=#typedef-filter-function title="<filter-function>">&lt;filter-function&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-url0 title="<url>">&lt;url&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-child-selector title="<child-selector>">&lt;child-selector&gt;</a> ]+
+    [ <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#string-value title="<string>">&lt;string&gt;</a> ], [ <a class="production css-code" data-link-type=type href=#typedef-filter-function title="<filter-function>">&lt;filter-function&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-child-selector title="<child-selector>">&lt;child-selector&gt;</a> ]+
 )</pre>
-<p>The <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> function takes two arguments. The first argument is an <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a>. The second is a filter function list as specified for the CSS <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property. The function takes the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> parameter and applies the filter rules, returning a processing image. Dimension and origin of the passed image must be preserved. Filter- and filter effect regions are sized according to the input image size.
+<p>The <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> function takes two arguments. The first argument is an <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a>. The second is a filter function list as specified for the CSS <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property. The function takes the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> parameter and applies the filter rules, returning a processing image. Dimension and origin of the passed image must be preserved. Filter- and filter effect regions are sized according to the input image size.
 
 <p class=note>Note: Since the dimension and origin of the original image must be preserved, some filter effects like <var>drop-shadow</var> on a fully opaque image may not have any affect.
 
@@ -5526,7 +5517,7 @@ void main()
 <pre class=examplesource> &lt;filter id="blur"&gt;
     &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
   &lt;/filter&gt; </pre>
-<p>Where edge mode computes to <span class=css data-link-type=maybe title=none>none</span> for the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property and to <span class=css data-link-type=maybe title=duplicate>duplicate</span> for the CSS Image <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> function. 
+<p>Where edge mode computes to <span class=css data-link-type=maybe title=none>none</span> for the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property and to <span class=css data-link-type=maybe title=duplicate>duplicate</span> for the CSS Image <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> function. 
 
 <h3 class="heading settled heading" data-level=14.10 id=dropshadowEquivalent><span class=secno>14.10 </span><span class=content>drop-shadow</span><a class=self-link href=#dropshadowEquivalent></a></h3>
 
@@ -5568,7 +5559,7 @@ void main()
       </li>
     </ul>
   </li>
-  <li id=reference-animation><a class=self-link href=#reference-animation></a>If the <em>from-</em> or the <em>to-filter</em> consists of at least one <a class="production css-code" data-link-type=type href=#typedef-url0 title="<url>">&lt;url&gt;</a> or <a class="production css-code" data-link-type=type href=#typedef-child-selector title="<child-selector>">&lt;child-selector&gt;</a>:
+  <li id=reference-animation><a class=self-link href=#reference-animation></a>If the <em>from-</em> or the <em>to-filter</em> consists of at least one <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> or <a class="production css-code" data-link-type=type href=#typedef-child-selector title="<child-selector>">&lt;child-selector&gt;</a>:
     <ul>
       <li>There is no interpolation possible.
       </li>
@@ -5726,11 +5717,11 @@ void main()
 
 <p>Filter operations must be implemented in such a way that they always take the same amount of time regardless of the pixel values if one of the input filter primitives is flagged as "tainted".
 
-<h3 class="heading settled heading" data-level=18.2 id=fedisplacemnentmap-restrictions><span class=secno>18.2 </span><span class=content><a class=property data-link-type=propdesc href=#propdef-fedisplacementmap title=fedisplacementmap>feDisplacementMap</a> Restrictions</span><a class=self-link href=#fedisplacemnentmap-restrictions></a></h3>
+<h3 class="heading settled heading" data-level=18.2 id=fedisplacemnentmap-restrictions><span class=secno>18.2 </span><span class=content><a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fedisplacementmap title=fedisplacementmap>feDisplacementMap</a> Restrictions</span><a class=self-link href=#fedisplacemnentmap-restrictions></a></h3>
 
 <p>If <a href=#feDisplacementMapElement><code class=element-name>&lt;feDisplacementMap&gt;</code></a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a class=attr-name data-link-type=maybe href=#feDisplacementMapIn2Attribute title=in2>in2</a>), then <a href=#feDisplacementMapElement><code class=element-name>&lt;feDisplacementMap&gt;</code></a> must not proceed with the filter operation and acts as a <a data-link-type=dfn href=#pass-through-filter title="pass through filter">pass through filter</a>.
 
-<h3 class="heading settled heading" data-level=18.3 id=fecustom-restrictions><span class=secno>18.3 </span><span class=content><a class=property data-link-type=propdesc href=#propdef-fecustom title=fecustom>feCustom</a> Restrictions</span><a class=self-link href=#fecustom-restrictions></a></h3>
+<h3 class="heading settled heading" data-level=18.3 id=fecustom-restrictions><span class=secno>18.3 </span><span class=content><a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/filters/#propdef-fecustom title=fecustom>feCustom</a> Restrictions</span><a class=self-link href=#fecustom-restrictions></a></h3>
 
 <p><a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a> is applying a processing operation on input filter primitives. It is important that no protected information leaks from that operation. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must validate each shader as described in section <a href=#validate-custom-filter-shaders>Validate custom filter shaders</a>. If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <a data-link-type=dfn href=#pass-through-filter title="pass through filter">pass through filter</a>. (See <a href=http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security>security study</a> <span class=issue id=issue-c0b03324><a class=self-link href=#issue-c0b03324></a>Make this a normative reference.</span>)
 
@@ -5740,7 +5731,7 @@ void main()
 
 <h3 class="heading settled heading" data-level=18.4 id=origin-restrictions><span class=secno>18.4 </span><span class=content>Origin Restrictions</span><a class=self-link href=#origin-restrictions></a></h3>
 
-<p>User agents must use the <a href=http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch>potentially CORS-enabled fetch</a> method defined by the <a data-biblio-type=normative data-link-type=biblio href=#html5 title=html5>[HTML5]</a> specification for the <a class=property data-link-type=propdesc href=#propdef-filter0 title=filter>filter</a> property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet’s URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value <span class=css data-link-type=maybe title=none>none</span> had been specified.
+<p>User agents must use the <a href=http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch>potentially CORS-enabled fetch</a> method defined by the <a data-biblio-type=normative data-link-type=biblio href=#html5 title=html5>[HTML5]</a> specification for the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet’s URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value <span class=css data-link-type=maybe title=none>none</span> had been specified.
 
 <div class=issue id=issue-16108a6f><a class=self-link href=#issue-16108a6f></a>
 <p>
@@ -6379,7 +6370,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=fecomponenttransferfunction/type>feComponentTransferFunction/type</a></span> on the
+          Corresponds to attribute <a class=attr-name data-link-type=maybe href=#feComponentTransferTypeAttribute title=type>type</a> on the
           given element. Takes one of the SVG_FECOMPONENTTRANSFER_TYPE_* constants
           defined on this interface.
         </div>
@@ -6390,7 +6381,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=fecomponenttransferfunction/tablevalues>feComponentTransferFunction/tableValues</a></span>
+          Corresponds to attribute <a class=attr-name href=#feComponentTransferTableValuesAttribute>‘tableValues‘</a>
           on the given element.
         </div>
       </dd>
@@ -6400,7 +6391,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=fecomponenttransferfunction/slope>feComponentTransferFunction/slope</a></span> on the
+          Corresponds to attribute <a class=attr-name data-link-type=maybe href=#feComponentTransferSlopeAttribute title=slope>slope</a> on the
           given element.
         </div>
       </dd>
@@ -6410,7 +6401,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=fecomponenttransferfunction/intercept>feComponentTransferFunction/intercept</a></span> on
+          Corresponds to attribute <a class=attr-name href=#feComponentTransferInterceptAttribute>‘intercept‘</a> on
           the given element.
         </div>
       </dd>
@@ -6420,7 +6411,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=fecomponenttransferfunction/amplitude>feComponentTransferFunction/amplitude</a></span> on
+          Corresponds to attribute <a class=attr-name href=#feComponentTransferAmplitudeAttribute>‘amplitude‘</a> on
           the given element.
         </div>
       </dd>
@@ -6430,7 +6421,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=fecomponenttransferfunction/exponent>feComponentTransferFunction/exponent</a></span> on
+          Corresponds to attribute <a class=attr-name href=#feComponentTransferExponentAttribute>‘exponent‘</a> on
           the given element.
         </div>
       </dd>
@@ -6440,7 +6431,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=fecomponenttransferfunction/offset>feComponentTransferFunction/offset</a></span> on the
+          Corresponds to attribute <a class=attr-name data-link-type=maybe href=#feComponentTransferOffsetAttribute title=offset>offset</a> on the
           given element.
         </div>
       </dd>
@@ -6823,7 +6814,7 @@ readonly attribute <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.ht
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <span class=xxx><a class=property data-link-type=propdesc title=feconvolvematrixelement/edgemode>feConvolveMatrixElement/edgeMode</a></span> on the given
+          Corresponds to attribute <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementEdgeModeAttribute title=edgemode>edgeMode</a> on the given
           <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> element. Takes one of the SVG_EDGEMODE_*
           constants defined on this interface.
         </div>
@@ -8524,7 +8515,7 @@ References</span><a class=self-link href=#references></a></h2>
 
 <h3 class="no-num no-ref heading settled heading" id=normative><span class=content>
 Normative References</span><a class=self-link href=#normative></a></h3>
-<div data-fill-with=normative-references><dl><dt id=compositing title=COMPOSITING><a class=self-link href=#compositing></a>[COMPOSITING]<dd>Rik Cabanier; Nikos Andronikos. <a href=http://www.w3.org/TR/2012/WD-compositing-20120816/>Compositing and Blending 1.0</a>. 16 August 2012. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2012/WD-compositing-20120816/>http://www.w3.org/TR/2012/WD-compositing-20120816/</a><dt id=css21 title=CSS21><a class=self-link href=#css21></a>[CSS21]<dd>Bert Bos; et al. <a href=http://www.w3.org/TR/2011/REC-CSS2-20110607>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a>. 7 June 2011. W3C Recommendation. URL: <a href=http://www.w3.org/TR/2011/REC-CSS2-20110607>http://www.w3.org/TR/2011/REC-CSS2-20110607</a><dt id=css3-conditional title=CSS3-CONDITIONAL><a class=self-link href=#css3-conditional></a>[CSS3-CONDITIONAL]<dd>L. David Baron. <a href=http://www.w3.org/TR/2013/CR-css3-conditional-20130404/>CSS Conditional Rules Module Level 3</a>. 4 April 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/CR-css3-conditional-20130404/>http://www.w3.org/TR/2013/CR-css3-conditional-20130404/</a><dt id=css3bg title=CSS3BG><a class=self-link href=#css3bg></a>[CSS3BG]<dd>Bert Bos; Elika J. Etemad; Brad Kemper. <a href=http://www.w3.org/TR/2012/CR-css3-background-20120724/>CSS Backgrounds and Borders Module Level 3</a>. 24 July 2012. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2012/CR-css3-background-20120724/>http://www.w3.org/TR/2012/CR-css3-background-20120724/</a><dt id=css3val title=CSS3VAL><a class=self-link href=#css3val></a>[CSS3VAL]<dd>Håkon Wium Lie; Tab Atkins; Elika J. Etemad. <a href=http://www.w3.org/TR/2013/CR-css3-values-20130730/>CSS Values and Units Module Level 3</a>. 30 July 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/CR-css3-values-20130730/>http://www.w3.org/TR/2013/CR-css3-values-20130730/</a><dt id=cssom title=CSSOM><a class=self-link href=#cssom></a>[CSSOM]<dd>Anne van Kesteren. <a href=http://www.w3.org/TR/2011/WD-cssom-20110712/>CSSOM</a>. 12 July 2011. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2011/WD-cssom-20110712/>http://www.w3.org/TR/2011/WD-cssom-20110712/</a><dt id=dom title=DOM><a class=self-link href=#dom></a>[DOM]<dd>Anne van Kesteren; et al. <a href=http://www.w3.org/TR/2012/WD-dom-20121206/>DOM4</a>. 6 December 2012. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2012/WD-dom-20121206/>http://www.w3.org/TR/2012/WD-dom-20121206/</a><dt id=glsles title=GLSLES><a class=self-link href=#glsles></a>[GLSLES]<dd>R. J. Simpson; John Kessenich. <a href=http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf>The OpenGL® ES Shading Language</a>. 12 May 2009. Revision 17 URL: <a href=http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf>http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf</a><dt id=html5 title=HTML5><a class=self-link href=#html5></a>[HTML5]<dd>Robin Berjon; et al. <a href=http://www.w3.org/TR/2013/CR-html5-20130806/>HTML5</a>. 6 August 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/CR-html5-20130806/>http://www.w3.org/TR/2013/CR-html5-20130806/</a><dt id=rfc2119 title=RFC2119><a class=self-link href=#rfc2119></a>[RFC2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=selectors4 title=SELECTORS4><a class=self-link href=#selectors4></a>[SELECTORS4]<dd>Elika J. Etemad; Tab Atkins Jr.. <a href=http://www.w3.org/TR/2013/WD-selectors4-20130502/>Selectors Level 4</a>. 2 May 2013. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/WD-selectors4-20130502/>http://www.w3.org/TR/2013/WD-selectors4-20130502/</a><dt id=svg11 title=SVG11><a class=self-link href=#svg11></a>[SVG11]<dd>Erik Dahlström; et al. <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/>Scalable Vector Graphics (SVG) 1.1 (Second Edition)</a>. 16 August 2011. W3C Recommendation. URL: <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/>http://www.w3.org/TR/2011/REC-SVG11-20110816/</a><dt id=webgl title=WEBGL><a class=self-link href=#webgl></a>[WEBGL]<dd>C. Marrin. <a href=http://www.khronos.org/registry/webgl/specs/1.0/>WebGL Specification Version 1.0</a>. 1 March 2013. Version 1.0.2 URL: <a href=http://www.khronos.org/registry/webgl/specs/1.0/>http://www.khronos.org/registry/webgl/specs/1.0/</a></dl></div>
+<div data-fill-with=normative-references><dl><dt id=compositing title=COMPOSITING><a class=self-link href=#compositing></a>[COMPOSITING]<dd>Rik Cabanier; Nikos Andronikos. <a href=http://www.w3.org/TR/2012/WD-compositing-20120816/>Compositing and Blending 1.0</a>. 16 August 2012. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2012/WD-compositing-20120816/>http://www.w3.org/TR/2012/WD-compositing-20120816/</a><dt id=css21 title=CSS21><a class=self-link href=#css21></a>[CSS21]<dd>Bert Bos; et al. <a href=http://www.w3.org/TR/2011/REC-CSS2-20110607>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a>. 7 June 2011. W3C Recommendation. URL: <a href=http://www.w3.org/TR/2011/REC-CSS2-20110607>http://www.w3.org/TR/2011/REC-CSS2-20110607</a><dt id=css3-conditional title=CSS3-CONDITIONAL><a class=self-link href=#css3-conditional></a>[CSS3-CONDITIONAL]<dd>L. David Baron. <a href=http://www.w3.org/TR/2013/CR-css3-conditional-20130404/>CSS Conditional Rules Module Level 3</a>. 4 April 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/CR-css3-conditional-20130404/>http://www.w3.org/TR/2013/CR-css3-conditional-20130404/</a><dt id=css3bg title=CSS3BG><a class=self-link href=#css3bg></a>[CSS3BG]<dd>Bert Bos; Elika J. Etemad; Brad Kemper. <a href=http://www.w3.org/TR/2012/CR-css3-background-20120724/>CSS Backgrounds and Borders Module Level 3</a>. 24 July 2012. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2012/CR-css3-background-20120724/>http://www.w3.org/TR/2012/CR-css3-background-20120724/</a><dt id=css3val title=CSS3VAL><a class=self-link href=#css3val></a>[CSS3VAL]<dd>Håkon Wium Lie; Tab Atkins; Elika J. Etemad. <a href=http://www.w3.org/TR/2013/CR-css3-values-20130730/>CSS Values and Units Module Level 3</a>. 30 July 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/CR-css3-values-20130730/>http://www.w3.org/TR/2013/CR-css3-values-20130730/</a><dt id=cssom title=CSSOM><a class=self-link href=#cssom></a>[CSSOM]<dd>Anne van Kesteren. <a href=http://www.w3.org/TR/2011/WD-cssom-20110712/>CSSOM</a>. 12 July 2011. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2011/WD-cssom-20110712/>http://www.w3.org/TR/2011/WD-cssom-20110712/</a><dt id=dom title=DOM><a class=self-link href=#dom></a>[DOM]<dd>Anne van Kesteren; et al. <a href=http://www.w3.org/TR/2012/WD-dom-20121206/>DOM4</a>. 6 December 2012. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2012/WD-dom-20121206/>http://www.w3.org/TR/2012/WD-dom-20121206/</a><dt id=html5 title=HTML5><a class=self-link href=#html5></a>[HTML5]<dd>Robin Berjon; et al. <a href=http://www.w3.org/TR/2013/CR-html5-20130806/>HTML5</a>. 6 August 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/CR-html5-20130806/>http://www.w3.org/TR/2013/CR-html5-20130806/</a><dt id=rfc2119 title=RFC2119><a class=self-link href=#rfc2119></a>[RFC2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=selectors4 title=SELECTORS4><a class=self-link href=#selectors4></a>[SELECTORS4]<dd>Elika J. Etemad; Tab Atkins Jr.. <a href=http://www.w3.org/TR/2013/WD-selectors4-20130502/>Selectors Level 4</a>. 2 May 2013. W3C Working Draft. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/WD-selectors4-20130502/>http://www.w3.org/TR/2013/WD-selectors4-20130502/</a><dt id=svg11 title=SVG11><a class=self-link href=#svg11></a>[SVG11]<dd>Erik Dahlström; et al. <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/>Scalable Vector Graphics (SVG) 1.1 (Second Edition)</a>. 16 August 2011. W3C Recommendation. URL: <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/>http://www.w3.org/TR/2011/REC-SVG11-20110816/</a></dl></div>
 
 <h3 class="no-num no-ref heading settled heading" id=informative><span class=content>
 Informative References</span><a class=self-link href=#informative></a></h3>
@@ -8533,6 +8524,7 @@ Informative References</span><a class=self-link href=#informative></a></h3>
 <h2 class="no-num no-ref heading settled heading" id=index><span class=content>
 Index</span><a class=self-link href=#index></a></h2>
 <div data-fill-with=index><ul class=indexlist>
+<li>, <a href=#descdef- title="section 11.1">11.1</a>
 <li>array(), <a href=#funcdef-array title="section 11.4">11.4</a>
 <li>attached, <a href=#attached title="section 11.5">11.5</a>
 <li>auto, <a href=#auto title="section 11.6">11.6</a>
@@ -8543,6 +8535,7 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>brightness(), <a href=#funcdef-brightness title="section 5">5</a>
 <li>child, <a href=#child title="section 5">5</a>
 <li>&lt;child-selector&gt;, <a href=#typedef-child-selector title="section 5">5</a>
+<li>color-interpolation-filters, <a href=#propdef-color-interpolation-filters title="section 9">9</a>
 <li>color matrix, <a href=#color-matrix title="section 12.5">12.5</a>
 <li>&lt;composite-mode&gt;, <a href=#typedef-composite-mode title="section 11.6">11.6</a>
 <li>contrast(), <a href=#funcdef-contrast title="section 5">5</a>
@@ -8550,7 +8543,37 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>&lt;custom-filter-type&gt;, <a href=#typedef-custom-filter-type title="section 11.1">11.1</a>
 <li>detached, <a href=#detached title="section 11.5">11.5</a>
 <li>drop-shadow(), <a href=#funcdef-drop-shadow title="section 5">5</a>
-<li>@filter, <a href=#at-ruledef-filter title="section 11.2">11.2</a>
+<li>feBlend, <a href=#elementdef-feblend title="section 8.4">8.4</a>
+<li>feColorMatrix, <a href=#elementdef-fecolormatrix title="section 8.5">8.5</a>
+<li>feComponentTransfer, <a href=#elementdef-fecomponenttransfer title="section 8.6">8.6</a>
+<li>feComposite, <a href=#elementdef-fecomposite title="section 8.7">8.7</a>
+<li>feConvolveMatrix, <a href=#elementdef-feconvolvematrix title="section 8.8">8.8</a>
+<li>feCustom, <a href=#elementdef-fecustom title="section 8.9">8.9</a>
+<li>feCustomParam, <a href=#elementdef-fecustomparam title="section 8.9">8.9</a>
+<li>feCustomSource, <a href=#elementdef-fecustomsource title="section 8.9">8.9</a>
+<li>feDiffuseLighting, <a href=#elementdef-fediffuselighting title="section 8.10">8.10</a>
+<li>feDisplacementMap, <a href=#elementdef-fedisplacementmap title="section 8.11">8.11</a>
+<li>feDistantLight, <a href=#elementdef-fedistantlight title="section 10.2">10.2</a>
+<li>feDropShadow, <a href=#elementdef-fedropshadow title="section 8.12">8.12</a>
+<li>feFlood, <a href=#elementdef-feflood title="section 8.13">8.13</a>
+<li>feFuncA, <a href=#elementdef-fefunca title="section 8.6">8.6</a>
+<li>feFuncB, <a href=#elementdef-fefuncb title="section 8.6">8.6</a>
+<li>feFuncG, <a href=#elementdef-fefuncg title="section 8.6">8.6</a>
+<li>feFuncR, <a href=#elementdef-fefuncr title="section 8.6">8.6</a>
+<li>feGaussianBlur, <a href=#elementdef-fegaussianblur title="section 8.14">8.14</a>
+<li>feImage, <a href=#elementdef-feimage title="section 8.15">8.15</a>
+<li>feMerge, <a href=#elementdef-femerge title="section 8.16">8.16</a>
+<li>feMergeNode, <a href=#elementdef-femergenode title="section 8.16">8.16</a>
+<li>feMorphology, <a href=#elementdef-femorphology title="section 8.17">8.17</a>
+<li>feOffset, <a href=#elementdef-feoffset title="section 8.18">8.18</a>
+<li>fePointLight, <a href=#elementdef-fepointlight title="section 10.3">10.3</a>
+<li>feSpecularLighting, <a href=#elementdef-fespecularlighting title="section 8.19">8.19</a>
+<li>feSpotLight, <a href=#elementdef-fespotlight title="section 10.4">10.4</a>
+<li>feTile, <a href=#elementdef-fetile title="section 8.20">8.20</a>
+<li>feTurbulence, <a href=#elementdef-feturbulence title="section 8.21">8.21</a>
+<li>filter<ul><li><small>(property), <a href=#propdef-filter title="section 5">5</a></small>
+<li><small>(element), <a href=#elementdef-filter title="section 6">6</a></small>
+</ul><li>@filter, <a href=#at-ruledef-filter title="section 11.2">11.2</a>
 <li>filter(), <a href=#funcdef-filter title="section 13">13</a>
 <li>&lt;filter-function&gt;, <a href=#typedef-filter-function title="section 5">5</a>
 <li>&lt;filter-function-list&gt;, <a href=#typedef-filter-function-list title="section 5">5</a>
@@ -8559,75 +8582,52 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>&lt;filter-primitive-reference&gt;, <a href=#typedef-filter-primitive-reference title="section 8.2">8.2</a>
 <li>filter primitives, <a href=#filter-primitives title="section 4">4</a>
 <li>filter_rule, <a href=#filter_rule title="section 11.2">11.2</a>
+<li>flood-color, <a href=#propdef-flood-color title="section 8.13.1">8.13.1</a>
+<li>flood-opacity, <a href=#propdef-flood-opacity title="section 8.13.2">8.13.2</a>
+<li>geometry, <a href=#descdef-geometry title="section 11.5">11.5</a>
 <li>&lt;geometry-shape&gt;, <a href=#typedef-geometry-shape title="section 11.5">11.5</a>
 <li>grayscale(), <a href=#funcdef-grayscale title="section 5">5</a>
 <li>grid(), <a href=#funcdef-grid title="section 11.5">11.5</a>
 <li>group_rule_body, <a href=#group_rule_body title="section 11.2">11.2</a>
 <li>hue-rotate(), <a href=#funcdef-hue-rotate title="section 5">5</a>
 <li>invert(), <a href=#funcdef-invert title="section 5">5</a>
-<li>light sources, <a href=#light-sources title="section 4">4</a>
+<li>lighting-color, <a href=#propdef-lighting-color title="section 10.5">10.5</a>
+<li>light source, <a href=#light-source title="section 4">4</a>
 <li>local coordinate system, <a href=#local-coordinate-system title="section 4">4</a>
+<li>margin, <a href=#descdef-margin title="section 11.7">11.7</a>
 <li>&lt;mat&gt;, <a href=#typedef-mat title="section 11.4">11.4</a>
 <li>mat2(), <a href=#funcdef-mat2 title="section 11.4">11.4</a>
 <li>mat3(), <a href=#funcdef-mat3 title="section 11.4">11.4</a>
 <li>mat4(), <a href=#funcdef-mat4 title="section 11.4">11.4</a>
+<li>mix, <a href=#descdef-mix title="section 11.6">11.6</a>
 <li>mix color, <a href=#mix-color title="section 12.5">12.5</a>
 <li>multiplied color, <a href=#multiplied-color title="section 12.5">12.5</a>
+<li>Name:, <a href=#propdef-name title="section 8.13.1">8.13.1</a>
 <li>null filter, <a href=#null-filter title="section 4">4</a>
 <li>object bounding box units, <a href=#object-bounding-box-units title="section 4">4</a>
 <li>opacity(), <a href=#funcdef-opacity title="section 5">5</a>
 <li>&lt;param&gt;, <a href=#typedef-param title="section 11.4">11.4</a>
+<li>parameters, <a href=#descdef-parameters title="section 11.4">11.4</a>
 <li>&lt;param-value&gt;, <a href=#typedef-param-value title="section 11.4">11.4</a>
 <li>pass through filter, <a href=#pass-through-filter title="section 4">4</a>
 <li>saturate(), <a href=#funcdef-saturate title="section 5">5</a>
 <li>sepia(), <a href=#funcdef-sepia title="section 5">5</a>
+<li>src, <a href=#descdef-src title="section 11.3">11.3</a>
 <li>transfer function elements, <a href=#transfer-function-elements title="section 4">4</a>
-<li>&lt;url&gt;, <a href=#typedef-url0 title="section 5">5</a>
-<li>&lt;url&gt;, <a href=#typedef-url title="section 11.4">11.4</a>
+<li>&lt;url&gt;, <a href=#typedef-url title="section 5">5</a>
 <li>user coordinate system, <a href=#user-coordinate-system title="section 4">4</a>
 <li>vertex mesh, <a href=#vertex-mesh title="section 4">4</a>
 </ul></div>
 
 <h2 class="no-num no-ref heading settled heading" id=property-index><span class=content>
 Property index</span><a class=self-link href=#property-index></a></h2>
-<div data-fill-with=property-index><table class=proptable><thead><tr><th scope=col>Name<th scope=col>Value<th scope=col>Initial<th scope=col>Applies to<th scope=col>Inh.<th scope=col>%ages<th scope=col>Media<th scope=col>Animatable<th scope=col>Attributes<th scope=col>Categories<th scope=col>Computed value<th scope=col>Content model<th scope=col>Dom interfaces<tbody>
-<tr><th scope=row><a data-property="">filter</a><td>none | &lt;filter-function-list&gt;<td>none<td>All elements. In SVG, it applies to container elements without the &lt;defs&gt; element and all graphics elements<td>no<td>n/a<td>visual<td>yes<td><td><td>as specified<td><td>
-<tr><th scope=row><a data-property="">filter</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’xlink attributes — ‘xlink:type’, ‘xlink:role’, ‘xlink:arcrole’, ‘xlink:title’‘class’‘style’‘externalResourcesRequired’‘x’‘y’‘width’‘height’‘filterRes’‘filterUnits’‘primitiveUnits’‘xlink:href’<td>None.<td><td>Any number of the following elements, in any order: descriptive  — &lt;desc&gt;, &lt;title&gt;, &lt;metadata&gt;filter primitive  — &lt;feBlend&gt;, &lt;feFlood&gt;, &lt;feColorMatrix&gt;, &lt;feComponentTransfer&gt;, &lt;feComposite&gt;, &lt;feConvolveMatrix&gt;, &lt;feCustom&gt;, &lt;feDiffuseLighting&gt;, &lt;feDisplacementMap&gt;, &lt;feDropShadow&gt;, &lt;feGaussianBlur&gt;, &lt;feImage&gt;, &lt;feMerge&gt;, &lt;feMorphology&gt;, &lt;feOffset&gt;, &lt;feSpecularLighting&gt;, &lt;feTile&gt;, &lt;feTurbulence&gt;&lt;animate&gt;&lt;set&gt;<td>SVGFilterElement
-<tr><th scope=row><a data-property="">feBlend</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘in2’‘mode’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEBlendElement
-<tr><th scope=row><a data-property="">feColorMatrix</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘type’‘values’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEColorMatrixElement
-<tr><th scope=row><a data-property="">feComponentTransfer</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;feFuncR&gt;&lt;feFuncG&gt;&lt;feFuncB&gt;&lt;feFuncA&gt;<td>SVGFEComponentTransferElement
-<tr><th scope=row><a data-property="">feFuncR</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’transfer function element attributes — ‘type’, ‘tableValues’, ‘slope’, ‘intercept’, ‘amplitude’, ‘exponent’, ‘offset’<td>Transfer function element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEFuncRElement
-<tr><th scope=row><a data-property="">feFuncG</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’transfer function element attributes — ‘type’, ‘tableValues’, ‘slope’, ‘intercept’, ‘amplitude’, ‘exponent’, ‘offset’<td>Transfer function element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEFuncGElement
-<tr><th scope=row><a data-property="">feFuncB</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’transfer function element attributes — ‘type’, ‘tableValues’, ‘slope’, ‘intercept’, ‘amplitude’, ‘exponent’, ‘offset’<td>Transfer function element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEFuncBElement
-<tr><th scope=row><a data-property="">feFuncA</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’transfer function element attributes — ‘type’, ‘tableValues’, ‘slope’, ‘intercept’, ‘amplitude’, ‘exponent’, ‘offset’<td>Transfer function element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEFuncAElement
-<tr><th scope=row><a data-property="">feComposite</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘in2’‘operator’‘k1’‘k2’‘k3’‘k4’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFECompositeElement
-<tr><th scope=row><a data-property="">feConvolveMatrix</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘order’‘kernelMatrix’‘divisor’‘bias’‘targetX’‘targetY’‘edgeMode’‘kernelUnitLength’‘preserveAlpha’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEConvolveMatrixElement
-<tr><th scope=row><a data-property="">feCustom</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘geometry’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;&lt;feCustomParam&gt;&lt;feCustomSource&gt;<td>SVGFECustomElement
-<tr><th scope=row><a data-property="">feCustomSource</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’‘src’‘format’<td>None.<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFECustomSourceElement
-<tr><th scope=row><a data-property="">feCustomParam</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’‘ident’‘type’‘values’‘color’‘texture’‘transform’<td>None.<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFECustomParamElement
-<tr><th scope=row><a data-property="">feDiffuseLighting</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘surfaceScale’‘diffuseConstant’‘kernelUnitLength’<td>Filter primitive element<td><td>Any number of descriptive elements
-    and exactly one light source element, in any order.<td>SVGFEDiffuseLightingElement
-<tr><th scope=row><a data-property="">feDisplacementMap</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘in2’‘scale’‘xChannelSelector’‘yChannelSelector’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEDisplacementMapElement
-<tr><th scope=row><a data-property="">feDropShadow</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘stdDeviation’‘dx’‘dy’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEDropShadowElement
-<tr><th scope=row><a data-property="">feFlood</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;&lt;animateColor&gt;<td>SVGFEFloodElement
-<tr><th scope=row><a data-property="">flood-color</a><td>currentColor | &lt;color&gt; &lt;icccolor&gt;?<td>black<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>N/A<td>visual<td>yes<td><td><td>as specified<td><td>
-<tr><th scope=row><a data-property="">flood-opacity</a><td>&lt;number&gt; | &lt;percentage&gt;<td>1<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>N/A<td>visual<td>yes<td><td><td>as specified<td><td>
-<tr><th scope=row><a data-property="">feGaussianBlur</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘stdDeviation’‘edgeMode’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEGaussianBlurElement
-<tr><th scope=row><a data-property="">feImage</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’xlink attributes — ‘xlink:type’, ‘xlink:role’, ‘xlink:arcrole’, ‘xlink:title’‘class’‘style’‘externalResourcesRequired’‘preserveAspectRatio’‘xlink:href’‘crossorigin’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;&lt;animateTransform&gt;<td>SVGFEImageElement
-<tr><th scope=row><a data-property="">feMerge</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;feMergeNode&gt;<td>SVGFEMergeElement
-<tr><th scope=row><a data-property="">feMergeNode</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’‘in’<td>None.<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEMergeNodeElement
-<tr><th scope=row><a data-property="">feMorphology</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘operator’‘radius’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEMorphologyElement
-<tr><th scope=row><a data-property="">feOffset</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘dx’‘dy’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEOffsetElement
-<tr><th scope=row><a data-property="">feSpecularLighting</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’‘surfaceScale’‘specularConstant’‘specularExponent’‘kernelUnitLength’<td>Filter primitive element<td><td>Any number of descriptive elements
-    and exactly one light source element, in any order.<td>SVGFESpecularLightingElement
-<tr><th scope=row><a data-property="">feTile</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘in’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFETileElement
-<tr><th scope=row><a data-property="">feTurbulence</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’presentation attributes — ‘alignment-baseline’, ‘baseline-shift’, ‘clip’, ‘clip-path’, ‘clip-rule’, ‘color’, ‘color-interpolation’, ‘color-interpolation-filters’, ‘color-profile’, ‘color-rendering’, ‘cursor’, ‘direction’, ‘display’, ‘dominant-baseline’, ‘enable-background’, ‘fill’, ‘fill-opacity’, ‘fill-rule’, ‘filter’, ‘flood-color’, ‘flood-opacity’, ‘font’, ‘font-family’, ‘font-size’, ‘font-size-adjust’, ‘font-stretch’, ‘font-style’, ‘font-variant’, ‘font-weight’, ‘glyph-orientation-horizontal’, ‘glyph-orientation-vertical’, ‘image-rendering’, ‘isolation’, ‘kerning’, ‘letter-spacing’, ‘lighting-color’, ‘marker’, ‘marker-end’, ‘marker-mid’, ‘marker-start’, ‘mask’, ‘mix-blend-mode’, ‘opacity’, ‘overflow’, ‘pointer-events’, ‘shape-rendering’, ‘stop-color’, ‘stop-opacity’, ‘stroke’, ‘stroke-dasharray’, ‘stroke-dashoffset’, ‘stroke-linecap’, ‘stroke-linejoin’, ‘stroke-miterlimit’, ‘stroke-opacity’, ‘stroke-width’, ‘text-anchor’, ‘text-decoration’, ‘text-rendering’, ‘unicode-bidi’, ‘visibility’, ‘word-spacing’, ‘writing-mode’filter primitive attributes — ‘x’, ‘y’, ‘width’, ‘height’, ‘result’‘class’‘style’‘baseFrequency’‘numOctaves’‘seed’‘stitchTiles’‘type’<td>Filter primitive element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFETurbulenceElement
-<tr><th scope=row><a data-property="">color-interpolation-filters</a><td>auto | sRGB | linearRGB<td>linearRGB<td>filter primitives<td>yes<td>N/A<td>visual<td>yes<td><td><td>as specified<td><td>
-<tr><th scope=row><a data-property="">feDistantLight</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’‘azimuth’‘elevation’<td>Light source element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEDistantLightElement
-<tr><th scope=row><a data-property="">fePointLight</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’‘x’‘y’‘z’<td>Light source element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFEPointLightElement
-<tr><th scope=row><a data-property="">feSpotLight</a><td><td><td><td><td><td><td><td>core attributes — ‘id’, ‘xml:base’, ‘xml:lang’, ‘xml:space’‘x’‘y’‘z’‘pointsAtX’‘pointsAtY’‘pointsAtZ’‘specularExponent’‘limitingConeAngle’<td>Light source element<td><td>Any number of the following elements, in any order: &lt;animate&gt;&lt;set&gt;<td>SVGFESpotLightElement
+<div data-fill-with=property-index><table class=proptable><thead><tr><th scope=col>Name<th scope=col>Value<th scope=col>Initial<th scope=col>Applies to<th scope=col>Inh.<th scope=col>%ages<th scope=col>Media<th scope=col>Animatable<th scope=col>Computed value<tbody>
+<tr><th scope=row><a data-property="">filter</a><td>none | &lt;filter-function-list&gt;<td>none<td>All elements. In SVG, it applies to container elements without the &lt;defs&gt; element and all graphics elements<td>no<td>n/a<td>visual<td>yes<td>as specified
+<tr><th scope=row><a data-property="">flood-color</a><td>currentColor | &lt;color&gt; &lt;icccolor&gt;?<td>black<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>N/A<td>visual<td>yes<td>as specified
+<tr><th scope=row><a data-property="">flood-opacity</a><td>&lt;number&gt; | &lt;percentage&gt;<td>1<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>N/A<td>visual<td>yes<td>as specified
+<tr><th scope=row><a data-property="">color-interpolation-filters</a><td>auto | sRGB | linearRGB<td>linearRGB<td>filter primitives<td>yes<td>N/A<td>visual<td>yes<td>as specified
 <tr><th scope=row><a data-property="">lighting-color</a><td>currentColor | &lt;color&gt; &lt;icccolor&gt;?<td>white<td>&lt;feDiffuseLighting&gt; and &lt;feSpecularLighting&gt;
-      elements<td>no<td>N/A<td>visual<td>yes<td><td><td>as specified<td><td></table><h3 class="no-num heading settled" id=miscellaneous-descriptor-table><span class=content>Miscellaneous Descriptors</span><a class=self-link href=#miscellaneous-descriptor-table></a></h3><table class=proptable><thead><tr><th scope=col>Name<th scope=col>Value<th scope=col>Initial<th scope=col>Computed value<tbody>
+      elements<td>no<td>N/A<td>visual<td>yes<td>as specified</table><h3 class="no-num heading settled" id=miscellaneous-descriptor-table><span class=content>Miscellaneous Descriptors</span><a class=self-link href=#miscellaneous-descriptor-table></a></h3><table class=proptable><thead><tr><th scope=col>Name<th scope=col>Value<th scope=col>Initial<th scope=col>Computed value<tbody>
 <tr><th scope-row=""><a data-property="">src</a><td>[ &lt;url&gt; [ format( &lt;string&gt; ) ]? ]#<td>N/A<td>
 <tr><th scope-row=""><a data-property="">parameters</a><td>&lt;param&gt;#<td>N/A<td>
 <tr><th scope-row=""><a data-property="">geometry</a><td>&lt;geometry-shape&gt;<td>grid(1 1 attached)<td>
@@ -8655,10 +8655,10 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 <a href=#issue-37b09b26> ↵ </a></p>
 
 <span class=issue>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?<a href=#issue-1ed55d6f> ↵ </a></span><span class=issue>To be removed<a href=#issue-eed401d00> ↵ </a></span>
-    <span class=issue>The current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns?<a href=#issue-ed50c31a> ↵ </a></span>. Any attributes which are defined on the referenced <span class=issue>Remove sentence about filterRes <a href=#issue-8f534bfb> ↵ </a></span>
+    <span class=issue>The current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns?<a href=#issue-ed50c31a> ↵ </a></span>. Any attributes which are defined on the referenced <span class=issue>Remove sentence about <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a><a href=#issue-e4fe787f> ↵ </a></span>
     <span class=issue>To be removed<a href=#issue-eed401d01> ↵ </a></span>
   <span class=issue>Preserve sentence about skewing<a href=#issue-efceff62> ↵ </a></span> Explicit values for attribute <span class=issue>To be removed<a href=#issue-eed401d0> ↵ </a></span>
-<span class=issue>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#clip-path title=clip-path>clip-path</a> property.<a href=#issue-5e7b98df> ↵ </a></span>
+<span class=issue>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-5e7b98df> ↵ </a></span>
 <span class=issue>Is there even a primitive that has different behavior?<a href=#issue-958f8287> ↵ </a></span>
 
 <p class=issue>
@@ -8674,14 +8674,14 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 <p class=issue>SVG WG decision: Enable blending without composition.<a href=#issue-903630f6> ↵ </a></p>
 
 <p class=issue>
-  feConvolveMatrix is device pixel dependent. The spec suggests to use <a class=attr-name href=#FilterElementFilterResAttribute>‘filterRes‘</a> or <span class=xxx><a class=property data-link-type=propdesc title=kernelunitlength>kernelUnitLength</a></span> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
-<a href=#issue-f3914f50> ↵ </a></p>
+  feConvolveMatrix is device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> or <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
+<a href=#issue-5e7c0f30> ↵ </a></p>
 
 <span class=issue>Sounds strange.<a href=#issue-adedf1f3> ↵ </a></span>
 
 <span class=issue>filterRes removed, control just over kernel size?<a href=#issue-ac4da719> ↵ </a></span>
 
-<span class=issue>So we scale the image to the coordinates of the <span class=xxx><a class=property data-link-type=propdesc title=kernelunitlength>kernelUnitLength</a></span> to produce device independent results.<a href=#issue-26586564> ↵ </a></span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
+<span class=issue>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results.<a href=#issue-698f0bfa> ↵ </a></span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
 
 <span class=issue>Require for all UAs.<a href=#issue-1a4e87b4> ↵ </a></span>
 
@@ -8720,7 +8720,7 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 
 <span class=issue>Do not disable rendering on negative or zero length?
       <a href=#issue-880abe39> ↵ </a></span><span class=issue>Does the user actually want to have device dependent results? Maybe the default shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.<br>
-      If a negative or zero value is specified the default value will be used instead.<a href=#issue-4557ad5e> ↵ </a></span> <span class=issue><a class=property data-link-type=propdesc title=filterres>filterRes</a> is deprecated<a href=#issue-d11a9f69> ↵ </a></span><p class=issue>
+      If a negative or zero value is specified the default value will be used instead.<a href=#issue-4557ad5e> ↵ </a></span> <span class=issue><a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is deprecated<a href=#issue-03cfbdcd> ↵ </a></span><p class=issue>
   Use pseudo code instead of C.
 <a href=#issue-6f6c40c6> ↵ </a></p>
 

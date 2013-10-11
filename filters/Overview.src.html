@@ -22,36 +22,6 @@ Abstract: Although originally designed for use in SVG, filter effects are a set 
 <script defer=defer src="https://test.csswg.org/harness/annotate.js#FILTER-EFFECTS_DEV" type="text/javascript"></script>
 <script type="text/javascript" src="../shared/MathJax/MathJax.js?config=MML_SVGorMML,local/local"></script>
 
-<style type="text/css">
-.example {
-  clear:both
-}
-
-th {
-  text-align:left
-}
-
-.pseudo-code {
-  font-family:monospace
-}
-.pseudo-code > ol {
-  list-style-type:decimal
-}
-.pseudo-code > ol > li > ol {
-  list-style-type:lower-latin
-}
-.pseudo-code > ol > li > ol > li > ol {
-  list-style-type:lower-roman
-}
-.pseudo-code ul {
-  list-style-type:disc
-}
-
-dd > p:nth-child(1) {
-  margin-top:0
-}
-</style>
-
 <h2 id="intro">Introduction</h2>
 
 A filter effect is a graphical operation that is applied to an element as it is drawn into the document. It is an image-based effect, in that it takes zero or more images as input, a number of parameters specific to the effect, and then produces an image as output. The output image is either rendered into the document instead of the original element, used as an input image to another filter effect, or provided as a CSS image value. <span class="issue">Remove the last sentence once ''filter()'' image function is in CSS Images Level 4.</span>
@@ -73,7 +43,7 @@ Filter effects are exposed with three levels of complexity:
 </ol>
 
 <div class="example">
-  <p>The following shows an example of graph of individual filter effects.
+  <p>The following shows an example of graph of individual filter effects.</p>
 
   <div class="figure">
     <img src="examples/filters01.png" alt="Example Filter">
@@ -235,6 +205,7 @@ The following pictures show the intermediate image results from each of the six 
     </tr>
   </tbody>
 </table>
+
 <ol>
   <li>
     Filter primitive <a>'feGaussianBlur'</a> takes input <a>SourceAlpha</a>, which is the alpha channel of the source graphic. The result is stored in a temporary buffer named "blur". Note that "blur" is used as input to both filter primitives 2 and 3.
@@ -258,7 +229,7 @@ The following pictures show the intermediate image results from each of the six 
 
 <h2 id="placement">Module interactions</h2>
 
-This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="http://www.w3.org/TR/CSS2/visuren.html" title="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <a href="http://www.w3.org/TR/CSS2/visuren.html#containing-block" title="Visual formatting model">containing block</a>, and/or the creation of a <a spec="css21">stacking context</a>.
+This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="http://www.w3.org/TR/CSS2/visuren.html" title="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <a spec="css21">containing block</a>, and/or the creation of a <a spec="css21">stacking context</a>.
 
 The compositing model follows the SVG compositing model [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such as 'border' [[!CSS3BG]].
 
@@ -285,7 +256,7 @@ When used in this specification, terms have the meanings assigned in this sectio
   </dd>
   <dt><dfn>transfer function elements</dfn></dt>
   <dd>
-    The set of <a>'feFuncR element'</a>, <a>'feFuncG element'</a>, <a>'feFuncB element'</a>, <a>'feFuncA element'</a> elements, that define the transfer function for the <a>'feComponentTransfer element'</a> <i>filter primitive</i>.
+    The set of <a>'feFuncR element'</a>, <a>'feFuncG element'</a>, <a>'feFuncB element'</a>, <a>'feFuncA element'</a> elements, that define the transfer function for the <a>'feComponentTransfer element'</a> <a>filter primitive</a>.
   </dd>
   <dt><dfn>bounding client rect</dfn></dt>
   <dd>
@@ -315,7 +286,7 @@ When used in this specification, terms have the meanings assigned in this sectio
   <dd>
     The set of elements that control the output of a <a>'filter element'</a> element, particularly: <a>'feSpotLight'</a>, <a>'feBlend'</a>, <a>'feColorMatrix'</a>, <a>'feComponentTransfer'</a>, <a>'feComposite'</a>, <a>'feConvolveMatrix'</a>, <a>'feCustom'</a>, <a>'feDiffuseLighting'</a>, <a>'feDisplacementMap'</a>, <a>'feDropShadow'</a>, <a>'feFlood'</a>, <a>'feGaussianBlur'</a>, <a>'feImage'</a>, <a>'feMerge'</a>, <a>'feMorphology'</a>, <a>'feOffset'</a>, <a>'feSpecularLighting'</a>, <a>'feTile'</a>, <a>'feTurbulence'</a>.
   </dd>
-  <dt><dfn>light sources</dfn></dt>
+  <dt><dfn>light source</dfn></dt>
   <dd>
     The following elements are light sources: <a>'feDistantLight'</a>, <a>'fePointLight'</a>, <a>'feSpotLight'</a>.
   </dd>
@@ -354,7 +325,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
 
 <pre class='prod'><dfn>&lt;child-selector></dfn> = <<select()>> | child</pre>
 
-<dl id="FilterFunction">
+<dl id="FilterFunction" dfn-for="filter">
   <dt><dfn>&lt;url></dfn></dt>
   <dd>
     A URL reference to a <a>'filter element'</a> element. For example ''url(commonmasks.svg#filter)''. If the URL references a non-existent object or the referenced object is not a <a>'filter element'</a> element, then the <i>null filter</i> will be applied instead. <span class="issue">Just ignore the URL reference instead of null filter?</span>
@@ -654,7 +625,7 @@ A <a>'filter element'</a> element can define a region on the canvas to which a g
       These attributes define a rectangular region on the canvas to which this filter applies.
     </p>
     <p>
-      The amount of memory and processing time required to apply the filter are related to the size of this rectangle and the <a>'filter/filterRes'</a> attribute of the filter. <span class="issue">Remove sentence about filterRes </span>
+      The amount of memory and processing time required to apply the filter are related to the size of this rectangle and the <a>'filter/filterRes'</a> attribute of the filter. <span class="issue">Remove sentence about <a>'filter/filterRes'</a></span>
     </p>
     <p>
       The coordinate system for these attributes depends on the value for attribute <a>'filterUnits'</a>.
@@ -1316,7 +1287,7 @@ for every pixel. It allows operations like brightness adjustment, contrast adjus
 
 The calculations are performed on non-premultiplied color values.
 
-The child elements of a <a>'feComponentTransfer'</a> element specify the <i>transfer functions</i> for the four channels:
+The child elements of a <a>'feComponentTransfer'</a> element specify the transfer functions for the four channels:
 
 <ul id="transferFuncElements">
   <li><a>'feFuncR'</a> - transfer function for the red component of the input graphic</li> 
@@ -1824,7 +1795,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
 <!--elementsummary feConvolveMatrix-->
 
 <p class="issue">
-  feConvolveMatrix is device pixel dependent. The spec suggests to use <a>'filterRes'</a> or <a>'kernelUnitLength'</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
+  feConvolveMatrix is device pixel dependent. The spec suggests to use <a>'filter/filterRes'</a> or <a>'feConvolveMatrix/kernelUnitLength'</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
 </p>
 
 feConvolveMatrix applies a matrix convolution filter effect. A convolution combines pixels in the input image with neighboring pixels to produce a resulting image. A wide variety of imaging operations can be achieved through convolutions, including blurring, edge detection, sharpening, embossing and beveling.
@@ -1859,7 +1830,7 @@ Let's focus on the color value at the second row and second column of the image 
 
 Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a>'feConvolveMatrix'</a> produce resolution-independent results, an explicit value should be provided for either the <a>'filter/filterRes'</a> attribute on the <a>'filter element'</a> element and/or attribute <a>'feConvolveMatrix/kernelUnitLength'</a>. <span class="issue">filterRes removed, control just over kernel size?</span>
 
-<a>'feConvolveMatrix/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). If the pixel grid established by <a>'feConvolveMatrix/kernelUnitLength'</a> is not scaled to match the pixel grid established by attribute <a>'filter/filterRes'</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a>'feConvolveMatrix/kernelUnitLength'</a>. <span class="issue">So we scale the image to the coordinates of the <a>'kernelUnitLength'</a> to produce device independent results.</span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
+<a>'feConvolveMatrix/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). If the pixel grid established by <a>'feConvolveMatrix/kernelUnitLength'</a> is not scaled to match the pixel grid established by attribute <a>'filter/filterRes'</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a>'feConvolveMatrix/kernelUnitLength'</a>. <span class="issue">So we scale the image to the coordinates of the <a>'feConvolveMatrix/kernelUnitLength'</a> to produce device independent results.</span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
 
 When the image must be resampled to match the coordinate system defined by <a>'feConvolveMatrix/kernelUnitLength'</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a>'image-rendering'</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a>'feConvolveMatrix/kernelUnitLength'</a> is considerably smaller than a device pixel. <span class="issue">Require for all UAs.</span>
 
@@ -1974,15 +1945,15 @@ When the image must be resampled to match the coordinate system defined by <a>'f
         ALPHA<sub>X,Y</sub>&nbsp;=&nbsp;(&nbsp;<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUM
         <sub>I=0&nbsp;to&nbsp;[<a href=
-        "#feConvolveMatrixElementOrderAttribute">'orderY'</a>-1]</sub>&nbsp;{&nbsp;<br>
+        "#feConvolveMatrixElementOrderAttribute">orderY</a>-1]</sub>&nbsp;{&nbsp;<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUM
         <sub>J=0&nbsp;to&nbsp;[<a href=
-        "#feConvolveMatrixElementOrderAttribute">'orderX'</a>-1]</sub>&nbsp;{&nbsp;<br>
+        "#feConvolveMatrixElementOrderAttribute">orderX</a>-1]</sub>&nbsp;{&nbsp;<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SOURCE
         <sub>X-<a>'targetX'</a>+J,&nbsp;Y-<a>'targetY'</a>+I</sub>&nbsp;*&nbsp;
         <a>'kernelMatrix'</a><sub><a href=
-        "#feConvolveMatrixElementOrderAttribute">'orderX'</a>-J-1,&nbsp; <a href= 
-        "#feConvolveMatrixElementOrderAttribute">'orderY'</a>-I-1</sub>&nbsp;<br>
+        "#feConvolveMatrixElementOrderAttribute">orderX</a>-J-1,&nbsp; <a href= 
+        "#feConvolveMatrixElementOrderAttribute">orderY</a>-I-1</sub>&nbsp;<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;/&nbsp;
@@ -2406,7 +2377,7 @@ In these formulas, the <code>dx</code> and <code>dy</code> values (e.g., <code>I
 
 L, the unit vector from the image sample to the light, is calculated as follows:
 
-For Infinite light sources it is constant:
+For Infinite <i>light sources</i> it is constant:
 
 <p class="filterformula">
   L<sub>x</sub> = cos(azimuth)*cos(elevation)<br>
@@ -2481,7 +2452,7 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
   </dl>
 </div>
 
-The light source is defined by one of the child elements <a>'feDistantLight'</a>, <a>'fePointLight'</a> or <a>'feSpotLight'</a>. The light color is specified by property <a>'lighting-color'</a>.
+The <i>light source</i> is defined by one of the child elements <a>'feDistantLight'</a>, <a>'fePointLight'</a> or <a>'feSpotLight'</a>. The light color is specified by property 'lighting-color'.
 
 <h3 id="feDisplacementMapElement">Filter primitive <a>'feDisplacementMap'</a></h3>
 
@@ -2594,7 +2565,7 @@ The above divided into steps:
   </li>
   <li>Composite the result of the <a>'feFlood'</a> in step 3 with the result of the
   <a>'feOffset'</a> in step 2 as if an <a>'feComposite'</a> filter primitive with
-  <a href="#feCompositeOperatorAttribute">''operator''</a>='in' was applied:
+  <a href="#feCompositeOperatorAttribute">''operator''</a>="in" was applied:
     <pre class="examplesource">
 &lt;feComposite in2="offsetblur" operator="in"/&gt;
 </pre><br>
@@ -2609,21 +2580,10 @@ The above divided into steps:
 </pre>
   </li>
 </ol>
-<p class="note implementation">
-  Note that while the definition of the <a>'feDropShadow'</a> filter primitive says
-  that it can be expanded into an equivalent tree it is not required that it is
-  implemented like that. The expectation is that user agents can optimize the
-  handling by not having to do all the steps separately.
-</p>
 
-<p>
-  Beyond the DOM interface <a href=
-  "#InterfaceSVGFEDropShadowElement">SVGFEDropShadowElement</a> there is no way of
-  accessing the internals of the <a>'feDropShadow'</a> filter primitive, meaning
-  <span class="requirement"
-     id="assert_dropShadowShadowTrees">if the filter primitive is implemented as an
-     equivalent tree then that tree must not be exposed to the DOM.</span>
-</p>
+Note: that while the definition of the <a>'feDropShadow'</a> filter primitive says that it can be expanded into an equivalent tree it is not required that it is implemented like that. The expectation is that user agents can optimize the handling by not having to do all the steps separately.
+
+Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropShadowElement</a> there is no way of accessing the internals of the <a>'feDropShadow'</a> filter primitive, meaning <span class="requirement" id="assert_dropShadowShadowTrees">if the filter primitive is implemented as an equivalent tree then that tree must not be exposed to the DOM.</span>
 
 <div class="adef-list">
   <p>
@@ -3177,7 +3137,7 @@ When applying this filter, the destination location may be offset by a fraction 
 
 This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).
 
-This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture using the <em>add</em> term of the <em>arithmetic</em> <a>'feComposite'</a> method. Multiple light sources can be simulated by adding several of these light maps before applying it to the texture image.
+This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture using the <em>add</em> term of the <em>arithmetic</em> <a>'feComposite'</a> method. Multiple <i>light sources</i> can be simulated by adding several of these light maps before applying it to the texture image.
 
 The resulting RGBA image is computed as follows:
 
@@ -3249,7 +3209,7 @@ The <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> filters will ofte
     </dt>
     <dd>
       The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <span class="attr-name">kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class="attr-name">kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <span class="attr-name">filterRes</span> and <span class="attr-name">kernelUnitLength</span>. Discussion of intermediate images are in the <a href="#introduction">Introduction</a> and in the description of attribute <a>'filter/filterRes'</a>. <span class="issue">Does the user actually want to have device dependent results? Maybe the default shouldn't be ''1''.<br>
-      If a negative or zero value is specified the default value will be used instead.</span> <span class="issue">'filterRes' is deprecated</span><br>
+      If a negative or zero value is specified the default value will be used instead.</span> <span class="issue"><a>'filter/filterRes'</a> is deprecated</span><br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
@@ -4094,14 +4054,14 @@ The list of parameters define variables, that get passed into the custom filter 
 
 <pre class='prod'><dfn>&lt;mat></dfn> = <<mat2()>> | <<mat3()>> | <<mat4()>></pre>
 
-<dl>
+<dl dfn-for="@filter">
   <dt>
     <pre class='prod'><dfn>array()</dfn> = array( <<number>># )</pre>
   </dt>
   <dd>
     Specifies an array of number values. 
   </dd>
-  <dt><dfn>&lt;url></dfn></dt>
+  <dt><<url>></dt>
   <dd>
     A URL reference to an image source.
   </dd>
@@ -4191,7 +4151,7 @@ The following function definitions describe matrices in column-major order.
   </dd>
 </dl>
 
-<h3 id="custom-filter-mix">Custom filter compositing: the <i>mix</i> descriptor</h3>
+<h3 id="custom-filter-mix">Custom filter compositing: the 'mix' descriptor</h3>
 
 <table class="descdef" dfn-for="@filter">
   <tbody>
@@ -4736,7 +4696,7 @@ The following table shows the mapping between CSS shader parameters and uniform 
     </tr>
     <tr>
       <th>
-        <<array>>
+        <<array()>>
       </th>
       <td>
         float[n]
@@ -4762,8 +4722,7 @@ The following table shows the mapping between CSS shader parameters and uniform 
     </tr>
     <tr>
       <th>
-        <a href=
-        "http://www.w3.org/TR/css3-images/#image-list-type"><var>&lt;image-list&gt;</var></a>
+        <<image-list>>
       </th>
       <td>
         sampler2D
@@ -5899,7 +5858,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feComponentTransferFunction/type'</a> on the
+          Corresponds to attribute <a>'feFuncR/type'</a> on the
           given element. Takes one of the SVG_FECOMPONENTTRANSFER_TYPE_* constants
           defined on this interface.
         </div>
@@ -5910,7 +5869,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feComponentTransferFunction/tableValues'</a>
+          Corresponds to attribute <a>'tableValues'</a>
           on the given element.
         </div>
       </dd>
@@ -5920,7 +5879,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feComponentTransferFunction/slope'</a> on the
+          Corresponds to attribute <a>'feFuncR/slope'</a> on the
           given element.
         </div>
       </dd>
@@ -5930,7 +5889,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feComponentTransferFunction/intercept'</a> on
+          Corresponds to attribute <a>'intercept'</a> on
           the given element.
         </div>
       </dd>
@@ -5940,7 +5899,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feComponentTransferFunction/amplitude'</a> on
+          Corresponds to attribute <a>'amplitude'</a> on
           the given element.
         </div>
       </dd>
@@ -5950,7 +5909,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feComponentTransferFunction/exponent'</a> on
+          Corresponds to attribute <a>'exponent'</a> on
           the given element.
         </div>
       </dd>
@@ -5960,7 +5919,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feComponentTransferFunction/offset'</a> on the
+          Corresponds to attribute <a>'feFuncR/offset'</a> on the
           given element.
         </div>
       </dd>
@@ -6392,7 +6351,7 @@ readonly attribute <a>SVGAnimatedBoolean</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feConvolveMatrixElement/edgeMode'</a> on the given
+          Corresponds to attribute <a>'feConvolveMatrix/edgeMode'</a> on the given
           <a>'feConvolveMatrix element'</a> element. Takes one of the SVG_EDGEMODE_*
           constants defined on this interface.
         </div>
