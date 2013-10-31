@@ -24,7 +24,7 @@ Abstract: Although originally designed for use in SVG, filter effects are a set 
 
 <h2 id="intro">Introduction</h2>
 
-A filter effect is a graphical operation that is applied to an element as it is drawn into the document. It is an image-based effect, in that it takes zero or more images as input, a number of parameters specific to the effect, and then produces an image as output. The output image is either rendered into the document instead of the original element, used as an input image to another filter effect, or provided as a CSS image value. <span class="issue">Remove the last sentence once ''filter()'' image function is in CSS Images Level 4.</span>
+A filter effect is a graphical operation that is applied to an element as it is drawn into the document. It is an image-based effect, in that it takes zero or more images as input, a number of parameters specific to the effect, and then produces an image as output. The output image is either rendered into the document instead of the original element, used as an input image to another filter effect, or provided as a CSS image value.
 
 A simple example of a filter effect is a "flood". It takes no image inputs but has a parameter defining a color. The effect produces an output image that is completely filled with the given color. A slightly more complex example is an "inversion" which takes a single image input (typically an image of the element as it would normally be rendered into its parent) and adjusts each pixel such that they have the opposite color values.
 
@@ -318,30 +318,30 @@ Animatable: yes
 
 If the value of the 'filter' property is ''none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
-<pre class='prod'><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> | <<child-selector>> ]+</pre>
+<pre class='prod'><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> <!--| <<child-selector>>--> ]+</pre>
 
 <pre class='prod'><dfn>&lt;filter-function></dfn> = [ <<blur()>> | <<brightness()>> | <<contrast()>> | <<custom()>> | <<drop-shadow()>>
   | <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
 
-<pre class='prod'><dfn>&lt;child-selector></dfn> = <<select()>> | child</pre>
+<!--<pre class='prod'><dfn>&lt;child-selector></dfn> = <<select()>> | child</pre>-->
 
 <dl id="FilterFunction" dfn-for="filter">
   <dt><dfn>&lt;url></dfn></dt>
   <dd>
-    A URL reference to a <a>'filter element'</a> element. For example ''url(commonmasks.svg#filter)''. If the URL references a non-existent object or the referenced object is not a <a>'filter element'</a> element, then the <i>null filter</i> will be applied instead. <span class="issue">Just ignore the URL reference instead of null filter?</span>
+    A filter reference to a <a>'filter'</a> element. For example ''url(commonfilters.svg#filter)''. If the filter references a non-existent object or the referenced object is not a <a>'filter'</a> element, then the whole filter chain is ignored. No filter is applied to the object.
   </dd>
-  <dt>
+  <!--<dt>
     <dfn>child</dfn>
   </dt>
   <dd>
-    A keyword to indicate that the last direct child <a>'filter element'</a> element of the element the 'filter' property is applied should be used as the filter source. It is equivalent to ''select(filter:last-of-type)''.
+    A keyword to indicate that the last direct child <a>'filter'</a> element of the element the 'filter' property is applied should be used as the filter source. It is equivalent to ''select(filter:last-of-type)''.
   </dd>
   <dt><<child-selector>></dt>
   <dd>
     A functional notation [[!CSS3VAL]] accepting a comma-separated list of <<compound-selector>> [[!SELECTORS4]] that represents first matching child <a>'filter element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
-  </dd>
+  </dd>-->
   <dt>
-    <pre class='prod'><dfn>blur()</dfn> = blur( <<length>> )</pre>
+    <span class='prod'><dfn>blur()</dfn> = blur( <<length>> )</span>
   </dt>
   <dd>
     <p>
@@ -353,12 +353,9 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     <p>
       The lacuna value for interpolation is ''0px''.
     </p>
-    <p class="issue">
-      The FXTF is looking into distinguish between vertical and horizontal blur radii.
-    </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>brightness()</dfn> = blur( [ <<number>> | <<percentage>> ] )</pre>
+    <span class='prod'><dfn>brightness()</dfn> = brightness( [ <<number>> | <<percentage>> ] )</span>
   </dt>
   <dd>
     <p>
@@ -372,7 +369,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>contrast()</dfn> = contrast( [ <<number>> | <<percentage>> ] )</pre>
+    <span class='prod'><dfn>contrast()</dfn> = contrast( [ <<number>> | <<percentage>> ] )</span>
   </dt>
   <dd>
     <p>
@@ -386,13 +383,13 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>custom()</dfn> = custom( IDENT [ , <<param>> ]* )</pre>
+    <span class='prod'><dfn>custom()</dfn> = custom( IDENT [ , <<param>> ]* )</span>
   </dt>
   <dd>
     References a custom filter at-rule by the given identifier. See <a href= "#custom-filter">Custom Filter Function</a> for details.
   </dd>
   <dt>
-    <pre class='prod'><dfn>drop-shadow()</dfn> = drop-shadow( <<length>>{2,3} <<color>>? )</pre>
+    <span class='prod'><dfn>drop-shadow()</dfn> = drop-shadow( <<length>>{2,3} <<color>>? )</span>
   </dt>
   <dd>
     <p>
@@ -406,7 +403,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>grayscale()</dfn> = grayscale( [ <<number>> | <<percentage>> ] )</dfn>
+    <span class='prod'><dfn>grayscale()</dfn> = grayscale( [ <<number>> | <<percentage>> ] )</span>
   </dt>
   <dd>
     <p>
@@ -420,7 +417,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>hue-rotate()</dfn> = hue-rotate( [ <<angle>> )</pre>
+    <span class='prod'><dfn>hue-rotate()</dfn> = hue-rotate( [ <<angle>> )</span>
   </dt>
   <dd>
     <p>
@@ -431,7 +428,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>invert()</dfn> = invert( [ <<number>> | <<percentage>> ] )</pre>
+    <span class='prod'><dfn>invert()</dfn> = invert( [ <<number>> | <<percentage>> ] )</span>
   </dt>
   <dd>
     <p>
@@ -445,7 +442,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>opacity()</dfn> = opacity( [ <<number>> | <<percentage>> ] )</pre>
+    <span class='prod'><dfn>opacity()</dfn> = opacity( [ <<number>> | <<percentage>> ] )</span>
   </dt>
   <dd>
     <p>
@@ -462,7 +459,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>saturate()</dfn> = saturate( [ <<number>> | <<percentage>> ] )</pre>
+    <span class='prod'><dfn>saturate()</dfn> = saturate( [ <<number>> | <<percentage>> ] )</span>
   </dt>
   <dd>
     <p>
@@ -477,7 +474,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
     </p>
   </dd>
   <dt>
-    <pre class='prod'><dfn>sepia()</dfn> = sepia( [ <<number>> | <<percentage>> ] )</pre>
+    <span class='prod'><dfn>sepia()</dfn> = sepia( [ <<number>> | <<percentage>> ] )</span>
   </dt>
   <dd>
     <p>
@@ -1992,7 +1989,7 @@ When the image must be resampled to match the coordinate system defined by <a>'f
 The calculations are performed on non-premultiplied color values.
 
 <p id="feCustomSourceElement">
-  Each 'feCustom' element can have any number of 'feCustomSource' subelements. Each 'feCustomSource' references one resource.
+  Each <a>'feCustom'</a> element can have any number of <a>'feCustomSource'</a> subelements. Each <a>'feCustomSource'</a> references one resource.
 </p>
 
 <!--elementsummary feCustomSource-->
@@ -2022,7 +2019,7 @@ The calculations are performed on non-premultiplied color values.
 </div>
 
 <p id="feCustomParamElement">
-  Each 'feCustom' element can have any number of 'feCustomParam' subelements. Each 'feCustomParam' node passes one parameter.
+  Each <a>'feCustom'</a> element can have any number of <a>'feCustomParam'</a> subelements. Each <a>'feCustomParam'</a> node passes one parameter.
 </p>
 
 <!--elementsummary feCustomParam-->
@@ -2128,13 +2125,10 @@ Note: Implementations might choose approaches that minimize or eliminate resampl
 
 For the formulas that follow, the <code>Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z</sub>)</code> function is defined as:
 
-<p class="issue">
-  Consider making this into mathml
-</p>
-<p class="filterformula">
-  Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z</sub>) =
-  sqrt(A<sub>x</sub>^2+A<sub>y</sub>^2+A<sub>z</sub>^2)
-</p>
+<math> <semantics> <mrow> <mi mathvariant="italic">Norm</mi> <mrow> <mrow> <mo stretchy="false">(</mo> <mrow> <msub> <mi>A</mi> <mi>x</mi> </msub> <mi>,</mi> <msub> <mi>A</mi> <mi>y</mi> </msub> <mi>,</mi> <msub> <mi>A</mi> <mi>z</mi> </msub> </mrow> <mo stretchy="false">)</mo> </mrow> <mo stretchy="false">=</mo> <msqrt> <mrow> <mrow> <mrow> <msubsup> <mi>A</mi> <mi>x</mi> <mn>2</mn> </msubsup> <mo stretchy="false">+</mo> <msubsup> <mi>A</mi> <mi>y</mi> <mn>2</mn> </msubsup> </mrow> <mo stretchy="false">+</mo> <msubsup> <mi>A</mi> <mi>z</mi> <mn>2</mn> </msubsup> </mrow> </mrow> </msqrt> </mrow> </mrow> <annotation encoding="StarMath 5.0">Norm(A_x,A_y,A_z) = sqrt { A_x^2+A_y^2+A_z^2}</annotation> </semantics> </math>
+
+Note: User agents may use the the fast inverse square root to optimize the equation and avoid time differences on extrema color values. See <a href="#security">Security</a> section for more details.
+
 <p>
   The resulting RGBA image is computed as follows:
 </p>
@@ -2977,7 +2971,7 @@ This filter primitive composites input image layers on top of each other using t
 Many effects produce a number of intermediate layers in order to create the final output image. This filter allows us to collapse those into a single image. Although this could be done by using n-1 Composite-filters, it is more convenient to have this common operation available in this form, and offers the implementation some additional flexibility.
 
 <p id="feMergeNodeElement">
-  Each 'feMerge' element can have any number of 'feMergeNode' subelements, each of which has an <a href="#CommonAttributes"><span class="attr-name">in</span></a> attribute.
+  Each <a>'feMerge'</a> element can have any number of <a>'feMergeNode'</a> subelements, each of which has an <a href="#CommonAttributes"><span class="attr-name">in</span></a> attribute.
 </p>
 
 <!--elementsummary feMergeNode-->
@@ -5120,7 +5114,7 @@ The following <a>filter primitives</a> have pixel values that potentially contai
   <li><a>'feDropShadow'</a>,</li>
   <li><a>'feDiffuseLighting'</a>,</li>
   <li><a>'feSpecularLighting'</a>,</li>
-  <li><a>'feImage'</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> <span class="issue">could break content</span> and</li>
+  <li><a>'feImage'</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and</li>
   <li>the filter primitives: <a>SourceGraphic</a>, <a>SourceAlpha</a>, <a>BackgroundImage</a>, <a>BackgroundAlpha</a>, <a>FillPaint</a> and <a>StrokePaint</a>.</li>
 </ul>
 
@@ -5128,11 +5122,15 @@ Furthermore, every <a>filter primitive</a> that has a "tainted" flagged <a>filte
 
 Filter operations must be implemented in such a way that they always take the same amount of time regardless of the pixel values if one of the input filter primitives is flagged as "tainted".
 
-<h3 id="fedisplacemnentmap-restrictions">'feDisplacementMap' Restrictions</h3>
+Note: This specification aggravates the restrictions to filter primitives based on implementation feedback from user agents.
+
+<p class="issue">It should be explained that the listed primitives can take ''currentColor'' as input which derives from the used value of 'color'; a property that can be set by '':visited''.</p>
+
+<h3 id="fedisplacemnentmap-restrictions"><a>'feDisplacementMap'</a> Restrictions</h3>
 
 If <a>'feDisplacementMap'</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a>'feDisplacementMap/in2'</a>), then <a>'feDisplacementMap'</a> must not proceed with the filter operation and acts as a <i>pass through filter</i>.
 
-<h3 id="fecustom-restrictions">'feCustom' Restrictions</h3>
+<h3 id="fecustom-restrictions"><a>'feCustom'</a> Restrictions</h3>
 
 <a>'feCustom'</a> is applying a processing operation on input filter primitives. It is important that no protected information leaks from that operation. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must validate each shader as described in section <a href="#validate-custom-filter-shaders">Validate custom filter shaders</a>. If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <i>pass through filter</i>. (See <a href="http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security">security study</a> <span class="issue">Make this a normative reference.</span>)
 
@@ -5144,42 +5142,13 @@ Note: The above restriction to color access may just apply to "tainted" flagged 
 
 User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for the 'filter' property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value ''none'' had been specified.
 
-<div class="issue">
-<p>
-  The following restrictions seem to be unnecessary with the clarification above or incorrect and probably should be removed.
-</p>
-
-<p>
-  Input to a filter effect must not include anything as input that would violate
-  <a href="http://www.w3.org/TR/cors/">same origin restrictions</a>. If cross-origin
-  access is required, then the requested content should be explicitly marked with
-  <a href="http://www.w3.org/TR/cors/#syntax">CORS data</a>.
-</p>
-
-<p>
-  This restriction includes:
-</p>
-<ul>
-  <li>Any <span class="code"><a href= 
-  "http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#the-iframe-element">&lt;iframe&gt;</a></span> content
-  </li>
-  <li>Any images, either as content or via styling, that are not exposed with <a href="http://www.w3.org/TR/cors/">CORS</a>
-  </li>
-  <li>Any <a href="http://www.w3.org/TR/2dcontext/#pixel-manipulation">tainted canvas</a>
-  </li>
-  <li>Any cross-origin content referenced by <span class="code"><a href="http://www.w3.org/TR/SVG/struct.html#UseElement">&lt;use&gt;</a></span>
-  </li>
-</ul>
-<p>
-  For content that falls under this restriction, the filter has no affect. For example, a filter effect that is applying to a cross-origin &lt;iframe> element does not have any affect on this element.
-</p>
-</div>
-
 <h3 id="timing-attack">Timing Attacks</h3>
 
 If any of the above rules are not followed, an attacker could infer information and mount a timing attack.
 
 A timing attack is a method of obtaining information about content that is otherwise protected, based on studying the amount of time it takes for an operation to occur. If, for example, red pixels took longer to draw than green pixels, one might be able to reconstruct a rough image of the element being rendered, without ever having access to the content of the element.
+
+<p class="issue">Add '':visited'' link example to explain the issue.</p>
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 

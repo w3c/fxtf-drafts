@@ -7,7 +7,7 @@ SOURCEFILE=Overview.src.html
 LINKEDFILE=.Overview.linked.html
 OUTPUTFILE=index.html
 EXTERNALLINKS=perl external-spec-links.pl
-PREPROCESSOR=bikeshed.py
+PREPROCESSOR=bikeshed
 
 all: $(OUTPUTFILE)
 
