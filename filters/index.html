@@ -15,7 +15,7 @@
 </a></p>
   <h1 class="p-name no-ref" id=title>Filter Effects Level 1</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131031>31 October 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20131103>3 November 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Latest version:<dd><a href=http://www.w3.org/TR/filters/>http://www.w3.org/TR/filters/</a><dt>Editor’s Draft:<dd><a href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Previous Versions:<dd><a href=http://www.w3.org/TR/2013/WD-filter-effects-20130523/ rel=previous>http://www.w3.org/TR/2013/WD-filter-effects-20130523/</a><dd><a href=http://www.w3.org/TR/2012/WD-filter-effects-20121025/ rel=previous>http://www.w3.org/TR/2012/WD-filter-effects-20121025/</a>
     <dt>Feedback:</dt>
         <dd><a href="mailto:public-fx@w3.org?subject=%5Bfilter-effects%5D%20feedback">public-fx@w3.org</a>
@@ -29,7 +29,7 @@
 </div>
 
 <h2 class="no-num no-toc no-ref heading settled heading" id=abstract><span class=content>Abstract</span></h2>
-<p class=p-summary data-fill-with=abstract>Filter effects are a way of processing an element’s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.<p>Although originally designed for use in SVG, filter effects are a set a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> value. <span class=issue id=issue-336cf378><a class=self-link href=#issue-336cf378></a>Remove the last sentence once <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> image function is in CSS Images Level 4.</span>
+<p class=p-summary data-fill-with=abstract>Filter effects are a way of processing an element’s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.<p>Although originally designed for use in SVG, filter effects are a set a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-images-3/#image-type title="<image>">&lt;image&gt;</a> value.
 <a href=http://www.w3.org/TR/CSS/>CSS</a> is a language for describing the rendering of structured documents 
 (such as HTML and XML) 
 on screen, on paper, in speech, etc.</p>
@@ -53,16 +53,18 @@ on screen, on paper, in speech, etc.</p>
 
 <p>
 	This document was produced by the <a href=http://www.w3.org/Style/CSS/members>CSS Working Group</a> 
-	(part of the <a href=http://www.w3.org/Style/>Style Activity</a>) and the <a href=http://www.w3.org/Graphics/SVG/>SVG Working Group</a> (part of the
+	(part of the <a href=http://www.w3.org/Style/>Style Activity</a>) and the <a href=http://www.w3.org/Graphics/SVG/WG/>SVG Working Group</a> (part of the
 	<a href=http://www.w3.org/Graphics/>Graphics Activity</a>).
 
 <p>
-	This document was produced by a group operating under 
+	This document was produced by groups operating under 
 	the <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/>5 February 2004 W3C Patent Policy</a>. 
-	W3C maintains a <a href=http://www.w3.org/2004/01/pp-impl/32061/status rel=disclosure>public list of any patent disclosures</a> 
-	made in connection with the deliverables of the group; 
-	that page also includes instructions for disclosing a patent. 
-	An individual who has actual knowledge of a patent which the individual believes contains <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential>Essential Claim(s)</a> 
+	W3C maintains a <a href=http://www.w3.org/2004/01/pp-impl/32061/status rel=disclosure>public list of any patent disclosures (CSS)</a>
+	and a <a href=http://www.w3.org/2004/01/pp-impl/19480/status rel=disclosure>public list of any patent disclosures (SVG)</a> 
+	made in connection with the deliverables of each group; 
+	these pages also includes instructions for disclosing a patent. 
+	An individual who has actual knowledge of a patent which the individual believes contains
+	<a href=http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential>Essential Claim(s)</a> 
 	must disclose the information in accordance with <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure>section 6 of the W3C Patent Policy</a>.</div>
 <div data-fill-with=at-risk></div>
 
@@ -507,7 +509,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
     </p>
   </dd>
   <dt>
-    <span class=prod><dfn class=css-code data-dfn-type=function data-export="" id=funcdef-hue-rotate title=hue-rotate()>hue-rotate()<a class=self-link href=#funcdef-hue-rotate></a></dfn> = hue-rotate( [ <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#angle-value title="<angle>">&lt;angle&gt;</a> )</span>
+    <span class=prod><dfn class=css-code data-dfn-type=function data-export="" id=funcdef-hue-rotate title=hue-rotate()>hue-rotate()<a class=self-link href=#funcdef-hue-rotate></a></dfn> = hue-rotate( <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#angle-value title="<angle>">&lt;angle&gt;</a> )</span>
   </dt>
   <dd>
     <p>
@@ -587,7 +589,9 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <p>The <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property has no effect on the geometry of the target element’s CSS boxes, even though <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> can cause painting outside of an element’s border box.
 
-<p>Conceptually, any parts of the drawing are effected by filter operations. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the filter is applied, and those of its descendants. The filter operations are applied in the element’s <a data-link-type=dfn href=#local-coordinate-system title="local coordinate system">local coordinate system</a>. <span class=issue id=issue-668a5e0f><a class=self-link href=#issue-668a5e0f></a>Should outline really be filtered? What about focus ring?</span>
+<p>Conceptually, any parts of the drawing are effected by filter operations. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the filter is applied, and those of its descendants. The filter operations are applied in the element’s <a data-link-type=dfn href=#local-coordinate-system title="local coordinate system">local coordinate system</a>.
+
+<p class=issue id=issue-d2848f56><a class=self-link href=#issue-d2848f56></a>Should outline really be filtered? What about focus ring?</p>
 
 <p>The compositing model follows the <a href=http://www.w3.org/TR/SVG11/render.html#Introduction>SVG compositing model</a> <a data-biblio-type=normative data-link-type=biblio href=#svg11 title=svg11>[SVG11]</a>: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> has no effect on hit-testing.
 
@@ -621,8 +625,8 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 </table>
 
 
-<p class=issue id=issue-37b09b26><a class=self-link href=#issue-37b09b26></a>
-  Which XML attributes can be removed?
+<p class=issue id=issue-0619e4fd><a class=self-link href=#issue-0619e4fd></a>
+  'xlink:type', 'xlink:role', 'xlink:arcrole', 'xlink:title': Which XML attributes can be removed?
 </p>
 
 <p>The description of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element follows:
@@ -642,13 +646,13 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
       <span class=adef>primitiveUnits</span> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
     </dt>
     <dd>
-      Specifies the coordinate system for the various length values within the <a data-link-type=dfn href=#filter-primitives title="filter primitives">filter primitives</a> and for the attributes that define the <a href=#FilterPrimitiveSubRegion>filter primitive subregion</a>.<br>
+      <p>Specifies the coordinate system for the various length values within the <a data-link-type=dfn href=#filter-primitives title="filter primitives">filter primitives</a> and for the attributes that define the <a href=#FilterPrimitiveSubRegion>filter primitive subregion</a>.<br>
       If <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> is equal to <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>, any length values within the filter definitions represent values in the current <a data-link-type=dfn href=#user-coordinate-system title="user coordinate system">user coordinate system</a> in place at the time when the
       <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element is referenced (i.e., the user coordinate system for the element referencing the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element via a <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> property).<br>
       If <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> is equal to <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a data-link-type=dfn href=#object-bounding-box-units title="object bounding box units">object bounding box units</a>). Note that if only one number was specified in a <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> computation takes place.<br>
       The <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue>lacuna value</a> for <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> is <span class=attr-value>userSpaceOnUse</span>.<br>
-      <span class=issue id=issue-1ed55d6f><a class=self-link href=#issue-1ed55d6f></a>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?</span><br>
       <span class=anim-target>Animatable: yes.</span>
+      <p class=issue id=issue-6fe881fb><a class=self-link href=#issue-6fe881fb></a>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?
     </dd>
     <dt id=FilterElementXAttribute><a class=self-link href=#FilterElementXAttribute></a>
       <span class=adef>x</span> = "<a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a> | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#percentage-value title="<percentage>">&lt;percentage&gt;</a>"
@@ -675,9 +679,9 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
       See <a href=#FilterEffectsRegion>filter effects region</a>.
     </dd>
     <dt id=FilterElementFilterResAttribute><a class=self-link href=#FilterElementFilterResAttribute></a>
-      <span class=adef>filterRes</span> =
+      <p><span class=adef>filterRes</span> =
       "<em><a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber>&lt;number-optional-number&gt;</a></em>"
-      <span class=issue id=issue-eed401d00><a class=self-link href=#issue-eed401d00></a>To be removed</span>
+      <p class=issue id=issue-cbe49af0><a class=self-link href=#issue-cbe49af0></a>Remove filterRes attribtue from filter element.
     </dt>
     <dd>
       See <a href=#FilterEffectsRegion>filter effects region</a>.
@@ -686,7 +690,8 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
       <span class=adef>xlink:href</span> = "<span class=attr-value>&lt;IRI&gt;</span>"
     </dt>
     <dd>
-      An <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference>IRI reference</a> to another <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element within the current <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermSVGDocumentFragment>SVG document fragment</a>. <span class=issue id=issue-ed50c31a><a class=self-link href=#issue-ed50c31a></a>The current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns?</span>. Any attributes which are defined on the referenced <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element which are not defined on this element are inherited by this element. If this element has no defined filter nodes, and the referenced element has defined filter nodes (possibly due to its own <span class=attr-name>href</span> attribute), then this element inherits the filter nodes defined from the referenced <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element. Inheritance can be indirect to an arbitrary level; thus, if the referenced <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element inherits attributes or its filter node specification due to its own <span class=attr-name>href</span> attribute, then the current element can inherit those attributes or filter node specifications.
+      <p>An <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermIRIReference>IRI reference</a> to another <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element within the current <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermSVGDocumentFragment>SVG document fragment</a>. Any attributes which are defined on the referenced <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element which are not defined on this element are inherited by this element. If this element has no defined filter nodes, and the referenced element has defined filter nodes (possibly due to its own <span class=attr-name>href</span> attribute), then this element inherits the filter nodes defined from the referenced <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element. Inheritance can be indirect to an arbitrary level; thus, if the referenced <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element inherits attributes or its filter node specification due to its own <span class=attr-name>href</span> attribute, then the current element can inherit those attributes or filter node specifications.
+      <p class=issue id=issue-7f1126f6><a class=self-link href=#issue-7f1126f6></a>IRI reference of the current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns?.
       <div class=note>
         This attribute is deprecated and should not be used in new content, it’s included for backwards compatibility reasons only.
       </div><br>
@@ -733,7 +738,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
       These attributes define a rectangular region on the canvas to which this filter applies.
     </p>
     <p>
-      The amount of memory and processing time required to apply the filter are related to the size of this rectangle and the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute of the filter. <span class=issue id=issue-e4fe787f><a class=self-link href=#issue-e4fe787f></a>Remove sentence about <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a></span>
+      The amount of memory and processing time required to apply the filter are related to the size of this rectangle and the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute of the filter.
     </p>
     <p>
       The coordinate system for these attributes depends on the value for attribute <a class=attr-name href=#FilterElementFilterUnitsAttribute>‘filterUnits‘</a>.
@@ -755,7 +760,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
     </p>
   </dd>
   <dt id=FilterRegionFilterRes><a class=self-link href=#FilterRegionFilterRes></a>
-    <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> <span class=issue id=issue-eed401d01><a class=self-link href=#issue-eed401d01></a>To be removed</span>
+    <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a>
   </dt>
   <dd>
     <p>
@@ -779,11 +784,13 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 <p>Note that both of the two possible value for <a class=attr-name href=#FilterElementFilterUnitsAttribute>‘filterUnits‘</a> (i.e., <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span> and <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>) result in a <a href=#FilterEffectsRegion>filter region</a> whose coordinate system has its X-axis and Y-axis each parallel to the X-axis and Y-axis, respectively, of the <a href=#TermUserCoordinateSystem>user coordinate system</a> for the element to which the filter will be applied.
 
 <p class="note implementation">
-  Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <a href=#FilterEffectsRegion>filter region</a> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.<span class=issue id=issue-efceff62><a class=self-link href=#issue-efceff62></a>Preserve sentence about skewing</span> Explicit values for attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> can either help or harm performance. If <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is smaller than the automatic (i.e., default) filter resolution, then filter effect might have faster performance (usually at the expense of quality). If <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is larger than the automatic (i.e., default) filter resolution, then filter effects performance will usually be slower. <span class=issue id=issue-eed401d0><a class=self-link href=#issue-eed401d0></a>To be removed</span>
+  Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <a href=#FilterEffectsRegion>filter region</a> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system. Explicit values for attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> can either help or harm performance. If <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is smaller than the automatic (i.e., default) filter resolution, then filter effect might have faster performance (usually at the expense of quality). If <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is larger than the automatic (i.e., default) filter resolution, then filter effects performance will usually be slower.
 </p>
+<p>Keep sentence about skewing on implementation note for filter effects region.</p>
 <p class="note authoring">
-  It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a> and percentages values greater than <span class=css data-link-type=maybe title=100%>100%</span> for <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>. This, for example, is why the defaults for the filter effects region are <span class=css data-link-type=maybe title='x="-10%" y="-10%" width="120%" height="120%"'>x="-10%" y="-10%" width="120%" height="120%"</span>. <span class=issue id=issue-5e7b98df><a class=self-link href=#issue-5e7b98df></a>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.</span>
+  It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a> and percentages values greater than <span class=css data-link-type=maybe title=100%>100%</span> for <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>. This, for example, is why the defaults for the filter effects region are ''x="-10%" y="-10%" width="120%" height="120%"''. 
 </p>
+<p class=issue id=issue-eeeaeff7><a class=self-link href=#issue-eeeaeff7></a>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.</p>
 
 <h2 class="heading settled heading" data-level=8 id=FilterPrimitivesOverview><span class=secno>8 </span><span class=content>Filter primitives</span><a class=self-link href=#FilterPrimitivesOverview></a></h2>
 
@@ -791,7 +798,9 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <p>This section describes the various filter primitives that can be assembled to achieve a particular filter effect.
 
-<p>Unless otherwise stated, all image filters operate on premultiplied RGBA samples. Some filters like <a href=#feColorMatrixElement><code class=element-name>&lt;feColorMatrix&gt;</code></a>, <a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a> and <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a> work more naturally on non-premultiplied data. For the time of the filter operation, all color values must temporarily be transformed to the required color multiplication of the current filter unless stated differently on the particular filter primitive. <span class=issue id=issue-958f8287><a class=self-link href=#issue-958f8287></a>Is there even a primitive that has different behavior?</span>
+<p>Unless otherwise stated, all image filters operate on premultiplied RGBA samples. Some filters like <a href=#feColorMatrixElement><code class=element-name>&lt;feColorMatrix&gt;</code></a>, <a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a> and <a href=#feComponentTransferElement><code class=element-name>&lt;feComponentTransfer&gt;</code></a> work more naturally on non-premultiplied data. For the time of the filter operation, all color values must temporarily be transformed to the required color multiplication of the current filter unless stated differently on the particular filter primitive.
+
+<p class=issue id=issue-1d4b4cbb><a class=self-link href=#issue-1d4b4cbb></a>Is there even a primitive that does not need to be transformed to the color space of the filter primitive?</p>
 
 <p class=note>Note: All input images are assumed to be in premultiplied RGBA. However, implementations can optimize performance by using non-premultiplied data buffering.
 
@@ -806,8 +815,8 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <p>Sometimes <a data-link-type=dfn href=#filter-primitives title="filter primitives">filter primitives</a> result in undefined pixels. For example, filter primitive <a href=#feOffsetElement><code class=element-name>&lt;feOffset&gt;</code></a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
 
-<p class=issue id=issue-1ed9f54d><a class=self-link href=#issue-1ed9f54d></a>
-  Make clear that most values can be scaled to produce high DPI filters with the exception of feConvolutionMatrix, the lightning filters and feCustom.
+<p class=issue id=issue-99e14ee4><a class=self-link href=#issue-99e14ee4></a>
+  Make clear that most values can be scaled to produce high DPI filters with the exception of feConvolveMatrix, the lightning filters and feCustom.
 </p>
 
 <h3 class="heading settled heading" data-level=8.2 id=CommonAttributes><span class=secno>8.2 </span><span class=content>Common attributes</span><a class=self-link href=#CommonAttributes></a></h3>
@@ -917,8 +926,9 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
         </dt>
         <dd>
           <p>
-            This keyword represents the graphics elements that were the original input into the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element. For raster effects <a href=#TermFilterPrimitiveElement>filter primitives</a>, the graphics elements will be rasterized into  an initially clear RGBA raster in image space. Pixels left untouched by the original graphic will be left clear. The image is specified to be rendered in linear RGBA pixels. The alpha channel of this image captures any anti-aliasing specified by SVG. (Since the raster is linear, the alpha channel of this image will represent the exact percent coverage of each pixel.) <span class=issue id=issue-b79d6367><a class=self-link href=#issue-b79d6367></a>Can this made easier? Also: Why is it fixed to linear RGB?</span>
+            This keyword represents the graphics elements that were the original input into the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element. For raster effects <a href=#TermFilterPrimitiveElement>filter primitives</a>, the graphics elements will be rasterized into  an initially clear RGBA raster in image space. Pixels left untouched by the original graphic will be left clear. The image is specified to be rendered in linear RGBA pixels. The alpha channel of this image captures any anti-aliasing specified by SVG. (Since the raster is linear, the alpha channel of this image will represent the exact percent coverage of each pixel.)
           </p>
+          <p class=issue id=issue-5d317c13><a class=self-link href=#issue-5d317c13></a>Why is SourceGraphic drawn into a fixed <em>linear</em> RGB?</p>
         </dd>
         <dt id=SourceAlpha><a class=self-link href=#SourceAlpha></a>
           <span class=attr-value>SourceAlpha</span>
@@ -947,7 +957,9 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
           <span class=attr-value>FillPaint</span>
         </dt>
         <dd>
-          This keyword represents the value of the <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#FillProperty title=fill>fill</a> property on the target element for the filter effect. The <a href=#FillPaint>FillPaint</a> image has conceptually infinite extent. Frequently this image is opaque everywhere, but it might not be if the "paint" itself has alpha, as in the case of a gradient or pattern which itself includes transparent or semi-transparent parts. <span class=issue id=issue-32faef77><a class=self-link href=#issue-32faef77></a>What is the dimension of the gradient/pattern if <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span> is specified on the PaintServer? The filter region? The dimension of the referencing element?</span> <span class=issue id=issue-1f4767b4><a class=self-link href=#issue-1f4767b4></a> Which coordinate space is used on <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>?</span>
+          <p>This keyword represents the value of the <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#FillProperty title=fill>fill</a> property on the target element for the filter effect. The <a href=#FillPaint>FillPaint</a> image has conceptually infinite extent. Frequently this image is opaque everywhere, but it might not be if the "paint" itself has alpha, as in the case of a gradient or pattern which itself includes transparent or semi-transparent parts.
+          <p class=issue id=issue-a2f2d409><a class=self-link href=#issue-a2f2d409></a>FillPaint: What is the dimension of the gradient/pattern if <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span> is specified on the PaintServer? The filter region? The dimension of the referencing element?
+          <p class=issue id=issue-16e5d940><a class=self-link href=#issue-16e5d940></a>FillPaint: Which coordinate space is used on <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>?
         </dd>
         <dt id=StrokePaint><a class=self-link href=#StrokePaint></a>
           <span class=attr-value>StrokePaint</span>
@@ -1306,7 +1318,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>        </li>
           </p>
         </li>
       </ul>
-      If the attribute is not specified, then the default behavior depends on the value of attribute <a class=attr-name data-link-type=maybe href=#feColorMatrixTypeAttribute title=type>type</a>. If <span class=css data-link-type=maybe title='type="matrix"'>type="matrix"</span>, then this attribute defaults to the identity matrix. If <span class=css data-link-type=maybe title='type="saturate"'>type="saturate"</span>, then this attribute defaults to the value <span class=css data-link-type=maybe title=1>1</span>, which results in the identity matrix. If <span class=css data-link-type=maybe title='type="huerotate"'>type="hueRotate"</span>, then this attribute defaults to the value <span class=css data-link-type=maybe title=0>0</span>, which results in the identity matrix.<br>
+      If the attribute is not specified, then the default behavior depends on the value of attribute <a class=attr-name data-link-type=maybe href=#feColorMatrixTypeAttribute title=type>type</a>. If ''type="matrix"<span class=css data-link-type=maybe title=", then this attribute defaults to the identity matrix. if ">, then this attribute defaults to the identity matrix. If </span>type="saturate"<span class=css data-link-type=maybe title=", then this attribute defaults to the value ">, then this attribute defaults to the value </span>1<span class=css data-link-type=maybe title=", which results in the identity matrix. if ">, which results in the identity matrix. If </span>type="hueRotate"<span class=css data-link-type=maybe title=", then this attribute defaults to the value ">, then this attribute defaults to the value </span>0'', which results in the identity matrix.<br>
       <span class=anim-target>Animatable: yes.</span>
     </dd>
   </dl>
@@ -2059,7 +2071,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>where "orderX" and "orderY" represent the X and Y values for the <a class=attr-name href=#feConvolveMatrixElementOrderAttribute>‘order‘</a> attribute, "targetX" represents the value of the <a class=attr-name href=#feConvolveMatrixElementTargetXAttribute>‘targetX‘</a> attribute, "targetY" represents the value of the <a class=attr-name href=#feConvolveMatrixElementTargetYAttribute>‘targetY‘</a> attribute, "kernelMatrix" represents the value of the <a class=attr-name href=#feConvolveMatrixElementKernelMatrixAttribute>‘kernelMatrix‘</a> attribute, "divisor" represents the value of the <a class=attr-name href=#feConvolveMatrixElementDivisorAttribute>‘divisor‘</a> attribute, and "bias" represents the value of the <a class=attr-name href=#feConvolveMatrixElementBiasAttribute>‘bias‘</a> attribute.
 
-<p>In the above formulas that the values in the kernel matrix are applied such that the kernel matrix is rotated 180 degrees relative to the source and destination images in order to match convolution theory as described in many computer graphics textbooks. <span class=issue id=issue-adedf1f3><a class=self-link href=#issue-adedf1f3></a>Sounds strange.</span>
+<p>In the above formulas the values in the kernel matrix are applied such that the kernel matrix is rotated 180 degrees relative to the source and destination images in order to match convolution theory as described in many computer graphics textbooks.
 
 <p>To illustrate, suppose you have a input image which is 5 pixels by 5 pixels, whose color values for one of the color channels are as follows:
 
@@ -2079,11 +2091,15 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
   <math><semantics><mrow><mrow><msub><mi>resultChannel</mi><mn>2,2</mn></msub><mo stretchy=false>=</mo><mfrac><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy=false>⋅</mo><mn>0</mn></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>8</mn><mo stretchy=false>⋅</mo><mn>20</mn></mrow></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>7</mn><mo stretchy=false>⋅</mo><mn>40</mn></mrow></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>6</mn><mo stretchy=false>⋅</mo><mn>100</mn></mrow></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>5</mn><mo stretchy=false>⋅</mo><mn>120</mn></mrow></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>4</mn><mo stretchy=false>⋅</mo><mn>140</mn></mrow></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>3</mn><mo stretchy=false>⋅</mo><mn>200</mn></mrow></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>2</mn><mo stretchy=false>⋅</mo><mn>220</mn></mrow></mrow></mrow><mo stretchy=false>+</mo><mrow><mrow><mn>1</mn><mo stretchy=false>⋅</mo><mn>240</mn></mrow></mrow></mrow></mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy=false>+</mo><mn>8</mn></mrow><mo stretchy=false>+</mo><mn>7</mn></mrow><mo stretchy=false>+</mo><mn>6</mn></mrow><mo stretchy=false>+</mo><mn>5</mn></mrow><mo stretchy=false>+</mo><mn>4</mn></mrow><mo stretchy=false>+</mo><mn>3</mn></mrow><mo stretchy=false>+</mo><mn>2</mn></mrow><mo stretchy=false>+</mo><mn>1</mn></mrow></mrow></mfrac></mrow></mrow></semantics></math>
 </p>
 
-<p>Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> produce resolution-independent results, an explicit value should be provided for either the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element and/or attribute <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. <span class=issue id=issue-ac4da719><a class=self-link href=#issue-ac4da719></a>filterRes removed, control just over kernel size?</span>
+<p>Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> produce resolution-independent results, an explicit value should be provided for either the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element and/or attribute <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>.
 
-<p><a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute). If the pixel grid established by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not scaled to match the pixel grid established by attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. <span class=issue id=issue-698f0bfa><a class=self-link href=#issue-698f0bfa></a>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results.</span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
+<p class=issue id=issue-c40c26ae><a class=self-link href=#issue-c40c26ae></a>feConvolveMatrix: filterRes removed, control just over kernel size?</p>
 
-<p>When the image must be resampled to match the coordinate system defined by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is considerably smaller than a device pixel. <span class=issue id=issue-1a4e87b4><a class=self-link href=#issue-1a4e87b4></a>Require for all UAs.</span>
+<p><a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute). If the pixel grid established by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not scaled to match the pixel grid established by attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
+
+<p class=issue id=issue-d445a04a><a class=self-link href=#issue-d445a04a></a>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates as device coordinate filtering?</p>
+
+<p>When the image must be resampled to match the coordinate system defined by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is considerably smaller than a device pixel.
 
 <div class=adef-list>
   <p>
@@ -2183,8 +2199,10 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
       <span class=adef>kernelUnitLength</span> = "<span class=attr-value><a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber>&lt;number-optional-number&gt;</a></span>"
     </dt>
     <dd>
-      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a>) between successive columns and rows, respectively, in the <a class=attr-name href=#feConvolveMatrixElementKernelMatrixAttribute>‘kernelMatrix‘</a>. By specifying value(s) for <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> and <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary offscreen images aligns with the pixel grid of the kernel. <span class=issue id=issue-4a36e894><a class=self-link href=#issue-4a36e894></a>Does the user even want device dependent results? Maybe the initial value shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.</span><br> If a negative or zero value is specified the default value will be used instead.<br>
+      <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a>) between successive columns and rows, respectively, in the <a class=attr-name href=#feConvolveMatrixElementKernelMatrixAttribute>‘kernelMatrix‘</a>. By specifying value(s) for <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> and <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary offscreen images aligns with the pixel grid of the kernel.<br>
+      If a negative or zero value is specified the default value will be used instead.<br>
       <span class=anim-target>Animatable: yes.</span>
+      <p class=issue id=issue-3f1c3fa0><a class=self-link href=#issue-3f1c3fa0></a>Does the user even want device dependent results? Maybe the initial value shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.</p>
     </dd>
     <dt id=feConvolveMatrixElementPreserveAlphaAttribute><a class=self-link href=#feConvolveMatrixElementPreserveAlphaAttribute></a>
       <span class=adef>preserveAlpha</span> = "<span class=attr-value>false | true</span>"
@@ -2452,13 +2470,17 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> compositing method. Multiple <a data-link-type=dfn href=#light-source title="light sources">light sources</a> can be simulated by adding several of these light maps together before applying it to the texture image.
 
-<p>The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a> produce resolution-independent results, an explicit value should be provided for either the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element and/or attribute <a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. <span class=issue id=issue-2727c971><a class=self-link href=#issue-2727c971></a>Remove filterRes.</span>
+<p>The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a> produce resolution-independent results, an explicit value should be provided for either the <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> attribute on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element and/or attribute <a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>.
 
 <p><a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute). If the pixel grid established by <a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not scaled to match the pixel grid established by attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. The 3x3 filters are applied to the resampled image. After applying the filter, the image is resampled back to its original resolution.
 
-<span class=requirement id=assert_diffuseLightingImageResampling>When the image must be resampled, it is recommended that high quality viewers make use of appropriate interpolation techniques <span class=issue id=issue-5210fdce><a class=self-link href=#issue-5210fdce></a>(Requirement for all UAs?)</span>, for example bilinear or bicubic.</span> Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting. <span class=issue id=issue-8f33eb14><a class=self-link href=#issue-8f33eb14></a>Maybe this should be the default case and not may.</span>
+<span class=requirement id=assert_diffuseLightingImageResampling>When the image must be resampled, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic.</span> Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting.
 
-<p class=note>Note: Implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is considerably smaller than a device pixel. <span class=issue id=issue-1fb3a4c0><a class=self-link href=#issue-1fb3a4c0></a>Is that needed or even useful here?</span>
+<p class=issue id=issue-35e2290c><a class=self-link href=#issue-35e2290c></a>Should feConvolveMatrix and feLigthing always take <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> into account? If yes, will the way change how?</p>
+
+<p class=issue id=issue-db95159d><a class=self-link href=#issue-db95159d></a>Do we still want to differ between quality viewers and the viewers which aren’t.</p> 
+
+<p class=note>Note: Implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a class=attr-name data-link-type=maybe href=#feDiffuseLightingKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is considerably smaller than a device pixel.
 
 <p>For the formulas that follow, the <code>Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z</sub>)</code> function is defined as:
 
@@ -2821,7 +2843,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>This filter can have arbitrary non-localized effect on the input which might require substantial buffering in the processing pipeline. However with this formulation, any intermediate buffering needs can be determined by <a class=attr-name data-link-type=maybe href=#feDisplacementMapScaleAttribute title=scale>scale</a> which represents the maximum range of displacement in either x or y.
 
-<p>When applying this filter, the source pixel location will often lie between several source pixels. In this case it is recommended that high quality viewers apply an interpolent on the surrounding pixels, for example bilinear or bicubic, rather than simply selecting the nearest source pixel. Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting. <span class=issue id=issue-551c19c9><a class=self-link href=#issue-551c19c9></a>Should be common by all browsers.</span><span class=issue id=issue-799aa4fe><a class=self-link href=#issue-799aa4fe></a>Interpolation of surrounding pixels on the source? Not rather on the output? Also, this just handles subpixel on the source, what about destination?</span>
+<p>When applying this filter, the source pixel location will often lie between several source pixels. In this case it is recommended that high quality viewers apply an interpolent on the surrounding pixels, for example bilinear or bicubic, rather than simply selecting the nearest source pixel. Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting.
 
 <p>The <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> property only applies to the <a class=attr-name data-link-type=maybe href=#feDisplacementMapIn2Attribute title=in2>in2</a> source image and does not apply to the <a class=attr-name href=#FilterPrimitiveInAttribute>‘in‘</a> source image. The <a class=attr-name href=#FilterPrimitiveInAttribute>‘in‘</a> source image must remain in its current color space.
 
@@ -3198,7 +3220,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 </p>
 
 <p class=issue id=issue-infinite-extents-fegaussianblur><a class=self-link href=#issue-infinite-extents-fegaussianblur></a>
-  What about other inputs with infinite extents? What is the 'periodic boundary condition'?
+  feGaussianBlur: What about other inputs with infinite extents? What is the 'periodic boundary condition'?
 </p>
 
 <div class=adef-list>
@@ -3287,10 +3309,12 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>This filter primitive can refer to an external image or can be a reference to another piece of SVG. It produces an image similar to the built-in image source <a href=#SourceGraphic><span class=attr-value>SourceGraphic</span></a> except that the graphic comes from an external source.
 
-<p>If the <span class=attr-name>xlink:href</span> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement><code class=element-name>&lt;image&gt;</code></a> element; otherwise, the referenced resource is rendered according to the behavior of the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement><code class=element-name>&lt;use&gt;</code></a> element. In either case, the current user coordinate system depends on the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element. The processing of the <span class=css data-link-type=maybe title=preserveaspectratio>preserveAspectRatio</span> attribute on the <a href=#feImageElement><code class=element-name>&lt;feImage&gt;</code></a> element is identical to that of the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement><code class=element-name>&lt;image&gt;</code></a> element. <span class=issue id=issue-3f408d80><a class=self-link href=#issue-3f408d80></a>should it still be xlink:href or just href?</span>
+<p>If the <span class=attr-name>xlink:href</span> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement><code class=element-name>&lt;image&gt;</code></a> element; otherwise, the referenced resource is rendered according to the behavior of the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#UseElement><code class=element-name>&lt;use&gt;</code></a> element. In either case, the current user coordinate system depends on the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> on the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element. The processing of the <span class=css data-link-type=maybe title=preserveaspectratio>preserveAspectRatio</span> attribute on the <a href=#feImageElement><code class=element-name>&lt;feImage&gt;</code></a> element is identical to that of the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ImageElement><code class=element-name>&lt;image&gt;</code></a> element.
 
-<p class=issue id=issue-c194d329><a class=self-link href=#issue-c194d329></a>
-  What happens if the referenced graphic does not exist or is not yet loaded? Maybe same behavior as feFlood with transparent black. What about <span class=css data-link-type=maybe title="preserve aspect ratio">preserve aspect ratio</span>?
+<p class=issue id=issue-464d6ca9><a class=self-link href=#issue-464d6ca9></a>Add href on every place where we use xlink:href.</p>
+
+<p class=issue id=issue-1864c8e9><a class=self-link href=#issue-1864c8e9></a>
+  What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don’t apply filter or null filter. What about <span class=css data-link-type=maybe title="preserve aspect ratio">preserve aspect ratio</span>?
 </p>
 
 <span class=requirement id=assert_hqImageResampling>When the referenced image must be resampled to match the device coordinate system, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic.</span> Depending on the speed of the available interpolents, this choice may be affected by the <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-images-4/#propdef-image-rendering title=image-rendering>image-rendering</a> property setting.
@@ -3490,10 +3514,6 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
   By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 </p>
 
-<p class=issue id=issue-infinite-extents-femorphology><a class=self-link href=#issue-infinite-extents-femorphology></a>
-  What about other inputs with infinite extents? What is the 'periodic boundary condition'?
-</p>
-
 <p>Because <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
 
 <div class=adef-list>
@@ -3519,9 +3539,10 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
         A negative or zero value disables the effect of the given filter primitive (i.e., the result is a transparent black image).
       </p>
       <p>
-        If the attribute is not specified, then the effect is as if a value of <span class=css data-link-type=maybe title=0>0</span> were specified. <span class=issue id=issue-880abe39><a class=self-link href=#issue-880abe39></a>Do not disable rendering on negative or zero length?
-      </span></p>
-      <span class=anim-target>Animatable: yes.</span>
+        If the attribute is not specified, then the effect is as if a value of <span class=css data-link-type=maybe title=0>0</span> were specified.
+      </p>
+      <p class=anim-target>Animatable: yes.</p>
+      <p class=issue id=issue-a746b07d><a class=self-link href=#issue-a746b07d></a>Do not disable rendering of feMorphology on negative or zero length?</p>
     </dd>
   </dl>
 </div>
@@ -3737,8 +3758,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
       <span class=adef>kernelUnitLength</span> = "<span class=attr-value><a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber>&lt;number-optional-number&gt;</a></span>"
     </dt>
     <dd>
-      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href=#SurfaceNormalCalculations>surface normal calculation formulas</a>. By specifying value(s) for <span class=attr-name>kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class=attr-name>kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <span class=attr-name>filterRes</span> and <span class=attr-name>kernelUnitLength</span>. Discussion of intermediate images are in the <a href=#introduction>Introduction</a> and in the description of attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a>. <span class=issue id=issue-4557ad5e><a class=self-link href=#issue-4557ad5e></a>Does the user actually want to have device dependent results? Maybe the default shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.<br>
-      If a negative or zero value is specified the default value will be used instead.</span> <span class=issue id=issue-03cfbdcd><a class=self-link href=#issue-03cfbdcd></a><a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is deprecated</span><br>
+      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href=#SurfaceNormalCalculations>surface normal calculation formulas</a>. By specifying value(s) for <span class=attr-name>kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class=attr-name>kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <span class=attr-name>filterRes</span> and <span class=attr-name>kernelUnitLength</span>. Discussion of intermediate images are in the <a href=#introduction>Introduction</a> and in the description of attribute <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a>.<br>
       <span class=anim-target>Animatable: yes.</span>
     </dd>
   </dl>
@@ -4005,8 +4025,8 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
   }
   return fSum;
 }</pre>
-<p class=issue id=issue-6f6c40c6><a class=self-link href=#issue-6f6c40c6></a>
-  Use pseudo code instead of C.
+<p class=issue id=issue-ad17c98d><a class=self-link href=#issue-ad17c98d></a>
+  Maybe use pseudo code for feTurbulence instead of C.
 </p>
 
 <div class=adef-list>
@@ -4072,10 +4092,10 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
     </dt>
     <dd>
       <p>
-        If <span class=css data-link-type=maybe title='stitchtiles="nostitch"'>stitchTiles="noStitch"</span>, no attempt is made to achieve smooth transitions at the border of tiles which contain a turbulence function. Sometimes the result will show clear discontinuities at the tile borders.
+        If ''stitchTiles="noStitch"'', no attempt is made to achieve smooth transitions at the border of tiles which contain a turbulence function. Sometimes the result will show clear discontinuities at the tile borders.
       </p>
       <p>
-        If <span class=css data-link-type=maybe title='stitchtiles="stitch"'>stitchTiles="stitch"</span>, then the user agent will automatically adjust baseFrequency-x and baseFrequency-y values such that the <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> node’s width and height (i.e., the width and height of the current subregion) contains an integral number of the Perlin tile width and height for the first octave. The baseFrequency will be adjusted up or down depending on which way has the smallest relative (not absolute) change as follows: Given the frequency, calculate <code>lowFreq=floor(width*frequency)/width</code> and <code>hiFreq=ceil(width*frequency)/width</code>. If frequency/lowFreq &lt; hiFreq/frequency then use lowFreq, else use hiFreq. While generating turbulence values, generate lattice vectors as normal for Perlin Noise, except for those lattice points that lie on the right or bottom edges of the active area (the size of the resulting tile). In those cases, copy the lattice vector from the opposite edge of the active area.
+        If ''stitchTiles="stitch"'', then the user agent will automatically adjust baseFrequency-x and baseFrequency-y values such that the <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> node’s width and height (i.e., the width and height of the current subregion) contains an integral number of the Perlin tile width and height for the first octave. The baseFrequency will be adjusted up or down depending on which way has the smallest relative (not absolute) change as follows: Given the frequency, calculate <code>lowFreq=floor(width*frequency)/width</code> and <code>hiFreq=ceil(width*frequency)/width</code>. If frequency/lowFreq &lt; hiFreq/frequency then use lowFreq, else use hiFreq. While generating turbulence values, generate lattice vectors as normal for Perlin Noise, except for those lattice points that lie on the right or bottom edges of the active area (the size of the resulting tile). In those cases, copy the lattice vector from the opposite edge of the active area.
       </p>
       <p>
         <span class=requirement id=assert_turbulenceStitchTilesLacunaValue>The <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue>lacuna value</a> for <a class=attr-name href=#feTurbulenceStitchTilesAttribute>‘stitchTiles‘</a> is <span class=attr-value>noStitch</span>.</span>
@@ -4332,8 +4352,8 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
   </p>
 </div>
 
-<p class=issue id=issue-8ff799b7><a class=self-link href=#issue-8ff799b7></a>
-  Use other color then red and green.
+<p class=issue id=issue-6408c4ff><a class=self-link href=#issue-6408c4ff></a>
+  Use other colors then red and green for graphics.
 </p>
 
 <h3 class="heading settled heading" data-level=10.3 id=fePointLightElement><span class=secno>10.3 </span><span class=content>Light source <a href=#fePointLightElement><code class=element-name>&lt;fePointLight&gt;</code></a></span><a class=self-link href=#fePointLightElement></a></h3>
@@ -5549,16 +5569,6 @@ void main()
   </li>
 </ul>
 
-<p class=issue id=matrix-interpolation><a class=self-link href=#matrix-interpolation></a>
-  Some filter functions can be represented as color matrices. Is it possible to interpolate between color matrices? See <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22583">Bug 22583</a>.
-</p>
-<p class=issue id=url-interpolation><a class=self-link href=#url-interpolation></a>
-  CSS filter function lists that have at least one SVG Filter reference can not be interpolated. Is it still possible to interpolate the other filter functions? See <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22951">Bug 22951</a>.
-</p>
-<p class=issue id=issue-css-transitions><a class=self-link href=#issue-css-transitions></a>
-  The CSS WG may define different fading transitions in the future.
-</p>
-
 <h3 class="heading settled heading" data-level=16.1 id=shader-params-interpolation><span class=secno>16.1 </span><span class=content>
   Interpolating the shader-params component in the custom() function
 </span><a class=self-link href=#shader-params-interpolation></a></h3>
@@ -5649,18 +5659,14 @@ void main()
   </tbody>
 </table>
 
-<p class=issue id=issue-59575f26><a class=self-link href=#issue-59575f26></a>
-  It needs to be researched and defined how additive animations are supposed to work.
+<p class=issue id=issue-eca11552><a class=self-link href=#issue-eca11552></a>
+  It needs to be researched and defined how additive animations of filters are supposed to work.
 </p>
 <p class=issue id=issue-7e3f8665><a class=self-link href=#issue-7e3f8665></a>
   The specification needs to define a distance() function for paced animations.
 </p>
 
 <h2 class="heading settled heading" data-level=18 id=security><span class=secno>18 </span><span class=content>Security</span><a class=self-link href=#security></a></h2>
-
-<p class=issue id=issue-2fa5f726><a class=self-link href=#issue-2fa5f726></a>
-  The following description of the security model is under discussion and may change. See <a href=http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html>public-fx</a> mailing list.
-</p>
 
 <h3 class="heading settled heading" data-level=18.1 id=tainted-filter-primitives><span class=secno>18.1 </span><span class=content>Tainted Filter Primitives</span><a class=self-link href=#tainted-filter-primitives></a></h3>
 
@@ -5691,7 +5697,9 @@ void main()
 
 <h3 class="heading settled heading" data-level=18.3 id=fecustom-restrictions><span class=secno>18.3 </span><span class=content><a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a> Restrictions</span><a class=self-link href=#fecustom-restrictions></a></h3>
 
-<p><a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a> is applying a processing operation on input filter primitives. It is important that no protected information leaks from that operation. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must validate each shader as described in section <a href=#validate-custom-filter-shaders>Validate custom filter shaders</a>. If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <a data-link-type=dfn href=#pass-through-filter title="pass through filter">pass through filter</a>. (See <a href=http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security>security study</a> <span class=issue id=issue-c0b03324><a class=self-link href=#issue-c0b03324></a>Make this a normative reference.</span>)
+<p><a href=#feCustomElement><code class=element-name>&lt;feCustom&gt;</code></a> is applying a processing operation on input filter primitives. It is important that no protected information leaks from that operation. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must validate each shader as described in section <a href=#validate-custom-filter-shaders>Validate custom filter shaders</a>. If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <a data-link-type=dfn href=#pass-through-filter title="pass through filter">pass through filter</a>. (See <a href=http://www.w3.org/Graphics/fx/wiki/CSS_Shaders_Security>security study</a>
+
+<p class=issue id=issue-b82be304><a class=self-link href=#issue-b82be304></a>Make security studies a normative reference.</p>
 
 <p class=note>Note: The above restriction to color access may just apply to "tainted" flagged input filter primitives in future versions of this specification.
 
@@ -5706,8 +5714,6 @@ void main()
 <p>If any of the above rules are not followed, an attacker could infer information and mount a timing attack.
 
 <p>A timing attack is a method of obtaining information about content that is otherwise protected, based on studying the amount of time it takes for an operation to occur. If, for example, red pixels took longer to draw than green pixels, one might be able to reconstruct a rough image of the element being rendered, without ever having access to the content of the element.
-
-<p class=issue id=issue-e9d2027a><a class=self-link href=#issue-e9d2027a></a>Add <a class=css data-link-type=maybe href=http://dev.w3.org/csswg/selectors-4/#visited-pseudo title=:visited>:visited</a> link example to explain the issue.</p>
 
 <h2 class="heading settled heading" data-level=19 id=DOMInterfaces><span class=secno>19 </span><span class=content>DOM interfaces</span><a class=self-link href=#DOMInterfaces></a></h2>
 
@@ -8575,113 +8581,85 @@ Property index</span><a class=self-link href=#property-index></a></h2>
         subregion.</table></div>
 
 
-<h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><span class=issue>Remove the last sentence once <a class="production css-code" data-link-type=function href=#funcdef-filter title=filter()>&lt;filter()&gt;</a> image function is in CSS Images Level 4.<a href=#issue-336cf378> ↵ </a></span>
-<span class=issue>Should outline really be filtered? What about focus ring?<a href=#issue-668a5e0f> ↵ </a></span>
+<h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>Should outline really be filtered? What about focus ring?<a href=#issue-d2848f56> ↵ </a></div>
 
-<p class=issue>
+<div class=issue>
   The CSS WG wants to look into how to apply the filter to certain parts of an object (background, border) instead of just the whole group with descendants.
-<a href=#issue-92cd9a9b> ↵ </a></p>
+<a href=#issue-92cd9a9b> ↵ </a></div>
 
-<p class=issue>
-  Which XML attributes can be removed?
-<a href=#issue-37b09b26> ↵ </a></p>
+<div class=issue>
+  'xlink:type', 'xlink:role', 'xlink:arcrole', 'xlink:title': Which XML attributes can be removed?
+<a href=#issue-0619e4fd> ↵ </a></div>
 
-<span class=issue>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?<a href=#issue-1ed55d6f> ↵ </a></span><span class=issue>To be removed<a href=#issue-eed401d00> ↵ </a></span>
-    <span class=issue>The current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns?<a href=#issue-ed50c31a> ↵ </a></span>. Any attributes which are defined on the referenced <span class=issue>Remove sentence about <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a><a href=#issue-e4fe787f> ↵ </a></span>
-    <span class=issue>To be removed<a href=#issue-eed401d01> ↵ </a></span>
-  <span class=issue>Preserve sentence about skewing<a href=#issue-efceff62> ↵ </a></span> Explicit values for attribute <span class=issue>To be removed<a href=#issue-eed401d0> ↵ </a></span>
-<span class=issue>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-5e7b98df> ↵ </a></span>
-<span class=issue>Is there even a primitive that has different behavior?<a href=#issue-958f8287> ↵ </a></span>
+<div class=issue>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?
+    <a href=#issue-6fe881fb> ↵ </a></div><div class=issue>Remove filterRes attribtue from filter element.
+    <a href=#issue-cbe49af0> ↵ </a></div><div class=issue>IRI reference of the current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns?.
+      <a href=#issue-7f1126f6> ↵ </a></div><div class=issue>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-eeeaeff7> ↵ </a></div>
 
-<p class=issue>
-  Make clear that most values can be scaled to produce high DPI filters with the exception of feConvolutionMatrix, the lightning filters and feCustom.
-<a href=#issue-1ed9f54d> ↵ </a></p>
+<div class=issue>Is there even a primitive that does not need to be transformed to the color space of the filter primitive?<a href=#issue-1d4b4cbb> ↵ </a></div>
 
-<span class=issue>Can this made easier? Also: Why is it fixed to linear RGB?<a href=#issue-b79d6367> ↵ </a></span>
-          <span class=issue>What is the dimension of the gradient/pattern if <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span> is specified on the PaintServer? The filter region? The dimension of the referencing element?<a href=#issue-32faef77> ↵ </a></span> <span class=issue> Which coordinate space is used on <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>?<a href=#issue-1f4767b4> ↵ </a></span>
-        <p class=issue>
+<div class=issue>
+  Make clear that most values can be scaled to produce high DPI filters with the exception of feConvolveMatrix, the lightning filters and feCustom.
+<a href=#issue-99e14ee4> ↵ </a></div>
+
+<div class=issue>Why is SourceGraphic drawn into a fixed <em>linear</em> RGB?<a href=#issue-5d317c13> ↵ </a></div>
+        <div class=issue>FillPaint: What is the dimension of the gradient/pattern if <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span> is specified on the PaintServer? The filter region? The dimension of the referencing element?
+          <a href=#issue-a2f2d409> ↵ </a></div><div class=issue>FillPaint: Which coordinate space is used on <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>?
+        <a href=#issue-16e5d940> ↵ </a></div><div class=issue>
   Define filter primitive subregion for shorthands. E.g. the out bounds of the previous filter functions, extended by affected area of current filter function.
-<a href=#issue-cb22c668> ↵ </a></p>
+<a href=#issue-cb22c668> ↵ </a></div>
 
-<p class=issue>SVG WG decision: Enable blending without composition.<a href=#issue-903630f6> ↵ </a></p>
+<div class=issue>SVG WG decision: Enable blending without composition.<a href=#issue-903630f6> ↵ </a></div>
 
-<p class=issue>
+<div class=issue>
   feConvolveMatrix is device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> or <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
-<a href=#issue-5e7c0f30> ↵ </a></p>
+<a href=#issue-5e7c0f30> ↵ </a></div>
 
-<span class=issue>Sounds strange.<a href=#issue-adedf1f3> ↵ </a></span>
+<div class=issue>feConvolveMatrix: filterRes removed, control just over kernel size?<a href=#issue-c40c26ae> ↵ </a></div>
 
-<span class=issue>filterRes removed, control just over kernel size?<a href=#issue-ac4da719> ↵ </a></span>
+<div class=issue>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates as device coordinate filtering?<a href=#issue-d445a04a> ↵ </a></div>
 
-<span class=issue>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results.<a href=#issue-698f0bfa> ↵ </a></span> The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
+<div class=issue>Does the user even want device dependent results? Maybe the initial value shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.<a href=#issue-3f1c3fa0> ↵ </a></div>
+    <div class=issue>Should feConvolveMatrix and feLigthing always take <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> into account? If yes, will the way change how?<a href=#issue-35e2290c> ↵ </a></div>
 
-<span class=issue>Require for all UAs.<a href=#issue-1a4e87b4> ↵ </a></span>
+<div class=issue>Do we still want to differ between quality viewers and the viewers which aren’t.<a href=#issue-db95159d> ↵ </a></div> 
 
-<span class=issue>Does the user even want device dependent results? Maybe the initial value shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.<a href=#issue-4a36e894> ↵ </a></span><span class=issue>Remove filterRes.<a href=#issue-2727c971> ↵ </a></span>
-
-<span class=issue>(Requirement for all UAs?)<a href=#issue-5210fdce> ↵ </a></span>, for example bilinear or bicubic.<span class=issue>Maybe this should be the default case and not may.<a href=#issue-8f33eb14> ↵ </a></span>
-
-<span class=issue>Is that needed or even useful here?<a href=#issue-1fb3a4c0> ↵ </a></span>
-
-<span class=issue>Should be common by all browsers.<a href=#issue-551c19c9> ↵ </a></span><span class=issue>Interpolation of surrounding pixels on the source? Not rather on the output? Also, this just handles subpixel on the source, what about destination?<a href=#issue-799aa4fe> ↵ </a></span>
-
-<p class=issue>
+<div class=issue>
   By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
-<a href=#issue-subregion-clipping-fegaussianblur> ↵ </a></p>
+<a href=#issue-subregion-clipping-fegaussianblur> ↵ </a></div>
 
-<p class=issue>
-  What about other inputs with infinite extents? What is the 'periodic boundary condition'?
-<a href=#issue-infinite-extents-fegaussianblur> ↵ </a></p>
+<div class=issue>
+  feGaussianBlur: What about other inputs with infinite extents? What is the 'periodic boundary condition'?
+<a href=#issue-infinite-extents-fegaussianblur> ↵ </a></div>
 
-<span class=issue>should it still be xlink:href or just href?<a href=#issue-3f408d80> ↵ </a></span>
+<div class=issue>Add href on every place where we use xlink:href.<a href=#issue-464d6ca9> ↵ </a></div>
 
-<p class=issue>
-  What happens if the referenced graphic does not exist or is not yet loaded? Maybe same behavior as feFlood with transparent black. What about <span class=css data-link-type=maybe title="preserve aspect ratio">preserve aspect ratio</span>?
-<a href=#issue-c194d329> ↵ </a></p>
+<div class=issue>
+  What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don’t apply filter or null filter. What about <span class=css data-link-type=maybe title="preserve aspect ratio">preserve aspect ratio</span>?
+<a href=#issue-1864c8e9> ↵ </a></div>
 
-<p class=issue>
+<div class=issue>
   By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
-<a href=#issue-subregion-clipping-femorphology> ↵ </a></p>
+<a href=#issue-subregion-clipping-femorphology> ↵ </a></div>
 
-<p class=issue>
-  What about other inputs with infinite extents? What is the 'periodic boundary condition'?
-<a href=#issue-infinite-extents-femorphology> ↵ </a></p>
+<div class=issue>Do not disable rendering of feMorphology on negative or zero length?<a href=#issue-a746b07d> ↵ </a></div>
+    <div class=issue>
+  Maybe use pseudo code for feTurbulence instead of C.
+<a href=#issue-ad17c98d> ↵ </a></div>
 
-<span class=issue>Do not disable rendering on negative or zero length?
-      <a href=#issue-880abe39> ↵ </a></span><span class=issue>Does the user actually want to have device dependent results? Maybe the default shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.<br>
-      If a negative or zero value is specified the default value will be used instead.<a href=#issue-4557ad5e> ↵ </a></span> <span class=issue><a class=attr-name data-link-type=maybe href=#FilterElementFilterResAttribute title=filterres>filterRes</a> is deprecated<a href=#issue-03cfbdcd> ↵ </a></span><p class=issue>
-  Use pseudo code instead of C.
-<a href=#issue-6f6c40c6> ↵ </a></p>
+<div class=issue>
+  Use other colors then red and green for graphics.
+<a href=#issue-6408c4ff> ↵ </a></div>
 
-<p class=issue>
-  Use other color then red and green.
-<a href=#issue-8ff799b7> ↵ </a></p>
-
-<p class=issue>
-  Some filter functions can be represented as color matrices. Is it possible to interpolate between color matrices? See <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22583">Bug 22583</a>.
-<a href=#matrix-interpolation> ↵ </a></p>
-<p class=issue>
-  CSS filter function lists that have at least one SVG Filter reference can not be interpolated. Is it still possible to interpolate the other filter functions? See <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22951">Bug 22951</a>.
-<a href=#url-interpolation> ↵ </a></p>
-<p class=issue>
-  The CSS WG may define different fading transitions in the future.
-<a href=#issue-css-transitions> ↵ </a></p>
-
-<p class=issue>
-  It needs to be researched and defined how additive animations are supposed to work.
-<a href=#issue-59575f26> ↵ </a></p>
-<p class=issue>
+<div class=issue>
+  It needs to be researched and defined how additive animations of filters are supposed to work.
+<a href=#issue-eca11552> ↵ </a></div>
+<div class=issue>
   The specification needs to define a distance() function for paced animations.
-<a href=#issue-7e3f8665> ↵ </a></p>
+<a href=#issue-7e3f8665> ↵ </a></div>
 
-<p class=issue>
-  The following description of the security model is under discussion and may change. See <a href=http://lists.w3.org/Archives/Public/public-fx/2013AprJun/0017.html>public-fx</a> mailing list.
-<a href=#issue-2fa5f726> ↵ </a></p>
+<div class=issue>It should be explained that the listed primitives can take <span class=css data-link-type=maybe title=currentcolor>currentColor</span> as input which derives from the used value of <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-color-3/#propdef-color title=color>color</a>; a property that can be set by <a class=css data-link-type=maybe href=http://dev.w3.org/csswg/selectors-4/#visited-pseudo title=:visited>:visited</a>.<a href=#issue-cfdba2b5> ↵ </a></div>
 
-<p class=issue>It should be explained that the listed primitives can take <span class=css data-link-type=maybe title=currentcolor>currentColor</span> as input which derives from the used value of <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-color-3/#propdef-color title=color>color</a>; a property that can be set by <a class=css data-link-type=maybe href=http://dev.w3.org/csswg/selectors-4/#visited-pseudo title=:visited>:visited</a>.<a href=#issue-cfdba2b5> ↵ </a></p>
-
-<span class=issue>Make this a normative reference.<a href=#issue-c0b03324> ↵ </a></span>)
-
-<p class=issue>Add <a class=css data-link-type=maybe href=http://dev.w3.org/csswg/selectors-4/#visited-pseudo title=:visited>:visited</a> link example to explain the issue.<a href=#issue-e9d2027a> ↵ </a></p>
+<div class=issue>Make security studies a normative reference.<a href=#issue-b82be304> ↵ </a></div>
 
 </div>
