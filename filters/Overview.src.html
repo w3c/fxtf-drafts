@@ -569,10 +569,9 @@ The description of the <a>'filter element'</a> element follows:
     <dt id="FilterElementFilterResAttribute">
       <p><span class="adef">filterRes</span> =
       "<em><a>&lt;number-optional-number&gt;</a></em>"
-      <p class="issue">Remove filterRes attribtue from filter element.
     </dt>
     <dd>
-      See <a>filter effects region</a>.
+      <p>The <em>filterRes</em> attribute was removed from the specification. See SVG 1.1 specification for the defintion [[!SVG11]].</p>
     </dd>
     <dt id="FilterElementHrefAttribute">
       <span class="adef">xlink:href</span> = "<span class=
@@ -580,11 +579,9 @@ The description of the <a>'filter element'</a> element follows:
     </dt>
     <dd>
       <p>An <a>IRI reference</a> to another <a>'filter element'</a> element within the current <a>SVG document fragment</a>. Any attributes which are defined on the referenced <a>'filter element'</a> element which are not defined on this element are inherited by this element. If this element has no defined filter nodes, and the referenced element has defined filter nodes (possibly due to its own <span class="attr-name">href</span> attribute), then this element inherits the filter nodes defined from the referenced <a>'filter element'</a> element. Inheritance can be indirect to an arbitrary level; thus, if the referenced <a>'filter element'</a> element inherits attributes or its filter node specification due to its own <span class="attr-name">href</span> attribute, then the current element can inherit those attributes or filter node specifications.
-      <p class="issue">IRI reference of the current fragment of the <a>'filter element'</a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns?</span>.
-      <div class="note">
-        This attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only.
-      </div><br>
-      <span class="anim-target">Animatable: yes.</span>
+      <p class="issue">IRI reference of the current fragment of the <a>'filter element'</a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns? Seems more restrictive already. Maybe remove it immediately?</p>
+      <p class="note">This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only.</p>
+      <p class="anim-target">Animatable: yes.</p>
     </dd>
   </dl>
 </div>
@@ -627,9 +624,6 @@ A <a>'filter element'</a> element can define a region on the canvas to which a g
       These attributes define a rectangular region on the canvas to which this filter applies.
     </p>
     <p>
-      The amount of memory and processing time required to apply the filter are related to the size of this rectangle and the <a>'filter/filterRes'</a> attribute of the filter.
-    </p>
-    <p>
       The coordinate system for these attributes depends on the value for attribute <a>'filterUnits'</a>.
     </p>
     <p>
@@ -648,34 +642,13 @@ A <a>'filter element'</a> element can define a region on the canvas to which a g
       <span class="anim-target">Animatable: yes.</span>
     </p>
   </dd>
-  <dt id="FilterRegionFilterRes">
-    <a>'filter/filterRes'</a>
-  </dt>
-  <dd>
-    <p>
-      Defines the width and height of the intermediate images in pixels. If not provided, then the user agent will use reasonable values to produce a high-quality result on the output device.
-    </p>
-    <p>
-      Care should be taken when assigning a non-default value to this attribute. Too small of a value may result in unwanted pixelation in the result. Too large of a value may result in slow processing and large memory usage.
-    </p>
-    <p>
-      Non-integer values are truncated, i.e rounded to the closest integer value towards zero.
-    </p>
-    <p>
-      Negative or zero values must disable rendering of the element which referenced the filter.
-    </p>
-    <p>
-      <span class="anim-target">Animatable: yes.</span>
-    </p>
-  </dd>
 </dl>
 
 Note that both of the two possible value for <a>'filterUnits'</a> (i.e., ''objectBoundingBox'' and ''userSpaceOnUse'') result in a <a>filter region</a> whose coordinate system has its X-axis and Y-axis each parallel to the X-axis and Y-axis, respectively, of the <a>user coordinate system</a> for the element to which the filter will be applied.
 
 <p class="note implementation">
-  Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <a>filter region</a> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system. Explicit values for attribute <a>'filter/filterRes'</a> can either help or harm performance. If <a>'filter/filterRes'</a> is smaller than the automatic (i.e., default) filter resolution, then filter effect might have faster performance (usually at the expense of quality). If <a>'filter/filterRes'</a> is larger than the automatic (i.e., default) filter resolution, then filter effects performance will usually be slower.
+  Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <a>filter region</a> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.
 </p>
-<p>Keep sentence about skewing on implementation note for filter effects region.</p>
 <p class="note authoring">
   It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a>'filter/x'</a>, <a>'filter/y'</a> and percentages values greater than ''100%'' for <a>'filter/width'</a>, <a>'filter/height'</a>. This, for example, is why the defaults for the filter effects region are ''x="-10%" y="-10%" width="120%" height="120%"''. 
 </p>
@@ -1806,7 +1779,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
 <!--elementsummary feConvolveMatrix-->
 
 <p class="issue">
-  feConvolveMatrix is device pixel dependent. The spec suggests to use <a>'filter/filterRes'</a> or <a>'feConvolveMatrix/kernelUnitLength'</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
+  feConvolveMatrix is device pixel dependent. The spec suggests to use <a>'feConvolveMatrix/kernelUnitLength'</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
 </p>
 
 feConvolveMatrix applies a matrix convolution filter effect. A convolution combines pixels in the input image with neighboring pixels to produce a resulting image. A wide variety of imaging operations can be achieved through convolutions, including blurring, edge detection, sharpening, embossing and beveling.
@@ -1839,11 +1812,11 @@ Let's focus on the color value at the second row and second column of the image 
   <math><semantics><mrow><mrow><msub><mi>resultChannel</mi><mn>2,2</mn></msub><mo stretchy="false">=</mo><mfrac><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy="false">⋅</mo><mn>0</mn></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>8</mn><mo stretchy="false">⋅</mo><mn>20</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>7</mn><mo stretchy="false">⋅</mo><mn>40</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>6</mn><mo stretchy="false">⋅</mo><mn>100</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>5</mn><mo stretchy="false">⋅</mo><mn>120</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>4</mn><mo stretchy="false">⋅</mo><mn>140</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>3</mn><mo stretchy="false">⋅</mo><mn>200</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>2</mn><mo stretchy="false">⋅</mo><mn>220</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>1</mn><mo stretchy="false">⋅</mo><mn>240</mn></mrow></mrow></mrow></mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy="false">+</mo><mn>8</mn></mrow><mo stretchy="false">+</mo><mn>7</mn></mrow><mo stretchy="false">+</mo><mn>6</mn></mrow><mo stretchy="false">+</mo><mn>5</mn></mrow><mo stretchy="false">+</mo><mn>4</mn></mrow><mo stretchy="false">+</mo><mn>3</mn></mrow><mo stretchy="false">+</mo><mn>2</mn></mrow><mo stretchy="false">+</mo><mn>1</mn></mrow></mrow></mfrac></mrow></mrow></semantics></math>
 </p>
 
-Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a>'feConvolveMatrix'</a> produce resolution-independent results, an explicit value should be provided for either the <a>'filter/filterRes'</a> attribute on the <a>'filter element'</a> element and/or attribute <a>'feConvolveMatrix/kernelUnitLength'</a>.
+Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a>'feConvolveMatrix'</a> produce resolution-independent results, an explicit value should be provided for the attribute <a>'feConvolveMatrix/kernelUnitLength'</a>.
 
 <p class="issue">feConvolveMatrix: filterRes removed, control just over kernel size?</p>
 
-<a>'feConvolveMatrix/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). If the pixel grid established by <a>'feConvolveMatrix/kernelUnitLength'</a> is not scaled to match the pixel grid established by attribute <a>'filter/filterRes'</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a>'feConvolveMatrix/kernelUnitLength'</a>. The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
+<a>'feConvolveMatrix/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). The input image will be temporarily rescaled to match its pixels with <a>'feConvolveMatrix/kernelUnitLength'</a>. The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
 
 <p class="issue">So we scale the image to the coordinates of the <a>'feConvolveMatrix/kernelUnitLength'</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates and device coordinate filtering?</p>
 
@@ -1948,7 +1921,7 @@ When the image must be resampled to match the coordinate system defined by <a>'f
       <span class="adef">kernelUnitLength</span> = "<span class="attr-value"><a>&lt;number-optional-number&gt;</a></span>"
     </dt>
     <dd>
-      <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) between successive columns and rows, respectively, in the <a>'kernelMatrix'</a>. By specifying value(s) for <a>'feConvolveMatrix/kernelUnitLength'</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a>'feConvolveMatrix/kernelUnitLength'</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <a>'filter/filterRes'</a> and <a>'feConvolveMatrix/kernelUnitLength'</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary offscreen images aligns with the pixel grid of the kernel.<br>
+      <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) between successive columns and rows, respectively, in the <a>'kernelMatrix'</a>. By specifying value(s) for <a>'feConvolveMatrix/kernelUnitLength'</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a>'feConvolveMatrix/kernelUnitLength'</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a>'feConvolveMatrix/kernelUnitLength'</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary offscreen images aligns with the pixel grid of the kernel.<br>
       If a negative or zero value is specified the default value will be used instead.<br>
       <span class="anim-target">Animatable: yes.</span>
       <p class="issue">Does the user even want device dependent results? Maybe the initial value shouldn't be ''1''.</p>
@@ -2135,9 +2108,9 @@ This filter primitive lights an image using the alpha channel as a bump map. The
 
 The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a>'feComposite'</a> compositing method. Multiple <i>light sources</i> can be simulated by adding several of these light maps together before applying it to the texture image.
 
-The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a>'feDiffuseLighting'</a> produce resolution-independent results, an explicit value should be provided for either the <a>'filter/filterRes'</a> attribute on the <a>'filter element'</a> element and/or attribute <a>'feDiffuseLighting/kernelUnitLength'</a>.
+The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a>'feDiffuseLighting'</a> produce resolution-independent results, an explicit value should be provided for the attribute <a>'feDiffuseLighting/kernelUnitLength'</a>.
 
-<a>'feDiffuseLighting/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). If the pixel grid established by <a>'feDiffuseLighting/kernelUnitLength'</a> is not scaled to match the pixel grid established by attribute <a>'filter/filterRes'</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a>'feDiffuseLighting/kernelUnitLength'</a>. The 3x3 filters are applied to the resampled image. After applying the filter, the image is resampled back to its original resolution.
+<a>'feDiffuseLighting/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). The input image will be temporarily rescaled to match its pixels with <a>'feDiffuseLighting/kernelUnitLength'</a>. The 3x3 filters are applied to the resampled image. After applying the filter, the image is resampled back to its original resolution.
 
 <span class="requirement" id="assert_diffuseLightingImageResampling">When the image must be resampled, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic.</span> Depending on the speed of the available interpolents, this choice may be affected by the <a>'image-rendering'</a> property setting.
 
@@ -2463,7 +2436,7 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
       "attr-value"><a>&lt;number-optional-number&gt;</a></span>"
     </dt>
     <dd>
-      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <span class="attr-name">kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class="attr-name">kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <a>'filter/filterRes'</a> and <span class="attr-name">kernelUnitLength</span>. Discussion of intermediate images are in the <a href="#introduction">Introduction</a> and in the description of attribute <a>'filter/filterRes'</a>.<br>
+      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <span class="attr-name">kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class="attr-name">kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <span class="attr-name">kernelUnitLength</span>.<br>
       If a negative or zero value is specified the default value will be used instead.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -2780,13 +2753,13 @@ The Gaussian blur kernel is an approximation of the normalized convolution:
 where
 
 <p class="filterformula">
-  H(x) = exp(-x<sup>2</sup>/ (2s<sup>2</sup>)) / sqrt(2* pi*s<sup>2</sup>)
+  H(x) = exp(-x<sup>2</sup>/ (2s<sup>2</sup>)) / sqrt(2&pi; * s<sup>2</sup>)
 </p>
 
 and
 
 <p class="filterformula">
-  I(y) = exp(-y<sup>2</sup>/ (2t<sup>2</sup>)) / sqrt(2* pi*t<sup>2</sup>)
+  I(y) = exp(-y<sup>2</sup>/ (2t<sup>2</sup>)) / sqrt(2&pi; * t<sup>2</sup>)
 </p>
 
 with "s" being the standard deviation in the x direction and "t" being the standard deviation in the y direction, as specified by <a>'feGaussianBlur/stdDeviation'</a>.
@@ -2798,7 +2771,7 @@ Even if only one value is provided for <a>'feGaussianBlur/stdDeviation'</a>, thi
 For larger values of "s" (s &gt;= 2.0), an approximation can be used: Three successive box-blurs build a piece-wise quadratic convolution kernel, which approximates the Gaussian kernel to within roughly 3%.
 
 <p class="filterformula">
-  let d = floor(s * 3*sqrt(2*pi)/4 + 0.5)
+  let d = floor(s * 3 * sqrt(2 * &pi;) / 4 + 0.5)
 </p>
 
 ... if d is odd, use three box-blurs of size "d", centered on the output pixel.
@@ -2881,9 +2854,7 @@ This filter primitive refers to a graphic external to this filter element, which
 
 This filter primitive can refer to an external image or can be a reference to another piece of SVG. It produces an image similar to the built-in image source <a href="#SourceGraphic"><span class="attr-value">SourceGraphic</span></a> except that the graphic comes from an external source.
 
-If the <span class="attr-name">xlink:href</span> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image element'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use element'</a> element. In either case, the current user coordinate system depends on the value of attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The processing of the ''preserveAspectRatio'' attribute on the <a>'feImage'</a> element is identical to that of the <a>'image'</a> element.
-
-<p class="issue">Add href on every place where we use xlink:href.</p>
+If the <span class="attr-name">href</span> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image element'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use element'</a> element. In either case, the current user coordinate system depends on the value of attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The processing of the ''preserveAspectRatio'' attribute on the <a>'feImage'</a> element is identical to that of the <a>'image'</a> element.
 
 <p class="issue">
   What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don't apply filter or null filter. What about ''preserve aspect ratio''?
@@ -2896,12 +2867,21 @@ If the <span class="attr-name">xlink:href</span> references a stand-alone image 
     <em>Attribute definitions:</em>
   </p>
   <dl>
-    <dt id="feImageElementHrefAttribute">
+    <dt id="feImageElementXlinkHrefAttribute">
       <span class="adef">xlink:href</span> = "<span class=
       "attr-value">&lt;IRI&gt;</span>"
     </dt>
     <dd>
-      An <a>IRI reference</a> to an image resource or to an element.<br>
+      <p>An <a>IRI reference</a> to an image resource or to an element.<br>
+      <span class="anim-target">Animatable: yes.</span>
+      <p class="note">This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a href="#feImageElementHrefAttribute">href</a> attribute instead.</p>
+    </dd>
+    <dt id="feImageElementHrefAttribute">
+      <span class="adef">href</span> = "<span class=
+      "attr-value">&lt;IRI&gt;</span>"
+    </dt>
+    <dd>
+      An <a>IRI reference</a> to an image resource or to an element. If both, the <a href="#feImageElementXlinkHrefAttribute">xlink:href</a> and the <em>href</em> attribute are specified, the latter overrides the first defintion.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feImageElementPreserveAspectRatioAttribute">
@@ -3224,7 +3204,7 @@ The <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> filters will ofte
       <span class="adef">kernelUnitLength</span> = "<span class="attr-value"><a>&lt;number-optional-number&gt;</a></span>"
     </dt>
     <dd>
-      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <span class="attr-name">kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class="attr-name">kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for at least one of <span class="attr-name">filterRes</span> and <span class="attr-name">kernelUnitLength</span>. Discussion of intermediate images are in the <a href="#introduction">Introduction</a> and in the description of attribute <a>'filter/filterRes'</a>.<br>
+      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <span class="attr-name">kernelUnitLength</span>, the kernel becomes defined in a scalable, abstract coordinate system. If <span class="attr-name">kernelUnitLength</span> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for  <span class="attr-name">kernelUnitLength</span>.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
@@ -5175,15 +5155,6 @@ readonly attribute <a>SVGAnimatedLength</a> <a href=
 "#SVGFilterElement__width">width</a>;
 readonly attribute <a>SVGAnimatedLength</a> <a href=
 "#SVGFilterElement__height">height</a>;
-readonly attribute <a>SVGAnimatedInteger</a> <a href=
-"#SVGFilterElement__filterResX">filterResX</a>;
-readonly attribute <a>SVGAnimatedInteger</a> <a href=
-"#SVGFilterElement__filterResY">filterResY</a>;
-
-void <a href=
-"#SVGFilterElement__setFilterRes">setFilterRes</a>(in unsigned long filterResX, in unsigned long filterResY);
-<a>ImageData</a> <a href=
-"#SVGFilterElement__apply">apply</a>(in <a>ImageData</a> source);
 };
 
 <a>SVGFilterElement</a> implements <a>SVGURIReference</a>;
@@ -5237,111 +5208,6 @@ void <a href=
       <dd>
         Corresponds to attribute <a>'filter/height'</a> on the given <a>'filter element'</a> element.
         </div>
-      </dd>
-      <dt id="SVGFilterElement__filterResX">
-        <b>filterResX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedInteger</a>)</span>
-      </dt>
-      <dd>
-        Corresponds to attribute <a>'filter/filterRes'</a> on the given <a>'filter element'</a> element. Contains the X component of attribute <a>'filter/filterRes'</a>.
-      </dd>
-      <dt id="SVGFilterElement__filterResY">
-        <b>filterResY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedInteger</a>)</span>
-      </dt>
-      <dd>
-        Corresponds to attribute <a>'filter/filterRes'</a> on the given <a>'filter element'</a> element. Contains the Y component (possibly computed automatically) of attribute <a>'filter/filterRes'</a>.
-      </dd>
-    </dl>
-  </dd>
-  <dt>
-    Operations:
-  </dt>
-  <dd>
-    <dl class="attributes">
-      <dt id="SVGFilterElement__setFilterRes">
-        void <b>setFilterRes</b>(in unsigned long <var>filterResX</var>, in unsigned
-        long <var>filterResY</var>)
-      </dt>
-      <dd>
-        <div>
-          Sets the values for attribute <a>'filter/filterRes'</a>.
-        </div>
-        <dl class="operation">
-          <dt>
-            Parameters
-          </dt>
-          <dd>
-            <ol class="parameters">
-              <li>
-                <div class="parameter">
-                  unsigned long <var>filterResX</var>
-                </div>
-                <div>
-                  The X component of attribute <a>'filter/filterRes'</a>.
-                </div>
-              </li>
-              <li>
-                <div class="parameter">
-                  unsigned long <var>filterResY</var>
-                </div>
-                <div>
-                  The Y component of attribute <a>'filter/filterRes'</a>.
-                </div>
-              </li>
-            </ol>
-          </dd>
-          <dt>
-            Exceptions
-          </dt>
-          <dd>
-            <dl class="exceptions">
-              <dt>
-                <a class="idlinterface"
-                    href=
-                    "http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-17189187">DOMException</a>,
-                    code NO_MODIFICATION_ALLOWED_ERR
-              </dt>
-              <dd>
-                Raised on an attempt to change the value of a readonly attribute.
-              </dd>
-            </dl>
-          </dd>
-        </dl>
-      </dd>
-      <dt id="SVGFilterElement__apply">
-        <a>ImageData</a> <b>apply</b>(in <a>ImageData</a> <var>source</var>)
-      </dt>
-      <dd>
-        <div>
-          Applies the filter to the given ImageData object and returns the result.
-        </div>
-        <dl class="operation">
-          <dt>
-            Parameters
-          </dt>
-          <dd>
-            <ol class="parameters">
-              <li>
-                <div class="parameter">
-                  <a>ImageData</a> <var>source</var>
-                </div>
-                <div>
-                  The image to apply the filter to.
-                </div>
-              </li>
-            </ol>
-          </dd>
-          <dt>
-            Returns
-          </dt>
-          <dd>
-            <div>
-              The result of the filter, see <a>ImageData</a> for how to construct
-              this.
-            </div>
-          </dd>
-        </dl>
       </dd>
     </dl>
   </dd>
