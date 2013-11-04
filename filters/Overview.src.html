@@ -489,6 +489,8 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
   </dd>
 </dl>
 
+<p class="issue">Implementation feedback needed: Some of the filter shorthands should operate on premulitplied colors (<<blur()>>, <<drop-shadow()>>) others on unpremultiplied colors. Do implementations follow the current spec text? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22581">Bug 22581</a></p>
+
 The first filter function or <a>'filter element'</a> reference in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as the input image. Subsequent operations take the output from the previous filter function or <a>'filter element'</a> reference as the input image. <a>'filter element'</a> element reference functions can specify an alternate input, but still uses the previous output as its <a href="#SourceGraphic">SourceGraphic</a>.
 
 Filter functions must operate in the sRGB color space.
@@ -538,7 +540,7 @@ The description of the <a>'filter element'</a> element follows:
       If <a>'filter/primitiveUnits'</a> is equal to ''objectBoundingBox'', then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a>'filter/primitiveUnits'</a> computation takes place.<br>
       The <a>lacuna value</a> for <a>'filter/primitiveUnits'</a> is <span class="attr-value">userSpaceOnUse</span>.<br>
       <span class="anim-target">Animatable: yes.</span>
-      <p class="issue">If we make filter region auto, how will it affect existing content that uses ''objectBoundingBox''?
+      <p class="issue">If we make filter region auto, how will it affect existing content that uses ''objectBoundingBox''? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
     </dd>
     <dt id="FilterElementXAttribute">
       <span class="adef">x</span> = "<<length>> | <<percentage>>"
@@ -865,7 +867,7 @@ The following attribute is representative for all input attributes:
 <h3 id="FilterPrimitiveSubRegion">Filter primitive subregion</h3>
 
 <p class="issue">
-  Define filter primitive subregion for shorthands. E.g. the out bounds of the previous filter functions, extended by affected area of current filter function.
+  Define filter primitive subregion for shorthands. E.g. the out bounds of the previous filter functions, extended by affected area of current filter function. <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22580">Bug 22580</a>
 </p>
 
 All <a>filter primitives</a> have attributes <a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> which together identify a subregion which restricts calculation and rendering of the given <a>filter primitive</a>. The <a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> attributes are defined according to the same rules as other <a>filter primitives</a> coordinate and length attributes and thus represent values in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.
@@ -875,6 +877,8 @@ All <a>filter primitives</a> have attributes <a>'feBlend/x'</a>, <a>'feBlend/y'<
 If the <a>filter primitive subregion</a> has a negative or zero width or height, the effect of the filter primitive is disabled.
 
 The <a>filter primitive subregion</a> act as a hard clip clipping rectangle on both the filter primitive's input image(s) and the filter primitive result.
+
+<p class="issue">Should subregions clip input, output or both results? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22577">Bug 22577</a></p>
 
 All intermediate offscreens are defined to not exceed the intersection of the <a>filter primitive subregion</a> with the <a>filter region</a>. The <a>filter region</a> and any of the filter primitive subregions are to be set up such that all offscreens are made big enough to accommodate any pixels which even partly intersect with either the <a>filter region</a> or the filter primitive subregions.
 
@@ -1841,7 +1845,7 @@ Because they operate on pixels, matrix convolutions are inherently resolution-de
 
 <a>'feConvolveMatrix/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). If the pixel grid established by <a>'feConvolveMatrix/kernelUnitLength'</a> is not scaled to match the pixel grid established by attribute <a>'filter/filterRes'</a> (implicitly or explicitly), then the input image will be temporarily rescaled to match its pixels with <a>'feConvolveMatrix/kernelUnitLength'</a>. The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
 
-<p class="issue">So we scale the image to the coordinates of the <a>'feConvolveMatrix/kernelUnitLength'</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates as device coordinate filtering?</p>
+<p class="issue">So we scale the image to the coordinates of the <a>'feConvolveMatrix/kernelUnitLength'</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates and device coordinate filtering?</p>
 
 When the image must be resampled to match the coordinate system defined by <a>'feConvolveMatrix/kernelUnitLength'</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a>'image-rendering'</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a>'feConvolveMatrix/kernelUnitLength'</a> is considerably smaller than a device pixel.
 
@@ -2810,7 +2814,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
 </p>
 
 <p class="issue" id="issue-infinite-extents-fegaussianblur">
-  feGaussianBlur: What about other inputs with infinite extents? What is the 'periodic boundary condition'?
+  feGaussianBlur: What about other inputs with infinite extents? What is the 'periodic boundary condition'? (Answer to 2nd question: <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">http://en.wikipedia.org/wiki/Periodic_boundary_conditions</a>)
 </p>
 
 <div class="adef-list">
@@ -3490,6 +3494,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
            id="assert_turbulenceNumOctavesAnimatable"><span class=
            "anim-target">Animatable: yes.</span></span>
       </p>
+      <p class="issue">Add a note that numOctaves of feTurbulence should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
     </dd>
     <dt id="feTurbulenceSeedAttribute">
       <span class="adef">seed</span> = "<em><<number>></em>"
