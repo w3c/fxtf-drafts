@@ -2034,8 +2034,8 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 </table>
 
 
-<p class=issue id=issue-d753e43f><a class=self-link href=#issue-d753e43f></a>
-  feConvolveMatrix is device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
+<p class=issue id=issue-0f0aa5a9><a class=self-link href=#issue-0f0aa5a9></a>
+  <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> and feLighting filter primitives are device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform independent result ever in the interest of the user? Maybe just have a switch between "device space" and <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>/<span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?
 </p>
 
 <p>feConvolveMatrix applies a matrix convolution filter effect. A convolution combines pixels in the input image with neighboring pixels to produce a resulting image. A wide variety of imaging operations can be achieved through convolutions, including blurring, edge detection, sharpening, embossing and beveling.
@@ -2070,11 +2070,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <p>Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> produce resolution-independent results, an explicit value should be provided for the attribute <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>.
 
-<p class=issue id=issue-c40c26ae><a class=self-link href=#issue-c40c26ae></a>feConvolveMatrix: filterRes removed, control just over kernel size?</p>
-
 <p><a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute). The input image will be temporarily rescaled to match its pixels with <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
-
-<p class=issue id=issue-0e196f4e><a class=self-link href=#issue-0e196f4e></a>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates and device coordinate filtering?</p>
 
 <p>When the image must be resampled to match the coordinate system defined by <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is considerably smaller than a device pixel.
 
@@ -2178,8 +2174,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
     <dd>
       <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a>) between successive columns and rows, respectively, in the <a class=attr-name href=#feConvolveMatrixElementKernelMatrixAttribute>‘kernelMatrix‘</a>. By specifying value(s) for <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary offscreen images aligns with the pixel grid of the kernel.<br>
       If a negative or zero value is specified the default value will be used instead.<br>
-      <span class=anim-target>Animatable: yes.</span>
-      <p class=issue id=issue-3f1c3fa0><a class=self-link href=#issue-3f1c3fa0></a>Does the user even want device dependent results? Maybe the initial value shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.</p>
+      <p class=anim-target>Animatable: yes.</p>
     </dd>
     <dt id=feConvolveMatrixElementPreserveAlphaAttribute><a class=self-link href=#feConvolveMatrixElementPreserveAlphaAttribute></a>
       <span class=adef>preserveAlpha</span> = "<span class=attr-value>false | true</span>"
@@ -3193,11 +3188,11 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 <p>Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a href=#SourceAlpha><span class=attr-value>SourceAlpha</span></a>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href=#security>Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <span class=attr-value><a href=#FillPaint>FillPaint</a></span> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a href=#feTileElement><code class=element-name>&lt;feTile&gt;</code></a>, the filter is evaluated with periodic boundary conditions.
 
 <p class=issue id=issue-subregion-clipping-fegaussianblur><a class=self-link href=#issue-subregion-clipping-fegaussianblur></a>
-  By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
+   <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a>: By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 </p>
 
 <p class=issue id=issue-infinite-extents-fegaussianblur><a class=self-link href=#issue-infinite-extents-fegaussianblur></a>
-  feGaussianBlur: What about other inputs with infinite extents? What is the 'periodic boundary condition'? (Answer to 2nd question: <a href=http://en.wikipedia.org/wiki/Periodic_boundary_conditions>http://en.wikipedia.org/wiki/Periodic_boundary_conditions</a>)
+  <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a>: What about other inputs with infinite extents? What is the "periodic boundary condition"? (Answer to 2nd question: <a href=http://en.wikipedia.org/wiki/Periodic_boundary_conditions>http://en.wikipedia.org/wiki/Periodic_boundary_conditions</a>)
 </p>
 
 <div class=adef-list>
@@ -3494,7 +3489,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 <p>If the input has infinite extent and is constant (e.g <span class=attr-value><a href=#FillPaint>FillPaint</a></span> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result is the input to an <a href=#feTileElement><code class=element-name>&lt;feTile&gt;</code></a>, the filter is evaluated with periodic boundary conditions.
 
 <p class=issue id=issue-subregion-clipping-femorphology><a class=self-link href=#issue-subregion-clipping-femorphology></a>
-  By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
+  <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a>: By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 </p>
 
 <p>Because <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
@@ -3525,7 +3520,7 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
         If the attribute is not specified, then the effect is as if a value of <span class=css data-link-type=maybe title=0>0</span> were specified.
       </p>
       <p class=anim-target>Animatable: yes.</p>
-      <p class=issue id=issue-a746b07d><a class=self-link href=#issue-a746b07d></a>Do not disable rendering of feMorphology on negative or zero length?</p>
+      <p class=issue id=issue-07b70d4b><a class=self-link href=#issue-07b70d4b></a>Do not disable rendering of <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a> on negative or zero length?</p>
     </dd>
   </dl>
 </div>
@@ -4008,8 +4003,8 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
   }
   return fSum;
 }</pre>
-<p class=issue id=issue-ad17c98d><a class=self-link href=#issue-ad17c98d></a>
-  Maybe use pseudo code for feTurbulence instead of C.
+<p class=issue id=issue-14821d5e><a class=self-link href=#issue-14821d5e></a>
+  Maybe use pseudo code for <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> instead of C.
 </p>
 
 <div class=adef-list>
@@ -4052,7 +4047,7 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
       <p>
         <span class=requirement id=assert_turbulenceNumOctavesAnimatable><span class=anim-target>Animatable: yes.</span></span>
       </p>
-      <p class=issue id=issue-587e9cce><a class=self-link href=#issue-587e9cce></a>Add a note that numOctaves of feTurbulence should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
+      <p class=issue id=issue-9f0c7fa3><a class=self-link href=#issue-9f0c7fa3></a>Add a note that numOctaves of <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
     </dd>
     <dt id=feTurbulenceSeedAttribute><a class=self-link href=#feTurbulenceSeedAttribute></a>
       <span class=adef>seed</span> = "<em><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a></em>"
@@ -8489,24 +8484,19 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 <div class=issue>SVG WG decision: Enable blending without composition.<a href=#issue-903630f6> ↵ </a></div>
 
 <div class=issue>
-  feConvolveMatrix is device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
-<a href=#issue-d753e43f> ↵ </a></div>
+  <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> and feLighting filter primitives are device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform independent result ever in the interest of the user? Maybe just have a switch between "device space" and <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>/<span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?
+<a href=#issue-0f0aa5a9> ↵ </a></div>
 
-<div class=issue>feConvolveMatrix: filterRes removed, control just over kernel size?<a href=#issue-c40c26ae> ↵ </a></div>
-
-<div class=issue>So we scale the image to the coordinates of the <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates and device coordinate filtering?<a href=#issue-0e196f4e> ↵ </a></div>
-
-<div class=issue>Does the user even want device dependent results? Maybe the initial value shouldn’t be <span class=css data-link-type=maybe title=1>1</span>.<a href=#issue-3f1c3fa0> ↵ </a></div>
-    <div class=issue>Should feConvolveMatrix and feLigthing always take <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> into account? If yes, will the way change how?<a href=#issue-35e2290c> ↵ </a></div>
+<div class=issue>Should feConvolveMatrix and feLigthing always take <a class=property href=http://www.w3.org/TR/2011/REC-SVG11-20110816/painting.html#ImageRenderingProperty>‘image-rendering‘</a> into account? If yes, will the way change how?<a href=#issue-35e2290c> ↵ </a></div>
 
 <div class=issue>Do we still want to differ between quality viewers and the viewers which aren’t.<a href=#issue-db95159d> ↵ </a></div> 
 
 <div class=issue>
-  By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
+   <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a>: By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 <a href=#issue-subregion-clipping-fegaussianblur> ↵ </a></div>
 
 <div class=issue>
-  feGaussianBlur: What about other inputs with infinite extents? What is the 'periodic boundary condition'? (Answer to 2nd question: <a href=http://en.wikipedia.org/wiki/Periodic_boundary_conditions>http://en.wikipedia.org/wiki/Periodic_boundary_conditions</a>)
+  <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a>: What about other inputs with infinite extents? What is the "periodic boundary condition"? (Answer to 2nd question: <a href=http://en.wikipedia.org/wiki/Periodic_boundary_conditions>http://en.wikipedia.org/wiki/Periodic_boundary_conditions</a>)
 <a href=#issue-infinite-extents-fegaussianblur> ↵ </a></div>
 
 <div class=issue>
@@ -8514,16 +8504,16 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 <a href=#issue-1864c8e9> ↵ </a></div>
 
 <div class=issue>
-  By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
+  <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a>: By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 <a href=#issue-subregion-clipping-femorphology> ↵ </a></div>
 
-<div class=issue>Do not disable rendering of feMorphology on negative or zero length?<a href=#issue-a746b07d> ↵ </a></div>
+<div class=issue>Do not disable rendering of <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a> on negative or zero length?<a href=#issue-07b70d4b> ↵ </a></div>
     <div class=issue>
-  Maybe use pseudo code for feTurbulence instead of C.
-<a href=#issue-ad17c98d> ↵ </a></div>
+  Maybe use pseudo code for <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> instead of C.
+<a href=#issue-14821d5e> ↵ </a></div>
 
-<div class=issue>Add a note that numOctaves of feTurbulence should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
-    <a href=#issue-587e9cce> ↵ </a></div><div class=issue>
+<div class=issue>Add a note that numOctaves of <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
+    <a href=#issue-9f0c7fa3> ↵ </a></div><div class=issue>
   It needs to be researched and defined how additive animations of filters are supposed to work.
 <a href=#issue-eca11552> ↵ </a></div>
 <div class=issue>

@@ -1779,7 +1779,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
 <!--elementsummary feConvolveMatrix-->
 
 <p class="issue">
-  feConvolveMatrix is device pixel dependent. The spec suggests to use <a>'feConvolveMatrix/kernelUnitLength'</a> to make it mostly platform independent. Is a platform dependent result ever in the interest of the user?
+  <a>'feConvolveMatrix'</a> and feLighting filter primitives are device pixel dependent. The spec suggests to use <a>'feConvolveMatrix/kernelUnitLength'</a> to make it mostly platform independent. Is a platform independent result ever in the interest of the user? Maybe just have a switch between "device space" and ''userSpaceOnUse''/''objectBoundingBox''?
 </p>
 
 feConvolveMatrix applies a matrix convolution filter effect. A convolution combines pixels in the input image with neighboring pixels to produce a resulting image. A wide variety of imaging operations can be achieved through convolutions, including blurring, edge detection, sharpening, embossing and beveling.
@@ -1814,11 +1814,7 @@ Let's focus on the color value at the second row and second column of the image 
 
 Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a>'feConvolveMatrix'</a> produce resolution-independent results, an explicit value should be provided for the attribute <a>'feConvolveMatrix/kernelUnitLength'</a>.
 
-<p class="issue">feConvolveMatrix: filterRes removed, control just over kernel size?</p>
-
 <a>'feConvolveMatrix/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). The input image will be temporarily rescaled to match its pixels with <a>'feConvolveMatrix/kernelUnitLength'</a>. The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
-
-<p class="issue">So we scale the image to the coordinates of the <a>'feConvolveMatrix/kernelUnitLength'</a> to produce device independent results. Maybe just add a flag to switch between CSS coordinates and device coordinate filtering?</p>
 
 When the image must be resampled to match the coordinate system defined by <a>'feConvolveMatrix/kernelUnitLength'</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a>'image-rendering'</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a>'feConvolveMatrix/kernelUnitLength'</a> is considerably smaller than a device pixel.
 
@@ -1923,8 +1919,7 @@ When the image must be resampled to match the coordinate system defined by <a>'f
     <dd>
       <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a>'filter/primitiveUnits'</a>) between successive columns and rows, respectively, in the <a>'kernelMatrix'</a>. By specifying value(s) for <a>'feConvolveMatrix/kernelUnitLength'</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a>'feConvolveMatrix/kernelUnitLength'</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a>'feConvolveMatrix/kernelUnitLength'</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary offscreen images aligns with the pixel grid of the kernel.<br>
       If a negative or zero value is specified the default value will be used instead.<br>
-      <span class="anim-target">Animatable: yes.</span>
-      <p class="issue">Does the user even want device dependent results? Maybe the initial value shouldn't be ''1''.</p>
+      <p class="anim-target">Animatable: yes.</p>
     </dd>
     <dt id="feConvolveMatrixElementPreserveAlphaAttribute">
       <span class="adef">preserveAlpha</span> = "<span class="attr-value">false | true</span>"
@@ -2783,11 +2778,11 @@ The approximation formula also applies correspondingly to "t".
 Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a href="#SourceAlpha"><span class="attr-value">SourceAlpha</span></a>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <span class="attr-value"><a href="#FillPaint">FillPaint</a></span> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a>'feTile'</a>, the filter is evaluated with periodic boundary conditions.
 
 <p class="issue" id="issue-subregion-clipping-fegaussianblur">
-  By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
+   <a>'feGaussianBlur'</a>: By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 </p>
 
 <p class="issue" id="issue-infinite-extents-fegaussianblur">
-  feGaussianBlur: What about other inputs with infinite extents? What is the 'periodic boundary condition'? (Answer to 2nd question: <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">http://en.wikipedia.org/wiki/Periodic_boundary_conditions</a>)
+  <a>'feGaussianBlur'</a>: What about other inputs with infinite extents? What is the "periodic boundary condition"? (Answer to 2nd question: <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">http://en.wikipedia.org/wiki/Periodic_boundary_conditions</a>)
 </p>
 
 <div class="adef-list">
@@ -3001,7 +2996,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
 If the input has infinite extent and is constant (e.g <span class= "attr-value"><a href="#FillPaint">FillPaint</a></span> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result is the input to an <a>'feTile'</a>, the filter is evaluated with periodic boundary conditions.
 
 <p class="issue" id="issue-subregion-clipping-femorphology">
-  By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
+  <a>'feMorphology'</a>: By default, the subregion interacts as input and output clipping and this sentence would be irrelevant. However, this changes if the WG decides to allow a choice between input and output clipping.
 </p>
 
 Because <a>'feMorphology'</a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
@@ -3032,7 +3027,7 @@ Because <a>'feMorphology'</a> operates on premultipied color values, it will alw
         If the attribute is not specified, then the effect is as if a value of ''0'' were specified.
       </p>
       <p class="anim-target">Animatable: yes.</p>
-      <p class="issue">Do not disable rendering of feMorphology on negative or zero length?</p>
+      <p class="issue">Do not disable rendering of <a>'feMorphology'</a> on negative or zero length?</p>
     </dd>
   </dl>
 </div>
@@ -3429,7 +3424,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
 }</pre>
 
 <p class="issue">
-  Maybe use pseudo code for feTurbulence instead of C.
+  Maybe use pseudo code for <a>'feTurbulence'</a> instead of C.
 </p>
 
 <div class="adef-list">
@@ -3474,7 +3469,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
            id="assert_turbulenceNumOctavesAnimatable"><span class=
            "anim-target">Animatable: yes.</span></span>
       </p>
-      <p class="issue">Add a note that numOctaves of feTurbulence should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
+      <p class="issue">Add a note that numOctaves of <a>'feTurbulence'</a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
     </dd>
     <dt id="feTurbulenceSeedAttribute">
       <span class="adef">seed</span> = "<em><<number>></em>"
