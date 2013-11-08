@@ -15,7 +15,7 @@
 </a></p>
   <h1 class="p-name no-ref" id=title>Filter Effects Module Level 1</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131107>7 November 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20131108>8 November 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Latest version:<dd><a href=http://www.w3.org/TR/filter-effects/>http://www.w3.org/TR/filter-effects/</a><dt>Editor’s Draft:<dd><a href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Previous Versions:<dd><a href=http://www.w3.org/TR/2013/WD-filter-effects-20130523/ rel=previous>http://www.w3.org/TR/2013/WD-filter-effects-20130523/</a><dd><a href=http://www.w3.org/TR/2012/WD-filter-effects-20121025/ rel=previous>http://www.w3.org/TR/2012/WD-filter-effects-20121025/</a>
     <dt>Feedback:</dt>
         <dd><a href="mailto:public-fx@w3.org?subject=%5Bfilter-effects%5D%20feedback">public-fx@w3.org</a>
@@ -765,7 +765,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 <p class="note authoring">
   It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a> and percentages values greater than <span class=css data-link-type=maybe title=100%>100%</span> for <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>. This, for example, is why the defaults for the filter effects region are ''x="-10%" y="-10%" width="120%" height="120%"''. 
 </p>
-<p class=issue id=issue-eeeaeff7><a class=self-link href=#issue-eeeaeff7></a>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.</p>
+<p class=issue id=issue-eeeaeff7><a class=self-link href=#issue-eeeaeff7></a>The value of <a class=css data-link-type=maybe href=#auto0 title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.</p>
 
 <h2 class="heading settled heading" data-level=8 id=FilterPrimitivesOverview><span class=secno>8 </span><span class=content>Filter primitives</span><a class=self-link href=#FilterPrimitivesOverview></a></h2>
 
@@ -777,22 +777,21 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <p class=issue id=issue-1d4b4cbb><a class=self-link href=#issue-1d4b4cbb></a>Is there even a primitive that does not need to be transformed to the color space of the filter primitive?</p>
 
-<p class=note>Note: All input images are assumed to be in premultiplied RGBA. However, implementations can optimize performance by using non-premultiplied data buffering.
+<p class=note>Note: All input images are assumed to be in premultiplied RGBA. User agents can optimize performance by using non-premultiplied data buffering.
 
 <p>All raster effect filtering operations take 1 to N input RGBA images, additional attributes as parameters, and produce a single output RGBA image.
 
 <p>The RGBA result from each filter primitive will be clamped into the allowable ranges for colors and opacity values. Thus, for example, the result from a given <a href=#TermFilterPrimitiveElement>filter primitive</a> will have any negative color values or opacity values adjusted up to color/opacity of zero.
 
-<p id=filtersColorSpace>
-  The color space in which a particular <a href=#TermFilterPrimitiveElement>filter primitive</a> performs its operations is determined by the value of property <a class=property href=#ColorInterpolationFiltersProperty>‘color-interpolation-filters‘</a> on the given <a href=#TermFilterPrimitiveElement>filter primitive</a>. A different property, <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> determines the color space for other color operations. Because these two properties have different initial values (<a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> has an initial value of <span class=css data-link-type=maybe title=linearrgb>linearRGB</span> whereas <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> has an initial value of <span class=css data-link-type=maybe title=srgb>sRGB</span>), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> to <span class=css data-link-type=maybe title=linearrgb>linearRGB</span> or <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> to <span class=css data-link-type=maybe title=srgb>sRGB</span> on particular elements. Note that the examples below do not explicitly set either <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> or <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a>, so the initial values for these properties apply to the examples.
-</p>
-
+<p id=filtersColorSpace>The color space in which a particular <a href=#TermFilterPrimitiveElement>filter primitive</a> performs its operations is determined by the value of the property <a class=property href=#ColorInterpolationFiltersProperty>‘color-interpolation-filters‘</a> on the given <a href=#TermFilterPrimitiveElement>filter primitive</a>. A different property, <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> determines the color space for other color operations. Because these two properties have different initial values (<a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> has an initial value of <a class=css data-link-type=maybe href=#linearrgb title=linearrgb>linearRGB</a> whereas <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> has an initial value of <a class=css data-link-type=maybe href=#srgb title=srgb>sRGB</a>), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> to <a class=css data-link-type=maybe href=#linearrgb title=linearrgb>linearRGB</a> or <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> to <a class=css data-link-type=maybe href=#srgb title=srgb>sRGB</a> on particular elements. Note that the examples below do not explicitly set either <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> or <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a>, so the initial values for these properties apply to the examples.
 
 <p>Sometimes <a data-link-type=dfn href=#filter-primitives title="filter primitives">filter primitives</a> result in undefined pixels. For example, filter primitive <a href=#feOffsetElement><code class=element-name>&lt;feOffset&gt;</code></a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
 
-<p class=issue id=issue-99e14ee4><a class=self-link href=#issue-99e14ee4></a>
-  Make clear that most values can be scaled to produce high DPI filters with the exception of feConvolveMatrix, the lightning filters and feCustom.
-</p>
+<p>To provide high quality rendering, all filter primitives should operate in a device dependent coordinate space, the <dfn data-dfn-type=dfn data-noexport="" id=operating-coordinate-space>operating coordinate space<a class=self-link href=#operating-coordinate-space></a></dfn>, taking device pixel density, user space transformations and zooming into account. To provide a platform independent alignment, attribute and property values are often relative to a coordinate system described by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute. User agents must scale these relative attributes and properties to the <a data-link-type=dfn href=#operating-coordinate-space title="operating coordinate space">operating coordinate space</a>.
+
+<p class=note>Note: On high resolution devices, attribute and property values that are relative to the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> usually need to be scaled up. User agents may reduce the resolution of filter primitives on limited platform resources.
+
+<p class=note>Note: Some attribute or property values from the filter primitives <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> and <a data-link-type=dfn href=#light-source title="light sources">light sources</a> can not be mapped from the coordinate space defined by the <a class=attr-name data-link-type=maybe href=#FilterElementPrimitiveUnitsAttribute title=primitiveunits>primitiveUnits</a> attribute to the <a data-link-type=dfn href=#operating-coordinate-space title="operating coordinate space">operating coordinate space</a>.
 
 <h3 class="heading settled heading" data-level=8.2 id=CommonAttributes><span class=secno>8.2 </span><span class=content>Common attributes</span><a class=self-link href=#CommonAttributes></a></h3>
 
@@ -3033,93 +3032,13 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 
 <h4 class="heading settled heading" data-level=8.13.1 id=FloodColorProperty><span class=secno>8.13.1 </span><span class=content>The <a class=property data-link-type=propdesc href=#propdef-flood-color title=flood-color>flood-color</a> property</span><a class=self-link href=#FloodColorProperty></a></h4>
 
+<table class=propdef><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-flood-color>flood-color<a class=self-link href=#propdef-flood-color></a></dfn><tr><th>Value:<td><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#typedef-color title="<color>">&lt;color&gt;</a> <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeICCColor>&lt;icccolor&gt;</a>?<tr><th>Initial:<td>black<tr><th>Applies to:<td><a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a> and <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> elements<tr><th>Inherited:<td>no<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>yes</table>
 <p>The <a class=property data-link-type=propdesc href=#propdef-flood-color title=flood-color>flood-color</a> property indicates what color to used to flood the current <a href=#FilterPrimitiveSubRegion>filter primitive subregion</a>. The keyword <span class=css data-link-type=maybe title=currentcolor>currentColor</span> and ICC colors can be specified in the same manner as within a &lt;paint&gt; specification for the <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#FillProperty title=fill>fill</a> and <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#StrokeProperty title=stroke>stroke</a> properties.
-
-<table class=propdef summary="flood-color property">
-  <tbody>
-    <tr>
-      <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-name>Name:<a class=self-link href=#propdef-name></a></dfn></td>
-      <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-flood-color>flood-color<a class=self-link href=#propdef-flood-color></a></dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td>currentColor | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#typedef-color title="<color>">&lt;color&gt;</a> <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeICCColor>&lt;icccolor&gt;</a>?</td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>black</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td><a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a> and <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> elements</td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Computed value:</th>
-      <td>as specified</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>yes</td>
-    </tr>
-  </tbody>
-</table>
 
 <h4 class="heading settled heading" data-level=8.13.2 id=FloodOpacityProperty><span class=secno>8.13.2 </span><span class=content>The <a class=property data-link-type=propdesc href=#propdef-flood-opacity title=flood-opacity>flood-opacity</a> property</span><a class=self-link href=#FloodOpacityProperty></a></h4>
 
+<table class=propdef><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-flood-opacity>flood-opacity<a class=self-link href=#propdef-flood-opacity></a></dfn><tr><th>Value:<td><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a> | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#percentage-value title="<percentage>">&lt;percentage&gt;</a><tr><th>Initial:<td>1<tr><th>Applies to:<td><a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a> and <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> elements<tr><th>Inherited:<td>no<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>yes</table>
 <p>The <a class=property data-link-type=propdesc href=#propdef-flood-opacity title=flood-opacity>flood-opacity</a> property defines the opacity value to use across the entire <a href=#FilterPrimitiveSubRegion>filter primitive subregion</a>. If the <a class=property data-link-type=propdesc href=#propdef-flood-color title=flood-color>flood-color</a> value includes an alpha channel, the alpha channel gets multiplied with the computed value of the <a class=property data-link-type=propdesc href=#propdef-flood-opacity title=flood-opacity>flood-opacity</a> property.
-
-<table class=propdef summary="flood-opacity property">
-  <tbody>
-    <tr>
-      <th>Name:</th>
-      <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-flood-opacity>flood-opacity<a class=self-link href=#propdef-flood-opacity></a></dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a> | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#percentage-value title="<percentage>">&lt;percentage&gt;</a></td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td><a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a> and <a href=#feDropShadowElement><code class=element-name>&lt;feDropShadow&gt;</code></a> elements</td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Computed value:</th>
-      <td>as specified</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>yes</td>
-    </tr>
-  </tbody>
-</table>
 
 <h3 class="heading settled heading" data-level=8.14 id=feGaussianBlurElement><span class=secno>8.14 </span><span class=content>Filter primitive <a href=#feGaussianBlurElement><code class=element-name>&lt;feGaussianBlur&gt;</code></a></span><a class=self-link href=#feGaussianBlurElement></a></h3>
 
@@ -4003,10 +3922,6 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
   }
   return fSum;
 }</pre>
-<p class=issue id=issue-14821d5e><a class=self-link href=#issue-14821d5e></a>
-  Maybe use pseudo code for <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> instead of C.
-</p>
-
 <div class=adef-list>
   <p>
     <em>Attribute definitions:</em>
@@ -4091,8 +4006,7 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
         Indicates whether the filter primitive should perform a noise or turbulence function.
       </p>
       <p>
-        <span class=requirement id=assert_turbulenceTypeLacunaValue>The <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue>lacuna value</a> for
-           <a class=attr-name data-link-type=maybe href=#feTurbulenceTypeAttribute title=type>type</a> is <span class=css data-link-type=maybe title=turbulence>turbulence</span>.</span>
+        <span class=requirement id=assert_turbulenceTypeLacunaValue>The <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue>lacuna value</a> for <a class=attr-name data-link-type=maybe href=#feTurbulenceTypeAttribute title=type>type</a> is <span class=css data-link-type=maybe title=turbulence>turbulence</span>.</span>
       </p>
       <p>
         <span class=anim-target>Animatable: yes.</span>
@@ -4189,61 +4103,17 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 
 <p>The description of the <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> property is as follows:
 
-<table class=propdef>
-  <tr>
-    <th>Name:</th>
-    <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-color-interpolation-filters>color-interpolation-filters<a class=self-link href=#propdef-color-interpolation-filters></a></dfn></td>
-  </tr>
-  <tr>
-    <th><em>Value:</em>  
-    <td>auto | sRGB | linearRGB</td>
-  </tr>
-  <tr>
-    <th><em>Initial:</em>  
-    <td>linearRGB</td>
-  </tr>
-  <tr>
-    <th><em>Applies to:</em>  
-    <td><a href=#TermFilterPrimitiveElement>filter primitives</a></td>
-  </tr>
-  <tr>
-    <th><em>Inherited:</em>  
-    <td>yes</td>
-  </tr>
-  <tr>
-    <th><em>Percentages:</em>  
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <th><em>Media:</em>  
-    <td>visual</td>
-  </tr>
-  <tr>
-    <th>Computed value:</th>
-    <td>as specified</td>
-  </tr>
-  <tr>
-    <th><a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#Animatable>Animatable</a>:  
-    <td>yes</td>
-  </tr>
-</table>
-
+<table class=propdef><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-color-interpolation-filters>color-interpolation-filters<a class=self-link href=#propdef-color-interpolation-filters></a></dfn><tr><th>Value:<td>auto | sRGB | linearRGB<tr><th>Initial:<td>auto<tr><th>Applies to:<td>All <a href=#TermFilterPrimitiveElement>filter primitives</a><tr><th>Inherited:<td>yes<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>no</table>
 <dl>
-  <dt>
-    <a class=css data-link-type=maybe href=#auto title=auto>auto</a>
-  </dt>
+  <dt><dfn data-dfn-type=dfn data-noexport="" id=auto0>auto<a class=self-link href=#auto0></a></dfn></dt>
   <dd>
-    Indicates that the user agent can choose either the <span class=css data-link-type=maybe title=srgb>sRGB</span> or <span class=css data-link-type=maybe title=linearrgb>linearRGB</span> spaces for filter effects color operations. This option indicates that the author doesn’t require that color operations occur in a particular color space.
+    Indicates that the user agent can choose either the <a class=css data-link-type=maybe href=#srgb title=srgb>sRGB</a> or <a class=css data-link-type=maybe href=#linearrgb title=linearrgb>linearRGB</a> spaces for filter effects color operations. This option indicates that the author doesn’t require that color operations occur in a particular color space.
   </dd>
-  <dt>
-    <span class=css data-link-type=maybe title=srgb>sRGB</span>
-  </dt>
+  <dt><dfn data-dfn-type=dfn data-noexport="" id=srgb>sRGB<a class=self-link href=#srgb></a></dfn></dt>
   <dd>
     Indicates that filter effects color operations should occur in the sRGB color space.
   </dd>
-  <dt>
-    <span class=css data-link-type=maybe title=linearrgb>linearRGB</span>
-  </dt>
+  <dt><dfn data-dfn-type=dfn data-noexport="" id=linearrgb>linearRGB<a class=self-link href=#linearrgb></a></dfn></dt>
   <dd>
     Indicates that filter effects color operations should occur in the linearized RGB color space.
   </dd>
@@ -4253,7 +4123,7 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 
 <p class=note>Note: The <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> property just has an effect on filter operations. Therefore, it has no effect on filter primitives like <a href=#feOffsetElement><code class=element-name>&lt;feOffset&gt;</code></a>, <a href=#feImageElement><code class=element-name>&lt;feImage&gt;</code></a>, <a href=#feTileElement><code class=element-name>&lt;feTile&gt;</code></a>, <a href=#feFloodElement><code class=element-name>&lt;feFlood&gt;</code></a> or <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a>.
 
-<p class=note>Note: The <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> has a different initial value than <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a>. <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> has an initial value of  <span class=css data-link-type=maybe title=linearrgb>linearRGB</span>, where as <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> has an initial value of <span class=css data-link-type=maybe title=srgb>sRGB</span>. Thus, in the default case, filter effects operations occur in the linearRGB color space, whereas all other color interpolations occur by default in the sRGB color space.
+<p class=note>Note: The <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> has a different initial value than <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a>. <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> has an initial value of  <a class=css data-link-type=maybe href=#linearrgb title=linearrgb>linearRGB</a>, where as <a class=property data-link-type=propdesc href=https://svgwg.org/svg2-draft/painting.html#ColorInterpolationProperty title=color-interpolation>color-interpolation</a> has an initial value of <a class=css data-link-type=maybe href=#srgb title=srgb>sRGB</a>. Thus, in the default case, filter effects operations occur in the linearRGB color space, whereas all other color interpolations occur by default in the sRGB color space.
 
 <p class=note>Note: The <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> property has no effect on <span>Filter Functions</span>, which operate in the sRGB color space.
 
@@ -4488,49 +4358,8 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 
 <h3 class="heading settled heading" data-level=10.5 id=LightingColorProperty><span class=secno>10.5 </span><span class=content>The <a class=property data-link-type=propdesc href=#propdef-lighting-color title=lighting-color>lighting-color</a> property</span><a class=self-link href=#LightingColorProperty></a></h3>
 
+<table class=propdef><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-lighting-color>lighting-color<a class=self-link href=#propdef-lighting-color></a></dfn><tr><th>Value:<td><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#typedef-color title="<color>">&lt;color&gt;</a> <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeICCColor>&lt;icccolor&gt;</a>?<tr><th>Initial:<td>white<tr><th>Applies to:<td><a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a> and <a href=#feSpecularLightingElement><code class=element-name>&lt;feSpecularLighting&gt;</code></a> elements<tr><th>Inherited:<td>no<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>yes</table>
 <p>The <a class=property data-link-type=propdesc href=#propdef-lighting-color title=lighting-color>lighting-color</a> property defines the color of the light source for <a data-link-type=dfn href=#filter-primitives title="filter primitives">filter primitives</a> <a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a> and <a href=#feSpecularLightingElement><code class=element-name>&lt;feSpecularLighting&gt;</code></a>.
-
-<table class=propdef summary="lighting-color property">
-  <tbody>
-    <tr>
-      <th>Name:</th>
-      <td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-lighting-color>lighting-color<a class=self-link href=#propdef-lighting-color></a></dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td>currentColor | <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#typedef-color title="<color>">&lt;color&gt;</a> <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeICCColor>&lt;icccolor&gt;</a>?</td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>white</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td><a href=#feDiffuseLightingElement><code class=element-name>&lt;feDiffuseLighting&gt;</code></a> and <a href=#feSpecularLightingElement><code class=element-name>&lt;feSpecularLighting&gt;</code></a>
-      elements</td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Computed value:</th>
-      <td>as specified</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>yes</td>
-    </tr>
-  </tbody>
-</table>
 
 <h2 class="heading settled heading" data-level=11 id=custom-filter><span class=secno>11 </span><span class=content>Custom Filter Function</span><a class=self-link href=#custom-filter></a></h2>
 
@@ -4913,7 +4742,7 @@ src: url(#warp);
       </dd>
       <dt>auto</dt>
       <dd>
-        If the <a class=property data-link-type=propdesc href=#descdef-mix title=mix>mix</a> descriptor value computes to <a class=css data-link-type=maybe href=#auto title=auto>auto</a>, the effect is as if
+        If the <a class=property data-link-type=propdesc href=#descdef-mix title=mix>mix</a> descriptor value computes to <a class=css data-link-type=maybe href=#auto0 title=auto>auto</a>, the effect is as if
         <span class=css data-link-type=maybe title="normal source-atop">normal source-atop</span> was specified.
       </dd>
     </dl>
@@ -8342,8 +8171,9 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>, <a href=#descdef- title="section 11.1">11.1</a>
 <li>array(), <a href=#funcdef-array title="section 11.4">11.4</a>
 <li>attached, <a href=#attached title="section 11.5">11.5</a>
-<li>auto, <a href=#auto title="section 11.6">11.6</a>
-<li>blended color, <a href=#blended-color title="section 12.5">12.5</a>
+<li>auto<ul><li>definition of, <a href=#auto0 title="section 9">9</a>
+<li>definition of, <a href=#auto title="section 11.6">11.6</a>
+</ul><li>blended color, <a href=#blended-color title="section 12.5">12.5</a>
 <li>&lt;blend-mode&gt;, <a href=#typedef-blend-mode title="section 11.6">11.6</a>
 <li>blur(), <a href=#funcdef-blur title="section 5">5</a>
 <li>bounding client rect, <a href=#bounding-client-rect title="section 4">4</a>
@@ -8406,6 +8236,7 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>invert(), <a href=#funcdef-invert title="section 5">5</a>
 <li>lighting-color, <a href=#propdef-lighting-color title="section 10.5">10.5</a>
 <li>light source, <a href=#light-source title="section 4">4</a>
+<li>linearRGB, <a href=#linearrgb title="section 9">9</a>
 <li>local coordinate system, <a href=#local-coordinate-system title="section 4">4</a>
 <li>margin, <a href=#descdef-margin title="section 11.7">11.7</a>
 <li>&lt;mat&gt;, <a href=#typedef-mat title="section 11.4">11.4</a>
@@ -8415,10 +8246,10 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>mix, <a href=#descdef-mix title="section 11.6">11.6</a>
 <li>mix color, <a href=#mix-color title="section 12.5">12.5</a>
 <li>multiplied color, <a href=#multiplied-color title="section 12.5">12.5</a>
-<li>Name:, <a href=#propdef-name title="section 8.13.1">8.13.1</a>
 <li>null filter, <a href=#null-filter title="section 4">4</a>
 <li>object bounding box units, <a href=#object-bounding-box-units title="section 4">4</a>
 <li>opacity(), <a href=#funcdef-opacity title="section 5">5</a>
+<li>operating coordinate space, <a href=#operating-coordinate-space title="section 8.1">8.1</a>
 <li>&lt;param&gt;, <a href=#typedef-param title="section 11.4">11.4</a>
 <li>parameters, <a href=#descdef-parameters title="section 11.4">11.4</a>
 <li>&lt;param-value&gt;, <a href=#typedef-param-value title="section 11.4">11.4</a>
@@ -8426,6 +8257,7 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>saturate(), <a href=#funcdef-saturate title="section 5">5</a>
 <li>sepia(), <a href=#funcdef-sepia title="section 5">5</a>
 <li>src, <a href=#descdef-src title="section 11.3">11.3</a>
+<li>sRGB, <a href=#srgb title="section 9">9</a>
 <li>transfer function elements, <a href=#transfer-function-elements title="section 4">4</a>
 <li>&lt;url&gt;, <a href=#typedef-url title="section 5">5</a>
 <li>user coordinate system, <a href=#user-coordinate-system title="section 4">4</a>
@@ -8436,11 +8268,10 @@ Index</span><a class=self-link href=#index></a></h2>
 Property index</span><a class=self-link href=#property-index></a></h2>
 <div data-fill-with=property-index><table class=proptable><thead><tr><th scope=col>Name<th scope=col>Value<th scope=col>Initial<th scope=col>Applies to<th scope=col>Inh.<th scope=col>%ages<th scope=col>Media<th scope=col>Animatable<th scope=col>Computed value<tbody>
 <tr><th scope=row><a data-property="">filter</a><td>none | &lt;filter-function-list&gt;<td>none<td>All elements. In SVG, it applies to container elements without the &lt;defs&gt; element and all graphics elements<td>no<td>n/a<td>visual<td>yes<td>as specified
-<tr><th scope=row><a data-property="">flood-color</a><td>currentColor | &lt;color&gt; &lt;icccolor&gt;?<td>black<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>N/A<td>visual<td>yes<td>as specified
-<tr><th scope=row><a data-property="">flood-opacity</a><td>&lt;number&gt; | &lt;percentage&gt;<td>1<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>N/A<td>visual<td>yes<td>as specified
-<tr><th scope=row><a data-property="">color-interpolation-filters</a><td>auto | sRGB | linearRGB<td>linearRGB<td>filter primitives<td>yes<td>N/A<td>visual<td>yes<td>as specified
-<tr><th scope=row><a data-property="">lighting-color</a><td>currentColor | &lt;color&gt; &lt;icccolor&gt;?<td>white<td>&lt;feDiffuseLighting&gt; and &lt;feSpecularLighting&gt;
-      elements<td>no<td>N/A<td>visual<td>yes<td>as specified</table><h3 class="no-num heading settled" id=miscellaneous-descriptor-table><span class=content>Miscellaneous Descriptors</span><a class=self-link href=#miscellaneous-descriptor-table></a></h3><table class=proptable><thead><tr><th scope=col>Name<th scope=col>Value<th scope=col>Initial<th scope=col>Computed value<tbody>
+<tr><th scope=row><a data-property="">flood-color</a><td>&lt;color&gt; &lt;icccolor&gt;?<td>black<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>n/a<td>visual<td>yes<td>as specified
+<tr><th scope=row><a data-property="">flood-opacity</a><td>&lt;number&gt; | &lt;percentage&gt;<td>1<td>&lt;feFlood&gt; and &lt;feDropShadow&gt; elements<td>no<td>n/a<td>visual<td>yes<td>as specified
+<tr><th scope=row><a data-property="">color-interpolation-filters</a><td>auto | sRGB | linearRGB<td>auto<td>All filter primitives<td>yes<td>n/a<td>visual<td>no<td>as specified
+<tr><th scope=row><a data-property="">lighting-color</a><td>&lt;color&gt; &lt;icccolor&gt;?<td>white<td>&lt;feDiffuseLighting&gt; and &lt;feSpecularLighting&gt; elements<td>no<td>n/a<td>visual<td>yes<td>as specified</table><h3 class="no-num heading settled" id=miscellaneous-descriptor-table><span class=content>Miscellaneous Descriptors</span><a class=self-link href=#miscellaneous-descriptor-table></a></h3><table class=proptable><thead><tr><th scope=col>Name<th scope=col>Value<th scope=col>Initial<th scope=col>Computed value<tbody>
 <tr><th scope-row=""><a data-property="">src</a><td>[ &lt;url&gt; [ format( &lt;string&gt; ) ]? ]#<td>N/A<td>
 <tr><th scope-row=""><a data-property="">parameters</a><td>&lt;param&gt;#<td>N/A<td>
 <tr><th scope-row=""><a data-property="">geometry</a><td>&lt;geometry-shape&gt;<td>grid(1 1 attached)<td>
@@ -8464,13 +8295,9 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 
 <div class=issue>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
     <a href=#issue-f1afaa76> ↵ </a></div><div class=issue>IRI reference of the current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns? Seems more restrictive already. Maybe remove it immediately?<a href=#issue-5bea81d3> ↵ </a></div>
-      <div class=issue>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-eeeaeff7> ↵ </a></div>
+      <div class=issue>The value of <a class=css data-link-type=maybe href=#auto0 title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-eeeaeff7> ↵ </a></div>
 
 <div class=issue>Is there even a primitive that does not need to be transformed to the color space of the filter primitive?<a href=#issue-1d4b4cbb> ↵ </a></div>
-
-<div class=issue>
-  Make clear that most values can be scaled to produce high DPI filters with the exception of feConvolveMatrix, the lightning filters and feCustom.
-<a href=#issue-99e14ee4> ↵ </a></div>
 
 <div class=issue>Why is SourceGraphic drawn into a fixed <em>linear</em> RGB?<a href=#issue-5d317c13> ↵ </a></div>
         <div class=issue>FillPaint: What is the dimension of the gradient/pattern if <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span> is specified on the PaintServer? The filter region? The dimension of the referencing element?
@@ -8508,11 +8335,7 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 <a href=#issue-subregion-clipping-femorphology> ↵ </a></div>
 
 <div class=issue>Do not disable rendering of <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a> on negative or zero length?<a href=#issue-07b70d4b> ↵ </a></div>
-    <div class=issue>
-  Maybe use pseudo code for <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> instead of C.
-<a href=#issue-14821d5e> ↵ </a></div>
-
-<div class=issue>Add a note that numOctaves of <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
+    <div class=issue>Add a note that numOctaves of <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
     <a href=#issue-9f0c7fa3> ↵ </a></div><div class=issue>
   It needs to be researched and defined how additive animations of filters are supposed to work.
 <a href=#issue-eca11552> ↵ </a></div>

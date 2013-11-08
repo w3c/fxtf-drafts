@@ -664,22 +664,21 @@ Unless otherwise stated, all image filters operate on premultiplied RGBA samples
 
 <p class="issue">Is there even a primitive that does not need to be transformed to the color space of the filter primitive?</p>
 
-Note: All input images are assumed to be in premultiplied RGBA. However, implementations can optimize performance by using non-premultiplied data buffering.
+Note: All input images are assumed to be in premultiplied RGBA. User agents can optimize performance by using non-premultiplied data buffering.
 
 All raster effect filtering operations take 1 to N input RGBA images, additional attributes as parameters, and produce a single output RGBA image.
 
 The RGBA result from each filter primitive will be clamped into the allowable ranges for colors and opacity values. Thus, for example, the result from a given <a>filter primitive</a> will have any negative color values or opacity values adjusted up to color/opacity of zero.
 
-<p id="filtersColorSpace">
-  The color space in which a particular <a>filter primitive</a> performs its operations is determined by the value of property <a>'color-interpolation-filters'</a> on the given <a>filter primitive</a>. A different property, 'color-interpolation' determines the color space for other color operations. Because these two properties have different initial values ('color-interpolation-filters' has an initial value of ''linearRGB'' whereas 'color-interpolation' has an initial value of ''sRGB''), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set 'color-interpolation' to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples below do not explicitly set either 'color-interpolation' or 'color-interpolation-filters', so the initial values for these properties apply to the examples.
-</p>
-
+<p id="filtersColorSpace">The color space in which a particular <a>filter primitive</a> performs its operations is determined by the value of the property <a>'color-interpolation-filters'</a> on the given <a>filter primitive</a>. A different property, 'color-interpolation' determines the color space for other color operations. Because these two properties have different initial values ('color-interpolation-filters' has an initial value of ''linearRGB'' whereas 'color-interpolation' has an initial value of ''sRGB''), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set 'color-interpolation' to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples below do not explicitly set either 'color-interpolation' or 'color-interpolation-filters', so the initial values for these properties apply to the examples.
 
 Sometimes <i>filter primitives</i> result in undefined pixels. For example, filter primitive <a>'feOffset'</a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
 
-<p class="issue">
-  Make clear that most values can be scaled to produce high DPI filters with the exception of feConvolveMatrix, the lightning filters and feCustom.
-</p>
+To provide high quality rendering, all filter primitives should operate in a device dependent coordinate space, the <dfn>operating coordinate space</dfn>, taking device pixel density, user space transformations and zooming into account. To provide a platform independent alignment, attribute and property values are often relative to a coordinate system described by the <a>'filter/primitiveUnits'</a> attribute. User agents must scale these relative attributes and properties to the <i>operating coordinate space</i>.
+
+Note: On high resolution devices, attribute and property values that are relative to the <a>'filter/primitiveUnits'</a> usually need to be scaled up. User agents may reduce the resolution of filter primitives on limited platform resources.
+
+Note: Some attribute or property values from the filter primitives <a>'feConvolveMatrix'</a> and <i>light sources</i> can not be mapped from the coordinate space defined by the <a>'filter/primitiveUnits'</a> attribute to the <i>operating coordinate space</i>.
 
 <h3 id="CommonAttributes">Common attributes</h3>
 
@@ -2645,93 +2644,35 @@ This filter primitive creates a rectangle filled with the color and opacity valu
 
 <h4 id="FloodColorProperty">The 'flood-color' property</h4>
 
-The 'flood-color' property indicates what color to used to flood the current <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. The keyword ''currentColor'' and ICC colors can be specified in the same manner as within a &lt;paint> specification for the 'fill' and 'stroke' properties.
+<pre class='propdef'>
+Name: flood-color
+Value: <<color>> <a>&lt;icccolor&gt;</a>?
+Initial: black
+Applies to: <a>'feFlood'</a> and <a>'feDropShadow'</a> elements
+Inherited: no
+Percentages: n/a
+Computed value: as specified
+Media: visual
+Animatable: yes
+</pre>
 
-<table summary="flood-color property" class="propdef">
-  <tbody>
-    <tr>
-      <td>Name:</td>
-      <td><dfn>flood-color</dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td>currentColor | <<color>> <a>&lt;icccolor&gt;</a>?</td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>black</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td><a>'feFlood'</a> and <a>'feDropShadow'</a> elements</td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Computed value:</th>
-      <td>as specified</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>yes</td>
-    </tr>
-  </tbody>
-</table>
+The 'flood-color' property indicates what color to used to flood the current <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. The keyword ''currentColor'' and ICC colors can be specified in the same manner as within a &lt;paint> specification for the 'fill' and 'stroke' properties.
 
 <h4 id="FloodOpacityProperty">The 'flood-opacity' property</h4>
 
-The 'flood-opacity' property defines the opacity value to use across the entire <a>filter primitive subregion</a>. If the 'flood-color' value includes an alpha channel, the alpha channel gets multiplied with the computed value of the 'flood-opacity' property.
+<pre class='propdef'>
+Name: flood-opacity
+Value: <<number>> | <<percentage>>
+Initial: 1
+Applies to: <a>'feFlood'</a> and <a>'feDropShadow'</a> elements
+Inherited: no
+Percentages: n/a
+Computed value: as specified
+Media: visual
+Animatable: yes
+</pre>
 
-<table summary="flood-opacity property" class="propdef">
-  <tbody>
-    <tr>
-      <th>Name:</th>
-      <td><dfn>flood-opacity</dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td><<number>> | <<percentage>></td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td><a>'feFlood'</a> and <a>'feDropShadow'</a> elements</td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Computed value:</th>
-      <td>as specified</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>yes</td>
-    </tr>
-  </tbody>
-</table>
+The 'flood-opacity' property defines the opacity value to use across the entire <a>filter primitive subregion</a>. If the 'flood-color' value includes an alpha channel, the alpha channel gets multiplied with the computed value of the 'flood-opacity' property.
 
 <h3 id="feGaussianBlurElement">Filter primitive <a>'feGaussianBlur'</a></h3>
 
@@ -3423,10 +3364,6 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
   return fSum;
 }</pre>
 
-<p class="issue">
-  Maybe use pseudo code for <a>'feTurbulence'</a> instead of C.
-</p>
-
 <div class="adef-list">
   <p>
     <em>Attribute definitions:</em>
@@ -3466,8 +3403,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
       </p>
       <p>
         <span class="requirement"
-           id="assert_turbulenceNumOctavesAnimatable"><span class=
-           "anim-target">Animatable: yes.</span></span>
+           id="assert_turbulenceNumOctavesAnimatable"><span class="anim-target">Animatable: yes.</span></span>
       </p>
       <p class="issue">Add a note that numOctaves of <a>'feTurbulence'</a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
     </dd>
@@ -3513,9 +3449,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
         Indicates whether the filter primitive should perform a noise or turbulence function.
       </p>
       <p>
-        <span class="requirement"
-           id="assert_turbulenceTypeLacunaValue">The <a>lacuna value</a> for
-           <a>'feTurbulence/type'</a> is ''turbulence''.</span>
+        <span class="requirement" id="assert_turbulenceTypeLacunaValue">The <a>lacuna value</a> for <a>'feTurbulence/type'</a> is ''turbulence''.</span>
       </p>
       <p>
         <span class="anim-target">Animatable: yes.</span>
@@ -3613,61 +3547,28 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
 
 The description of the 'color-interpolation-filters' property is as follows:
 
-<table class="propdef">
-  <tr>
-    <th>Name:</th>
-    <td><dfn>color-interpolation-filters</dfn></td>
-  </tr>
-  <tr>
-    <th><em>Value:</em>&nbsp;&nbsp;</td>
-    <td>auto | sRGB | linearRGB</td>
-  </tr>
-  <tr>
-    <th><em>Initial:</em>&nbsp;&nbsp;</td>
-    <td>linearRGB</td>
-  </tr>
-  <tr>
-    <th><em>Applies to:</em>&nbsp;&nbsp;</td>
-    <td><a>filter primitives</a></td>
-  </tr>
-  <tr>
-    <th><em>Inherited:</em>&nbsp;&nbsp;</td>
-    <td>yes</td>
-  </tr>
-  <tr>
-    <th><em>Percentages:</em>&nbsp;&nbsp;</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <th><em>Media:</em>&nbsp;&nbsp;</td>
-    <td>visual</td>
-  </tr>
-  <tr>
-    <th>Computed value:</th>
-    <td>as specified</td>
-  </tr>
-  <tr>
-    <th><a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/animate.html#Animatable">Animatable</a>:</em>&nbsp;&nbsp;</td>
-    <td>yes</td>
-  </tr>
-</table>
+<pre class='propdef'>
+Name: color-interpolation-filters
+Value: auto | sRGB | linearRGB
+Initial: auto
+Applies to: All <a>filter primitives</a>
+Inherited: yes
+Percentages: n/a
+Computed value: as specified
+Media: visual
+Animatable: no
+</pre>
 
 <dl>
-  <dt>
-    ''auto''
-  </dt>
+  <dt><dfn>auto</dfn></dt>
   <dd>
     Indicates that the user agent can choose either the ''sRGB'' or ''linearRGB'' spaces for filter effects color operations. This option indicates that the author doesn't require that color operations occur in a particular color space.
   </dd>
-  <dt>
-    ''sRGB''
-  </dt>
+  <dt><dfn>sRGB</dfn></dt>
   <dd>
     Indicates that filter effects color operations should occur in the sRGB color space.
   </dd>
-  <dt>
-    ''linearRGB''
-  </dt>
+  <dt><dfn>linearRGB</dfn></dt>
   <dd>
     Indicates that filter effects color operations should occur in the linearized RGB color space.
   </dd>
@@ -3847,49 +3748,19 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
 
 <h3 id="LightingColorProperty">The 'lighting-color' property</h3>
 
-The 'lighting-color' property defines the color of the light source for <i>filter primitives</i> <a>'feDiffuseLighting element'</a> and <a>'feSpecularLighting element'</a>.
+<pre class='propdef'>
+Name: lighting-color
+Value: <<color>> <a>&lt;icccolor&gt;</a>?
+Initial: white
+Applies to: <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> elements
+Inherited: no
+Percentages: n/a
+Computed value: as specified
+Media: visual
+Animatable: yes
+</pre>
 
-<table summary="lighting-color property" class="propdef">
-  <tbody>
-    <tr>
-      <th>Name:</th>
-      <td><dfn>lighting-color</dfn></td>
-    </tr>
-    <tr>
-      <th>Value:</th>
-      <td>currentColor | <<color>> <a>&lt;icccolor&gt;</a>?</td>
-    </tr>
-    <tr>
-      <th>Initial:</th>
-      <td>white</td>
-    </tr>
-    <tr>
-      <th>Applies to:</th>
-      <td><a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a>
-      elements</td>
-    </tr>
-    <tr>
-      <th>Inherited:</th>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>Percentages:</th>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <th>Media:</th>
-      <td>visual</td>
-    </tr>
-    <tr>
-      <th>Computed value:</th>
-      <td>as specified</td>
-    </tr>
-    <tr>
-      <th>Animatable:</th>
-      <td>yes</td>
-    </tr>
-  </tbody>
-</table>
+The 'lighting-color' property defines the color of the light source for <i>filter primitives</i> <a>'feDiffuseLighting element'</a> and <a>'feSpecularLighting element'</a>.
 
 <h2 id="custom-filter">Custom Filter Function</h2>
 
