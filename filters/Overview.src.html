@@ -489,8 +489,6 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
   </dd>
 </dl>
 
-<p class="issue">Implementation feedback needed: Some of the filter shorthands should operate on premulitplied colors (<<blur()>>, <<drop-shadow()>>) others on unpremultiplied colors. Do implementations follow the current spec text? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22581">Bug 22581</a></p>
-
 The first filter function or <a>'filter element'</a> reference in the list takes the element (<a href="#SourceGraphic">SourceGraphic</a>) as the input image. Subsequent operations take the output from the previous filter function or <a>'filter element'</a> reference as the input image. <a>'filter element'</a> element reference functions can specify an alternate input, but still uses the previous output as its <a href="#SourceGraphic">SourceGraphic</a>.
 
 Filter functions must operate in the sRGB color space.
@@ -504,10 +502,6 @@ Conceptually, any parts of the drawing are effected by filter operations. This i
 <p class="issue">Should outline really be filtered? What about focus ring?</p>
 
 The compositing model follows the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing model</a> [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of 'filter' has no effect on hit-testing.
-
-<p class="issue">
-  The CSS WG wants to look into how to apply the filter to certain parts of an object (background, border) instead of just the whole group with descendants.
-</p>
 
 <h2 id="FilterElement">The <a>'filter element'</a> element</h2>
 
@@ -3559,8 +3553,8 @@ Media: visual
 Animatable: no
 </pre>
 
-<dl>
-  <dt><dfn>auto</dfn></dt>
+<dl dfn-for=color-interpolation-filters>
+  <dt><var>auto</var></dt>
   <dd>
     Indicates that the user agent can choose either the ''sRGB'' or ''linearRGB'' spaces for filter effects color operations. This option indicates that the author doesn't require that color operations occur in a particular color space.
   </dd>

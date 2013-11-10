@@ -15,7 +15,7 @@
 </a></p>
   <h1 class="p-name no-ref" id=title>Filter Effects Module Level 1</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131108>8 November 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20131110>10 November 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Latest version:<dd><a href=http://www.w3.org/TR/filter-effects/>http://www.w3.org/TR/filter-effects/</a><dt>Editor’s Draft:<dd><a href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Previous Versions:<dd><a href=http://www.w3.org/TR/2013/WD-filter-effects-20130523/ rel=previous>http://www.w3.org/TR/2013/WD-filter-effects-20130523/</a><dd><a href=http://www.w3.org/TR/2012/WD-filter-effects-20121025/ rel=previous>http://www.w3.org/TR/2012/WD-filter-effects-20121025/</a>
     <dt>Feedback:</dt>
         <dd><a href="mailto:public-fx@w3.org?subject=%5Bfilter-effects%5D%20feedback">public-fx@w3.org</a>
@@ -581,8 +581,6 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
   </dd>
 </dl>
 
-<p class=issue id=issue-f6debe97><a class=self-link href=#issue-f6debe97></a>Implementation feedback needed: Some of the filter shorthands should operate on premulitplied colors (<a class="production css-code" data-link-type=function href=#funcdef-blur title=blur()>&lt;blur()&gt;</a>, <a class="production css-code" data-link-type=function href=#funcdef-drop-shadow title=drop-shadow()>&lt;drop-shadow()&gt;</a>) others on unpremultiplied colors. Do implementations follow the current spec text? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22581">Bug 22581</a></p>
-
 <p>The first filter function or <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> reference in the list takes the element (<a href=#SourceGraphic>SourceGraphic</a>) as the input image. Subsequent operations take the output from the previous filter function or <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> reference as the input image. <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element reference functions can specify an alternate input, but still uses the previous output as its <a href=#SourceGraphic>SourceGraphic</a>.
 
 <p>Filter functions must operate in the sRGB color space.
@@ -596,10 +594,6 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 <p class=issue id=issue-d2848f56><a class=self-link href=#issue-d2848f56></a>Should outline really be filtered? What about focus ring?</p>
 
 <p>The compositing model follows the <a href=http://www.w3.org/TR/SVG11/render.html#Introduction>SVG compositing model</a> <a data-biblio-type=normative data-link-type=biblio href=#svg11 title=svg11>[SVG11]</a>: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of <a class=property data-link-type=propdesc href=#propdef-filter title=filter>filter</a> has no effect on hit-testing.
-
-<p class=issue id=issue-92cd9a9b><a class=self-link href=#issue-92cd9a9b></a>
-  The CSS WG wants to look into how to apply the filter to certain parts of an object (background, border) instead of just the whole group with descendants.
-</p>
 
 <h2 class="heading settled heading" data-level=6 id=FilterElement><span class=secno>6 </span><span class=content>The <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element</span><a class=self-link href=#FilterElement></a></h2>
 
@@ -765,7 +759,7 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 <p class="note authoring">
   It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermBoundingBox>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a class=attr-name data-link-type=maybe href=#FilterElementXAttribute title=x>x</a>, <a class=attr-name data-link-type=maybe href=#FilterElementYAttribute title=y>y</a> and percentages values greater than <span class=css data-link-type=maybe title=100%>100%</span> for <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#width title=width>width</a>, <a class=attr-name data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>. This, for example, is why the defaults for the filter effects region are ''x="-10%" y="-10%" width="120%" height="120%"''. 
 </p>
-<p class=issue id=issue-eeeaeff7><a class=self-link href=#issue-eeeaeff7></a>The value of <a class=css data-link-type=maybe href=#auto0 title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.</p>
+<p class=issue id=issue-eeeaeff7><a class=self-link href=#issue-eeeaeff7></a>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.</p>
 
 <h2 class="heading settled heading" data-level=8 id=FilterPrimitivesOverview><span class=secno>8 </span><span class=content>Filter primitives</span><a class=self-link href=#FilterPrimitivesOverview></a></h2>
 
@@ -4104,8 +4098,8 @@ double turbulence(int nColorChannel, double *point, double <a href=#feTurbulence
 <p>The description of the <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> property is as follows:
 
 <table class=propdef><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-color-interpolation-filters>color-interpolation-filters<a class=self-link href=#propdef-color-interpolation-filters></a></dfn><tr><th>Value:<td>auto | sRGB | linearRGB<tr><th>Initial:<td>auto<tr><th>Applies to:<td>All <a href=#TermFilterPrimitiveElement>filter primitives</a><tr><th>Inherited:<td>yes<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>no</table>
-<dl>
-  <dt><dfn data-dfn-type=dfn data-noexport="" id=auto0>auto<a class=self-link href=#auto0></a></dfn></dt>
+<dl data-dfn-for=color-interpolation-filters>
+  <dt><var>auto</var></dt>
   <dd>
     Indicates that the user agent can choose either the <a class=css data-link-type=maybe href=#srgb title=srgb>sRGB</a> or <a class=css data-link-type=maybe href=#linearrgb title=linearrgb>linearRGB</a> spaces for filter effects color operations. This option indicates that the author doesn’t require that color operations occur in a particular color space.
   </dd>
@@ -4742,7 +4736,7 @@ src: url(#warp);
       </dd>
       <dt>auto</dt>
       <dd>
-        If the <a class=property data-link-type=propdesc href=#descdef-mix title=mix>mix</a> descriptor value computes to <a class=css data-link-type=maybe href=#auto0 title=auto>auto</a>, the effect is as if
+        If the <a class=property data-link-type=propdesc href=#descdef-mix title=mix>mix</a> descriptor value computes to <a class=css data-link-type=maybe href=#auto title=auto>auto</a>, the effect is as if
         <span class=css data-link-type=maybe title="normal source-atop">normal source-atop</span> was specified.
       </dd>
     </dl>
@@ -8171,9 +8165,8 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>, <a href=#descdef- title="section 11.1">11.1</a>
 <li>array(), <a href=#funcdef-array title="section 11.4">11.4</a>
 <li>attached, <a href=#attached title="section 11.5">11.5</a>
-<li>auto<ul><li>definition of, <a href=#auto0 title="section 9">9</a>
-<li>definition of, <a href=#auto title="section 11.6">11.6</a>
-</ul><li>blended color, <a href=#blended-color title="section 12.5">12.5</a>
+<li>auto, <a href=#auto title="section 11.6">11.6</a>
+<li>blended color, <a href=#blended-color title="section 12.5">12.5</a>
 <li>&lt;blend-mode&gt;, <a href=#typedef-blend-mode title="section 11.6">11.6</a>
 <li>blur(), <a href=#funcdef-blur title="section 5">5</a>
 <li>bounding client rect, <a href=#bounding-client-rect title="section 4">4</a>
@@ -8281,13 +8274,7 @@ Property index</span><a class=self-link href=#property-index></a></h2>
         subregion.</table></div>
 
 
-<h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>Implementation feedback needed: Some of the filter shorthands should operate on premulitplied colors (<a class="production css-code" data-link-type=function href=#funcdef-blur title=blur()>&lt;blur()&gt;</a>, <a class="production css-code" data-link-type=function href=#funcdef-drop-shadow title=drop-shadow()>&lt;drop-shadow()&gt;</a>) others on unpremultiplied colors. Do implementations follow the current spec text? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22581">Bug 22581</a><a href=#issue-f6debe97> ↵ </a></div>
-
-<div class=issue>Should outline really be filtered? What about focus ring?<a href=#issue-d2848f56> ↵ </a></div>
-
-<div class=issue>
-  The CSS WG wants to look into how to apply the filter to certain parts of an object (background, border) instead of just the whole group with descendants.
-<a href=#issue-92cd9a9b> ↵ </a></div>
+<h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>Should outline really be filtered? What about focus ring?<a href=#issue-d2848f56> ↵ </a></div>
 
 <div class=issue>
   'xlink:type', 'xlink:role', 'xlink:arcrole', 'xlink:title': Which XML attributes can be removed?
@@ -8295,7 +8282,7 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 
 <div class=issue>If we make filter region auto, how will it affect existing content that uses <span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
     <a href=#issue-f1afaa76> ↵ </a></div><div class=issue>IRI reference of the current fragment of the <a href=#FilterElement><code class=element-name>&lt;filter&gt;</code></a> element? Or the referencing element? Assume the former. Do filter references cross document allowed? Do we have the same restriction for gradients or patterns? Seems more restrictive already. Maybe remove it immediately?<a href=#issue-5bea81d3> ↵ </a></div>
-      <div class=issue>The value of <a class=css data-link-type=maybe href=#auto0 title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-eeeaeff7> ↵ </a></div>
+      <div class=issue>The value of <a class=css data-link-type=maybe href=#auto title=auto>auto</a> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-eeeaeff7> ↵ </a></div>
 
 <div class=issue>Is there even a primitive that does not need to be transformed to the color space of the filter primitive?<a href=#issue-1d4b4cbb> ↵ </a></div>
 
