@@ -932,6 +932,8 @@ All intermediate offscreens are defined to not exceed the intersection of the <a
 
 This filter blends two objects together using commonly used imaging software blending modes. It performs a pixel-wise combination of two input images. (See [[COMPOSITING]].)
 
+<p class="issue">Add all remaining blend modes from [[COMPOSITING]] as well?</p>
+
 <div class="adef-list">
   <p>
     <em>Attribute definitions:</em>
@@ -941,15 +943,16 @@ This filter blends two objects together using commonly used imaging software ble
       <span class="adef">mode</span> = "<em>normal | multiply | screen | darken | lighten</em>"
     </dt>
     <dd>
-      One of the image blending modes (see <a href="#BlendingTable">table</a> below). The <a>lacuna value</a> for <a>'mode'</a> is <span class="attr-value">normal</span>.<br>
-      <span class="anim-target">Animatable: yes.</span>
+      <p>One of the image blending modes (see <a href="#BlendingTable">table</a> below). The <a>lacuna value</a> for <a>'mode'</a> is <span class="attr-value">normal</span>.</p>
+      <p class="anim-target">Animatable: yes.</p>
     </dd>
     <dt id="feBlendIn2Attribute">
       <span class="adef">in2</span> = "<em>(see <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute)</em>"
     </dt>
     <dd>
-      The second input image to the blending operation. This attribute can take on the same values as the <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute.<br>
-      <span class="anim-target">Animatable: yes.</span>
+      <p>The second input image to the blending operation. This attribute can take on the same values as the <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute. (<a href="http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg">example</a>)</p>
+      <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a>'feComposite'</a>: Does that mean that "in2" should take the value of "in" if not specified?
+      <p class="anim-target">Animatable: yes.</p>
     </dd>
   </dl>
 </div>
@@ -1578,8 +1581,9 @@ For this filter primitive, the extent of the resulting image might grow as descr
       <span class="adef">in2</span> = "<em>(see <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute)</em>"
     </dt>
     <dd>
-      The second input image to the compositing operation. This attribute can take on the same values as the <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute.<br>
-      <span class="anim-target">Animatable: yes.</span>
+      <p>The second input image to the compositing operation. This attribute can take on the same values as the <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute.</p>
+      <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a>'feBlend'</a>: Does that mean that "in2" should take the value of "in" if not specified? (<a href="http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg">example</a>)</p>
+      <p class="anim-target">Animatable: yes.</p>
     </dd>
   </dl>
 </div>
@@ -3062,6 +3066,8 @@ When applying this filter, the destination location may be offset by a fraction 
 This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).
 
 This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture using the <em>add</em> term of the <em>arithmetic</em> <a>'feComposite'</a> method. Multiple <i>light sources</i> can be simulated by adding several of these light maps before applying it to the texture image.
+
+<p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: Is the result intended to be used with <a>'feComposite'</a> or required? (<a href="http://tavmjong.free.fr/SVG/COLOR_INTERPOLATION/filter_interpolate.svg">example</a>)</p>
 
 The resulting RGBA image is computed as follows:
 

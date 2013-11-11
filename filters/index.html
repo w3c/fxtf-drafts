@@ -1066,6 +1066,8 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
 
 <p>This filter blends two objects together using commonly used imaging software blending modes. It performs a pixel-wise combination of two input images. (See <a data-biblio-type=informative data-link-type=biblio href=#compositing title=compositing>[COMPOSITING]</a>.)
 
+<p class=issue id=issue-ae573f5f><a class=self-link href=#issue-ae573f5f></a>Add all remaining blend modes from <a data-biblio-type=informative data-link-type=biblio href=#compositing title=compositing>[COMPOSITING]</a> as well?</p>
+
 <div class=adef-list>
   <p>
     <em>Attribute definitions:</em>
@@ -1075,15 +1077,16 @@ Property index</a><ul class=toc><li><a href=#miscellaneous-descriptor-table><spa
       <span class=adef>mode</span> = "<em>normal | multiply | screen | darken | lighten</em>"
     </dt>
     <dd>
-      One of the image blending modes (see <a href=#BlendingTable>table</a> below). The <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue>lacuna value</a> for <a class=attr-name href=#feBlendModeAttribute>‘mode‘</a> is <span class=attr-value>normal</span>.<br>
-      <span class=anim-target>Animatable: yes.</span>
+      <p>One of the image blending modes (see <a href=#BlendingTable>table</a> below). The <a href=http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermLacunaValue>lacuna value</a> for <a class=attr-name href=#feBlendModeAttribute>‘mode‘</a> is <span class=attr-value>normal</span>.</p>
+      <p class=anim-target>Animatable: yes.</p>
     </dd>
     <dt id=feBlendIn2Attribute><a class=self-link href=#feBlendIn2Attribute></a>
       <span class=adef>in2</span> = "<em>(see <a href=#FilterPrimitiveInAttribute><span class=attr-name>in</span></a> attribute)</em>"
     </dt>
     <dd>
-      The second input image to the blending operation. This attribute can take on the same values as the <a href=#FilterPrimitiveInAttribute><span class=attr-name>in</span></a> attribute.<br>
-      <span class=anim-target>Animatable: yes.</span>
+      <p>The second input image to the blending operation. This attribute can take on the same values as the <a href=#FilterPrimitiveInAttribute><span class=attr-name>in</span></a> attribute. (<a href=http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg>example</a>)</p>
+      <p class=issue id=issue-eeb0c968><a class=self-link href=#issue-eeb0c968></a><a href=http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html>public-fx</a>: <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a>: Does that mean that "in2" should take the value of "in" if not specified?
+      <p class=anim-target>Animatable: yes.</p>
     </dd>
   </dl>
 </div>
@@ -1813,8 +1816,9 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
       <span class=adef>in2</span> = "<em>(see <a href=#FilterPrimitiveInAttribute><span class=attr-name>in</span></a> attribute)</em>"
     </dt>
     <dd>
-      The second input image to the compositing operation. This attribute can take on the same values as the <a href=#FilterPrimitiveInAttribute><span class=attr-name>in</span></a> attribute.<br>
-      <span class=anim-target>Animatable: yes.</span>
+      <p>The second input image to the compositing operation. This attribute can take on the same values as the <a href=#FilterPrimitiveInAttribute><span class=attr-name>in</span></a> attribute.</p>
+      <p class=issue id=issue-1412b672><a class=self-link href=#issue-1412b672></a><a href=http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html>public-fx</a>: <a href=#feBlendElement><code class=element-name>&lt;feBlend&gt;</code></a>: Does that mean that "in2" should take the value of "in" if not specified? (<a href=http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg>example</a>)</p>
+      <p class=anim-target>Animatable: yes.</p>
     </dd>
   </dl>
 </div>
@@ -3577,6 +3581,8 @@ A' = <a href=#feFuncAElement>feFuncA</a>( A )</pre>
 <p>This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).
 
 <p>This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture using the <em>add</em> term of the <em>arithmetic</em> <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> method. Multiple <a data-link-type=dfn href=#light-source title="light sources">light sources</a> can be simulated by adding several of these light maps before applying it to the texture image.
+
+<p class=issue id=issue-85e00b95><a class=self-link href=#issue-85e00b95></a><a href=http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html>public-fx</a>: Is the result intended to be used with <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> or required? (<a href=http://tavmjong.free.fr/SVG/COLOR_INTERPOLATION/filter_interpolate.svg>example</a>)</p>
 
 <p>The resulting RGBA image is computed as follows:
 
@@ -8291,9 +8297,13 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 
 <div class=issue>Should subregions clip input, output or both results? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22577">Bug 22577</a><a href=#issue-e1e80c37> ↵ </a></div>
 
-<div class=issue>SVG WG decision: Enable blending without composition.<a href=#issue-903630f6> ↵ </a></div>
+<div class=issue>Add all remaining blend modes from <a data-biblio-type=informative data-link-type=biblio href=#compositing title=compositing>[COMPOSITING]</a> as well?<a href=#issue-ae573f5f> ↵ </a></div>
 
-<div class=issue>
+<div class=issue><a href=http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html>public-fx</a>: <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a>: Does that mean that "in2" should take the value of "in" if not specified?
+      <a href=#issue-eeb0c968> ↵ </a></div><div class=issue>SVG WG decision: Enable blending without composition.<a href=#issue-903630f6> ↵ </a></div>
+
+<div class=issue><a href=http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html>public-fx</a>: <a href=#feBlendElement><code class=element-name>&lt;feBlend&gt;</code></a>: Does that mean that "in2" should take the value of "in" if not specified? (<a href=http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg>example</a>)<a href=#issue-1412b672> ↵ </a></div>
+      <div class=issue>
   <a href=#feConvolveMatrixElement><code class=element-name>&lt;feConvolveMatrix&gt;</code></a> and feLighting filter primitives are device pixel dependent. The spec suggests to use <a class=attr-name data-link-type=maybe href=#feConvolveMatrixElementKernelUnitLengthAttribute title=kernelunitlength>kernelUnitLength</a> to make it mostly platform independent. Is a platform independent result ever in the interest of the user? Maybe just have a switch between "device space" and <span class=css data-link-type=maybe title=userspaceonuse>userSpaceOnUse</span>/<span class=css data-link-type=maybe title=objectboundingbox>objectBoundingBox</span>?
 <a href=#issue-0f0aa5a9> ↵ </a></div>
 
@@ -8318,7 +8328,9 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 <a href=#issue-subregion-clipping-femorphology> ↵ </a></div>
 
 <div class=issue>Do not disable rendering of <a href=#feMorphologyElement><code class=element-name>&lt;feMorphology&gt;</code></a> on negative or zero length?<a href=#issue-07b70d4b> ↵ </a></div>
-    <div class=issue>Add a note that numOctaves of <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
+    <div class=issue><a href=http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html>public-fx</a>: Is the result intended to be used with <a href=#feCompositeElement><code class=element-name>&lt;feComposite&gt;</code></a> or required? (<a href=http://tavmjong.free.fr/SVG/COLOR_INTERPOLATION/filter_interpolate.svg>example</a>)<a href=#issue-85e00b95> ↵ </a></div>
+
+<div class=issue>Add a note that numOctaves of <a href=#feTurbulenceElement><code class=element-name>&lt;feTurbulence&gt;</code></a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
     <a href=#issue-9f0c7fa3> ↵ </a></div><div class=issue>
   It needs to be researched and defined how additive animations of filters are supposed to work.
 <a href=#issue-eca11552> ↵ </a></div>
