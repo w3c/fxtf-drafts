@@ -7,7 +7,7 @@ Previous Version: http://www.w3.org/TR/2013/WD-filter-effects-20130523/
 Previous Version: http://www.w3.org/TR/2012/WD-filter-effects-20121025/
 Shortname: filter-effects
 Level: 1
-Link Defaults: css-transforms-1 (property) transform, svg2 (property) color-interpolation/fill/stroke, css-masking-1 (property) clip-path, css-flexbox-1 (property) display, selectors-4 (type) <compound-selector>, css21 (type) <margin-width>, css-transforms-1 (type) <transform-function>, css-images-4 (property) image-rendering
+Link Defaults: css-transforms-1 (property) transform, svg2 (property) color-interpolation/fill/stroke, css-masking-1 (property) clip-path, css-flexbox-1 (property) display, selectors-4 (type) <compound-selector>, css21 (type) <margin-width>, css-transforms-1 (type) <transform-function>, css-images-4 (property) image-rendering, css-color-3 (property) color
 Group: fxtf
 Editor: Dean Jackson, <a href="http://www.apple.com/">Apple Inc</a>, dino@apple.com
 Editor: Erik Dahlström, Opera Software ASA, ed@opera.com
@@ -4683,7 +4683,7 @@ An implementation must also type-check these built-in attributes and uniforms.
 CSS <<image>> values can be filtered with the filter functions specified for the CSS 'filter' property. This specification introduces the <<image>> <<filter()>> function with the following syntax:
 
 <pre class='prod'><dfn>filter()</dfn> = filter(
-    [ <<image>> | <<string>> ], [ <<filter-function>> | <<url>> | <<child-selector>> ]+
+    [ <<image>> | <<string>> ], <<filter-function-list>>
 )</pre>
 
 The <<filter()>> function takes two arguments. The first argument is an <<image>>. The second is a filter function list as specified for the CSS 'filter' property. The function takes the <<image>> parameter and applies the filter rules, returning a processing image. Dimension and origin of the passed image must be preserved. Filter- and filter effect regions are sized according to the input image size.
@@ -4825,7 +4825,7 @@ For interpolation between one filter <em>from-filter</em> and a second filter <e
       </li>
     </ul>
   </li>
-  <li id="reference-animation">If the <em>from-</em> or the <em>to-filter</em> consists of at least one <<url>> or <<child-selector>>:
+  <li id="reference-animation">If the <em>from-</em> or the <em>to-filter</em> consists of at least one <<url>> <!--  or <<child-selector>> -->:
     <ul>
       <li>There is no interpolation possible.
       </li>
@@ -5912,8 +5912,6 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEConvolveMatrixElement__kernelUnitLengthX">kernelUnitLengthX</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href= 
 "#SVGFEConvolveMatrixElement__kernelUnitLengthY">kernelUnitLengthY</a>;
-readonly attribute <a>SVGAnimatedBoolean</a> <a href= 
-"#SVGFEConvolveMatrixElement__preserveAlpha">preserveAlpha</a>;
 };
 
 <a>SVGFEConvolveMatrixElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
@@ -6077,16 +6075,6 @@ readonly attribute <a>SVGAnimatedBoolean</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/kernelUnitLength'</a> on the
-          given <a>'feConvolveMatrix element'</a> element.
-        </div>
-      </dd>
-      <dt id="SVGFEConvolveMatrixElement__preserveAlpha">
-        <b>preserveAlpha</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedBoolean</a>)</span>
-      </dt>
-      <dd>
-        <div>
-          Corresponds to attribute <a>'feConvolveMatrix/preserveAlpha'</a> on the
           given <a>'feConvolveMatrix element'</a> element.
         </div>
       </dd>
