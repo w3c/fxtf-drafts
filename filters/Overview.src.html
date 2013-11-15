@@ -55,28 +55,27 @@ Filter effects are exposed with three levels of complexity:
 
 The filter effect used in the example above is repeated here with reference numbers in the left column before each of the six filter primitives:
 
-<table summary="filter example with reference numbers">
+<table>
   <tbody>
     <tr>
-      <td valign="top"><pre>
- 
- 
-1
-2
-3
- 
- 
- 
- 
-4
-5
- 
-6
- 
- 
- </pre>
+      <td style="vertical-align: top">
+<br>
+<br>
+1<br>
+2<br>
+3<br>
+ <br>
+ <br>
+ <br>
+ <br>
+4<br>
+5<br>
+ <br>
+6<br>
+ <br>
+ <br>
       </td>
-      <td valign="top"><pre>&lt;filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="120"&gt;
+      <td style="vertical-align: top"><pre>&lt;filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="120"&gt;
   &lt;desc&gt;Produces a 3D lighting effect.&lt;/desc&gt;
   &lt;feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/&gt;
   &lt;feOffset in="blur" dx="4" dy="4" result="offsetBlur"/&gt;
@@ -100,7 +99,7 @@ The filter effect used in the example above is repeated here with reference numb
 
 The following pictures show the intermediate image results from each of the six filter elements:
 
-<table summary="filter example intermediate results">
+<table>
   <tbody>
     <tr>
       <td>
@@ -875,7 +874,7 @@ All intermediate offscreens are defined to not exceed the intersection of the <a
 &lt;/svg&gt;</pre>
 
   <div class="figure">
-    <table summary="Example">
+    <table>
       <tr>
         <td>
           <img alt="Example" src="examples/filtersubregion00.png">
@@ -953,7 +952,7 @@ cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
 <p id="BlendingTable">The following table
 provides the list of available image blending modes:</p>
 
-<table class="data" summary="blending modes">
+<table class="data">
   <thead>
     <tr>
       <th>Image Blending Mode
@@ -2098,16 +2097,14 @@ Note: User agents may use the the "fast inverse square root" to optimize the equ
 
 where
 
-<dl>
-  <dd>
+<p>
     k<sub>d</sub> = diffuse lighting constant<br>
     N = surface normal unit vector, a function of x and y<br>
     L = unit vector pointing from surface to light, a function of x and y in the
     point and spot light cases<br>
     L<sub>r</sub>,L<sub>g</sub>,L<sub>b</sub> = RGB components of light, a function
     of x and y in the spot light case
-  </dd>
-</dl>
+</p>
 
 N is a function of x and y and depends on the surface gradient as follows:
 
@@ -2146,8 +2143,7 @@ The surface described by the input alpha image I(x,y) is:
 
 In these formulas, the <code>dx</code> and <code>dy</code> values (e.g., <code>I(x-dx,y-dy)</code>), represent deltas relative to a given <code>(x,y)</code> position for the purpose of estimating the slope of the surface at that point. These deltas are determined by the value (explicit or implicit) of attribute <a>'feDiffuseLighting/kernelUnitLength'</a>.
 
-<table class="data complex"
-       summary="feDiffuseLighting formulas">
+<table class="data complex">
   <tbody>
     <tr>
       <th>
@@ -2685,7 +2681,7 @@ For larger values of "s" (s &gt;= 2.0), an approximation can be used: Three succ
 
 The approximation formula also applies correspondingly to "t".
 
-Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a href="#SourceAlpha"><span class="attr-value">SourceAlpha</span></a>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <i>FillPaint</i> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a>'feTile'</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
+Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <i>SourceAlpha</i>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <i>FillPaint</i> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a>'feTile'</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
 
 <div class="adef-list">
   <p>
@@ -2741,7 +2737,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
   </dl>
 </div>
 
-<a href="#introduction">The example</a> at the start of this chapter makes use of the <a>'feGaussianBlur'</a> filter primitive to create a drop shadow effect.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feGaussianBlur'</a> filter primitive to create a drop shadow effect.
 
 <h3 id="feImageElement">Filter primitive <a>'feImage'</a></h3>
 
@@ -2749,7 +2745,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
 
 This filter primitive refers to a graphic external to this filter element, which is loaded or rendered into an RGBA raster and becomes the result of the filter primitive.
 
-This filter primitive can refer to an external image or can be a reference to another piece of SVG. It produces an image similar to the built-in image source <a href="#SourceGraphic"><span class="attr-value">SourceGraphic</span></a> except that the graphic comes from an external source.
+This filter primitive can refer to an external image or can be a reference to another piece of SVG. It produces an image similar to the built-in image source <i>SourceGraphic</i> except that the graphic comes from an external source.
 
 If the <span class="attr-name">href</span> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image element'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use element'</a> element. In either case, the current user coordinate system depends on the value of attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The processing of the ''preserveAspectRatio'' attribute on the <a>'feImage'</a> element is identical to that of the <a>'image'</a> element.
 
@@ -2800,7 +2796,7 @@ If the <span class="attr-name">href</span> references a stand-alone image resour
       "attr-value">anonymous | use-credentials</span>"
     </dt>
     <dd>
-      The <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a>'feDisplacementMap'</a>. For the defintion see <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="security">security section</a> in this specification.
+      The <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a>'feDisplacementMap'</a>. For the defintion see <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="#security">security section</a> in this specification.
     </dd>
   </dl>
 </div>
@@ -2881,9 +2877,9 @@ Many effects produce a number of intermediate layers in order to create the fina
 
 The canonical implementation of feMerge is to render the entire effect into one RGBA layer, and then render the resulting layer on the output device. In certain cases (in particular if the output device itself is a continuous tone device), and since merging is associative, it might be a sufficient approximation to evaluate the effect one layer at a time and render each layer individually onto the output device bottom to top.
 
-If the topmost image input is <a href="#SourceGraphic"><span class="attr-value">SourceGraphic</span></a> and this <a>'feMerge'</a> is the last filter primitive in the filter, the implementation is encouraged to render the layers up to that point, and then render the <a href="#SourceGraphic"><span class="attr-value">SourceGraphic</span></a> directly from its vector description on top.
+If the topmost image input is <i>SourceGraphic</i> and this <a>'feMerge'</a> is the last filter primitive in the filter, the implementation is encouraged to render the layers up to that point, and then render the <i>SourceGraphic</i> directly from its vector description on top.
 
-<a href="#introduction">The example</a> at the start of this chapter makes use of the <a>'feMerge'</a> filter primitive to composite two intermediate filter results together.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feMerge'</a> filter primitive to composite two intermediate filter results together.
 
 <h3 id="feMorphologyElement">Filter primitive <a>'feMorphology'</a></h3>
 
@@ -2893,9 +2889,9 @@ This filter primitive performs "fattening" or "thinning" of artwork. It is parti
 
 The dilation (or erosion) kernel is a rectangle with a width of 2*<em>x-radius</em> and a height of 2*<em>y-radius</em>. In dilation, the output pixel is the individual component-wise maximum of the corresponding R,G,B,A values in the input image's kernel rectangle. In erosion, the output pixel is the individual component-wise minimum of the corresponding R,G,B,A values in the input image's kernel rectangle.
 
-Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a href="#SourceAlpha"><span class="attr-value">SourceAlpha</span></a>. In that case, the implementation might want to optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details.)
+Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <i>SourceAlpha</i>. In that case, the implementation might want to optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details.)
 
-If the input has infinite extent and is constant (e.g <span class= "attr-value"><a href="#FillPaint">FillPaint</a></span> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result is the input to an <a>'feTile'</a>, the filter is evaluated with <a href="">periodic boundary conditions</a>.
+If the input has infinite extent and is constant (e.g <i>FillPaint</i> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result is the input to an <a>'feTile'</a>, the filter is evaluated with <a href="">periodic boundary conditions</a>.
 
 Because <a>'feMorphology'</a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
 
@@ -3017,7 +3013,7 @@ When applying this filter, the destination location may be offset by a fraction 
 </div>
 
 
-<a href="#introduction">The example</a> at the start of this chapter makes use of the <a>'feOffset'</a> filter primitive to offset the drop shadow from the original source graphic.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feOffset'</a> filter primitive to offset the drop shadow from the original source graphic.
 
 <h3 id="feSpecularLightingElement">Filter primitive <a>'feSpecularLighting'</a></h3>
 
@@ -3104,7 +3100,7 @@ The <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> filters will ofte
 
 The light source is defined by one of the child elements <a>'feDistantLight'</a>, <a>'fePointLight'</a> or <a>'feDistantLight'</a>. The light color is specified by property <a>'lighting-color'</a>.
 
-<a href="#introduction">The example</a> at the start of this chapter makes use of the <a>'feSpecularLighting'</a> filter primitive to achieve a highly reflective, 3D glowing effect.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feSpecularLighting'</a> filter primitive to achieve a highly reflective, 3D glowing effect.
 
 <h3 id="feTileElement">Filter primitive <a>'feTile'</a></h3>
 
@@ -4057,7 +4053,7 @@ There are many precedents for shading languages, for example:
 <ul>
   <li>
     <a href="http://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf">
-    OpenGL ES Shading Language</a> (also known as GLSL ES) from <a href="http://www.khronos.org/registry/webgl/specs/latest/#refsGLES20GLSL">WebGL</a>
+    OpenGL ES Shading Language</a> (also known as GLSL ES) from <a href="https://www.khronos.org/registry/webgl/specs/1.0.2/#refsGLES20GLSL">WebGL</a>
   </li>
   <li>
     <a href="http://msdn.microsoft.com/en-us/library/bb509635(v=VS.85).aspx">HLSL Shading Language</a>
@@ -4078,10 +4074,10 @@ In particular, the same restrictions as defined in WebGL should apply to shaders
 
 <ul>
   <li>
-    <a href="http://www.khronos.org/registry/webgl/specs/latest/#SUPPORTED_GLSL_CONSTRUCTS">supported GLSL constructs.</a>
+    <a href="https://www.khronos.org/registry/webgl/specs/1.0.2/#SUPPORTED_GLSL_CONSTRUCTS">supported GLSL constructs.</a>
   </li>
   <li>
-    <a href="http://www.khronos.org/registry/webgl/specs/latest/#6">differences between WebGL and OpenGL ES 2.0</a> as it applies to shaders.
+    <a href="https://www.khronos.org/registry/webgl/specs/1.0.2/#6">differences between WebGL and OpenGL ES 2.0</a> as it applies to shaders.
   </li>
 </ul>
 
@@ -4392,7 +4388,7 @@ css_ColorMatrix = mat4(
 
 The following attribute variables are available to the vertex shader.
 
-<table class="data" summary="Vertex attribute variables">
+<table class="data">
   <thead>
     <tr>
       <th>
@@ -4433,7 +4429,7 @@ The following attribute variables are available to the vertex shader.
 <div class="figure">
   <img src="images/a_triangleCoord.z.png"
        alt="The a_triangleCoord.z value"
-       width="50%">
+       width="150">
   <p class="caption">
     The a_triangleCoord.z value
   </p>
@@ -4443,7 +4439,7 @@ The following attribute variables are available to the vertex shader.
 
 The following uniform variables are set to specific values by the user agent:
 
-<table class="data" summary="uniform variables overview">
+<table class="data">
   <thead>
     <tr>
       <th>
@@ -4614,7 +4610,7 @@ The author's shader is validated according to the WebGL specification, with a co
 
 <h4 class="no-num" id="disallowing-unbound-samplers">Disallowing Unbound Samplers</h4>
 
-Similar to WebGL, CSS Custom Filters allow authors to fetch <a href="#cors-approved-resources">CORS-approved images</a> and use it in the shader. The user agent then binds the texture to a texture unit, and finally binds a sampler variable in a shader program to the corresponding texture unit.
+Similar to WebGL, CSS Custom Filters allow authors to fetch <a href="#cors-approved-resource">CORS-approved images</a> and use it in the shader. The user agent then binds the texture to a texture unit, and finally binds a sampler variable in a shader program to the corresponding texture unit.
 
 When a sampler variable is not bound, GLSL gives it a default value of ''0'', which refers to texture unit 0. Depending on the implementation, texture unit 0 may contain the texture of the filtered content or some other sensitive texture.
 
