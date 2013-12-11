@@ -207,22 +207,22 @@ The following pictures show the intermediate image results from each of the six 
 
 <ol>
   <li>
-    Filter primitive <a>'feGaussianBlur'</a> takes input <i>SourceAlpha</i>, which is the alpha channel of the source graphic. The result is stored in a temporary buffer named "blur". Note that "blur" is used as input to both filter primitives 2 and 3.
+    Filter primitive <a element>feGaussianBlur</a> takes input <i>SourceAlpha</i>, which is the alpha channel of the source graphic. The result is stored in a temporary buffer named "blur". Note that "blur" is used as input to both filter primitives 2 and 3.
   </li>
   <li>
-    Filter primitive <a>'feOffset'</a> takes buffer "blur", shifts the result in a positive direction in both x and y, and creates a new buffer named "offsetBlur". The effect is that of a drop shadow.
+    Filter primitive <a element>feOffset</a> takes buffer "blur", shifts the result in a positive direction in both x and y, and creates a new buffer named "offsetBlur". The effect is that of a drop shadow.
   </li>
   <li>
-    Filter primitive <a>'feSpecularLighting'</a>, uses buffer "blur" as a model of a surface elevation and generates a lighting effect from a single point source. The result is stored in buffer "specOut".
+    Filter primitive <a element>feSpecularLighting</a>, uses buffer "blur" as a model of a surface elevation and generates a lighting effect from a single point source. The result is stored in buffer "specOut".
   </li>
   <li>
-    Filter primitive <a>'feComposite'</a> masks out the result of filter primitive 3 by the original source graphics alpha channel so that the intermediate result is no bigger than the original source graphic.
+    Filter primitive <a element>feComposite</a> masks out the result of filter primitive 3 by the original source graphics alpha channel so that the intermediate result is no bigger than the original source graphic.
   </li>
   <li>
-    Filter primitive <a>'feComposite'</a> composites the result of the specular lighting with the original source graphic.
+    Filter primitive <a element>feComposite</a> composites the result of the specular lighting with the original source graphic.
   </li>
   <li>
-    Filter primitive <a>'feMerge'</a> composites two layers together. The lower layer consists of the drop shadow result from filter primitive 2. The upper layer consists of the specular lighting result from filter primitive 5.
+    Filter primitive <a element>feMerge</a> composites two layers together. The lower layer consists of the drop shadow result from filter primitive 2. The upper layer consists of the specular lighting result from filter primitive 5.
   </li>
 </ol>
 
@@ -232,7 +232,7 @@ This specification defines a set of CSS properties that affect the visual render
 
 The compositing model follows the SVG compositing model [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such as 'border' [[!CSS3BG]].
 
-Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and 'lighting-color' properties as well as the <a>'filter element'</a> element, the <a>'feMergeNode element'</a> element, the <a>'feCustomParam element'</a> element, the <i>transfer function elements</i> and the <i>filter primitive elements</i>.
+Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and 'lighting-color' properties as well as the <a element>filter</a> element, the <a element>feMergeNode</a> element, the <a element>feCustomParam</a> element, the <i>transfer function elements</i> and the <i>filter primitive elements</i>.
 
 <h2 id="values">Values</h2>
 
@@ -255,7 +255,7 @@ When used in this specification, terms have the meanings assigned in this sectio
   </dd>
   <dt><dfn>transfer function elements</dfn></dt>
   <dd>
-    The set of <a>'feFuncR element'</a>, <a>'feFuncG element'</a>, <a>'feFuncB element'</a>, <a>'feFuncA element'</a> elements, that define the transfer function for the <a>'feComponentTransfer element'</a> <a>filter primitive</a>.
+    The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a> elements, that define the transfer function for the <a element>feComponentTransfer</a> <a>filter primitive</a>.
   </dd>
   <dt><dfn>bounding client rect</dfn></dt>
   <dd>
@@ -283,11 +283,11 @@ When used in this specification, terms have the meanings assigned in this sectio
   </dd>
   <dt><dfn>filter primitives</dfn>, <dfn>filter primitive elements</dfn></dt>
   <dd>
-    The set of elements that control the output of a <a>'filter element'</a> element, particularly: <a>'feSpotLight'</a>, <a>'feBlend'</a>, <a>'feColorMatrix'</a>, <a>'feComponentTransfer'</a>, <a>'feComposite'</a>, <a>'feConvolveMatrix'</a>, <a>'feCustom'</a>, <a>'feDiffuseLighting'</a>, <a>'feDisplacementMap'</a>, <a>'feDropShadow'</a>, <a>'feFlood'</a>, <a>'feGaussianBlur'</a>, <a>'feImage'</a>, <a>'feMerge'</a>, <a>'feMorphology'</a>, <a>'feOffset'</a>, <a>'feSpecularLighting'</a>, <a>'feTile'</a>, <a>'feTurbulence'</a>.
+    The set of elements that control the output of a <a element>filter</a> element, particularly: <a element>feSpotLight</a>, <a element>feBlend</a>, <a element>feColorMatrix</a>, <a element>feComponentTransfer</a>, <a element>feComposite</a>, <a element>feConvolveMatrix</a>, <a element>feCustom</a>, <a element>feDiffuseLighting</a>, <a element>feDisplacementMap</a>, <a element>feDropShadow</a>, <a element>feFlood</a>, <a element>feGaussianBlur</a>, <a element>feImage</a>, <a element>feMerge</a>, <a element>feMorphology</a>, <a element>feOffset</a>, <a element>feSpecularLighting</a>, <a element>feTile</a>, <a element>feTurbulence</a>.
   </dd>
   <dt><dfn>light source</dfn></dt>
   <dd>
-    The following elements are light sources: <a>'feDistantLight'</a>, <a>'fePointLight'</a>, <a>'feSpotLight'</a>.
+    The following elements are light sources: <a>'feDistantLight'</a>, <a>'fePointLight'</a>, <a element>feSpotLight</a>.
   </dd>
   <dt><dfn>filter primitive attributes</dfn></dt>
   <dd>
@@ -337,7 +337,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
   </dd>
   <dt><<child-selector>></dt>
   <dd>
-    A functional notation [[!CSS3VAL]] accepting a comma-separated list of <<compound-selector>> [[!SELECTORS4]] that represents first matching child <a>'filter element'</a> element in <a>tree order</a> (as defined in [[!DOM]]).
+    A functional notation [[!CSS3VAL]] accepting a comma-separated list of <<compound-selector>> [[!SELECTORS4]] that represents first matching child <a element>filter</a> element in <a>tree order</a> (as defined in [[!DOM]]).
   </dd>-->
   <dt>
     <span class='prod'><dfn>blur()</dfn> = blur( <<length>> )</span>
@@ -488,7 +488,7 @@ If the value of the 'filter' property is ''none'' then there is no filter effect
   </dd>
 </dl>
 
-The first filter function or <a>'filter element'</a> reference in the list takes the element (<a href="#sourcegraphic">SourceGraphic</a>) as the input image. Subsequent operations take the output from the previous filter function or <a>'filter element'</a> reference as the input image. <a>'filter element'</a> element reference functions can specify an alternate input, but still uses the previous output as its <a href="#sourcegraphic">SourceGraphic</a>.
+The first filter function or <a element>filter</a> reference in the list takes the element (<a href="#sourcegraphic">SourceGraphic</a>) as the input image. Subsequent operations take the output from the previous filter function or <a element>filter</a> reference as the input image. <a element>filter</a> element reference functions can specify an alternate input, but still uses the previous output as its <a href="#sourcegraphic">SourceGraphic</a>.
 
 Filter functions must operate in the sRGB color space.
 
@@ -500,62 +500,61 @@ Conceptually, any parts of the drawing are effected by filter operations. This i
 
 The compositing model follows the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing model</a> [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of 'filter' has no effect on hit-testing.
 
-<h2 id="FilterElement">The <a>'filter element'</a> element</h2>
+<h2 id="FilterElement">The <a element>filter</a> element</h2>
 
 <!--elementsummary filter-->
 
-The description of the <a>'filter element'</a> element follows:
+The description of the <a element>filter</a> element follows:
 
 <div class="adef-list">
   <p>
     <em>Attribute definitions:</em>
   </p>
-  <dl>
+  <dl dfn-type="element-attr" dfn-for="filter">
     <dt id="FilterElementFilterUnitsAttribute">
-      <span class="adef">filterUnits</span> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
+      <dfn>filterUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
     </dt>
     <dd>
       See <a>filter effects region</a>.
     </dd>
     <dt id="FilterElementPrimitiveUnitsAttribute">
-      <span class="adef">primitiveUnits</span> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
+      <dfn>primitiveUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
     </dt>
     <dd>
       <p>Specifies the coordinate system for the various length values within the <i>filter primitives</i> and for the attributes that define the <a>filter primitive subregion</a>.<br>
       If <a>'filter/primitiveUnits'</a> is equal to ''userSpaceOnUse'', any length values within the filter definitions represent values in the current <i>user coordinate system</i> in place at the time when the
-      <a>'filter element'</a> element is referenced (i.e., the user coordinate system for the element referencing the <a>'filter element'</a> element via a 'filter' property).<br>
+      <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).<br>
       If <a>'filter/primitiveUnits'</a> is equal to ''objectBoundingBox'', then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a>'filter/primitiveUnits'</a> computation takes place.<br>
       The <a>lacuna value</a> for <a>'filter/primitiveUnits'</a> is <span class="attr-value">userSpaceOnUse</span>.<br>
       <span class="anim-target">Animatable: yes.</span>
       <p class="issue">If we make filter region auto, how will it affect existing content that uses ''objectBoundingBox''? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
     </dd>
     <dt id="FilterElementXAttribute">
-      <span class="adef">x</span> = "<<length>> | <<percentage>>"
+      <dfn>x</dfn> = "<<length>> | <<percentage>>"
     </dt>
     <dd>
       See <a>filter effects region</a>.
     </dd>
     <dt id="FilterElementYAttribute">
-      <span class="adef">y</span> = "<<length>> | <<percentage>>"
+      <dfn>y</dfn> = "<<length>> | <<percentage>>"
     </dt>
     <dd>
       See <a>filter effects region</a>.
     </dd>
     <dt id="FilterElementWidthAttribute">
-      <span class="adef">width</span> = "<<length>> | <<percentage>>"
+      <dfn>width</dfn> = "<<length>> | <<percentage>>"
     </dt>
     <dd>
       See <a>filter effects region</a>.
     </dd>
     <dt id="FilterElementHeightAttribute">
-      <span class="adef">height</span> = "<<length>> | <<percentage>>"
+      <dfn>height</dfn> = "<<length>> | <<percentage>>"
     </dt>
     <dd>
       See <a>filter effects region</a>.
     </dd>
     <dt id="FilterElementFilterResAttribute">
-      <p><span class="adef">filterRes</span> =
-      "<em><a>&lt;number-optional-number&gt;</a></em>"
+      <dfn>filterRes</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
     </dt>
     <dd>
       <p>The <em>filterRes</em> attribute was removed from the specification. See SVG 1.1 specification for the defintion [[!SVG11]].</p>
@@ -563,13 +562,13 @@ The description of the <a>'filter element'</a> element follows:
   </dl>
 </div>
 
-Properties inherit into the <a>'filter element'</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a>'filter element'</a> element.
+Properties inherit into the <a element>filter</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a element>filter</a> element.
 
-<a>'filter element'</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'filter' property. The 'display' property does not apply to the <a>'filter element'</a> element; thus, <a>'filter element'</a> elements are not directly rendered even if the 'display' property is set to a value other than ''none'', and <a>'filter element'</a> elements are available for referencing even when the 'display' property on the <a>'filter element'</a> element or any of its ancestors is set to ''none''.
+<a element>filter</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'filter' property. The 'display' property does not apply to the <a element>filter</a> element; thus, <a element>filter</a> elements are not directly rendered even if the 'display' property is set to a value other than ''none'', and <a element>filter</a> elements are available for referencing even when the 'display' property on the <a element>filter</a> element or any of its ancestors is set to ''none''.
 
 <h2 id="FilterEffectsRegion">Filter effects region</h2>
 
-A <a>'filter element'</a> element can define a region on the canvas to which a given filter effect applies and can provide a resolution for any intermediate continuous tone images used to process any raster-based <a>filter primitives</a>. The <a>'filter element'</a> element has the following attributes which work together to define the filter effects region:
+A <a element>filter</a> element can define a region on the canvas to which a given filter effect applies and can provide a resolution for any intermediate continuous tone images used to process any raster-based <a>filter primitives</a>. The <a element>filter</a> element has the following attributes which work together to define the filter effects region:
 
 <dl class='definitions unemphasized-names'>
   <dt id="FilterUnitsAttribute">
@@ -580,7 +579,7 @@ A <a>'filter element'</a> element can define a region on the canvas to which a g
       Defines the coordinate system for attributes <a>'filter/x'</a>, <a>'filter/y'</a>, <a>'filter/width'</a>, <a>'filter/height'</a>.
     </p>
     <p>
-      If <a>'filter/filterUnits'</a> is equal to ''userSpaceOnUse'', <a>'filter/x'</a>, <a>'filter/y'</a>, <a>'filter/width'</a>, <a>'filter/height'</a> represent values in the current user coordinate system in place at the time when the <a>'filter element'</a> element is referenced (i.e., the user coordinate system for the element referencing the <a>'filter element'</a> element via a 'filter' property).
+      If <a>'filter/filterUnits'</a> is equal to ''userSpaceOnUse'', <a>'filter/x'</a>, <a>'filter/y'</a>, <a>'filter/width'</a>, <a>'filter/height'</a> represent values in the current user coordinate system in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).
     </p>
     <p>
       If <a>'filter/filterUnits'</a> is equal to ''objectBoundingBox'', then <a>'filter/x'</a>, <a>'filter/y'</a>, <a>'filter/width'</a>, <a>'filter/height'</a> represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>).
@@ -604,7 +603,7 @@ A <a>'filter element'</a> element can define a region on the canvas to which a g
       The coordinate system for these attributes depends on the value for attribute <a>'filterUnits'</a>.
     </p>
     <p>
-      The bounds of this rectangle act as a hard clipping region for each <a>filter primitive</a> included with a given <a>'filter element'</a> element; thus, if the effect of a given filter primitive would extend beyond the bounds of the rectangle (this sometimes happens when using a <a>'feGaussianBlur'</a> filter primitive with a very large <a>'feGaussianBlur/stdDeviation'</a>), parts of the effect will get clipped.
+      The bounds of this rectangle act as a hard clipping region for each <a>filter primitive</a> included with a given <a element>filter</a> element; thus, if the effect of a given filter primitive would extend beyond the bounds of the rectangle (this sometimes happens when using a <a element>feGaussianBlur</a> filter primitive with a very large <a>'feGaussianBlur/stdDeviation'</a>), parts of the effect will get clipped.
     </p>
     <p>
       The <a>lacuna value</a> for <a>'filter/x'</a> and <a>'filter/y'</a> is <span class="attr-value">-10%</span>.
@@ -637,7 +636,7 @@ Note that both of the two possible value for <a>'filterUnits'</a> (i.e., ''objec
 
 This section describes the various filter primitives that can be assembled to achieve a particular filter effect.
 
-Unless otherwise stated, all image filters operate on premultiplied RGBA samples. Some filters like <a>'feColorMatrix'</a>, <a>'feCustom'</a> and <a>'feComponentTransfer'</a> work more naturally on non-premultiplied data. For the time of the filter operation, all color values must temporarily be transformed to the required color multiplication of the current filter.
+Unless otherwise stated, all image filters operate on premultiplied RGBA samples. Some filters like <a element>feColorMatrix</a>, <a element>feCustom</a> and <a element>feComponentTransfer</a> work more naturally on non-premultiplied data. For the time of the filter operation, all color values must temporarily be transformed to the required color multiplication of the current filter.
 
 Note: All input images are assumed to be in premultiplied RGBA. User agents can optimize performance by using non-premultiplied data buffering.
 
@@ -647,13 +646,13 @@ The RGBA result from each filter primitive will be clamped into the allowable ra
 
 <p id="filtersColorSpace">The color space in which a particular <a>filter primitive</a> performs its operations is determined by the value of the property <a>'color-interpolation-filters'</a> on the given <a>filter primitive</a>. A different property, 'color-interpolation' determines the color space for other color operations. Because these two properties have different initial values ('color-interpolation-filters' has an initial value of ''linearRGB'' whereas 'color-interpolation' has an initial value of ''sRGB''), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set 'color-interpolation' to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples below do not explicitly set either 'color-interpolation' or 'color-interpolation-filters', so the initial values for these properties apply to the examples.
 
-Sometimes <i>filter primitives</i> result in undefined pixels. For example, filter primitive <a>'feOffset'</a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
+Sometimes <i>filter primitives</i> result in undefined pixels. For example, filter primitive <a element>feOffset</a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
 
 To provide high quality rendering, all filter primitives should operate in a device dependent coordinate space, the <dfn>operating coordinate space</dfn>, taking device pixel density, user space transformations and zooming into account. To provide a platform independent alignment, attribute and property values are often relative to a coordinate system described by the <a>'filter/primitiveUnits'</a> attribute. User agents must scale these relative attributes and properties to the <i>operating coordinate space</i>.
 
 Note: On high resolution devices, attribute and property values that are relative to the <a>'filter/primitiveUnits'</a> usually need to be scaled up. User agents may reduce the resolution of filter primitives on limited platform resources.
 
-Note: Some attribute or property values from the filter primitives <a>'feConvolveMatrix'</a> and <i>light sources</i> can not be mapped from the coordinate space defined by the <a>'filter/primitiveUnits'</a> attribute to the <i>operating coordinate space</i>.
+Note: Some attribute or property values from the filter primitives <a element>feConvolveMatrix</a> and <i>light sources</i> can not be mapped from the coordinate space defined by the <a>'filter/primitiveUnits'</a> attribute to the <i>operating coordinate space</i>.
 
 <h3 id="CommonAttributes">Common attributes</h3>
 
@@ -731,7 +730,7 @@ The following attributes are available for all filter primitives:
       "<em><dfn>&lt;filter-primitive-reference></dfn></em>"
     </dt>
     <dd>
-      <<filter-primitive-reference>> is an <<custom-ident>> [[CSS3VAL]] and an assigned name for this <a>filter primitive</a>. If supplied, then graphics that result from processing this <a>filter primitive</a> can be referenced by an <a>'in'</a> attribute on a subsequent filter primitive within the same <a>'filter element'</a> element. If no value is provided, the output will only be available for re-use as the implicit input into the next <a>filter primitive</a> if that <a>filter primitive</a> provides no value for its <a>'in'</a> attribute.
+      <<filter-primitive-reference>> is an <<custom-ident>> [[CSS3VAL]] and an assigned name for this <a>filter primitive</a>. If supplied, then graphics that result from processing this <a>filter primitive</a> can be referenced by an <a>'in'</a> attribute on a subsequent filter primitive within the same <a element>filter</a> element. If no value is provided, the output will only be available for re-use as the implicit input into the next <a>filter primitive</a> if that <a>filter primitive</a> provides no value for its <a>'in'</a> attribute.
     </dd>
   </dl>
 </div>
@@ -748,10 +747,10 @@ The following attribute is representative for all input attributes:
     </dt>
     <dd>
       <p>
-        Identifies input for the given filter primitive. The value can be either one of six keywords or can be a string which matches a previous <a>'feBlend/result'</a> attribute value within the same <a>'filter element'</a> element. If no value is provided and this is the first <a>filter primitive</a>, then this <a>filter primitive</a> will use <i>SourceGraphic</i> as its input. If no value is provided and this is a subsequent <a>filter primitive</a>, then this <a>filter primitive</a> will use the result from the previous <a>filter primitive</a> as its input.
+        Identifies input for the given filter primitive. The value can be either one of six keywords or can be a string which matches a previous <a>'feBlend/result'</a> attribute value within the same <a element>filter</a> element. If no value is provided and this is the first <a>filter primitive</a>, then this <a>filter primitive</a> will use <i>SourceGraphic</i> as its input. If no value is provided and this is a subsequent <a>filter primitive</a>, then this <a>filter primitive</a> will use the result from the previous <a>filter primitive</a> as its input.
       </p>
       <p>
-        If the value for <span class="attr-name">result</span> appears multiple times within a given <a>'filter element'</a> element, then a reference to that result will use the closest preceding <a>filter primitive</a> with the given value for attribute <a>'feBlend/result'</a>. Forward references to results are not allowed, and will be treated as if no result was specified.
+        If the value for <span class="attr-name">result</span> appears multiple times within a given <a element>filter</a> element, then a reference to that result will use the closest preceding <a>filter primitive</a> with the given value for attribute <a>'feBlend/result'</a>. Forward references to results are not allowed, and will be treated as if no result was specified.
       </p>
       <p>
         Definitions for the six keywords:
@@ -762,7 +761,7 @@ The following attribute is representative for all input attributes:
         </dt>
         <dd>
           <p>
-            This keyword represents the graphics elements that were the original input into the <a>'filter element'</a> element. For raster effects <a>filter primitives</a>, the graphics elements will be rasterized into  an initially clear RGBA raster in image space. Pixels left untouched by the original graphic will be left clear. The image is specified to be rendered in linear RGBA pixels. The alpha channel of this image captures any anti-aliasing specified by SVG. (Since the raster is linear, the alpha channel of this image will represent the exact percent coverage of each pixel.)
+            This keyword represents the graphics elements that were the original input into the <a element>filter</a> element. For raster effects <a>filter primitives</a>, the graphics elements will be rasterized into  an initially clear RGBA raster in image space. Pixels left untouched by the original graphic will be left clear. The image is specified to be rendered in linear RGBA pixels. The alpha channel of this image captures any anti-aliasing specified by SVG. (Since the raster is linear, the alpha channel of this image will represent the exact percent coverage of each pixel.)
           </p>
         </dd>
         <dt>
@@ -770,7 +769,7 @@ The following attribute is representative for all input attributes:
         </dt>
         <dd>
           <p>
-            This keyword represents the graphics elements that were the original input into the <a>'filter element'</a> element. <i>SourceAlpha</i> has all of the same rules as <i>SourceGraphic</i> except that only the alpha channel is used. The input image is an RGBA image consisting of implicitly black color values for the RGB channels, but whose alpha channel is the same as <i>SourceGraphic</i>.
+            This keyword represents the graphics elements that were the original input into the <a element>filter</a> element. <i>SourceAlpha</i> has all of the same rules as <i>SourceGraphic</i> except that only the alpha channel is used. The input image is an RGBA image consisting of implicitly black color values for the RGB channels, but whose alpha channel is the same as <i>SourceGraphic</i>.
           </p>
           <p class="note implementation">
             If this option is used, then some implementations might need to rasterize the graphics elements in order to extract the alpha channel.
@@ -780,7 +779,7 @@ The following attribute is representative for all input attributes:
           <dfn>BackgroundImage</dfn>
         </dt>
         <dd>
-          This keyword represents the back drop defined by the current isolation group behind the <a>filter region</a> at the time that the <a>'filter element'</a> element was invoked. See 'isolation' property [[!COMPOSITING]].
+          This keyword represents the back drop defined by the current isolation group behind the <a>filter region</a> at the time that the <a element>filter</a> element was invoked. See 'isolation' property [[!COMPOSITING]].
         </dd>
         <dt>
           <dfn>BackgroundAlpha</dfn>
@@ -814,9 +813,9 @@ The following attribute is representative for all input attributes:
   Define filter primitive subregion for shorthands. E.g. the out bounds of the previous filter functions, extended by affected area of current filter function. <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22580">Bug 22580</a>
 </p>
 
-All <a>filter primitives</a> have attributes <a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> which together identify a subregion which restricts calculation and rendering of the given <a>filter primitive</a>. The <a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> attributes are defined according to the same rules as other <a>filter primitives</a> coordinate and length attributes and thus represent values in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.
+All <a>filter primitives</a> have attributes <a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> which together identify a subregion which restricts calculation and rendering of the given <a>filter primitive</a>. The <a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> attributes are defined according to the same rules as other <a>filter primitives</a> coordinate and length attributes and thus represent values in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.
 
-<a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> default to the union (i.e., tightest fitting bounding box) of the subregions defined for all referenced nodes. If there are no referenced nodes (e.g., for <a>'feImage'</a> or <a>'feTurbulence'</a>), or one or more of the referenced nodes is a standard input (one of <i>SourceGraphic</i>, <i>SourceAlpha</i>, <i>BackgroundImage</i>, <i>BackgroundAlpha</i>, <i>FillPaint</i> or <i>StrokePaint</i>), or for <a>'feTile'</a> (which is special because its principal function is to replicate the referenced node in X and Y and thereby produce a usually larger result), the default subregion is ''0%, 0%, 100%, 100%'', where as a special-case the percentages are relative to the dimensions of the <a>filter region</a>, thus making the default <a>filter primitive subregion</a> equal to the <a>filter region</a>.
+<a>'feBlend/x'</a>, <a>'feBlend/y'</a>, <a>'feBlend/width'</a> and <a>'feBlend/height'</a> default to the union (i.e., tightest fitting bounding box) of the subregions defined for all referenced nodes. If there are no referenced nodes (e.g., for <a element>feImage</a> or <a element>feTurbulence</a>), or one or more of the referenced nodes is a standard input (one of <i>SourceGraphic</i>, <i>SourceAlpha</i>, <i>BackgroundImage</i>, <i>BackgroundAlpha</i>, <i>FillPaint</i> or <i>StrokePaint</i>), or for <a element>feTile</a> (which is special because its principal function is to replicate the referenced node in X and Y and thereby produce a usually larger result), the default subregion is ''0%, 0%, 100%, 100%'', where as a special-case the percentages are relative to the dimensions of the <a>filter region</a>, thus making the default <a>filter primitive subregion</a> equal to the <a>filter region</a>.
 
 If the <a>filter primitive subregion</a> has a negative or zero width or height, the effect of the filter primitive is disabled.
 
@@ -826,7 +825,7 @@ All intermediate offscreens are defined to not exceed the intersection of the <a
 
 <div class="example">
   <p>
-    <a>'feTile'</a> references a previous filter primitive and then stitches the tiles together based on the <a>filter primitive subregion</a> of the referenced filter primitive in order to fill its own <a>filter primitive subregion</a>.
+    <a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <a>filter primitive subregion</a> of the referenced filter primitive in order to fill its own <a>filter primitive subregion</a>.
   </p>
 
   <pre class="xml">&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt; 
@@ -893,18 +892,18 @@ All intermediate offscreens are defined to not exceed the intersection of the <a
   </p>
   <ul>
     <li>
-      The upper left rectangle shows an <a>'feFlood'</a> with ''flood-opacity: 75%'' so the cross should be visible through the green rect in the middle.
+      The upper left rectangle shows an <a element>feFlood</a> with ''flood-opacity: 75%'' so the cross should be visible through the green rect in the middle.
     </li>
     <li>
-      The lower left rectangle shows an <a>'feMerge'</a> that merges <i>SourceGraphic</i> with <i>FillPaint</i>. Since the circle has <span class="attr-name">fill-opacity</span>="<span class="attr-value">0.5</span>" it will also be transparent so that the cross is visible through the green rect in the middle.
+      The lower left rectangle shows an <a element>feMerge</a> that merges <i>SourceGraphic</i> with <i>FillPaint</i>. Since the circle has <span class="attr-name">fill-opacity</span>="<span class="attr-value">0.5</span>" it will also be transparent so that the cross is visible through the green rect in the middle.
     </li>
     <li>
-      The upper right rectangle shows an <a>'feBlend'</a> that has <span class="attr-name">mode</span>="<span class="attr-value">multiply</span>". Since the circle in this case isn't transparent the result is totally opaque. The rect should be dark green and the cross should not be visible through it.
+      The upper right rectangle shows an <a element>feBlend</a> that has <span class="attr-name">mode</span>="<span class="attr-value">multiply</span>". Since the circle in this case isn't transparent the result is totally opaque. The rect should be dark green and the cross should not be visible through it.
     </li>
   </ul>
 </div>
 
-<h3 id="feBlendElement">Filter primitive <a>'feBlend'</a></h3>
+<h3 id="feBlendElement">Filter primitive <a element>feBlend</a></h3>
 
 <!--elementsummary feBlend-->
 
@@ -914,20 +913,20 @@ This filter blends two objects together using commonly used imaging software ble
   <p>
     <em>Attribute definitions:</em>
   </p>
-  <dl>
+  <dl dfn-type="element-attr" dfn-for="feblend">
     <dt id="feBlendModeAttribute">
-      <span class="adef">mode</span> = "<em>normal | multiply | screen | darken | lighten</em>"
+      <dfn>mode</dfn> = "<em>normal | multiply | screen | darken | lighten</em>"
     </dt>
     <dd>
       <p>One of the image blending modes (see <a href="#BlendingTable">table</a> below). The <a>lacuna value</a> for <a>'mode'</a> is <span class="attr-value">normal</span>.</p>
       <p class="anim-target">Animatable: yes.</p>
     </dd>
     <dt id="feBlendIn2Attribute">
-      <span class="adef">in2</span> = "<em>(see <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute)</em>"
+      <dfn>in2</dfn> = "<em>(see <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute)</em>"
     </dt>
     <dd>
       <p>The second input image to the blending operation. This attribute can take on the same values as the <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute. (<a href="http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg">example</a>)</p>
-      <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a>'feComposite'</a>: Does that mean that "in2" should take the value of "in" if not specified?
+      <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a element>feComposite</a>: Does that mean that "in2" should take the value of "in" if not specified?
       <p class="anim-target">Animatable: yes.</p>
     </dd>
   </dl>
@@ -983,7 +982,7 @@ provides the list of available image blending modes:</p>
   </tbody>
 </table>
 
-The ''normal'' blend mode is equivalent to <a href="#feCompositeOperatorAttribute"><span class="attr-value">operator="over"</span></a> on the <a>'feComposite'</a> filter primitive, matches the blending method used by <a>'feMerge'</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
+The ''normal'' blend mode is equivalent to <a href="#feCompositeOperatorAttribute"><span class="attr-value">operator="over"</span></a> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
 
 <div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
@@ -1042,7 +1041,7 @@ The ''normal'' blend mode is equivalent to <a href="#feCompositeOperatorAttribut
   </p>
 </div>
 
-<h3 id="feColorMatrixElement">Filter primitive <a>'feColorMatrix'</a></h3>
+<h3 id="feColorMatrixElement">Filter primitive <a element>feColorMatrix</a></h3>
 
 <!--elementsummary feColorMatrix-->
 
@@ -1067,9 +1066,9 @@ The calculations are performed on non-premultiplied color values.
   <p>
     <em>Attribute definitions:</em>
   </p>
-  <dl>
+  <dl dfn-type="element-attr" dfn-for="fecolormatrix">
     <dt id="feColorMatrixTypeAttribute">
-      <span class="adef">type</span> = "<em>matrix | saturate | hueRotate |
+      <dfn>type</dfn> = "<em>matrix | saturate | hueRotate |
       luminanceToAlpha</em>"
     </dt>
     <dd>
@@ -1077,7 +1076,7 @@ The calculations are performed on non-premultiplied color values.
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feColorMatrixValuesAttribute">
-      <span class="adef">values</span> = "<em>list of <<number>>s</em>"
+      <dfn>values</dfn> = "<em>list of <<number>>s</em>"
     </dt>
     <dd>
       The contents of <span class="attr-name">values</span> depends on the value of attribute <a href="#feColorMatrixTypeAttribute"><span class="attr-name">type</span></a>:
@@ -1226,7 +1225,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
   </p>
 </div>
 
-<h3 id="feComponentTransferElement">Filter primitive <a>'feComponentTransfer'</a></h3>
+<h3 id="feComponentTransferElement">Filter primitive <a element>feComponentTransfer</a></h3>
 
 <!--elementsummary feComponentTransfer-->
 
@@ -1241,7 +1240,7 @@ for every pixel. It allows operations like brightness adjustment, contrast adjus
 
 The calculations are performed on non-premultiplied color values.
 
-The child elements of a <a>'feComponentTransfer'</a> element specify the transfer functions for the four channels:
+The child elements of a <a element>feComponentTransfer</a> element specify the transfer functions for the four channels:
 
 <ul id="transferFuncElements">
   <li><a>'feFuncR'</a> - transfer function for the red component of the input graphic</li> 
@@ -1250,12 +1249,12 @@ The child elements of a <a>'feComponentTransfer'</a> element specify the transfe
   <li><a>'feFuncA'</a> - transfer function for the alpha component of the input graphic</li> 
 </ul>
 
-The following rules apply to the processing of the <a>'feComponentTransfer'</a> element:
+The following rules apply to the processing of the <a element>feComponentTransfer</a> element:
 
 <ul>
   <li>If more than one <a>transfer function element</a> of the same kind is specified, the last occurrence is to be used.
   </li>
-  <li>If any of the <a>transfer function elements</a> are unspecified, the <a>'feComponentTransfer'</a> must be processed as if those <a>transfer function elements</a> were specified with their <a>'feFuncR/type'</a> attributes set to ''identity''.
+  <li>If any of the <a>transfer function elements</a> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <a>transfer function elements</a> were specified with their <a>'feFuncR/type'</a> attributes set to ''identity''.
   </li>
 </ul>
   
@@ -1487,13 +1486,13 @@ The following rules apply to the processing of the <a>'feComponentTransfer'</a> 
   </p>
 </div>
 
-<h3 id="feCompositeElement">Filter primitive <a>'feComposite'</a></h3>
+<h3 id="feCompositeElement">Filter primitive <a element>feComposite</a></h3>
 
 <!--elementsummary feComposite-->
 
 This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: ''over'', ''in'', ''atop'', ''out', ''xor'' [[!COMPOSITING]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
 
-The <em>arithmetic</em> operation is useful for combining the output from the <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> filters with texture data. It is also useful for implementing <em>dissolve</em>. If the <em>arithmetic</em> operation is chosen, each result pixel is computed using the following formula:
+The <em>arithmetic</em> operation is useful for combining the output from the <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filters with texture data. It is also useful for implementing <em>dissolve</em>. If the <em>arithmetic</em> operation is chosen, each result pixel is computed using the following formula:
 
 <pre>
 result = k1*i1*i2 + k2*i1 + k3*i2 + k4
@@ -1513,16 +1512,16 @@ For this filter primitive, the extent of the resulting image might grow as descr
   <p>
     <em>Attribute definitions:</em>
   </p>
-  <dl>
+  <dl dfn-type="element-attr" dfn-for="fecomposite">
     <dt id="feCompositeOperatorAttribute">
-      <span class="adef">operator</span> = "<em>over | in | out | atop | xor | arithmetic</em>"
+      <dfn>operator</dfn> = "<em>over | in | out | atop | xor | arithmetic</em>"
     </dt>
     <dd>
       The compositing operation that is to be performed. All of the <span class="attr-name">operator</span> types except ''arithmetic'' match the corresponding operation as described in [[PORTERDUFF]]. The ''arithmetic'' operator is described above. The <a>lacuna value</a> for <a>'feComposite/operator'</a> is ''over''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feCompositeK1Attribute">
-      <span class="adef">k1</span> = "<<number>>"
+      <dfn>k1</dfn> = "<<number>>"
     </dt>
     <dd>
       Only applicable if <span class="attr-value">operator="arithmetic"</span>.<br>
@@ -1530,7 +1529,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feCompositeK2Attribute">
-      <span class="adef">k2</span> = "<em><<number>></em>"
+      <dfn>k2</dfn> = "<em><<number>></em>"
     </dt>
     <dd>
       Only applicable if <span class="attr-value">operator="arithmetic"</span>.<br>
@@ -1538,7 +1537,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feCompositeK3Attribute">
-      <span class="adef">k3</span> = "<<number>>"
+      <dfn>k3</dfn> = "<<number>>"
     </dt>
     <dd>
       Only applicable if <span class="attr-value">operator="arithmetic"</span>.<br>
@@ -1546,7 +1545,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feCompositeK4Attribute">
-      <span class="adef">k4</span> = "<<number>>"
+      <dfn>k4</dfn> = "<<number>>"
     </dt>
     <dd>
       Only applicable if <span class="attr-value">operator="arithmetic"</span>.<br>
@@ -1554,11 +1553,11 @@ For this filter primitive, the extent of the resulting image might grow as descr
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feCompositeIn2Attribute">
-      <span class="adef">in2</span> = "<em>(see <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute)</em>"
+      <dfn>in2</dfn> = "<em>(see <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute)</em>"
     </dt>
     <dd>
       <p>The second input image to the compositing operation. This attribute can take on the same values as the <a href="#FilterPrimitiveInAttribute"><span class="attr-name">in</span></a> attribute.</p>
-      <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a>'feBlend'</a>: Does that mean that "in2" should take the value of "in" if not specified? (<a href="http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg">example</a>)</p>
+      <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a element>feBlend</a>: Does that mean that "in2" should take the value of "in" if not specified? (<a href="http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg">example</a>)</p>
       <p class="anim-target">Animatable: yes.</p>
     </dd>
   </dl>
@@ -1745,7 +1744,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </p>
 </div>
 
-<h3 id="feConvolveMatrixElement">Filter primitive <a>'feConvolveMatrix'</a></h3>
+<h3 id="feConvolveMatrixElement">Filter primitive <a element>feConvolveMatrix</a></h3>
 
 <!--elementsummary feConvolveMatrix-->
 
@@ -1779,7 +1778,7 @@ Let's focus on the color value at the second row and second column of the image 
   <math><semantics><mrow><mrow><msub><mi>resultChannel</mi><mn>2,2</mn></msub><mo stretchy="false">=</mo><mfrac><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy="false">⋅</mo><mn>0</mn></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>8</mn><mo stretchy="false">⋅</mo><mn>20</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>7</mn><mo stretchy="false">⋅</mo><mn>40</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>6</mn><mo stretchy="false">⋅</mo><mn>100</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>5</mn><mo stretchy="false">⋅</mo><mn>120</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>4</mn><mo stretchy="false">⋅</mo><mn>140</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>3</mn><mo stretchy="false">⋅</mo><mn>200</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>2</mn><mo stretchy="false">⋅</mo><mn>220</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>1</mn><mo stretchy="false">⋅</mo><mn>240</mn></mrow></mrow></mrow></mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy="false">+</mo><mn>8</mn></mrow><mo stretchy="false">+</mo><mn>7</mn></mrow><mo stretchy="false">+</mo><mn>6</mn></mrow><mo stretchy="false">+</mo><mn>5</mn></mrow><mo stretchy="false">+</mo><mn>4</mn></mrow><mo stretchy="false">+</mo><mn>3</mn></mrow><mo stretchy="false">+</mo><mn>2</mn></mrow><mo stretchy="false">+</mo><mn>1</mn></mrow></mrow></mfrac></mrow></mrow></semantics></math>
 </p>
 
-Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a>'feConvolveMatrix'</a> produce resolution-independent results, an explicit value should be provided for the attribute <a>'feConvolveMatrix/kernelUnitLength'</a>.
+Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a element>feConvolveMatrix</a> produce resolution-independent results, an explicit value should be provided for the attribute <a>'feConvolveMatrix/kernelUnitLength'</a>.
 
 <a>'feConvolveMatrix/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). The input image will be temporarily rescaled to match its pixels with <a>'feConvolveMatrix/kernelUnitLength'</a>. The convolution happens on the resampled image. After applying the convolution, the image is resampled back to the original resolution.
 
@@ -1922,7 +1921,7 @@ When the image must be resampled to match the coordinate system defined by <a>'f
   </dl>
 </div>
 
-<h3 id="feCustomElement">Filter primitive <a>'feCustom'</a></h3>
+<h3 id="feCustomElement">Filter primitive <a element>feCustom</a></h3>
 
 <!--elementsummary feCustom-->
 
@@ -1945,7 +1944,7 @@ When the image must be resampled to match the coordinate system defined by <a>'f
 The calculations are performed on non-premultiplied color values.
 
 <p id="feCustomSourceElement">
-  Each <a>'feCustom'</a> element can have any number of <a>'feCustomSource'</a> subelements. Each <a>'feCustomSource'</a> references one resource.
+  Each <a element>feCustom</a> element can have any number of <a>'feCustomSource'</a> subelements. Each <a>'feCustomSource'</a> references one resource.
 </p>
 
 <!--elementsummary feCustomSource-->
@@ -1975,7 +1974,7 @@ The calculations are performed on non-premultiplied color values.
 </div>
 
 <p id="feCustomParamElement">
-  Each <a>'feCustom'</a> element can have any number of <a>'feCustomParam'</a> subelements. Each <a>'feCustomParam'</a> node passes one parameter.
+  Each <a element>feCustom</a> element can have any number of <a>'feCustomParam'</a> subelements. Each <a>'feCustomParam'</a> node passes one parameter.
 </p>
 
 <!--elementsummary feCustomParam-->
@@ -2063,15 +2062,15 @@ The calculations are performed on non-premultiplied color values.
   </dl>
 </div>
 
-<h3 id="feDiffuseLightingElement">Filter primitive <a>'feDiffuseLighting'</a></h3>
+<h3 id="feDiffuseLightingElement">Filter primitive <a element>feDiffuseLighting</a></h3>
 
 <!--elementsummary feDiffuseLighting-->
 
 This filter primitive lights an image using the alpha channel as a bump map. The resulting image is an RGBA opaque image based on the light color with alpha = 1.0 everywhere. The lighting calculation follows the standard diffuse component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map.
 
-The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a>'feComposite'</a> compositing method. Multiple <i>light sources</i> can be simulated by adding several of these light maps together before applying it to the texture image.
+The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a element>feComposite</a> compositing method. Multiple <i>light sources</i> can be simulated by adding several of these light maps together before applying it to the texture image.
 
-The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a>'feDiffuseLighting'</a> produce resolution-independent results, an explicit value should be provided for the attribute <a>'feDiffuseLighting/kernelUnitLength'</a>.
+The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a element>feDiffuseLighting</a> produce resolution-independent results, an explicit value should be provided for the attribute <a>'feDiffuseLighting/kernelUnitLength'</a>.
 
 <a>'feDiffuseLighting/kernelUnitLength'</a>, in combination with the other attributes, defines an implicit pixel grid in the filter effects coordinate system (i.e., the coordinate system established by the <a>'filter/primitiveUnits'</a> attribute). The input image will be temporarily rescaled to match its pixels with <a>'feDiffuseLighting/kernelUnitLength'</a>. The 3x3 filters are applied to the resampled image. After applying the filter, the image is resampled back to its original resolution.
 
@@ -2400,9 +2399,9 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
   </dl>
 </div>
 
-The <i>light source</i> is defined by one of the child elements <a>'feDistantLight'</a>, <a>'fePointLight'</a> or <a>'feSpotLight'</a>. The light color is specified by property 'lighting-color'.
+The <i>light source</i> is defined by one of the child elements <a>'feDistantLight'</a>, <a>'fePointLight'</a> or <a element>feSpotLight</a>. The light color is specified by property 'lighting-color'.
 
-<h3 id="feDisplacementMapElement">Filter primitive <a>'feDisplacementMap'</a></h3>
+<h3 id="feDisplacementMapElement">Filter primitive <a element>feDisplacementMap</a></h3>
 
 <!--elementsummary feDisplacementMap-->
 
@@ -2435,7 +2434,7 @@ The 'color-interpolation-filters' property only applies to the <a>'feDisplacemen
       <span class="adef">scale</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Displacement scale factor. The amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
+      Displacement scale factor. The amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.<br>
       When the value of this attribute is ''0'', this operation has no effect on the source image.<br>
       <p>
         The <a>lacuna value</a> for <a>'feDisplacementMap/scale'</a> is ''0''.
@@ -2471,13 +2470,13 @@ The 'color-interpolation-filters' property only applies to the <a>'feDisplacemen
   </dl>
 </div>
 
-<h3 id="feDropShadowElement">Filter primitive <a>'feDropShadow'</a></h3>
+<h3 id="feDropShadowElement">Filter primitive <a element>feDropShadow</a></h3>
 
 <!--elementsummary feDropShadow-->
 
 This filter creates a drop shadow of the input image. It is a shorthand filter, and is defined in terms of combinations of other <a>filter primitives</a>. The expectation is that it can be optimized more easily by implementations.
 
-The result of a <a>'feDropShadow'</a> filter primitive is equivalent to the following:
+The result of a <a element>feDropShadow</a> filter primitive is equivalent to the following:
 
 <pre class="examplesource">
   &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt; 
@@ -2493,35 +2492,35 @@ The result of a <a>'feDropShadow'</a> filter primitive is equivalent to the foll
 The above divided into steps:
 
 <ol>
-  <li>Take the alpha channel of the input to the <a>'feDropShadow'</a> filter
-  primitive and the <a>'feDropShadow/stdDeviation'</a> on the <a>'feDropShadow'</a>
-  and do processing as if the following <a>'feGaussianBlur'</a> was applied:
+  <li>Take the alpha channel of the input to the <a element>feDropShadow</a> filter
+  primitive and the <a>'feDropShadow/stdDeviation'</a> on the <a element>feDropShadow</a>
+  and do processing as if the following <a element>feGaussianBlur</a> was applied:
     <pre class="examplesource">
 &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;
 </pre><br>
   </li>
   <li>Offset the result of step 1 by <a>'feDropShadow/dx'</a> and
-  <a>'feDropShadow/dy'</a> as specified on the <a>'feDropShadow'</a> element,
-  equivalent to applying an <a>'feOffset'</a> with these parameters:
+  <a>'feDropShadow/dy'</a> as specified on the <a element>feDropShadow</a> element,
+  equivalent to applying an <a element>feOffset</a> with these parameters:
     <pre class="examplesource">
 &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;
 </pre><br>
   </li>
-  <li>Do processing as if an <a>'feFlood'</a> element with <a>'flood-color'</a> and
-  <a>'flood-opacity'</a> as specified on the <a>'feDropShadow'</a> was applied:
+  <li>Do processing as if an <a element>feFlood</a> element with 'flood-color' and
+  'flood-opacity' as specified on the <a element>feDropShadow</a> was applied:
     <pre class="examplesource">
 &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;
 </pre><br>
   </li>
-  <li>Composite the result of the <a>'feFlood'</a> in step 3 with the result of the
-  <a>'feOffset'</a> in step 2 as if an <a>'feComposite'</a> filter primitive with
+  <li>Composite the result of the <a element>feFlood</a> in step 3 with the result of the
+  <a element>feOffset</a> in step 2 as if an <a element>feComposite</a> filter primitive with
   <a href="#feCompositeOperatorAttribute">''operator''</a>="in" was applied:
     <pre class="examplesource">
 &lt;feComposite in2="offsetblur" operator="in"/&gt;
 </pre><br>
   </li>
   <li>Finally merge the result of the previous step, doing processing as if the
-  following <a>'feMerge'</a> was performed:
+  following <a element>feMerge</a> was performed:
     <pre class="examplesource">
 &lt;feMerge&gt;
   &lt;feMergeNode/&gt;
@@ -2531,9 +2530,9 @@ The above divided into steps:
   </li>
 </ol>
 
-Note: that while the definition of the <a>'feDropShadow'</a> filter primitive says that it can be expanded into an equivalent tree it is not required that it is implemented like that. The expectation is that user agents can optimize the handling by not having to do all the steps separately.
+Note: that while the definition of the <a element>feDropShadow</a> filter primitive says that it can be expanded into an equivalent tree it is not required that it is implemented like that. The expectation is that user agents can optimize the handling by not having to do all the steps separately.
 
-Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropShadowElement</a> there is no way of accessing the internals of the <a>'feDropShadow'</a> filter primitive, meaning <span class="requirement" id="assert_dropShadowShadowTrees">if the filter primitive is implemented as an equivalent tree then that tree must not be exposed to the DOM.</span>
+Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropShadowElement</a> there is no way of accessing the internals of the <a element>feDropShadow</a> filter primitive, meaning <span class="requirement" id="assert_dropShadowShadowTrees">if the filter primitive is implemented as an equivalent tree then that tree must not be exposed to the DOM.</span>
 
 <div class="adef-list">
   <p>
@@ -2553,7 +2552,7 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
       </p>
       <p>
         This attribute is then forwarded to the <a>'feOffset/dx'</a> attribute of the
-        internal <a>'feOffset'</a> element.
+        internal <a element>feOffset</a> element.
       </p>
       <p>
         <span class="anim-target">Animatable: yes.</span>
@@ -2571,7 +2570,7 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
       </p>
       <p>
         This attribute is then forwarded to the <a>'feOffset/dy'</a> attribute of the
-        internal <a>'feOffset'</a> element.
+        internal <a element>feOffset</a> element.
       </p>
       <p>
         <span class="anim-target">Animatable: yes.</span>
@@ -2590,7 +2589,7 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
       </p>
       <p>
         This attribute is then forwarded to the <a>'feGaussianBlur/stdDeviation'</a>
-        attribute of the internal <a>'feGaussianBlur'</a> element.
+        attribute of the internal <a element>feGaussianBlur</a> element.
       </p>
       <p>
         <span class="anim-target">Animatable: yes.</span>
@@ -2599,11 +2598,11 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
   </dl>
 </div>
 
-<h3 id="feFloodElement">Filter primitive <a>'feFlood'</a></h3>
+<h3 id="feFloodElement">Filter primitive <a element>feFlood</a></h3>
 
 <!--elementsummary feFlood-->
 
-This filter primitive creates a rectangle filled with the color and opacity values from properties 'flood-color' and 'flood-opacity'. The rectangle is as large as the <a>filter primitive subregion</a> established by the <a>'feFlood element'</a> element.
+This filter primitive creates a rectangle filled with the color and opacity values from properties 'flood-color' and 'flood-opacity'. The rectangle is as large as the <a>filter primitive subregion</a> established by the <a element>feFlood</a> element.
 
 <div class="adef-list"></div>
 
@@ -2613,7 +2612,7 @@ This filter primitive creates a rectangle filled with the color and opacity valu
 Name: flood-color
 Value: <<color>> <a>&lt;icccolor&gt;</a>?
 Initial: black
-Applies to: <a>'feFlood'</a> and <a>'feDropShadow'</a> elements
+Applies to: <a element>feFlood</a> and <a element>feDropShadow</a> elements
 Inherited: no
 Percentages: n/a
 Computed value: as specified
@@ -2629,7 +2628,7 @@ The 'flood-color' property indicates what color to used to flood the current <a 
 Name: flood-opacity
 Value: <<number>> | <<percentage>>
 Initial: 1
-Applies to: <a>'feFlood'</a> and <a>'feDropShadow'</a> elements
+Applies to: <a element>feFlood</a> and <a element>feDropShadow</a> elements
 Inherited: no
 Percentages: n/a
 Computed value: as specified
@@ -2639,7 +2638,7 @@ Animatable: yes
 
 The 'flood-opacity' property defines the opacity value to use across the entire <a>filter primitive subregion</a>. If the 'flood-color' value includes an alpha channel, the alpha channel gets multiplied with the computed value of the 'flood-opacity' property.
 
-<h3 id="feGaussianBlurElement">Filter primitive <a>'feGaussianBlur'</a></h3>
+<h3 id="feGaussianBlurElement">Filter primitive <a element>feGaussianBlur</a></h3>
 
 <!--elementsummary feGaussianBlur-->
 
@@ -2681,7 +2680,7 @@ For larger values of "s" (s &gt;= 2.0), an approximation can be used: Three succ
 
 The approximation formula also applies correspondingly to "t".
 
-Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <i>SourceAlpha</i>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <i>FillPaint</i> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a>'feTile'</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
+Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <i>SourceAlpha</i>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <i>FillPaint</i> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a element>feTile</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
 
 <div class="adef-list">
   <p>
@@ -2694,7 +2693,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
     </dt>
     <dd>
       <p>
-        The standard deviation for the blur operation. If two <<number>> s are provided, the first number represents a standard deviation value along the x-axis of the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The second value represents a standard deviation in Y. If one number is provided, then that value is used for both X and Y.
+        The standard deviation for the blur operation. If two <<number>> s are provided, the first number represents a standard deviation value along the x-axis of the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element. The second value represents a standard deviation in Y. If one number is provided, then that value is used for both X and Y.
       </p>
       <p>
         A negative value or a value of zero disables the effect of the given filter primitive (i.e., the result is the filter input image).
@@ -2737,9 +2736,9 @@ Frequently this operation will take place on alpha-only images, such as that pro
   </dl>
 </div>
 
-<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feGaussianBlur'</a> filter primitive to create a drop shadow effect.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a element>feGaussianBlur</a> filter primitive to create a drop shadow effect.
 
-<h3 id="feImageElement">Filter primitive <a>'feImage'</a></h3>
+<h3 id="feImageElement">Filter primitive <a element>feImage</a></h3>
 
 <!--elementsummary feImage-->
 
@@ -2747,7 +2746,7 @@ This filter primitive refers to a graphic external to this filter element, which
 
 This filter primitive can refer to an external image or can be a reference to another piece of SVG. It produces an image similar to the built-in image source <i>SourceGraphic</i> except that the graphic comes from an external source.
 
-If the <span class="attr-name">href</span> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image element'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use element'</a> element. In either case, the current user coordinate system depends on the value of attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element. The processing of the ''preserveAspectRatio'' attribute on the <a>'feImage'</a> element is identical to that of the <a>'image'</a> element.
+If the <span class="attr-name">href</span> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use'</a> element. In either case, the current user coordinate system depends on the value of attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element. The processing of the ''preserveAspectRatio'' attribute on the <a element>feImage</a> element is identical to that of the <a>'image'</a> element.
 
 <p class="issue">
   What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don't apply filter or null filter. What about ''preserve aspect ratio''?
@@ -2796,7 +2795,7 @@ If the <span class="attr-name">href</span> references a stand-alone image resour
       "attr-value">anonymous | use-credentials</span>"
     </dt>
     <dd>
-      The <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a>'feDisplacementMap'</a>. For the defintion see <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="#security">security section</a> in this specification.
+      The <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a element>feDisplacementMap</a>. For the defintion see <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="#security">security section</a> in this specification.
     </dd>
   </dl>
 </div>
@@ -2861,7 +2860,7 @@ If the <span class="attr-name">href</span> references a stand-alone image resour
   </p>
 </div>
 
-<h3 id="feMergeElement">Filter primitive <a>'feMerge'</a></h3>
+<h3 id="feMergeElement">Filter primitive <a element>feMerge</a></h3>
 
 <!--elementsummary feMerge-->
 
@@ -2870,18 +2869,18 @@ This filter primitive composites input image layers on top of each other using t
 Many effects produce a number of intermediate layers in order to create the final output image. This filter allows us to collapse those into a single image. Although this could be done by using n-1 Composite-filters, it is more convenient to have this common operation available in this form, and offers the implementation some additional flexibility.
 
 <p id="feMergeNodeElement">
-  Each <a>'feMerge'</a> element can have any number of <a>'feMergeNode'</a> subelements, each of which has an <a href="#CommonAttributes"><span class="attr-name">in</span></a> attribute.
+  Each <a element>feMerge</a> element can have any number of <a>'feMergeNode'</a> subelements, each of which has an <a href="#CommonAttributes"><span class="attr-name">in</span></a> attribute.
 </p>
 
 <!--elementsummary feMergeNode-->
 
 The canonical implementation of feMerge is to render the entire effect into one RGBA layer, and then render the resulting layer on the output device. In certain cases (in particular if the output device itself is a continuous tone device), and since merging is associative, it might be a sufficient approximation to evaluate the effect one layer at a time and render each layer individually onto the output device bottom to top.
 
-If the topmost image input is <i>SourceGraphic</i> and this <a>'feMerge'</a> is the last filter primitive in the filter, the implementation is encouraged to render the layers up to that point, and then render the <i>SourceGraphic</i> directly from its vector description on top.
+If the topmost image input is <i>SourceGraphic</i> and this <a element>feMerge</a> is the last filter primitive in the filter, the implementation is encouraged to render the layers up to that point, and then render the <i>SourceGraphic</i> directly from its vector description on top.
 
-<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feMerge'</a> filter primitive to composite two intermediate filter results together.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a element>feMerge</a> filter primitive to composite two intermediate filter results together.
 
-<h3 id="feMorphologyElement">Filter primitive <a>'feMorphology'</a></h3>
+<h3 id="feMorphologyElement">Filter primitive <a element>feMorphology</a></h3>
 
 <!--elementsummary feMorphology-->
 
@@ -2891,9 +2890,9 @@ The dilation (or erosion) kernel is a rectangle with a width of 2*<em>x-radius</
 
 Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <i>SourceAlpha</i>. In that case, the implementation might want to optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details.)
 
-If the input has infinite extent and is constant (e.g <i>FillPaint</i> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result is the input to an <a>'feTile'</a>, the filter is evaluated with <a href="">periodic boundary conditions</a>.
+If the input has infinite extent and is constant (e.g <i>FillPaint</i> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result is the input to an <a element>feTile</a>, the filter is evaluated with <a href="">periodic boundary conditions</a>.
 
-Because <a>'feMorphology'</a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
+Because <a element>feMorphology</a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
 
 <div class="adef-list">
   <p>
@@ -2913,7 +2912,7 @@ Because <a>'feMorphology'</a> operates on premultipied color values, it will alw
     </dt>
     <dd>
       <p>
-        The radius (or radii) for the operation. If two <<number>> s are provided, the first number represents a x-radius and the second value represents a y-radius. If one number is provided, then that value is used for both X and Y. The values are in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.</p>
+        The radius (or radii) for the operation. If two <<number>> s are provided, the first number represents a x-radius and the second value represents a y-radius. If one number is provided, then that value is used for both X and Y. The values are in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.</p>
       <p>
         A negative or zero value disables the effect of the given filter primitive (i.e., the result is the filter input image).
       </p>
@@ -2974,7 +2973,7 @@ Because <a>'feMorphology'</a> operates on premultipied color values, it will alw
   </p>
 </div>
 
-<h3 id="feOffsetElement">Filter primitive <a>'feOffset'</a></h3>
+<h3 id="feOffsetElement">Filter primitive <a element>feOffset</a></h3>
 
 <!--elementsummary feOffset-->
 
@@ -2993,7 +2992,7 @@ When applying this filter, the destination location may be offset by a fraction 
       <span class="adef">dx</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      The amount to offset the input graphic along the x-axis. The offset amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
+      The amount to offset the input graphic along the x-axis. The offset amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.<br>
       If the attribute is not specified, then the effect is as if a value of ''0'' were specified.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3002,7 +3001,7 @@ When applying this filter, the destination location may be offset by a fraction 
     </dt>
     <dd>
       <p>
-        The amount to offset the input graphic along the y-axis. The offset amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.
+        The amount to offset the input graphic along the y-axis. The offset amount is expressed in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.
       </p>
       <p>
         If the attribute is not specified, then the effect is as if a value of ''0'' were specified.
@@ -3013,15 +3012,15 @@ When applying this filter, the destination location may be offset by a fraction 
 </div>
 
 
-<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feOffset'</a> filter primitive to offset the drop shadow from the original source graphic.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a element>feOffset</a> filter primitive to offset the drop shadow from the original source graphic.
 
-<h3 id="feSpecularLightingElement">Filter primitive <a>'feSpecularLighting'</a></h3>
+<h3 id="feSpecularLightingElement">Filter primitive <a element>feSpecularLighting</a></h3>
 
 <!--elementsummary feSpecularLighting-->
 
 This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).
 
-Note: This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture from a second filter primitive using the <em>add</em> term of the <em>arithmetic</em> <a>'feComposite'</a> method. Multiple <i>light sources</i> can be simulated by adding several of these light maps before applying it to the texture image.
+Note: This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture from a second filter primitive using the <em>add</em> term of the <em>arithmetic</em> <a element>feComposite</a> method. Multiple <i>light sources</i> can be simulated by adding several of these light maps before applying it to the texture image.
 
 The resulting RGBA image is computed as follows:
 
@@ -3043,7 +3042,7 @@ The resulting RGBA image is computed as follows:
     L<sub>r</sub>,L<sub>g</sub>,L<sub>b</sub> = RGB components of light
 </p>
 
-See <a>'feDiffuseLighting'</a> for definition of N and (L<sub>r</sub>, L<sub>g</sub>, L<sub>b</sub>).
+See <a element>feDiffuseLighting</a> for definition of N and (L<sub>r</sub>, L<sub>g</sub>, L<sub>b</sub>).
 
 The definition of H reflects our assumption of the constant eye vector E = (0,0,1):
 
@@ -3053,9 +3052,9 @@ The definition of H reflects our assumption of the constant eye vector E = (0,0,
 
 where L is the light unit vector.
 
-Unlike the <a>'feDiffuseLighting'</a>, the <a>'feSpecularLighting'</a> filter produces a non-opaque image. This is due to the fact that the specular result (S<sub>r</sub>,S<sub>g</sub>,S<sub>b</sub>,S<sub>a</sub>) is meant to be added to the textured image. The alpha channel of the result is the max of the color components, so that where the specular light is zero, no additional coverage is added to the image and a fully white highlight will add opacity.
+Unlike the <a element>feDiffuseLighting</a>, the <a element>feSpecularLighting</a> filter produces a non-opaque image. This is due to the fact that the specular result (S<sub>r</sub>,S<sub>g</sub>,S<sub>b</sub>,S<sub>a</sub>) is meant to be added to the textured image. The alpha channel of the result is the max of the color components, so that where the specular light is zero, no additional coverage is added to the image and a fully white highlight will add opacity.
 
-The <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> filters will often be applied together. An implementation may detect this and calculate both maps in one pass, instead of two.
+The <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filters will often be applied together. An implementation may detect this and calculate both maps in one pass, instead of two.
 
 <div class="adef-list">
   <p>
@@ -3098,15 +3097,15 @@ The <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> filters will ofte
 
 The light source is defined by one of the child elements <a>'feDistantLight'</a>, <a>'fePointLight'</a> or <a>'feDistantLight'</a>. The light color is specified by property <a>'lighting-color'</a>.
 
-<a href="#intro">The example</a> at the start of this chapter makes use of the <a>'feSpecularLighting'</a> filter primitive to achieve a highly reflective, 3D glowing effect.
+<a href="#intro">The example</a> at the start of this chapter makes use of the <a element>feSpecularLighting</a> filter primitive to achieve a highly reflective, 3D glowing effect.
 
-<h3 id="feTileElement">Filter primitive <a>'feTile'</a></h3>
+<h3 id="feTileElement">Filter primitive <a element>feTile</a></h3>
 
 <!--elementsummary feTile-->
 
-This filter primitive fills a target rectangle with a repeated, tiled pattern of an input image. The target rectangle is as large as the <a>filter primitive subregion</a> established by the <a>'feTile'</a> element.
+This filter primitive fills a target rectangle with a repeated, tiled pattern of an input image. The target rectangle is as large as the <a>filter primitive subregion</a> established by the <a element>feTile</a> element.
 
-Typically, the input image has been defined with its own <a>filter primitive subregion</a> in order to define a reference tile. <a>'feTile'</a> replicates the reference tile in both X and Y to completely fill the target rectangle. The top/left corner of each given tile is at location <code>(x+i*width,y+j*height)</code>, where <code>(x,y)</code> represents the top/left of the input image's <a>filter primitive subregion</a>, <code>width</code> and <code>height</code> represent the width and height of the input image's <a>filter primitive subregion</a>, and <code>i</code> and <code>j</code> can be any integer value. In most cases, the input image will have a smaller <a>filter primitive subregion</a> than the <a>'feTile'</a> in order to achieve a repeated pattern effect.
+Typically, the input image has been defined with its own <a>filter primitive subregion</a> in order to define a reference tile. <a element>feTile</a> replicates the reference tile in both X and Y to completely fill the target rectangle. The top/left corner of each given tile is at location <code>(x+i*width,y+j*height)</code>, where <code>(x,y)</code> represents the top/left of the input image's <a>filter primitive subregion</a>, <code>width</code> and <code>height</code> represent the width and height of the input image's <a>filter primitive subregion</a>, and <code>i</code> and <code>j</code> can be any integer value. In most cases, the input image will have a smaller <a>filter primitive subregion</a> than the <a element>feTile</a> in order to achieve a repeated pattern effect.
 
 <p class="requirement" id="assertTileArtifacts">
   Implementers must take appropriate measures in constructing the tiled image to avoid artifacts between tiles, particularly in situations where the user to device transform includes shear and/or rotation. Unless care is taken, interpolation can lead to edge pixels in the tile having opacity values lower or higher than expected due to the interaction of painting adjacent tiles which each have partial overlap
@@ -3115,7 +3114,7 @@ Typically, the input image has been defined with its own <a>filter primitive sub
 
 <div class="adef-list"></div>
 
-<h3 id="feTurbulenceElement">Filter primitive <a>'feTurbulence'</a></h3>
+<h3 id="feTurbulenceElement">Filter primitive <a element>feTurbulence</a></h3>
 
 <!--elementsummary feTurbulence-->
 
@@ -3355,7 +3354,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
         <span class="requirement"
            id="assert_turbulenceNumOctavesAnimatable"><span class="anim-target">Animatable: yes.</span></span>
       </p>
-      <p class="issue">Add a note that numOctaves of <a>'feTurbulence'</a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
+      <p class="issue">Add a note that numOctaves of <a element>feTurbulence</a> should be 10 or less? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22435">Bug 22435</a>
     </dd>
     <dt id="feTurbulenceSeedAttribute">
       <span class="adef">seed</span> = "<em><<number>></em>"
@@ -3382,7 +3381,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenc
         If ''stitchTiles="noStitch"'', no attempt is made to achieve smooth transitions at the border of tiles which contain a turbulence function. Sometimes the result will show clear discontinuities at the tile borders.
       </p>
       <p>
-        If ''stitchTiles="stitch"'', then the user agent will automatically adjust baseFrequency-x and baseFrequency-y values such that the <a>'feTurbulence'</a> node's width and height (i.e., the width and height of the current subregion) contains an integral number of the Perlin tile width and height for the first octave. The baseFrequency will be adjusted up or down depending on which way has the smallest relative (not absolute) change as follows: Given the frequency, calculate <code>lowFreq=floor(width*frequency)/width</code> and <code>hiFreq=ceil(width*frequency)/width</code>. If frequency/lowFreq &lt; hiFreq/frequency then use lowFreq, else use hiFreq. While generating turbulence values, generate lattice vectors as normal for Perlin Noise, except for those lattice points that lie on the right or bottom edges of the active area (the size of the resulting tile). In those cases, copy the lattice vector from the opposite edge of the active area.
+        If ''stitchTiles="stitch"'', then the user agent will automatically adjust baseFrequency-x and baseFrequency-y values such that the <a element>feTurbulence</a> node's width and height (i.e., the width and height of the current subregion) contains an integral number of the Perlin tile width and height for the first octave. The baseFrequency will be adjusted up or down depending on which way has the smallest relative (not absolute) change as follows: Given the frequency, calculate <code>lowFreq=floor(width*frequency)/width</code> and <code>hiFreq=ceil(width*frequency)/width</code>. If frequency/lowFreq &lt; hiFreq/frequency then use lowFreq, else use hiFreq. While generating turbulence values, generate lattice vectors as normal for Perlin Noise, except for those lattice points that lie on the right or bottom edges of the active area (the size of the resulting tile). In those cases, copy the lattice vector from the opposite edge of the active area.
       </p>
       <p>
         <span class="requirement" id="assert_turbulenceStitchTilesLacunaValue">The <a>lacuna value</a> for <a>'stitchTiles'</a> is <span class="attr-value">noStitch</span>.</span>
@@ -3526,7 +3525,7 @@ Animatable: no
 
 The 'color-interpolation-filters' property specifies the color space for imaging operations performed via filter effects.
 
-Note: The 'color-interpolation-filters' property just has an effect on filter operations. Therefore, it has no effect on filter primitives like <a>'feOffset'</a>, <a>'feImage'</a>, <a>'feTile'</a>, <a>'feFlood'</a> or <a>'feTurbulence'</a>.
+Note: The 'color-interpolation-filters' property just has an effect on filter operations. Therefore, it has no effect on filter primitives like <a element>feOffset</a>, <a element>feImage</a>, <a element>feTile</a>, <a element>feFlood</a> or <a element>feTurbulence</a>.
 
 Note: The 'color-interpolation-filters' has a different initial value than 'color-interpolation'. 'color-interpolation-filters' has an initial value of  ''linearRGB'', where as 'color-interpolation' has an initial value of ''sRGB''. Thus, in the default case, filter effects operations occur in the linearRGB color space, whereas all other color interpolations occur by default in the sRGB color space.
 
@@ -3536,7 +3535,7 @@ Note: The 'color-interpolation-filters' property has no effect on <span>Filter F
 
 <h3 id="LightSourceIntro">Introduction</h3>
 
-The following sections define the elements that define a <i>light source</i>, <a>'feDistantLight'</a>, <a>'fePointLight'</a> and <a>'feSpotLight'</a>, and property 'lighting-color', which defines the color of the light.
+The following sections define the elements that define a <i>light source</i>, <a>'feDistantLight'</a>, <a>'fePointLight'</a> and <a element>feSpotLight</a>, and property 'lighting-color', which defines the color of the light.
 
 
 <h3 id="feDistantLightElement">Light source <a>'feDistantLight'</a></h3>
@@ -3598,7 +3597,7 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">x</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      X location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
+      X location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.<br>
       The <a>lacuna value</a> for <a>'fePointLight/x'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3606,7 +3605,7 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">y</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Y location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
+      Y location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.<br>
       The <a>lacuna value</a> for <a>'fePointLight/y'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3614,14 +3613,14 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">z</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Z location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element, assuming that, in the <a>initial coordinate system</a> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br>
+      Z location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element, assuming that, in the <a>initial coordinate system</a> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br>
       The <a>lacuna value</a> for <a>'fePointLight/z'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
   </dl>
 </div>
 
-<h3 id="feSpotLightElement">Light source <a>'feSpotLight'</a></h3>
+<h3 id="feSpotLightElement">Light source <a element>feSpotLight</a></h3>
 
 <!--elementsummary feSpotLight-->
 
@@ -3634,7 +3633,7 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">x</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      X location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
+      X location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.<br>
       The <a>lacuna value</a> for <a>'feSpotLight/x'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3642,7 +3641,7 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">y</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Y location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element.<br>
+      Y location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element.<br>
       The <a>lacuna value</a> for <a>'feSpotLight/y'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3650,7 +3649,7 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">z</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Z location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element, assuming that, in the <a>initial coordinate system</a> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br>
+      Z location for the light source in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element, assuming that, in the <a>initial coordinate system</a> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br>
       The <a>lacuna value</a> for <a>'feSpotLight/z'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3658,7 +3657,7 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">pointsAtX</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      X location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element of the point at which the light source is pointing.<br>
+      X location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element of the point at which the light source is pointing.<br>
       The <a>lacuna value</a> for <a>'pointsAtX'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3666,14 +3665,14 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
       <span class="adef">pointsAtY</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Y location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element of the point at which the light source is pointing.<br> The <a>lacuna value</a> for <a>'pointsAtY'</a> is ''0''.<br>
+      Y location in the coordinate system established by attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element of the point at which the light source is pointing.<br> The <a>lacuna value</a> for <a>'pointsAtY'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
     <dt id="feSpotLightPointsAtZAttribute">
       <span class="adef">pointsAtZ</span> = "<em><<number>></em>"
     </dt>
     <dd>
-      Z location in the coordinate system established by the attribute <a>'filter/primitiveUnits'</a> on the <a>'filter element'</a> element of the point at which the light source is pointing, assuming that, in the <a>initial coordinate system</a>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br>
+      Z location in the coordinate system established by the attribute <a>'filter/primitiveUnits'</a> on the <a element>filter</a> element of the point at which the light source is pointing, assuming that, in the <a>initial coordinate system</a>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="http://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.<br>
       The <a>lacuna value</a> for <a>'pointsAtZ'</a> is ''0''.<br>
       <span class="anim-target">Animatable: yes.</span>
     </dd>
@@ -3702,7 +3701,7 @@ The following diagram illustrates the angles which <a>'azimuth'</a> and <a>'elev
 Name: lighting-color
 Value: <<color>> <a>&lt;icccolor&gt;</a>?
 Initial: white
-Applies to: <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> elements
+Applies to: <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> elements
 Inherited: no
 Percentages: n/a
 Computed value: as specified
@@ -3710,11 +3709,11 @@ Media: visual
 Animatable: yes
 </pre>
 
-The 'lighting-color' property defines the color of the light source for <i>filter primitives</i> <a>'feDiffuseLighting element'</a> and <a>'feSpecularLighting element'</a>.
+The 'lighting-color' property defines the color of the light source for <i>filter primitives</i> <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a>.
 
 <h2 id="custom-filter">Custom Filter Function</h2>
 
-The custom-filter function allows extending this specification with a customized filter effect. Customized filter effects are described by the @filter rule or <a>'feCustom element'</a> element and referenced internal or external resources. External resource must be described by a host language. Each @filter rule has a unique identifier that can be referenced by the custom-filter function.
+The custom-filter function allows extending this specification with a customized filter effect. Customized filter effects are described by the @filter rule or <a element>feCustom</a> element and referenced internal or external resources. External resource must be described by a host language. Each @filter rule has a unique identifier that can be referenced by the custom-filter function.
 
 <h3 id="support-condition-filter">The '@supports' condition: ''filter''</h3>
 
@@ -4149,7 +4148,7 @@ This section illustrates the shader processing model as it applies to an element
   </p>
 </div>
 
-An <a>'feCustom element'</a> element or a ''custom()'' filter function defines a custom filter primitive. The following figure illustrates its model.
+An <a element>feCustom</a> element or a ''custom()'' filter function defines a custom filter primitive. The following figure illustrates its model.
 
 <div class="figure">
   <img alt="processing model"
@@ -4173,7 +4172,7 @@ In a <strong>first step</strong> the source texture is used on a <span>vertex me
   </p>
 </div>
 
-The <a>'geometry attribute'</a> attribute on the <a>'feCustom element'</a> element and the 'geometry' descriptor on the <a href="#custom-filter">custom-filter at-rule</a> give more granularity control over the vertex mesh.
+The <a>'geometry attribute'</a> attribute on the <a element>feCustom</a> element and the 'geometry' descriptor on the <a href="#custom-filter">custom-filter at-rule</a> give more granularity control over the vertex mesh.
 
 <div class="figure">
   <img alt="custom vertex mesh"
@@ -4470,7 +4469,7 @@ The following uniform variables are set to specific values by the user agent:
 
 <h4 id="other-uniform-variables">Other uniform variables: the CSS shaders parameters</h4>
 
-When there parameters are passed to the custom filter function or the <a>'feCustom element'</a> filter primitive, the user agent pass uniforms of the corresponding name and type to the shaders.
+When there parameters are passed to the custom filter function or the <a element>feCustom</a> filter primitive, the user agent pass uniforms of the corresponding name and type to the shaders.
 
 The following table shows the mapping between CSS shader parameters and uniform types.
 
@@ -4642,14 +4641,14 @@ The <<filter()>> function takes two arguments. The first argument is an <<image>
 
 Note: Since the dimension and origin of the original image must be preserved, some filter effects like <var>drop-shadow</var> on a fully opaque image may not have any affect.
 
-Note: For the <<blur()>> function the <a>'feGaussianBlur/edgeMode'</a> attribute on the <a>'feGaussianBlur'</a> element is set to ''duplicate''. This produces more pleasant results on the edges of the filtered input image.
+Note: For the <<blur()>> function the <a>'feGaussianBlur/edgeMode'</a> attribute on the <a element>feGaussianBlur</a> element is set to ''duplicate''. This produces more pleasant results on the edges of the filtered input image.
 
 <h3 id="interpolating-filter-image">Interpolating filter()</h3>
 
 If both the starting and ending image are <<filter()>>s which may only differ by their used filter functions, they must be interpolated by interpolating their filter function lists as described in section <a href="#interpolation-of-filters">Interpolation of Filters</a>. Otherwise, they must be interpolated as generic <<image>>s. If the filter function interpolation can not be performed, the images must be interpolated as generic <<image>>s.
 
 <h2 id="ShorthandEquivalents">
-  Shorthands defined in terms of the <a>'filter element'</a> element
+  Shorthands defined in terms of the <a element>filter</a> element
 </h2>
 
 Below are the equivalents for each of the filter functions expressed in terms of the 'filter element' element. The parameters from the function are labeled with brackets in the following style: [amount]. In the case of parameters that are percentage values, they are converted to real numbers.
@@ -4761,7 +4760,7 @@ Where edge mode computes to ''none'' for the 'filter' property and to ''duplicat
 
 <h2 id="AccessBackgroundImage">The 'enable-background' property</h2>
 
-SVG 1.1 introduced the <a>'enable-background'</a> property [[SVG11]]. The property defined the back drop under the <a>filter region</a> at the time that the <a>'filter element'</a> element was invoked. The concept defined by this property was identified to be incompatible with the model of stacking context in CSS at the time writing this specification. UAs can choose to implement the 'enable-background' property as defined in SVG 1.1 but will not be compatible to this specification or to CSS Compositing and Blending [[!COMPOSITING]].
+SVG 1.1 introduced the <a>'enable-background'</a> property [[SVG11]]. The property defined the back drop under the <a>filter region</a> at the time that the <a element>filter</a> element was invoked. The concept defined by this property was identified to be incompatible with the model of stacking context in CSS at the time writing this specification. UAs can choose to implement the 'enable-background' property as defined in SVG 1.1 but will not be compatible to this specification or to CSS Compositing and Blending [[!COMPOSITING]].
 
 This specification does not support the 'enable-background' property. UAs must support the 'isolation' property instead [[!COMPOSITING]].
 
@@ -4807,7 +4806,7 @@ For interpolation between one filter <em>from-filter</em> and a second filter <e
   Interpolating the shader-params component in the custom() function
 </h3>
 
-To interpolate between 'parameters' values in a <<custom()>> filter function or between <a>'feCustomParam element'</a> attribute values, the user agent should interpolate between each of the parameter values according to its type. List of values need to be of the same length. Matrices need to be of the same dimension. Arrays need to be of the same size.
+To interpolate between 'parameters' values in a <<custom()>> filter function or between <a element>feCustomParam</a> attribute values, the user agent should interpolate between each of the parameter values according to its type. List of values need to be of the same length. Matrices need to be of the same dimension. Arrays need to be of the same size.
 
 Note: Interpolation between shader params only happens if all the other shader properties are identical: vertex shader, fragment shader, filter margins and vertex mesh.
 
@@ -4860,10 +4859,10 @@ Note: As with the 'transform' property, it is not possible to animate the differ
 <h2 id="svg-animation">SVG Animation</h2>
 
 <h3 id="svg-animate-and-set-element">
-  The <a>'animate element'</a> and <a>'set element'</a> element
+  The <a>'animate'</a> and <a>'set'</a> element
 </h3>
 
-With this specification <<filter-function-list>> gets a new SVG basic data type. <<filter-function-list>> is animatable and additive. The data type can be animated using the SVG <a>'animate element'</a> element and the SVG <a>'set element'</a> element. SVG animations must run the same animation steps as described in section <a href="#interpolation-of-filters">Interpolation of Filters</a>.
+With this specification <<filter-function-list>> gets a new SVG basic data type. <<filter-function-list>> is animatable and additive. The data type can be animated using the SVG <a>'animate'</a> element and the SVG <a>'set'</a> element. SVG animations must run the same animation steps as described in section <a href="#interpolation-of-filters">Interpolation of Filters</a>.
 
 The set of animatable data types gets extended by <<filter-function-list>>. The new data type is animatable and additive.
 
@@ -4873,9 +4872,9 @@ The set of animatable data types gets extended by <<filter-function-list>>. The 
     <tr>
       <th>Data type</th>
       <th>Additive?</th>
-      <th><a>'animate element'</a></th>
-      <th><a>'set element'</a></th>
-      <th><a>'animateColor element'</a></th>
+      <th><a>'animate'</a></th>
+      <th><a>'set'</a></th>
+      <th><a>'animateColor'</a></th>
       <th><a>'animateTransform'</a></th>
       <th>Notes</th>
     </tr>
@@ -4909,17 +4908,17 @@ It is important that the timing of any filter operation is independent of pixel 
 The following <a>filter primitives</a> may have access to pixel values that potentially contain privacy information, either from the filtered object itself or other sources such as CSS styling. These primitives must be flagged as "tainted".
 
 <ul>
-  <li><a>'feFlood'</a>,</li>
-  <li><a>'feDropShadow'</a>,</li>
-  <li><a>'feDiffuseLighting'</a>,</li>
-  <li><a>'feSpecularLighting'</a>,</li>
-  <li><a>'feImage'</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and</li>
+  <li><a element>feFlood</a>,</li>
+  <li><a element>feDropShadow</a>,</li>
+  <li><a element>feDiffuseLighting</a>,</li>
+  <li><a element>feSpecularLighting</a>,</li>
+  <li><a element>feImage</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and</li>
   <li>the filter primitives: <i>SourceGraphic</i>, <i>SourceAlpha</i>, <i>BackgroundImage</i>, <i>BackgroundAlpha</i>, <i>FillPaint</i> and <i>StrokePaint</i>.</li>
 </ul>
 
-<a>'feFlood'</a>, <a>'feDropShadow'</a>, <a>'feDiffuseLighting'</a> and <a>'feSpecularLighting'</a> are primitives with one or more CSS properties that take <<color>> as property value. <<color>> consists of (amongst others) the ''currentColor'' keyword. The <i>used value</i> for ''currentColor'' derives from the 'color' property. Since 'color' can be set by the '':visited'' pseudo selector, it potentially contains privacy information and therefore these primitives must be marked as tainted.
+<a element>feFlood</a>, <a element>feDropShadow</a>, <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> are primitives with one or more CSS properties that take <<color>> as property value. <<color>> consists of (amongst others) the ''currentColor'' keyword. The <i>used value</i> for ''currentColor'' derives from the 'color' property. Since 'color' can be set by the '':visited'' pseudo selector, it potentially contains privacy information and therefore these primitives must be marked as tainted.
 
-<a>'feImage'</a> can reference cross domain images as well as document fragments such as SVG <a>graphics elements</a>. These references potentially contain privacy information and therefore the primitive must be marked as tainted.
+<a element>feImage</a> can reference cross domain images as well as document fragments such as SVG <a>graphics elements</a>. These references potentially contain privacy information and therefore the primitive must be marked as tainted.
 
 The filter primitives <i>SourceGraphic</i>, <i>SourceAlpha</i>, <i>BackgroundImage</i>, <i>BackgroundAlpha</i>, <i>FillPaint</i> and <i>StrokePaint</i> either reference document fragments such as SVG <a>graphics elements</a> or style information that may derive directly or indirectly from the 'color' property. Therefore these primitives must be marked as tainted.
 
@@ -4929,13 +4928,13 @@ Filter operations must be implemented in such a way that they always take the sa
 
 Note: This specification aggravates the restrictions to filter primitives based on implementation feedback from user agents.
 
-<h3 id="fedisplacemnentmap-restrictions"><a>'feDisplacementMap'</a> Restrictions</h3>
+<h3 id="fedisplacemnentmap-restrictions"><a element>feDisplacementMap</a> Restrictions</h3>
 
-If <a>'feDisplacementMap'</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a>'feDisplacementMap/in2'</a>), then <a>'feDisplacementMap'</a> must not proceed with the filter operation and acts as a <i>pass through filter</i>.
+If <a element>feDisplacementMap</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a>'feDisplacementMap/in2'</a>), then <a element>feDisplacementMap</a> must not proceed with the filter operation and acts as a <i>pass through filter</i>.
 
-<h3 id="fecustom-restrictions"><a>'feCustom'</a> Restrictions</h3>
+<h3 id="fecustom-restrictions"><a element>feCustom</a> Restrictions</h3>
 
-<a>'feCustom'</a> is applying a processing operation on input filter primitives. It is important that no protected information leaks from that operation [[ShadSec]]. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must validate each shader as described in section <a href="#validate-custom-filter-shaders">Validate custom filter shaders</a>. If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <i>pass through filter</i>.
+<a element>feCustom</a> is applying a processing operation on input filter primitives. It is important that no protected information leaks from that operation [[ShadSec]]. Therefore, vertex shader and fragment shader must not have access to pixel values of the input filter primitive at any time. User-agents must validate each shader as described in section <a href="#validate-custom-filter-shaders">Validate custom filter shaders</a>. If the vertex shader or the fragment shader does not match this requirement, the particular shader acts as a <i>pass through filter</i>.
 
 Note: The above restriction to color access may just apply to "tainted" flagged input filter primitives in future versions of this specification.
 
@@ -4955,7 +4954,7 @@ A timing attack is a method of obtaining information about content that is other
 
 <h3 id="InterfaceSVGFilterElement">Interface SVGFilterElement</h3>
 
-The <a>SVGFilterElement</a> interface corresponds to the <a>'filter element'</a> element.
+The <a>SVGFilterElement</a> interface corresponds to the <a element>filter</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFilterElement</b> : SVGElement {
@@ -4985,42 +4984,42 @@ readonly attribute <a>SVGAnimatedLength</a> <a href=
         <a>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'filterUnits'</a> on the given <a>'filter element'</a> element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
+        Corresponds to attribute <a>'filterUnits'</a> on the given <a element>filter</a> element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
       </dd>
       <dt id="SVGFilterElement__primitiveUnits">
         <b>primitiveUnits</b> <span class="idl-type-parenthetical">(readonly
         <a>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'primitiveUnits'</a> on the given <a>'filter element'</a> element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
+        Corresponds to attribute <a>'primitiveUnits'</a> on the given <a element>filter</a> element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
       </dd>
       <dt id="SVGFilterElement__x">
         <b>x</b> <span class="idl-type-parenthetical">(readonly
         <a>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'filter/x'</a> on the given <a>'filter element'</a> element.
+        Corresponds to attribute <a>'filter/x'</a> on the given <a element>filter</a> element.
       </dd>
       <dt id="SVGFilterElement__y">
         <b>y</b> <span class="idl-type-parenthetical">(readonly
         <a>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'filter/y'</a> on the given <a>'filter element'</a> element.
+        Corresponds to attribute <a>'filter/y'</a> on the given <a element>filter</a> element.
       </dd>
       <dt id="SVGFilterElement__width">
         <b>width</b> <span class="idl-type-parenthetical">(readonly
         <a>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'filter/width'</a> on the given <a>'filter element'</a> element.
+        Corresponds to attribute <a>'filter/width'</a> on the given <a element>filter</a> element.
       </dd>
       <dt id="SVGFilterElement__height">
         <b>height</b> <span class="idl-type-parenthetical">(readonly
         <a>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'filter/height'</a> on the given <a>'filter element'</a> element.
+        Corresponds to attribute <a>'filter/height'</a> on the given <a element>filter</a> element.
         </div>
       </dd>
     </dl>
@@ -5110,7 +5109,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
   Interface SVGFEBlendElement
 </h3>
 
-The <a>SVGFEBlendElement</a> interface corresponds to the <a>'feBlend element'</a> element.
+The <a>SVGFEBlendElement</a> interface corresponds to the <a element>feBlend</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
@@ -5213,7 +5212,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feBlend element'</a> element.
+          <a element>feBlend</a> element.
         </div>
       </dd>
       <dt id="SVGFEBlendElement__in2">
@@ -5221,14 +5220,14 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
         <a>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'feBlend/in2'</a> on the given <a>'feBlend element'</a> element.
+        Corresponds to attribute <a>'feBlend/in2'</a> on the given <a element>feBlend</a> element.
       </dd>
       <dt id="SVGFEBlendElement__mode">
         <b>mode</b> <span class="idl-type-parenthetical">(readonly
         <a>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'feBlend/mode'</a> on the given <a>'feBlend element'</a> element. Takes one of the SVG_FEBLEND_MODE_* constants defined on this interface.
+        Corresponds to attribute <a>'feBlend/mode'</a> on the given <a element>feBlend</a> element. Takes one of the SVG_FEBLEND_MODE_* constants defined on this interface.
       </dd>
     </dl>
   </dd>
@@ -5238,7 +5237,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
   Interface SVGFEColorMatrixElement
 </h3>
 
-The <a>SVGFEColorMatrixElement</a> interface corresponds to the <a>'feColorMatrix element'</a> element.
+The <a>SVGFEColorMatrixElement</a> interface corresponds to the <a element>feColorMatrix</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEColorMatrixElement</b> : <a>SVGElement</a> {
@@ -5332,7 +5331,7 @@ readonly attribute <a>SVGAnimatedNumberList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feColorMatrix element'</a> element.
+          <a element>feColorMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEColorMatrixElement__type">
@@ -5342,7 +5341,7 @@ readonly attribute <a>SVGAnimatedNumberList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feColorMatrix/type'</a> on the given
-          <a>'feColorMatrix element'</a> element. Takes one of the
+          <a element>feColorMatrix</a> element. Takes one of the
           SVG_FECOLORMATRIX_TYPE_* constants defined on this interface.
         </div>
       </dd>
@@ -5353,7 +5352,7 @@ readonly attribute <a>SVGAnimatedNumberList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feColorMatrix/values'</a> on the given
-          <a>'feColorMatrix element'</a> element.
+          <a element>feColorMatrix</a> element.
         </div>
       </dd>
     </dl>
@@ -5364,7 +5363,7 @@ readonly attribute <a>SVGAnimatedNumberList</a> <a href=
 </h3>
 <p>
   The <a>SVGFEComponentTransferElement</a> interface corresponds to the
-  <a>'feComponentTransfer element'</a> element.
+  <a element>feComponentTransfer</a> element.
 </p>
 <pre class="idl" data-no-idl>
 interface <b>SVGFEComponentTransferElement</b> : <a>SVGElement</a> {
@@ -5387,7 +5386,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feComponentTransfer element'</a> element.
+          <a element>feComponentTransfer</a> element.
         </div>
       </dd>
     </dl>
@@ -5587,7 +5586,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFEFuncRElement
 </h3>
 
-The <a>SVGFEFuncRElement</a> interface corresponds to the <a>'feFuncR element'</a> element.
+The <a>SVGFEFuncRElement</a> interface corresponds to the <a element>feFuncR</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEFuncRElement</b> : <a>SVGComponentTransferFunctionElement</a> {
@@ -5597,7 +5596,7 @@ interface <b>SVGFEFuncRElement</b> : <a>SVGComponentTransferFunctionElement</a> 
   Interface SVGFEFuncGElement
 </h3>
 <p>
-  The <a>SVGFEFuncRElement</a> interface corresponds to the <a>'feFuncG element'</a>
+  The <a>SVGFEFuncRElement</a> interface corresponds to the <a element>feFuncG</a>
   element.
 </p>
 <pre class="idl" data-no-idl>
@@ -5609,7 +5608,7 @@ interface <b>SVGFEFuncGElement</b> : <a>SVGComponentTransferFunctionElement</a> 
   Interface SVGFEFuncBElement
 </h3>
 
-The <a>SVGFEFuncBElement</a> interface corresponds to the <a>'feFuncB element'</a> element.
+The <a>SVGFEFuncBElement</a> interface corresponds to the <a element>feFuncB</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEFuncBElement</b> : <a>SVGComponentTransferFunctionElement</a> {
@@ -5619,7 +5618,7 @@ interface <b>SVGFEFuncBElement</b> : <a>SVGComponentTransferFunctionElement</a> 
   Interface SVGFEFuncAElement
 </h3>
 <p>
-  The <a>SVGFEFuncAElement</a> interface corresponds to the <a>'feFuncA element'</a>
+  The <a>SVGFEFuncAElement</a> interface corresponds to the <a element>feFuncA</a>
   element.
 </p>
 <pre class="idl" data-no-idl>
@@ -5631,7 +5630,7 @@ interface <b>SVGFEFuncAElement</b> : <a>SVGComponentTransferFunctionElement</a> 
   Interface SVGFECompositeElement
 </h3>
 
-The <a>SVGFECompositeElement</a> interface corresponds to the <a>'feComposite element'</a> element.
+The <a>SVGFECompositeElement</a> interface corresponds to the <a element>feComposite</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
@@ -5755,7 +5754,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feComposite element'</a> element.
+          <a element>feComposite</a> element.
         </div>
       </dd>
       <dt id="SVGFECompositeElement__in2">
@@ -5765,7 +5764,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feComposite/in2'</a> on the given
-          <a>'feComposite element'</a> element.
+          <a element>feComposite</a> element.
         </div>
       </dd>
       <dt id="SVGFECompositeElement__operator">
@@ -5775,7 +5774,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feComposite/operator'</a> on the given
-          <a>'feComposite element'</a> element. Takes one of the
+          <a element>feComposite</a> element. Takes one of the
           SVG_FECOMPOSITE_OPERATOR_* constants defined on this interface.
         </div>
       </dd>
@@ -5786,7 +5785,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feComposite/k1'</a> on the given
-          <a>'feComposite element'</a> element.
+          <a element>feComposite</a> element.
         </div>
       </dd>
       <dt id="SVGFECompositeElement__k2">
@@ -5796,7 +5795,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feComposite/k2'</a> on the given
-          <a>'feComposite element'</a> element.
+          <a element>feComposite</a> element.
         </div>
       </dd>
       <dt id="SVGFECompositeElement__k3">
@@ -5806,7 +5805,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feComposite/k3'</a> on the given
-          <a>'feComposite element'</a> element.
+          <a element>feComposite</a> element.
         </div>
       </dd>
       <dt id="SVGFECompositeElement__k4">
@@ -5816,7 +5815,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feComposite/k4'</a> on the given
-          <a>'feComposite element'</a> element.
+          <a element>feComposite</a> element.
         </div>
       </dd>
     </dl>
@@ -5827,7 +5826,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFEConvolveMatrixElement
 </h3>
 
-The <a>SVGFEConvolveMatrixElement</a> interface corresponds to the <a>'feConvolveMatrix element'</a> element.
+The <a>SVGFEConvolveMatrixElement</a> interface corresponds to the <a element>feConvolveMatrix</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
@@ -5926,7 +5925,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feConvolveMatrix element'</a> element.
+          <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__orderX">
@@ -5936,7 +5935,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/order'</a> on the given
-          <a>'feConvolveMatrix element'</a> element.
+          <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__orderY">
@@ -5946,7 +5945,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/order'</a> on the given
-          <a>'feConvolveMatrix element'</a> element.
+          <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__kernelMatrix">
@@ -5956,7 +5955,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/kernelMatrix'</a> on the
-          given <a>'feConvolveMatrix element'</a> element.
+          given <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__divisor">
@@ -5966,7 +5965,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/divisor'</a> on the given
-          <a>'feConvolveMatrix element'</a> element.
+          <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__bias">
@@ -5976,7 +5975,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/bias'</a> on the given
-          <a>'feConvolveMatrix element'</a> element.
+          <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__targetX">
@@ -5986,7 +5985,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/targetX'</a> on the given
-          <a>'feConvolveMatrix element'</a> element.
+          <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__targetY">
@@ -5996,7 +5995,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/targetY'</a> on the given
-          <a>'feConvolveMatrix element'</a> element.
+          <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__edgeMode">
@@ -6006,7 +6005,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/edgeMode'</a> on the given
-          <a>'feConvolveMatrix element'</a> element. Takes one of the SVG_EDGEMODE_*
+          <a element>feConvolveMatrix</a> element. Takes one of the SVG_EDGEMODE_*
           constants defined on this interface.
         </div>
       </dd>
@@ -6017,7 +6016,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/kernelUnitLength'</a> on the
-          given <a>'feConvolveMatrix element'</a> element.
+          given <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__kernelUnitLengthY">
@@ -6027,7 +6026,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feConvolveMatrix/kernelUnitLength'</a> on the
-          given <a>'feConvolveMatrix element'</a> element.
+          given <a element>feConvolveMatrix</a> element.
         </div>
       </dd>
     </dl>
@@ -6038,7 +6037,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFECustomElement
 </h3>
 
-The <a>SVGFECustomElement</a> interface corresponds to the <a>'feCustom element'</a> element.
+The <a>SVGFECustomElement</a> interface corresponds to the <a element>feCustom</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFECustomElement</b> : <a>SVGElement</a> {
@@ -6063,7 +6062,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feCustom element'</a> element.
+          <a element>feCustom</a> element.
         </div>
       </dd>
       <dt id="SVGFECustomElement__geometry">
@@ -6073,7 +6072,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustom/geometry'</a> on the given
-          <a>'feCustom element'</a> element.
+          <a element>feCustom</a> element.
         </div>
       </dd>
     </dl>
@@ -6084,7 +6083,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
   Interface SVGFECustomSourceElement
 </h3>
 
-The <a>SVGFECustomSourceElement</a> interface corresponds to the <a>'feCustomSource element'</a> element.
+The <a>SVGFECustomSourceElement</a> interface corresponds to the <a element>feCustomSource</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFECustomSourceElement</b> : <a>SVGElement</a> {
@@ -6109,7 +6108,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomSource/src'</a> on the given
-          <a>'feCustomSource element'</a> element.
+          <a element>feCustomSource</a> element.
         </div>
       </dd>
       <dt id="SVGFECustomSourceElement__format">
@@ -6119,7 +6118,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomSource/format'</a> on the given
-          <a>'feCustomSource element'</a> element.
+          <a element>feCustomSource</a> element.
         </div>
       </dd>
     </dl>
@@ -6130,7 +6129,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
   Interface SVGFECustomParamElement
 </h3>
 
-The <a>SVGFECustomParamElement</a> interface corresponds to the <a>'feCustomParam element'</a> element.
+The <a>SVGFECustomParamElement</a> interface corresponds to the <a element>feCustomParam</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFECustomParamElement</b> : <a>SVGElement</a> {
@@ -6258,7 +6257,7 @@ readonly attribute <a>SVGAnimatedTransformList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomParam/type'</a> on the given
-          <a>'feCustomParam element'</a> element.
+          <a element>feCustomParam</a> element.
         </div>
       </dd>
       <dt id="SVGFECustomParamElement__ident">
@@ -6268,7 +6267,7 @@ readonly attribute <a>SVGAnimatedTransformList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomParam/ident'</a> on the given
-          <a>'feCustomParam element'</a> element.
+          <a element>feCustomParam</a> element.
         </div>
       </dd>
       <dt id="SVGFECustomParamElement__values">
@@ -6278,7 +6277,7 @@ readonly attribute <a>SVGAnimatedTransformList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomParam/values'</a> on the given
-          <a>'feCustomParam element'</a> element.
+          <a element>feCustomParam</a> element.
         </div>
       </dd>
       <dt id="SVGFECustomParamElement__texture">
@@ -6288,7 +6287,7 @@ readonly attribute <a>SVGAnimatedTransformList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomParam/texture'</a> on the given
-          <a>'feCustomParam element'</a> element.
+          <a element>feCustomParam</a> element.
         </div>
       </dd>
       <dt id="SVGFECustomParamElement__color">
@@ -6298,7 +6297,7 @@ readonly attribute <a>SVGAnimatedTransformList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomParam/color'</a> on the given
-          <a>'feCustomParam element'</a> element.
+          <a element>feCustomParam</a> element.
         </div>
       </dd>
       <dt id="SVGFECustomParamElement__transform">
@@ -6308,7 +6307,7 @@ readonly attribute <a>SVGAnimatedTransformList</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feCustomParam/transform'</a> on the given
-          <a>'feCustomParam element'</a> element.
+          <a element>feCustomParam</a> element.
         </div>
       </dd>
     </dl>
@@ -6319,7 +6318,7 @@ readonly attribute <a>SVGAnimatedTransformList</a> <a href=
   Interface SVGFEDiffuseLightingElement
 </h3>
 
-The <a>SVGFEDiffuseLightingElement</a> interface corresponds to the <a>'feDiffuseLighting element'</a> element.
+The <a>SVGFEDiffuseLightingElement</a> interface corresponds to the <a element>feDiffuseLighting</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
@@ -6351,7 +6350,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feDiffuseLighting element'</a> element.
+          <a element>feDiffuseLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFEDiffuseLightingElement__surfaceScale">
@@ -6361,7 +6360,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDiffuseLighting/surfaceScale'</a> on the
-          given <a>'feDiffuseLighting element'</a> element.
+          given <a element>feDiffuseLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFEDiffuseLightingElement__diffuseConstant">
@@ -6371,7 +6370,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDiffuseLighting/diffuseConstant'</a> on the
-          given <a>'feDiffuseLighting element'</a> element.
+          given <a element>feDiffuseLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFEDiffuseLightingElement__kernelUnitLengthX">
@@ -6381,7 +6380,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDiffuseLighting/kernelUnitLength'</a> on the
-          given <a>'feDiffuseLighting element'</a> element.
+          given <a element>feDiffuseLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFEDiffuseLightingElement__kernelUnitLengthY">
@@ -6391,7 +6390,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDiffuseLighting/kernelUnitLength'</a> on the
-          given <a>'feDiffuseLighting element'</a> element.
+          given <a element>feDiffuseLighting</a> element.
         </div>
       </dd>
     </dl>
@@ -6402,7 +6401,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFEDistantLightElement
 </h3>
 
-<a>SVGFEDistantLightElement</a> interface corresponds to the <a>'feDistantLight element'</a> element.
+<a>SVGFEDistantLightElement</a> interface corresponds to the <a element>feDistantLight</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEDistantLightElement</b> : <a>SVGElement</a> {
@@ -6426,7 +6425,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDistantLight/azimuth'</a> on the given
-          <a>'feDistantLight element'</a> element.
+          <a element>feDistantLight</a> element.
         </div>
       </dd>
       <dt id="SVGFEDistantLightElement__elevation">
@@ -6436,7 +6435,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDistantLight/elevation'</a> on the given
-          <a>'feDistantLight element'</a> element.
+          <a element>feDistantLight</a> element.
         </div>
       </dd>
     </dl>
@@ -6447,7 +6446,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFEPointLightElement
 </h3>
 
-The <a>SVGFEPointLightElement</a> interface corresponds to the <a>'fePointLight element'</a> element.
+The <a>SVGFEPointLightElement</a> interface corresponds to the <a element>fePointLight</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEPointLightElement</b> : <a>SVGElement</a> {
@@ -6470,7 +6469,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__z"
       <dd>
         <div>
           Corresponds to attribute <a>'fePointLight/x'</a> on the given
-          <a>'fePointLight element'</a> element.
+          <a element>fePointLight</a> element.
         </div>
       </dd>
       <dt id="SVGFEPointLightElement__y">
@@ -6480,7 +6479,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__z"
       <dd>
         <div>
           Corresponds to attribute <a>'fePointLight/y'</a> on the given
-          <a>'fePointLight element'</a> element.
+          <a element>fePointLight</a> element.
         </div>
       </dd>
       <dt id="SVGFEPointLightElement__z">
@@ -6490,7 +6489,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__z"
       <dd>
         <div>
           Corresponds to attribute <a>'fePointLight/z'</a> on the given
-          <a>'fePointLight element'</a> element.
+          <a element>fePointLight</a> element.
         </div>
       </dd>
     </dl>
@@ -6501,7 +6500,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__z"
   Interface SVGFESpotLightElement
 </h3>
 
-The <a>SVGFESpotLightElement</a> interface corresponds to the <a>'feSpotLight element'</a> element.
+The <a>SVGFESpotLightElement</a> interface corresponds to the <a element>feSpotLight</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
@@ -6534,7 +6533,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/x'</a> on the given
-          <a>'feSpotLight element'</a> element.
+          <a element>feSpotLight</a> element.
         </div>
       </dd>
       <dt id="SVGFESpotLightElement__y">
@@ -6544,7 +6543,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/y'</a> on the given
-          <a>'feSpotLight element'</a> element.
+          <a element>feSpotLight</a> element.
         </div>
       </dd>
       <dt id="SVGFESpotLightElement__z">
@@ -6554,7 +6553,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/z'</a> on the given
-          <a>'feSpotLight element'</a> element.
+          <a element>feSpotLight</a> element.
         </div>
       </dd>
       <dt id="SVGFESpotLightElement__pointsAtX">
@@ -6564,7 +6563,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/pointsAtX'</a> on the given
-          <a>'feSpotLight element'</a> element.
+          <a element>feSpotLight</a> element.
         </div>
       </dd>
       <dt id="SVGFESpotLightElement__pointsAtY">
@@ -6574,7 +6573,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/pointsAtY'</a> on the given
-          <a>'feSpotLight element'</a> element.
+          <a element>feSpotLight</a> element.
         </div>
       </dd>
       <dt id="SVGFESpotLightElement__pointsAtZ">
@@ -6584,7 +6583,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/pointsAtZ'</a> on the given
-          <a>'feSpotLight element'</a> element.
+          <a element>feSpotLight</a> element.
         </div>
       </dd>
       <dt id="SVGFESpotLightElement__specularExponent">
@@ -6594,7 +6593,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/specularExponent'</a> on the given
-          <a>'feSpotLight element'</a> element.
+          <a element>feSpotLight</a> element.
         </div>
       </dd>
       <dt id="SVGFESpotLightElement__limitingConeAngle">
@@ -6604,7 +6603,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpotLight/limitingConeAngle'</a> on the
-          given <a>'feSpotLight element'</a> element.
+          given <a element>feSpotLight</a> element.
         </div>
       </dd>
     </dl>
@@ -6615,7 +6614,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFEDisplacementMapElement
 </h3>
 
-The <a>SVGFEDisplacementMapElement</a> interface corresponds to the <a>'feDisplacementMap element'</a> element.
+The <a>SVGFEDisplacementMapElement</a> interface corresponds to the <a element>feDisplacementMap</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
@@ -6714,7 +6713,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feDisplacementMap element'</a> element.
+          <a element>feDisplacementMap</a> element.
         </div>
       </dd>
       <dt id="SVGFEDisplacementMapElement__in2">
@@ -6724,7 +6723,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDisplacementMap/in2'</a> on the given
-          <a>'feDisplacementMap element'</a> element.
+          <a element>feDisplacementMap</a> element.
         </div>
       </dd>
       <dt id="SVGFEDisplacementMapElement__scale">
@@ -6734,7 +6733,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDisplacementMap/scale'</a> on the given
-          <a>'feDisplacementMap element'</a> element.
+          <a element>feDisplacementMap</a> element.
         </div>
       </dd>
       <dt id="SVGFEDisplacementMapElement__xChannelSelector">
@@ -6744,7 +6743,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDisplacementMap/xChannelSelector'</a> on the
-          given <a>'feDisplacementMap element'</a> element. Takes one of the
+          given <a element>feDisplacementMap</a> element. Takes one of the
           SVG_CHANNEL_* constants defined on this interface.
         </div>
       </dd>
@@ -6755,7 +6754,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDisplacementMap/yChannelSelector'</a> on the
-          given <a>'feDisplacementMap element'</a> element. Takes one of the
+          given <a element>feDisplacementMap</a> element. Takes one of the
           SVG_CHANNEL_* constants defined on this interface.
         </div>
       </dd>
@@ -6767,7 +6766,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
   Interface SVGFEDropShadowElement
 </h3>
 
-<a>SVGFEDropShadowElement</a> interface corresponds to the <a>'feDropShadow element'</a> element.
+<a>SVGFEDropShadowElement</a> interface corresponds to the <a element>feDropShadow</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
@@ -6802,7 +6801,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feDropShadow element'</a> element.
+          <a element>feDropShadow</a> element.
         </div>
       </dd>
       <dt id="SVGFEDropShadowElement__dx">
@@ -6812,7 +6811,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDropShadow/dx'</a> on the given
-          <a>'feDropShadow element'</a> element.
+          <a element>feDropShadow</a> element.
         </div>
       </dd>
       <dt id="SVGFEDropShadowElement__dy">
@@ -6822,7 +6821,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDropShadow/dy'</a> on the given
-          <a>'feDropShadow element'</a> element.
+          <a element>feDropShadow</a> element.
         </div>
       </dd>
       <dt id="SVGFEDropShadowElement__stdDeviationX">
@@ -6832,7 +6831,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDropShadow/stdDeviation'</a> on the given
-          <a>'feDropShadow element'</a> element. Contains the X component of
+          <a element>feDropShadow</a> element. Contains the X component of
           attribute <a>'feDropShadow/stdDeviation'</a>.
         </div>
       </dd>
@@ -6843,7 +6842,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feDropShadow/stdDeviation'</a> on the given
-          <a>'feDropShadow element'</a> element. Contains the Y component (possibly
+          <a element>feDropShadow</a> element. Contains the Y component (possibly
           computed automatically) of attribute <a>'feDropShadow/stdDeviation'</a>.
         </div>
       </dd>
@@ -6912,7 +6911,7 @@ void <a href=
   Interface SVGFEFloodElement
 </h3>
 <p>
-  The <a>SVGFEFloodElement</a> interface corresponds to the <a>'feFlood element'</a>
+  The <a>SVGFEFloodElement</a> interface corresponds to the <a element>feFlood</a>
   element.
 </p>
 <pre class="idl" data-no-idl>
@@ -6926,7 +6925,7 @@ interface <b>SVGFEFloodElement</b> : <a>SVGElement</a> {
   Interface SVGFEGaussianBlurElement
 </h3>
 
-The <a>SVGFEGaussianBlurElement</a> interface corresponds to the <a>'feGaussianBlur element'</a> element.
+The <a>SVGFEGaussianBlurElement</a> interface corresponds to the <a element>feGaussianBlur</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
@@ -7015,7 +7014,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feGaussianBlur element'</a> element.
+          <a element>feGaussianBlur</a> element.
         </div>
       </dd>
       <dt id="SVGFEGaussianBlurElement__stdDeviationX">
@@ -7025,7 +7024,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feGaussianBlur/stdDeviation'</a> on the given
-          <a>'feGaussianBlur element'</a> element. Contains the X component of
+          <a element>feGaussianBlur</a> element. Contains the X component of
           attribute <a>'feGaussianBlur/stdDeviation'</a>.
         </div>
       </dd>
@@ -7036,7 +7035,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feGaussianBlur/stdDeviation'</a> on the given
-          <a>'feGaussianBlur element'</a> element. Contains the Y component (possibly
+          <a element>feGaussianBlur</a> element. Contains the Y component (possibly
           computed automatically) of attribute <a>'feGaussianBlur/stdDeviation'</a>.
         </div>
       </dd>
@@ -7047,7 +7046,7 @@ void <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feGaussianBlur/edgeMode'</a> on the given
-          <a>'feGaussianBlur element'</a> element. Takes one of the SVG_EDGEMODE_*
+          <a element>feGaussianBlur</a> element. Takes one of the SVG_EDGEMODE_*
           constants defined on this interface.
         </div>
       </dd>
@@ -7116,7 +7115,7 @@ void <a href=
   Interface SVGFEImageElement
 </h3>
 
-The <a>SVGFEImageElement</a> interface corresponds to the <a>'feImage element'</a> element.
+The <a>SVGFEImageElement</a> interface corresponds to the <a element>feImage</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEImageElement</b> : <a>SVGElement</a> {
@@ -7141,7 +7140,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEImageElement__crossOr
       <dd>
         <div>
           Corresponds to attribute <a>'feImage/preserveAspectRatio'</a> on the given
-          <a>'feImage element'</a> element.
+          <a element>feImage</a> element.
         </div>
       </dd>
       <dt id="SVGFEImageElement__crossOrigin">
@@ -7159,7 +7158,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEImageElement__crossOr
   Interface SVGFEMergeElement
 </h3>
 
-The <a>SVGFEMergeElement</a> interface corresponds to the <a>'feMerge element'</a> element.
+The <a>SVGFEMergeElement</a> interface corresponds to the <a element>feMerge</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEMergeElement</b> : <a>SVGElement</a> {
@@ -7172,7 +7171,7 @@ interface <b>SVGFEMergeElement</b> : <a>SVGElement</a> {
   Interface SVGFEMergeNodeElement
 </h3>
 
-The <a>SVGFEMergeNodeElement</a> interface corresponds to the <a>'feMergeNode element'</a> element.
+The <a>SVGFEMergeNodeElement</a> interface corresponds to the <a element>feMergeNode</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEMergeNodeElement</b> : <a>SVGElement</a> {
@@ -7194,7 +7193,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feMergeNode element'</a>element.
+          <a element>feMergeNode</a>element.
         </div>
       </dd>
     </dl>
@@ -7205,7 +7204,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
   Interface SVGFEMorphologyElement
 </h3>
 
-The <a>SVGFEMorphologyElement</a> interface corresponds to the <a>'feMorphology element'</a> element.
+The <a>SVGFEMorphologyElement</a> interface corresponds to the <a element>feMorphology</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
@@ -7280,7 +7279,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feMorphology element'</a> element.
+          <a element>feMorphology</a> element.
         </div>
       </dd>
       <dt id="SVGFEMorphologyElement__operator">
@@ -7290,7 +7289,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feMorphology/operator'</a> on the given
-          <a>'feMorphology element'</a> element. Takes one of the
+          <a element>feMorphology</a> element. Takes one of the
           SVG_MORPHOLOGY_OPERATOR_* constants defined on this interface.
         </div>
       </dd>
@@ -7301,7 +7300,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feMorphology/radius'</a> on the given
-          <a>'feMorphology element'</a> element.
+          <a element>feMorphology</a> element.
         </div>
       </dd>
       <dt id="SVGFEMorphologyElement__radiusY">
@@ -7311,7 +7310,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feMorphology/radius'</a> on the given
-          <a>'feMorphology element'</a> element.
+          <a element>feMorphology</a> element.
         </div>
       </dd>
     </dl>
@@ -7322,7 +7321,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFEOffsetElement
 </h3>
 
-The <a>SVGFEOffsetElement</a> interface corresponds to the <a>'feOffset element'</a> element.
+The <a>SVGFEOffsetElement</a> interface corresponds to the <a element>feOffset</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFEOffsetElement</b> : <a>SVGElement</a> {
@@ -7347,7 +7346,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dy">dy
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feOffset element'</a> element.
+          <a element>feOffset</a> element.
         </div>
       </dd>
       <dt id="SVGFEOffsetElement__dx">
@@ -7355,14 +7354,14 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dy">dy
         <a>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'feOffset/dx'</a> on the given <a>'feOffset element'</a> element.
+        Corresponds to attribute <a>'feOffset/dx'</a> on the given <a element>feOffset</a> element.
       </dd>
       <dt id="SVGFEOffsetElement__dy">
         <b>dy</b> <span class="idl-type-parenthetical">(readonly
         <a>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a>'feOffset/dy'</a> on the given <a>'feOffset element'</a> element.
+        Corresponds to attribute <a>'feOffset/dy'</a> on the given <a element>feOffset</a> element.
       </dd>
     </dl>
   </dd>
@@ -7372,7 +7371,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dy">dy
   Interface SVGFESpecularLightingElement
 </h3>
 
-The <a>SVGFESpecularLightingElement</a> interface corresponds to the <a>'feSpecularLighting element'</a> element.
+The <a>SVGFESpecularLightingElement</a> interface corresponds to the <a element>feSpecularLighting</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
@@ -7406,7 +7405,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feSpecularLighting element'</a> element.
+          <a element>feSpecularLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFESpecularLightingElement__surfaceScale">
@@ -7416,7 +7415,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpecularLighting/surfaceScale'</a> on the
-          given <a>'feSpecularLighting element'</a> element.
+          given <a element>feSpecularLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFESpecularLightingElement__specularConstant">
@@ -7426,7 +7425,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpecularLighting/specularConstant'</a> on
-          the given <a>'feSpecularLighting element'</a> element.
+          the given <a element>feSpecularLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFESpecularLightingElement__specularExponent">
@@ -7436,7 +7435,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpecularLighting/specularExponent'</a> on
-          the given <a>'feSpecularLighting element'</a> element.
+          the given <a element>feSpecularLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFESpecularLightingElement__kernelUnitLengthX">
@@ -7446,7 +7445,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpecularLighting/kernelUnitLength'</a> on
-          the given <a>'feSpecularLighting element'</a> element.
+          the given <a element>feSpecularLighting</a> element.
         </div>
       </dd>
       <dt id="SVGFESpecularLightingElement__kernelUnitLengthY">
@@ -7456,7 +7455,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
       <dd>
         <div>
           Corresponds to attribute <a>'feSpecularLighting/kernelUnitLength'</a> on
-          the given <a>'feSpecularLighting'</a> element.
+          the given <a element>feSpecularLighting</a> element.
         </div>
       </dd>
     </dl>
@@ -7467,7 +7466,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   Interface SVGFETileElement
 </h3>
 
-The <a>SVGFETileElement</a> interface corresponds to the <a>'feTile element'</a> element.
+The <a>SVGFETileElement</a> interface corresponds to the <a element>feTile</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFETileElement</b> : <a>SVGElement</a> {
@@ -7490,7 +7489,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFETileElement__in1">in1
       <dd>
         <div>
           Corresponds to attribute <a>'in'</a> on the given
-          <a>'feTile element'</a> element.
+          <a element>feTile</a> element.
         </div>
       </dd>
     </dl>
@@ -7501,7 +7500,7 @@ readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFETileElement__in1">in1
   Interface SVGFETurbulenceElement
 </h3>
 <p>
-  The <a>SVGFETurbulenceElement</a> interface corresponds to the <a>'feTurbulence element'</a>
+  The <a>SVGFETurbulenceElement</a> interface corresponds to the <a element>feTurbulence</a>
   element.
 </p>
 
@@ -7621,7 +7620,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feTurbulence/baseFrequency'</a> on the given <a>'feTurbulence element'</a> element. Contains the X component of the <a>'feTurbulence/baseFrequency'</a> attribute.
+          Corresponds to attribute <a>'feTurbulence/baseFrequency'</a> on the given <a element>feTurbulence</a> element. Contains the X component of the <a>'feTurbulence/baseFrequency'</a> attribute.
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__baseFrequencyY">
@@ -7629,7 +7628,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feTurbulence/baseFrequency'</a> on the given <a>'feTurbulence element'</a> element. Contains the Y component of the (possibly computed automatically) <a>'feTurbulence/baseFrequency'</a> attribute.
+          Corresponds to attribute <a>'feTurbulence/baseFrequency'</a> on the given <a element>feTurbulence</a> element. Contains the Y component of the (possibly computed automatically) <a>'feTurbulence/baseFrequency'</a> attribute.
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__numOctaves">
@@ -7637,7 +7636,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feTurbulence/numOctaves'</a> on the given <a>'feTurbulence element'</a> element.
+          Corresponds to attribute <a>'feTurbulence/numOctaves'</a> on the given <a element>feTurbulence</a> element.
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__seed">
@@ -7645,7 +7644,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feTurbulence/seed'</a> on the given <a>'feTurbulence element'</a> element.
+          Corresponds to attribute <a>'feTurbulence/seed'</a> on the given <a element>feTurbulence</a> element.
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__stitchTiles">
@@ -7653,7 +7652,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feTurbulence/stitchTiles'</a> on the given <a>'feTurbulence element'</a> element. Takes one of the SVG_STITCHTYPE_* constants defined on this interface.
+          Corresponds to attribute <a>'feTurbulence/stitchTiles'</a> on the given <a element>feTurbulence</a> element. Takes one of the SVG_STITCHTYPE_* constants defined on this interface.
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__type">
@@ -7661,7 +7660,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
       </dt>
       <dd>
         <div>
-          Corresponds to attribute <a>'feTurbulence/type'</a> on the given <a>'feTurbulence element'</a> element. Takes one of the SVG_TURBULENCE_TYPE_* constants defined on this interface.
+          Corresponds to attribute <a>'feTurbulence/type'</a> on the given <a element>feTurbulence</a> element. Takes one of the SVG_TURBULENCE_TYPE_* constants defined on this interface.
         </div>
       </dd>
     </dl>
