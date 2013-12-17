@@ -53,13 +53,13 @@ The 'clip-path' property can reference SVG <a>graphics element</a> or use specif
 
 The effect of applying a mask to a graphical object is as if the graphical object will be painted onto the background through the mask, thus completely or partially masking out parts of the graphical object.
 
-Masks are applied using the 'mask-image' or 'mask-box-image-source' properties.
+Masks are applied using the 'mask-image' or 'mask-box-source' properties.
 
-The 'mask-image' property may reference a <a>'mask'</a> element. In this case the content of the <a>'mask'</a> element is rendered into an off-screen image which has been initialized to transparent black. This off-screen image is taken as mask image. Alternatively, for many simple uses, the 'mask-image' property may refer directly to images to be used as mask image, forgoing the need for an explicit <a>'mask'</a> element. The 'mask' property serves as a shorthand property for 'mask-box-image', 'mask-image' and other characterizing properties.
+The 'mask-image' property may reference a <a>'mask'</a> element. In this case the content of the <a>'mask'</a> element is rendered into an off-screen image which has been initialized to transparent black. This off-screen image is taken as mask image. Alternatively, for many simple uses, the 'mask-image' property may refer directly to images to be used as mask image, forgoing the need for an explicit <a>'mask'</a> element. The 'mask' property serves as a shorthand property for 'mask-box', 'mask-image' and other characterizing properties.
 
-The 'mask-box-image-source' property splits a mask image into 9 pieces. The pieces may be sliced, scaled and stretched in various ways to fit the size of the <i>mask box image area</i>. The 'mask-box-image' property serves as a shorthand property for 'mask-box-image-source' and other characterizing properties.
+The 'mask-box-source' property splits a mask image into 9 pieces. The pieces may be sliced, scaled and stretched in various ways to fit the size of the <i>mask box image area</i>. The 'mask-box' property serves as a shorthand property for 'mask-box-source' and other characterizing properties.
 
-Note: While masking gives many possibilities for enhanced graphical effects and in general provides more control over the "visible portions" of the content, clipping paths can be more performant and are easier to interpolate.
+Note: While masking gives many possibilities for enhanced graphical effects and in general provides more control over the "visible portions" of the content, clipping paths can perform better and are easier to interpolate.
 
 <h2 id="placement">Module interactions</h2>
 
@@ -655,7 +655,7 @@ If one <<box>> value is present then it sets both 'mask-origin' and 'mask-clip' 
 
 The <i>used value</i> of the properties 'mask-image', 'mask-repeat', 'mask-position', 'mask-clip', 'mask-origin' and 'mask-size' must have no effect if <<mask-reference>> references a <a>'mask element'</a> element. In this case the element defines position, sizing and clipping of the mask image.
 
-The 'mask' shorthand also resets 'mask-box-image' to its initial value. It is therefore recommended that authors use the 'mask' shorthand, rather than other shorthands or the individual properties, to override any mask settings earlier in the cascade. This will ensure that 'mask-box-image' has also been reset to allow the new styles to take effect.
+The 'mask' shorthand also resets 'mask-box' to its initial value. It is therefore recommended that authors use the 'mask' shorthand, rather than other shorthands or the individual properties, to override any mask settings earlier in the cascade. This will ensure that 'mask-box' has also been reset to allow the new styles to take effect.
 
 Note: A future level of this specification will allow different mask layers for various additional masking operations like composited mask layers masking and serial layer masking.
 
@@ -697,9 +697,9 @@ Note: SVG <a>graphics elements</a> (e.g., <a>'circle'</a> or <a>'text'</a>) are 
 
 The effect of a mask is identical to what would have happened if there were no mask but instead the alpha channel of the given object were multiplied with the mask's resulting mask values.
 
-<h2 id="box-image-masks">Box-Image Masks</h2>
+<h2 id="box-masks">Box Masks</h2>
 
-With 'mask-box-image' an image can be split into nine pieces: four corners, four edges and the middle piece as demonstrated in the figure below.
+With 'mask-box' an image can be split into nine pieces: four corners, four edges and the middle piece as demonstrated in the figure below.
 
 <div class=figure>
   <img src="images/mask-box-image-mask.svg" alt="pieces of a mask box image" width="240">
@@ -708,7 +708,7 @@ With 'mask-box-image' an image can be split into nine pieces: four corners, four
   </p>
 </div>
 
-These pieces may be sliced, scaled and stretched in various ways to fit the size of the <i>mask box image area</i>. This distorted image is then used as a mask. The syntax of 'mask-box-image' corresponds to the 'border-image' property of CSS Background and Borders [[!CSS3BG]].
+These pieces may be sliced, scaled and stretched in various ways to fit the size of the <i>mask box image area</i>. This distorted image is then used as a mask. The syntax of 'mask-box' corresponds to the 'border-image' property of CSS Background and Borders [[!CSS3BG]].
 
 <div class=example>
 <p>The mask image in the following example is split into four corners with
@@ -716,9 +716,9 @@ dimensions of 75 pixels, four edges and the middle piece that is stretched
 and scaled.
 
 <div class=figure>
-  <img src="images/mask-box-image.svg" alt="Example for 'mask-box-image'" width="720" height="240">
+  <img src="images/mask-box-image.svg" alt="Example for 'mask-box'" width="720" height="240">
   <p class=caption>
-    Example for 'mask-box-image'. The object on the left is the object to mask. The second image is the alpha mask and
+    Example for 'mask-box'. The object on the left is the object to mask. The second image is the alpha mask and
     the last image the masked object.
   </p>
 </div>
@@ -726,16 +726,16 @@ and scaled.
 <pre>
 div {
   background: linear-gradient(bottom, #F27BAA 0%, #FCC8AD 100%);
-  mask-box-image-slice: 25 fill;
-  mask-box-image-repeat: stretch;
-  mask-box-image-source: url(mask.png);
+  mask-box-slice: 25 fill;
+  mask-box-repeat: stretch;
+  mask-box-source: url(mask.png);
 }</pre>
 </div>
 
-<h3 id="the-mask-box-image-source">Mask Image Source: the 'mask-box-image-source' property</h3>
+<h3 id="the-mask-box-source">Mask Image Source: the 'mask-box-source' property</h3>
 
 <pre class='propdef'>
-Name: mask-box-image-source
+Name: mask-box-source
 Value: none | <<image>>
 Initial: none
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
@@ -750,14 +750,14 @@ Specifies an image to be used as mask image.
 
 An image that is an empty image (zero width or zero height), that fails to download, is non-existent, or that cannot be displayed (e.g. because it is not in a supported image format) is ignored. It still counts as an mask image but does not mask the element.
 
-When a break splits the box, 'mask-box-image-source' is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
+When a break splits the box, 'mask-box-source' is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
 
 A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does.
 
-<h3 id="the-mask-box-image-slice">Mask Image Slicing: the 'mask-box-image-slice' property</h3>
+<h3 id="the-mask-box-slice">Mask Image Slicing: the 'mask-box-slice' property</h3>
 
 <pre class='propdef'>
-Name: mask-box-image-slice
+Name: mask-box-slice
 Value: [<<number>> | <<percentage>>]{1,4} fill?
 Initial: 0 fill
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
@@ -772,10 +772,10 @@ This property specifies inward offsets from the top, right, bottom, and left edg
 
 See the 'border-image-slice' property [[!CSS3BG]] for the definitions of the property values.
 
-<h3 id="the-mask-box-image-width">Masking Areas: the 'mask-box-image-width' property</h3>
+<h3 id="the-mask-box-width">Masking Areas: the 'mask-box-width' property</h3>
 
 <pre class='propdef'>
-Name: mask-box-image-width
+Name: mask-box-width
 Value: [ <<length>> | <<percentage>> | <<number>> | auto ]{1,4}
 Initial: auto
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
@@ -786,16 +786,16 @@ Media: visual
 Animatable: no
 </pre>
 
-The mask image is drawn inside an area called the <i>mask box image area</i>. This is an area whose boundaries by default correspond to the mask box, see 'mask-box-image-outset'.
+The mask image is drawn inside an area called the <i>mask box image area</i>. This is an area whose boundaries by default correspond to the mask box, see 'mask-box-outset'.
 
 See the 'border-image-width' property [[!CSS3BG]] for the definitions of the property values.
 
 Note: For SVG elements without an associated layout box the 'border-width' is considered to be ''0''.
 
-<h3 id="the-mask-box-image-outset">Edge Overhang: the 'mask-box-image-outset' property</h3>
+<h3 id="the-mask-box-outset">Edge Overhang: the 'mask-box-outset' property</h3>
 
 <pre class='propdef'>
-Name: mask-box-image-outset
+Name: mask-box-outset
 Value: [ <<length>> | <<number>> ]{1,4}
 Initial: 0
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
@@ -808,14 +808,14 @@ Animatable: no
 
 The values specify the amount by which the <i>mask box image area</i> extends beyond the border box. If it has four values, they set the outsets on the top, right, bottom and left sides in that order. If the left is missing, it is the same as the right; if the bottom is missing, it is the same as the top; if the right is missing, it is the same as the top.
 
-As with 'mask-box-image-width', a <<number>> represents a multiple of the corresponding 'border-width'. Negative values are not allowed for any of the 'mask-box-image-outset' values.
+As with 'mask-box-width', a <<number>> represents a multiple of the corresponding 'border-width'. Negative values are not allowed for any of the 'mask-box-outset' values.
 
 Note: For SVG elements without associated layout box the 'border-width' is considered to be ''0''.
 
-<h3 id="the-mask-box-image-repeat">Mask Image Tiling: the 'mask-box-image-repeat' property</h3>
+<h3 id="the-mask-box-repeat">Mask Image Tiling: the 'mask-box-repeat' property</h3>
 
 <pre class='propdef'>
-Name: mask-box-image-repeat
+Name: mask-box-repeat
 Value: [ stretch | repeat | round | space ]{1,2}
 Initial: stretch
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
@@ -830,13 +830,13 @@ This property specifies how the images for the sides and the middle part of the 
 
 See the 'border-image-repeat' property [[!CSS3BG]] for the definitions of the property values.
 
-The exact process for scaling and tiling the mask box image parts is given in the section <a href="#masking-with-the-mask-box-image">Masking with the mask-box-image</a>
+The exact process for scaling and tiling the mask box image parts is given in the section <a href="#masking-with-the-mask-box">Masking with the mask-box</a>
 
-<h3 id="the-mask-box-image">Mask Box Image Shorthand: the 'mask-box-image' property</h3>
+<h3 id="the-mask-box">Mask Box Image Shorthand: the 'mask-box' property</h3>
 
 <pre class='propdef'>
-Name: mask-box-image
-Value: <<'mask-box-image-source'>> || <<'mask-box-image-slice'>> [ / <<'mask-box-image-width'>> | / <<'mask-box-image-width'>>? / <<'mask-box-image-outset'>> ]? || <<'mask-box-image-repeat'>>
+Name: mask-box
+Value: <<'mask-box-source'>> || <<'mask-box-slice'>> [ / <<'mask-box-width'>> | / <<'mask-box-width'>>? / <<'mask-box-outset'>> ]? || <<'mask-box-repeat'>>
 Initial: See individual properties
 Applies to: See individual properties
 Inherited: no
@@ -846,17 +846,17 @@ Media: visual
 Animatable: See individual properties
 </pre>
 
-This is a shorthand property for setting 'mask-box-image-source', 'mask-box-image-slice', 'mask-box-image-width', 'mask-box-image-outset' and 'mask-box-image-repeat'. Omitted values are set to their initial values.
+This is a shorthand property for setting 'mask-box-source', 'mask-box-slice', 'mask-box-width', 'mask-box-outset' and 'mask-box-repeat'. Omitted values are set to their initial values.
 
-Note: The 'mask' shorthand resets the properties 'mask-box-image', 'mask-box-image-source', 'mask-box-image-slice', 'mask-box-image-width', 'mask-box-image-outset' and 'mask-box-image-repeat'.
+Note: The 'mask' shorthand resets the properties 'mask-box', 'mask-box-source', 'mask-box-slice', 'mask-box-width', 'mask-box-outset' and 'mask-box-repeat'.
 
-<h3 id="masking-with-the-mask-box-image">Masking with the mask-box-image</h3>
+<h3 id="masking-with-the-mask-box">Masking with the mask-box</h3>
 
-After the mask-box-image given by 'mask-box-image-source' is sliced by the 'mask-box-image-slice' values, the resulting nine images are scaled, positioned, and tiled into their corresponding mask image regions in four steps as described in the section <a href="http://www.w3.org/TR/css3-background/#border-image-process">Drawing the Border Image</a> [[!CSS3BG]].
+After the mask-box given by 'mask-box-source' is sliced by the 'mask-box-slice' values, the resulting nine images are scaled, positioned, and tiled into their corresponding mask image regions in four steps as described in the section <a href="http://www.w3.org/TR/css3-background/#border-image-process">Drawing the Border Image</a> [[!CSS3BG]].
 
-The application of the 'mask-box-image-source' property to an element formatted with the CSS box model establishes a <a spec="css21">stacking context</a> in the same way that CSS 'opacity' [[CSS3COLOR]] does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
+The application of the 'mask-box-source' property to an element formatted with the CSS box model establishes a <a spec="css21">stacking context</a> in the same way that CSS 'opacity' [[CSS3COLOR]] does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
 
-The 'mask-box-image-source' property has no effect on the geometry or hit-testing of any element's CSS boxes.
+The 'mask-box-source' property has no effect on the geometry or hit-testing of any element's CSS boxes.
 
 <h2 id="svg-masks">SVG Masks</h2>
 
@@ -1036,7 +1036,7 @@ A timing attack is a method of obtaining information about content that is other
 
 <<mask-source>>s and <<clip-source>>s have special requirements on fetching resources.
 
-User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for all <<mask-source>>, <<clip-source>> and <<image>> values on the 'mask-image', 'mask-box-image-source' and 'clip-path' properties. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value ''none'' had been specified.
+User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for all <<mask-source>>, <<clip-source>> and <<image>> values on the 'mask-image', 'mask-box-source' and 'clip-path' properties. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value ''none'' had been specified.
 
 <h2 id="DOMInterfaces">DOM interfaces</h2>
 
@@ -1171,7 +1171,7 @@ The following changes were made since the <a href="http://www.w3.org/TR/2013/WD-
 The following significant changes were made since the <a href="http://www.w3.org/TR/2013/WD-css-masking-20130620/">20 June 2013 Working Draft</a>.
 
 <ul>
-<li>'mask' resets 'mask-box-image' properties.</li>
+<li>'mask' resets 'mask-box' properties.</li>
 <li>Initial values for 'mask-repeat', 'mask-position' and 'mask-origin' changed to ''no-repeat'', ''center'' and <a value for=mask-origin>border-box</a>.</li>
 <li>Multiple layers of mask images were deferred to a future level of this specification.</li>
 <li>Added security model for pixel operations and fetching of masking and clipping resources.</li>
