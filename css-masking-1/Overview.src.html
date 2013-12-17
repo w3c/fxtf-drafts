@@ -239,7 +239,9 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   </div>
 </div>
 
-<h2 id="ClipPathElement">The <a>'clipPath element'</a> element</h2> 
+<h2 id="svg-clipping-paths">SVG Clipping paths</h2>
+
+<h3 id="ClipPathElement">The <a>'clipPath element'</a> element</h3> 
 
 <!--elementsummary clipPath-->
 
@@ -302,13 +304,13 @@ A couple of additions:
   'clip-path' property applied.</li>
 </ul>
 
-<h3 id="clipPath-geometry">Clipping paths, geometry, and pointer events</h3>
+<h4 id="clipPath-geometry">Clipping paths, geometry, and pointer events</h4>
 
 A clipping path is conceptually equivalent to a custom viewport for the referencing element.  Thus, it affects the rendering of an element, but not the element's inherent geometry. The <i>bounding client rect</i> of a clipped element (that is, an element which references a <a>'clipPath'</a> element via a 'clip-path' property, or a child of the referencing element) must remain the same as if it were not clipped.
 
 By default, <a>pointer events</a> must not be dispatched on the clipped (non-visible) regions of a shape. For example, a circle with a radius of 10 which is clipped to a circle with a radius of 5 will not receive ''click'' events outside the smaller radius.
 
-<h2 id="the-clip-rule">The 'clip-rule' property</h2>
+<h3 id="the-clip-rule">The 'clip-rule' property</h3>
 
 <pre class='propdef'>
 Name: clip-rule
@@ -357,7 +359,7 @@ Note: The 'clip-rule' does not apply to <<basic-shape>>s.
 </pre>
 </div>
 
-<h2 id="masking">Layered Masks</h2>
+<h2 id="masking">Positioned Masks</h2>
 
 <h3 id="the-mask-image">The 'mask-image' property</h3>
 
@@ -687,174 +689,6 @@ Note: SVG <a>graphics elements</a> (e.g., <a>'circle'</a> or <a>'text'</a>) are 
 
 The effect of a mask is identical to what would have happened if there were no mask but instead the alpha channel of the given object were multiplied with the mask's resulting mask values.
 
-<h2 id="MaskElement">The <a>'mask element'</a> element</h2>
-
-<!--elementsummary mask-->
-
-<div class="adef-list">
-  <p><em>Attribute definitions:</em></p>
-  <dl dfn-type="element-attr" dfn-for="mask">
-    <dt id="MaskElementMaskUnitsAttribute">
-      <dfn>maskUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
-    </dt>
-    <dd>Defines the coordinate system for attributes
-    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>.<br>
-     If <span
-    class="attr-value">maskUnits="userSpaceOnUse"</span>,
-    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>
-    represent values in the current user coordinate system in place at
-    the time when the <a>'mask element'</a>
-    element is referenced (i.e., the user coordinate system for
-    the element referencing the <a>'mask element'</a> element via the
-    'mask' property).<br>
-     If <span
-    class="attr-value">maskUnits="objectBoundingBox"</span>,
-    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>
-    represent fractions or percentages of the bounding box of
-    the element to which the mask is applied. (See <span class="term">object bounding box
-    units</span>.)<br>
-     If attribute <a>'mask/maskUnits'</a> is
-    not specified, then the effect is as if a value of ''objectBoundingBox'' were
-    specified.<br>
-     <span class="anim-target">Animatable:
-    yes.</span></dd>
-    <dt id="MaskElementMaskContentUnitsAttribute">
-      <dfn>maskContentUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
-    </dt>
-    <dd>Defines the coordinate system for the contents of the
-    <a>'mask element'</a>.<br>
-     If <span
-    class="attr-value">maskContentUnits="userSpaceOnUse"</span>,
-    the user coordinate system for the contents of the
-    <a>'mask element'</a> element is the current
-    user coordinate system in place at the time when the
-    <a>'mask element'</a> element is referenced
-    (i.e., the user coordinate system for the element
-    referencing the <a>'mask element'</a>
-    element via the 'mask'
-    property).<br>
-     If <span
-    class="attr-value">maskContentUnits="objectBoundingBox"</span>,
-    the user coordinate system for the contents of the <a>'mask element'</a> is established using the
-    bounding box of the element to which the mask is applied.
-    (See <span class="term">object bounding box
-    units</span>.)<br>
-     If attribute <a>'maskContentUnits'</a> is not specified,
-    then the effect is as if a value of ''userSpaceOnUse'' were
-    specified.<br>
-     <span class="anim-target">Animatable:
-    yes.</span></dd>
-    <dt id="MaskElementXAttribute">
-      <dfn>x</dfn> = "<<length>> | <<percentage>>"
-    </dt>
-    <dd>The x-axis coordinate of one corner of the rectangle
-    for the largest possible offscreen buffer.
-    If the attribute is not specified but at least one of the attributes <a>'mask/y'</a>,
-    <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'-10%'</span> were specified.<br>
-     <span class="anim-target">Animatable:
-    yes.</span></dd>
-    <dt id="MaskElementYAttribute">
-      <dfn>y</dfn> = "<<length>> | <<percentage>>"
-    </dt>
-    <dd>The y-axis coordinate of one corner of the rectangle
-    for the largest possible offscreen buffer.<br>
-    If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
-    <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'-10%'</span> were specified.<br>
-    <span class="anim-target">Animatable:
-    yes.</span></dd>
-    <dt id="MaskElementWidthAttribute">
-      <dfn>width</dfn> = "<<length>> | <<percentage>>"
-    </dt>
-    <dd>The width of the largest possible offscreen buffer.
-    A negative value or a value of zero disables rendering of the element.<br>
-    If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
-    <a>'mask/y'</a> or <a>'mask/height'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'120%'</span> were specified.<br>
-     <span class="anim-target">Animatable:
-    yes.</span></dd>
-    <dt id="MaskElementHeightAttribute">
-      <dfn>height</dfn> = "<<length>> | <<percentage>>"
-    </dt>
-    <dd>The height of the largest possible offscreen
-    buffer.<br>
-    A negative value or a value of zero disables rendering of the element.<br>
-    If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
-    <a>'mask/y'</a> or <a>'mask/width'</a> are specified, the effect is as if a
-    value of <span class='attr-value'>'120%'</span> were specified.<br>
-     <span class="anim-target">Animatable:
-    yes.</span></dd>
-  </dl>
-</div>
-
-If at least one of the attributes <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the given object and the rectangle defined by <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a> establish a current clipping path. The rendered content of the mask must be clipped by this current clipping path.
-
-CSS properties inherit into the <a>'mask element'</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a>'mask element'</a> element.
-
-<a>'mask element'</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'mask' property. The 'opacity', 'filter' and 'display' properties do not apply to the <a>'mask element'</a> element; thus, <a>'mask element'</a> elements are not directly rendered even if the 'display' property is set to a value other than ''none'', and <a>'mask element'</a> elements are available for referencing even when the 'display' property on the <a>'mask element'</a> element or any of its ancestors is set to ''none''.
-
-<h2 id="the-mask-type">The 'mask-type' property</h2>
-
-<pre class='propdef'>
-Name: mask-type
-Value: luminance | alpha
-Initial: luminance
-Applies to: <a>'mask element'</a> elements
-Inherited: no
-Percentages: n/a
-Computed value: as specified
-Media: visual
-Animatable: no
-</pre>
-
-The 'mask-type' property defines whether the content of the <a>'mask element'</a> element is treated as as luminance mask or alpha mask, as described in <a href="#MaskValues">Calculating mask values</a>.
-
-Values have the following meanings:
-
-<dl dfn-for="mask-type" dfn-type=value>
-  <dt><dfn>luminance</dfn></dt>
-  <dd>Indicates that the luminance values of the mask should be used.</dd>
-
-  <dt><dfn>alpha</dfn></dt>
-  <dd>Indicates that the alpha values of the mask should be used.</dd>
-</dl>
-
-The 'mask-type' property allows the author of the <a>'mask element'</a> element to specify the preferred masking operation. However, the author can override this preference by setting the 'mask-source-type' value to something different than ''auto'' on the masked content.
-
-<div class=example>
-
-<p>In the following example the computed value of 'mask-type' is <a value for=mask-type>luminance</a> and the computed value of 'mask-source-type' is ''auto''. The UA must follow the preferred masking operation defined on the <a>'mask element'</a> element.
-
-<pre><code>
-&lt;svg>
-  &lt;mask style="mask-type: luminance;" id="mask">
-    ...
-  &lt;/mask>
-&lt;/svg>
-
-&lt;p style="mask-image: url(#mask); mask-source-type: auto;">
-  This is the masked content.
-&lt;/p>
-</code></pre>
-
-<p>In the next example the computed value of 'mask-source-type' is <a value for=mask-source-type>alpha</a> and overrides the preference on the <a>'mask element'</a> element that is computed to <a value for=mask-type>luminance</a>. The mask image is used as an alpha mask.
-
-<pre><code>
-&lt;svg>
-  &lt;mask style="mask-type: luminance;" id="mask2">
-    ...
-  &lt;/mask>
-&lt;/svg>
-
-&lt;p style="mask-image: url(#mask2); mask-source-type: alpha;">
-  This is the masked content.
-&lt;/p>
-</code></pre>
-</div>
-
-The 'mask-type' property is a presentation attribute for SVG elements.
-
 <h2 id="box-image-masks">Box-Image Masks</h2>
 
 With 'mask-box-image' an image can be split into nine pieces: four corners, four edges and the middle piece as demonstrated in the figure below.
@@ -1013,6 +847,176 @@ After the mask-box-image given by 'mask-box-image-source' is sliced by the 'mask
 The application of the 'mask-box-image-source' property to an element formatted with the CSS box model establishes a <a spec="css21">stacking context</a> in the same way that CSS 'opacity' [[CSS3COLOR]] does, and all the element's descendants are rendered together as a group with the masking applied to the group as a whole.
 
 The 'mask-box-image-source' property has no effect on the geometry or hit-testing of any element's CSS boxes.
+
+<h2 id="svg-masks">SVG Masks</h2>
+
+<h3 id="MaskElement">The <a>'mask element'</a> element</h3>
+
+<!--elementsummary mask-->
+
+<div class="adef-list">
+  <p><em>Attribute definitions:</em></p>
+  <dl dfn-type="element-attr" dfn-for="mask">
+    <dt id="MaskElementMaskUnitsAttribute">
+      <dfn>maskUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
+    </dt>
+    <dd>Defines the coordinate system for attributes
+    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>.<br>
+     If <span
+    class="attr-value">maskUnits="userSpaceOnUse"</span>,
+    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>
+    represent values in the current user coordinate system in place at
+    the time when the <a>'mask element'</a>
+    element is referenced (i.e., the user coordinate system for
+    the element referencing the <a>'mask element'</a> element via the
+    'mask' property).<br>
+     If <span
+    class="attr-value">maskUnits="objectBoundingBox"</span>,
+    <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a>
+    represent fractions or percentages of the bounding box of
+    the element to which the mask is applied. (See <span class="term">object bounding box
+    units</span>.)<br>
+     If attribute <a>'mask/maskUnits'</a> is
+    not specified, then the effect is as if a value of ''objectBoundingBox'' were
+    specified.<br>
+     <span class="anim-target">Animatable:
+    yes.</span></dd>
+    <dt id="MaskElementMaskContentUnitsAttribute">
+      <dfn>maskContentUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
+    </dt>
+    <dd>Defines the coordinate system for the contents of the
+    <a>'mask element'</a>.<br>
+     If <span
+    class="attr-value">maskContentUnits="userSpaceOnUse"</span>,
+    the user coordinate system for the contents of the
+    <a>'mask element'</a> element is the current
+    user coordinate system in place at the time when the
+    <a>'mask element'</a> element is referenced
+    (i.e., the user coordinate system for the element
+    referencing the <a>'mask element'</a>
+    element via the 'mask'
+    property).<br>
+     If <span
+    class="attr-value">maskContentUnits="objectBoundingBox"</span>,
+    the user coordinate system for the contents of the <a>'mask element'</a> is established using the
+    bounding box of the element to which the mask is applied.
+    (See <span class="term">object bounding box
+    units</span>.)<br>
+     If attribute <a>'maskContentUnits'</a> is not specified,
+    then the effect is as if a value of ''userSpaceOnUse'' were
+    specified.<br>
+     <span class="anim-target">Animatable:
+    yes.</span></dd>
+    <dt id="MaskElementXAttribute">
+      <dfn>x</dfn> = "<<length>> | <<percentage>>"
+    </dt>
+    <dd>The x-axis coordinate of one corner of the rectangle
+    for the largest possible offscreen buffer.
+    If the attribute is not specified but at least one of the attributes <a>'mask/y'</a>,
+    <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the effect is as if a
+    value of <span class='attr-value'>'-10%'</span> were specified.<br>
+     <span class="anim-target">Animatable:
+    yes.</span></dd>
+    <dt id="MaskElementYAttribute">
+      <dfn>y</dfn> = "<<length>> | <<percentage>>"
+    </dt>
+    <dd>The y-axis coordinate of one corner of the rectangle
+    for the largest possible offscreen buffer.<br>
+    If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
+    <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the effect is as if a
+    value of <span class='attr-value'>'-10%'</span> were specified.<br>
+    <span class="anim-target">Animatable:
+    yes.</span></dd>
+    <dt id="MaskElementWidthAttribute">
+      <dfn>width</dfn> = "<<length>> | <<percentage>>"
+    </dt>
+    <dd>The width of the largest possible offscreen buffer.
+    A negative value or a value of zero disables rendering of the element.<br>
+    If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
+    <a>'mask/y'</a> or <a>'mask/height'</a> are specified, the effect is as if a
+    value of <span class='attr-value'>'120%'</span> were specified.<br>
+     <span class="anim-target">Animatable:
+    yes.</span></dd>
+    <dt id="MaskElementHeightAttribute">
+      <dfn>height</dfn> = "<<length>> | <<percentage>>"
+    </dt>
+    <dd>The height of the largest possible offscreen
+    buffer.<br>
+    A negative value or a value of zero disables rendering of the element.<br>
+    If the attribute is not specified but at least one of the attributes <a>'mask/x'</a>,
+    <a>'mask/y'</a> or <a>'mask/width'</a> are specified, the effect is as if a
+    value of <span class='attr-value'>'120%'</span> were specified.<br>
+     <span class="anim-target">Animatable:
+    yes.</span></dd>
+  </dl>
+</div>
+
+If at least one of the attributes <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> or <a>'mask/height'</a> are specified, the given object and the rectangle defined by <a>'mask/x'</a>, <a>'mask/y'</a>, <a>'mask/width'</a> and <a>'mask/height'</a> establish a current clipping path. The rendered content of the mask must be clipped by this current clipping path.
+
+CSS properties inherit into the <a>'mask element'</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a>'mask element'</a> element.
+
+<a>'mask element'</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'mask' property. The 'opacity', 'filter' and 'display' properties do not apply to the <a>'mask element'</a> element; thus, <a>'mask element'</a> elements are not directly rendered even if the 'display' property is set to a value other than ''none'', and <a>'mask element'</a> elements are available for referencing even when the 'display' property on the <a>'mask element'</a> element or any of its ancestors is set to ''none''.
+
+<h3 id="the-mask-type">The 'mask-type' property</h3>
+
+<pre class='propdef'>
+Name: mask-type
+Value: luminance | alpha
+Initial: luminance
+Applies to: <a>'mask'</a> elements
+Inherited: no
+Percentages: n/a
+Computed value: as specified
+Media: visual
+Animatable: no
+</pre>
+
+The 'mask-type' property defines whether the content of the <a>'mask element'</a> element is treated as as luminance mask or alpha mask, as described in <a href="#MaskValues">Calculating mask values</a>.
+
+Values have the following meanings:
+
+<dl dfn-for="mask-type" dfn-type=value>
+  <dt><dfn>luminance</dfn></dt>
+  <dd>Indicates that the luminance values of the mask should be used.</dd>
+
+  <dt><dfn>alpha</dfn></dt>
+  <dd>Indicates that the alpha values of the mask should be used.</dd>
+</dl>
+
+The 'mask-type' property allows the author of the <a>'mask element'</a> element to specify the preferred masking operation. However, the author can override this preference by setting the 'mask-source-type' value to something different than ''auto'' on the masked content.
+
+<div class=example>
+
+<p>In the following example the computed value of 'mask-type' is <a value for=mask-type>luminance</a> and the computed value of 'mask-source-type' is ''auto''. The UA must follow the preferred masking operation defined on the <a>'mask element'</a> element.
+
+<pre><code>
+&lt;svg>
+  &lt;mask style="mask-type: luminance;" id="mask">
+    ...
+  &lt;/mask>
+&lt;/svg>
+
+&lt;p style="mask-image: url(#mask); mask-source-type: auto;">
+  This is the masked content.
+&lt;/p>
+</code></pre>
+
+<p>In the next example the computed value of 'mask-source-type' is <a value for=mask-source-type>alpha</a> and overrides the preference on the <a>'mask element'</a> element that is computed to <a value for=mask-type>luminance</a>. The mask image is used as an alpha mask.
+
+<pre><code>
+&lt;svg>
+  &lt;mask style="mask-type: luminance;" id="mask2">
+    ...
+  &lt;/mask>
+&lt;/svg>
+
+&lt;p style="mask-image: url(#mask2); mask-source-type: alpha;">
+  This is the masked content.
+&lt;/p>
+</code></pre>
+</div>
+
+The 'mask-type' property is a presentation attribute for SVG elements.
 
 <h2 id="security">Security</h2>
 
