@@ -85,7 +85,7 @@ When used in this specification, terms have the meanings assigned in this sectio
 <dt><dfn>bounding client rect</dfn></dt>
 <dd>
   <p>
-    The union of all border boxes for the element that has an associated CSS layout box and is not in the <code>http://www.w3.org/2000/svg</code> namespace and its descendant elements. Or the object bounding box [[!SVG11]], if the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace. (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [[CSSOM-VIEW]].)
+    The object bounding box for elements in the <code>http://www.w3.org/2000/svg</code> namespace and without an associated CSS layout box. The smallest rectangle that contains the border box of the element and the border boxes of all its descendants otherwise. (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [[CSSOM-VIEW]].)
   </p>
 </dd>
 <dt><dfn>user coordinate system</dfn></dt>
@@ -314,7 +314,7 @@ By default, <a>pointer events</a> must not be dispatched on the clipped (non-vis
 Name: clip-rule
 Value: nonzero | evenodd
 Initial: nonzero
-Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
+Applies to: Applies to SVG <a>graphics elements</a>
 Inherited: yes
 Percentages: n/a
 Computed value: as specified
@@ -330,7 +330,7 @@ Animatable: no
   <dd>See description of 'fill-rule' property [[!SVG11]].</dd>
 </dl>
 
-The 'clip-rule' property only applies to graphics elements that are contained within a <a>'clipPath'</a> element.
+The 'clip-rule' property only applies to <a>graphics elements</a> that are contained within a <a>'clipPath'</a> element.
 
 Note: The 'clip-rule' does not apply to <<basic-shape>>s.
 
@@ -568,8 +568,7 @@ Values have the following meanings:
   <dd>The painted content is rectricted to (clipped to) the
     <span>content box</span> respectively <span>object bounding box</span> [[!SVG11]] for objects without associated layout box.
   <dt><dfn>no-clip</dfn></dt>
-  <dd>The painted content is not restricted (not clipped). The <i>mask painting area</i> is set to
-    the <i>bounding client rect</i>.
+  <dd>The painted content is not restricted (not clipped).
 </dl>
 
 Note: There is no corresponding box for <a value for=mask-clip>padding-box</a> on objects without associated layout box and <a value for=mask-clip>content-box</a> is choosen instead.
@@ -600,6 +599,8 @@ For elements rendered as a single box, specifies the <i>mask positioning area</i
   <dt><dfn>content-box</dfn>
   <dd>The position is relative to the content box respectively object bounding box [[!SVG11]] for objects without associated layout box.
 </dl>
+
+<p class="issue">There should be a way to define a bigger reference box including bounding client rects of descendants.</p>
 
 Note: There is no corresponding box for <a value for=mask-origin>padding-box</a> on objects without associated layout box and <a value for=mask-origin>content-box</a> is choosen instead.
 
