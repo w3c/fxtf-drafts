@@ -139,7 +139,7 @@ Definitions of CSS properties and values in this specification are analogous to 
   </tbody>
 </table>
 
-<h2 id="clipping-paths">Clipping paths</h2>
+<h2 id="clipping-paths">Clipping Paths</h2>
 
 The clipping path restricts the region to which paint can be applied, the so-called <dfn export>clipping region</dfn>. Conceptually, any parts of the drawing that lie outside of this region are not drawn. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the clipping path is applied, and those of its descendants.
 
@@ -147,11 +147,11 @@ An element's ancestors may also clip portions of their content (e.g., via their 
 
 If the clipping region exceeds the bounds of the UA's document window, content may be clipped to that window by the native operating environment.
 
-<h3 id="the-clip-path">The 'clip-path' property</h3>
+<h3 id="the-clip-path">Clipping Path Source: the 'clip-path' property</h3>
 
 <pre class='propdef'>
 Name: clip-path
-Value: <<basic-shape>> | <<clip-source>> | none
+Value: <<clip-source>> | [ <<basic-shape>> || <<box>> | bounding-box ] | none
 Initial: none
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
 Inherited: no
@@ -170,7 +170,15 @@ Specifies a basic shape or references a <a>'clipPath element'</a> element to cre
     <<basic-shape>>
   </dt>
   <dd>
-    A basic shape function as defined in the CSS Shapes module [[!CSS-SHAPES]]. The reference box of the shape is the <i>bounding client rect</i>.
+    A basic shape function as defined in the CSS Shapes module [[!CSS-SHAPES]]. If no reference box is specified, the border-box will be used as reference box.
+  </dd>
+  <dt><<box>></dt>
+  <dd>
+    The reference box for a <<basic-shape>>.
+  </dd>
+  <dt><dfn dfn-for="clip-path" dfn-type=value>bounding-box</dfn></dt>
+  <dd>
+    The reference box for a specified <<basic-shape>> is the <i>bounding client rect</i>.
   </dd>
   <dt>none</dt>
   <dd>
@@ -178,11 +186,13 @@ Specifies a basic shape or references a <a>'clipPath element'</a> element to cre
   </dd>
 </dl>
 
+When a break splits the box, the clipping path is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
+
 A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does.
 
 If the URI reference is not valid (e.g it points to an object that doesn't exist or the object is not a <a>'clipPath element'</a> element), no clipping is applied.
 
-<h3 id="clip-property">The 'clip' property</h3>
+<h3 id="clip-property">Rectangular clipping: the 'clip' property</h3>
 
 <pre class='propdef'>
 Name: clip
@@ -239,7 +249,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   </div>
 </div>
 
-<h2 id="svg-clipping-paths">SVG Clipping paths</h2>
+<h2 id="svg-clipping-paths">SVG Clipping Paths</h2>
 
 <h3 id="ClipPathElement">The <a>'clipPath element'</a> element</h3> 
 
@@ -310,7 +320,7 @@ A clipping path is conceptually equivalent to a custom viewport for the referenc
 
 By default, <a>pointer events</a> must not be dispatched on the clipped (non-visible) regions of a shape. For example, a circle with a radius of 10 which is clipped to a circle with a radius of 5 will not receive ''click'' events outside the smaller radius.
 
-<h3 id="the-clip-rule">The 'clip-rule' property</h3>
+<h3 id="the-clip-rule">Winding Rules: the 'clip-rule' property</h3>
 
 <pre class='propdef'>
 Name: clip-rule
@@ -361,7 +371,7 @@ Note: The 'clip-rule' does not apply to <<basic-shape>>s.
 
 <h2 id="masking">Positioned Masks</h2>
 
-<h3 id="the-mask-image">The 'mask-image' property</h3>
+<h3 id="the-mask-image">Mask Image Source: the 'mask-image' property</h3>
 
 <pre class='propdef'>
 Name: mask-image
@@ -394,6 +404,8 @@ This property sets the mask image of an element. Where:
   </dd>
 </dl>
 
+When a break splits the box, 'mask-image' is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
+
 A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does.
 
 A mask reference that is an empty image (zero width or zero height), that fails to download, is not a reference to an <a>'mask element'</a> element, is non-existent, or that cannot be displayed (e.g. because it is not in a supported image format) is ignored. It still counts as an image layer but does not mask the element.
@@ -409,7 +421,7 @@ div { mask-image: url(resources.svg#mask2) }
 </pre>
 </div>
 
-<h3 id="the-mask-source-type">The 'mask-source-type' property</h3>
+<h3 id="the-mask-source-type">Masking Type: the 'mask-source-type' property</h3>
 
 <pre class='propdef'>
 Name: mask-source-type
@@ -470,7 +482,7 @@ Values have the following meanings:
 </pre>
 </div>
 
-<h3 id="the-mask-repeat">The 'mask-repeat' property</h3>
+<h3 id="the-mask-repeat">Tiling Mask Images: The 'mask-repeat' property</h3>
 
 <pre class='propdef'>
 Name: mask-repeat
@@ -507,7 +519,7 @@ body {
   </div>
 </div>
 
-<h3 id="the-mask-position">The 'mask-position' property</h3>
+<h3 id="the-mask-position">Positioning Mask Images: the 'mask-position' property</h3>
 
 <pre class='propdef'>
 Name: mask-position
@@ -541,7 +553,7 @@ body {
 <pre>mask-position: right 3em bottom 10px</pre>
 </div>
 
-<h3 id="the-mask-clip">The 'mask-clip' property</h3>
+<h3 id="the-mask-clip">Masking Area: the 'mask-clip' property</h3>
 
 <pre class='propdef'>
 Name: mask-clip
@@ -575,11 +587,11 @@ Values have the following meanings:
 
 Note: There is no corresponding box for <a value for=mask-clip>padding-box</a> on objects without associated layout box and <a value for=mask-clip>content-box</a> is choosen instead.
 
-<h3 id="the-mask-origin">The 'mask-origin' property</h3>
+<h3 id="the-mask-origin">Positioning Area: the 'mask-origin' property</h3>
 
 <pre class='propdef'>
 Name: mask-origin
-Value: <<box>>
+Value: <<box>> | bounding-box
 Initial: border-box
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
 Inherited: no
@@ -600,15 +612,15 @@ For elements rendered as a single box, specifies the <i>mask positioning area</i
   <dd>The position is relative to the border box respectively <span>painting box</span> for objects without associated layout box.
   <dt><dfn>content-box</dfn>
   <dd>The position is relative to the content box respectively object bounding box [[!SVG11]] for objects without associated layout box.
+  <dt><dfn>bounding-box</dfn></dt>
+  <dd>The position relative to the <i>bounding client rect</i>.</dd>
 </dl>
 
-<p class="issue">There should be a way to define a bigger reference box including bounding client rects of descendants.</p>
-
-Note: There is no corresponding box for <a value for=mask-origin>padding-box</a> on objects without associated layout box and <a value for=mask-origin>content-box</a> is choosen instead.
+Note: There is no corresponding box for <a value for=mask-origin>padding-box</a> on objects without associated layout box and <a value for=mask-origin>content-box</a> is chosen instead.
 
 Note: If 'mask-clip' is <a value for=mask-origin>padding-box</a>, 'mask-origin' is <a value for=mask-origin>border-box</a>, 'mask-position' is ''top left'' (the initial value), and the element has a non-zero border, then the top and left of the mask image will be clipped.
 
-<h3 id="the-mask-size">The 'mask-size' property</h3>
+<h3 id="the-mask-size">Sizing Mask Images: the 'mask-size' property</h3>
 
 <pre class='propdef'>
 Name: mask-size
@@ -626,7 +638,7 @@ Specifies the size of the mask images.
 
 See 'background-size' property [[!CSS3BG]] for the definitions of the property values.
 
-<h3 id="the-mask">The 'mask' property</h3>
+<h3 id="the-mask">Mask Shorthand: the 'mask' property</h3>
 
 <pre class='propdef'>
 Name: mask
@@ -724,7 +736,7 @@ div {
 }</pre>
 </div>
 
-<h3 id="the-mask-box-image-source">The 'mask-box-image-source' property</h3>
+<h3 id="the-mask-box-image-source">Mask Image Source: the 'mask-box-image-source' property</h3>
 
 <pre class='propdef'>
 Name: mask-box-image-source
@@ -742,9 +754,11 @@ Specifies an image to be used as mask image.
 
 An image that is an empty image (zero width or zero height), that fails to download, is non-existent, or that cannot be displayed (e.g. because it is not in a supported image format) is ignored. It still counts as an mask image but does not mask the element.
 
+When a break splits the box, 'mask-box-image-source' is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
+
 A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does.
 
-<h3 id="the-mask-box-image-slice">The 'mask-box-image-slice' property</h3>
+<h3 id="the-mask-box-image-slice">Mask Image Slicing: the 'mask-box-image-slice' property</h3>
 
 <pre class='propdef'>
 Name: mask-box-image-slice
@@ -762,7 +776,7 @@ This property specifies inward offsets from the top, right, bottom, and left edg
 
 See the 'border-image-slice' property [[!CSS3BG]] for the definitions of the property values.
 
-<h3 id="the-mask-box-image-width">The 'mask-box-image-width' property</h3>
+<h3 id="the-mask-box-image-width">Masking Areas: the 'mask-box-image-width' property</h3>
 
 <pre class='propdef'>
 Name: mask-box-image-width
@@ -782,7 +796,7 @@ See the 'border-image-width' property [[!CSS3BG]] for the definitions of the pro
 
 Note: For SVG elements without an associated layout box the 'border-width' is considered to be ''0''.
 
-<h3 id="the-mask-box-image-outset">The 'mask-box-image-outset' property</h3>
+<h3 id="the-mask-box-image-outset">Edge Overhang: the 'mask-box-image-outset' property</h3>
 
 <pre class='propdef'>
 Name: mask-box-image-outset
@@ -802,7 +816,7 @@ As with 'mask-box-image-width', a <<number>> represents a multiple of the corres
 
 Note: For SVG elements without associated layout box the 'border-width' is considered to be ''0''.
 
-<h3 id="the-mask-box-image-repeat">The 'mask-box-image-repeat' property</h3>
+<h3 id="the-mask-box-image-repeat">Mask Image Tiling: the 'mask-box-image-repeat' property</h3>
 
 <pre class='propdef'>
 Name: mask-box-image-repeat
@@ -822,7 +836,7 @@ See the 'border-image-repeat' property [[!CSS3BG]] for the definitions of the pr
 
 The exact process for scaling and tiling the mask box image parts is given in the section <a href="#masking-with-the-mask-box-image">Masking with the mask-box-image</a>
 
-<h3 id="the-mask-box-image">The 'mask-box-image' property</h3>
+<h3 id="the-mask-box-image">Mask Box Image Shorthand: the 'mask-box-image' property</h3>
 
 <pre class='propdef'>
 Name: mask-box-image
@@ -957,7 +971,7 @@ CSS properties inherit into the <a>'mask element'</a> element from its ancestors
 
 <a>'mask element'</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'mask' property. The 'opacity', 'filter' and 'display' properties do not apply to the <a>'mask element'</a> element; thus, <a>'mask element'</a> elements are not directly rendered even if the 'display' property is set to a value other than ''none'', and <a>'mask element'</a> elements are available for referencing even when the 'display' property on the <a>'mask element'</a> element or any of its ancestors is set to ''none''.
 
-<h3 id="the-mask-type">The 'mask-type' property</h3>
+<h3 id="the-mask-type">Masking Type: the 'mask-type' property</h3>
 
 <pre class='propdef'>
 Name: mask-type
