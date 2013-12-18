@@ -65,7 +65,7 @@ Note: While masking gives many possibilities for enhanced graphical effects and 
 
 This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied. These effects are applied after elements have been sized and positioned according to the <a href="http://www.w3.org/TR/CSS2/visuren.html" title="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <a spec="css21">stacking context</a>. Furthermore, this specification replaces the section <a href="http://www.w3.org/TR/CSS2/visufx.html#clipping">Clipping: the clip property</a> from [[!CSS21]].
 
-The compositing model follows the SVG compositing model [[!SVG11]]: First the element and its descendants are styled and drawn on a temporary canvas without taking filter effects, masking, clipping or opacity of the element into account. Only then any of the following effects are applied in order: filter effects [[FILTER-EFFECTS]], clipping, masking and opacity.
+The compositing model follows the SVG compositing model [[!SVG11]]: First the element is styled under absence of filter effects, masking, clipping and opacity. Then the element and its descendants are drawn on a temporary canvas. In a last step the following effects are applied to the element in order: filter effects [[FILTER-EFFECTS]], clipping, masking and opacity.
 
 <h2 id="values">Values</h2>
 
@@ -696,6 +696,8 @@ Note: When referencing a grayscale image file, the transfer curve relating the e
 Note: SVG <a>graphics elements</a> (e.g., <a>'circle'</a> or <a>'text'</a>) are all treated as four-channel RGBA images for the purposes of masking operations.
 
 The effect of a mask is identical to what would have happened if there were no mask but instead the alpha channel of the given object were multiplied with the mask's resulting mask values.
+
+Regions not covered by a mask image are treated as transparent black. The mask value is 0.
 
 <h2 id="box-masks">Box Masks</h2>
 
