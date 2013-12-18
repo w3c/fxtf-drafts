@@ -100,7 +100,7 @@ Property index</a></ul></div>
 
 <p>A closed vector path, shape or polygon defines a so called <dfn data-dfn-type=dfn data-export="" id=clipping-path>clipping path<a class=self-link href=#clipping-path></a></dfn>. This clipping path is a region (in the absence of anti-aliasing) where everything on the "inside" of this region is allowed to show through but everything on the outside is "clipped out" and does not appear on the canvas.
 
-<p>The <a class=property data-link-type=propdesc href=#propdef-clip-path title=clip-path>clip-path</a> property can reference SVG <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement>graphics element</a> or use specified basic shapes as clipping path.
+<p>The <a class=property data-link-type=propdesc href=#propdef-clip-path title=clip-path>clip-path</a> property can reference an SVG <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement>graphics element</a> or use a specified basic shapes as clipping path.
 
 <h3 class="heading settled heading" data-level=1.2 id=masking0><span class=secno>1.2 </span><span class=content>Masking</span><a class=self-link href=#masking0></a></h3>
 
@@ -117,11 +117,11 @@ Property index</a></ul></div>
 
 <p>Masks are applied using the <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> or <a class=property data-link-type=propdesc href=#propdef-mask-box-source title=mask-box-source>mask-box-source</a> properties.
 
-<p>The <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> property may reference a <a href=#MaskElement><code class=element-name>&lt;mask&gt;</code></a> element. In this case the content of the <a href=#MaskElement><code class=element-name>&lt;mask&gt;</code></a> element is rendered into an off-screen image which has been initialized to transparent black. This off-screen image is taken as mask image. Alternatively, for many simple uses, the <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> property may refer directly to images to be used as mask image, forgoing the need for an explicit <a href=#MaskElement><code class=element-name>&lt;mask&gt;</code></a> element. The <a class=property data-link-type=propdesc href=#propdef-mask title=mask>mask</a> property serves as a shorthand property for <a class=property data-link-type=propdesc href=#propdef-mask-box title=mask-box>mask-box</a>, <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> and other characterizing properties.
+<p>The <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> property may reference a <a href=#MaskElement><code class=element-name>&lt;mask&gt;</code></a> element. In this case the content of the <a href=#MaskElement><code class=element-name>&lt;mask&gt;</code></a> element is rendered into temporary canvas which has been initialized to transparent black. This temporary canvas is taken as mask image. Alternatively, for many simple uses, the <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> property may refer directly to images to be used as mask image, forgoing the need for an explicit <a href=#MaskElement><code class=element-name>&lt;mask&gt;</code></a> element. The <a class=property data-link-type=propdesc href=#propdef-mask title=mask>mask</a> property serves as a shorthand property for <a class=property data-link-type=propdesc href=#propdef-mask-box title=mask-box>mask-box</a>, <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> and other characterizing properties.
 
 <p>The <a class=property data-link-type=propdesc href=#propdef-mask-box-source title=mask-box-source>mask-box-source</a> property splits a mask image into 9 pieces. The pieces may be sliced, scaled and stretched in various ways to fit the size of the <a data-link-type=dfn href=#mask-box-image-area title="mask box image area">mask box image area</a>. The <a class=property data-link-type=propdesc href=#propdef-mask-box title=mask-box>mask-box</a> property serves as a shorthand property for <a class=property data-link-type=propdesc href=#propdef-mask-box-source title=mask-box-source>mask-box-source</a> and other characterizing properties.
 
-<p class=note>Note: While masking gives many possibilities for enhanced graphical effects and in general provides more control over the "visible portions" of the content, clipping paths can perform better and are easier to interpolate.
+<p class=note>Note: While masking gives many possibilities for enhanced graphical effects and in general provides more control over the “visible portions” of the content, clipping paths can perform better and are easier to interpolate.
 
 <h2 class="heading settled heading" data-level=2 id=placement><span class=secno>2 </span><span class=content>Module interactions</span><a class=self-link href=#placement></a></h2>
 
@@ -216,7 +216,7 @@ Property index</a></ul></div>
     <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-shapes-2/#ltbasic-shapegt title="<basic-shape>">&lt;basic-shape&gt;</a>
   </dt>
   <dd>
-    A basic shape function as defined in the CSS Shapes module <a data-biblio-type=normative data-link-type=biblio href=#css-shapes title=css-shapes>[CSS-SHAPES]</a>. If no reference box is specified, the border-box will be used as reference box.
+    A basic shape function as defined in the CSS Shapes module <a data-biblio-type=normative data-link-type=biblio href=#css-shapes title=css-shapes>[CSS-SHAPES]</a>. A basic shape makes use of the specified reference box to size and position the basic shape. If no reference box is specified, the border-box will be used as reference box.
   </dd>
   <dt><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-backgrounds-3/#box title="<box>">&lt;box&gt;</a></dt>
   <dd>
@@ -232,7 +232,7 @@ Property index</a></ul></div>
   </dd>
 </dl>
 
-<p>When a break splits the box, the clipping path is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module <a data-biblio-type=normative data-link-type=biblio href=#css3-break title=css3-break>[CSS3-BREAK]</a>.
+<p>When a break splits the box, the clipping path is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow the algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module <a data-biblio-type=normative data-link-type=biblio href=#css3-break title=css3-break>[CSS3-BREAK]</a>.
 
 <p>A computed value of other than <span class=css data-link-type=maybe title=none>none</span> results in the creation of a <a data-link-spec=css21 data-link-type=dfn href=http://www.w3.org/TR/CSS21/visuren.html#x43 title="stacking context">stacking context</a> <a data-biblio-type=normative data-link-type=biblio href=#css21 title=css21>[CSS21]</a> the same way that CSS <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-color-3/#opacity title=opacity>opacity</a> <a data-biblio-type=informative data-link-type=biblio href=#css3color title=css3color>[CSS3COLOR]</a> does.
 
@@ -379,6 +379,8 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 <h3 class="heading settled heading" data-level=6.2 id=the-clip-rule><span class=secno>6.2 </span><span class=content>Winding Rules: the <a class=property data-link-type=propdesc href=#propdef-clip-rule title=clip-rule>clip-rule</a> property</span><a class=self-link href=#the-clip-rule></a></h3>
 
 <table class="definition propdef"><tr><th>Name:<td><dfn class=css-code data-dfn-type=property data-export="" id=propdef-clip-rule>clip-rule<a class=self-link href=#propdef-clip-rule></a></dfn><tr><th>Value:<td>nonzero | evenodd<tr><th>Initial:<td>nonzero<tr><th>Applies to:<td>Applies to SVG <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement>graphics elements</a><tr><th>Inherited:<td>yes<tr><th>Media:<td>visual<tr><th>Computed value:<td>as specified<tr><th>Percentages:<td>n/a<tr><th>Animatable:<td>no</table>
+<p>The <a class=property data-link-type=propdesc href=#propdef-clip-rule title=clip-rule>clip-rule</a> property specifies the used winding rule for a <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement>graphics element</a>.
+
 <dl>
   <dt><dfn data-dfn-type=dfn data-noexport="" id=nonzero>nonzero<a class=self-link href=#nonzero></a></dfn></dt>
   <dd>See description of <a class=property data-link-type=propdesc href=http://www.w3.org/TR/SVG/painting.html#FillRuleProperty title=fill-rule>fill-rule</a> property <a data-biblio-type=normative data-link-type=biblio href=#svg11 title=svg11>[SVG11]</a>.</dd>
@@ -389,7 +391,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
 
 <p>The <a class=property data-link-type=propdesc href=#propdef-clip-rule title=clip-rule>clip-rule</a> property only applies to <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/intro.html#TermGraphicsElement>graphics elements</a> that are contained within a <a href=#ClipPathElement><code class=element-name>&lt;clipPath&gt;</code></a> element.
 
-<p class=note>Note: The <a class=property data-link-type=propdesc href=#propdef-clip-rule title=clip-rule>clip-rule</a> does not apply to <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-shapes-2/#ltbasic-shapegt title="<basic-shape>">&lt;basic-shape&gt;</a>s.
+<p class=note>Note: The <a class=property data-link-type=propdesc href=#propdef-clip-rule title=clip-rule>clip-rule</a> property does not apply to <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-shapes-2/#ltbasic-shapegt title="<basic-shape>">&lt;basic-shape&gt;</a>s.
 
 <div class=example><p>The following fragment of code will cause an evenodd clipping rule to be applied to the clipping path because <a class=property data-link-type=propdesc href=#propdef-clip-rule title=clip-rule>clip-rule</a> is specified on the <a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/paths.html#PathElement><code class=element-name>&lt;path&gt;</code></a> element that defines the clipping shape:
 
@@ -432,7 +434,7 @@ p#two { clip: rect(5px, 55px, 45px, 5px); }</code></pre>
   </dd>
 </dl>
 
-<p>When a break splits the box, <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module <a data-biblio-type=normative data-link-type=biblio href=#css3-break title=css3-break>[CSS3-BREAK]</a>.
+<p>When a break splits the box, <a class=property data-link-type=propdesc href=#propdef-mask-image title=mask-image>mask-image</a> is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow the algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module <a data-biblio-type=normative data-link-type=biblio href=#css3-break title=css3-break>[CSS3-BREAK]</a>.
 
 <p>A computed value of other than <span class=css data-link-type=maybe title=none>none</span> results in the creation of a <a data-link-spec=css21 data-link-type=dfn href=http://www.w3.org/TR/CSS21/visuren.html#x43 title="stacking context">stacking context</a> <a data-biblio-type=normative data-link-type=biblio href=#css21 title=css21>[CSS21]</a> the same way that CSS <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-color-3/#opacity title=opacity>opacity</a> <a data-biblio-type=informative data-link-type=biblio href=#css3color title=css3color>[CSS3COLOR]</a> does.
 

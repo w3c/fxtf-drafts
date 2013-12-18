@@ -38,7 +38,7 @@ This specification defines two different graphical operations which both fully o
 
 A closed vector path, shape or polygon defines a so called <dfn export>clipping path</dfn>. This clipping path is a region (in the absence of anti-aliasing) where everything on the "inside" of this region is allowed to show through but everything on the outside is "clipped out" and does not appear on the canvas.
 
-The 'clip-path' property can reference SVG <a>graphics element</a> or use specified basic shapes as clipping path.
+The 'clip-path' property can reference an SVG <a>graphics element</a> or use a specified basic shapes as clipping path.
 
 <h3 id="masking">Masking</h3>
 
@@ -55,11 +55,11 @@ The effect of applying a mask to a graphical object is as if the graphical objec
 
 Masks are applied using the 'mask-image' or 'mask-box-source' properties.
 
-The 'mask-image' property may reference a <a>'mask'</a> element. In this case the content of the <a>'mask'</a> element is rendered into an off-screen image which has been initialized to transparent black. This off-screen image is taken as mask image. Alternatively, for many simple uses, the 'mask-image' property may refer directly to images to be used as mask image, forgoing the need for an explicit <a>'mask'</a> element. The 'mask' property serves as a shorthand property for 'mask-box', 'mask-image' and other characterizing properties.
+The 'mask-image' property may reference a <a>'mask'</a> element. In this case the content of the <a>'mask'</a> element is rendered into temporary canvas which has been initialized to transparent black. This temporary canvas is taken as mask image. Alternatively, for many simple uses, the 'mask-image' property may refer directly to images to be used as mask image, forgoing the need for an explicit <a>'mask'</a> element. The 'mask' property serves as a shorthand property for 'mask-box', 'mask-image' and other characterizing properties.
 
 The 'mask-box-source' property splits a mask image into 9 pieces. The pieces may be sliced, scaled and stretched in various ways to fit the size of the <i>mask box image area</i>. The 'mask-box' property serves as a shorthand property for 'mask-box-source' and other characterizing properties.
 
-Note: While masking gives many possibilities for enhanced graphical effects and in general provides more control over the "visible portions" of the content, clipping paths can perform better and are easier to interpolate.
+Note: While masking gives many possibilities for enhanced graphical effects and in general provides more control over the “visible portions” of the content, clipping paths can perform better and are easier to interpolate.
 
 <h2 id="placement">Module interactions</h2>
 
@@ -166,7 +166,7 @@ Specifies a basic shape or references a <a>'clipPath element'</a> element to cre
     <<basic-shape>>
   </dt>
   <dd>
-    A basic shape function as defined in the CSS Shapes module [[!CSS-SHAPES]]. If no reference box is specified, the border-box will be used as reference box.
+    A basic shape function as defined in the CSS Shapes module [[!CSS-SHAPES]]. A basic shape makes use of the specified reference box to size and position the basic shape. If no reference box is specified, the border-box will be used as reference box.
   </dd>
   <dt><<box>></dt>
   <dd>
@@ -182,7 +182,7 @@ Specifies a basic shape or references a <a>'clipPath element'</a> element to cre
   </dd>
 </dl>
 
-When a break splits the box, the clipping path is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
+When a break splits the box, the clipping path is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow the algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
 
 A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does.
 
@@ -330,6 +330,8 @@ Media: visual
 Animatable: no
 </pre>
 
+The 'clip-rule' property specifies the used winding rule for a <a>graphics element</a>.
+
 <dl>
   <dt><dfn>nonzero</dfn></dt>
   <dd>See description of 'fill-rule' property [[!SVG11]].</dd>
@@ -340,7 +342,7 @@ Animatable: no
 
 The 'clip-rule' property only applies to <a>graphics elements</a> that are contained within a <a>'clipPath'</a> element.
 
-Note: The 'clip-rule' does not apply to <<basic-shape>>s.
+Note: The 'clip-rule' property does not apply to <<basic-shape>>s.
 
 <div class=example><p>The following fragment of code will cause an evenodd clipping rule to be applied to the clipping path because 'clip-rule' is specified on the <a>'path'</a> element that defines the clipping shape:
 
@@ -400,7 +402,7 @@ This property sets the mask image of an element. Where:
   </dd>
 </dl>
 
-When a break splits the box, 'mask-image' is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow that algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
+When a break splits the box, 'mask-image' is rendered for the whole box as if the box was unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. The UA must follow the algorithm described by “Joining Boxes for ‘slice’” in the CSS Fragmentation module [[!CSS3-BREAK]].
 
 A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does.
 
