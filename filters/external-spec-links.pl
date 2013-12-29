@@ -388,8 +388,18 @@ sub elementSummary {
     for my $cat (@{$elements{$name}{attributecategories}}) {
       if ($cat eq 'presentation') {
         $attributes .= "<li><a href='$attributeCategories{$cat}{href}'>$cat attributes</a><span class=expanding> — ";
-        $attributes .= join(', ', map { "<a href='$properties{$_}{href}'>‘<code class=property>$_</code>’</a>" }
+        $attributes .= join(', ', map { "'$_'" }
                             sort keys(%properties));
+        $attributes .= '</span></li>';
+      } elsif ($cat eq 'filter primitive') {
+        $attributes .= "<li><a href='$attributeCategories{$cat}{href}'>$cat attributes</a><span class=expanding> — ";
+        $attributes .= join(', ', map { "<a element-attr for=filter-primitive>$_</a>" }
+                            @{$attributeCategories{$cat}{attributesOrder}});
+        $attributes .= '</span></li>';
+      } elsif ($cat eq 'transfer function element') {
+        $attributes .= "<li><a href='$attributeCategories{$cat}{href}'>$cat attributes</a><span class=expanding> — ";
+        $attributes .= join(', ', map { "<a element-attr for=feComponentTransfer>$_</a>" }
+                            @{$attributeCategories{$cat}{attributesOrder}});
         $attributes .= '</span></li>';
       } elsif (defined $attributeCategories{$cat}{href}) {
         $attributes .= "<li><a href='$attributeCategories{$cat}{href}'>$cat attributes</a><span class=expanding> — ";
@@ -408,7 +418,7 @@ sub elementSummary {
       $attributes .= "<li><a href='$href'><span class=attr-name>‘$attr’</span></a></li>";
     }
     for my $attr (@{$elements{$name}{attributesSpecific}}) {
-      $attributes .= "<li><a href='$elements{$name}{attributes}{$attr}'><span class=attr-name>‘$attr’</span></a></li>";
+      $attributes .= "<li><a element-attr for=$name>$attr</a></li>";
     }
   }
   if ($attributes eq '') {
