@@ -694,7 +694,7 @@ The following attributes are available for all filter primitives:
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>result</dfn> = "<em><dfn>&lt;filter-primitive-reference></dfn></em>"
+    <dfn>result</dfn> = "<em><dfn type dfn-for=result>&lt;filter-primitive-reference></dfn></em>"
   </dt>
   <dd>
     <<filter-primitive-reference>> is an <<custom-ident>> [[CSS3VAL]] and an assigned name for this <i>filter primitive</i>. If supplied, then graphics that result from processing this <i>filter primitive</i> can be referenced by an <a element-attr>in</a> attribute on a subsequent filter primitive within the same <a element>filter</a> element. If no value is provided, the output will only be available for re-use as the implicit input into the next <i>filter primitive</i> if that <i>filter primitive</i> provides no value for its <a element-attr>in</a> attribute.
@@ -932,7 +932,7 @@ provides the list of available image blending modes:</p>
   </tbody>
 </table>
 
-The ''normal'' blend mode is equivalent to <a href="#feCompositeOperatorAttribute"><code>operator="over"</code></a> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
+The ''normal'' blend mode is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
 
 <div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
@@ -1783,13 +1783,13 @@ When the image must be resampled to match the coordinate system defined by <a el
     <dfn>kernelUnitLength</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
   </dt>
   <dd>
-    <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) between successive columns and rows, respectively, in the <a element-attr>kernelMatrix</a>. By specifying value(s) for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feConvolveMatrix>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary offscreen images aligns with the pixel grid of the kernel.</p>
+    <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) between successive columns and rows, respectively, in the <a element-attr>kernelMatrix</a>. By specifying value(s) for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feConvolveMatrix>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary off-screen images aligns with the pixel grid of the kernel.</p>
     <p>If a negative or zero value is specified the default value will be used instead.</p>
     <p class="note">Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>preserveAlpha</dfn> = "<em>false | true</e,>"
+    <dfn>preserveAlpha</dfn> = "<em>false | true</em>"
   </dt>
   <dd>
     <p>A value of ''false'' indicates that the convolution will apply to all channels, including the alpha channel. In this case the <code>ALPHA<sub>X,Y</sub></code> of the <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given pixel is:</p>
@@ -1797,15 +1797,15 @@ When the image must be resampled to match the coordinate system defined by <a el
       ALPHA<sub>X,Y</sub>&nbsp;=&nbsp;(&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUM
       <sub>I=0&nbsp;to&nbsp;[<a href=
-      "#feConvolveMatrixElementOrderAttribute">orderY</a>-1]</sub>&nbsp;{&nbsp;<br>
+      "#element-attrdef-order">orderY</a>-1]</sub>&nbsp;{&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUM
       <sub>J=0&nbsp;to&nbsp;[<a href=
-      "#feConvolveMatrixElementOrderAttribute">orderX</a>-1]</sub>&nbsp;{&nbsp;<br>
+      "#element-attrdef-order">orderX</a>-1]</sub>&nbsp;{&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SOURCE
-      <sub>X-<a>'targetX'</a>+J,&nbsp;Y-<a element-attr>targetY</a>+I</sub>&nbsp;*&nbsp;
+      <sub>X-<a element-attr>targetX</a>+J,&nbsp;Y-<a element-attr>targetY</a>+I</sub>&nbsp;*&nbsp;
       <a element-attr>kernelMatrix</a><sub><a href=
-      "#feConvolveMatrixElementOrderAttribute">orderX</a>-J-1,&nbsp; <a href= 
-      "#feConvolveMatrixElementOrderAttribute">orderY</a>-I-1</sub>&nbsp;<br>
+      "#element-attrdef-order">orderX</a>-J-1,&nbsp; <a href= 
+      "#element-attrdef-order">orderY</a>-I-1</sub>&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;/&nbsp;
@@ -2535,7 +2535,7 @@ This filter primitive refers to a graphic external to this filter element, which
 
 This filter primitive can refer to an external image or can be a reference to another piece of SVG. It produces an image similar to the built-in image source <a value>SourceGraphic</a> except that the graphic comes from an external source.
 
-If the <a element-attr for=feImage>href</a> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use'</a> element. In either case, the current user coordinate system depends on the value of attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The processing of the ''preserveAspectRatio'' attribute on the <a element>feImage</a> element is identical to that of the <a>'image'</a> element.
+If the <a element-attr for=feImage>href</a> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use'</a> element. In either case, the current user coordinate system depends on the value of attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The processing of the <a element-attr for=feImage>preserveAspectRatio</a> attribute on the <a element>feImage</a> element is identical to that of the <a>'image'</a> element.
 
 <p class="issue">
   What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don't apply filter or null filter. What about ''preserve aspect ratio''?
@@ -2551,13 +2551,13 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
   <dd>
     <p>An <a>IRI reference</a> to an image resource or to an element.</p>
     <p>Animatable: yes.</p>
-    <p class="note">This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a href="#feImageElementHrefAttribute">href</a> attribute instead.</p>
+    <p class="note">This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a element-attr for=feImage>href</a> attribute instead.</p>
   </dd>
   <dt>
     <dfn>href</dfn> = "<em>&lt;IRI&gt;</em>"
   </dt>
   <dd>
-    <p>An <a>IRI reference</a> to an image resource or to an element. If both, the <a href="#feImageElementXlinkHrefAttribute">xlink:href</a> and the <em>href</em> attribute are specified, the latter overrides the first defintion.</p>
+    <p>An <a>IRI reference</a> to an image resource or to an element. If both, the <a element-attr for=feImage>xlink:href</a> and the <a element-attr for=feImage>href</a> attribute are specified, the latter overrides the first defintion.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2572,7 +2572,7 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
     <dfn>crossorigin</dfn> = "<em>anonymous</em> | <em>use-credentials</em>"
   </dt>
   <dd>
-    The <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a element>feDisplacementMap</a>. For the defintion see <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">''crossorigin''</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="#security">security section</a> in this specification.
+    The <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">crossorigin</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a element>feDisplacementMap</a>. For the defintion see <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">crossorigin</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="#security">security section</a> in this specification.
   </dd>
 </dl>
 
@@ -3001,9 +3001,9 @@ double noise2(int nColorChannel, double vec[2], StitchInfo *pStitchInfo)
   b = lerp(sx, u, v);
   return lerp(sy, a, b);
 }
-double turbulence(int nColorChannel, double *point, double <a href="#feTurbulenceBaseFrequencyAttribute">fBaseFreqX</a>, double <a href="#feTurbulenceBaseFrequencyAttribute">fBaseFreqY</a>,
-          int <a href="#feTurbulenceNumOctavesAttribute">nNumOctaves</a>, bool bFractalSum, bool bDoStitching,
-          double <a href="#FilterPrimitiveSubRegion">fTileX</a>, double <a href="#FilterPrimitiveSubRegion">fTileY</a>, double <a href="#FilterPrimitiveSubRegion">fTileWidth</a>, double <a href="#FilterPrimitiveSubRegion">fTileHeight</a>)
+double turbulence(int nColorChannel, double *point, double <a href="#element-attrdef-basefrequency">fBaseFreqX</a>, double <a href="#element-attrdef-basefrequency">fBaseFreqY</a>,
+          int <a href="#element-attrdef-numoctaves">nNumOctaves</a>, bool bFractalSum, bool bDoStitching,
+          double <a href="#filter-primitive-subregion">fTileX</a>, double <a href="#filter-primitive-subregion">fTileY</a>, double <a href="#filter-primitive-subregion">fTileWidth</a>, double <a href="#filter-primitive-subregion">fTileHeight</a>)
 {
   StitchInfo stitch;
   StitchInfo *pStitchInfo = NULL; // Not stitching when NULL.
