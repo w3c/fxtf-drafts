@@ -866,23 +866,27 @@ This filter blends two objects together using commonly used imaging software ble
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feBlend>
   <dt>
-    <dfn>mode</dfn> = "<em>normal | multiply | screen | darken | lighten</em>"
+    <dfn>mode</dfn> = "<span dfn-type=value dfn-for=mode><dfn>normal</dfn> | <dfn>multiply</dfn> | <dfn>screen</dfn> | <dfn>darken</dfn> | <dfn>lighten</dfn></em>"
   </dt>
   <dd>
     <p>One of the image blending modes (see <a href="#BlendingTable">table</a> below). The <a>lacuna value</a> for <a element-attr>mode</a> is ''normal''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
+    <dfn>no-composite</dfn> = "<dfn dfn-type=value dfn-for=no-composite>no-composite</dfn>"
+  </dt>
+  <dd>
+    <p>If the <a element-attr>no-composite</a> attribute is present, the specified blend mode must not use alpha compositing.</p>
+    <p>Animatable: no.</p>
+  </dd>
+  <dt>
     <dfn>in2</dfn> = "<em>(see <a element-attr>in</a> attribute)</em>"
   </dt>
   <dd>
-    <p>The second input image to the blending operation. This attribute can take on the same values as the <a element-attr>in</a> attribute. (<a href="http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg">example</a>)</p>
-    <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a element>feComposite</a>: Does that mean that "in2" should take the value of "in" if not specified?
+    <p>The second input image to the blending operation.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
-
-<p class="issue">SVG WG decision: Enable blending without composition.</p>
 
 For all feBlend modes, the result opacity is computed as follows:
 
@@ -905,7 +909,7 @@ provides the list of available image blending modes:</p>
   <thead>
     <tr>
       <th>Image Blending Mode
-      <th>Formula for computing result color
+      <th>Formula for computing result color <em>with</em> compositing
     </tr>
   </thead>
   <tbody>
@@ -932,7 +936,38 @@ provides the list of available image blending modes:</p>
   </tbody>
 </table>
 
-The ''normal'' blend mode is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
+<table class="data">
+  <thead>
+    <tr>
+      <th>Image Blending Mode
+      <th>Formula for computing result color <em>without</em> compositing
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>normal
+      <td><pre>cr = ca</pre>
+    </tr>
+    <tr>
+      <th>multiply
+      <td><pre>cr = (1 - qb) x ca + cb x ca</pre>
+    </tr>
+    <tr>
+      <th>screen
+      <td>cr = ca + qs x cb - cb x ca</pre>
+    </tr>
+    <tr>
+      <th>darken
+      <td><pre>cr = (1 - qb) x ca + Min (qa x cb, qb x ca)</pre>
+    </tr>
+    <tr>
+      <th>lighten
+      <td><pre>cr = (1 - qb) x ca + Max (qa x cb, qb x ca)</pre>
+    </tr>
+  </tbody>
+</table>
+
+The ''normal'' blend mode with alpha compositing is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
 
 <div class="example">
 <pre class="xml">&lt;?xml version="1.0"?&gt;
@@ -1418,7 +1453,7 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
 
 <!--elementsummary feComposite-->
 
-This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: ''over'', ''in'', ''atop'', ''out', ''xor'' [[!COMPOSITING]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
+This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: ''over'', ''in'', ''atop'', ''out'', ''xor'' [[!COMPOSITING]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
 
 The <em>arithmetic</em> operation is useful for combining the output from the <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filters with texture data. It is also useful for implementing <em>dissolve</em>. If the <em>arithmetic</em> operation is chosen, each result pixel is computed using the following formula:
 
@@ -1439,7 +1474,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feComposite>
   <dt>
-    <dfn>operator</dfn> = "<em>over | in | out | atop | xor | arithmetic</em>"
+    <dfn>operator</dfn> = "<span dfn-type=value dfn-for=operator><dfn>over</dfn> | <dfn>in</dfn> | <dfn>out</dfn> | <dfn>atop</dfn> | <dfn>xor</dfn> | <dfn>arithmetic</dfn></span>"
   </dt>
   <dd>
     <p>The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[PORTERDUFF]]. The ''arithmetic'' operator is described above. The <a>lacuna value</a> for <a element-attr for=feComposite>operator</a> is ''over''.</p>
@@ -1481,8 +1516,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
     <dfn>in2</dfn> = "<em>(see <a element-attr>in</a> attribute)</em>"
   </dt>
   <dd>
-    <p>The second input image to the compositing operation. This attribute can take on the same values as the <a element-attr>in</a> attribute.</p>
-    <p class="issue"><a href="http://lists.w3.org/Archives/Public/public-fx/2013OctDec/0137.html">public-fx</a>: <a element>feBlend</a>: Does that mean that "in2" should take the value of "in" if not specified? (<a href="http://tavmjong.free.fr//INKSCAPE/MANUAL/images/FILTERS/Filters_SolarFlare.svg">example</a>)</p>
+    <p>The second input image to the compositing operation.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -1756,7 +1790,7 @@ When the image must be resampled to match the coordinate system defined by <a el
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>edgeMode</dfn> = "<em>duplicate | wrap | none</em>"
+    <dfn>edgeMode</dfn> = "<a value>duplicate</a> | <a value>wrap</a> | none</span>"
   </dt>
   <dd>
     <p>Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image.</p>
@@ -2512,13 +2546,13 @@ Frequently this operation will take place on alpha-only images, such as that pro
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>edgeMode</dfn> = "<em>duplicate</em> | <em>wrap</em> | <em>none</em>"
+    <dfn>edgeMode</dfn> = "<a value>duplicate</a> | <a value>wrap</a> | none"
   </dt>
   <dd>
     <p>Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image.</p>
-    <p>''duplicate'' indicates that the input image is extended along each of its borders as necessary by duplicating the color values at the given edge of the input image.</p>
+    <p><dfn dfn-type=value dfn-for=edgeMode>duplicate</dfn> indicates that the input image is extended along each of its borders as necessary by duplicating the color values at the given edge of the input image.</p>
     <p>Original N-by-M image, where m=M-1 and n=N-1:</p>
-    <p>''wrap'' indicates that the input image is extended by taking the color values from the opposite edge of the image.</p>
+    <p><dfn dfn-type=value dfn-for=edgeMode>wrap</dfn> indicates that the input image is extended by taking the color values from the opposite edge of the image.</p>
     <p>The value ''none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
     <p>The <a>lacuna value</a> for <a element-attr for=feGaussianBlur>edgeMode</a> is ''none''.</p>
     <p>Animatable: yes.</p>
@@ -2549,7 +2583,7 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
     <dfn>xlink:href</dfn> = "<em>&lt;IRI&gt;</em>"
   </dt>
   <dd>
-    <p>An <a>IRI reference</a> to an image resource or to an element.</p>
+    <p>See <a element-attr for=feImage>href</a> attribute.</p>
     <p>Animatable: yes.</p>
     <p class="note">This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a element-attr for=feImage>href</a> attribute instead.</p>
   </dd>
@@ -4592,10 +4626,10 @@ It is important that the timing of any filter operation is independent of pixel 
 The following <i>filter primitives</i> may have access to pixel values that potentially contain privacy-sensitive information, either from the filtered object itself or other sources such as CSS styling. These primitives must be flagged as "tainted".
 
 <ul>
-  <li><a element>feFlood</a> when the <i>specified value</i> of the 'flood-color' property computes to ''inherit'' or ''currentColor'',</li>
-  <li><a element>feDropShadow</a> when the <i>specified value</i> value of the 'flood-color' property computes to ''inherit'' or ''currentColor'',</li>
-  <li><a element>feDiffuseLighting</a>, when the <i>specified value</i> value of the 'lighting-color' property computes to ''inherit'' or ''currentColor''</li>
-  <li><a element>feSpecularLighting</a> when the <i>specified value</i> value of the 'lighting-color' property computes to ''inherit'' or ''currentColor'',</li>
+  <li><a element>feFlood</a> when the <i>specified value</i> of the 'flood-color' property computes to ''currentColor'',</li>
+  <li><a element>feDropShadow</a> when the <i>specified value</i> value of the 'flood-color' property computes to ''currentColor'',</li>
+  <li><a element>feDiffuseLighting</a>, when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor''</li>
+  <li><a element>feSpecularLighting</a> when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor'',</li>
   <li><a element>feImage</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and</li>
   <li>the filter primitives: <a value>SourceGraphic</a>, <a value>SourceAlpha</a>, <a value>BackgroundImage</a>, <a value>BackgroundAlpha</a>, <a value>FillPaint</a> and <a value>StrokePaint</a>.</li>
 </ul>
