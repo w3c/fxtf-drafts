@@ -254,10 +254,6 @@ In addition to the property-specific values listed in their definitions, all pro
 When used in this specification, terms have the meanings assigned in this section.
 
 <dl>
-<dt><dfn>null filter</dfn></dt>
-<dd>
-  The null filter output is all transparent black pixels. If applied to an element it means that the element (and children if any) becomes invisible. Note that it does not affect event processing.
-</dd>
 <dt><dfn>pass through filter</dfn></dt>
 <dd>
   The pass through filter output is equal to the primary input of the filter.
@@ -272,15 +268,9 @@ When used in this specification, terms have the meanings assigned in this sectio
 </dd>
 <dt><dfn>user coordinate system</dfn></dt>
 <dd>
-  <p>
-    In general, a coordinate system defines locations and distances on the current canvas. The current user coordinate system (also user coordinate system) is the coordinate system that is currently active and which is used to define how coordinates and lengths are located and computed, respectively, on the current canvas [[CSS3-TRANSFORMS]].
-  </p>
-  <p>
-    For elements that have an associated CSS layout box, the current user coordinate system has its origin at the top-left corner of the <i>bounding client rect</i> and one unit equals one CSS pixel. The viewport for resolving percentage values is defined by the width and height of the <i>bounding client rect</i>.
-  </p>
-  <p>
-    If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace, the current user coordinate system has its origin at the top-left corner of the element's nearest viewport.
-  </p>
+  <p>In general, a coordinate system defines locations and distances on the current canvas. The current user coordinate system (also user coordinate system) is the coordinate system that is currently active and which is used to define how coordinates and lengths are located and computed, respectively, on the current canvas [[CSS3-TRANSFORMS]].</p>
+  <p>For elements that have an associated CSS layout box, the current user coordinate system has its origin at the top-left corner of the <i>bounding client rect</i> and one unit equals one CSS pixel. The viewport for resolving percentage values is defined by the width and height of the <i>bounding client rect</i>.</p>
+  <p>If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace, the current user coordinate system has its origin at the top-left corner of the element's nearest viewport.</p>
 </dd>
 <dt><dfn>object bounding box units</dfn></dt>
 <dd>
@@ -304,7 +294,7 @@ When used in this specification, terms have the meanings assigned in this sectio
 </dd>
 </dl>
 
-<h2 id="FilterProperty">The 'filter' property</h2>
+<h2 id="FilterProperty">Graphic filters: the 'filter' property</h2>
 
 The description of the 'filter' property is as follows:
 
@@ -322,174 +312,101 @@ Animatable: yes
 
 If the value of the 'filter' property is ''none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
-<pre class='prod'><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> <!--| <<child-selector>>--> ]+</pre>
+<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> <!--| <<child-selector>>--> ]+</pre>
 
-<pre class='prod'><dfn>&lt;filter-function></dfn> = [ <<blur()>> | <<brightness()>> | <<contrast()>> | <<custom()>> | <<drop-shadow()>>
+<pre class=prod><dfn>&lt;filter-function></dfn> = [ <<blur()>> | <<brightness()>> | <<contrast()>> | <<custom()>> | <<drop-shadow()>>
   | <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
-
-<!--<pre class='prod'><dfn>&lt;child-selector></dfn> = <<select()>> | child</pre>-->
 
 <dl id="FilterFunction" dfn-for="filter">
 <dt><dfn>&lt;url></dfn></dt>
 <dd>
   A filter reference to a <a element>filter</a> element. For example ''url(commonfilters.svg#filter)''. If the filter references a non-existent object or the referenced object is not a <a element>filter</a> element, then the whole filter chain is ignored. No filter is applied to the object.
 </dd>
-<!--<dt>
-  <dfn>child</dfn>
+<dt>
+  <span class=prod><dfn>blur()</dfn> = blur( <<length>> )</span>
 </dt>
 <dd>
-  A keyword to indicate that the last direct child <a element>filter</a> element of the element the 'filter' property is applied should be used as the filter source. It is equivalent to ''select(filter:last-of-type)''.
+  <p>Applies a Gaussian blur to the input image. The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function. The parameter is specified a CSS length, but does not accept percentage values. The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''0px''.</p>
 </dd>
-<dt><<child-selector>></dt>
-<dd>
-  A functional notation [[!CSS3VAL]] accepting a comma-separated list of <<compound-selector>> [[!SELECTORS4]] that represents first matching child <a element>filter</a> element in <a>tree order</a> (as defined in [[!DOM]]).
-</dd>-->
 <dt>
-  <span class='prod'><dfn>blur()</dfn> = blur( <<length>> )</span>
+  <span class=prod><dfn>brightness()</dfn> = brightness( [ <<number>> | <<percentage>> ] )</span>
 </dt>
 <dd>
-  <p>
-    Applies a Gaussian blur to the input image. The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function. The parameter is specified a CSS length, but does not accept percentage values. The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''0px''.
-  </p>
+  <p>Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>brightness()</dfn> = brightness( [ <<number>> | <<percentage>> ] )</span>
+  <span class=prod><dfn>contrast()</dfn> = contrast( [ <<number>> | <<percentage>> ] )</span>
 </dt>
 <dd>
-  <p>
-    Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''1''.
-  </p>
+  <p>Adjusts the contrast of the input. A value of ''0%'' will create an image that is completely gray. A value of ''100%'' leaves the input unchanged. Values of amount over 100% are allowed, providing results with less contrast. The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>contrast()</dfn> = contrast( [ <<number>> | <<percentage>> ] )</span>
-</dt>
-<dd>
-  <p>
-    Adjusts the contrast of the input. A value of ''0%'' will create an image that is completely gray. A value of ''100%'' leaves the input unchanged. Values of amount over 100% are allowed, providing results with less contrast. The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''1''.
-  </p>
-</dd>
-<dt>
-  <span class='prod'><dfn>custom()</dfn> = custom( IDENT [ , <<param>> ]* )</span>
+  <span class=prod><dfn>custom()</dfn> = custom( IDENT [ , <<param>> ]* )</span>
 </dt>
 <dd>
   References a custom filter at-rule by the given identifier. See <a href= "#custom-filter">Custom Filter Function</a> for details.
 </dd>
 <dt>
-  <span class='prod'><dfn>drop-shadow()</dfn> = drop-shadow( <<length>>{2,3} <<color>>? )</span>
+  <span class=prod><dfn>drop-shadow()</dfn> = drop-shadow( <<length>>{2,3} <<color>>? )</span>
 </dt>
 <dd>
-  <p>
-    Applies a drop shadow effect to the input image. A drop shadow is effectively a blurred, offset version of the input image's alpha mask drawn in a particular color, composited below the image. Values are interpreted as for 'box-shadow' [[!CSS3BG]]. The markup equivalent of this function is <a href="#dropshadowEquivalent">given below</a>.
-  </p>
-  <p class="note">
-    Note that spread values or multiple shadows are not accepted for this level of the specification.
-  </p>
-  <p>
-    The lacuna value for interpolation is all length values set to ''0'' and the used color is taken from the 'color' property.
-  </p>
+  <p>Applies a drop shadow effect to the input image. A drop shadow is effectively a blurred, offset version of the input image's alpha mask drawn in a particular color, composited below the image. Values are interpreted as for 'box-shadow' [[!CSS3BG]]. The markup equivalent of this function is <a href="#dropshadowEquivalent">given below</a>.</p>
+  <p class=note>Note that spread values or multiple shadows are not accepted for this level of the specification.</p>
+  <p>The lacuna value for interpolation is all length values set to ''0'' and the used color is taken from the 'color' property.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>grayscale()</dfn> = grayscale( [ <<number>> | <<percentage>> ] )</span>
+  <span class=prod><dfn>grayscale()</dfn> = grayscale( [ <<number>> | <<percentage>> ] )</span>
 </dt>
 <dd>
-  <p>
-    Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''0''.
-  </p>
+  <p>Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''0''.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>hue-rotate()</dfn> = hue-rotate( <<angle>> )</span>
+  <span class=prod><dfn>hue-rotate()</dfn> = hue-rotate( <<angle>> )</span>
 </dt>
 <dd>
-  <p>
-    Applies a hue rotation on the input image. The passed parameter defines the number of degrees around the color circle the input samples will be adjusted. A value of ''0deg'' leaves the input unchanged. Implementations should not normalize this value in order to allow animations beyond ''360deg''. The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''0deg''.
-  </p>
+  <p>Applies a hue rotation on the input image. The passed parameter defines the number of degrees around the color circle the input samples will be adjusted. A value of ''0deg'' leaves the input unchanged. Implementations should not normalize this value in order to allow animations beyond ''360deg''. The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.</p>
+  <p>The lacuna value for interpolation is ''0deg''.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>invert()</dfn> = invert( [ <<number>> | <<percentage>> ] )</span>
+  <span class=prod><dfn>invert()</dfn> = invert( [ <<number>> | <<percentage>> ] )</span>
 </dt>
 <dd>
-  <p>
-    Inverts the samples in the input image. The passed parameter defines the proportion of the conversion. A value of 100% is completely inverted. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''0''.
-  </p>
+  <p>Inverts the samples in the input image. The passed parameter defines the proportion of the conversion. A value of 100% is completely inverted. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''0''.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>opacity()</dfn> = opacity( [ <<number>> | <<percentage>> ] )</span>
+  <span class=prod><dfn>opacity()</dfn> = opacity( [ <<number>> | <<percentage>> ] )</span>
 </dt>
 <dd>
-  <p>
-    Applies transparency to the samples in the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely transparent. A value of ''100%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. This is equivalent to multiplying the input image samples by amount. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''1''.
-  </p>
-  <p class="note">
-    The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
-  </p>
+  <p>Applies transparency to the samples in the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely transparent. A value of ''100%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. This is equivalent to multiplying the input image samples by amount. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
+  <p class=note>The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>saturate()</dfn> = saturate( [ <<number>> | <<percentage>> ] )</span>
+  <span class=prod><dfn>saturate()</dfn> = saturate( [ <<number>> | <<percentage>> ] )</span>
 </dt>
 <dd>
-  <p>
-    Saturates the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely un-saturated. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over ''100%'' are allowed, providing super-saturated results. The markup equivalent of this function is <a href="#saturateEquivalent">given
-    below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''1''.
-  </p>
+  <p>Saturates the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely un-saturated. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over ''100%'' are allowed, providing super-saturated results. The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''1''.</p>
 </dd>
 <dt>
-  <span class='prod'><dfn>sepia()</dfn> = sepia( [ <<number>> | <<percentage>> ] )</span>
+  <span class=prod><dfn>sepia()</dfn> = sepia( [ <<number>> | <<percentage>> ] )</span>
 </dt>
 <dd>
-  <p>
-    Converts the input image to sepia. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely sepia. A value of ''0%'' leaves the input unchanged. Values between 0% and 100% are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
-  </p>
-  <p>
-    Negative values are not allowed.
-  </p>
-  <p>
-    The lacuna value for interpolation is ''0''.
-  </p>
+  <p>Converts the input image to sepia. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely sepia. A value of ''0%'' leaves the input unchanged. Values between 0% and 100% are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.</p>
+  <p>Negative values are not allowed.</p>
+  <p>The lacuna value for interpolation is ''0''.</p>
 </dd>
 </dl>
 
@@ -505,31 +422,30 @@ Conceptually, any parts of the drawing are effected by filter operations. This i
 
 The compositing model follows the <a href="http://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing model</a> [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of 'filter' has no effect on hit-testing.
 
-<h2 id="FilterElement">The <a element>filter</a> element</h2>
+<h2 id="FilterElement">SVG Filter Sources: the <a element>filter</a> element</h2>
 
 <!--elementsummary filter-->
 
 The description of the <a element>filter</a> element follows:
 
 <p><em>Attribute definitions:</em></p>
-<dl dfn-type="element-attr" dfn-for="filter">
+<dl dfn-type=element-attr dfn-for=filter>
   <dt>
-    <dfn>filterUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
+    <dfn>filterUnits</dfn> = "<dfn dfn-type=value dfn-for=filterUnits>userSpaceOnUse</dfn> | <dfn dfn-type=value dfn-for=filterUnits>objectBoundingBox</dfn>"
   </dt>
   <dd>
     See <i>filter region</i>.
   </dd>
   <dt>
-    <dfn>primitiveUnits</dfn> = "<em>userSpaceOnUse</em> | <em>objectBoundingBox</em>"
+    <dfn>primitiveUnits</dfn> = "<dfn dfn-type=value dfn-for=primitiveUnits>userSpaceOnUse</dfn> | <dfn dfn-type=value dfn-for=primitiveUnits>objectBoundingBox</dfn>"
   </dt>
   <dd>
-    <p>Specifies the coordinate system for the various length values within the <i>filter primitives</i> and for the attributes that define the <i>filter primitive subregion</i>.<br>
-    If <a element-attr>primitiveUnits</a> is equal to ''userSpaceOnUse'', any length values within the filter definitions represent values in the current <i>user coordinate system</i> in place at the time when the
-    <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).<br>
-    If <a element-attr>primitiveUnits</a> is equal to ''objectBoundingBox'', then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>primitiveUnits</a> is ''userSpaceOnUse''.</p>
+    <p>Specifies the coordinate system for the various length values within the <i>filter primitives</i> and for the attributes that define the <i>filter primitive subregion</i>.</p>
+    <p>If <a element-attr>primitiveUnits</a> is equal to <a value for=primitiveUnits>userSpaceOnUse</a>, any length values within the filter definitions represent values in the current <i>user coordinate system</i> in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
+    <p>If <a element-attr>primitiveUnits</a> is equal to <a value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
+    <p>The <a>lacuna value</a> for <a element-attr>primitiveUnits</a> is <a value for=primitiveUnits>userSpaceOnUse</a>.</p>
     <p>Animatable: yes.</p>
-    <p class="issue">If we make filter region auto, how will it affect existing content that uses ''objectBoundingBox''? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
+    <p class="issue">If we make filter region auto, how will it affect existing content that uses <a value for=primitiveUnits>objectBoundingBox</a>? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
   </dd>
   <dt>
     <dfn>x</dfn> = "<<length>> | <<percentage>>"
@@ -576,52 +492,28 @@ A <a element>filter</a> element can define a <dfn>filter region</dfn> on the can
     <a element-attr>filterUnits</a>
   </dt>
   <dd>
-    <p>
-      Defines the coordinate system for attributes <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>.
-    </p>
-    <p>
-      If <a element-attr for=filter>filterUnits</a> is equal to ''userSpaceOnUse'', <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent values in the current user coordinate system in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).
-    </p>
-    <p>
-      If <a element-attr for=filter>filterUnits</a> is equal to ''objectBoundingBox'', then <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>).
-    </p>
-    <p>
-      The <a>lacuna value</a> for <a element-attr>filterUnits</a> is ''objectBoundingBox''.
-    </p>
-    <p>
-      <p>Animatable: yes.</p>
-    </p>
+    <p>Defines the coordinate system for attributes <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>.</p>
+    <p>If <a element-attr for=filter>filterUnits</a> is equal to <a value for=filterUnits>userSpaceOnUse</a>, <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent values in the current user coordinate system in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
+    <p>If <a element-attr for=filter>filterUnits</a> is equal to <a value for=filterUnits>objectBoundingBox</a>, then <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>).</p>
+    <p>The <a>lacuna value</a> for <a element-attr>filterUnits</a> is <a value for=filterUnits>objectBoundingBox</a>.</p>
+    <p>Animatable: yes.</p>
   </dd>
   <dt id="FilterRegionXYWidthHeightAttributes">
     <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>,
     <a element-attr for=filter>height</a>
   </dt>
   <dd>
-    <p>
-      These attributes define a rectangular region on the canvas to which this filter applies.
-    </p>
-    <p>
-      The coordinate system for these attributes depends on the value for attribute <a element-attr>filterUnits</a>.
-    </p>
-    <p>
-      The bounds of this rectangle act as a hard clipping region for each <i>filter primitive</i> included with a given <a element>filter</a> element; thus, if the effect of a given filter primitive would extend beyond the bounds of the rectangle (this sometimes happens when using a <a element>feGaussianBlur</a> filter primitive with a very large <a element-attr for=feGaussianBlur>stdDeviation</a>), parts of the effect will get clipped.
-    </p>
-    <p>
-      The <a>lacuna value</a> for <a element-attr for=filter>x</a> and <a element-attr for=filter>y</a> is ''-10%''.
-    </p>
-    <p>
-      The <a>lacuna value</a> for <a element-attr for=filter>width</a> and <a element-attr for=filter>height</a> is ''120%''.
-    </p>
-    <p>
-      Negative or zero values for <a element-attr for=filter>width</a> or <a element-attr for=filter>height</a> disable rendering of the element which referenced the filter.
-    </p>
-    <p>
-      <p>Animatable: yes.</p>
-    </p>
+    <p>These attributes define a rectangular region on the canvas to which this filter applies.</p>
+    <p>The coordinate system for these attributes depends on the value for attribute <a element-attr>filterUnits</a>.</p>
+    <p>The bounds of this rectangle act as a hard clipping region for each <i>filter primitive</i> included with a given <a element>filter</a> element; thus, if the effect of a given filter primitive would extend beyond the bounds of the rectangle (this sometimes happens when using a <a element>feGaussianBlur</a> filter primitive with a very large <a element-attr for=feGaussianBlur>stdDeviation</a>), parts of the effect will get clipped.</p>
+    <p>The <a>lacuna value</a> for <a element-attr for=filter>x</a> and <a element-attr for=filter>y</a> is ''-10%''.</p>
+    <p>The <a>lacuna value</a> for <a element-attr for=filter>width</a> and <a element-attr for=filter>height</a> is ''120%''.</p>
+    <p>Negative or zero values for <a element-attr for=filter>width</a> or <a element-attr for=filter>height</a> disable rendering of the element which referenced the filter.</p>
+    <p>Animatable: yes.</p>
   </dd>
 </dl>
 
-Note that both of the two possible value for <a element-attr>filterUnits</a> (i.e., ''objectBoundingBox'' and ''userSpaceOnUse'') result in a <i>filter region</i> whose coordinate system has its X-axis and Y-axis each parallel to the X-axis and Y-axis, respectively, of the <i>user coordinate system</i> for the element to which the filter will be applied.
+Note that both of the two possible value for <a element-attr>filterUnits</a> (i.e., <a value for=filterUnits>objectBoundingBox</a> and <a value for=filterUnits>userSpaceOnUse</a>) result in a <i>filter region</i> whose coordinate system has its X-axis and Y-axis each parallel to the X-axis and Y-axis, respectively, of the <i>user coordinate system</i> for the element to which the filter will be applied.
 
 Note: Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <i>filter region</i> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.
 
@@ -643,7 +535,7 @@ All raster effect filtering operations take 1 to N input RGBA images, additional
 
 The RGBA result from each filter primitive will be clamped into the allowable ranges for colors and opacity values. Thus, for example, the result from a given <i>filter primitive</i> will have any negative color values or opacity values adjusted up to color/opacity of zero.
 
-<p id="filtersColorSpace">The color space in which a particular <i>filter primitive</i> performs its operations is determined by the value of the property 'color-interpolation-filters' on the given <i>filter primitive</i>. A different property, 'color-interpolation' determines the color space for other color operations. Because these two properties have different initial values ('color-interpolation-filters' has an initial value of ''linearRGB'' whereas 'color-interpolation' has an initial value of ''sRGB''), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set 'color-interpolation' to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples below do not explicitly set either 'color-interpolation' or 'color-interpolation-filters', so the initial values for these properties apply to the examples.
+<p id="filtersColorSpace">The color space in which a particular <i>filter primitive</i> performs its operations is determined by the value of the property 'color-interpolation-filters' on the given <i>filter primitive</i>. A different property, 'color-interpolation' determines the color space for other color operations. Because these two properties have different initial values ('color-interpolation-filters' has an initial value of ''linearRGB'' whereas 'color-interpolation' has an initial value of ''sRGB''), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set 'color-interpolation' to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples below do not explicitly set either 'color-interpolation' or 'color-interpolation-filters', so the initial values for these properties apply to the examples.</p>
 
 Sometimes <i>filter primitives</i> result in undefined pixels. For example, filter primitive <a element>feOffset</a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
 
@@ -748,7 +640,7 @@ Most filter primitives take other filter primitives as input. The following attr
         <dfn>FillPaint</dfn>
       </dt>
       <dd>
-        <p>This keyword represents the value of the 'fill' property on the target element for the filter effect. The <a value>FillPaint</a> image has conceptually infinite extent. Frequently this image is opaque everywhere, but it might not be if the "paint" itself has alpha, as in the case of a gradient or pattern which itself includes transparent or semi-transparent parts. If 'fill' references a paint server, then the coordinate space of the paint server is the coordinate space defined for the filtered object. E.g if the paint server requires to use the ''objectBoundingBox'' of the object, the object bounding box of the filtered object defines the reference size of the paint server. If the paint server requires to use the ''userSpaceOnUse'', the nearest viewport in the <i>user coordinate system</i> of the filtered object defines the reference size of the paint server.
+        <p>This keyword represents the value of the 'fill' property on the target element for the filter effect. The <a value>FillPaint</a> image has conceptually infinite extent. Frequently this image is opaque everywhere, but it might not be if the "paint" itself has alpha, as in the case of a gradient or pattern which itself includes transparent or semi-transparent parts. If 'fill' references a paint server, then the coordinate space of the paint server is the coordinate space defined for the filtered object. E.g if the paint server requires to use the <a value for=primitiveUnits>objectBoundingBox</a> of the object, the object bounding box of the filtered object defines the reference size of the paint server. If the paint server requires to use the <a value for=primitiveUnits>userSpaceOnUse</a>, the nearest viewport in the <i>user coordinate system</i> of the filtered object defines the reference size of the paint server.
       </dd>
       <dt>
         <dfn>StrokePaint</dfn>
@@ -778,9 +670,7 @@ The <i>filter primitive subregion</i> act as a hard clip clipping rectangle on b
 All intermediate offscreens are defined to not exceed the intersection of the <i>filter primitive subregion</i> with the <i>filter region</i>. The <i>filter region</i> and any of the filter primitive subregions are to be set up such that all offscreens are made big enough to accommodate any pixels which even partly intersect with either the <i>filter region</i> or the filter primitive subregions.
 
 <div class="example">
-  <p>
-    <a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <i>filter primitive subregion</i> of the referenced filter primitive in order to fill its own <i>filter primitive subregion</i>.
-  </p>
+  <p><a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <i>filter primitive subregion</i> of the referenced filter primitive in order to fill its own <i>filter primitive subregion</i>.</p>
 
   <pre class="xml">&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt; 
   &lt;defs&gt;
@@ -838,12 +728,8 @@ All intermediate offscreens are defined to not exceed the intersection of the <i
       Example for subregions
     </p>
   </div>
-  <p class="view-as-svg">
-    <a href="examples/filtersubregion00.svg">View this example as SVG (SVG-enabled browsers only)</a>
-  </p>
-  <p>
-    In the example above there are three rectangles that each have a cross and a circle in them. The circle element in each one has a different filter applied, but with the same <i>filter primitive subregion</i>. The filter output should be limited to the <i>filter primitive subregion</i>, so you should never see the circles themselves, just the rectangles that make up the <i>filter primitive subregion</i>.
-  </p>
+  <p class="view-as-svg"><a href="examples/filtersubregion00.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+  <p>In the example above there are three rectangles that each have a cross and a circle in them. The circle element in each one has a different filter applied, but with the same <i>filter primitive subregion</i>. The filter output should be limited to the <i>filter primitive subregion</i>, so you should never see the circles themselves, just the rectangles that make up the <i>filter primitive subregion</i>.</p>
   <ul>
     <li>
       The upper left rectangle shows an <a element>feFlood</a> with ''flood-opacity: 75%'' so the cross should be visible through the green rect in the middle.
@@ -1258,69 +1144,41 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feComponentTransfer>
   <dt>
-    <dfn>type</dfn> = "<em>identity | table | discrete | linear | gamma</em>"
+    <dfn>type</dfn> = "<a value>identity</a> | <a value>table</a> | <a value>discrete</a> | <a value>linear</a> | <a value>gamma</a>"
   </dt>
   <dd>
     <p>Indicates the type of component transfer function. The type of function determines the applicability of the other attributes.</p>
     <p>In the following, C is the initial component (e.g., <a element>feFuncR</a>), C' is the remapped component; both in the closed interval [0,1].</p>
     <ul>
-      <li>For ''identity'':
+      <li>For <dfn dfn-type=value dfn-for=type>identity</dfn>:
         <pre>C' = C</pre>
       </li>
-      <li>For ''table'', the function is defined by linear interpolation between values given in the attribute <a element-attr>tableValues</a>. The table has <em>n+1</em> values (i.e., v<sub>0</sub> to v<sub>n</sub>) specifying the start and end values for <em>n</em> evenly sized interpolation regions. Interpolations use the following formula:
-        <p>
-          For a value <code>C &lt; 1</code> find <code>k</code> such that:
-        </p>
-        <p class="filterformula">
-          k/n &lt;= C &lt; (k+1)/n
-        </p>
-        <p>
-          The result <code>C'</code> is given by:
-        </p>
-        <p class="filterformula">
-          C' = v<sub>k</sub> + (C - k/n)*n * (v<sub>k+1</sub> - v<sub>k</sub>)
-        </p>
-        <p>
-          If <code>C = 1</code> then:
-        </p>
-        <p class="filterformula">
-          C' = v<sub>n</sub>.
-        </p>
+      <li>
+        <p>For <dfn dfn-type=value dfn-for=type>table</dfn>, the function is defined by linear interpolation between values given in the attribute <a element-attr>tableValues</a>. The table has <em>n+1</em> values (i.e., v<sub>0</sub> to v<sub>n</sub>) specifying the start and end values for <em>n</em> evenly sized interpolation regions. Interpolations use the following formula:</p>
+        <p>For a value <code>C &lt; 1</code> find <code>k</code> such that:</p>
+        <p class="filterformula">k/n &lt;= C &lt; (k+1)/n</p>
+        <p>The result <code>C'</code> is given by:</p>
+        <p class="filterformula">C' = v<sub>k</sub> + (C - k/n)*n * (v<sub>k+1</sub> - v<sub>k</sub>)</p>
+        <p>If <code>C = 1</code> then:</p>
+        <p class="filterformula">C' = v<sub>n</sub>.</p>
       </li>
       <li>
-        <p>
-          For ''discrete'', the function is defined by the step function given in the attribute <a element-attr>tableValues</a>, which provides a list of <em>n</em> values (i.e., v<sub>0</sub> to v<sub>n-1</sub>) in order to identify a step function consisting of <em>n</em> steps. The step function is defined by the following formula:
+        <p>For <dfn dfn-type=value dfn-for=type>discrete</dfn>, the function is defined by the step function given in the attribute <a element-attr>tableValues</a>, which provides a list of <em>n</em> values (i.e., v<sub>0</sub> to v<sub>n-1</sub>) in order to identify a step function consisting of <em>n</em> steps. The step function is defined by the following formula:
         </p>
-        <p>
-          For a value <code>C &lt; 1</code> find <code>k</code> such that:
-        </p>
-        <p class="filterformula">
-          k/n &lt;= C &lt; (k+1)/n
-        </p>
-        <p>
-          The result <code>C'</code> is given by:
-        </p>
-        <p class="filterformula">
-          C' = v<sub>k</sub>
-        </p>
-        <p>
-          If <code>C = 1</code> then:
-        </p>
-        <p class="filterformula">
-          C' = v<sub>n-1</sub>.
-        </p>
+        <p>For a value <code>C &lt; 1</code> find <code>k</code> such that:</p>
+        <p class="filterformula">k/n &lt;= C &lt; (k+1)/n</p>
+        <p>The result <code>C'</code> is given by:</p>
+        <p class="filterformula">C' = v<sub>k</sub></p>
+        <p>If <code>C = 1</code> then:</p>
+        <p class="filterformula">C' = v<sub>n-1</sub>.</p>
       </li>
       <li>
-        <p>For ''linear'', the function is defined by the following linear equation:</p>
-        <p class="filterformula">
-          C' = <a element-attr>slope</a> * C + <a element-attr>intercept</a>
-        </p>
+        <p>For <dfn dfn-type=value dfn-for=type>linear</dfn>, the function is defined by the following linear equation:</p>
+        <p class="filterformula">C' = <a element-attr>slope</a> * C + <a element-attr>intercept</a></p>
       </li>
       <li>
-        <p>For ''gamma'', the function is defined by the following exponential function:</p>
-        <p class="filterformula">
-          C' = <a element-attr for=feComponentTransfer>amplitude</a> * pow(C, <a element-attr=feComponentTransfer>exponent</a>) + <a element-attr=feComponentTransfer>offset</a>
-        </p>
+        <p>For <dfn dfn-type=value dfn-for=type>gamma</dfn>, the function is defined by the following exponential function:</p>
+        <p class="filterformula">C' = <a element-attr for=feComponentTransfer>amplitude</a> * pow(C, <a element-attr=feComponentTransfer>exponent</a>) + <a element-attr=feComponentTransfer>offset</a></p>
       </li>
     </ul><p>Animatable: yes.</p>
   </dd>
@@ -1819,7 +1677,7 @@ When the image must be resampled to match the coordinate system defined by <a el
   <dd>
     <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) between successive columns and rows, respectively, in the <a element-attr>kernelMatrix</a>. By specifying value(s) for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feConvolveMatrix>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary off-screen images aligns with the pixel grid of the kernel.</p>
     <p>If a negative or zero value is specified the default value will be used instead.</p>
-    <p class="note">Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.</p>
+    <p class=note>Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1859,7 +1717,7 @@ When the image must be resampled to match the coordinate system defined by <a el
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feCustom>
   <dt>
-    <dfn>geometry</dfn> = "<em>grid(&lt;integer&gt;{0,2} [ detached | attached ]?</em>"
+    <dfn>geometry</dfn> = "<em>grid(<<integer>>{0,2} [ detached | attached ]?</em>"
   </dt>
   <dd>
     <p>See the 'geometry' descriptor.</p>
@@ -1945,9 +1803,7 @@ Each <a element>feCustom</a> element can have any number of <a element>feCustomP
         For <code>type="mat4"</code>, <a element-attr for=feCustomParam>values</a> is a list of 16 real number values. The list specifies a 4x4 homogeneous matrix in column-major order.
       </li>
     </ul>
-    <p>
-      If the attribute is not specified, then the default behavior depends on the value of attribute <a element-attr for=feCustomParam>type</a>. If <a element-attr for=feCustomParam>type</a> is ''mat2'', ''mat3'' or ''mat4'', then this attribute defaults to the identity matrix. If <a element-attr for=feCustomParam>type</a> is ''number'' or ''array'', then this attribute defaults to the value 0. If <a element-attr for=feCustomParam>type</a> is ''vec2'', ''vec3'' or ''vec4'', then this attribute defaults to a number list with values of 0. The length of the number list depends on the size of the specified vector.
-    </p>
+    <p>If the attribute is not specified, then the default behavior depends on the value of attribute <a element-attr for=feCustomParam>type</a>. If <a element-attr for=feCustomParam>type</a> is ''mat2'', ''mat3'' or ''mat4'', then this attribute defaults to the identity matrix. If <a element-attr for=feCustomParam>type</a> is ''number'' or ''array'', then this attribute defaults to the value 0. If <a element-attr for=feCustomParam>type</a> is ''vec2'', ''vec3'' or ''vec4'', then this attribute defaults to a number list with values of 0. The length of the number list depends on the size of the specified vector.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2019,13 +1875,9 @@ N is a function of x and y and depends on the surface gradient as follows:
 
 The surface described by the input alpha image I(x,y) is:
 
-<p class="filterformula">
-  Z (x,y) = surfaceScale * I(x,y)
-</p>
+<p class="filterformula">Z (x,y) = surfaceScale * I(x,y)</p>
 
-<p id="SurfaceNormalCalculations">
-  Surface normal is calculated using the Sobel gradient 3x3 filter. Different filter kernels are used depending on whether the given pixel is on the interior or an edge. For each case, the formula is:
-</p>
+<p id="SurfaceNormalCalculations">Surface normal is calculated using the Sobel gradient 3x3 filter. Different filter kernels are used depending on whether the given pixel is on the interior or an edge. For each case, the formula is:</p>
 
 <p class="filterformula">
   N<sub>x</sub> (x,y) = - surfaceScale * FACTOR<sub>x</sub> *<br>
@@ -2299,7 +2151,7 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
   <dd>
     <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feDiffuseLighting>kernelUnitLength</a> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>.<br>
     If a negative or zero value is specified the default value will be used instead.</p>
-    <p class="note">Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.</p> 
+    <p class=note>Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.</p> 
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2497,21 +2349,15 @@ This filter primitive performs a Gaussian blur on the input image.
 
 The Gaussian blur kernel is an approximation of the normalized convolution:
 
-<p class="filterformula">
-  G(x,y) = H(x)I(y)
-</p>
+<p class="filterformula">G(x,y) = H(x)I(y)</p>
 
 where
 
-<p class="filterformula">
-  H(x) = exp(-x<sup>2</sup>/ (2s<sup>2</sup>)) / sqrt(2&pi; * s<sup>2</sup>)
-</p>
+<p class="filterformula">H(x) = exp(-x<sup>2</sup>/ (2s<sup>2</sup>)) / sqrt(2&pi; * s<sup>2</sup>)</p>
 
 and
 
-<p class="filterformula">
-  I(y) = exp(-y<sup>2</sup>/ (2t<sup>2</sup>)) / sqrt(2&pi; * t<sup>2</sup>)
-</p>
+<p class="filterformula">I(y) = exp(-y<sup>2</sup>/ (2t<sup>2</sup>)) / sqrt(2&pi; * t<sup>2</sup>)</p>
 
 with "s" being the standard deviation in the x direction and "t" being the standard deviation in the y direction, as specified by <a element-attr for=feGaussianBlur>stdDeviation</a>.
 
@@ -2521,9 +2367,7 @@ Even if only one value is provided for <a element-attr for=feGaussianBlur>stdDev
 
 For larger values of "s" (s &gt;= 2.0), an approximation can be used: Three successive box-blurs build a piece-wise quadratic convolution kernel, which approximates the Gaussian kernel to within roughly 3%.
 
-<p class="filterformula">
-  let d = floor(s * 3 * sqrt(2 * &pi;) / 4 + 0.5)
-</p>
+<p class="filterformula">let d = floor(s * 3 * sqrt(2 * &pi;) / 4 + 0.5)</p>
 
 ... if d is odd, use three box-blurs of size "d", centered on the output pixel.
 
@@ -2571,9 +2415,7 @@ This filter primitive can refer to an external image or can be a reference to an
 
 If the <a element-attr for=feImage>href</a> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use'</a> element. In either case, the current user coordinate system depends on the value of attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The processing of the <a element-attr for=feImage>preserveAspectRatio</a> attribute on the <a element>feImage</a> element is identical to that of the <a>'image'</a> element.
 
-<p class="issue">
-  What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don't apply filter or null filter. What about ''preserve aspect ratio''?
-</p>
+<p class="issue">What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don't apply filter or null filter. What about ''preserve aspect ratio''?</p>
 
 <span class="requirement" id="assert_hqImageResampling">When the referenced image must be resampled to match the device coordinate system, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic.</span> Depending on the speed of the available interpolents, this choice may be affected by the 'image-rendering' property setting.
 
@@ -2585,7 +2427,7 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
   <dd>
     <p>See <a element-attr for=feImage>href</a> attribute.</p>
     <p>Animatable: yes.</p>
-    <p class="note">This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a element-attr for=feImage>href</a> attribute instead.</p>
+    <p class=note>This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a element-attr for=feImage>href</a> attribute instead.</p>
   </dd>
   <dt>
     <dfn>href</dfn> = "<em>&lt;IRI&gt;</em>"
@@ -2611,9 +2453,7 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
 </dl>
 
 <div class="example">
-  <p>
-    The following example illustrates how images are placed relative to an object. From left to right:
-  </p>
+  <p>The following example illustrates how images are placed relative to an object. From left to right:</p>
   <ul>
     <li>The default placement of an image. Note that the image is centered in the <i>filter region</i> and has the maximum size that will fit in the region consistent with preserving the aspect ratio.
     </li>
@@ -2660,14 +2500,9 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
   <div class="figure">
     <img alt="Example feImage &mdash; Examples of feImage use"
          src="examples/feImage-01.png">
-    <p class="caption">
-      Example of feImage
-    </p>
+    <p class="caption">Example of feImage</p>
   </div>
-  <p class="view-as-svg">
-    <a href="examples/feImage-01.svg">View this example as SVG (SVG-enabled browsers
-    only)</a>
-  </p>
+  <p class="view-as-svg"><a href="examples/feImage-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
 </div>
 
 <h3 id="feMergeElement">Filter primitive <a element>feMerge</a></h3>
@@ -2795,12 +2630,8 @@ When applying this filter, the destination location may be offset by a fraction 
     <dfn>dy</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>
-      The amount to offset the input graphic along the y-axis. The offset amount is expressed in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.
-    </p>
-    <p>
-      If the attribute is not specified, then the effect is as if a value of ''0'' were specified.
-    </p>
+    <p>The amount to offset the input graphic along the y-axis. The offset amount is expressed in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
+    <p>If the attribute is not specified, then the effect is as if a value of ''0'' were specified.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2893,7 +2724,7 @@ The light source is defined by one of the child elements <a element>feDistantLig
 
 This filter primitive fills a target rectangle with a repeated, tiled pattern of an input image. The target rectangle is as large as the <i>filter primitive subregion</i> established by the <a element>feTile</a> element.
 
-Typically, the input image has been defined with its own <i>filter primitive subregion</i> in order to define a reference tile. <a element>feTile</a> replicates the reference tile in both X and Y to completely fill the target rectangle. The top/left corner of each given tile is at location <code>(x+i*width,y+j*height)</code>, where <code>(x,y)</code> represents the top/left of the input image's <i>filter primitive subregion</i>, <code>width</code> and <code>height</code> represent the width and height of the input image's <i>filter primitive subregion</i>, and <code>i</code> and <code>j</code> can be any integer value. In most cases, the input image will have a smaller <i>filter primitive subregion</i> than the <a element>feTile</a> in order to achieve a repeated pattern effect.
+Typically, the input image has been defined with its own <i>filter primitive subregion</i> in order to define a reference tile. <a element>feTile</a> replicates the reference tile in both X and Y to completely fill the target rectangle. The top/left corner of each given tile is at location <code>(x + i*width, y + j*height)</code>, where <code>(x,y)</code> represents the top/left of the input image's <i>filter primitive subregion</i>, <code>width</code> and <code>height</code> represent the width and height of the input image's <i>filter primitive subregion</i>, and <code>i</code> and <code>j</code> can be any integer value. In most cases, the input image will have a smaller <i>filter primitive subregion</i> than the <a element>feTile</a> in order to achieve a repeated pattern effect.
 
 Implementers must take appropriate measures in constructing the tiled image to avoid artifacts between tiles, particularly in situations where the user to device transform includes shear and/or rotation. Unless care is taken, interpolation can lead to edge pixels in the tile having opacity values lower or higher than expected due to the interaction of painting adjacent tiles which each have partial overlap with particular pixels.
 
@@ -3117,7 +2948,7 @@ double turbulence(int nColorChannel, double *point, double <a href="#element-att
     <p>The <a>lacuna value</a> for <a element-attr>numOctaves</a> is ''1''.</p>
     <p>Negative values are <a>unsupported</a>.</p>
     <p><p>Animatable: yes.</p>
-    <p class="note">The contribution of each additional octave to the color and alpha values in the final image is one-half of the preceding octave. At some point, the contribution of additional octaves becomes smaller than the color resolution for a given color depth. UAs may clamp the specified value for numOctaves during the processing depending on the supported color depth. (For example: For a color depth of 8 bits per channel, the UA may clamp the value of numOctaves to 9.)
+    <p class=note>The contribution of each additional octave to the color and alpha values in the final image is one-half of the preceding octave. At some point, the contribution of additional octaves becomes smaller than the color resolution for a given color depth. UAs may clamp the specified value for numOctaves during the processing depending on the supported color depth. (For example: For a color depth of 8 bits per channel, the UA may clamp the value of numOctaves to 9.)
   </dd>
   <dt>
     <dfn>seed</dfn> = "<em><<number>></em>"
@@ -3447,7 +3278,7 @@ The custom-filter function allows extending this specification with a customized
 
 To verify if a UA supports a certain customized filter effect type, the support condition syntax [[!CSS3-CONDITIONAL]] gets extended by adding the media feature ''filter''.
 
-<pre class='prod'><dfn>&lt;custom-filter-type></dfn> = webgl</pre>
+<pre class=prod><dfn>&lt;custom-filter-type></dfn> = webgl</pre>
 
 This specification supports the custom filter type ''webgl'' to indicate support for the <a href="#shading-language">shading language</a> based on WebGL. Future versions may allow additional keywords.
 
@@ -3573,16 +3404,16 @@ Format strings defined by this specification:
 
 The list of parameters define variables, that get passed into the custom filter effect (e.g. parameters passed to a shader). Each parameter has an identifier. If a parameter with the same identifier occurs more then once in the list of parameters, the latest parameter definition overrides all previous definitions. A parameter definition can be overloaded by a parameter definition in the referencing custom filter function.
 
-<pre class='prod'><dfn>&lt;param></dfn> = IDENT <<param-value>></pre>
+<pre class=prod><dfn>&lt;param></dfn> = IDENT <<param-value>></pre>
 
-<pre class='prod'><dfn>&lt;param-value></dfn> = <<transform-function>>+ | <<number>>{1,4} | <<array()>> |
+<pre class=prod><dfn>&lt;param-value></dfn> = <<transform-function>>+ | <<number>>{1,4} | <<array()>> |
         <<mat>> | <<color>> | <<url>></pre>
 
-<pre class='prod'><dfn>&lt;mat></dfn> = <<mat2()>> | <<mat3()>> | <<mat4()>></pre>
+<pre class=prod><dfn>&lt;mat></dfn> = <<mat2()>> | <<mat3()>> | <<mat4()>></pre>
 
 <dl dfn-for="@filter">
   <dt>
-    <pre class='prod'><dfn>array()</dfn> = array( <<number>># )</pre>
+    <pre class=prod><dfn>array()</dfn> = array( <<number>># )</pre>
   </dt>
   <dd>
     Specifies an array of number values. 
@@ -3597,19 +3428,19 @@ The following function definitions describe matrices in column-major order.
 
 <dl>
   <dt>
-    <pre class='prod'><dfn>mat2()</dfn> = mat2( <<number>> [ , <<number>> ]{3,3} )</pre>
+    <pre class=prod><dfn>mat2()</dfn> = mat2( <<number>> [ , <<number>> ]{3,3} )</pre>
   </dt>
   <dd>
     Specifies a 2x2 homogeneous matrix of 4 values.
   </dd>
   <dt>
-    <pre class='prod'><dfn>mat3()</dfn> = mat3( <<number>> [ , <<number>> ]{8,8} )</pre>
+    <pre class=prod><dfn>mat3()</dfn> = mat3( <<number>> [ , <<number>> ]{8,8} )</pre>
   </dt>
   <dd>
     Specifies a 3x3 homogeneous matrix of 9 values.
   </dd>
   <dt>
-    <pre class='prod'><dfn>mat4()</dfn> = mat4( <<number>> [ , <<number>> ]{15,15} )</pre>
+    <pre class=prod><dfn>mat4()</dfn> = mat4( <<number>> [ , <<number>> ]{15,15} )</pre>
   </dt>
   <dd>
     Specifies a 4x4 homogeneous matrix of 16 values.
@@ -3638,9 +3469,9 @@ The following function definitions describe matrices in column-major order.
   </tbody>
 </table>
 
-<pre class='prod'><dfn>&lt;geometry-shape></dfn> = <<grid()>></pre>
+<pre class=prod><dfn>&lt;geometry-shape></dfn> = <<grid()>></pre>
 
-<pre class='prod'><dfn>grid()</dfn> = grid( <<integer>>{1,2} || [ detached | attached ]? )</pre>
+<pre class=prod><dfn>grid()</dfn> = grid( <<integer>>{1,2} || [ detached | attached ]? )</pre>
 
 <dl dfn-for=geometry>
   <dt><<grid()>></dt>
@@ -3648,7 +3479,7 @@ The following function definitions describe matrices in column-major order.
     <dl>
       <dt><<integer>></dt>
       <dd>
-        One or two positive integers greater then zero indicate the additional number of vertex lines and columns that will make the vertex mesh. With the initial value of ''1 1'' there is a single row and a single column, resulting in a four-vertices mesh (top-left, top-right, bottom-right, bottom-left). If the second parameter is not provided, it takes a value equal to the first. A value of ''n m'' results in a vertex mesh that has n columns and m rows. This results in a total of (n + 1) * (m + 1) vertices. If one of the passed parameters is zero or negative, the UA must use the initial mesh.
+        <p>One or two positive integers greater then zero indicate the additional number of vertex lines and columns that will make the vertex mesh. With the initial value of ''1 1'' there is a single row and a single column, resulting in a four-vertices mesh (top-left, top-right, bottom-right, bottom-left). If the second parameter is not provided, it takes a value equal to the first. A value of ''n m'' results in a vertex mesh that has n columns and m rows. This results in a total of (n + 1) * (m + 1) vertices. If one of the passed parameters is zero or negative, the UA must use the initial mesh.</p>
         <div class="figure" id="vertexMesh56">
           <img alt="Concept of granular mesh" src="images/shader-concept-granular-mesh.svg" width="372" height="252">
           <p class="caption">
@@ -3666,12 +3497,8 @@ The following function definitions describe matrices in column-major order.
         <dfn>attached</dfn>
       </dt>
       <dd>
-        <p>
-          The geometry provided to the vertex shader is made of triangles which do not share adjacent edges' vertices. A value of ''attached'' implies that the vertices are attached.
-        </p>
-        <p>
-          If no value for attachmeny of verices is specified, it computes to ''attached''.
-        </p>
+        <p>The geometry provided to the vertex shader is made of triangles which do not share adjacent edges' vertices. A value of ''attached'' implies that the vertices are attached.</p>
+        <p>If no value for attachmeny of verices is specified, it computes to ''attached''.</p>
       </dd>
     </dl>
   </dd>
@@ -3842,89 +3669,50 @@ This section illustrates the shader processing model as it applies to an element
 
 <div class="figure"
      id="unfiltered-input">
-  <img alt="the unfiltered input"
-       src="images/shader-concept-image.svg"
-       width="372"
-       height="252">
-  <p class="caption">
-    Element before applying shaders
-  </p>
+  <img alt="the unfiltered input" src="images/shader-concept-image.svg" width="372" height="252">
+  <p class="caption">Element before applying shaders</p>
 </div>
-<p>
-  Prior to the shader processing, the input of the filter primitive gets rendered
-  into an off-screen image (the source texture). The off-screen size and position is
-  controlled by the <a href="#FilterPrimitiveSubRegion">filter primitive
-  subregion</a>.
-</p>
+
+Prior to the shader processing, the input of the filter primitive gets rendered into an off-screen image (the source texture). The off-screen size and position is controlled by the <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>.
+
 <div class="figure">
-  <img alt="source texture"
-       src="images/shader-concept-image-raster.svg"
-       width="372"
-       height="252">
-  <p class="caption">
-    Source texture created by rendering<br>
-    the element off-screen and adding filter primitive margins
-  </p>
+  <img alt="source texture" src="images/shader-concept-image-raster.svg" width="372" height="252">
+  <p class="caption">Source texture created by rendering<br>the element off-screen and adding filter primitive margins</p>
 </div>
 
 An <a element>feCustom</a> element or a ''custom()'' filter function defines a custom filter primitive. The following figure illustrates its model.
 
 <div class="figure">
-  <img alt="processing model"
-       src="images/shader-concept-processing-model.svg"
-       width="800"
-       height="334">
-  <p class="caption">
-    The shader processing model
-  </p>
+  <img alt="processing model" src="images/shader-concept-processing-model.svg" width="800" height="334">
+  <p class="caption">The shader processing model</p>
 </div>
 
 In a <strong>first step</strong> the source texture is used on a <span>vertex mesh</span>. By default, the vertex mesh has the position and size of the <a href="#FilterPrimitiveSubRegion">filter primitive subregion</a>. In the following figure, the red markers represent the default vertices in the default vertex mesh. The diagonal line illustrate how the vertices define two triangles.
 
 <div class="figure">
-  <img alt="vertex mesh"
-       src="images/shader-concept-image-default-mesh.svg"
-       width="372"
-       height="252">
-  <p class="caption">
-    The default vertex mesh and its default vertices
-  </p>
+  <img alt="vertex mesh" src="images/shader-concept-image-default-mesh.svg" width="372" height="252">
+  <p class="caption">The default vertex mesh and its default vertices</p>
 </div>
 
 The <a element-attr>geometry</a> attribute on the <a element>feCustom</a> element and the 'geometry' descriptor on the <a href="#custom-filter">custom-filter at-rule</a> give more granularity control over the vertex mesh.
 
 <div class="figure">
-  <img alt="custom vertex mesh"
-       src="images/shader-concept-image-granular-mesh.svg"
-       width="372"
-       height="252">
-  <p class="caption">
-    A finer, custom vertex mesh
-  </p>
+  <img alt="custom vertex mesh" src="images/shader-concept-image-granular-mesh.svg" width="372" height="252">
+  <p class="caption">A finer, custom vertex mesh</p>
 </div>
 
 In a <strong>second step</strong>, the <span>vertex mesh</span> gets processed through the vertex shader, which produces a set of transformed vertices. These transformed vertices are the output as shown in the figure below.
 
 <div class="figure">
-  <img alt="transformed vertices"
-       src="images/shader-concept-vertices-shader.svg"
-       width="372"
-       height="252">
-  <p class="caption">
-    Transformed vertices after applying the vertex shader
-  </p>
+  <img alt="transformed vertices" src="images/shader-concept-vertices-shader.svg" width="372" height="252">
+  <p class="caption">Transformed vertices after applying the vertex shader</p>
 </div>
 
 The <strong>third step</strong> is the rasterization step. The filter primitive invokes the fragment shader for every pixel location inside the vertex mesh to perform per pixel operation and produce the final pixel color at that vertex mesh location.
 
 <div class="figure">
-  <img alt="transformed vertices"
-       src="images/shader-concept-image-shader.svg"
-       width="372"
-       height="252">
-  <p class="caption">
-    Transformed vertices after applying the vertex shader
-  </p>
+  <img alt="transformed vertices" src="images/shader-concept-image-shader.svg" width="372" height="252">
+  <p class="caption">Transformed vertices after applying the vertex shader</p>
 </div>
 
 Note: The fragment shader may be called several times for what corresponds to the same pixel coordinate on the output, for example when the vertex mesh folds over itself. Overlaying pixel values do neither composite nor blend. The pixel value with the least depth will be chosen.
@@ -3932,13 +3720,8 @@ Note: The fragment shader may be called several times for what corresponds to th
 The 'mix' descriptor provides basic functionalities for color manipulation like blending and alpha compositing on a fragment shader. The processing model of 'mix' is illustrated in the following figure:
 
 <div class="figure">
-  <img src="images/mix-fragment-shader.png"
-       alt="fragmentShader: processing model for mix"
-       width="451"
-       height="726">
-  <p class="caption">
-    fragmentShader: processing model for mix
-  </p>
+  <img src="images/mix-fragment-shader.png" alt="fragmentShader: processing model for mix" width="451" height="726">
+  <p class="caption">fragmentShader: processing model for mix</p>
 </div>
 
 Each color value passed to the fragment shader gets multiplied with the <dfn>color matrix</dfn>, a predefined fragment shader variable that represents a 4x4 matrix. The matrix is initialized to an identity matrix, but can be set by a fragment shader. The resulting color is the <i>multiplied color</i>.
@@ -3972,12 +3755,8 @@ In the context of this specification, fragment shaders have the options to compu
 </ul>
   
 <div class="example">
-  <p>
-    The following example shows a fragment shader which computes a simple solid red color:
-  </p>
-  <p>
-    CSS
-  </p>
+  <p>The following example shows a fragment shader which computes a simple solid red color:</p>
+  <p>CSS</p>
   <pre>
 @filter red {
 src: url('simple.vs') format('x-shader/x-vertex'), url(simple.fs) format('x-shader/x-fragment');
@@ -3988,9 +3767,7 @@ filter: custom(red);
 }
   
 </pre>
-  <p>
-    simple.vs
-  </p>
+  <p>simple.vs</p>
   <pre>
 attribute vec4 a_position;
 
@@ -4012,12 +3789,8 @@ gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 
 
 <div class="example">
-  <p>
-    The following example shows a fragment shader which darkens the rendered content by computing a <code>css_MixColor</code> which is multiplied with the rendered content:
-  </p>
-  <p>
-    CSS
-  </p>
+  <p>The following example shows a fragment shader which darkens the rendered content by computing a <code>css_MixColor</code> which is multiplied with the rendered content:</p>
+  <p>CSS</p>
   <pre>
 @filter darken {
 src: url('simple2.vs') format('x-shader/x-vertex'), url(simple2.fs) format('x-shader/x-fragment');
@@ -4029,9 +3802,7 @@ filter: custom(mix);
 }
 
 </pre>
-  <p>
-    simple2.vs
-  </p>
+  <p>simple2.vs</p>
   <pre>
 attribute vec4 a_position;
 
@@ -4052,12 +3823,8 @@ void main()
 </div>
 
 <div class="example">
-  <p>
-    The following example shows a fragment shader which darkens the rendered content by computing a <code>css_ColorMatrix</code> which varies depending on the texture coordinate:
-  </p>
-  <p>
-    CSS
-  </p>
+  <p>The following example shows a fragment shader which darkens the rendered content by computing a <code>css_ColorMatrix</code> which varies depending on the texture coordinate:</p>
+  <p>CSS</p>
   <pre>
 @filter colormatrix {
 src: url('simple.vs') format('x-shader/x-vertex'), url(simple3.fs) format('x-shader/x-fragment');
@@ -4068,9 +3835,7 @@ filter: custom(colormatrix);
 }
   
 </pre>
-  <p>
-    simple3.vs
-  </p>
+  <p>simple3.vs</p>
   <pre>
 attribute vec4 a_position;
 varying vec2 v_texCoord;
@@ -4079,11 +3844,8 @@ void main()
 {      
   v_texCoord = a_position.xy;  
   gl_Position = a_position;
-}
-</pre>
-  <p>
-    simple3.fs
-  </p>
+}</pre>
+  <p>simple3.fs</p>
   <pre>
 varying vec2 v_texCoord;
 
@@ -4096,8 +3858,7 @@ css_ColorMatrix = mat4(
     vec4(x, x, x, x), // 3rd column
     vec4(x, x, x, x), // 4th column
 );
-}      
-</pre>
+}</pre>
 </div>
   
 <h4 id="vertex-attribute-variables">Vertex attribute variables</h4>
@@ -4131,24 +3892,16 @@ The following attribute variables are available to the vertex shader.
         <code>attribute vec3 a_triangleCoord</code>
       </th>
       <td>
-        <p>
-          The x and y values provide the coordinate of the current "tile" in the shader mesh. For example, (0, 0) for the top right tile in the mesh. The x and y values are in the [0, mesh columns] and [0, mesh rows] range, respectively.
-        </p>
-        <p>
-          The z coordinate is computed according to the following figure. The z coordinate value is provided for each vertex and corresponding triangle. For example, for the bottom right vertex of the top triangle, the z coordinate will be 2. For the bottom right vertex of the bottom triangle, the z coordinate will be 4.
-        </p>
+        <p>The x and y values provide the coordinate of the current "tile" in the shader mesh. For example, (0, 0) for the top right tile in the mesh. The x and y values are in the [0, mesh columns] and [0, mesh rows] range, respectively.</p>
+        <p>The z coordinate is computed according to the following figure. The z coordinate value is provided for each vertex and corresponding triangle. For example, for the bottom right vertex of the top triangle, the z coordinate will be 2. For the bottom right vertex of the bottom triangle, the z coordinate will be 4.</p>
       </td>
     </tr>
   </tbody>
 </table>
 
 <div class="figure">
-  <img src="images/a_triangleCoord.z.png"
-       alt="The a_triangleCoord.z value"
-       width="150">
-  <p class="caption">
-    The a_triangleCoord.z value
-  </p>
+  <img src="images/a_triangleCoord.z.png" alt="The a_triangleCoord.z value" width="150">
+  <p class="caption">The a_triangleCoord.z value</p>
 </div>
 
 <h4 id="shader-uniform-variables">Shader uniform variables</h4>
@@ -4352,7 +4105,7 @@ An implementation must also type-check these built-in attributes and uniforms.
 
 CSS <<image>> values can be filtered with the filter functions specified for the CSS 'filter' property. This specification introduces the <<image>> <<filter()>> function with the following syntax:
 
-<pre class='prod'><dfn>filter()</dfn> = filter(
+<pre class=prod><dfn>filter()</dfn> = filter(
     [ <<image>> | <<string>> ], <<filter-function-list>>
 )</pre>
 
@@ -4366,9 +4119,7 @@ For the <<blur()>> function the <a element-attr for=feGaussianBlur>edgeMode</a> 
 
 If both the starting and ending image are <<filter()>>s which may only differ by their used filter functions, they must be interpolated by interpolating their filter function lists as described in section <a href="#interpolation-of-filters">Interpolation of Filters</a>. Otherwise, they must be interpolated as generic <<image>>s. If the filter function interpolation can not be performed, the images must be interpolated as generic <<image>>s.
 
-<h2 id="ShorthandEquivalents">
-  Shorthands defined in terms of the <a element>filter</a> element
-</h2>
+<h2 id="ShorthandEquivalents">Shorthands defined in terms of the <a element>filter</a> element</h2>
 
 Below are the equivalents for each of the filter functions expressed in terms of the 'filter element' element. The parameters from the function are labeled with brackets in the following style: [amount]. In the case of parameters that are percentage values, they are converted to real numbers.
 
@@ -4521,9 +4272,7 @@ For interpolation between one filter <em>from-filter</em> and a second filter <e
   </li>
 </ul>
 
-<h3 id="shader-params-interpolation">
-  Interpolating the shader-params component in the custom() function
-</h3>
+<h3 id="shader-params-interpolation">Interpolating the shader-params component in the custom() function</h3>
 
 To interpolate between 'parameters' values in a <<custom()>> filter function or between <a element>feCustomParam</a> attribute values, the user agent should interpolate between each of the parameter values according to its type. List of values need to be of the same length. Matrices need to be of the same dimension. Arrays need to be of the same size.
 
@@ -4576,9 +4325,7 @@ Note: As with the 'transform' property, it is not possible to animate the differ
 
 <h2 id="svg-animation">SVG Animation</h2>
 
-<h3 id="svg-animate-and-set-element">
-  The <a>'animate'</a> and <a>'set'</a> element
-</h3>
+<h3 id="svg-animate-and-set-element">The <a>'animate'</a> and <a>'set'</a> element</h3>
 
 With this specification <<filter-function-list>> gets a new SVG basic data type. <<filter-function-list>> is animatable and additive. The data type can be animated using the SVG <a>'animate'</a> element and the SVG <a>'set'</a> element. SVG animations must run the same animation steps as described in section <a href="#interpolation-of-filters">Interpolation of Filters</a>.
 
@@ -4610,12 +4357,8 @@ The set of animatable data types gets extended by <<filter-function-list>>. The 
   </tbody>
 </table>
 
-<p class="issue">
-  It needs to be researched and defined how additive animations of filters are supposed to work.
-</p>
-<p class="issue">
-  The specification needs to define a distance() function for paced animations.
-</p>
+<p class="issue">It needs to be researched and defined how additive animations of filters are supposed to work.</p>
+<p class="issue">The specification needs to define a distance() function for paced animations.</p>
 
 <h2 id="security">Security</h2>
 
@@ -4668,7 +4411,7 @@ If any of the above rules are not followed, an attacker could infer information 
 
 A timing attack is a method of obtaining information about content that is otherwise protected, based on studying the amount of time it takes for an operation to occur. If, for example, red pixels took longer to draw than green pixels, one might be able to reconstruct a rough image of the element being rendered, without ever having access to the content of the element. Security studies show that timing differences on arithmetic operations can be caused by the hardware architecture or compiler [[ArTD]].
 
-<h2 id="DOMInterfaces">DOM interfaces</h2>
+<h2 id="DOMInterfaces" class="no-num">DOM interfaces</h2>
 
 <h3 id="InterfaceSVGFilterElement">Interface SVGFilterElement</h3>
 
