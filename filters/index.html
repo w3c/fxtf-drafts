@@ -3756,26 +3756,27 @@ double turbulence(int nColorChannel, double *point, double <a href=#element-attr
   &lt;/filter&gt; </pre>
 <h2 class="heading settled heading" data-level=13 id=interpolation-of-filters><span class=secno>13 </span><span class=content>Interpolation of Filters</span><a class=self-link href=#interpolation-of-filters></a></h2>
 
-<p>For interpolation between one filter <em>from-filter</em> and a second filter <em>to-filter</em>, the rules described below apply:
+<p>Interpolation between one filter <em>from-filter</em> and a second filter <em>to-filter</em> happens in two different steps. First, prepare <em>from-filter</em> and <em>to-filter</em> for the interpolation. Second, interpolate each filter function pair.
 
-<ol>
+
+<p>Prepare <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a>s for interpolation: 
+<ul>
   <li id=none-none-animation><a class=self-link href=#none-none-animation></a>If both, the <em>from-</em> and <em>to-filter</em> are
   <span class=css data-link-type=maybe title=none>none</span>:
     <ul>
-      <li>There is no interpolation necessary. The computed value stays <span class=css data-link-type=maybe title=none>none</span>.
+      <li>There is no interpolation necessary. The computed value stays <span class=css data-link-type=maybe title=none>none</span>. The preparation process is not successful.
       </li>
     </ul>
   </li>
   <li id=reference-animation><a class=self-link href=#reference-animation></a>If the <em>from-</em> or the <em>to-filter</em> consists of at least one <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> :
     <ul>
-      <li>There is no interpolation possible.
+      <li>There is no interpolation possible. The preparation process is not successful.
       </li>
     </ul>
   </li>
   <li id=from-to-animation-equal><a class=self-link href=#from-to-animation-equal></a>If <em>from-</em> and <em>to-filter</em> have the same number of filter functions and each filter function pair is of the same type:
     <ul>
-      <li>Interpolate each filter function pair value type following the instructions of “<a href=http://www.w3.org/TR/css3-transitions/#animatable-types>Animation of property types</a>” <a data-biblio-type=normative data-link-type=biblio href=#css3-transitions title=css3-transitions>[CSS3-TRANSITIONS]</a>.
-      </li>
+      <li>The preparation for the interpolation is successful. Continue with the interpolation of filter function values.</li>
     </ul>
   </li>
   <li id=from-to-animation-unequal><a class=self-link href=#from-to-animation-unequal></a>If <em>from-</em> and <em>to-filter</em> have a different number of filter functions. And all filter function pairs between <em>from-</em> and <em>to-filter</em> are compatible up to the length of the filter list with the least filter functions:
@@ -3786,20 +3787,30 @@ double turbulence(int nColorChannel, double *point, double <a href=#element-attr
   </li>
   <li id=invalid-animation><a class=self-link href=#invalid-animation></a>In all other cases:
     <ul>
-      <li>No interpolation possible.
+      <li>No interpolation possible. The preparation process is not successful.
       </li>
     </ul>
   </li>
-</ol>
+</ul>
 
+<p>If <em>from-value</em> and <em>to-value</em> can be interpolated and the interpolation was prepared successfully, interpolate each filter function pair value type following the instructions of “<a href=http://www.w3.org/TR/css3-transitions/#animatable-types>Animation of property types</a>” <a data-biblio-type=normative data-link-type=biblio href=#css3-transitions title=css3-transitions>[CSS3-TRANSITIONS]</a>.
 
 <h3 class="heading settled heading" data-level=13.1 id=additive-animations><span class=secno>13.1 </span><span class=content>Additive animations</span><a class=self-link href=#additive-animations></a></h3>
 
 <p>It is possible for animations to define an offset from a <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a> value rather than having animations between absolute values. This offset is added to the underlying value of the attribute and other lower priority animations <a data-biblio-type=informative data-link-type=biblio href=#svg11 title=svg11>[SVG11]</a>.
 
-<p>Additive animations of <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a> follow the interpolation algorithm above. The underlying attribute value is used as <em>from-filter</em>. <em>to-filter</em> is the offset value added to <em>from-filter</em>. The offset value, a <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a>, must be compatible to the <em>from-value</em>. One of the interpolation conditions 1 to 4 must apply to the offset value and <em>from-value</em>. In all other cases no interpolation is possible.
+<p>Additive animations of <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a> follow the interpolation algorithm above. The underlying attribute value is used as <em>from-filter</em>. <em>to-filter</em> is the offset value added to <em>from-filter</em>. Additive animations of <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a>s follow the following steps:
 
-<p>For the purpose of summation, each filter function must be temporarily serialized to its longest possible definition. The summation of the offset to <em>from-value</em> is done per filter function value type: <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>, <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a>, <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#percentage-value title="<percentage>">&lt;percentage&gt;</a>, <a class="production css-code" data-link-type=function href=http://dev.w3.org/csswg/css-values-3/#calc title=calc()>&lt;calc()&gt;</a>, <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#valuea-def-color title="<color>">&lt;color&gt;</a> and <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#angle-value title="<angle>">&lt;angle&gt;</a>. It is assumed that increasing numerical values are direct proportional to the resulting filter effect for each filter function.
+<ol>
+  <li>The offset value, a <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a>, must be compatible to the <em>from-filter</em>. Prepare the offset value and the <em>from-filter</em> for interpolation with the preparation algorithm above. The offset value is used as <em>to-filter</em>.
+    <ul>
+      <li>If the preparation process was not successful then stop. No interpolation is possible.</li>
+      <li>If the preparation process was successful it results in two <a class="production css-code" data-link-type=type href=#typedef-filter-function-list title="<filter-function-list>">&lt;filter-function-list&gt;</a> with the same number of filter function pairs each pair of the same type. Continue with the next step.</li>
+    </ul>
+  </li> 
+  <li>For the purpose of addition, each filter function must be temporarily serialized to its longest possible definition. The summation of the offset to <em>from-filter</em> is done per filter function value type: <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>, <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a>, <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#percentage-value title="<percentage>">&lt;percentage&gt;</a>, <a class="production css-code" data-link-type=function href=http://dev.w3.org/csswg/css-values-3/#calc title=calc()>&lt;calc()&gt;</a>, <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-color-3/#valuea-def-color title="<color>">&lt;color&gt;</a> and <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#angle-value title="<angle>">&lt;angle&gt;</a>. It is assumed that increasing numerical values are direct proportional to the resulting filter effect for each filter function.</li>
+  <li>Continue with the interpolation process taking the initial <em>from-filter</em> and the sum of the previous operations as <em>to-filter</em>.</li>
+
 
 <div class=example>
 The following SVG animation animates the <a class="production css-code" data-link-type=function href=#funcdef-blur title=blur()>&lt;blur()&gt;</a> filter function.
@@ -6462,7 +6473,7 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 <tr><th scope=row><a data-property="">lighting-color</a><td>&lt;color&gt; &lt;icccolor&gt;?<td>white<td>feDiffuseLighting and feSpecularLighting elements<td>no<td>n/a<td>visual<td>yes<td>as specified</table></div>
 
 
-<h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>If we make filter region auto, how will it affect existing content that uses <a class=css-code data-link-for=primitiveUnits data-link-type=value href=#valuedef-objectboundingbox title=objectboundingbox>objectBoundingBox</a>? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
+</ol><h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>If we make filter region auto, how will it affect existing content that uses <a class=css-code data-link-for=primitiveUnits data-link-type=value href=#valuedef-objectboundingbox title=objectboundingbox>objectBoundingBox</a>? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
   <a href=#issue-cecd29ff> ↵ </a></div><div class=issue>The value of <span class=css data-link-type=maybe title=auto>auto</span> should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the <a class=property data-link-type=propdesc href=http://dev.w3.org/fxtf/masking/#propdef-clip-path title=clip-path>clip-path</a> property.<a href=#issue-b42e7603> ↵ </a></div>
 
 <div class=issue>Define filter primitive subregion for shorthands. E.g. the out bounds of the previous filter functions, extended by affected area of current filter function. <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22580">Bug 22580</a><a href=#issue-20e2fe4e> ↵ </a></div>
