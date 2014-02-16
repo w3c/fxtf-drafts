@@ -7,7 +7,7 @@ Previous Version: http://www.w3.org/TR/2013/WD-filter-effects-20130523/
 Previous Version: http://www.w3.org/TR/2012/WD-filter-effects-20121025/
 Shortname: filter-effects
 Level: 1
-Link Defaults: css-transforms-1 (property) transform, svg (property) color-interpolation/fill/fill-opacity/fill-rule/stroke/glyph-orientation-horizontal/glyph-orientation-vertical/marker-start/marker-end/marker-mid/stop-color/stop-opacity/stroke-dasharray/stroke-dashoffset/stroke-linecap/stroke-linejoin/stroke-miterlimit/stroke-opacity/stroke-width/text-anchor, css-masking-1 (property) clip-path/clip/clip-rule/mask, css-flexbox-1 (property) display, selectors-4 (type) <compound-selector>, css21 (type) <margin-width>, css-transforms-1 (type) <transform-function>, css-images-4 (property) image-rendering, css-color-3 (property) color, css-fonts-3 (property) font-family/font-stretch/font-style/font-variant/font-weight
+Link Defaults: css-transforms-1 (property) transform, svg (property) color-interpolation/fill/fill-opacity/fill-rule/stroke/glyph-orientation-horizontal/glyph-orientation-vertical/marker-start/marker-end/marker-mid/stop-color/stop-opacity/stroke-dasharray/stroke-dashoffset/stroke-linecap/stroke-linejoin/stroke-miterlimit/stroke-opacity/stroke-width/text-anchor/alignment-baseline/baseline-shift/dominant-baseline, css-masking-1 (property) clip-path/clip/clip-rule/mask, css-flexbox-1 (property) display, selectors-4 (type) <compound-selector>, css21 (type) <margin-width>, css-transforms-1 (type) <transform-function>, css-images-4 (property) image-rendering, css-color-3 (property) color, css-fonts-3 (property) font-family/font-stretch/font-style/font-variant/font-weight, selectors-4 (selector) :visited
 Group: fxtf
 Editor: Dean Jackson, <a href="http://www.apple.com/">Apple Inc</a>, dino@apple.com
 Editor: Erik Dahlström, Opera Software ASA, ed@opera.com
@@ -3232,9 +3232,9 @@ Where edge mode computes to ''none'' for the 'filter' property and to ''duplicat
 
 <h2 id="interpolation-of-filters">Interpolation of Filters</h2>
 
-For interpolation between one filter <em>from-filter</em> and a second filter <em>to-filter</em>, the rules described below are applied.
+For interpolation between one filter <em>from-filter</em> and a second filter <em>to-filter</em>, the rules described below apply:
 
-<ul>
+<ol>
   <li id="none-none-animation">If both, the <em>from-</em> and <em>to-filter</em> are
   ''none'':
     <ul>
@@ -3248,25 +3248,44 @@ For interpolation between one filter <em>from-filter</em> and a second filter <e
       </li>
     </ul>
   </li>
-  <li>If <em>from-</em> and <em>to-filter</em> have the same number of filter functions and each filter function pair is of the same type:
+  <li id="from-to-animation-equal">If <em>from-</em> and <em>to-filter</em> have the same number of filter functions and each filter function pair is of the same type:
     <ul>
-      <li>Interpolate each filter function pair value numerically.
+      <li>Interpolate each filter function pair value type following the instructions of “<a href="http://www.w3.org/TR/css3-transitions/#animatable-types">Animation of property types</a>” [[!CSS3-TRANSITIONS]].
       </li>
     </ul>
   </li>
-  <li>If <em>from-</em> and <em>to-filter</em> have a different number of filter functions. And all filter function pairs between <em>from-</em> and <em>to-filter</em> are compatible up to the length of the filter list with the least filter functions:
+  <li id="from-to-animation-unequal">If <em>from-</em> and <em>to-filter</em> have a different number of filter functions. And all filter function pairs between <em>from-</em> and <em>to-filter</em> are compatible up to the length of the filter list with the least filter functions:
     <ul>
       <li>Add the corresponding filter functions with their initial value to the filter list with least filter functions and proceed with the previous step.
       </li>
     </ul>
   </li>
-  <li>In all other cases:
+  <li id="invalid-animation">In all other cases:
     <ul>
-      <li>There is no interpolation possible.
+      <li>No interpolation possible.
       </li>
     </ul>
   </li>
-</ul>
+</ol>
+
+
+<h3 id="additive-animations">Additive animations</h3>
+
+It is possible for animations to define an offset from a <<filter-function-list>> value rather than having animations between absolute values. This offset is added to the underlying value of the attribute and other lower priority animations [[SVG11]].
+
+Additive animations of <<filter-function-list>> follow the interpolation algorithm above. The underlying attribute value is used as <em>from-filter</em>. <em>to-filter</em> is the offset value added to <em>from-filter</em>. The offset value, a <<filter-function-list>>, must be compatible to the <em>from-value</em>. One of the interpolation conditions 1 to 4 must apply to the offset value and <em>from-value</em>. In all other cases no interpolation is possible.
+
+For the purpose of summation, each filter function must be temporarily serialized to its longest possible definition. The summation of the offset to <em>from-value</em> is done per filter function value type: <<length>>, <<number>>, <<percentage>>, <<calc()>>, <<color>> and <<angle>>. It is assumed that increasing numerical values are direct proportional to the resulting filter effect for each filter function.
+
+<div class="example">
+The following SVG animation animates the <<blur()>> filter function.
+
+<p class="issue">Add additive animation examples.</p>
+</div>
+
+<h3 id="paced-animations">Paced animations</h3>
+
+<p class="issue">The specification needs to define a distance() function for paced animations.</p>
 
 <h2 id="svg-animation">SVG Animation</h2>
 
@@ -3301,9 +3320,6 @@ The set of animatable data types gets extended by <<filter-function-list>>. The 
     </tr>
   </tbody>
 </table>
-
-<p class="issue">It needs to be researched and defined how additive animations of filters are supposed to work.</p>
-<p class="issue">The specification needs to define a distance() function for paced animations.</p>
 
 <h2 id="security">Security</h2>
 
