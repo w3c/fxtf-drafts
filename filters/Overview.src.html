@@ -7,7 +7,7 @@ Previous Version: http://www.w3.org/TR/2013/WD-filter-effects-20130523/
 Previous Version: http://www.w3.org/TR/2012/WD-filter-effects-20121025/
 Shortname: filter-effects
 Level: 1
-Link Defaults: css-transforms-1 (property) transform, svg (property) color-interpolation/fill/fill-opacity/fill-rule/stroke/glyph-orientation-horizontal/glyph-orientation-vertical/marker-start/marker-end/marker-mid/stop-color/stop-opacity/stroke-dasharray/stroke-dashoffset/stroke-linecap/stroke-linejoin/stroke-miterlimit/stroke-opacity/stroke-width/text-anchor/alignment-baseline/baseline-shift/dominant-baseline, css-masking-1 (property) clip-path/clip/clip-rule/mask, css-flexbox-1 (property) display, selectors-4 (type) <compound-selector>, css21 (type) <margin-width>, css-transforms-1 (type) <transform-function>, css-images-4 (property) image-rendering, css-color-3 (property) color, css-fonts-3 (property) font-family/font-stretch/font-style/font-variant/font-weight, selectors-4 (selector) :visited
+Link Defaults: css-transforms-1 (property) transform, svg (property) color-interpolation/fill/fill-opacity/fill-rule/stroke/glyph-orientation-horizontal/glyph-orientation-vertical/marker-start/marker-end/marker-mid/stop-color/stop-opacity/stroke-dasharray/stroke-dashoffset/stroke-linecap/stroke-linejoin/stroke-miterlimit/stroke-opacity/stroke-width/text-anchor/alignment-baseline/baseline-shift/dominant-baseline, css-masking-1 (property) clip-path/clip/clip-rule/mask, css-flexbox-1 (property) display, selectors-4 (type) <compound-selector>, css21 (type) <margin-width>, css-transforms-1 (type) <transform-function>, css-images-4 (property) image-rendering, css-color-3 (property) color, css-fonts-3 (property) font-family/font-stretch/font-style/font-variant/font-weight, selectors-4 (selector) :visited, css21 (dfn) containing block
 Group: fxtf
 Editor: Dean Jackson, <a href="http://www.apple.com/">Apple Inc</a>, dino@apple.com
 Editor: Erik Dahlström, Opera Software ASA, ed@opera.com
@@ -238,7 +238,7 @@ This specification defines a set of CSS properties that affect the visual render
 
 The compositing model follows the SVG compositing model [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such as 'border' [[!CSS3BG]].
 
-Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and 'lighting-color' properties as well as the <a element>filter</a> element, the <a element>feMergeNode</a> element, the <i>transfer function elements</i> and the <i>filter primitive elements</i>.
+Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and 'lighting-color' properties as well as the <a element>filter</a> element, the <a element>feMergeNode</a> element, the <i>transfer function elements</i> and the <i>filter primitive</i> elements.
 
 <h2 id="values">Values</h2>
 
@@ -251,43 +251,9 @@ In addition to the property-specific values listed in their definitions, all pro
 When used in this specification, terms have the meanings assigned in this section.
 
 <dl>
-<dt><dfn>pass through filter</dfn></dt>
-<dd>
-  The pass through filter output is equal to the primary input of the filter.
-</dd>
-<dt><dfn>transfer function element</dfn></dt>
-<dd>
-  The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a> elements, that define the transfer function for the <a element>feComponentTransfer</a> <i>filter primitive</i>.
-</dd>
-<dt><dfn>bounding client rect</dfn></dt>
-<dd>
-  The object bounding box for elements in the <code>http://www.w3.org/2000/svg</code> namespace and without an associated CSS layout box. Otherwise, the smallest rectangle that contains the border box of the element and the border boxes of all its descendants. (See <a href="http://www.w3.org/TR/cssom-view/#dom-element-getboundingclientrect">getBoundingClientRect</a> [[CSSOM-VIEW]].)
-</dd>
-<dt><dfn>user coordinate system</dfn></dt>
-<dd>
-  <p>In general, a coordinate system defines locations and distances on the current canvas. The current user coordinate system (also user coordinate system) is the coordinate system that is currently active and which is used to define how coordinates and lengths are located and computed, respectively, on the current canvas [[CSS3-TRANSFORMS]].</p>
-  <p>For elements that have an associated CSS layout box, the current user coordinate system has its origin at the top-left corner of the <i>bounding client rect</i> and one unit equals one CSS pixel. The viewport for resolving percentage values is defined by the width and height of the <i>bounding client rect</i>.</p>
-  <p>If the element does not have an associated CSS layout box and is in the <code>http://www.w3.org/2000/svg</code> namespace, the current user coordinate system has its origin at the top-left corner of the element's nearest viewport.</p>
-</dd>
-<dt><dfn>object bounding box units</dfn></dt>
-<dd>
-  The <i>bounding client rect</i> defines the coordinate system in which to resolve values, as defined in <a>object bounding box units</a> [[!SVG11]].
-</dd>
-<dt><dfn>filter primitive</dfn>, <dfn element>filter-primitive</dfn>, <dfn>filter primitive elements</dfn></dt>
+<dt><dfn>filter primitive</dfn>, <dfn element>filter-primitive</dfn></dt>
 <dd>
   The set of elements that control the output of a <a element>filter</a> element, particularly: <a element>feSpotLight</a>, <a element>feBlend</a>, <a element>feColorMatrix</a>, <a element>feComponentTransfer</a>, <a element>feComposite</a>, <a element>feConvolveMatrix</a>, <a element>feDiffuseLighting</a>, <a element>feDisplacementMap</a>, <a element>feDropShadow</a>, <a element>feFlood</a>, <a element>feGaussianBlur</a>, <a element>feImage</a>, <a element>feMerge</a>, <a element>feMorphology</a>, <a element>feOffset</a>, <a element>feSpecularLighting</a>, <a element>feTile</a>, <a element>feTurbulence</a>.
-</dd>
-<dt><dfn>light source</dfn></dt>
-<dd>
-  The following elements are light sources: <a element>feDistantLight</a>, <a element>fePointLight</a>, <a element>feSpotLight</a>.
-</dd>
-<dt><dfn>filter primitive attributes</dfn></dt>
-<dd>
-  All <i>filter primitives</i> share <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> as filter primitive attributes.
-</dd>
-<dt><dfn>vertex mesh</dfn></dt>
-<dd>
-  The vertex mesh defines the geometry that is processed by the vertex shader.
 </dd>
 </dl>
 
@@ -433,7 +399,7 @@ The description of the <a element>filter</a> element follows:
   <dd>
     <p>Specifies the coordinate system for the various length values within the <i>filter primitives</i> and for the attributes that define the <i>filter primitive subregion</i>.</p>
     <p>If <a element-attr>primitiveUnits</a> is equal to <a value for=primitiveUnits>userSpaceOnUse</a>, any length values within the filter definitions represent values in the current <i>user coordinate system</i> in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
-    <p>If <a element-attr>primitiveUnits</a> is equal to <a value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
+    <p>If <a element-attr>primitiveUnits</a> is equal to <a value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
     <p>The <a>lacuna value</a> for <a element-attr>primitiveUnits</a> is <a value for=primitiveUnits>userSpaceOnUse</a>.</p>
     <p>Animatable: yes.</p>
     <p class="issue">If we make filter region auto, how will it affect existing content that uses <a value for=primitiveUnits>objectBoundingBox</a>? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
@@ -538,7 +504,7 @@ Note: Some attribute or property values from the filter primitives <a element>fe
 
 <h3 id="CommonAttributes">Common filter primitive attributes</h3>
 
-The following attributes are available for all filter primitives:
+The following <dfn>filter primitive attributes</dfn> are available for all filter primitives:
 
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=filter-primitive>
@@ -1100,6 +1066,8 @@ The child elements of a <a element>feComponentTransfer</a> element specify the t
   <li><a element>feFuncB</a> - transfer function for the blue component of the input graphic</li> 
   <li><a element>feFuncA</a> - transfer function for the alpha component of the input graphic</li> 
 </ul>
+
+The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a> elements are also called <dfn>transfer function element</dfn>s.
 
 The following rules apply to the processing of the <a element>feComponentTransfer</a> element:
 
@@ -2962,7 +2930,7 @@ Note: The 'color-interpolation-filters' property has no effect on <span>Filter F
 
 <h3 id="LightSourceIntro">Introduction</h3>
 
-The following sections define the elements that define a <i>light source</i>, <a element>feDistantLight</a>, <a element>fePointLight</a> and <a element>feSpotLight</a>, and property 'lighting-color', which defines the color of the light.
+The following sections define the elements that define a <dfn>light source</dfn>, <a element>feDistantLight</a>, <a element>fePointLight</a> and <a element>feSpotLight</a>, and property 'lighting-color', which defines the color of the light.
 
 <h3 id="feDistantLightElement">Light source <a element>feDistantLight</a></h3>
 
@@ -3273,6 +3241,8 @@ If <em>from-value</em> and <em>to-value</em> can be interpolated and the interpo
 
 <h3 id="additive-animations">Additive animations</h3>
 
+<p class=issue>Should additive animations be defined by appending the offset to the filter function list or by adding offset to function list per component? <a href="http://lists.w3.org/Archives/Public/public-fx/2014JanMar/0063.html">public-fx</a></p>
+
 It is possible for animations to define an offset from a <<filter-function-list>> value rather than having animations between absolute values. This offset is added to the underlying value of the attribute and other lower priority animations [[SVG11]].
 
 Additive animations of <<filter-function-list>> follow the interpolation algorithm above. The underlying attribute value is used as <em>from-filter</em>. <em>to-filter</em> is the offset value added to <em>from-filter</em>. Additive animations of <<filter-function-list>>s follow the following steps:
@@ -3289,9 +3259,14 @@ Additive animations of <<filter-function-list>> follow the interpolation algorit
 </ul>
 
 <div class="example">
-The following SVG animation animates the <<blur()>> filter function.
+The following SVG animation is an example for and additive animation of the <<blur()>> filter function.
 
-<p class="issue">Add additive animation examples.</p>
+<pre><code class=html>
+&lt;rect width="200px" ...>
+  &lt;animate attributeType="filter" from="blur(2px)" to="blur(2px)" dur="10s"
+           additive="sum" accumulate="sum" repeatCount="5"/>
+&lt;/rect>
+</code></pre>
 </div>
 
 <h3 id="paced-animations">Paced animations</h3>
@@ -3363,7 +3338,7 @@ Note: This specification aggravates the restrictions to filter primitives based 
 
 <h3 id="fedisplacemnentmap-restrictions"><a element>feDisplacementMap</a> Restrictions</h3>
 
-If <a element>feDisplacementMap</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a element-attr for=feDisplacementMap>in2</a>), then <a element>feDisplacementMap</a> must not proceed with the filter operation and acts as a <i>pass through filter</i>.
+If <a element>feDisplacementMap</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a element-attr for=feDisplacementMap>in2</a>), then <a element>feDisplacementMap</a> must not proceed with the filter operation and acts as a <dfn>pass through filter</dfn>. The pass through filter output is equal to the primary input of the filter.
 
 <h3 id="origin-restrictions">Origin Restrictions</h3>
 
