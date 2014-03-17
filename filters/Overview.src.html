@@ -486,7 +486,7 @@ This section describes the various filter primitives that can be assembled to ac
 
 Unless otherwise stated, all image filters operate on premultiplied RGBA samples. Some filters like <a element>feColorMatrix</a> and <a element>feComponentTransfer</a> work more naturally on non-premultiplied data. For the time of the filter operation, all color values must temporarily be transformed to the required color multiplication of the current filter.
 
-Note: All input images are assumed to be in premultiplied RGBA. User agents can optimize performance by using non-premultiplied data buffering.
+Note: All input images are assumed to be in premultiplied RGBA. User agents may optimize performance by using non-premultiplied data buffering.
 
 All raster effect filtering operations take 1 to N input RGBA images, additional attributes as parameters, and produce a single output RGBA image.
 
@@ -578,7 +578,7 @@ Most filter primitives take other filter primitives as input. The following attr
           This keyword represents the graphics elements that were the original input into the <a element>filter</a> element. <a value>SourceAlpha</a> has all of the same rules as <a value>SourceGraphic</a> except that only the alpha channel is used. The input image is an RGBA image consisting of implicitly black color values for the RGB channels, but whose alpha channel is the same as <a value>SourceGraphic</a>.
         </p>
         <p class="note implementation">
-          If this option is used, then some implementations might need to rasterize the graphics elements in order to extract the alpha channel.
+          Note: If this option is used, then some implementations might need to rasterize the graphics elements in order to extract the alpha channel.
         </p>
       </dd>
       <dt>
@@ -888,7 +888,8 @@ on the RGBA color and alpha values of every pixel on the input graphics to produ
 
 The calculations are performed on non-premultiplied color values.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feColorMatrix>
   <dt>
     <dfn>type</dfn> = "<em>matrix | saturate | hueRotate |
@@ -920,7 +921,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 | 1  |     |           0                   0                   0        0  1 |   | 1 |</pre>
     </object>-->
         <div class="note authoring">
-          A value of ''0'' produces a fully desaturated (grayscale) filter result, while a value of ''1'' passes the filter input image through unchanged. Values outside the 0..1 range under- or oversaturates the filter input image respectively.
+          Note: A value of ''0'' produces a fully desaturated (grayscale) filter result, while a value of ''1'' passes the filter input image through unchanged. Values outside the 0..1 range under- or oversaturates the filter input image respectively.
         </div>
       </li>
       <li>
@@ -1096,7 +1097,8 @@ The following rules apply to the processing of the <a element>feComponentTransfe
 
 The attributes below are the <dfn>transfer function element attributes</dfn>, which apply to the <i>transfer function elements</i>.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feComponentTransfer>
   <dt>
     <dfn>type</dfn> = "<a value>identity</a> | <a value>table</a> | <a value>discrete</a> | <a value>linear</a> | <a value>gamma</a>"
@@ -1282,7 +1284,8 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
 
 For this filter primitive, the extent of the resulting image might grow as described in the section that describes the <i>filter primitive subregion</i>.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feComposite>
   <dt>
     <dfn>operator</dfn> = "<span dfn-type=value dfn-for=operator><dfn>over</dfn> | <dfn>in</dfn> | <dfn>out</dfn> | <dfn>atop</dfn> | <dfn>xor</dfn> | <dfn>arithmetic</dfn></span>"
@@ -1551,7 +1554,8 @@ Because they operate on pixels, matrix convolutions are inherently resolution-de
 
 When the image must be resampled to match the coordinate system defined by <a element-attr for=feConvolveMatrix>kernelUnitLength</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the 'image-rendering' property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a element-attr for=feConvolveMatrix>kernelUnitLength</a> is considerably smaller than a device pixel.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feConvolveMatrix>
   <dt>
     <dfn>order</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
@@ -2014,7 +2018,8 @@ Note: Depending on the speed of the available interpolents, this choice may be a
 
 The 'color-interpolation-filters' property only applies to the <a element-attr for=feDisplacementMap>in2</a> source image and does not apply to the <a element-attr>in</a> source image. The <a element-attr>in</a> source image must remain in its current color space.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feDisplacementMap>
   <dt>
     <dfn>scale</dfn> = "<em><<number>></em>"
@@ -2104,7 +2109,8 @@ Note: that while the definition of the <a element>feDropShadow</a> filter primit
 
 Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropShadowElement</a> there is no way of accessing the internals of the <a element>feDropShadow</a> filter primitive, meaning <span class="requirement" id="assert_dropShadowShadowTrees">if the filter primitive is implemented as an equivalent tree then that tree must not be exposed to the DOM.</span>
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feDropShadow>
   <dt>
     <dfn>dx</dfn> = "<em><<number>></em>"
@@ -2209,7 +2215,8 @@ The approximation formula also applies correspondingly to "t".
 
 Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a value>SourceAlpha</a>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <a value>FillPaint</a> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a element>feTile</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feGaussianBlur>
   <dt>
     <dfn>stdDeviation</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
@@ -2369,7 +2376,8 @@ If the input has infinite extent and is constant (e.g <a value>FillPaint</a> whe
 
 Because <a element>feMorphology</a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feMorphology>
   <dt>
     <dfn>operator</dfn> = "<em>erode | dilate</em>"
@@ -2446,7 +2454,8 @@ This is important for effects like drop shadows.
 
 When applying this filter, the destination location may be offset by a fraction of a pixel in device space. <span class="requirement" id="assert_hqFeOffsetInterpolation">In this case a high quality viewer should make use of appropriate interpolation techniques, for example bilinear or bicubic.</span> This is especially recommended for dynamic viewers where this interpolation provides visually smoother movement of images. For static viewers this is less of a concern. Close attention should be made to the 'image-rendering' property setting to determine the authors intent.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feOffset>
   <dt>
     <dfn>dx</dfn> = "<em><<number>></em>"
@@ -2509,7 +2518,8 @@ Unlike the <a element>feDiffuseLighting</a>, the <a element>feSpecularLighting</
 
 The <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filters will often be applied together. An implementation may detect this and calculate both maps in one pass, instead of two.
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feSpecularLighting>
   <dt>
     <dfn>surfaceScale</dfn> = "<em><<number>></em>"
@@ -2967,7 +2977,8 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
 
 <!--elementsummary fePointLight-->
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=fePointLight>
   <dt>
     <dfn>x</dfn> = "<em><<number>></em>"
@@ -2999,7 +3010,8 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
 
 <!--elementsummary feSpotLight-->
 
-<p><em>Attribute definitions:</em></p>
+<em>Attribute definitions:</em>
+
 <dl dfn-type=element-attr dfn-for=feSpotLight>
   <dt>
     <dfn>x</dfn> = "<em><<number>></em>"

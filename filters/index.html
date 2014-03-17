@@ -25,7 +25,7 @@ a[data-link-type=element]::after,span[data-link-type=element]::after {
 </p>
   <h1 class="p-name no-ref" id=title>Filter Effects Module Level 1</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20140219>19 February 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140317>17 March 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Latest version:<dd><a href=http://www.w3.org/TR/filter-effects/>http://www.w3.org/TR/filter-effects/</a><dt>Editor’s Draft:<dd><a href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a><dt>Previous Versions:<dd><a href=http://www.w3.org/TR/2013/WD-filter-effects-20130523/ rel=previous>http://www.w3.org/TR/2013/WD-filter-effects-20130523/</a><dd><a href=http://www.w3.org/TR/2012/WD-filter-effects-20121025/ rel=previous>http://www.w3.org/TR/2012/WD-filter-effects-20121025/</a>
     <dt>Feedback:</dt>
         <dd><a href="mailto:public-fx@w3.org?subject=%5Bfilter-effects%5D%20feedback">public-fx@w3.org</a>
@@ -593,7 +593,7 @@ Property index</a><li><a href=#issues-index><span class=secno></span>Issues Inde
 
 <p>Unless otherwise stated, all image filters operate on premultiplied RGBA samples. Some filters like <a data-link-type=element href=#elementdef-fecolormatrix title=fecolormatrix>feColorMatrix</a> and <a data-link-type=element href=#elementdef-fecomponenttransfer title=fecomponenttransfer>feComponentTransfer</a> work more naturally on non-premultiplied data. For the time of the filter operation, all color values must temporarily be transformed to the required color multiplication of the current filter.
 
-<p class=note>Note: All input images are assumed to be in premultiplied RGBA. User agents can optimize performance by using non-premultiplied data buffering.
+<p class=note>Note: All input images are assumed to be in premultiplied RGBA. User agents may optimize performance by using non-premultiplied data buffering.
 
 <p>All raster effect filtering operations take 1 to N input RGBA images, additional attributes as parameters, and produce a single output RGBA image.
 
@@ -685,7 +685,7 @@ Property index</a><li><a href=#issues-index><span class=secno></span>Issues Inde
           This keyword represents the graphics elements that were the original input into the <a data-link-type=element href=#elementdef-filter title=filter>filter</a> element. <a class=css-code data-link-type=value href=#valuedef-sourcealpha title=sourcealpha>SourceAlpha</a> has all of the same rules as <a class=css-code data-link-type=value href=#valuedef-sourcegraphic title=sourcegraphic>SourceGraphic</a> except that only the alpha channel is used. The input image is an RGBA image consisting of implicitly black color values for the RGB channels, but whose alpha channel is the same as <a class=css-code data-link-type=value href=#valuedef-sourcegraphic title=sourcegraphic>SourceGraphic</a>.
         </p>
         <p class="note implementation">
-          If this option is used, then some implementations might need to rasterize the graphics elements in order to extract the alpha channel.
+          Note: If this option is used, then some implementations might need to rasterize the graphics elements in order to extract the alpha channel.
         </p>
       </dd>
       <dt>
@@ -1028,7 +1028,8 @@ provides the list of available image blending modes:</p>
 
 <p>The calculations are performed on non-premultiplied color values.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feColorMatrix data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-type0>type<a class=self-link href=#element-attrdef-type0></a></dfn> = "<em>matrix | saturate | hueRotate |
@@ -1052,7 +1053,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>      </li>
 <math><semantics><mrow><mrow><mfenced close=] open=[><mrow><mtable><mtr><mtd><mrow><mi>R</mi><mi>'</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi><mi>'</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi><mi>'</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><mi>'</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy=false>=</mo><mrow><mfenced close=] open=[><mrow><mtable><mtr><mtd><mrow><mrow><mn>0.213</mn><mo stretchy=false>+</mo><mn>0.787s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.715</mn><mo stretchy=false>−</mo><mn>0.715s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.072</mn><mo stretchy=false>−</mo><mn>0.072s</mn></mrow></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mn>0.213</mn><mo stretchy=false>−</mo><mn>0.213s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.715</mn><mo stretchy=false>+</mo><mn>0.285s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.072</mn><mo stretchy=false>−</mo><mn>0.072s</mn></mrow></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mn>0.213</mn><mo stretchy=false>−</mo><mn>0.213s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.715</mn><mo stretchy=false>−</mo><mn>0.715s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.072</mn><mo stretchy=false>+</mo><mn>0.928s</mn></mrow></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy=false>⋅</mo><mfenced close=] open=[><mrow><mtable><mtr><mtd><mrow><mi>R</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></mrow></semantics></math>
     
         <div class="note authoring">
-          A value of <span class=css data-link-type=maybe title=0>0</span> produces a fully desaturated (grayscale) filter result, while a value of <span class=css data-link-type=maybe title=1>1</span> passes the filter input image through unchanged. Values outside the 0..1 range under- or oversaturates the filter input image respectively.
+          Note: A value of <span class=css data-link-type=maybe title=0>0</span> produces a fully desaturated (grayscale) filter result, while a value of <span class=css data-link-type=maybe title=1>1</span> passes the filter input image through unchanged. Values outside the 0..1 range under- or oversaturates the filter input image respectively.
         </div>
       </li>
       <li>
@@ -1309,7 +1310,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>The attributes below are the <dfn data-dfn-type=dfn data-noexport="" id=transfer-function-element-attributes>transfer function element attributes<a class=self-link href=#transfer-function-element-attributes></a></dfn>, which apply to the <a data-link-type=dfn href=#transfer-function-element title="transfer function elements">transfer function elements</a>.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feComponentTransfer data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-type1>type<a class=self-link href=#element-attrdef-type1></a></dfn> = "<a class=css-code data-link-type=value href=#valuedef-identity title=identity>identity</a> | <a class=css-code data-link-type=value href=#valuedef-table title=table>table</a> | <a class=css-code data-link-type=value href=#valuedef-discrete title=discrete>discrete</a> | <a class=css-code data-link-type=value href=#valuedef-linear title=linear>linear</a> | <a class=css-code data-link-type=value href=#valuedef-gamma title=gamma>gamma</a>"
@@ -1512,7 +1514,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>For this filter primitive, the extent of the resulting image might grow as described in the section that describes the <a data-link-type=dfn href=#filter-primitive-subregion title="filter primitive subregion">filter primitive subregion</a>.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feComposite data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-operator0>operator<a class=self-link href=#element-attrdef-operator0></a></dfn> = "<span data-dfn-for=operator data-dfn-type=value><dfn class=css-code data-dfn-for=operator data-dfn-type=value data-export="" id=valuedef-over>over<a class=self-link href=#valuedef-over></a></dfn> | <dfn class=css-code data-dfn-for=operator data-dfn-type=value data-export="" id=valuedef-in>in<a class=self-link href=#valuedef-in></a></dfn> | <dfn class=css-code data-dfn-for=operator data-dfn-type=value data-export="" id=valuedef-out>out<a class=self-link href=#valuedef-out></a></dfn> | <dfn class=css-code data-dfn-for=operator data-dfn-type=value data-export="" id=valuedef-atop>atop<a class=self-link href=#valuedef-atop></a></dfn> | <dfn class=css-code data-dfn-for=operator data-dfn-type=value data-export="" id=valuedef-xor>xor<a class=self-link href=#valuedef-xor></a></dfn> | <dfn class=css-code data-dfn-for=operator data-dfn-type=value data-export="" id=valuedef-arithmetic>arithmetic<a class=self-link href=#valuedef-arithmetic></a></dfn></span>"
@@ -1801,7 +1804,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>When the image must be resampled to match the coordinate system defined by <a data-link-for=feConvolveMatrix data-link-type=element-attr href=#element-attrdef-kernelunitlength0 title=kernelunitlength>kernelUnitLength</a> prior to convolution, or resampled to match the device coordinate system after convolution, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic. Depending on the speed of the available interpolents, this choice may be affected by the <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-images-4/#propdef-image-rendering title=image-rendering>image-rendering</a> property setting. Note that implementations might choose approaches that minimize or eliminate resampling when not necessary to produce proper results, such as when the document is zoomed out such that <a data-link-for=feConvolveMatrix data-link-type=element-attr href=#element-attrdef-kernelunitlength0 title=kernelunitlength>kernelUnitLength</a> is considerably smaller than a device pixel.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feConvolveMatrix data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-order>order<a class=self-link href=#element-attrdef-order></a></dfn> = "<em><a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber>&lt;number-optional-number&gt;</a></em>"
@@ -2303,7 +2307,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>The <a class=property data-link-type=propdesc href=#propdef-color-interpolation-filters title=color-interpolation-filters>color-interpolation-filters</a> property only applies to the <a data-link-for=feDisplacementMap data-link-type=element-attr href=#element-attrdef-in2 title=in2>in2</a> source image and does not apply to the <a data-link-type=element-attr href=#element-attrdef-in title=in>in</a> source image. The <a data-link-type=element-attr href=#element-attrdef-in title=in>in</a> source image must remain in its current color space.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feDisplacementMap data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-scale>scale<a class=self-link href=#element-attrdef-scale></a></dfn> = "<em><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a></em>"
@@ -2403,7 +2408,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>Beyond the DOM interface <a href=#InterfaceSVGFEDropShadowElement>SVGFEDropShadowElement</a> there is no way of accessing the internals of the <a data-link-type=element href=#elementdef-fedropshadow title=fedropshadow>feDropShadow</a> filter primitive, meaning <span class=requirement id=assert_dropShadowShadowTrees>if the filter primitive is implemented as an equivalent tree then that tree must not be exposed to the DOM.</span>
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feDropShadow data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-dx0>dx<a class=self-link href=#element-attrdef-dx0></a></dfn> = "<em><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a></em>"
@@ -2530,7 +2536,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a class=css-code data-link-type=value href=#valuedef-sourcealpha title=sourcealpha>SourceAlpha</a>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href=#security>Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <a class=css-code data-link-type=value href=#valuedef-fillpaint title=fillpaint>FillPaint</a> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a data-link-type=element href=#elementdef-fetile title=fetile>feTile</a>, the filter is evaluated with <a href=http://en.wikipedia.org/wiki/Periodic_boundary_conditions>periodic boundary conditions</a>.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feGaussianBlur data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-stddeviation>stdDeviation<a class=self-link href=#element-attrdef-stddeviation></a></dfn> = "<em><a href=http://www.w3.org/TR/2011/REC-SVG11-20110816/types.html#DataTypeNumberOptionalNumber>&lt;number-optional-number&gt;</a></em>"
@@ -2776,7 +2783,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>Because <a data-link-type=element href=#elementdef-femorphology title=femorphology>feMorphology</a> operates on premultipied color values, it will always result in color values less than or equal to the alpha channel.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feMorphology data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-operator>operator<a class=self-link href=#element-attrdef-operator></a></dfn> = "<em>erode | dilate</em>"
@@ -2873,7 +2881,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>When applying this filter, the destination location may be offset by a fraction of a pixel in device space. <span class=requirement id=assert_hqFeOffsetInterpolation>In this case a high quality viewer should make use of appropriate interpolation techniques, for example bilinear or bicubic.</span> This is especially recommended for dynamic viewers where this interpolation provides visually smoother movement of images. For static viewers this is less of a concern. Close attention should be made to the <a class=property data-link-type=propdesc href=http://dev.w3.org/csswg/css-images-4/#propdef-image-rendering title=image-rendering>image-rendering</a> property setting to determine the authors intent.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feOffset data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-dx>dx<a class=self-link href=#element-attrdef-dx></a></dfn> = "<em><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a></em>"
@@ -2959,7 +2968,8 @@ A' = <a data-link-type=element href=#elementdef-fefunca title=fefunca>feFuncA</a
 
 <p>The <a data-link-type=element href=#elementdef-fediffuselighting title=fediffuselighting>feDiffuseLighting</a> and <a data-link-type=element href=#elementdef-fespecularlighting title=fespecularlighting>feSpecularLighting</a> filters will often be applied together. An implementation may detect this and calculate both maps in one pass, instead of two.
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feSpecularLighting data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-surfacescale>surfaceScale<a class=self-link href=#element-attrdef-surfacescale></a></dfn> = "<em><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a></em>"
@@ -3491,7 +3501,8 @@ double turbulence(int nColorChannel, double *point, double <a href=#element-attr
 </table>
 
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=fePointLight data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-x2>x<a class=self-link href=#element-attrdef-x2></a></dfn> = "<em><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a></em>"
@@ -3545,7 +3556,8 @@ double turbulence(int nColorChannel, double *point, double <a href=#element-attr
 </table>
 
 
-<p><em>Attribute definitions:</em></p>
+<p><em>Attribute definitions:</em>
+
 <dl data-dfn-for=feSpotLight data-dfn-type=element-attr>
   <dt>
     <dfn data-dfn-type=element-attr data-export="" id=element-attrdef-x>x<a class=self-link href=#element-attrdef-x></a></dfn> = "<em><a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#number-value title="<number>">&lt;number&gt;</a></em>"
