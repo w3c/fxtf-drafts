@@ -709,17 +709,17 @@ This filter blends two objects together using commonly used imaging software ble
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feBlend>
   <dt>
-    <dfn>mode</dfn> = "<span dfn-type=value dfn-for=mode><dfn>normal</dfn> | <dfn>multiply</dfn> | <dfn>screen</dfn> | <dfn>darken</dfn> | <dfn>lighten</dfn></em>"
+    <dfn>mode</dfn> = "<<blend-mode>>"
   </dt>
   <dd>
-    <p>One of the image blending modes (see <a href="#BlendingTable">table</a> below). The <a>lacuna value</a> for <a element-attr>mode</a> is ''normal''.</p>
+    <p>One of the blend modes defined by “Compositing and Blending Level 1” [[!COMPOSITING-1]]. The lacuna value for <a element-attr>mode</a> is ''normal''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>no-composite</dfn> = "<dfn dfn-type=value dfn-for=no-composite>no-composite</dfn>"
   </dt>
   <dd>
-    <p>If the <a element-attr>no-composite</a> attribute is present, the specified blend mode must not use alpha compositing.</p>
+    <p>If the <a element-attr>no-composite</a> attribute is present, the specified blend mode must not use alpha compositing. The necessary modifications are defined by “Compositing and Blending Level 1” [[!COMPOSITING-1]].</p>
     <p>Animatable: no.</p>
   </dd>
   <dt>
@@ -730,85 +730,6 @@ This filter blends two objects together using commonly used imaging software ble
     <p>Animatable: yes.</p>
   </dd>
 </dl>
-
-For all feBlend modes, the result opacity is computed as follows:
-
-<pre>qr = 1 - (1-qa)*(1-qb)</pre>
-
-For the compositing formulas below, the following definitions apply:
-
-<pre>image A = in
-image B = in2
-cr = Result color (RGB) - premultiplied 
-qa = Opacity value at a given pixel for image A 
-qb = Opacity value at a given pixel for image B 
-ca = Color (RGB) at a given pixel for image A - premultiplied 
-cb = Color (RGB) at a given pixel for image B - premultiplied </pre>
-
-<p id="BlendingTable">The following table
-provides the list of available image blending modes:</p>
-
-<table class="data">
-  <thead>
-    <tr>
-      <th>Image Blending Mode
-      <th>Formula for computing result color <em>with</em> compositing
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>normal
-      <td><pre>cr = (1 - qa) * cb + ca</pre>
-    </tr>
-    <tr>
-      <th>multiply
-      <td><pre>cr = (1 - qa) * cb + (1 - qb) * ca + ca * cb</pre>
-    </tr>
-    <tr>
-      <th>screen
-      <td><pre>cr = cb + ca - ca * cb</pre>
-    </tr>
-    <tr>
-      <th>darken
-      <td><pre>cr = Min ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</pre>
-    </tr>
-    <tr>
-      <th>lighten
-      <td><pre>cr = Max ((1 - qa) * cb + ca, (1 - qb) * ca + cb)</pre>
-    </tr>
-  </tbody>
-</table>
-
-<table class="data">
-  <thead>
-    <tr>
-      <th>Image Blending Mode
-      <th>Formula for computing result color <em>without</em> compositing
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>normal
-      <td><pre>cr = ca</pre>
-    </tr>
-    <tr>
-      <th>multiply
-      <td><pre>cr = (1 - qb) x ca + cb x ca</pre>
-    </tr>
-    <tr>
-      <th>screen
-      <td>cr = ca + qs x cb - cb x ca</pre>
-    </tr>
-    <tr>
-      <th>darken
-      <td><pre>cr = (1 - qb) x ca + Min (qa x cb, qb x ca)</pre>
-    </tr>
-    <tr>
-      <th>lighten
-      <td><pre>cr = (1 - qb) x ca + Max (qa x cb, qb x ca)</pre>
-    </tr>
-  </tbody>
-</table>
 
 The ''normal'' blend mode with alpha compositing is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
 
