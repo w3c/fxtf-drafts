@@ -25,29 +25,29 @@ a[data-link-type=element]::after,span[data-link-type=element]::after {
 </p>
   <h1 class="p-name no-ref" id=title>Filter Effects Module Level 1</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20140626>26 June 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140627>27 June 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl>
+	<dt>This version:
+	<dd><a class=u-url href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a>
+	<dt>Latest version:
+	<dd><a href=http://www.w3.org/TR/filter-effects/>http://www.w3.org/TR/filter-effects/</a>
+	<dt>Previous Versions:
+	<dd><dd><a href=http://www.w3.org/TR/2013/WD-filter-effects-20130523/ rel=previous>http://www.w3.org/TR/2013/WD-filter-effects-20130523/</a>
+	<dd><dd><a href=http://www.w3.org/TR/2012/WD-filter-effects-20121025/ rel=previous>http://www.w3.org/TR/2012/WD-filter-effects-20121025/</a>
 	<dt>Feedback:
 	<dd><a href="mailto:public-fx@w3.org?subject=%5Bfilter-effects%5D%20feedback">public-fx@w3.org</a>
             with subject line
             “<kbd>[filter-effects] <var>… message topic …</var></kbd>”(<a href=http://lists.w3.org/Archives/Public/public-fx/ rel=discussion>archives</a>)
 	<dt>Test Suite:
 	<dd><a href=http://test.csswg.org/suites/filter-effects/nightly-unstable/>http://test.csswg.org/suites/filter-effects/nightly-unstable/</a>
-	<dt>Former Editors:
-	<dd><dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:vhardy@adobe.com>Vincent Hardy</a> (<span class="p-org org"><a href=http://www.adobe.com/>Adobe Systems Inc</a></span>)
 	<dt>Editors:
 	<dd><dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:dino@apple.com>Dean Jackson</a> (<span class="p-org org"><a href=http://www.apple.com/>Apple Inc</a></span>)
 	<dd><dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:ed@opera.com>Erik Dahlström</a> (<span class="p-org org">Opera Software ASA</span>)
 	<dd><dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:dschulze@adobe.com>Dirk Schulze</a> (<span class="p-org org"><a href=http://www.adobe.com/>Adobe Systems Inc</a></span>)
-	<dt>Previous Versions:
-	<dd><dd><a href=http://www.w3.org/TR/2013/WD-filter-effects-20130523/ rel=previous>http://www.w3.org/TR/2013/WD-filter-effects-20130523/</a>
-	<dd><dd><a href=http://www.w3.org/TR/2012/WD-filter-effects-20121025/ rel=previous>http://www.w3.org/TR/2012/WD-filter-effects-20121025/</a>
-	<dt>Latest version:
-	<dd><a href=http://www.w3.org/TR/filter-effects/>http://www.w3.org/TR/filter-effects/</a>
+	<dt>Former Editors:
+	<dd><dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:vhardy@adobe.com>Vincent Hardy</a> (<span class="p-org org"><a href=http://www.adobe.com/>Adobe Systems Inc</a></span>)
 	<dt>Issues List:
 	<dd><a href="https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&amp;component=Filter%20Effects&amp;resolution=---">in Bugzilla</a>
-	<dt>This version:
-	<dd><a class=u-url href=http://dev.w3.org/fxtf/filters/>http://dev.w3.org/fxtf/filters/</a>
 </dl>
 </div>
   <div data-fill-with=warning></div>
@@ -2943,7 +2943,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
 </table>
 
 
-<p>This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).</p>
+<p>This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Blinn-Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).</p>
 
 <p class=note>Note: This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture from a second filter primitive using the <em>add</em> term of the <em>arithmetic</em> <a data-link-type=element href=#elementdef-fecomposite title=fecomposite>feComposite</a> method. Multiple <a data-link-type=dfn href=#light-source title="light sources">light sources</a> can be simulated by adding several of these light maps before applying it to the texture image.</p>
 
@@ -3016,7 +3016,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
   </dd>
 </dl>
 
-<p>The light source is defined by one of the child elements <a data-link-type=element href=#elementdef-fedistantlight title=fedistantlight>feDistantLight</a>, <a data-link-type=element href=#elementdef-fepointlight title=fepointlight>fePointLight</a> or <a data-link-type=element href=#elementdef-fedistantlight title=fedistantlight>feDistantLight</a>. The light color is specified by property <a class=property data-link-type=propdesc href=#propdef-lighting-color title=lighting-color>lighting-color</a>.</p>
+<p>The light source is defined by one of the child elements <a data-link-type=element href=#elementdef-fedistantlight title=fedistantlight>feDistantLight</a>, <a data-link-type=element href=#elementdef-fepointlight title=fepointlight>fePointLight</a> or <a data-link-type=element href=#elementdef-fespotlight title=fespotlight>feSpotLight</a>. The light color is specified by property <a class=property data-link-type=propdesc href=#propdef-lighting-color title=lighting-color>lighting-color</a>.</p>
 
 <p><a href=#intro>The example</a> at the start of this chapter makes use of the <a data-link-type=element href=#elementdef-fespecularlighting title=fespecularlighting>feSpecularLighting</a> filter primitive to achieve a highly reflective, 3D glowing effect.</p>
 
