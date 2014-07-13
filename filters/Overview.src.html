@@ -34,20 +34,33 @@ a[data-link-type=element]::after,span[data-link-type=element]::after {
 
 <h2 id="intro">Introduction</h2>
 
+<em>This section is not normative</em>
+
 A filter effect is a graphical operation that is applied to an element as it is drawn into the document. It is an image-based effect, in that it takes zero or more images as input, a number of parameters specific to the effect, and then produces an image as output. The output image is either rendered into the document instead of the original element, used as an input image to another filter effect, or provided as a CSS image value.
 
-A simple example of a filter effect is a "flood". It takes no image inputs but has a parameter defining a color. The effect produces an output image that is completely filled with the given color. A slightly more complex example is an "inversion" which takes a single image input (typically an image of the element as it would normally be rendered into its parent) and adjusts each pixel such that they have the opposite color values.
+A simple example of a filter effect is a “flood”. It takes no image inputs but has a parameter defining a color. The effect produces an output image that is completely filled with the given color. A slightly more complex example is an “inversion” which takes a single image input (typically an image of the element as it would normally be rendered into its parent) and adjusts each pixel such that they have the opposite color values.
 
 Filter effects are exposed with two levels of complexity:
 
 <ol>
   <li>
-    A small set of canned filter functions that are given by name. While not particularly powerful, these are convenient and easily understood and provide a simple approach to achieving common effects, such as blurring. The canned filters can also be animated by [[CSS3-TRANSFORMS]] and [[CSS3-ANIMATIONS]].
+    A small set of canned filter functions that are given by name. While not particularly powerful, these are convenient and easily understood and provide a simple approach to achieving common effects, such as blurring. The canned filters can also be animated by [[CSS3-ANIMATIONS]].
   </li>
   <li>
     A graph of individual filter effects described in markup that define an overall effect. The graph is agnostic to its input in that the effect can be applied to any content. While such graphs are the combination of effects that may be simple in isolation, the graph as a whole can produce complex effects. An example is given below.
   </li>
 </ol>
+
+<div class="example">
+  <p>In this example, the image is filtered with the <<grayscale()>> filter function.</p>
+
+  <pre><code class="css">image {
+  filter: grayscale(0);
+}</code></pre>
+
+  <p class="isse">Complete initial filter function example</p>
+
+</div>
 
 <div class="example">
   <p>The following shows an example of graph of individual filter effects.</p>
@@ -58,9 +71,8 @@ Filter effects are exposed with two levels of complexity:
   </div>
 
   <p><a href="examples/filters01.svg">View this example</a> as SVG</p>
-</div>
 
-The filter effect used in the example above is repeated here with reference numbers in the left column before each of the six filter primitives:
+<p>The filter effect used in the example above is repeated here with reference numbers in the left column before each of the six filter primitives:
 
 <table>
   <tbody>
@@ -106,113 +118,50 @@ The filter effect used in the example above is repeated here with reference numb
 
 The following pictures show the intermediate image results from each of the six filter elements:
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <p>
-          <img width="115"
-             height="70"
-             alt="filters01 - original source graphic"
-             src="examples/filters01-0.png"><br>
-          Source graphic
-        </p>
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <p>
-          <img width="115"
-             height="70"
-             alt="filters01 - after filter element 1"
-             src="examples/filters01-1.png"><br>
-          After filter primitive 1
-        </p>
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <p>
-          <img width="115"
-             height="70"
-             alt="filters01 - after filter element 2"
-             src="examples/filters01-2.png"><br>
-          After filter primitive 2
-        </p>
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <p>
-          <img width="115"
-             height="70"
-             alt="filters01 - after filter element 3"
-             src="examples/filters01-3.png"><br>
-          After filter primitive 3
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <p>
-          <img width="115"
-             height="70"
-             alt="filters01 - after filter element 4"
-             src="examples/filters01-4.png"><br>
-          After filter primitive 4
-        </p>
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <p>
-          <img width="115"
-             height="70"
-             alt="filters01 - after filter element 5"
-             src="examples/filters01-5.png"><br>
-          After filter primitive 5
-        </p>
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <p>
-          <img width="115"
-             height="70"
-             alt="filters01 - after filter element 6"
-             src="examples/filters01-6.png"><br>
-          After filter primitive 6
-        </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<style type="text/css">
+.primitive > div {
+  width: 155px;
+  margin: 10px;
+  float: left;
+  text-align: center;
+}
+.primitive div > img {
+  border: solid black 1px;
+}
+</style>
 
-<ol>
+<div class="primitive">
+<div>
+  <img width="115" height="70" alt="filters01 - original source graphic" src="examples/filters01-0.png">
+  <p>Source graphic</p>
+</div>
+<div>
+  <img width="115" height="70" alt="filters01 - after filter element 1" src="examples/filters01-1.png">
+  <p>After filter primitive 1</p>
+</div>
+<div>
+  <img width="115" height="70" alt="filters01 - after filter element 2" src="examples/filters01-2.png">
+  <p>After filter primitive 2</p>
+</div>
+<div class="primitive">
+  <img width="115" height="70" alt="filters01 - after filter element 3" src="examples/filters01-3.png">
+  <p>After filter primitive 3</p>
+</div>
+<div>
+  <img width="115" height="70" alt="filters01 - after filter element 4" src="examples/filters01-4.png">
+  <p>After filter primitive 4</p>
+</div>
+<div>
+  <img width="115" height="70" alt="filters01 - after filter element 5" src="examples/filters01-5.png">
+  <p>After filter primitive 5</p>
+</div>
+<div>
+  <img width="115" height="70" alt="filters01 - after filter element 6" src="examples/filters01-6.png">
+  <p>After filter primitive 6</p>
+</div>
+</div>
+
+<ol style="clear: left">
   <li>
     Filter primitive <a element>feGaussianBlur</a> takes input <a value>SourceAlpha</a>, which is the alpha channel of the source graphic. The result is stored in a temporary buffer named "blur". Note that "blur" is used as input to both filter primitives 2 and 3.
   </li>
@@ -232,6 +181,7 @@ The following pictures show the intermediate image results from each of the six 
     Filter primitive <a element>feMerge</a> composites two layers together. The lower layer consists of the drop shadow result from filter primitive 2. The upper layer consists of the specular lighting result from filter primitive 5.
   </li>
 </ol>
+</div>
 
 <h2 id="placement">Module interactions</h2>
 
@@ -240,6 +190,7 @@ This specification defines a set of CSS properties that affect the visual render
 The compositing model follows the SVG compositing model [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such as 'border' [[!CSS3BG]].
 
 Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and 'lighting-color' properties as well as the <a element>filter</a> element, the <a element>feMergeNode</a> element, the <i>transfer function elements</i> and the <i>filter primitive</i> elements.
+
 
 <h2 id="values">Values</h2>
 
