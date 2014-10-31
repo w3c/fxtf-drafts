@@ -15,9 +15,10 @@ Editor: Dirk Schulze, <a href="http://www.adobe.com/">Adobe Systems Inc</a>, dsc
 Former Editor: Vincent Hardy, <a href="http://www.adobe.com/">Adobe Systems Inc</a>, vhardy@adobe.com
 Test Suite: http://test.csswg.org/suites/filter-effects/nightly-unstable/
 Abstract: Filter effects are a way of processing an element's rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.
-Abstract: 
+Abstract:
 Abstract: Although originally designed for use in SVG, filter effects are a set a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the 'filter' property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <<image>> value.
 !Issues List: <a href="https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&component=Filter%20Effects&resolution=---">in Bugzilla</a>
+Use <i> Autolinks: yes
 </pre>
 
 <style type="text/css">
@@ -98,13 +99,13 @@ Filter effects are exposed with two levels of complexity:
   &lt;desc&gt;Produces a 3D lighting effect.&lt;/desc&gt;
   &lt;feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/&gt;
   &lt;feOffset in="blur" dx="4" dy="4" result="offsetBlur"/&gt;
-  &lt;feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" 
-                      specularExponent="20" lighting-color="#bbbbbb" 
+  &lt;feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75"
+                      specularExponent="20" lighting-color="#bbbbbb"
                       result="specOut"&gt;
     &lt;fePointLight x="-5000" y="-10000" z="20000"/&gt;
   &lt;/feSpecularLighting&gt;
   &lt;feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/&gt;
-  &lt;feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" 
+  &lt;feComposite in="SourceGraphic" in2="specOut" operator="arithmetic"
                k1="0" k2="1" k3="1" k4="0" result="litPaint"/&gt;
   &lt;feMerge&gt;
     &lt;feMergeNode in="offsetBlur"/&gt;
@@ -426,7 +427,7 @@ Note that both of the two possible value for <a element-attr>filterUnits</a> (i.
 
 Note: Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <i>filter region</i> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.
 
-Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>. 
+Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
 
 <p class="issue">The value of ''auto'' should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the 'clip-path' property.</p>
 
@@ -581,7 +582,7 @@ All intermediate offscreens are defined to not exceed the intersection of the <i
 <div class="example">
   <p><a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <i>filter primitive subregion</i> of the referenced filter primitive in order to fill its own <i>filter primitive subregion</i>.</p>
 
-  <pre class="xml">&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt; 
+  <pre class="xml">&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt;
   &lt;defs&gt;
     &lt;filter id="flood" x="0" y="0" width="100%" height="100%" primitiveUnits="objectBoundingBox"&gt;
        &lt;feFlood x="25%" y="25%" width="50%" height="50%"
@@ -598,7 +599,7 @@ All intermediate offscreens are defined to not exceed the intersection of the <i
        &lt;/feMerge&gt;
     &lt;/filter&gt;
   &lt;/defs&gt;
-  
+
   &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
      &lt;rect width="200" height="200"/&gt;
      &lt;line x2="200" y2="200"/&gt;
@@ -614,7 +615,7 @@ All intermediate offscreens are defined to not exceed the intersection of the <i
     &lt;/g&gt;
     &lt;circle fill="green" filter="url(#blend)" cx="100" cy="100" r="90"/&gt;
   &lt;/g&gt;
-  
+
   &lt;g transform="translate(0 200)"&gt;
     &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
        &lt;rect width="200" height="200"/&gt;
@@ -716,7 +717,7 @@ The ''normal'' blend mode with alpha compositing is equivalent to <code>operator
       &lt;feBlend mode="lighten" in2="BackgroundImage" in="SourceGraphic"/&gt;
     &lt;/filter&gt;
   &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"  
+  &lt;rect fill="none" stroke="blue"
         x="1" y="1" width="498" height="498"/&gt;
   &lt;g isolation="isolate" &gt;
     &lt;rect x="100" y="20" width="300" height="460" fill="url(#MyGradient)" /&gt;
@@ -734,7 +735,7 @@ The ''normal'' blend mode with alpha compositing is equivalent to <code>operator
     <img alt="Example " src="examples/feBlend.png">
     <p class="caption">Example of feBlend</p>
   </div>
-  
+
   <p class="view-as-svg">
     <a href="examples/feBlend.svg">View this example as SVG (SVG-enabled UA only)</a>
   </p>
@@ -780,7 +781,7 @@ The calculations are performed on non-premultiplied color values.
     <ul>
       <li>For <code>type="matrix"</code>, <a element-attr for=feColorMatrix>values</a> is a list of 20 matrix values (a00 a01 a02 a03 a04 a10 a11 ... a34), separated by whitespace and/or a comma. For example, the identity matrix could be expressed as:
         <pre>
-type="matrix" 
+type="matrix"
 values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
       </li>
       <li>
@@ -798,7 +799,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
         </div>
       </li>
       <li>
-        For <code>type="hueRotate"</code>, <a element-attr for=feColorMatrix>values</a> is a single one real number value (degrees). A ''hueRotate'' operation is equivalent to the following matrix operation: 
+        For <code>type="hueRotate"</code>, <a element-attr for=feColorMatrix>values</a> is a single one real number value (degrees). A ''hueRotate'' operation is equivalent to the following matrix operation:
 <math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><msub><mi>a</mi><mn>00</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>01</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>02</mn></msub></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>10</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>11</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>12</mn></msub></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>20</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>21</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>22</mn></msub></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></mrow></semantics></math>
     <!--<object data="mathml/feColorMatrix02.mml" type="application/mathml+xml" width="100%" height="130">
         <pre>| R' |     | a00  a01  a02  0  0 |   | R |
@@ -808,7 +809,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 | 1  |     | 0    0    0    0  1 |   | 1 |</pre>
   </object>-->
 
-        where the terms a00, a01, etc. are calculated as follows: 
+        where the terms a00, a01, etc. are calculated as follows:
     <p>
 <math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><msub><mi>a</mi><mn>00</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>01</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>02</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>10</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>11</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>12</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>20</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>21</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>22</mn></msub></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">+</mo><mi>cos</mi></mrow></mrow><mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.787</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.285</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.928</mn></mrow></mrow></mtd></mtr></mtable></mrow></mfenced></mrow><mo stretchy="false">+</mo><mi>sin</mi></mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.928</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.143</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.140</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.283</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.787</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></semantics></math>
   <!--<object data="mathml/feColorMatrix03.mml" type="application/mathml+xml" width="100%" height="230">
@@ -828,13 +829,13 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
         Thus, the upper left term of the hue matrix turns out to be:
     <p>
 <math><semantics><mrow><mrow><msub><mi>a</mi><mn>00</mn></msub><mo stretchy="false">=</mo><mrow><mn>0.2127</mn><mo stretchy="false">+</mo><mi>cos</mi></mrow></mrow><mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mn>0.7873</mn></mrow><mo stretchy="false">−</mo><mi>sin</mi></mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mn>0.2127</mn></mrow></mrow></semantics></math>
-  <!--<object data="mathml/feColorMatrix04.mml" type="application/mathml+xml" width="100%" height="30"> 
+  <!--<object data="mathml/feColorMatrix04.mml" type="application/mathml+xml" width="100%" height="30">
         <pre>0.2127 + cos(hueRotate value) * 0.7873 - sin(hueRotate value) * 0.2127</pre>
     </object>-->
     </p>
 
       </li>
-      <li>For <code>type="luminanceToAlpha"</code>, <a element-attr for=feColorMatrix>values</a> is not applicable. A ''luminanceToAlpha'' operation is equivalent to the following matrix operation: 
+      <li>For <code>type="luminanceToAlpha"</code>, <a element-attr for=feColorMatrix>values</a> is not applicable. A ''luminanceToAlpha'' operation is equivalent to the following matrix operation:
         <p>
 <math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0.2126</mn></mrow></mtd><mtd><mrow><mn>0.7152</mn></mrow></mtd><mtd><mrow><mn>0.0722</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></mrow></semantics></math>
     <!--<object data="mathml/feColorMatrix05.mml" type="application/mathml+xml" width="100%" height="130">
@@ -857,8 +858,8 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 &lt;svg width="8cm" height="5cm" viewBox="0 0 800 500"
      xmlns="http://www.w3.org/2000/svg"&gt;
   &lt;title&gt;Example feColorMatrix - Examples of feColorMatrix operations&lt;/title&gt;
-  &lt;desc&gt;Five text strings showing the effects of feColorMatrix: 
-        an unfiltered text string acting as a reference, 
+  &lt;desc&gt;Five text strings showing the effects of feColorMatrix:
+        an unfiltered text string acting as a reference,
         use of the feColorMatrix matrix option to convert to grayscale,
         use of the feColorMatrix saturate option,
         use of the feColorMatrix hueRotate option,
@@ -871,31 +872,31 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
       &lt;stop offset=".67" stop-color="#2020ff" /&gt;
       &lt;stop offset="1" stop-color="#d00000" /&gt;
     &lt;/linearGradient&gt;
-    &lt;filter id="Matrix" filterUnits="objectBoundingBox" 
+    &lt;filter id="Matrix" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feColorMatrix type="matrix" in="SourceGraphic"
-           values=".33 .33 .33 0 0 
-                   .33 .33 .33 0 0 
-                   .33 .33 .33 0 0 
+           values=".33 .33 .33 0 0
+                   .33 .33 .33 0 0
+                   .33 .33 .33 0 0
                    .33 .33 .33 0 0"/&gt;
     &lt;/filter&gt;
-    &lt;filter id="Saturate40" filterUnits="objectBoundingBox" 
+    &lt;filter id="Saturate40" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feColorMatrix type="saturate" in="SourceGraphic" values="0.4"/&gt;
     &lt;/filter&gt;
-    &lt;filter id="HueRotate90" filterUnits="objectBoundingBox" 
+    &lt;filter id="HueRotate90" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feColorMatrix type="hueRotate" in="SourceGraphic" values="90"/&gt;
     &lt;/filter&gt;
-    &lt;filter id="LuminanceToAlpha" filterUnits="objectBoundingBox" 
+    &lt;filter id="LuminanceToAlpha" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feColorMatrix type="luminanceToAlpha" in="SourceGraphic" result="a"/&gt;
       &lt;feComposite in="SourceGraphic" in2="a" operator="in" /&gt;
     &lt;/filter&gt;
   &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"  
+  &lt;rect fill="none" stroke="blue"
         x="1" y="1" width="798" height="498"/&gt;
-  &lt;g font-family="Verdana" font-size="75" 
+  &lt;g font-family="Verdana" font-size="75"
             font-weight="bold" fill="url(#MyGradient)" &gt;
     &lt;rect x="100" y="0" width="500" height="20" /&gt;
     &lt;text x="100" y="90"&gt;Unfiltered&lt;/text&gt;
@@ -935,10 +936,10 @@ The calculations are performed on non-premultiplied color values.
 The child elements of a <a element>feComponentTransfer</a> element specify the transfer functions for the four channels:
 
 <ul>
-  <li><a element>feFuncR</a> - transfer function for the red component of the input graphic</li> 
-  <li><a element>feFuncG</a> - transfer function for the green component of the input graphic</li> 
-  <li><a element>feFuncB</a> - transfer function for the blue component of the input graphic</li> 
-  <li><a element>feFuncA</a> - transfer function for the alpha component of the input graphic</li> 
+  <li><a element>feFuncR</a> - transfer function for the red component of the input graphic</li>
+  <li><a element>feFuncG</a> - transfer function for the green component of the input graphic</li>
+  <li><a element>feFuncB</a> - transfer function for the blue component of the input graphic</li>
+  <li><a element>feFuncA</a> - transfer function for the alpha component of the input graphic</li>
 </ul>
 
 The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a> elements are also called <dfn>transfer function element</dfn>s.
@@ -951,7 +952,7 @@ The following rules apply to the processing of the <a element>feComponentTransfe
   <li>If any of the <i>transfer function elements</i> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <i>transfer function elements</i> were specified with their <a element-attr for=feComponentTransfer>type</a> attributes set to ''identity''.
   </li>
 </ul>
-  
+
 <div id="feFuncRElement"></div>
 
 <!--elementsummary feFuncR-->
@@ -1066,8 +1067,8 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
 &lt;svg width="8cm" height="4cm" viewBox="0 0 800 400"
      xmlns="http://www.w3.org/2000/svg"&gt;
   &lt;title&gt;Example feComponentTransfer - Examples of feComponentTransfer operations&lt;/title&gt;
-  &lt;desc&gt;Four text strings showing the effects of feComponentTransfer: 
-        an identity function acting as a reference, 
+  &lt;desc&gt;Four text strings showing the effects of feComponentTransfer:
+        an identity function acting as a reference,
         use of the feComponentTransfer table option,
         use of the feComponentTransfer linear option,
         and use of the feComponentTransfer gamma option.&lt;/desc&gt;
@@ -1079,7 +1080,7 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
       &lt;stop offset=".67" stop-color="#0000ff" /&gt;
       &lt;stop offset="1" stop-color="#000000" /&gt;
     &lt;/linearGradient&gt;
-    &lt;filter id="Identity" filterUnits="objectBoundingBox" 
+    &lt;filter id="Identity" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feComponentTransfer&gt;
         &lt;feFuncR type="identity"/&gt;
@@ -1088,7 +1089,7 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
         &lt;feFuncA type="identity"/&gt;
       &lt;/feComponentTransfer&gt;
     &lt;/filter&gt;
-    &lt;filter id="Table" filterUnits="objectBoundingBox" 
+    &lt;filter id="Table" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feComponentTransfer&gt;
         &lt;feFuncR type="table" tableValues="0 0 1 1"/&gt;
@@ -1096,7 +1097,7 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
         &lt;feFuncB type="table" tableValues="0 1 1 0"/&gt;
       &lt;/feComponentTransfer&gt;
     &lt;/filter&gt;
-    &lt;filter id="Linear" filterUnits="objectBoundingBox" 
+    &lt;filter id="Linear" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feComponentTransfer&gt;
         &lt;feFuncR type="linear" slope=".5" intercept=".25"/&gt;
@@ -1104,7 +1105,7 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
         &lt;feFuncB type="linear" slope=".5" intercept=".5"/&gt;
       &lt;/feComponentTransfer&gt;
     &lt;/filter&gt;
-    &lt;filter id="Gamma" filterUnits="objectBoundingBox" 
+    &lt;filter id="Gamma" filterUnits="objectBoundingBox"
             x="0%" y="0%" width="100%" height="100%"&gt;
       &lt;feComponentTransfer&gt;
         &lt;feFuncR type="gamma" amplitude="2" exponent="5" offset="0"/&gt;
@@ -1113,9 +1114,9 @@ The attributes below are the <dfn>transfer function element attributes</dfn>, wh
       &lt;/feComponentTransfer&gt;
     &lt;/filter&gt;
   &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"  
+  &lt;rect fill="none" stroke="blue"
         x="1" y="1" width="798" height="398"/&gt;
-  &lt;g font-family="Verdana" font-size="75" 
+  &lt;g font-family="Verdana" font-size="75"
             font-weight="bold" fill="url(#MyGradient)" &gt;
     &lt;rect x="100" y="0" width="600" height="20" /&gt;
     &lt;text x="100" y="90"&gt;Identity&lt;/text&gt;
@@ -1249,7 +1250,7 @@ Note: Compositing and Blending [[!COMPOSITING]] defines more compositing keyword
       &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/&gt;
       &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
     &lt;/filter&gt;
-    &lt;filter id="arithmeticFlood" filterUnits="objectBoundingBox" 
+    &lt;filter id="arithmeticFlood" filterUnits="objectBoundingBox"
             x="-5%" y="-5%" width="110%" height="110%"&gt;
       &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
       &lt;feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
@@ -1271,7 +1272,7 @@ Note: Compositing and Blending [[!COMPOSITING]] defines more compositing keyword
     &lt;filter id="xorNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
       &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/&gt;
     &lt;/filter&gt;
-    &lt;filter id="arithmeticNoFlood" filterUnits="objectBoundingBox" 
+    &lt;filter id="arithmeticNoFlood" filterUnits="objectBoundingBox"
             x="-5%" y="-5%" width="110%" height="110%"&gt;
       &lt;feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
                    operator="arithmetic" k1=".5" k2=".5" k3=".5" k4=".5"/&gt;
@@ -1526,7 +1527,7 @@ When the image must be resampled to match the coordinate system defined by <a el
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SOURCE
       <sub>X-<a element-attr>targetX</a>+J,&nbsp;Y-<a element-attr>targetY</a>+I</sub>&nbsp;*&nbsp;
       <a element-attr>kernelMatrix</a><sub><a href=
-      "#element-attrdef-order">orderX</a>-J-1,&nbsp; <a href= 
+      "#element-attrdef-order">orderX</a>-J-1,&nbsp; <a href=
       "#element-attrdef-order">orderY</a>-I-1</sub>&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
@@ -1862,7 +1863,7 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
   <dd>
     <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feDiffuseLighting>kernelUnitLength</a> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>.<br>
     If a negative or zero value is specified the default value will be used instead.</p>
-    <p class=note>Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.</p> 
+    <p class=note>Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -1937,13 +1938,13 @@ This filter creates a drop shadow of the input image. It is a shorthand filter, 
 The result of a <a element>feDropShadow</a> filter primitive is equivalent to the following:
 
 <pre class="examplesource">
-  &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt; 
-  &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt; 
-  &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt; 
-  &lt;feComposite in2="offsetblur" operator="in"/&gt; 
-  &lt;feMerge&gt; 
+  &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;
+  &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;
+  &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;
+  &lt;feComposite in2="offsetblur" operator="in"/&gt;
+  &lt;feMerge&gt;
     &lt;feMergeNode/&gt;
-    &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt; 
+    &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
   &lt;/feMerge&gt;
 </pre>
 
@@ -2199,7 +2200,7 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
          x="500" y="5"/&gt;
     &lt;/filter&gt;
   &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"  
+  &lt;rect fill="none" stroke="blue"
         x="1" y="1" width="598" height="248"/&gt;
   &lt;g&gt;
     &lt;rect x="50"  y="25" width="100" height="200" filter="url(#Default)"/&gt;
@@ -2294,10 +2295,10 @@ Because <a element>feMorphology</a> operates on premultipied color values, it wi
       &lt;feMorphology operator="dilate" in="SourceGraphic" radius="6" /&gt;
     &lt;/filter&gt;
   &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue" stroke-width="2"  
+  &lt;rect fill="none" stroke="blue" stroke-width="2"
         x="1" y="1" width="698" height="498"/&gt;
   &lt;g isolation="isolate" &gt;
-    &lt;g font-family="Verdana" font-size="75" 
+    &lt;g font-family="Verdana" font-size="75"
               fill="none" stroke="black" stroke-width="6" &gt;
       &lt;text x="50" y="90"&gt;Unfiltered&lt;/text&gt;
       &lt;text x="50" y="180" filter="url(#Erode3)" &gt;Erode radius 3&lt;/text&gt;
@@ -2698,31 +2699,31 @@ double turbulence(int nColorChannel, double *point, double <a href="#element-att
 &lt;svg width="450px" height="325px" viewBox="0 0 450 325"
      xmlns="http://www.w3.org/2000/svg"&gt;
   &lt;title&gt;Example feTurbulence - Examples of feTurbulence operations&lt;/title&gt;
-  &lt;desc&gt;Six rectangular areas showing the effects of 
+  &lt;desc&gt;Six rectangular areas showing the effects of
         various parameter settings for feTurbulence.&lt;/desc&gt;
   &lt;g  font-family="Verdana" text-anchor="middle" font-size="10" &gt;
     &lt;defs&gt;
-      &lt;filter id="Turb1" filterUnits="objectBoundingBox" 
+      &lt;filter id="Turb1" filterUnits="objectBoundingBox"
               x="0%" y="0%" width="100%" height="100%"&gt;
         &lt;feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2"/&gt;
       &lt;/filter&gt;
-      &lt;filter id="Turb2" filterUnits="objectBoundingBox" 
+      &lt;filter id="Turb2" filterUnits="objectBoundingBox"
               x="0%" y="0%" width="100%" height="100%"&gt;
         &lt;feTurbulence type="turbulence" baseFrequency="0.1" numOctaves="2"/&gt;
       &lt;/filter&gt;
-      &lt;filter id="Turb3" filterUnits="objectBoundingBox" 
+      &lt;filter id="Turb3" filterUnits="objectBoundingBox"
               x="0%" y="0%" width="100%" height="100%"&gt;
         &lt;feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="8"/&gt;
       &lt;/filter&gt;
-      &lt;filter id="Turb4" filterUnits="objectBoundingBox" 
+      &lt;filter id="Turb4" filterUnits="objectBoundingBox"
               x="0%" y="0%" width="100%" height="100%"&gt;
         &lt;feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="4"/&gt;
       &lt;/filter&gt;
-      &lt;filter id="Turb5" filterUnits="objectBoundingBox" 
+      &lt;filter id="Turb5" filterUnits="objectBoundingBox"
               x="0%" y="0%" width="100%" height="100%"&gt;
         &lt;feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="4"/&gt;
       &lt;/filter&gt;
-      &lt;filter id="Turb6" filterUnits="objectBoundingBox" 
+      &lt;filter id="Turb6" filterUnits="objectBoundingBox"
               x="0%" y="0%" width="100%" height="100%"&gt;
         &lt;feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1"/&gt;
       &lt;/filter&gt;
@@ -3070,7 +3071,7 @@ Below are the equivalents for each of the filter functions expressed in terms of
     &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
   &lt;/filter&gt; </pre>
 
-Where edge mode computes to ''none'' for the 'filter' property and to ''duplicate'' for the CSS Image <<filter()>> function. 
+Where edge mode computes to ''none'' for the 'filter' property and to ''duplicate'' for the CSS Image <<filter()>> function.
 
 <h3 id="dropshadowEquivalent">drop-shadow</h3>
 
@@ -3090,7 +3091,7 @@ Where edge mode computes to ''none'' for the 'filter' property and to ''duplicat
 Interpolation between one filter <em>from-filter</em> and a second filter <em>to-filter</em> happens in two different steps. First, prepare <em>from-filter</em> and <em>to-filter</em> for the interpolation. Second, interpolate each filter function pair.
 
 
-Prepare <<filter-function-list>>s for interpolation: 
+Prepare <<filter-function-list>>s for interpolation:
 <ul>
   <li id="none-none-animation">If both, the <em>from-</em> and <em>to-filter</em> are
   ''none'':
@@ -3140,7 +3141,7 @@ Additive animations of <<filter-function-list>> follow the interpolation algorit
       <li>If the preparation process was not successful then stop. No interpolation is possible.</li>
       <li>If the preparation process was successful it results in two <<filter-function-list>> with the same number of filter function pairs each pair of the same type. Continue with the next step.</li>
     </ul>
-  </li> 
+  </li>
   <li>For the purpose of addition, each filter function must be temporarily serialized to its longest possible definition. The summation of the offset to <em>from-filter</em> is done per filter function value type: <<length>>, <<number>>, <<percentage>>, <<calc()>>, <<color>> and <<angle>>. It is assumed that increasing numerical values are direct proportional to the resulting filter effect for each filter function.</li>
   <li>Continue with the interpolation process taking the initial <em>from-filter</em> and the sum of the previous operations as <em>to-filter</em>.</li>
 </ul>
@@ -3255,7 +3256,7 @@ The <a>SVGFilterElement</a> interface corresponds to the <a element>filter</a> e
 interface <b>SVGFilterElement</b> : SVGElement {
 readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFilterElement__filterUnits">filterUnits</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFilterElement__primitiveUnits">primitiveUnits</a>;
 readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGFilterElement__x">x</a>;
 readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGFilterElement__y">y</a>;
@@ -3330,15 +3331,15 @@ This interface defines the set of DOM attributes that are common across the filt
 <pre class="idl" data-no-idl>
 [NoInterfaceObject]
 interface <b>SVGFilterPrimitiveStandardAttributes</b> {
-readonly attribute <a>SVGAnimatedLength</a> <a href= 
+readonly attribute <a>SVGAnimatedLength</a> <a href=
 "#SVGFilterPrimitiveStandardAttributes__x">x</a>;
-readonly attribute <a>SVGAnimatedLength</a> <a href= 
+readonly attribute <a>SVGAnimatedLength</a> <a href=
 "#SVGFilterPrimitiveStandardAttributes__y">y</a>;
-readonly attribute <a>SVGAnimatedLength</a> <a href= 
+readonly attribute <a>SVGAnimatedLength</a> <a href=
 "#SVGFilterPrimitiveStandardAttributes__width">width</a>;
-readonly attribute <a>SVGAnimatedLength</a> <a href= 
+readonly attribute <a>SVGAnimatedLength</a> <a href=
 "#SVGFilterPrimitiveStandardAttributes__height">height</a>;
-readonly attribute <a>SVGAnimatedString</a> <a href= 
+readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFilterPrimitiveStandardAttributes__result">result</a>;
 };
 </pre>
@@ -3546,14 +3547,14 @@ const unsigned short <a href=
 "#SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_SATURATE">SVG_FECOLORMATRIX_TYPE_SATURATE</a> = 2;
 const unsigned short <a href=
 "#SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_HUEROTATE">SVG_FECOLORMATRIX_TYPE_HUEROTATE</a> = 3;
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA">SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA</a> = 4;
 
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFEColorMatrixElement__in1">in1</a>;
 readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFEColorMatrixElement__type">type</a>;
-readonly attribute <a>SVGAnimatedNumberList</a> <a href= 
+readonly attribute <a>SVGAnimatedNumberList</a> <a href=
 "#SVGFEColorMatrixElement__values">values</a>;
 };
 
@@ -3604,7 +3605,7 @@ readonly attribute <a>SVGAnimatedNumberList</a> <a href=
         </div>
       </dd>
       <dt id="SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA">
-        <b>SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA</b> <span class= 
+        <b>SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA</b> <span class=
         "idl-type-parenthetical">(unsigned short)</span>
       </dt>
       <dd>
@@ -3698,32 +3699,32 @@ This interface defines a base interface used by the component transfer function 
 interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
 
 // Component Transfer Types
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN">SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN</a> = 0;
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY">SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY</a> = 1;
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_TABLE">SVG_FECOMPONENTTRANSFER_TYPE_TABLE</a> = 2;
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE">SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE</a> = 3;
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_LINEAR">SVG_FECOMPONENTTRANSFER_TYPE_LINEAR</a> = 4;
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_GAMMA">SVG_FECOMPONENTTRANSFER_TYPE_GAMMA</a> = 5;
 
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGComponentTransferFunctionElement__type">type</a>;
-readonly attribute <a>SVGAnimatedNumberList</a> <a href= 
+readonly attribute <a>SVGAnimatedNumberList</a> <a href=
 "#SVGComponentTransferFunctionElement__tableValues">tableValues</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGComponentTransferFunctionElement__slope">slope</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGComponentTransferFunctionElement__intercept">intercept</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGComponentTransferFunctionElement__amplitude">amplitude</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGComponentTransferFunctionElement__exponent">exponent</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGComponentTransferFunctionElement__offset">offset</a>;
 };
 </pre>
@@ -3733,9 +3734,9 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
   </dt>
   <dd>
     <dl class="constants">
-      <dt id= 
+      <dt id=
       "SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN">
-        <b>SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN</b> <span class= 
+        <b>SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN</b> <span class=
         "idl-type-parenthetical">(unsigned short)</span>
       </dt>
       <dd>
@@ -3745,9 +3746,9 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
           type.
         </div>
       </dd>
-      <dt id= 
+      <dt id=
       "SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY">
-        <b>SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY</b> <span class= 
+        <b>SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY</b> <span class=
         "idl-type-parenthetical">(unsigned short)</span>
       </dt>
       <dd>
@@ -3765,9 +3766,9 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
           Corresponds to value ''table''.
         </div>
       </dd>
-      <dt id= 
+      <dt id=
       "SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE">
-        <b>SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE</b> <span class= 
+        <b>SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE</b> <span class=
         "idl-type-parenthetical">(unsigned short)</span>
       </dt>
       <dd>
@@ -3943,14 +3944,14 @@ const unsigned short <a href=
 "#SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_ATOP">SVG_FECOMPOSITE_OPERATOR_ATOP</a> = 4;
 const unsigned short <a href=
 "#SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_XOR">SVG_FECOMPOSITE_OPERATOR_XOR</a> = 5;
-const unsigned short <a href= 
+const unsigned short <a href=
 "#SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_ARITHMETIC">SVG_FECOMPOSITE_OPERATOR_ARITHMETIC</a> = 6;
 
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFECompositeElement__in1">in1</a>;
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFECompositeElement__in2">in2</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFECompositeElement__operator">operator</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFECompositeElement__k1">k1</a>;
@@ -4138,25 +4139,25 @@ const unsigned short <a href=
 
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFEConvolveMatrixElement__in1">in1</a>;
-readonly attribute <a>SVGAnimatedInteger</a> <a href= 
+readonly attribute <a>SVGAnimatedInteger</a> <a href=
 "#SVGFEConvolveMatrixElement__orderX">orderX</a>;
-readonly attribute <a>SVGAnimatedInteger</a> <a href= 
+readonly attribute <a>SVGAnimatedInteger</a> <a href=
 "#SVGFEConvolveMatrixElement__orderY">orderY</a>;
-readonly attribute <a>SVGAnimatedNumberList</a> <a href= 
+readonly attribute <a>SVGAnimatedNumberList</a> <a href=
 "#SVGFEConvolveMatrixElement__kernelMatrix">kernelMatrix</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEConvolveMatrixElement__divisor">divisor</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEConvolveMatrixElement__bias">bias</a>;
-readonly attribute <a>SVGAnimatedInteger</a> <a href= 
+readonly attribute <a>SVGAnimatedInteger</a> <a href=
 "#SVGFEConvolveMatrixElement__targetX">targetX</a>;
-readonly attribute <a>SVGAnimatedInteger</a> <a href= 
+readonly attribute <a>SVGAnimatedInteger</a> <a href=
 "#SVGFEConvolveMatrixElement__targetY">targetY</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFEConvolveMatrixElement__edgeMode">edgeMode</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEConvolveMatrixElement__kernelUnitLengthX">kernelUnitLengthX</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEConvolveMatrixElement__kernelUnitLengthY">kernelUnitLengthY</a>;
 };
 
@@ -4338,13 +4339,13 @@ The <a>SVGFEDiffuseLightingElement</a> interface corresponds to the <a element>f
 interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFEDiffuseLightingElement__in1">in1</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDiffuseLightingElement__surfaceScale">surfaceScale</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDiffuseLightingElement__diffuseConstant">diffuseConstant</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDiffuseLightingElement__kernelUnitLengthX">kernelUnitLengthX</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDiffuseLightingElement__kernelUnitLengthY">kernelUnitLengthY</a>;
 };
 
@@ -4421,7 +4422,7 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
 interface <b>SVGFEDistantLightElement</b> : <a>SVGElement</a> {
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDistantLightElement__azimuth">azimuth</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDistantLightElement__elevation">elevation</a>;
 };
 </pre>
@@ -4527,9 +4528,9 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpotLightElement__pointsAtY">pointsAtY</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpotLightElement__pointsAtZ">pointsAtZ</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpotLightElement__specularExponent">specularExponent</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpotLightElement__limitingConeAngle">limitingConeAngle</a>;
 };
 </pre>
@@ -4651,9 +4652,9 @@ readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFEDisplacementMapElement__in2">in2</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDisplacementMapElement__scale">scale</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFEDisplacementMapElement__xChannelSelector">xChannelSelector</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFEDisplacementMapElement__yChannelSelector">yChannelSelector</a>;
 };
 
@@ -4790,9 +4791,9 @@ readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDropShadowElement__dx">dx</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDropShadowElement__dy">dy</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDropShadowElement__stdDeviationX">stdDeviationX</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEDropShadowElement__stdDeviationY">stdDeviationY</a>;
 
 void <a href=
@@ -4956,11 +4957,11 @@ const unsigned short <a href=
 
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFEGaussianBlurElement__in1">in1</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEGaussianBlurElement__stdDeviationX">stdDeviationX</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEGaussianBlurElement__stdDeviationY">stdDeviationY</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFEGaussianBlurElement__edgeMode">edgeMode</a>;
 
 void <a href=
@@ -5233,7 +5234,7 @@ const unsigned short <a href=
 
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFEMorphologyElement__in1">in1</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFEMorphologyElement__operator">operator</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFEMorphologyElement__radiusX">radiusX</a>;
@@ -5391,15 +5392,15 @@ The <a>SVGFESpecularLightingElement</a> interface corresponds to the <a element>
 interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
 readonly attribute <a>SVGAnimatedString</a> <a href=
 "#SVGFESpecularLightingElement__in1">in1</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpecularLightingElement__surfaceScale">surfaceScale</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpecularLightingElement__specularConstant">specularConstant</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpecularLightingElement__specularExponent">specularExponent</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpecularLightingElement__kernelUnitLengthX">kernelUnitLengthX</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFESpecularLightingElement__kernelUnitLengthY">kernelUnitLengthY</a>;
 };
 
@@ -5537,15 +5538,15 @@ const unsigned short <a href=
 const unsigned short <a href=
 "#SVGFETurbulenceElement__SVG_STITCHTYPE_NOSTITCH">SVG_STITCHTYPE_NOSTITCH</a> = 2;
 
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFETurbulenceElement__baseFrequencyX">baseFrequencyX</a>;
-readonly attribute <a>SVGAnimatedNumber</a> <a href= 
+readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFETurbulenceElement__baseFrequencyY">baseFrequencyY</a>;
-readonly attribute <a>SVGAnimatedInteger</a> <a href= 
+readonly attribute <a>SVGAnimatedInteger</a> <a href=
 "#SVGFETurbulenceElement__numOctaves">numOctaves</a>;
 readonly attribute <a>SVGAnimatedNumber</a> <a href=
 "#SVGFETurbulenceElement__seed">seed</a>;
-readonly attribute <a>SVGAnimatedEnumeration</a> <a href= 
+readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFETurbulenceElement__stitchTiles">stitchTiles</a>;
 readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 "#SVGFETurbulenceElement__type">type</a>;
@@ -5686,7 +5687,7 @@ readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
 The following significant changes were made since the <a href="http://www.w3.org/TR/2013/WD-filter-effects-1-20131126/">26 November 2013 Working Draft</a>.
 
 <ul>
-  <li>Removed Custom Filters. 
+  <li>Removed Custom Filters.
   </li>
   <li>Allow the <a>'script'</a> element in the content model everywhere.
   </li>
