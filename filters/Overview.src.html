@@ -9,10 +9,10 @@ Shortname: filter-effects
 Level: 1
 Link Defaults: css-transforms-1 (property) transform, svg (property) color-interpolation/fill/fill-opacity/fill-rule/stroke/glyph-orientation-horizontal/glyph-orientation-vertical/marker-start/marker-end/marker-mid/stop-color/stop-opacity/stroke-dasharray/stroke-dashoffset/stroke-linecap/stroke-linejoin/stroke-miterlimit/stroke-opacity/stroke-width/text-anchor/alignment-baseline/baseline-shift/dominant-baseline, css-masking-1 (property) clip-path/clip/clip-rule/mask, css-flexbox-1 (property) display, selectors-4 (type) <compound-selector>, css21 (type) <margin-width>, css-transforms-1 (type) <transform-function>, css-images-4 (property) image-rendering, css-color-3 (property) color, css-fonts-3 (property) font-family/font-stretch/font-style/font-variant/font-weight, selectors-4 (selector) :visited, css21 (dfn) containing block
 Group: fxtf
-Editor: Dean Jackson, <a href="http://www.apple.com/">Apple Inc</a>, dino@apple.com
+Editor: Dean Jackson, Apple Inc, dino@apple.com
 Editor: Erik Dahlström, Opera Software ASA, ed@opera.com
-Editor: Dirk Schulze, <a href="http://www.adobe.com/">Adobe Systems Inc</a>, dschulze@adobe.com
-Former Editor: Vincent Hardy, <a href="http://www.adobe.com/">Adobe Systems Inc</a>, vhardy@adobe.com
+Editor: Dirk Schulze, Adobe Systems Inc, dschulze@adobe.com
+Former Editor: Vincent Hardy, Adobe Systems Inc, vhardy@adobe.com
 Test Suite: http://test.csswg.org/suites/filter-effects/nightly-unstable/
 Abstract: Filter effects are a way of processing an element's rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.
 Abstract:
@@ -204,7 +204,7 @@ In addition to the property-specific values listed in their definitions, all pro
 When used in this specification, terms have the meanings assigned in this section.
 
 <dl>
-<dt><dfn>filter primitive</dfn>, <dfn element>filter-primitive</dfn></dt>
+<dt><dfn>filter primitive</dfn>, <dfn dfn-type=element id="elementdef-filter-primitive">filter-primitive</dfn></dt>
 <dd>
   The set of elements that control the output of a <a element>filter</a> element, particularly: <a element>feSpotLight</a>, <a element>feBlend</a>, <a element>feColorMatrix</a>, <a element>feComponentTransfer</a>, <a element>feComposite</a>, <a element>feConvolveMatrix</a>, <a element>feDiffuseLighting</a>, <a element>feDisplacementMap</a>, <a element>feDropShadow</a>, <a element>feFlood</a>, <a element>feGaussianBlur</a>, <a element>feImage</a>, <a element>feMerge</a>, <a element>feMorphology</a>, <a element>feOffset</a>, <a element>feSpecularLighting</a>, <a element>feTile</a>, <a element>feTurbulence</a>.
 </dd>
@@ -228,9 +228,9 @@ Animatable: yes
 
 If the value of the 'filter' property is ''none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
-<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> <!--| <<child-selector>>--> ]+</pre>
+<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> <!--| <<child-selector>> -->]+</pre>
 
-<pre class=prod><dfn>&lt;filter-function></dfn> = [ <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>>
+<pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>>
   | <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
 
 <dl id="FilterFunction" dfn-for="filter">
@@ -355,7 +355,6 @@ The description of the <a element>filter</a> element follows:
     <p>If <a element-attr>primitiveUnits</a> is equal to <a value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
     <p>The <a>lacuna value</a> for <a element-attr>primitiveUnits</a> is <a value for=primitiveUnits>userSpaceOnUse</a>.</p>
     <p>Animatable: yes.</p>
-    <p class="issue">If we make filter region auto, how will it affect existing content that uses <a value for=primitiveUnits>objectBoundingBox</a>? <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=21611">Bug 21611</a>
   </dd>
   <dt>
     <dfn>x</dfn> = "<<length>> | <<percentage>>"
@@ -429,8 +428,6 @@ Note: Sometimes implementers can achieve faster performance when the filter regi
 
 Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
 
-<p class="issue">The value of ''auto'' should take care of that unless the authors wants to clip explicitly. Given that, do we need it at all? You can clip with the 'clip-path' property.</p>
-
 <h2 id="FilterPrimitivesOverview">Filter primitives</h2>
 
 <h3 id="FilterPrimitivesOverviewIntro">Overview</h3>
@@ -457,7 +454,7 @@ Note: Some attribute or property values from the filter primitives <a element>fe
 
 <h3 id="CommonAttributes">Common filter primitive attributes</h3>
 
-The following <dfn>filter primitive attributes</dfn> are available for all filter primitives:
+The following <dfn id="filter-primitive-attributes">filter primitive attributes</dfn> are available for all filter primitives:
 
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=filter-primitive>
@@ -567,9 +564,7 @@ Most filter primitives take other filter primitives as input. The following attr
 
 <h3 id="FilterPrimitiveSubRegion">Filter primitive subregion</h3>
 
-<p class="issue">Define filter primitive subregion for shorthands. E.g. the out bounds of the previous filter functions, extended by affected area of current filter function. <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=22580">Bug 22580</a></p>
-
-All <i>filter primitives</i> have attributes <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> which together identify a <dfn>filter primitive subregion</dfn> which restricts calculation and rendering of the given <i>filter primitive</i>. The <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> attributes are defined according to the same rules as other <i>filter primitives</i> coordinate and length attributes and thus represent values in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.
+All <i>filter primitives</i> have attributes <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> which together identify a <dfn id="filter-primitive-subregion">filter primitive subregion</dfn> which restricts calculation and rendering of the given <i>filter primitive</i>. The <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> attributes are defined according to the same rules as other <i>filter primitives</i> coordinate and length attributes and thus represent values in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.
 
 <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> default to the union (i.e., tightest fitting bounding box) of the subregions defined for all referenced nodes. If there are no referenced nodes (e.g., for <a element>feImage</a> or <a element>feTurbulence</a>), or one or more of the referenced nodes is a standard input (one of <a value>SourceGraphic</a>, <a value>SourceAlpha</a>, <a value>BackgroundImage</a>, <a value>BackgroundAlpha</a>, <a value>FillPaint</a> or <a value>StrokePaint</a>), or for <a element>feTile</a> (which is special because its principal function is to replicate the referenced node in X and Y and thereby produce a usually larger result), the default subregion is ''0%, 0%, 100%, 100%'', where as a special-case the percentages are relative to the dimensions of the <i>filter region</i>, thus making the default <i>filter primitive subregion</i> equal to the <i>filter region</i>.
 
@@ -942,15 +937,13 @@ The child elements of a <a element>feComponentTransfer</a> element specify the t
   <li><a element>feFuncA</a> - transfer function for the alpha component of the input graphic</li>
 </ul>
 
-The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a> elements are also called <dfn>transfer function element</dfn>s.
+The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a> elements are also called <dfn id="transfer-function-element">transfer function element</dfn>s.
 
 The following rules apply to the processing of the <a element>feComponentTransfer</a> element:
 
 <ul>
-  <li>If more than one <i>transfer function element</i> of the same kind is specified, the last occurrence is to be used.
-  </li>
-  <li>If any of the <i>transfer function elements</i> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <i>transfer function elements</i> were specified with their <a element-attr for=feComponentTransfer>type</a> attributes set to ''identity''.
-  </li>
+  <li>If more than one <i>transfer function element</i> of the same kind is specified, the last occurrence is to be used.</li>
+  <li>If any of the <i>transfer function elements</i> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <i>transfer function elements</i> were specified with their <a element-attr for=feComponentTransfer>type</a> attributes set to ''identity''.</li>
 </ul>
 
 <div id="feFuncRElement"></div>
@@ -969,7 +962,7 @@ The following rules apply to the processing of the <a element>feComponentTransfe
 
 <!--elementsummary feFuncA-->
 
-The attributes below are the <dfn>transfer function element attributes</dfn>, which apply to the <i>transfer function elements</i>.
+The attributes below are the <dfn id="transfer-function-element-attributes">transfer function element attributes</dfn>, which apply to the <i>transfer function elements</i>.
 
 <em>Attribute definitions:</em>
 
@@ -1503,7 +1496,7 @@ When the image must be resampled to match the coordinate system defined by <a el
   </dd>
 
   <dt>
-    <dfn>kernelUnitLength</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn element-attr dfn-for=feConvolveMatrix>kernelUnitLength</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
   </dt>
   <dd>
     <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) between successive columns and rows, respectively, in the <a element-attr>kernelMatrix</a>. By specifying value(s) for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feConvolveMatrix>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary off-screen images aligns with the pixel grid of the kernel.</p>
@@ -2027,7 +2020,7 @@ This filter primitive creates a rectangle filled with the color and opacity valu
 
 <pre class='propdef'>
 Name: flood-color
-Value: <<color>> <a>&lt;icccolor&gt;</a>?
+Value: <<color>>
 Initial: black
 Applies to: <a element>feFlood</a> and <a element>feDropShadow</a> elements
 Inherited: no
@@ -2037,7 +2030,7 @@ Media: visual
 Animatable: yes
 </pre>
 
-The 'flood-color' property indicates what color to used to flood the current <i>filter primitive subregion</i>. The keyword ''currentColor'' and ICC colors can be specified in the same manner as within a &lt;paint> specification for the 'fill' and 'stroke' properties.
+The 'flood-color' property indicates what color to used to flood the current <i>filter primitive subregion</i>.
 
 <h4 id="FloodOpacityProperty">The 'flood-opacity' property</h4>
 
@@ -2582,9 +2575,9 @@ double noise2(int nColorChannel, double vec[2], StitchInfo *pStitchInfo)
   b = lerp(sx, u, v);
   return lerp(sy, a, b);
 }
-double turbulence(int nColorChannel, double *point, double <a href="#element-attrdef-basefrequency">fBaseFreqX</a>, double <a href="#element-attrdef-basefrequency">fBaseFreqY</a>,
-          int <a href="#element-attrdef-numoctaves">nNumOctaves</a>, bool bFractalSum, bool bDoStitching,
-          double <a href="#filter-primitive-subregion">fTileX</a>, double <a href="#filter-primitive-subregion">fTileY</a>, double <a href="#filter-primitive-subregion">fTileWidth</a>, double <a href="#filter-primitive-subregion">fTileHeight</a>)
+double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fBaseFreqY,
+          int nNumOctaves, bool bFractalSum, bool bDoStitching,
+          double fTileX, double fTileY, double fTileWidth, double fTileHeight)
 {
   StitchInfo stitch;
   StitchInfo *pStitchInfo = NULL; // Not stitching when NULL.
@@ -2816,7 +2809,7 @@ Note: The 'color-interpolation-filters' property has no effect on <span>Filter F
 
 <h3 id="LightSourceIntro">Introduction</h3>
 
-The following sections define the elements that define a <dfn>light source</dfn>, <a element>feDistantLight</a>, <a element>fePointLight</a> and <a element>feSpotLight</a>, and property 'lighting-color', which defines the color of the light.
+The following sections define the elements that define a <dfn id="light-source">light source</dfn>, <a element>feDistantLight</a>, <a element>fePointLight</a> and <a element>feSpotLight</a>, and property 'lighting-color', which defines the color of the light.
 
 <h3 id="feDistantLightElement">Light source <a element>feDistantLight</a></h3>
 
@@ -2959,7 +2952,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
 
 <pre class='propdef'>
 Name: lighting-color
-Value: <<color>> <a>&lt;icccolor&gt;</a>?
+Value: <<color>>
 Initial: white
 Applies to: <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> elements
 Inherited: no
@@ -2991,11 +2984,14 @@ If both the starting and ending image are <<filter()>>s which may only differ by
 
 <h2 id="ShorthandEquivalents">Shorthands defined in terms of the <a element>filter</a> element</h2>
 
+<h3 id="FilterPrimitiveRepresentation">Filter primitive representation</h3>
+
 Below are the equivalents for each of the filter functions expressed in terms of the 'filter element' element. The parameters from the function are labeled with brackets in the following style: [amount]. In the case of parameters that are percentage values, they are converted to real numbers.
 
-<h3 id="grayscaleEquivalent">grayscale</h3>
+<h4 id="grayscaleEquivalent">grayscale</h4>
 
-<pre class="examplesource"> &lt;filter id="grayscale"&gt;
+<pre class="examplesource">
+  &lt;filter id="grayscale"&gt;
     &lt;feColorMatrix type="matrix"
                values="(0.2126 + 0.7874 * [1 - amount]) (0.7152 - 0.7152 * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
                        (0.2126 - 0.2126 * [1 - amount]) (0.7152 + 0.2848 * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
@@ -3003,9 +2999,10 @@ Below are the equivalents for each of the filter functions expressed in terms of
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="sepiaEquivalent">sepia</h3>
+<h4 id="sepiaEquivalent">sepia</h4>
 
-<pre class="examplesource"> &lt;filter id="sepia"&gt;
+<pre class="examplesource">
+  &lt;filter id="sepia"&gt;
     &lt;feColorMatrix type="matrix"
                values="(0.393 + 0.607 * [1 - amount]) (0.769 - 0.769 * [1 - amount]) (0.189 - 0.189 * [1 - amount]) 0 0
                        (0.349 - 0.349 * [1 - amount]) (0.686 + 0.314 * [1 - amount]) (0.168 - 0.168 * [1 - amount]) 0 0
@@ -3013,23 +3010,26 @@ Below are the equivalents for each of the filter functions expressed in terms of
                        0 0 0 1 0"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="saturateEquivalent">saturate</h3>
+<h4 id="saturateEquivalent">saturate</h4>
 
-<pre class="examplesource"> &lt;filter id="saturate"&gt;
+<pre class="examplesource">
+  &lt;filter id="saturate"&gt;
     &lt;feColorMatrix type="saturate"
                values="(1 - [amount])"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="huerotateEquivalent">hue-rotate</h3>
+<h4 id="huerotateEquivalent">hue-rotate</h4>
 
-<pre class="examplesource"> &lt;filter id="hue-rotate"&gt;
+<pre class="examplesource">
+  &lt;filter id="hue-rotate"&gt;
     &lt;feColorMatrix type="hueRotate"
                values="[angle]"/&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="invertEquivalent">invert</h3>
+<h4 id="invertEquivalent">invert</h4>
 
-<pre class="examplesource"> &lt;filter id="invert"&gt;
+<pre class="examplesource">
+  &lt;filter id="invert"&gt;
     &lt;feComponentTransfer&gt;
         &lt;feFuncR type="table" tableValues="[amount] (1 - [amount])"/&gt;
         &lt;feFuncG type="table" tableValues="[amount] (1 - [amount])"/&gt;
@@ -3037,17 +3037,19 @@ Below are the equivalents for each of the filter functions expressed in terms of
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="opacityEquivalent">opacity</h3>
+<h4 id="opacityEquivalent">opacity</h4>
 
-<pre class="examplesource"> &lt;filter id="opacity"&gt;
+<pre class="examplesource">
+  &lt;filter id="opacity"&gt;
     &lt;feComponentTransfer&gt;
         &lt;feFuncA type="table" tableValues="0 [amount]"/&gt;
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="brightnessEquivalent">brightness</h3>
+<h4 id="brightnessEquivalent">brightness</h4>
 
-<pre class="examplesource"> &lt;filter id="brightness"&gt;
+<pre class="examplesource">
+  &lt;filter id="brightness"&gt;
     &lt;feComponentTransfer&gt;
         &lt;feFuncR type="linear" slope="[amount]"/&gt;
         &lt;feFuncG type="linear" slope="[amount]"/&gt;
@@ -3055,9 +3057,10 @@ Below are the equivalents for each of the filter functions expressed in terms of
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="contrastEquivalent">contrast</h3>
+<h4 id="contrastEquivalent">contrast</h4>
 
-<pre class="examplesource"> &lt;filter id="contrast"&gt;
+<pre class="examplesource">
+  &lt;filter id="contrast"&gt;
     &lt;feComponentTransfer&gt;
         &lt;feFuncR type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
         &lt;feFuncG type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
@@ -3065,17 +3068,19 @@ Below are the equivalents for each of the filter functions expressed in terms of
     &lt;/feComponentTransfer&gt;
   &lt;/filter&gt; </pre>
 
-<h3 id="blurEquivalent">blur</h3>
+<h4 id="blurEquivalent">blur</h4>
 
-<pre class="examplesource"> &lt;filter id="blur"&gt;
+<pre class="examplesource">
+  &lt;filter id="blur"&gt;
     &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
   &lt;/filter&gt; </pre>
 
 Where edge mode computes to ''none'' for the 'filter' property and to ''duplicate'' for the CSS Image <<filter()>> function.
 
-<h3 id="dropshadowEquivalent">drop-shadow</h3>
+<h4 id="dropshadowEquivalent">drop-shadow</h4>
 
-<pre class="examplesource"> &lt;filter id="drop-shadow"&gt;
+<pre class="examplesource">
+  &lt;filter id="drop-shadow"&gt;
     &lt;feGaussianBlur in="[alpha-channel-of-input]" stdDeviation="[radius]"/&gt;
     &lt;feOffset dx="[offset-x]" dy="[offset-y]" result="offsetblur"/&gt;
     &lt;feFlood flood-color="[color]"/&gt;
@@ -3085,6 +3090,12 @@ Where edge mode computes to ''none'' for the 'filter' property and to ''duplicat
       &lt;feMergeNode in="[input-image]"/&gt;
     &lt;/feMerge&gt;
   &lt;/filter&gt; </pre>
+
+<h3 id="filter-region-for-shorthands">Filter region for shorthands</h3>
+
+All shorthand filters implemented with filter primitives from the previous subsection must have a UA defined <i>filter region</i>. The filter region must cover the visual content of an element including overflowing content, graphical control elements such as scrollbars, 'border'/'border-image', 'box-shadow', 'text-shadow' and 'outline'. Furthermore, if a shorthand filter expands this visible area like it is the case for <<blur()>> or <<drop-shadow()>> the filter region must cover this area as well.
+
+Note: For the handling of <a href="#FilterElement">filter sources</a> see section <a href="#FilterEffectsRegion">Filter region</a>.
 
 <h2 id="interpolation-of-filters">Interpolation of Filters</h2>
 

@@ -371,12 +371,12 @@ sub elementSummary {
       $model .= '<ul class=no-bullets>';
       for my $cat (@{$elements{$name}{elementcategories}}) {
         $model .= "<li><a href='$elementCategories{$cat}{href}'>$cat</a> <span class=expanding> — ";
-        $model .= join(', ', map { "<a href='$elements{$_}{href}'><span class=element-name>&lt;$_></span></a>" }
+        $model .= join(', ', map { "<a element>$_</a>" }
                              @{$elementCategories{$cat}{elements}});
         $model .= '</span></li>';
       }
       for my $elementName (@{$elements{$name}{elements}}) {
-        $model .= "<li><a href='$elements{$elementName}{href}'><span class=element-name>&lt;$elementName></span></a></li>";
+        $model .= "<li><a element>$elementName</a></li>";
       }
       $model .= '</ul>';
     }
@@ -415,7 +415,11 @@ sub elementSummary {
     }
     for my $attr (@{$elements{$name}{attributesCommon}}) {
       my $href = $elements{$name}{attributes}{$attr} || $commonAttributes{$attr};
-      $attributes .= "<li><a href='$href'><span class=attr-name>‘$attr’</span></a></li>";
+      if ($attr eq 'in') {
+        $attributes .= "<li><a element-attr for=filter-primitive>$attr</a></li>";
+      } else {
+        $attributes .= "<li><a href='$href'><span class=attr-name>‘$attr’</span></a></li>";
+      }
     }
     for my $attr (@{$elements{$name}{attributesSpecific}}) {
       $attributes .= "<li><a element-attr for=$name>$attr</a></li>";
