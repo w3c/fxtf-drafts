@@ -42,14 +42,8 @@ A simple example of a filter effect is a “flood”. It takes no image inputs b
 
 Filter effects are exposed with two levels of complexity:
 
-<ol>
-  <li>
-    A small set of canned filter functions that are given by name. While not particularly powerful, these are convenient and easily understood and provide a simple approach to achieving common effects, such as blurring. The canned filters can also be animated by [[CSS3-ANIMATIONS]].
-  </li>
-  <li>
-    A graph of individual filter effects described in markup that define an overall effect. The graph is agnostic to its input in that the effect can be applied to any content. While such graphs are the combination of effects that may be simple in isolation, the graph as a whole can produce complex effects. An example is given below.
-  </li>
-</ol>
+1. A small set of canned filter functions that are given by name. While not particularly powerful, these are convenient and easily understood and provide a simple approach to achieving common effects, such as blurring. The canned filters can also be animated by [[CSS3-ANIMATIONS]].
+2. A graph of individual filter effects described in markup that define an overall effect. The graph is agnostic to its input in that the effect can be applied to any content. While such graphs are the combination of effects that may be simple in isolation, the graph as a whole can produce complex effects. An example is given below.
 
 <div class="example">
   <p>In this example, the image is filtered with the <<grayscale()>> filter function.</p>
@@ -58,8 +52,7 @@ Filter effects are exposed with two levels of complexity:
   filter: grayscale(0);
 }</code></pre>
 
-  <p class="isse">Complete initial filter function example</p>
-
+  <p class="issue">Complete initial filter function example</p>
 </div>
 
 <div class="example">
@@ -72,7 +65,7 @@ Filter effects are exposed with two levels of complexity:
 
   <p><a href="examples/filters01.svg">View this example</a> as SVG</p>
 
-<p>The filter effect used in the example above is repeated here with reference numbers in the left column before each of the six filter primitives:
+  <p>The filter effect used in the example above is repeated here with reference numbers in the left column before each of the six filter primitives:
 
 <table>
   <tbody>
@@ -131,34 +124,34 @@ The following pictures show the intermediate image results from each of the six 
 </style>
 
 <div class="primitive">
-<div>
-  <img width="115" height="70" alt="filters01 - original source graphic" src="examples/filters01-0.png">
-  <p>Source graphic</p>
-</div>
-<div>
-  <img width="115" height="70" alt="filters01 - after filter element 1" src="examples/filters01-1.png">
-  <p>After filter primitive 1</p>
-</div>
-<div>
-  <img width="115" height="70" alt="filters01 - after filter element 2" src="examples/filters01-2.png">
-  <p>After filter primitive 2</p>
-</div>
-<div class="primitive">
-  <img width="115" height="70" alt="filters01 - after filter element 3" src="examples/filters01-3.png">
-  <p>After filter primitive 3</p>
-</div>
-<div>
-  <img width="115" height="70" alt="filters01 - after filter element 4" src="examples/filters01-4.png">
-  <p>After filter primitive 4</p>
-</div>
-<div>
-  <img width="115" height="70" alt="filters01 - after filter element 5" src="examples/filters01-5.png">
-  <p>After filter primitive 5</p>
-</div>
-<div>
-  <img width="115" height="70" alt="filters01 - after filter element 6" src="examples/filters01-6.png">
-  <p>After filter primitive 6</p>
-</div>
+  <div>
+    <img width="115" height="70" alt="filters01 - original source graphic" src="examples/filters01-0.png">
+    <p>Source graphic</p>
+  </div>
+  <div>
+    <img width="115" height="70" alt="filters01 - after filter element 1" src="examples/filters01-1.png">
+    <p>After filter primitive 1</p>
+  </div>
+  <div>
+    <img width="115" height="70" alt="filters01 - after filter element 2" src="examples/filters01-2.png">
+    <p>After filter primitive 2</p>
+  </div>
+  <div class="primitive">
+    <img width="115" height="70" alt="filters01 - after filter element 3" src="examples/filters01-3.png">
+    <p>After filter primitive 3</p>
+  </div>
+  <div>
+    <img width="115" height="70" alt="filters01 - after filter element 4" src="examples/filters01-4.png">
+    <p>After filter primitive 4</p>
+  </div>
+  <div>
+    <img width="115" height="70" alt="filters01 - after filter element 5" src="examples/filters01-5.png">
+    <p>After filter primitive 5</p>
+  </div>
+  <div>
+    <img width="115" height="70" alt="filters01 - after filter element 6" src="examples/filters01-6.png">
+    <p>After filter primitive 6</p>
+  </div>
 </div>
 
 <ol style="clear: left">
@@ -929,21 +922,17 @@ The calculations are performed on non-premultiplied color values.
 
 The child elements of a <a element>feComponentTransfer</a> element specify the transfer functions for the four channels:
 
-<ul>
-  <li><a element>feFuncR</a> - transfer function for the red component of the input graphic</li>
-  <li><a element>feFuncG</a> - transfer function for the green component of the input graphic</li>
-  <li><a element>feFuncB</a> - transfer function for the blue component of the input graphic</li>
-  <li><a element>feFuncA</a> - transfer function for the alpha component of the input graphic</li>
-</ul>
+* <a element>feFuncR</a> - transfer function for the red component of the input graphic
+* <a element>feFuncG</a> - transfer function for the green component of the input graphic
+* <a element>feFuncB</a> - transfer function for the blue component of the input graphic
+* <a element>feFuncA</a> - transfer function for the alpha component of the input graphic
 
 The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a> elements are also called <dfn id="transfer-function-element">transfer function element</dfn>s.
 
 The following rules apply to the processing of the <a element>feComponentTransfer</a> element:
 
-<ul>
-  <li>If more than one <i>transfer function element</i> of the same kind is specified, the last occurrence is to be used.</li>
-  <li>If any of the <i>transfer function elements</i> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <i>transfer function elements</i> were specified with their <a element-attr for=feComponentTransfer>type</a> attributes set to ''identity''.</li>
-</ul>
+* If more than one <i>transfer function element</i> of the same kind is specified, the last occurrence is to be used.
+* If any of the <i>transfer function elements</i> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <i>transfer function elements</i> were specified with their <a element-attr for=feComponentTransfer>type</a> attributes set to ''identity''.
 
 <div id="feFuncRElement"></div>
 
@@ -3098,44 +3087,49 @@ Note: For the handling of <a href="#FilterElement">filter sources</a> see sectio
 
 <h2 id="interpolation-of-filters">Interpolation of Filters</h2>
 
-Interpolation between one filter <em>from-filter</em> and a second filter <em>to-filter</em> happens in two different steps. First, prepare <em>from-filter</em> and <em>to-filter</em> for the interpolation. Second, interpolate each filter function pair.
+For interpolating between one filter and a second, the rules below are applied.
 
+<dl class=switch>
+  <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<url>> and each <<filter-function>> pair is of the same type
+  <dd>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</dd>
+  <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<url>> and each possible <<filter-function>> pair is of the same type
+  <dd>
+    <ol class=algorithm>
+      <li>Add the missing equivalent <<filter-function>>s from the longer list to the shorter list. The new added <<filter-function>>s must be initialised to their default values.</li>
+      <li>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</li>
+    </ol>
+  </dd>
+  <dt id='interpolation-none-filter-functions'>If one filter is ''none'' and the other is a <<filter-function-list>> without <<url>></dt>
+  <dd>
+    <ol class=algorithm>
+      <li>Replace ''none'' with the corresponding <<filter-function-list>> to the other filter. The new <<filter-function>>s must be initialised to their default values.</li>
+      <li>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</li>
+    </ol>
+  </dd>
+  <dt id='no-interpolation'>Otherwise</dt>
+  <dd>No interpolation is possible.</dd>
+</dl>
 
-Prepare <<filter-function-list>>s for interpolation:
-<ul>
-  <li id="none-none-animation">If both, the <em>from-</em> and <em>to-filter</em> are
-  ''none'':
-    <ul>
-      <li>There is no interpolation necessary. The computed value stays ''none''. The preparation process is not successful.
-      </li>
-    </ul>
-  </li>
-  <li id="reference-animation">If the <em>from-</em> or the <em>to-filter</em> consists of at least one <<url>> <!--  or <<child-selector>> -->:
-    <ul>
-      <li>There is no interpolation possible. The preparation process is not successful.
-      </li>
-    </ul>
-  </li>
-  <li id="from-to-animation-equal">If <em>from-</em> and <em>to-filter</em> have the same number of filter functions and each filter function pair is of the same type:
-    <ul>
-      <li>The preparation for the interpolation is successful. Continue with the interpolation of filter function values.</li>
-    </ul>
-  </li>
-  <li id="from-to-animation-unequal">If <em>from-</em> and <em>to-filter</em> have a different number of filter functions. And all filter function pairs between <em>from-</em> and <em>to-filter</em> are compatible up to the length of the filter list with the least filter functions:
-    <ul>
-      <li>Add the corresponding filter functions with their initial value to the filter list with least filter functions and proceed with the previous step.
-      </li>
-    </ul>
-  </li>
-  <li id="invalid-animation">In all other cases:
-    <ul>
-      <li>No interpolation possible. The preparation process is not successful.
-      </li>
-    </ul>
-  </li>
-</ul>
+<h3 id='interpolation-of-filter-functions'>Interpolation of <<filter-function>>s</h3>
 
-If <em>from-value</em> and <em>to-value</em> can be interpolated and the interpolation was prepared successfully, interpolate each filter function pair value type following the instructions of “<a href="http://www.w3.org/TR/css3-transitions/#animatable-types">Animation of property types</a>” [[!CSS3-TRANSITIONS]].
+Values in the <<filter-function>>s are interpolated as follows:
+
+<dl class=switch>
+  <dt><<blur()>></dt>
+  <dd>Interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-length'>length</a>.</dd>
+  <dt><<brightness()>></dt>
+  <dt><<contrast()>></dt>
+  <dt><<grayscale()>></dt>
+  <dt><<invert()>></dt>
+  <dt><<opacity()>></dt>
+  <dt><<saturate()>></dt>
+  <dt><<sepia()>></dt>
+  <dd>When both values are numbers, interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-number'>number</a>; when both values are percentages, interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-percentage'>percentages</a>; otherwise, both values are converted into a <<calc()>> function that is the sum of a number and a percentage (each possibly zero), and these <<calc()>> functions have each half interpolated as real numbers.</dd>
+  <dt><<hue-rotate()>></dt>
+  <dd>Interpolated as real numbers.</dd>
+  <dt><<drop-shadow()>></dt>
+  <dd>Interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-shadow-list'>shadow list</a>s.</dd>
+</dl>
 
 <h3 id="additive-animations">Additive animations</h3>
 
@@ -3166,10 +3160,6 @@ The following SVG animation is an example for and additive animation of the <<bl
 &lt;/rect>
 </code></pre>
 </div>
-
-<h3 id="paced-animations">Paced animations</h3>
-
-<p class="issue">The specification needs to define a distance() function for paced animations.</p>
 
 <h2 id="svg-animation">SVG Animation</h2>
 
