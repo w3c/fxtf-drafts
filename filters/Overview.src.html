@@ -3108,10 +3108,10 @@ For interpolating between one filter and a second, the rules below are applied.
     </ol>
   </dd>
   <dt id='no-interpolation'>Otherwise</dt>
-  <dd>Not animatable.</dd>
+  <dd>Use discrete interpolation.</dd>
 </dl>
 
-<h3 id='interpolation-of-filter-functions'>Interpolation of <<filter-function>>s</h3>
+<h4 id='interpolation-of-filter-functions'>Interpolation of <<filter-function>>s</h4>
 
 Values in the <<filter-function>>s are interpolated as follows:
 
@@ -3132,7 +3132,7 @@ Values in the <<filter-function>>s are interpolated as follows:
   <dd>Interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-shadow-list'>shadow list</a>s.</dd>
 </dl>
 
-<h3 id="additive-animations">Additive animations</h3>
+<h3 id="addition">Addition</h3>
 
 <p class=issue>Should additive animations be defined by appending the offset to the filter function list or by adding offset to function list per component? <a href="http://lists.w3.org/Archives/Public/public-fx/2014JanMar/0063.html">public-fx</a></p>
 
@@ -3140,16 +3140,15 @@ It is possible for animations to define an offset from a <<filter-function-list>
 
 Additive animations of <<filter-function-list>> follow the interpolation algorithm above. The underlying attribute value is used as <em>from-filter</em>. <em>to-filter</em> is the offset value added to <em>from-filter</em>. Additive animations of <<filter-function-list>>s follow the following steps:
 
-<ol>
-  <li>The offset value, a <<filter-function-list>>, must be compatible to the <em>from-filter</em>. Prepare the offset value and the <em>from-filter</em> for interpolation with the preparation algorithm above. The offset value is used as <em>to-filter</em>.
+ISSUE: According to Brian Birtles, this sounds more like accumulative behavior.
+
+1. The offset value, a <<filter-function-list>>, must be compatible to the <em>from-filter</em>. Prepare the offset value and the <em>from-filter</em> for interpolation with the preparation algorithm above. The offset value is used as <em>to-filter</em>.
     <ul>
       <li>If the preparation process was not successful then stop. No interpolation is possible.</li>
       <li>If the preparation process was successful it results in two <<filter-function-list>> with the same number of filter function pairs each pair of the same type. Continue with the next step.</li>
     </ul>
-  </li>
-  <li>For the purpose of addition, each filter function must be temporarily serialized to its longest possible definition. The summation of the offset to <em>from-filter</em> is done per filter function value type: <<length>>, <<number>>, <<percentage>>, <<calc()>>, <<color>> and <<angle>>. It is assumed that increasing numerical values are direct proportional to the resulting filter effect for each filter function.</li>
-  <li>Continue with the interpolation process taking the initial <em>from-filter</em> and the sum of the previous operations as <em>to-filter</em>.</li>
-</ol>
+2. For the purpose of addition, each filter function must be temporarily serialized to its longest possible definition. The summation of the offset to <em>from-filter</em> is done per filter function value type: <<length>>, <<number>>, <<percentage>>, <<calc()>>, <<color>> and <<angle>>. It is assumed that increasing numerical values are direct proportional to the resulting filter effect for each filter function.</li>
+3. Continue with the interpolation process taking the initial <em>from-filter</em> and the sum of the previous operations as <em>to-filter</em>.
 
 <div class="example">
 The following SVG animation is an example for and additive animation of the <<blur()>> filter function.
@@ -3161,6 +3160,10 @@ The following SVG animation is an example for and additive animation of the <<bl
 &lt;/rect>
 </code></pre>
 </div>
+
+<h3 id="accumulation">Accumulation</h3>
+
+ISSUE: Add normative text for accumulation.
 
 <h2 id="svg-animation">SVG Animation</h2>
 
