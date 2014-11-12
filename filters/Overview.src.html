@@ -3088,7 +3088,7 @@ Note: For the handling of <a href="#FilterElement">filter sources</a> see sectio
 <h2 id="animation-of-filters">Animation of Filters</h2>
 
 <h3 id="interpolation-of-filters">Interpolation</h2>
-For interpolating between one filter and a second, the rules below are applied.
+For interpolation between one filter and a second, the steps corresponding to the first matching condition in the following list must be run:
 
 <dl class=switch>
   <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<url>> and each <<filter-function>> pair is of the same type
@@ -3096,14 +3096,14 @@ For interpolating between one filter and a second, the rules below are applied.
   <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<url>> and each possible <<filter-function>> pair is of the same type
   <dd>
     <ol class=algorithm>
-      <li>Add the missing equivalent <<filter-function>>s from the longer list to the shorter list. The new added <<filter-function>>s must be initialised to their default values.</li>
+      <li>Add the missing equivalent <<filter-function>>s from the longer list to the shorter list. The new added <<filter-function>>s must be initialized to their default values.</li>
       <li>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</li>
     </ol>
   </dd>
   <dt id='interpolation-none-filter-functions'>If one filter is ''none'' and the other is a <<filter-function-list>> without <<url>></dt>
   <dd>
     <ol class=algorithm>
-      <li>Replace ''none'' with the corresponding <<filter-function-list>> to the other filter. The new <<filter-function>>s must be initialized to their default values.</li>
+      <li>Replace ''none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their default values.</li>
       <li>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</li>
     </ol>
   </dd>
@@ -3113,7 +3113,7 @@ For interpolating between one filter and a second, the rules below are applied.
 
 <h4 id='interpolation-of-filter-functions'>Interpolation of <<filter-function>>s</h4>
 
-Values in the <<filter-function>>s are interpolated as follows:
+For interpolation of values in <<filter-function>>s, the steps corresponding to the first matching condition in the following list must be run:
 
 <dl class=switch>
   <dt><<blur()>></dt>
@@ -3125,7 +3125,7 @@ Values in the <<filter-function>>s are interpolated as follows:
   <dt><<opacity()>></dt>
   <dt><<saturate()>></dt>
   <dt><<sepia()>></dt>
-  <dd>When both values are numbers, interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-number'>number</a>; when both values are percentages, interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-percentage'>percentages</a>; otherwise, both values are converted into a <<calc()>> function that is the sum of a number and a percentage (each possibly zero), and these <<calc()>> functions have each half interpolated as real numbers.</dd>
+  <dd>Convert percentage values to numbers with 0% being relative to 0 and 100% relative to 1. Interpolated as real numbers.</dd>
   <dt><<hue-rotate()>></dt>
   <dd>Interpolated as real numbers.</dd>
   <dt><<drop-shadow()>></dt>
@@ -3134,70 +3134,29 @@ Values in the <<filter-function>>s are interpolated as follows:
 
 <h3 id="addition">Addition</h3>
 
-<p class=issue>Should additive animations be defined by appending the offset to the filter function list or by adding offset to function list per component? <a href="http://lists.w3.org/Archives/Public/public-fx/2014JanMar/0063.html">public-fx</a></p>
+It is possible to combine independent animations of <<filter-function-list>>s [[SVG11]].
 
-It is possible for animations to define an offset from a <<filter-function-list>> value rather than having animations between absolute values. This offset is added to the underlying value of the attribute and other lower priority animations [[SVG11]].
+Given two filter values <var>V<sub>a</sub></var> and <var>V<sub>b</sub></var>, returns the concatenated lists of the two filters, <var>V<sub>result</sub></var>. A filter value <var>V<sub>a</sub></var> or <var>V<sub>b</sub></var> of ''none'' counts as empty list.
 
-Additive animations of <<filter-function-list>> follow the interpolation algorithm above. The underlying attribute value is used as <em>from-filter</em>. <em>to-filter</em> is the offset value added to <em>from-filter</em>. Additive animations of <<filter-function-list>>s follow the following steps:
 
-ISSUE: According to Brian Birtles, this sounds more like accumulative behavior.
-
-1. The offset value, a <<filter-function-list>>, must be compatible to the <em>from-filter</em>. Prepare the offset value and the <em>from-filter</em> for interpolation with the preparation algorithm above. The offset value is used as <em>to-filter</em>.
-    <ul>
-      <li>If the preparation process was not successful then stop. No interpolation is possible.</li>
-      <li>If the preparation process was successful it results in two <<filter-function-list>> with the same number of filter function pairs each pair of the same type. Continue with the next step.</li>
-    </ul>
-2. For the purpose of addition, each filter function must be temporarily serialized to its longest possible definition. The summation of the offset to <em>from-filter</em> is done per filter function value type: <<length>>, <<number>>, <<percentage>>, <<calc()>>, <<color>> and <<angle>>. It is assumed that increasing numerical values are direct proportional to the resulting filter effect for each filter function.</li>
-3. Continue with the interpolation process taking the initial <em>from-filter</em> and the sum of the previous operations as <em>to-filter</em>.
-
-<div class="example">
-The following SVG animation is an example for and additive animation of the <<blur()>> filter function.
+<div class=example>
+The following SVG animation has two <a>'animate'</a> elements animating 'filter' property of the <a>'rect'</a> element. Both specified animations are additive and have a duration of <var>10s</var>.
 
 <pre><code class=html>
-&lt;rect width="200px" ...>
-  &lt;animate attributeType="filter" from="blur(2px)" to="blur(2px)" dur="10s"
-           additive="sum" accumulate="sum" repeatCount="5"/>
+&lt;rect width="200px" filter="none" ...>
+  &lt;animate attributeName="filter" from="blur(0px)" to="blur(10px)" dur="10s"
+           additive="sum"/>
+  &lt;animate attributeName="filter" from="sepia(0)" to="sepia(1)" dur="10s"
+           additive="sum"/>
 &lt;/rect>
 </code></pre>
+
+After <var>5s</var>, the <i>used value</i> of 'filter' is ''blur(5px) sepia(0.5)''.
 </div>
 
 <h3 id="accumulation">Accumulation</h3>
 
-ISSUE: Add normative text for accumulation.
-
-<h2 id="svg-animation">SVG Animation</h2>
-
-<h3 id="svg-animate-and-set-element">The <a>'animate'</a> and <a>'set'</a> element</h3>
-
-With this specification <<filter-function-list>> gets a new SVG basic data type. <<filter-function-list>> is animatable and additive. The data type can be animated using the SVG <a>'animate'</a> element and the SVG <a>'set'</a> element. SVG animations must run the same animation steps as described in section <a href="#interpolation-of-filters">Interpolation of Filters</a>.
-
-The set of animatable data types gets extended by <<filter-function-list>>. The new data type is animatable and additive.
-
-<table class="data">
-  <caption>Animatable data types</caption>
-  <thead>
-    <tr>
-      <th>Data type</th>
-      <th>Additive?</th>
-      <th><a>'animate'</a></th>
-      <th><a>'set'</a></th>
-      <th><a>'animateColor'</a></th>
-      <th><a>'animateTransform'</a></th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th><<filter-function-list>></th>
-      <td>yes</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+Given two filter values <var>V<sub>a</sub></var> and <var>V<sub>b</sub></var>, returns the filter value, <var>V<sub>b</sub></var>.
 
 <h2 id="security">Security</h2>
 
@@ -3207,14 +3166,12 @@ It is important that the timing of any filter operation is independent of pixel 
 
 The following <i>filter primitives</i> may have access to pixel values that potentially contain privacy-sensitive information, either from the filtered object itself or other sources such as CSS styling. These primitives must be flagged as "tainted".
 
-<ul>
-  <li><a element>feFlood</a> when the <i>specified value</i> of the 'flood-color' property computes to ''currentColor'',</li>
-  <li><a element>feDropShadow</a> when the <i>specified value</i> value of the 'flood-color' property computes to ''currentColor'',</li>
-  <li><a element>feDiffuseLighting</a>, when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor''</li>
-  <li><a element>feSpecularLighting</a> when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor'',</li>
-  <li><a element>feImage</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and</li>
-  <li>the filter primitives: <a value>SourceGraphic</a>, <a value>SourceAlpha</a>, <a value>BackgroundImage</a>, <a value>BackgroundAlpha</a>, <a value>FillPaint</a> and <a value>StrokePaint</a>.</li>
-</ul>
+1. <a element>feFlood</a> when the <i>specified value</i> of the 'flood-color' property computes to ''currentColor'',
+2. <a element>feDropShadow</a> when the <i>specified value</i> value of the 'flood-color' property computes to ''currentColor'',
+3. <a element>feDiffuseLighting</a>, when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor''
+4. <a element>feSpecularLighting</a> when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor'',
+5. <a element>feImage</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and
+6. the filter primitives: <a value>SourceGraphic</a>, <a value>SourceAlpha</a>, <a value>BackgroundImage</a>, <a value>BackgroundAlpha</a>, <a value>FillPaint</a> and <a value>StrokePaint</a>.
 
 <a element>feFlood</a>, <a element>feDropShadow</a>, <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> are primitives with one or more CSS properties that take <<color>> as property value. <<color>> consists of (amongst others) the ''currentColor'' keyword. The <i>used value</i> for ''currentColor'' derives from the 'color' property. Since 'color' can be set by the '':visited'' pseudo selector, it potentially contains privacy-sensitive information and therefore these primitives must be marked as tainted.
 
