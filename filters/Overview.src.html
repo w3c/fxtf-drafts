@@ -504,7 +504,9 @@ Most filter primitives take other filter primitives as input. The following attr
   </dt>
   <dd>
     <p>Identifies input for the given filter primitive. The value can be either one of six keywords or can be a string which matches a previous <a element-attr>result</a> attribute value within the same <a element>filter</a> element. If no value is provided and this is the first <i>filter primitive</i>, then this <i>filter primitive</i> will use <a value>SourceGraphic</a> as its input. If no value is provided and this is a subsequent <i>filter primitive</i>, then this <i>filter primitive</i> will use the result from the previous <i>filter primitive</i> as its input.</p>
-    <p>If the value for <a element-attr for=filter-primitive>result</a> appears multiple times within a given <a element>filter</a> element, then a reference to that result will use the closest preceding <i>filter primitive</i> with the given value for attribute <a element-attr>result</a>. Forward references to results are not allowed, and will be treated as if no result was specified.</p>
+    <p>If the value for <a element-attr for=filter-primitive>result</a> appears multiple times within a given <a element>filter</a> element, then a reference to that result will use the closest preceding <i>filter primitive</i> with the given value for attribute <a element-attr>result</a>.</p>
+    <p>Forward references to results are not allowed, and will be treated as if no result was specified.</p>
+    <p>References to non-existent results will be treated as if no result was specified.</p>
     <p>Definitions for the six keywords:</p>
     <dl dfn-type=value dfn-for=in>
       <dt>
@@ -565,7 +567,9 @@ All <i>filter primitives</i> have attributes <a element-attr for=filter-primitiv
 
 If the <i>filter primitive subregion</i> has a negative or zero width or height, the effect of the filter primitive is disabled.
 
-The <i>filter primitive subregion</i> act as a hard clip clipping rectangle on both the filter primitive's input image(s) and the filter primitive result.
+The <i>filter region</i> acts as a hard clip clipping rectangle on the filter primitive's input image(s).
+
+The <i>filter primitive subregion</i> acts as a hard clip clipping rectangle on the filter primitive result.
 
 All intermediate offscreens are defined to not exceed the intersection of the <i>filter primitive subregion</i> with the <i>filter region</i>. The <i>filter region</i> and any of the filter primitive subregions are to be set up such that all offscreens are made big enough to accommodate any pixels which even partly intersect with either the <i>filter region</i> or the filter primitive subregions.
 
@@ -2114,14 +2118,14 @@ This filter primitive can refer to an external image or can be a reference to an
 
 If the <a element-attr for=feImage>href</a> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a>'image'</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a>'use'</a> element. In either case, the current user coordinate system depends on the value of attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The processing of the <a element-attr for=feImage>preserveAspectRatio</a> attribute on the <a element>feImage</a> element is identical to that of the <a>'image'</a> element.
 
-<p class="issue">What happens if the referenced graphic does not exist or is not yet loaded? WG decision: don't apply filter or null filter. What about ''preserve aspect ratio''?</p>
+A <a element-attr for=feImage>href</a> reference that is an empty image (zero width or zero height), that fails to download, is non-existent, or that cannot be displayed (e.g. because it is not in a supported image format) fills the filter primitive subregion with transparent black.
 
 <span class="requirement" id="assert_hqImageResampling">When the referenced image must be resampled to match the device coordinate system, it is recommended that high quality viewers make use of appropriate interpolation techniques, for example bilinear or bicubic.</span> Depending on the speed of the available interpolents, this choice may be affected by the 'image-rendering' property setting.
 
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feImage>
   <dt>
-    <dfn>xlink:href</dfn> = "<em>&lt;IRI&gt;</em>"
+    <dfn>xlink:href</dfn> = "<<url>>"
   </dt>
   <dd>
     <p>See <a element-attr for=feImage>href</a> attribute.</p>
@@ -2129,10 +2133,10 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
     <p class=note>This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a element-attr for=feImage>href</a> attribute instead.</p>
   </dd>
   <dt>
-    <dfn>href</dfn> = "<em>&lt;IRI&gt;</em>"
+    <dfn>href</dfn> = "<<url>>"
   </dt>
   <dd>
-    <p>An <a>IRI reference</a> to an image resource or to an element. If both, the <a element-attr for=feImage>xlink:href</a> and the <a element-attr for=feImage>href</a> attribute are specified, the latter overrides the first defintion.</p>
+    <p>An <<url>> to an image resource or to an element. If both, the <a element-attr for=feImage>xlink:href</a> and the <a element-attr for=feImage>href</a> attribute are specified, the latter overrides the first definition.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2151,7 +2155,7 @@ If the <a element-attr for=feImage>href</a> references a stand-alone image resou
   </dd>
 </dl>
 
-<div class="example">
+<div class=example>
   <p>The following example illustrates how images are placed relative to an object. From left to right:</p>
   <ul>
     <li>The default placement of an image. Note that the image is centered in the <i>filter region</i> and has the maximum size that will fit in the region consistent with preserving the aspect ratio.
@@ -2401,7 +2405,7 @@ The <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filte
     <dfn>specularExponent</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>Exponent for specular term, larger is more "shiny". Range 1.0 to 128.0.</p>
+    <p>Exponent for specular term, larger is more "shiny".</p>
     <p>If the attribute is not specified, then the effect is as if a value of ''1'' were specified.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2927,6 +2931,8 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   <dd>
     <p>Exponent value controlling the focus for the light source.</p>
     <p>The <a>lacuna value</a> for <a element-attr for=feSpotLight>specularExponent</a> is ''1''.</p>
+    <p>See section <a href="#feDiffuseLightingElement">Filter primitive &lt;feDiffuseLighting></a> for how to use <a element-attr for=feSpotLight>specularExponent</a>.</p>
+    <p class=note>Note: <a element-attr for=feSpotLight>specularExponent</a> for <a element>feSpotLight</a> serves a different use case than <a element-attr for=feSpecularLighting>specularExponent</a> for <a element>feSpecularLighting</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -3173,7 +3179,7 @@ The following <i>filter primitives</i> may have access to pixel values that pote
 2. <a element>feDropShadow</a> when the <i>specified value</i> value of the 'flood-color' property computes to ''currentColor'',
 3. <a element>feDiffuseLighting</a>, when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor''
 4. <a element>feSpecularLighting</a> when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor'',
-5. <a element>feImage</a>, when the <a>IRI reference</a> points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and
+5. <a element>feImage</a>, when the <<url>> reference points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and
 6. the filter primitives: <a value>SourceGraphic</a>, <a value>SourceAlpha</a>, <a value>BackgroundImage</a>, <a value>BackgroundAlpha</a>, <a value>FillPaint</a> and <a value>StrokePaint</a>.
 
 <a element>feFlood</a>, <a element>feDropShadow</a>, <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> are primitives with one or more CSS properties that take <<color>> as property value. <<color>> consists of (amongst others) the ''currentColor'' keyword. The <i>used value</i> for ''currentColor'' derives from the 'color' property. Since 'color' can be set by the '':visited'' pseudo selector, it potentially contains privacy-sensitive information and therefore these primitives must be marked as tainted.
