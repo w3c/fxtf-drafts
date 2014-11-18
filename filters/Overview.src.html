@@ -3100,20 +3100,20 @@ Note: For the handling of <a href="#FilterElement">filter sources</a> see sectio
 For interpolation between one filter and a second, the steps corresponding to the first matching condition in the following list must be run:
 
 <dl class=switch>
-  <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<url>> and each <<filter-function>> pair is of the same type
-  <dd>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</dd>
-  <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<url>> and each possible <<filter-function>> pair is of the same type
+  <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<url>> and for each <<filter-function>> for which there is a corresponding item in each list
+  <dd>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</dd>
+  <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<url>> and for each <<filter-function>> for which there is a corresponding item in each list
   <dd>
     <ol class=algorithm>
-      <li>Add the missing equivalent <<filter-function>>s from the longer list to the shorter list. The new added <<filter-function>>s must be initialized to their default values.</li>
-      <li>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</li>
+      <li>Append the missing equivalent <<filter-function>>s from the longer list to the end of the shorter list. The new added <<filter-function>>s must be initialized to their default values.</li>
+      <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</li>
     </ol>
   </dd>
   <dt id='interpolation-none-filter-functions'>If one filter is ''none'' and the other is a <<filter-function-list>> without <<url>></dt>
   <dd>
     <ol class=algorithm>
       <li>Replace ''none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their default values.</li>
-      <li>Interpolate each <<filter-function>> pair following the rules in the <a href='#interpolation-of-filter-functions'>next section</a>.</li>
+      <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</li>
     </ol>
   </dd>
   <dt id='no-interpolation'>Otherwise</dt>
@@ -3126,7 +3126,7 @@ For interpolation of values in <<filter-function>>s, the steps corresponding to 
 
 <dl class=switch>
   <dt><<blur()>></dt>
-  <dd>Interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-length'>length</a>.</dd>
+  <dd>Interpolate values as <a href='http://www.w3.org/TR/css3-transitions/#animtype-length'>length</a>.</dd>
   <dt><<brightness()>></dt>
   <dt><<contrast()>></dt>
   <dt><<grayscale()>></dt>
@@ -3134,19 +3134,18 @@ For interpolation of values in <<filter-function>>s, the steps corresponding to 
   <dt><<opacity()>></dt>
   <dt><<saturate()>></dt>
   <dt><<sepia()>></dt>
-  <dd>Convert percentage values to numbers with 0% being relative to 0 and 100% relative to 1. Interpolated as real numbers.</dd>
+  <dd>Convert percentage values to numbers with 0% being relative to 0 and 100% relative to 1. Interpolate values as real numbers.</dd>
   <dt><<hue-rotate()>></dt>
-  <dd>Interpolated as real numbers.</dd>
+  <dd>Interpolate values as real numbers.</dd>
   <dt><<drop-shadow()>></dt>
-  <dd>Interpolated as <a href='http://www.w3.org/TR/css3-transitions/#animtype-shadow-list'>shadow list</a>s.</dd>
+  <dd>Interpolate values as <a href='http://www.w3.org/TR/css3-transitions/#animtype-shadow-list'>shadow list</a>s.</dd>
 </dl>
 
 <h3 id="addition">Addition</h3>
 
 It is possible to combine independent animations of <<filter-function-list>>s [[SVG11]].
 
-Given two filter values <var>V<sub>a</sub></var> and <var>V<sub>b</sub></var>, returns the concatenated lists of the two filters, <var>V<sub>result</sub></var>. A filter value <var>V<sub>a</sub></var> or <var>V<sub>b</sub></var> of ''none'' counts as empty list.
-
+Given two filter values representing an base value (<var>base filter list</var>) and a value to add (<var>added filter list</var>), returns the concatenation of the the two lists: &lsquo;<var>base filter list</var> <var>added filter list</var>&rsquo;.
 
 <div class=example>
 The following SVG animation has two <a>'animate'</a> elements animating 'filter' property of the <a>'rect'</a> element. Both specified animations are additive and have a duration of <var>10s</var>.
