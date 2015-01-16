@@ -2500,8 +2500,10 @@ static void init(long lSeed)
     for(i = 0; i &lt; BSize; i++)
     {
       uLatticeSelector[i] = i;
-      for (j = 0; j &lt; 2; j++)
-        fGradient[k][i][j] = (double)(((lSeed = random(lSeed)) % (BSize + BSize)) - BSize) / BSize;
+      do {
+         for (j = 0; j &lt; 2; j++)
+           fGradient[k][i][j] = (double)(((lSeed = random(lSeed)) % (BSize + BSize)) - BSize) / BSize;
+      } while(fGradient[k][i][0] == 0 && fGradient[k][i][1] == 0);
       s = double(sqrt(fGradient[k][i][0] * fGradient[k][i][0] + fGradient[k][i][1] * fGradient[k][i][1]));
       fGradient[k][i][0] /= s;
       fGradient[k][i][1] /= s;
