@@ -19,6 +19,12 @@ Abstract: Although originally designed for use in SVG, filter effects are a set 
 !Issues List: <a href="https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&component=Filter%20Effects&resolution=---">in Bugzilla</a>
 Use <i> Autolinks: yes
 </pre>
+<pre class=link-defaults>
+spec:compositing-1; type:value; text:screen
+spec:compositing-1; type:value; text:normal
+spec:css21; type:dfn; text:containing block
+spec:css-text-decor-3; type:value; text:currentcolor
+</pre>
 
 <style type="text/css">
 a[data-link-type=element]::before,span[data-link-type=element]::before {
@@ -181,7 +187,7 @@ The following pictures show the intermediate image results from each of the six 
 
 <h2 id="placement">Module interactions</h2>
 
-This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="http://www.w3.org/TR/CSS2/visuren.html" title="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <a spec="css21">containing block</a>, and/or the creation of a <a spec="css21">stacking context</a>.
+This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="http://www.w3.org/TR/CSS2/visuren.html" lt="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <a spec="css21">containing block</a>, and/or the creation of a <a spec="css21">stacking context</a>.
 
 The compositing model follows the SVG compositing model [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such as 'border' [[!CSS3BG]].
 
@@ -221,7 +227,7 @@ Media: visual
 Animatable: yes
 </pre>
 
-If the value of the 'filter' property is ''none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
+If the value of the 'filter' property is ''filter/none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
 <pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> <!--| <<child-selector>> -->]+</pre>
 
@@ -319,7 +325,7 @@ The first filter function or <a element>filter</a> reference in the list takes t
 
 Filter functions must operate in the sRGB color space.
 
-A computed value of other than ''none'' results in the creation of a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' does. All the elements descendants are rendered together as a group with the filter effect applied to the group as a whole.
+A computed value of other than ''filter/none'' results in the creation of a <a href="http://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' does. All the elements descendants are rendered together as a group with the filter effect applied to the group as a whole.
 
 The 'filter' property has no effect on the geometry of the target element's CSS boxes, even though 'filter' can cause painting outside of an element's border box.
 
@@ -385,7 +391,7 @@ The description of the <a element>filter</a> element follows:
 
 Properties inherit into the <a element>filter</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a element>filter</a> element.
 
-<a element>filter</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'filter' property. The 'display' property does not apply to the <a element>filter</a> element; thus, <a element>filter</a> elements are not directly rendered even if the 'display' property is set to a value other than ''none'', and <a element>filter</a> elements are available for referencing even when the 'display' property on the <a element>filter</a> element or any of its ancestors is set to ''none''.
+<a element>filter</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'filter' property. The 'display' property does not apply to the <a element>filter</a> element; thus, <a element>filter</a> elements are not directly rendered even if the 'display' property is set to a value other than ''filter/none'', and <a element>filter</a> elements are available for referencing even when the 'display' property on the <a element>filter</a> element or any of its ancestors is set to ''filter/none''.
 
 <h2 id="FilterEffectsRegion">Filter Region</h2>
 
@@ -1485,7 +1491,7 @@ When the image must be resampled to match the coordinate system defined by <a el
     <p>
       <math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr><mtr><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
     </p>
-    <p>The value ''none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
+    <p>The value ''feConvolveMatrix/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
     <p>The <a>lacuna value</a> for <a element-attr for=feConvolveMatrix>edgeMode</a> is ''duplicate''.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -1522,7 +1528,7 @@ When the image must be resampled to match the coordinate system defined by <a el
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;/&nbsp;
       <a element-attr>divisor</a>&nbsp;+&nbsp; <a element-attr>bias</a>&nbsp;<br>
     </p>
-    <p>A value of ''true'' indicates that the convolution will only apply to the color channels. In this case, the filter will temporarily unpremultiply the color component values and apply the kernel. In this case the <code>ALPHA<sub>X,Y</sub></code> of the <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given pixel is:</p>
+    <p>A value of "true" indicates that the convolution will only apply to the color channels. In this case, the filter will temporarily unpremultiply the color component values and apply the kernel. In this case the <code>ALPHA<sub>X,Y</sub></code> of the <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given pixel is:</p>
     <p class="filterformula">ALPHA<sub>X,Y</sub>&nbsp;=&nbsp;SOURCE<sub>X,Y</sub></p>
     <p>The <a>lacuna value</a> for <a element-attr for=feConvolveMatrix>preserveAlpha</a> is ''false''.</p>
     <p>Animatable: yes.</p>
@@ -2100,8 +2106,8 @@ Frequently this operation will take place on alpha-only images, such as that pro
     <p><dfn dfn-type=value dfn-for=edgeMode>duplicate</dfn> indicates that the input image is extended along each of its borders as necessary by duplicating the color values at the given edge of the input image.</p>
     <p>Original N-by-M image, where m=M-1 and n=N-1:</p>
     <p><dfn dfn-type=value dfn-for=edgeMode>wrap</dfn> indicates that the input image is extended by taking the color values from the opposite edge of the image.</p>
-    <p>The value ''none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feGaussianBlur>edgeMode</a> is ''none''.</p>
+    <p>The value ''feGaussianBlur/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
+    <p>The <a>lacuna value</a> for <a element-attr for=feGaussianBlur>edgeMode</a> is ''feGaussianBlur/none''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -3074,7 +3080,7 @@ Below are the equivalents for each of the filter functions expressed in terms of
     &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
   &lt;/filter&gt; </pre>
 
-Where edge mode computes to ''none'' for the 'filter' property and to ''duplicate'' for the CSS Image <<filter()>> function.
+Where edge mode computes to ''filter/none'' for the 'filter' property and to ''duplicate'' for the CSS Image <<filter()>> function.
 
 <h4 id="dropshadowEquivalent">drop-shadow</h4>
 
@@ -3111,10 +3117,10 @@ For interpolation between one filter and a second, the steps corresponding to th
       <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</li>
     </ol>
   </dd>
-  <dt id='interpolation-none-filter-functions'>If one filter is ''none'' and the other is a <<filter-function-list>> without <<url>></dt>
+  <dt id='interpolation-none-filter-functions'>If one filter is ''filter/none'' and the other is a <<filter-function-list>> without <<url>></dt>
   <dd>
     <ol class=algorithm>
-      <li>Replace ''none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their default values.</li>
+      <li>Replace ''filter/none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their default values.</li>
       <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</li>
     </ol>
   </dd>
@@ -3201,7 +3207,7 @@ If <a element>feDisplacementMap</a> has a "tainted" flagged filter primitive as 
 
 <h3 id="origin-restrictions">Origin Restrictions</h3>
 
-User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for the 'filter' property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value ''none'' had been specified.
+User agents must use the <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-enabled-fetch">potentially CORS-enabled fetch</a> method defined by the [[!HTML5]] specification for the 'filter' property. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet's URL and set the origin to the URL of the containing document. If this results in network errors, the effect is as if the value ''filter/none'' had been specified.
 
 <h3 id="timing-attack">Timing Attacks</h3>
 
@@ -4175,7 +4181,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dt>
       <dd>
         <div>
-          Corresponds to value ''none''.
+          Corresponds to value ''feConvolveMatrix/none''.
         </div>
       </dd>
     </dl>
@@ -4983,7 +4989,7 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
       </dt>
       <dd>
         <div>
-          Corresponds to value ''none''.
+          Corresponds to value ''feGaussianBlur/none''.
         </div>
       </dd>
     </dl>
