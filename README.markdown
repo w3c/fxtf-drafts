@@ -3,4 +3,4 @@ groups related to graphics.
 
 The repository is based at: https://hg.fxtf.org/drafts/
 
-Editor's drafts: http://dev.w3.org/fxtf/
+Editor's drafts: https://drafts.fxtf.org/
