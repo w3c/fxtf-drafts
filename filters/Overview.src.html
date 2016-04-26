@@ -18,6 +18,7 @@ Abstract:
 Abstract: Although originally designed for use in SVG, filter effects are a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the 'filter' property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <<image>> value.
 !Issues List: <a href="https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&component=Filter%20Effects&resolution=---">in Bugzilla</a>
 Use <i> Autolinks: yes
+Ignored Vars: Va, 5s, 10s
 </pre>
 <pre class=link-defaults>
 spec:compositing-1; type:value; text:screen
@@ -54,9 +55,7 @@ Filter effects are exposed with two levels of complexity:
 <div class="example">
   <p>In this example, an image is filtered with the <<grayscale()>> filter function.</p>
 
-  <pre><code class="css">#image {
-  filter: grayscale(100%);
-}</code></pre>
+  <pre><code class="css">#image { filter: grayscale(100%); }</code></pre>
 
   <div class=figure>
     <img src="images/grayscale.svg" width="451" height="260" alt="Example for grayscale filter applied to image">
@@ -538,13 +537,13 @@ Most filter primitives take other filter primitives as input. The following attr
         <dfn>BackgroundImage</dfn>
       </dt>
       <dd>
-        This keyword represents the back drop defined by the current isolation group behind the <i>filter region</i> at the time that the <a element>filter</a> element was invoked. See 'isolation' property [[!COMPOSITING]].
+        This keyword represents the back drop defined by the current isolation group behind the <i>filter region</i> at the time that the <a element>filter</a> element was invoked. See 'isolation' property [[!COMPOSITING-1]].
       </dd>
       <dt>
         <dfn>BackgroundAlpha</dfn>
       </dt>
       <dd>
-        Same as <a value>BackgroundImage</a> except only the alpha channel is used. See <a value>SourceAlpha</a> and the 'isolation' property [[!COMPOSITING]].
+        Same as <a value>BackgroundImage</a> except only the alpha channel is used. See <a value>SourceAlpha</a> and the 'isolation' property [[!COMPOSITING-1]].
       </dd>
       <dt>
         <dfn>FillPaint</dfn>
@@ -657,7 +656,7 @@ All intermediate offscreens are defined to not exceed the intersection of the <i
 
 <!--elementsummary feBlend-->
 
-This filter blends two objects together using commonly used imaging software blending modes. It performs a pixel-wise combination of two input images. (See [[COMPOSITING]].)
+This filter blends two objects together using commonly used imaging software blending modes. It performs a pixel-wise combination of two input images. (See [[COMPOSITING-1]].)
 
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feBlend>
@@ -1134,7 +1133,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
 
 <!--elementsummary feComposite-->
 
-This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: ''over'', ''in'', ''atop'', ''out'', ''xor'', ''lighter'' [[!COMPOSITING]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
+This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: ''over'', ''in'', ''atop'', ''out'', ''xor'', ''lighter'' [[!COMPOSITING-1]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
 
 The <em>arithmetic</em> operation is useful for combining the output from the <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filters with texture data. It is also useful for implementing <em>dissolve</em>. If the <em>arithmetic</em> operation is chosen, each result pixel is computed using the following formula:
 
@@ -1159,7 +1158,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
     <dfn>operator</dfn> = "<span dfn-type=value dfn-for=operator><dfn>over</dfn> | <dfn>in</dfn> | <dfn>out</dfn> | <dfn>atop</dfn> | <dfn>xor</dfn> | <dfn>lighter</dfn> | <dfn>arithmetic</dfn></span>"
   </dt>
   <dd>
-    <p>The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING]]. The ''arithmetic'' operator is described above. The <a>lacuna value</a> for <a element-attr for=feComposite>operator</a> is ''over''.</p>
+    <p>The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING-1]]. The ''arithmetic'' operator is described above. The <a>lacuna value</a> for <a element-attr for=feComposite>operator</a> is ''over''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1203,7 +1202,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dd>
 </dl>
 
-Note: Compositing and Blending [[!COMPOSITING]] defines more compositing keywords. The functionality of the additional keywords can be archived by switching the input filter primitives <a element-attr>in</a> and <a element-attr for=feComposite>in2</a>.
+Note: Compositing and Blending [[!COMPOSITING-1]] defines more compositing keywords. The functionality of the additional keywords can be archived by switching the input filter primitives <a element-attr>in</a> and <a element-attr for=feComposite>in2</a>.
 
 <div class="example">
 <pre class="xml">
@@ -1555,7 +1554,7 @@ For the formulas that follow, the <code>Norm(A<sub>x</sub>,A<sub>y</sub>,A<sub>z
 
 <math> <semantics> <mrow> <mi mathvariant="italic">Norm</mi> <mrow> <mrow> <mo stretchy="false">(</mo> <mrow> <msub> <mi>A</mi> <mi>x</mi> </msub> <mi>,</mi> <msub> <mi>A</mi> <mi>y</mi> </msub> <mi>,</mi> <msub> <mi>A</mi> <mi>z</mi> </msub> </mrow> <mo stretchy="false">)</mo> </mrow> <mo stretchy="false">=</mo> <msqrt> <mrow> <mrow> <mrow> <msubsup> <mi>A</mi> <mi>x</mi> <mn>2</mn> </msubsup> <mo stretchy="false">+</mo> <msubsup> <mi>A</mi> <mi>y</mi> <mn>2</mn> </msubsup> </mrow> <mo stretchy="false">+</mo> <msubsup> <mi>A</mi> <mi>z</mi> <mn>2</mn> </msubsup> </mrow> </mrow> </msqrt> </mrow> </mrow> <annotation encoding="StarMath 5.0">Norm(A_x,A_y,A_z) = sqrt { A_x^2+A_y^2+A_z^2}</annotation> </semantics> </math>
 
-Note: User agents may use the the "fast inverse square root" to optimize the equation and avoid time differences on extrema color values. See <a href="#security">Security</a> section for more details about timing attacks.
+Note: User agents may use the the "fast inverse square root" to optimize the equation and avoid time differences on extrema color values. See <a href="#priv-sec">Privacy and Security Considerations</a> section for more details about timing attacks.
 
 The resulting RGBA image is computed as follows:
 
@@ -2083,7 +2082,7 @@ For larger values of "s" (s &gt;= 2.0), an approximation can be used: Three succ
 
 The approximation formula also applies correspondingly to "t".
 
-Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a value>SourceAlpha</a>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <a value>FillPaint</a> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a element>feTile</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
+Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a value>SourceAlpha</a>. The implementation may notice this and optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#priv-sec">Privacy and Security Considerations</a> for more details about timing attacks.) If the input has infinite extent and is constant (e.g <a value>FillPaint</a> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result where the fill is a solid color) is the input to an <a element>feTile</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
 
 <em>Attribute definitions:</em>
 
@@ -2157,7 +2156,7 @@ A <a element-attr for=feImage>href</a> reference that is an empty image (zero wi
     <dfn>crossorigin</dfn> = "<em>anonymous</em> | <em>use-credentials</em>"
   </dt>
   <dd>
-    The <a href="https://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">crossorigin</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a element>feDisplacementMap</a>. For the defintion see <a href="https://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">crossorigin</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="#security">security section</a> in this specification.
+    The <a href="https://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">crossorigin</a> attribute is a CORS settings attribute. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a element>feDisplacementMap</a>. For the defintion see <a href="https://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">crossorigin</a> attribute for the &lt;img> tag [[!HTML5]] and the <a href="#priv-sec">Privacy and Security Considerations</a> section in this specification.
   </dd>
 </dl>
 
@@ -2240,7 +2239,7 @@ This filter primitive performs "fattening" or "thinning" of artwork. It is parti
 
 The dilation (or erosion) kernel is a rectangle with a width of 2*<em>x-radius</em> and a height of 2*<em>y-radius</em>. In dilation, the output pixel is the individual component-wise maximum of the corresponding R,G,B,A values in the input image's kernel rectangle. In erosion, the output pixel is the individual component-wise minimum of the corresponding R,G,B,A values in the input image's kernel rectangle.
 
-Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a value>SourceAlpha</a>. In that case, the implementation might want to optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#security">Security</a> for more details.)
+Frequently this operation will take place on alpha-only images, such as that produced by the built-in input, <a value>SourceAlpha</a>. In that case, the implementation might want to optimize the single channel case. This optimization must be omitted if it leads to privacy concerns of any matter. (See section <a href="#priv-sec">Privacy and Security Considerations</a> for more details.)
 
 If the input has infinite extent and is constant (e.g <a value>FillPaint</a> where the fill is a solid color), this operation has no effect. If the input has infinite extent and the filter result is the input to an <a element>feTile</a>, the filter is evaluated with <a href="http://en.wikipedia.org/wiki/Periodic_boundary_conditions">periodic boundary conditions</a>.
 
@@ -2786,7 +2785,7 @@ Animatable: no
 </pre>
 
 <dl dfn-for=color-interpolation-filters>
-  <dt><var>auto</var></dt>
+  <dt><dfn>auto</dfn></dt>
   <dd>
     Indicates that the user agent can choose either the ''sRGB'' or ''linearRGB'' spaces for filter effects color operations. This option indicates that the author doesn't require that color operations occur in a particular color space.
   </dd>
@@ -2979,7 +2978,7 @@ CSS <<image>> values can be filtered with the filter functions specified for the
 
 The <<filter()>> function takes two arguments. The first argument is an <<image>>. The second is a filter function list as specified for the CSS 'filter' property. The function takes the <<image>> parameter and applies the filter rules, returning a processing image. Dimension and origin of the passed image must be preserved. Filter- and filter effect regions are sized according to the input image size.
 
-Note: Since the dimension and origin of the original image must be preserved, some filter effects like <var>drop-shadow</var> on a fully opaque image may not have any affect.
+Note: Since the dimension and origin of the original image must be preserved, some filter effects like <<drop-shadow()>> on a fully opaque image may not have any affect.
 
 For the <<blur()>> function the <a element-attr for=feGaussianBlur>edgeMode</a> attribute on the <a element>feGaussianBlur</a> element is set to ''duplicate''. This produces more pleasant results on the edges of the filtered input image.
 
@@ -3174,7 +3173,7 @@ After <var>5s</var>, the <i>used value</i> of 'filter' is ''blur(5px) sepia(0.5)
 
 Given two filter values <var>V<sub>a</sub></var> and <var>V<sub>b</sub></var>, returns the filter value, <var>V<sub>b</sub></var>.
 
-<h2 id="security">Security</h2>
+<h2 id="priv-sec">Privacy and Security Considerations</h2>
 
 <h3 id="tainted-filter-primitives">Tainted Filter Primitives</h3>
 
@@ -3218,9 +3217,9 @@ A timing attack is a method of obtaining information about content that is other
 
 <h2 id="AccessBackgroundImage" class="no-num">Appendix A: The deprecated 'enable-background' property</h2>
 
-SVG 1.1 introduced the 'enable-background' property [[SVG11]]. The property defined the back drop under the <i>filter region</i> at the time that the <a element>filter</a> element was invoked. The concept defined by this property was identified to be incompatible with the model of stacking context in CSS at the time writing this specification. UAs can choose to implement the 'enable-background' property as defined in SVG 1.1 but will not be compatible to this specification or to CSS Compositing and Blending [[!COMPOSITING]].
+SVG 1.1 introduced the 'enable-background' property [[SVG11]]. The property defined the back drop under the <i>filter region</i> at the time that the <a element>filter</a> element was invoked. The concept defined by this property was identified to be incompatible with the model of stacking context in CSS at the time writing this specification. UAs can choose to implement the 'enable-background' property as defined in SVG 1.1 but will not be compatible to this specification or to CSS Compositing and Blending [[!COMPOSITING-1]].
 
-This specification does not support the 'enable-background' property. UAs must support the 'isolation' property instead [[!COMPOSITING]].
+This specification does not support the 'enable-background' property. UAs must support the 'isolation' property instead [[!COMPOSITING-1]].
 
 
 <h2 id="DOMInterfaces" class="no-num">Appendix B: DOM interfaces</h2>
@@ -5660,6 +5659,12 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
 </dl>
 
 <h2 class="no-num" id="changes">Changes</h2>
+
+The following significant changes were made since the <a href="https://www.w3.org/TR/2014/WD-filter-effects-1-20141125/">25 November 2014 Working Draft</a>.
+
+<ul>
+  <li>Editorial changes.</li>
+</ul>
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2013/WD-filter-effects-1-20131126/">26 November 2013 Working Draft</a>.
 
