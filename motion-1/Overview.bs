@@ -62,17 +62,17 @@ url: https://www.w3.org/TR/SVG11/struct.html#DefsElement; spec: SVG11; type: ele
 
 Authors have possibilities to position objects like elements, boxes or containers relative to each other or absolutely in their own coordinate system. CSS Transforms extends these possibilities with a set of transform functions allowing authors to mutate the object's <a>local coordinate system</a>. With CSS Animations and CSS Transitions, these static placements can change over a given period of time. Both kind of animations are powerful to express transitions in time but not suitable to describe transitions of location of an object over time.
 
-This specification allows authors to specify an <a>motion path</a>. The object can be transitioned along this motion path over a given period of time. The time may be static if no animation was specified.
+This specification allows authors to specify an <a>path</a>. The object can be positioned and also be transitioned along this path over a given period of time. The time may be static if no animation was specified.
 
 <div class="example">
   <p>In the following example, a schematic of an air plane is animated along a motion path. The plane faces in the direction of the motion path at each position on the path.
   <div class=figure>
     <img src="images/motion-path.svg" width="470" height="120" alt="Example Motion Path">
-    <p class=caption>A black plane at different positions on a blue dotted motion path, rotated in the direction of the path.</p>
+    <p class=caption>A black plane at different positions on a blue dotted path, rotated in the direction of the path.</p>
   </div>
 </div>
 
-A motion path may consist of a <<basic-shape>> like <<circle()>>, <<inset()>> or <<polygon()>>. To allow authors to specify curves and sub-paths, this specification adds the <<path()>> function in addition to the existing <<basic-shape>> functions. The <<path()>> function takes an SVG Path string as input [[!SVG2]]. As a third option, authors may reference an SVG <a>shape element</a> by <<url>> which is used as the motion path.
+A path may consist of a <<angle>> or <<basic-shape>> like <<circle()>>, <<inset()>> or <<polygon()>>. To allow authors to specify curves and sub-paths, this specification adds the <<path()>> function in addition to the existing <<basic-shape>> functions. The <<path()>> function takes an SVG Path string as input [[!SVG2]]. As a third option, authors may reference an SVG <a>shape element</a> by <<url>> which is used as the motion path.
 
 <h2 id="placement">Module interactions</h2>
 
@@ -92,27 +92,38 @@ In addition to the property-specific values listed in their definitions, all pro
 
 ISSUE: Add more details and examples.
 
-<h3 id="motion-path-property">Motion path: The 'motion-path' property</h3>
+<h3 id="offset-path-property">Define a path: The 'offset-path' property</h3>
 
 <pre class='propdef'>
-Name: motion-path
-Value: <<url>> | [ <<basic-shape>> | <<path()>> ] || <<geometry-box>> | none
-Initial: none
+Name: offset-path
+Value: <<url>> | <<angle>> && contain? | [ <<basic-shape>> | <<path()>> ] || <<geometry-box>> | none
+Initial: 0deg for <<angle>>, otherwise none
 Applies to: All elements. In SVG, it applies to <a>container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
 Inherited: no
 Percentages: n/a
 Computed value: as specified
 Media: visual
-Animatable: no
+Animatable: as specified for <a href="https://www.w3.org/TR/css3-transitions/#animatable-types">angle</a>, otherwise no
 </pre>
 
-Specifies the <a>motion path</a> the element gets positioned at. The exact element's position on the motion path is determined by the 'motion-offset' property. A <dfn>motion path</dfn> is either a specified path with one or multiple sub-paths or the geometry of a not styled basic shape. Each shape or path must define an <dfn>initial position</dfn> for the computed value of "0" for 'motion-offset' and an <dfn>initial direction</dfn> which specifies the rotation of the object on the initial position.
+Specifies the <a>path</a> the element gets positioned at. The exact element's position on the motion path is determined by the 'offset-distance' property. A <dfn>path</dfn> is either a specified path with one or multiple sub-paths or the geometry of a not styled basic shape. Each shape or path must define an <dfn>initial position</dfn> for the computed value of "0" for 'offset-distance' and an <dfn>initial direction</dfn> which specifies the rotation of the object on the initial position.
 
-In this specification a direction (or rotation) of 0 degree is equivalent to the direction of the positive x-axis in the object's <a>local coordinate system</a>. E.g a rotation of 0 degree points to the right side of the UA if the object and its ancestors have no transformation applied.
+In this specification a direction (or rotation) of 0 degree is equivalent to the direction of the positive y-axis in the object's <a>local coordinate system</a>. E.g a rotation of 0 degree points to the upper side of the UA if the object and its ancestors have no transformation applied.
 
 Values have the following meanings:
 
-<dl dfn-for="motion-path">
+<dl dfn-for="offset-path">
+  <dt><<angle>></dt>
+  <dd>
+    The path is a straight line that starts from the current position of the element and has the degree of the angle as specified in <<angle>> from the Y-axis. The path ends at the edge of the containing block.
+    <dl>
+        <dt><dfn>contain</dfn></dt>
+        <dd>
+           Adjust the value of 'offset-distance' when the element goes out of the path. When overflowing occurs, the distance value is reduced, until the end point of the path is on the edge of the element.
+        </dd>
+    </dl>
+    <p class="note">Note: Defining the path with <<angle>>, the element can be positioned in the polar coordinate system. In polar coordinates, a pole is the reference point and points are described as been a certain distance from it, as also a certain angle from the polar axis. In mathematical theory, the polar axis is commonly defined as the positive direction of the x-axis, but we consider the polar axis as the positive direction of the y-axis position as other CSS specifications usually do. Therefore, when the <<angle>> value of 'offset-path' is 0, the element is positioned on the y-axis. If the <<angle>> value increases in the positive direction from 0, the element moves clockwise. The method to determine a direction using the <<angle>> value for 'offset-path' works the same way in [[!CSS3VAL]], <<angle>> value.</p>
+  </dd>
   <dt><<basic-shape>></dt>
   <dd>
     The motion path is a basic shape as specified in CSS Shapes [[!CSS-SHAPES]]. The initial position and the initial direction for basic shapes are defined as follows:
@@ -149,11 +160,43 @@ For SVG elements without associated CSS layout box, the <a>used value</a> for <a
 
 For elements with associated CSS layout box, the <a>used value</a> for <a value for=clip-path>fill-box</a>, <a value for=clip-path>stroke-box</a> and <a value for=clip-path>view-box</a> is <a value for=mask-clip>border-box</a>.
 
-<h3 id="motion-offset">Position on motion path: The 'motion-offset' property</h3>
+<div class='example'>
+    Here are some examples. The first example shows some parts of elements are outside of the path.
+
+    <pre class="lang-html">
+        &lt;body>
+          &lt;div style="offset-path: 45deg; offset-distance: 100%">&lt;/div>
+          &lt;div style="offset-path: 180deg; offset-distance: 100%">&lt;/div>
+        &lt;/body>
+    </pre>
+    <div class=figure> 
+        <img alt="An image of elements positioned without contain" src="images/offset_distance_without_contain.png" style="width: 300px;"/>
+        <figcaption>
+            'offset-path' without 'contain'
+        </figcaption>
+    </div>
+
+    In the second example, contain, the extent keyword value is added to the 'offset-path' value of each element to avoid overflowing.
+
+    <pre class="lang-html">
+        &lt;body>
+          &lt;div style="offset-path: 45deg contain; offset-distance: 100%">&lt;/div>
+          &lt;div style="offset-path: 180deg contain; offset-distance: 100%">&lt;/div>
+        &lt;/body>
+    </pre>
+    <div class=figure>    
+        <img alt="An image of elements positioned without contain" src="images/offset_distance_with_contain.png" style="width: 300px;"/>
+        <figcaption>
+            'offset-path' with 'contain'
+        </figcaption>
+    </div>
+</div>
+
+<h3 id="offset-distance-property">Position on the path: The 'offset-distance' property</h3>
 
 <pre class='propdef'>
-Name: motion-offset
-Value: <<length>> | <<percentage>>
+Name: offset-distance
+Value: [ <<length>> | <<percentage>> <<size>>? ]
 Initial: 0
 Applies to: All elements. In SVG, it applies to <a>container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
 Inherited: no
@@ -163,20 +206,76 @@ Media: visual
 Animatable: yes
 </pre>
 
-A distance that describes the position along the specified <a>motion path</a>.
+A distance that describes the position along the specified <a>path</a>.
 
-<dl dfn-for="motion-offset" dfn-type="value">
-  <dt><<percentage>></dt>
+<dl dfn-for="offset-distance" dfn-type="value">
   <dt><<length>></dt>
-  <dd>The distance from the <a>initial position</a> of the shape or path to the position of the element. Percentages are relative to the total path length including all sub-paths.</dd>
+    <dd>
+       The distance from the initial position of the shape or path to the position of the element. Percentages are relative to the total path length including all sub-paths.
+    </dd>
+    <dt><<percentage>></dt>
+    <dd>
+       Is relative to the length of the path. The length is a distance between the initial position and the end position which is the contact point of the edge of the containing block and the path.
+    </dd>
+    <dt><<size>></dt>
+    <dd>Decides a point used for measuring the distance from the initial position of the path.             
+        It is defined as
+
+        &nbsp;<b>&lt;size&gt;</b> = [ closest-side | closest-corner | farthest-side | farthest-corner ]
+
+        If omitted it defaults to <var>closest-side</var>.
+
+        <dl>
+          <dt><dfn>closet-side</dfn></dt>
+          <dd>The distance is measured between the initial position and the closest side of the box from it.</dd>
+          <dt><dfn>closest-corner</dfn></dt>
+          <dd>The distance is measured between the initial position and the closest corner of the box from it.</dd>
+          <dt><dfn>farthest-side</dfn></dt>
+          <dd>The distance is measured between the initial position and the farthest side of the box from it.</dd>
+          <dt><dfn>farthest-corner</dfn></dt>
+          <dd>The distance is measured between the initial position and the farthest corner of the box from it.</dd>
+        </dl>
+        <p class='note'>Note: When the initial position is at one of the corners of the containing block, the closest side takes the edge where the initial position is on. Even if the offset given by <<length>> or <<percentage>> changes, the position of the element specified with closest-side is the same.</p>
+    </dd>
 </dl>
 
 See the section <a href="#motion-processing">“Motion processing”</a> for how to process a motion position.
 
-<h3 id="motion-rotation">Rotation at point: The 'motion-rotation' property</h3>
+<div class='example'>
+    This example shows a way to align elements within the polar coordinate system using 'offset-path', 'offset-distance'.
+    <pre class="lang-html">
+        &lt;body>
+          &lt;div id="circle1"&lt;/div>
+          &lt;div id="circle2"&lt;/div>
+          &lt;div id="circle3"&lt;/div>
+        &lt;/body>
+        &lt;style>
+            #circle1 {
+               offset-path: 0deg;
+               offset-distance: 50%;
+            }
+            #circle2 {
+               offset-path: 90deg;
+               offset-distance: 20%;
+            }
+            #circle3 {
+               offset-path: 225deg;
+               offset-distance: 100%;
+            }
+        &lt;/style>
+    </pre>
+    <div class=figure> 
+        <img alt="An image of three elements positioned to polar coordinates" src="images/simple_offset_position.png" style="width: 300px;"/>
+        <figcaption>
+            An example of positioning element in polar coordinates
+        </figcaption>
+    </div>
+</div>
+
+<h3 id="offset-rotation-property">Rotation at point: The 'offset-rotation' property</h3>
 
 <pre class='propdef'>
-Name: motion-rotation
+Name: offset-rotation
 Value: [ auto | reverse ] && <<angle>>
 Initial: auto
 Applies to: All elements. In SVG, it applies to <a href="">container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
@@ -187,44 +286,102 @@ Media: visual
 Animatable: yes
 </pre>
 
-Defines the direction of the element while positioning along the <a>motion path</a>.
+Defines the direction of the element while positioning along the <a>path</a>.
 
 Values have the following meanings:
 
-<dl dfn-for="mask-rotation" dfn-type="value">
+<dl dfn-for="offset-rotation" dfn-type="value">
   <dt><dfn>auto</dfn></dt>
-  <dd>Indicates that the object is rotated (over time if 'motion-offset' is animated) by the angle of the direction (i.e., directional tangent vector) of the <a>motion path</a>. If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''auto''.</dd>
+  <dd>Indicates that the object is rotated (over time if 'offset-distance' is animated) by the angle of the direction (i.e., directional tangent vector) of the <a>path</a>. If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''auto''.</dd>
   <dt><dfn>reverse</dfn></dt>
   <dd>
-    <p>Indicates that the object is rotated (over time if 'motion-offset' is animated) by the angle of the direction (i.e., directional tangent vector) of the <a>motion path</a> plus 180 degrees. If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''reverse''.
+    <p>Indicates that the object is rotated (over time if 'offset-distance' is animated) by the angle of the direction (i.e., directional tangent vector) of the <a>path</a> plus 180 degrees. If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''reverse''.
       <p class="note">This is the same as specifying ''auto 180deg''.
   </dd>
   <dt><<angle>></dt>
-  <dd>Indicates that the element has a constant rotation transformation applied to it by the specified rotation angle. See definitions of ''auto'' or ''reverse'' if specified in combination with either one of the keywords. For the purpose of this argument, ''0deg'' points to the right side in the direction of the positive x-axis, and positive angles represent clockwise rotation, so ''90deg'' point toward the bottom.</dd>
+  <dd>Indicates that the element has a constant rotation transformation applied to it by the specified rotation angle. See definitions of ''auto'' or ''reverse'' if specified in combination with either one of the keywords. For the purpose of this argument, ''0deg'' points to the right side in the direction of the positive y-axis, and positive angles represent clockwise rotation, so ''90deg'' point toward the direction of the positive x-axis.</dd>
 </dl>
 
 Note: The rotation described here does not override or replace any rotation defined by the 'transform' property.
 
 <div class="example">
-  The following three examples use the shape of a plane. The red dot in the middle of the shape indicates the origin of the shape.
+  The following examples use the shape of a plane. The red dot in the middle of the shape indicates the origin of the shape.
   <div class=figure>
     <img src="images/plane.svg" width="160" height="140" alt="Shape with its origin">
-    <p class=caption>A red dot in the middle of a plane shape indicates the shape's origin.</p>
+    <figcaption>A red dot in the middle of a plane shape indicates the shape's origin.</figcaption>
   </div>
-  <p>In the first example, the 'motion-rotation' property is set to ''auto''. The shape's point of origin is placed at different positions along the motion path. The shape is rotated based on the gradient at the current position and faces the direction of the motion path at this position.</p>
+  When the shape's point of origin is placed at different positions along the path and 'offset-rotation' isn't specified, the shape points to the positive direction of the x-axis.
   <div class=figure>
-    <img src="images/motion-path.svg" width="470" height="120" alt="Motion Path with auto rotation">
-    <p class=caption>A black plane at different positions on a blue dotted motion path, rotated in the direction of the path.</p>
+    <img src="images/offset-rotation-none.svg" width="470" height="120" alt="Path without rotation">
+    <figcaption>A black plane at different positions on a blue dotted path without rotation transforms.</figcaption>
   </div>
-  <p>In this example, the 'motion-rotation' property is set to ''reverse''. The plane faces the opposite direction of the motion path at each position on the motion path.
+  <p>If the 'offset-rotation' property is set to ''auto'', the shape's point of origin is placed at different positions along the motion path. The shape is rotated based on the gradient at the current position and faces the direction of the motion path at this position.</p>
   <div class=figure>
-    <img src="images/motion-rotation-reverse.svg" width="470" height="120" alt="Motion Path with reverse auto rotation">
-    <p class=caption>A black plane at different positions on a blue dotted motion path, rotated in the opposite direction of the path.</p>
+    <img src="images/offset-rotation-auto.svg" width="470" height="120" alt="Path with auto rotation">
+    <figcaption>A black plane at different positions on a blue dotted path, rotated in the direction of the path.</figcaption>
   </div>
-  <p>The last example sets the 'motion-rotation' property to ''-45deg''. The shape is rotated by -45 degree once and keeps the rotation at each position on the motion path.
+  <p>In this example, the 'offset-rotation' property is set to ''reverse''. The plane faces the opposite direction of the path at each position on the path.
   <div class=figure>
-    <img src="images/motion-rotation-45.svg" width="470" height="120" alt="Motion Path with fixed rotation">
-    <p class=caption>A black plane at different positions on a blue dotted path, rotated by a fixed amount of degree.</p>
+    <img src="images/offset-rotation-reverse.svg" width="470" height="120" alt="Path with reverse auto rotation">
+    <figcaption>A black plane at different positions on a blue dotted path, rotated in the opposite direction of the path.</figcaption>
+  </div>
+  <p>The last example sets the 'offset-rotation' property to ''45deg''. The shape is rotated by 45 degree once and keeps the rotation at each position on the path.
+  <div class=figure>
+    <img src="images/offset-rotation-45.svg" width="470" height="120" alt="Path with fixed rotation">
+    <figcaption>A black plane at different positions on a blue dotted path, rotated by a fixed amount of degree.</figcaption>
+  </div>
+</div>
+
+<div class='example'>
+  This example shows how ''auto'' or ''reverse'' works specified in combination with <<angle>>. The computed value of <<angle>> is added to the computed value of ''auto'' or ''reverse''.
+  <pre class="lang-html">
+    &lt;style>
+      body {
+        border-radius: 50%;
+      }
+      #item1 {
+        offset-path: 0deg;
+        offset-distance: 90%;
+        offset-rotate: auto 90deg;
+      }
+      #item2 {
+        offset-path: 45deg;
+        offset-distance: 90%;
+        offset-rotate: auto 90deg;
+      }
+      #item3 {
+        offset-path: 135deg;
+        offset-distance: 90%;
+        offset-rotate: auto -90deg;
+      }
+      #item4 {
+        offset-path: 180deg;
+        offset-distance: 90%;
+        offset-rotate: auto -90deg;
+      }
+      #item5 {
+        offset-path: 225deg;
+        offset-distance: 90%;
+        offset-rotate: auto -90deg;
+      }
+      #item6 {
+        offset-path: -45deg;
+        offset-distance: 90%;
+        offset-rotate: auto 90deg;
+      }
+    &lt;/style>
+    &lt;body>
+      &lt;div id="item1">1&lt;/div>
+      &lt;div id="item2">2&lt;/div>
+      &lt;div id="item3">3&lt;/div>
+      &lt;div id="item4">4&lt;/div>
+      &lt;div id="item5">5&lt;/div>
+      &lt;div id="item6">6&lt;/div>
+    &lt;/body>
+  </pre>
+  <div class="figure">
+    <img alt="An image of example for offset-rotation" src="images/rotate_by_angle_with_auto.png" style="width: 250px; text-align: center"/>
+    <figcaption>The elements are rotated by the value of ''auto'' with a fixed amount of degree.</figcaption>
   </div>
 </div>
 
