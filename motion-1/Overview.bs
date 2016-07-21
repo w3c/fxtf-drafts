@@ -327,6 +327,90 @@ Values are defined as follows:
   </dd>
 </dl>
 
+<h3 id="offset-anchor-property">Define an anchor point: The 'offset-anchor' property</h3>
+<pre class='propdef'>
+    Name: offset-anchor
+    Applies to: All elements
+    Value: <<position>>
+    Initial: 'auto'
+    Media: visual
+    Inherited: no
+    Percentages: Relative to the width and the height of an element
+    Animatable: as <<position>>
+</pre>
+
+Defines an anchor point of the element positioned along the path. The anchor specifies a position which is a representative point of the element and could be set as any point within the content area of the element. The anchor point is placed along the path.
+
+Values have the following meanings:
+<dl dfn-for="offset-anchor" dfn-type="value">
+  <dt><var>'auto'</var></dt>
+  <dd>
+    Computes to the value from 'offset-position'. When 'auto' is given to 'offset-anchor', 'offset-position' behaves similar to 'background-position'.
+  </dd>
+  <dt><<position>></dt>
+  <dd>
+    <dl>
+      <dt><<percentage>></dt>
+      <dd>A percentage for the horizontal offset is relative to width of content box area of the element. A percentage for the vertical offset is relative to the height of the content box area of the element. For example, with a value pair of '100%, 0%', an anchor point is on the upper right corner of the element.</dd>
+      <dt><<length>></dt>
+      <dd>A length value gives a length offset from the upper left corner of the element's content area.</dd>
+    </dl>
+  </dd>
+</dl>
+
+<div class='example'>
+  The following explains how to set the anchor point of the element.
+  <pre class="lang-css">
+    #plane {
+      offset-anchor: center;
+    }
+  </pre>
+  
+  The red dot in the middle of the shape indicates the anchor point of the shape.
+  <div class=figure>
+    <img src="images/plane.svg" width="160" height="140" alt="Shape with its anchor point">
+    <figcaption>A red dot in the middle of a plane shape indicates the shape's anchor point.</figcaption>
+  </div>
+</div>
+
+<div class='example'>
+  This example shows an alignment of four elements with different anchor points.
+  <pre class="lang-html">
+    &lt;style>
+      #item1 {
+        offset-path: 45deg;
+        offset-distance: 100%;
+        offset-anchor: right top;
+      }
+      #item2 {
+        offset-path: 135deg;
+        offset-distance: 100%;
+        offset-anchor: right bottom;
+      }
+      #item3 {
+        offset-path: 225deg;
+        offset-distance: 100%;
+        offset-anchor: left bottom;
+      }
+      #item4 {
+        offset-path: 315deg;
+        offset-distance: 100%;
+        offset-anchor: left top;
+      }
+    &lt;/style>
+    &lt;body>
+      &lt;div id="item1">&lt;/div>
+      &lt;div id="item2">&lt;/div>
+      &lt;div id="item3">&lt;/div>
+      &lt;div id="item4">&lt;/div>
+    &lt;/body>
+  </pre>
+  <div class=figure>
+    <img src="images/offset_anchor.png" alt="An example of offset-anchor" style="width: 300px;">
+    <figcaption>An example of 'offset-anchor'</figcaption>
+  </div>
+</div>
+
 <h3 id="offset-rotation-property">Rotation at point: The 'offset-rotation' property</h3>
 
 <pre class='propdef'>

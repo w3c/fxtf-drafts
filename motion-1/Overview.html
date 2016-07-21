@@ -350,13 +350,14 @@
       <li><a href="#offset-path-property"><span class="secno">4.1</span> <span class="content">Define a path: The <span class="property">offset-path</span> property</span></a>
       <li><a href="#offset-distance-property"><span class="secno">4.2</span> <span class="content">Position on the path: The <span class="property">offset-distance</span> property</span></a>
       <li><a href="#offset-position-property"><span class="secno">4.3</span> <span class="content">Define the initial position of the path: The <span class="property">offset-position</span> property</span></a>
-      <li><a href="#offset-rotation-property"><span class="secno">4.4</span> <span class="content">Rotation at point: The <span class="property">offset-rotation</span> property</span></a>
-      <li><a href="#motion-shorthand"><span class="secno">4.5</span> <span class="content">Motion shorthand: The <span class="property">motion</span> property</span></a>
+      <li><a href="#offset-anchor-property"><span class="secno">4.4</span> <span class="content">Define an anchor point: The <span class="property">offset-anchor</span> property</span></a>
+      <li><a href="#offset-rotation-property"><span class="secno">4.5</span> <span class="content">Rotation at point: The <span class="property">offset-rotation</span> property</span></a>
+      <li><a href="#motion-shorthand"><span class="secno">4.6</span> <span class="content">Motion shorthand: The <span class="property">motion</span> property</span></a>
       <li>
-       <a href="#motion-processing"><span class="secno">4.6</span> <span class="content">Motion processing</span></a>
+       <a href="#motion-processing"><span class="secno">4.7</span> <span class="content">Motion processing</span></a>
        <ol class="toc">
-        <li><a href="#calculating-the-computed-distance-along-a-path"><span class="secno">4.6.1</span> <span class="content">Calculating the computed distance along a path</span></a>
-        <li><a href="#calculating-path-transform"><span class="secno">4.6.2</span> <span class="content">Calculating the path transform</span></a>
+        <li><a href="#calculating-the-computed-distance-along-a-path"><span class="secno">4.7.1</span> <span class="content">Calculating the computed distance along a path</span></a>
+        <li><a href="#calculating-path-transform"><span class="secno">4.7.2</span> <span class="content">Calculating the path transform</span></a>
        </ol>
      </ol>
     <li>
@@ -646,7 +647,103 @@
       <dd> Computes to 50% (left 50%) for the horizontal position if the horizontal position is not otherwise specified, or 50% (top 50%) for the vertical position if it is. 
      </dl>
    </dl>
-   <h3 class="heading settled" data-level="4.4" id="offset-rotation-property"><span class="secno">4.4. </span><span class="content">Rotation at point: The <a class="property" data-link-type="propdesc" href="#propdef-offset-rotation" id="ref-for-propdef-offset-rotation-1">offset-rotation</a> property</span><a class="self-link" href="#offset-rotation-property"></a></h3>
+   <h3 class="heading settled" data-level="4.4" id="offset-anchor-property"><span class="secno">4.4. </span><span class="content">Define an anchor point: The <a class="property" data-link-type="propdesc" href="#propdef-offset-anchor" id="ref-for-propdef-offset-anchor-1">offset-anchor</a> property</span><a class="self-link" href="#offset-anchor-property"></a></h3>
+   <table class="def propdef" data-link-for-hint="offset-anchor">
+    <tbody>
+     <tr>
+      <th>Name:
+      <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export="" id="propdef-offset-anchor">offset-anchor</dfn>
+     <tr class="value">
+      <th>Value:
+      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-backgrounds-3/#position">&lt;position></a>
+     <tr>
+      <th>Initial:
+      <td><a class="property" data-link-type="propdesc">auto</a>
+     <tr>
+      <th>Applies to:
+      <td><a href="https://drafts.csswg.org/css-pseudo/#generated-content" title="Includes ::before and ::after pseudo-elements.">all elements</a>
+     <tr>
+      <th>Inherited:
+      <td>no
+     <tr>
+      <th>Percentages:
+      <td>Relative to the width and the height of an element
+     <tr>
+      <th>Media:
+      <td>visual
+     <tr>
+      <th>Computed value:
+      <td>as specified
+     <tr>
+      <th>Canonical order:
+      <td>per grammar
+     <tr>
+      <th>Animatable:
+      <td>as <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-backgrounds-3/#position">&lt;position></a>
+   </table>
+   <p>Defines an anchor point of the element positioned along the path. The anchor specifies a position which is a representative point of the element and could be set as any point within the content area of the element. The anchor point is placed along the path.</p>
+   <p>Values have the following meanings:</p>
+   <dl>
+    <dt><var><a class="property" data-link-type="propdesc">auto</a></var>
+    <dd> Computes to the value from <a class="property" data-link-type="propdesc" href="#propdef-offset-position" id="ref-for-propdef-offset-position-2">offset-position</a>. When <a class="property" data-link-type="propdesc">auto</a> is given to <a class="property" data-link-type="propdesc" href="#propdef-offset-anchor" id="ref-for-propdef-offset-anchor-2">offset-anchor</a>, <a class="property" data-link-type="propdesc" href="#propdef-offset-position" id="ref-for-propdef-offset-position-3">offset-position</a> behaves similar to <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-backgrounds-3/#background-position">background-position</a>. 
+    <dt><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-backgrounds-3/#position">&lt;position></a>
+    <dd>
+     <dl>
+      <dt><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#percentage-value">&lt;percentage></a>
+      <dd>A percentage for the horizontal offset is relative to width of content box area of the element. A percentage for the vertical offset is relative to the height of the content box area of the element. For example, with a value pair of '100%, 0%', an anchor point is on the upper right corner of the element.
+      <dt><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#length-value" title="Expands to: em | advance measure | vb | ch | vmin | cm | pc | pixel unit | vi | in | rem | q | vh | ex | pt | vw | vmax | ic | mm">&lt;length></a>
+      <dd>A length value gives a length offset from the upper left corner of the element’s content area.
+     </dl>
+   </dl>
+   <div class="example" id="example-69b5c471">
+    <a class="self-link" href="#example-69b5c471"></a> The following explains how to set the anchor point of the element. 
+<pre class="lang-css highlight"><span></span><span class="nt">#plane </span><span class="p">{</span>
+  <span class="k">offset-anchor</span><span class="p">:</span> center<span class="p">;</span>
+<span class="p">}</span>
+</pre>
+    <p>The red dot in the middle of the shape indicates the anchor point of the shape.</p>
+    <div class="figure">
+      <img alt="Shape with its anchor point" height="140" src="images/plane.svg" width="160"> 
+     <figcaption>A red dot in the middle of a plane shape indicates the shape’s anchor point.</figcaption>
+    </div>
+   </div>
+   <div class="example" id="example-0118a40a">
+    <a class="self-link" href="#example-0118a40a"></a> This example shows an alignment of four elements with different anchor points. 
+<pre class="lang-html highlight"><span></span><span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
+  <span class="nn">#item1</span> <span class="p">{</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">path</span><span class="o">:</span> <span class="m">45</span><span class="n">deg</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">distance</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">anchor</span><span class="o">:</span> <span class="nb">right</span> <span class="nb">top</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nn">#item2</span> <span class="p">{</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">path</span><span class="o">:</span> <span class="m">135</span><span class="n">deg</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">distance</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">anchor</span><span class="o">:</span> <span class="nb">right</span> <span class="nb">bottom</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nn">#item3</span> <span class="p">{</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">path</span><span class="o">:</span> <span class="m">225</span><span class="n">deg</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">distance</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">anchor</span><span class="o">:</span> <span class="nb">left</span> <span class="nb">bottom</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nn">#item4</span> <span class="p">{</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">path</span><span class="o">:</span> <span class="m">315</span><span class="n">deg</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">distance</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="n">offset</span><span class="o">-</span><span class="n">anchor</span><span class="o">:</span> <span class="nb">left</span> <span class="nb">top</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">></span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">></span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"item1"</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"item2"</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"item3"</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"item4"</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">></span>
+</pre>
+    <div class="figure">
+      <img alt="An example of offset-anchor" src="images/offset_anchor.png" style="width: 300px;"> 
+     <figcaption>An example of <a class="property" data-link-type="propdesc" href="#propdef-offset-anchor" id="ref-for-propdef-offset-anchor-3">offset-anchor</a></figcaption>
+    </div>
+   </div>
+   <h3 class="heading settled" data-level="4.5" id="offset-rotation-property"><span class="secno">4.5. </span><span class="content">Rotation at point: The <a class="property" data-link-type="propdesc" href="#propdef-offset-rotation" id="ref-for-propdef-offset-rotation-1">offset-rotation</a> property</span><a class="self-link" href="#offset-rotation-property"></a></h3>
    <table class="def propdef" data-link-for-hint="offset-rotation">
     <tbody>
      <tr>
@@ -773,7 +870,7 @@
    </div>
    <p class="issue" id="issue-5d73326d"><a class="self-link" href="#issue-5d73326d"></a> More natural names requested for <a class="css" data-link-type="maybe" href="#valdef-offset-rotation-auto" id="ref-for-valdef-offset-rotation-auto-7">auto</a> and <a class="css" data-link-type="maybe" href="#valdef-offset-rotation-reverse" id="ref-for-valdef-offset-rotation-reverse-6">reverse</a>.</p>
    <p>See the section <a href="#motion-processing">“Motion processing”</a> for how to process a motion rotation.</p>
-   <h3 class="heading settled" data-level="4.5" id="motion-shorthand"><span class="secno">4.5. </span><span class="content">Motion shorthand: The <a class="property" data-link-type="propdesc" href="#propdef-motion" id="ref-for-propdef-motion-1">motion</a> property</span><a class="self-link" href="#motion-shorthand"></a></h3>
+   <h3 class="heading settled" data-level="4.6" id="motion-shorthand"><span class="secno">4.6. </span><span class="content">Motion shorthand: The <a class="property" data-link-type="propdesc" href="#propdef-motion" id="ref-for-propdef-motion-1">motion</a> property</span><a class="self-link" href="#motion-shorthand"></a></h3>
    <table class="def propdef" data-link-for-hint="motion">
     <tbody>
      <tr>
@@ -808,8 +905,8 @@
       <td>see individual properties
    </table>
    <p>This is a shorthand property for setting <a class="property" data-link-type="propdesc">motion-path</a>, <a class="property" data-link-type="propdesc">motion-offset</a> and <a class="property" data-link-type="propdesc">motion-rotation</a>. Omitted values are set to their initial values.</p>
-   <h3 class="heading settled" data-level="4.6" id="motion-processing"><span class="secno">4.6. </span><span class="content">Motion processing</span><a class="self-link" href="#motion-processing"></a></h3>
-   <h4 class="heading settled" data-level="4.6.1" id="calculating-the-computed-distance-along-a-path"><span class="secno">4.6.1. </span><span class="content">Calculating the computed distance along a path</span><a class="self-link" href="#calculating-the-computed-distance-along-a-path"></a></h4>
+   <h3 class="heading settled" data-level="4.7" id="motion-processing"><span class="secno">4.7. </span><span class="content">Motion processing</span><a class="self-link" href="#motion-processing"></a></h3>
+   <h4 class="heading settled" data-level="4.7.1" id="calculating-the-computed-distance-along-a-path"><span class="secno">4.7.1. </span><span class="content">Calculating the computed distance along a path</span><a class="self-link" href="#calculating-the-computed-distance-along-a-path"></a></h4>
    <p>Processing the distance along a path operates differently depending upon whether
 the path is open or closed:</p>
    <ul>
@@ -853,7 +950,7 @@ sub-paths.</p>
       </dl>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="4.6.2" id="calculating-path-transform"><span class="secno">4.6.2. </span><span class="content">Calculating the path transform</span><a class="self-link" href="#calculating-path-transform"></a></h4>
+   <h4 class="heading settled" data-level="4.7.2" id="calculating-path-transform"><span class="secno">4.7.2. </span><span class="content">Calculating the path transform</span><a class="self-link" href="#calculating-path-transform"></a></h4>
    <div class="switch">
     <ol>
      <li data-md="">
@@ -985,27 +1082,28 @@ the element.</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#valdef-offset-rotation-auto">auto</a><span>, in §4.4</span>
+   <li><a href="#valdef-offset-rotation-auto">auto</a><span>, in §4.5</span>
    <li><a href="#valdef-offset-position-bottom">bottom</a><span>, in §4.3</span>
    <li><a href="#valdef-offset-position-center">center</a><span>, in §4.3</span>
    <li><a href="#valdef-offset-distance-closest-corner">closest-corner</a><span>, in §4.2</span>
    <li><a href="#valdef-offset-distance-closet-side">closet-side</a><span>, in §4.2</span>
-   <li><a href="#computed-distance">computed distance</a><span>, in §4.6.1</span>
+   <li><a href="#computed-distance">computed distance</a><span>, in §4.7.1</span>
    <li><a href="#offset-path-contain">contain</a><span>, in §4.1</span>
    <li><a href="#valdef-offset-distance-farthest-corner">farthest-corner</a><span>, in §4.2</span>
    <li><a href="#valdef-offset-distance-farthest-side">farthest-side</a><span>, in §4.2</span>
    <li><a href="#initial-direction">initial direction</a><span>, in §4.1</span>
    <li><a href="#initial-position">initial position</a><span>, in §4.1</span>
    <li><a href="#valdef-offset-position-left">left</a><span>, in §4.3</span>
-   <li><a href="#propdef-motion">motion</a><span>, in §4.5</span>
+   <li><a href="#propdef-motion">motion</a><span>, in §4.6</span>
    <li><a href="#valdef-offset-path-none">none</a><span>, in §4.1</span>
+   <li><a href="#propdef-offset-anchor">offset-anchor</a><span>, in §4.4</span>
    <li><a href="#propdef-offset-distance">offset-distance</a><span>, in §4.2</span>
    <li><a href="#propdef-offset-path">offset-path</a><span>, in §4.1</span>
    <li><a href="#propdef-offset-position">offset-position</a><span>, in §4.3</span>
-   <li><a href="#propdef-offset-rotation">offset-rotation</a><span>, in §4.4</span>
+   <li><a href="#propdef-offset-rotation">offset-rotation</a><span>, in §4.5</span>
    <li><a href="#funcdef-offset-path-path">path()</a><span>, in §4.1</span>
    <li><a href="#path">path</a><span>, in §4.1</span>
-   <li><a href="#valdef-offset-rotation-reverse">reverse</a><span>, in §4.4</span>
+   <li><a href="#valdef-offset-rotation-reverse">reverse</a><span>, in §4.5</span>
    <li><a href="#valdef-offset-position-right">right</a><span>, in §4.3</span>
    <li><a href="#valdef-offset-position-top">top</a><span>, in §4.3</span>
   </ul>
@@ -1025,6 +1123,7 @@ the element.</p>
     <a data-link-type="biblio">[css-backgrounds-3]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-backgrounds-3/#position">&lt;position></a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#background-position">background-position</a>
     </ul>
    <li>
     <a data-link-type="biblio">[css-cascade-4]</a> defines the following terms:
@@ -1198,6 +1297,17 @@ the element.</p>
       <td>per grammar
       <td>as specified
      <tr>
+      <th scope="row"><a class="css" data-link-type="property" href="#propdef-offset-anchor">offset-anchor</a>
+      <td>&lt;position>
+      <td>auto
+      <td>all elements
+      <td>no
+      <td>Relative to the width and the height of an element
+      <td>visual
+      <td>as &lt;position>
+      <td>per grammar
+      <td>as specified
+     <tr>
       <th scope="row"><a class="css" data-link-type="property" href="#propdef-offset-rotation">offset-rotation</a>
       <td>[ auto | reverse ] &amp;&amp; &lt;angle>
       <td>auto
@@ -1242,7 +1352,7 @@ the element.</p>
     <li><a href="#ref-for-path-1">1. Introduction</a>
     <li><a href="#ref-for-path-2">4.1. Define a path: The offset-path property</a>
     <li><a href="#ref-for-path-3">4.2. Position on the path: The offset-distance property</a>
-    <li><a href="#ref-for-path-4">4.4. Rotation at point: The offset-rotation property</a> <a href="#ref-for-path-5">(2)</a> <a href="#ref-for-path-6">(3)</a>
+    <li><a href="#ref-for-path-4">4.5. Rotation at point: The offset-rotation property</a> <a href="#ref-for-path-5">(2)</a> <a href="#ref-for-path-6">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="initial-position">
@@ -1276,44 +1386,51 @@ the element.</p>
    <ul>
     <li><a href="#ref-for-propdef-offset-distance-1">4.1. Define a path: The offset-path property</a> <a href="#ref-for-propdef-offset-distance-2">(2)</a> <a href="#ref-for-propdef-offset-distance-3">(3)</a>
     <li><a href="#ref-for-propdef-offset-distance-4">4.2. Position on the path: The offset-distance property</a> <a href="#ref-for-propdef-offset-distance-5">(2)</a>
-    <li><a href="#ref-for-propdef-offset-distance-6">4.4. Rotation at point: The offset-rotation property</a> <a href="#ref-for-propdef-offset-distance-7">(2)</a>
+    <li><a href="#ref-for-propdef-offset-distance-6">4.5. Rotation at point: The offset-rotation property</a> <a href="#ref-for-propdef-offset-distance-7">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="propdef-offset-position">
    <b><a href="#propdef-offset-position">#propdef-offset-position</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-propdef-offset-position-1">4.3. Define the initial position of the path: The offset-position property</a>
+    <li><a href="#ref-for-propdef-offset-position-2">4.4. Define an anchor point: The offset-anchor property</a> <a href="#ref-for-propdef-offset-position-3">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="propdef-offset-anchor">
+   <b><a href="#propdef-offset-anchor">#propdef-offset-anchor</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-propdef-offset-anchor-1">4.4. Define an anchor point: The offset-anchor property</a> <a href="#ref-for-propdef-offset-anchor-2">(2)</a> <a href="#ref-for-propdef-offset-anchor-3">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="propdef-offset-rotation">
    <b><a href="#propdef-offset-rotation">#propdef-offset-rotation</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-offset-rotation-1">4.4. Rotation at point: The offset-rotation property</a> <a href="#ref-for-propdef-offset-rotation-2">(2)</a> <a href="#ref-for-propdef-offset-rotation-3">(3)</a> <a href="#ref-for-propdef-offset-rotation-4">(4)</a> <a href="#ref-for-propdef-offset-rotation-5">(5)</a>
+    <li><a href="#ref-for-propdef-offset-rotation-1">4.5. Rotation at point: The offset-rotation property</a> <a href="#ref-for-propdef-offset-rotation-2">(2)</a> <a href="#ref-for-propdef-offset-rotation-3">(3)</a> <a href="#ref-for-propdef-offset-rotation-4">(4)</a> <a href="#ref-for-propdef-offset-rotation-5">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-offset-rotation-auto">
    <b><a href="#valdef-offset-rotation-auto">#valdef-offset-rotation-auto</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-offset-rotation-auto-1">4.4. Rotation at point: The offset-rotation property</a> <a href="#ref-for-valdef-offset-rotation-auto-2">(2)</a> <a href="#ref-for-valdef-offset-rotation-auto-3">(3)</a> <a href="#ref-for-valdef-offset-rotation-auto-4">(4)</a> <a href="#ref-for-valdef-offset-rotation-auto-5">(5)</a> <a href="#ref-for-valdef-offset-rotation-auto-6">(6)</a> <a href="#ref-for-valdef-offset-rotation-auto-7">(7)</a>
+    <li><a href="#ref-for-valdef-offset-rotation-auto-1">4.5. Rotation at point: The offset-rotation property</a> <a href="#ref-for-valdef-offset-rotation-auto-2">(2)</a> <a href="#ref-for-valdef-offset-rotation-auto-3">(3)</a> <a href="#ref-for-valdef-offset-rotation-auto-4">(4)</a> <a href="#ref-for-valdef-offset-rotation-auto-5">(5)</a> <a href="#ref-for-valdef-offset-rotation-auto-6">(6)</a> <a href="#ref-for-valdef-offset-rotation-auto-7">(7)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-offset-rotation-reverse">
    <b><a href="#valdef-offset-rotation-reverse">#valdef-offset-rotation-reverse</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-offset-rotation-reverse-1">4.4. Rotation at point: The offset-rotation property</a> <a href="#ref-for-valdef-offset-rotation-reverse-2">(2)</a> <a href="#ref-for-valdef-offset-rotation-reverse-3">(3)</a> <a href="#ref-for-valdef-offset-rotation-reverse-4">(4)</a> <a href="#ref-for-valdef-offset-rotation-reverse-5">(5)</a> <a href="#ref-for-valdef-offset-rotation-reverse-6">(6)</a>
+    <li><a href="#ref-for-valdef-offset-rotation-reverse-1">4.5. Rotation at point: The offset-rotation property</a> <a href="#ref-for-valdef-offset-rotation-reverse-2">(2)</a> <a href="#ref-for-valdef-offset-rotation-reverse-3">(3)</a> <a href="#ref-for-valdef-offset-rotation-reverse-4">(4)</a> <a href="#ref-for-valdef-offset-rotation-reverse-5">(5)</a> <a href="#ref-for-valdef-offset-rotation-reverse-6">(6)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="propdef-motion">
    <b><a href="#propdef-motion">#propdef-motion</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-motion-1">4.5. Motion shorthand: The motion property</a>
+    <li><a href="#ref-for-propdef-motion-1">4.6. Motion shorthand: The motion property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="computed-distance">
    <b><a href="#computed-distance">#computed-distance</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-computed-distance-1">4.6.1. Calculating the computed distance along a path</a> <a href="#ref-for-computed-distance-2">(2)</a>
-    <li><a href="#ref-for-computed-distance-3">4.6.2. Calculating the path transform</a> <a href="#ref-for-computed-distance-4">(2)</a>
+    <li><a href="#ref-for-computed-distance-1">4.7.1. Calculating the computed distance along a path</a> <a href="#ref-for-computed-distance-2">(2)</a>
+    <li><a href="#ref-for-computed-distance-3">4.7.2. Calculating the path transform</a> <a href="#ref-for-computed-distance-4">(2)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
