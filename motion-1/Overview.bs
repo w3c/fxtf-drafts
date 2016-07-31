@@ -10,7 +10,7 @@ Group: fxtf
 Link Defaults: css-shapes-1 (type) <basic-shape>, css-transforms-1 (property) transform/transform-origin
 Editor: Dirk Schulze, Adobe Systems Inc., dschulze@adobe.com
 Editor: Shane Stephens, Google, shanestephens@google.com
-Abstract: Motion paths allow authors to animate any graphical object along an author specified path.
+Abstract: Motion path allows authors to animate any graphical object along an author specified path.
 </pre>
 
 <pre class="anchors">
@@ -62,17 +62,17 @@ url: https://www.w3.org/TR/SVG11/struct.html#DefsElement; spec: SVG11; type: ele
 
 Authors have possibilities to position objects like elements, boxes or containers relative to each other or absolutely in their own coordinate system. CSS Transforms extends these possibilities with a set of transform functions allowing authors to mutate the object's <a>local coordinate system</a>. With CSS Animations and CSS Transitions, these static placements can change over a given period of time. Both kind of animations are powerful to express transitions in time but not suitable to describe transitions of location of an object over time.
 
-This specification allows authors to specify an <a>path</a>. The object can be positioned and also be transitioned along this path over a given period of time. The time may be static if no animation was specified.
+This specification allows authors to specify a <a>path</a>. The object can be positioned, transitioned and animated along this path over a given period of time. The time may be static if no animation was specified.
 
 <div class="example">
-  <p>In the following example, a schematic of an air plane is animated along a motion path. The plane faces in the direction of the motion path at each position on the path.
+  <p>In the following example, a schematic of an air plane is animated along a path. The plane faces in the direction of the path at each position on the path.
   <div class=figure>
-    <img src="images/motion-path.svg" width="470" height="120" alt="Example Motion Path">
+    <img src="images/motion-path.svg" width="470" height="120" alt="Example Path">
     <p class=caption>A black plane at different positions on a blue dotted path, rotated in the direction of the path.</p>
   </div>
 </div>
 
-A path may consist of a <<angle>> or <<basic-shape>> like <<circle()>>, <<inset()>> or <<polygon()>>. To allow authors to specify curves and sub-paths, this specification adds the <<path()>> function in addition to the existing <<basic-shape>> functions. The <<path()>> function takes an SVG Path string as input [[!SVG2]]. As a third option, authors may reference an SVG <a>shape element</a> by <<url>> which is used as the motion path.
+A path may consist of an <<angle>> or <<basic-shape>> like <<circle()>>, <<inset()>> or <<polygon()>>. To allow authors to specify curves and sub-paths, this specification adds the <<path()>> function in addition to the existing <<basic-shape>> functions. The <<path()>> function takes an SVG Path string as input [[!SVG2]]. As a third option, authors may reference an SVG <a>shape element</a> by <<url>> which is used as the path.
 
 <h2 id="placement">Module interactions</h2>
 
@@ -106,9 +106,9 @@ Media: visual
 Animatable: as specified for <a href="https://www.w3.org/TR/css3-transitions/#animatable-types">angle</a>, otherwise no
 </pre>
 
-Specifies the <a>path</a> the element gets positioned at. The exact element's position on the motion path is determined by the 'offset-distance' property. A <dfn>path</dfn> is either a specified path with one or multiple sub-paths or the geometry of a not styled basic shape. Each shape or path must define an <dfn>initial position</dfn> for the computed value of "0" for 'offset-distance' and an <dfn>initial direction</dfn> which specifies the rotation of the object on the initial position.
+Specifies the <a>path</a> the element gets positioned at. The element's exact position on the path is determined by the 'offset-distance' property. A <dfn>path</dfn> is either a specified path with one or multiple sub-paths or the geometry of a not styled basic shape. Each shape or path must define an <dfn>initial position</dfn> for the computed value of "0" for 'offset-distance' and an <dfn>initial direction</dfn> which specifies the rotation of the object on the initial position.
 
-In this specification a direction (or rotation) of 0 degree is equivalent to the direction of the positive y-axis in the object's <a>local coordinate system</a>. E.g a rotation of 0 degree points to the upper side of the UA if the object and its ancestors have no transformation applied.
+In this specification, a direction (or rotation) of 0 degree is equivalent to the direction of the positive y-axis in the object's <a>local coordinate system</a>. E.g a rotation of 0 degree points to the upper side of the UA if the object and its ancestors have no transformation applied.
 
 Values have the following meanings:
 
@@ -122,11 +122,11 @@ Values have the following meanings:
            Adjust the value of 'offset-distance' when the element goes out of the path. When overflowing occurs, the distance value is reduced, until the end point of the path is on the edge of the element.
         </dd>
     </dl>
-    <p class="note">Note: Defining the path with <<angle>>, the element can be positioned in the polar coordinate system. In polar coordinates, a pole is the reference point and points are described as been a certain distance from it, as also a certain angle from the polar axis. In mathematical theory, the polar axis is commonly defined as the positive direction of the x-axis, but we consider the polar axis as the positive direction of the y-axis position as other CSS specifications usually do. Therefore, when the <<angle>> value of 'offset-path' is 0, the element is positioned on the y-axis. If the <<angle>> value increases in the positive direction from 0, the element moves clockwise. The method to determine a direction using the <<angle>> value for 'offset-path' works the same way in [[!CSS3VAL]], <<angle>> value.</p>
+    <p class="note">Note: Defining a path with <<angle>>, the element can be positioned in the polar coordinate system. In polar coordinates, a pole is the reference point and points are described as been a certain distance from it, as also a certain angle from the polar axis. In mathematical theory, the polar axis is commonly defined as the positive direction of the x-axis, but we consider the polar axis as the positive direction of the y-axis position as other CSS specifications such as [[!CSS3VAL]], <<angle>> value. Therefore, when 0deg is given to 'offset-path', the element is positioned along the y-axis. If the <<angle>> value increases in the positive direction from 0, the element moves clockwise.</p>
   </dd>
   <dt><<basic-shape>></dt>
   <dd>
-    The motion path is a basic shape as specified in CSS Shapes [[!CSS-SHAPES]]. The initial position and the initial direction for basic shapes are defined as follows:
+    The path is a basic shape as specified in CSS Shapes [[!CSS-SHAPES]]. The initial position and the initial direction for basic shapes are defined as follows:
     <dl>
       <dt><<circle()>></dt>
       <dt><<ellipse()>></dt>
@@ -144,24 +144,24 @@ Values have the following meanings:
   </dd>
   <dt><<url>></dt>
   <dd>
-    References an SVG <a>shape element</a> and uses its geometry as motion path. See SVG 1.1 for more information about the initial position and initial direction [[!SVG11]].
+    References an SVG <a>shape element</a> and uses its geometry as path. See SVG 1.1 for more information about the initial position and initial direction [[!SVG11]].
   </dd>
   <dt dfn-type=value><dfn>none</dfn></dt>
-  <dd>No motion path gets created.</dd>
+  <dd>No path gets created.</dd>
 </dl>
 
 A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does for values other than ''1'', unless the element is an SVG element with out an associated CSS layout box.
 
-A reference that fails to download, is not a reference to an SVG <a>shape element</a> element, or is non-existent is ignored. No motion path and no stacking context are created.
+A reference that fails to download, is not a reference to an SVG <a>shape element</a> element, or is non-existent is ignored. No path and no stacking context are created.
 
-See the section <a href="#motion-processing">“Motion processing”</a> for how to process a motion path.
+See the section <a href="#motion-processing">“Motion processing”</a> for how to process a path.
 
 For SVG elements without associated CSS layout box, the <a>used value</a> for <a value for=mask-clip>content-box</a>, <a value for=mask-clip>padding-box</a>, <a value for=mask-clip>border-box</a> and <a value for=mask-clip>margin-box</a> is <a value for=clip-path>fill-box</a>.
 
 For elements with associated CSS layout box, the <a>used value</a> for <a value for=clip-path>fill-box</a>, <a value for=clip-path>stroke-box</a> and <a value for=clip-path>view-box</a> is <a value for=mask-clip>border-box</a>.
 
 <div class='example'>
-    Here are some examples. The first example shows some parts of elements are outside of the path.
+    Here are some examples. The first example shows that some parts of elements are outside of the path.
 
     <pre class="lang-html">
         &lt;body>
@@ -176,7 +176,7 @@ For elements with associated CSS layout box, the <a>used value</a> for <a value 
         </figcaption>
     </div>
 
-    In the second example, contain, the extent keyword value is added to the 'offset-path' value of each element to avoid overflowing.
+    In the second example, 'contain' is given to the 'offset-path' value of each element to avoid overflowing.
 
     <pre class="lang-html">
         &lt;body>
@@ -206,7 +206,7 @@ Media: visual
 Animatable: yes
 </pre>
 
-A distance that describes the position along the specified <a>path</a>.
+Describes the position of the element along the specified <a>path</a>.
 
 <dl dfn-for="offset-distance" dfn-type="value">
   <dt><<length>></dt>
@@ -454,7 +454,7 @@ Note: The rotation described here does not override or replace any rotation defi
     <img src="images/offset-rotation-none.svg" width="470" height="120" alt="Path without rotation">
     <figcaption>A black plane at different positions on a blue dotted path without rotation transforms.</figcaption>
   </div>
-  <p>If the 'offset-rotation' property is set to ''auto'', the shape's point of origin is placed at different positions along the motion path. The shape is rotated based on the gradient at the current position and faces the direction of the motion path at this position.</p>
+  <p>If the 'offset-rotation' property is set to ''auto'', the shape's point of origin is placed at different positions along the path. The shape is rotated based on the gradient at the current position and faces the direction of the path at this position.</p>
   <div class=figure>
     <img src="images/offset-rotation-auto.svg" width="470" height="120" alt="Path with auto rotation">
     <figcaption>A black plane at different positions on a blue dotted path, rotated in the direction of the path.</figcaption>
