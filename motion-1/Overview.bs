@@ -122,307 +122,333 @@ Values have the following meanings:
            Adjust the value of 'offset-distance' when the element goes out of the path. When overflowing occurs, the distance value is reduced, until the end point of the path is on the edge of the element.
         </dd>
     </dl>
-    <p class="note">Note: Defining a path with <<angle>>, the element can be positioned in the polar coordinate system. In polar coordinates, a pole is the reference point and points are described as been a certain distance from it, as also a certain angle from the polar axis. In mathematical theory, the polar axis is commonly defined as the positive direction of the x-axis, but we consider the polar axis as the positive direction of the y-axis position as other CSS specifications such as [[!CSS3VAL]], <<angle>> value. Therefore, when 0deg is given to 'offset-path', the element is positioned along the y-axis. If the <<angle>> value increases in the positive direction from 0, the element moves clockwise.</p>
-  </dd>
-  <dt><<basic-shape>></dt>
-  <dd>
-    The path is a basic shape as specified in CSS Shapes [[!CSS-SHAPES]]. The initial position and the initial direction for basic shapes are defined as follows:
-    <dl>
-      <dt><<circle()>></dt>
-      <dt><<ellipse()>></dt>
-      <dd>The <a>initial position</a> is defined by the point where a virtual tangent to the circle/ellipse would reach the top vertical position. The <a>initial direction</a> is 90 degrees.</dd>
-      <dt><<inset()>></dt>
-      <dd>The <a>initial position</a> is defined by the left top corner of the rectangle. The <a>initial direction</a> is 0 degree.</dd>
-      <dt><<polygon()>></dt>
-      <dd>The <a>initial position</a> is defined by the first coordinate pair of the polygon. The <a>initial direction</a> is defined by the vector connecting the initial position with the next following coordinate pair that isn't equal to the initial position. If there is no such unequal coordinate pair, the initial direction is defined with 0 degree.</dd>
-    </dl>
-  </dd>
-  <dt><dfn>path()</dfn> = path([ <<fill-rule>> ,]? <<string>>)</dt>
-  <dd>
-    <p>The <<string>> represents an SVG Path data string. The path data string must be conform to the grammar and parsing rules of SVG 1.1 [[!SVG11]]. The initial position is defined by the first “move to” argument in the path string. For the initial direction follow SVG 1.1 [[!SVG11]].
-    <p><<fill-rule>> - The filling rule used to determine the interior of the path. See 'fill-rule' property in SVG for details. Possible values are ''nonzero'' or ''evenodd''. Default value when omitted is ''nonzero''.
-  </dd>
-  <dt><<url>></dt>
-  <dd>
-    References an SVG <a>shape element</a> and uses its geometry as path. See SVG 1.1 for more information about the initial position and initial direction [[!SVG11]].
-  </dd>
-  <dt dfn-type=value><dfn>none</dfn></dt>
-  <dd>No path gets created.</dd>
+	<p class="note">
+	Note: Defining a path with <<angle>>, the element can be positioned in the polar coordinate system.
+		In polar coordinates, a pole is the reference point and points are described as been a certain distance from it,
+		as also a certain angle from the polar axis. 
+		In mathematical theory, the polar axis is commonly defined as the positive direction of the x-axis, 
+		but we consider the polar axis as the positive direction of the y-axis position as other CSS specifications 
+		such as [[!CSS3VAL]], <<angle>> value. 
+		Therefore, when 0deg is given to 'offset-path', the element is positioned along the y-axis.
+		If the <<angle>> value increases in the positive direction from 0, the element moves clockwise.
+	</p>
+	</dd>
+
+	<dt><<basic-shape>></dt>
+	<dd>The path is a basic shape as specified in CSS Shapes [[!CSS-SHAPES]]. 
+	The initial position and the initial direction for basic shapes are defined as follows:
+	<dl>
+		<dt><<circle()>></dt>
+		<dt><<ellipse()>></dt>
+		<dd>The <a>initial position</a> is defined by the point where a virtual tangent to the circle/ellipse 
+		would reach the top vertical position. 
+		The <a>initial direction</a> is 90 degrees.</dd>
+		<dt><<inset()>></dt>
+		<dd>The <a>initial position</a> is defined by the left top corner of the rectangle.
+		The <a>initial direction</a> is 0 degree.</dd>
+		<dt><<polygon()>></dt>
+		<dd>The <a>initial position</a> is defined by the first coordinate pair of the polygon.
+		The <a>initial direction</a> is defined by the vector connecting the initial position with the next following coordinate pair that isn't equal to the initial position. If there is no such unequal coordinate pair, the initial direction is defined with 0 degree.</dd>
+	</dl>
+	</dd>
+	<dt><dfn>path()</dfn> = path([ <<fill-rule>> ,]? <<string>>)</dt>
+	<dd>The <<string>> represents an SVG Path data string.
+		The path data string must be conform to the grammar and parsing rules of SVG 1.1 [[!SVG11]].
+		The initial position is defined by the first “move to” argument in the path string. For the initial direction follow SVG 1.1 [[!SVG11]].
+
+		<<fill-rule>> - The filling rule used to determine the interior of the path.
+		See 'fill-rule' property in SVG for details. Possible values are ''nonzero'' or ''evenodd''.
+		Default value when omitted is ''nonzero''.
+	</dd>
+	<dt><<url>></dt>
+	<dd>References an SVG <a>shape element</a> and uses its geometry as path.
+	See SVG 1.1 for more information about the initial position and initial direction [[!SVG11]].
+	</dd>
+	<dt dfn-type=value><dfn>none</dfn></dt>
+	<dd>No path gets created.</dd>
 </dl>
 
-A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' [[CSS3COLOR]] does for values other than ''1'', unless the element is an SVG element with out an associated CSS layout box.
+A computed value of other than ''none'' results in the creation of a <a spec="css21">stacking context</a> [[!CSS21]] 
+the same way that CSS 'opacity' [[CSS3COLOR]] does for values other than ''1'',
+unless the element is an SVG element with out an associated CSS layout box.
 
-A reference that fails to download, is not a reference to an SVG <a>shape element</a> element, or is non-existent is ignored. No path and no stacking context are created.
+A reference that fails to download, is not a reference to an SVG <a>shape element</a> element,
+or is non-existent is ignored. No path and no stacking context are created.
 
 See the section <a href="#offset-processing">“Offset processing”</a> for how to process a path.
 
-For SVG elements without associated CSS layout box, the <a>used value</a> for <a value for=mask-clip>content-box</a>, <a value for=mask-clip>padding-box</a>, <a value for=mask-clip>border-box</a> and <a value for=mask-clip>margin-box</a> is <a value for=clip-path>fill-box</a>.
+For SVG elements without associated CSS layout box, the <a>used value</a> for <a value for=mask-clip>content-box</a>,
+<a value for=mask-clip>padding-box</a>, <a value for=mask-clip>border-box</a> and <a value for=mask-clip>margin-box</a> is 
+<a value for=clip-path>fill-box</a>.
 
-For elements with associated CSS layout box, the <a>used value</a> for <a value for=clip-path>fill-box</a>, <a value for=clip-path>stroke-box</a> and <a value for=clip-path>view-box</a> is <a value for=mask-clip>border-box</a>.
+For elements with associated CSS layout box, the <a>used value</a> for <a value for=clip-path>fill-box</a>, 
+<a value for=clip-path>stroke-box</a> and <a value for=clip-path>view-box</a> is <a value for=mask-clip>border-box</a>.
 
 <div class='example'>
-    Here are some examples. The first example shows that some parts of elements are outside of the path.
+	Here are some examples. The first example shows that some parts of elements are outside of the path.
 
-    <pre class="lang-html">
-        &lt;body>
-          &lt;div style="offset-path: 45deg; offset-distance: 100%">&lt;/div>
-          &lt;div style="offset-path: 180deg; offset-distance: 100%">&lt;/div>
-        &lt;/body>
-    </pre>
-    <div class=figure> 
-        <img alt="An image of elements positioned without contain" src="images/offset_distance_without_contain.png" style="width: 300px;"/>
-        <figcaption>
-            'offset-path' without 'contain'
-        </figcaption>
-    </div>
+	<pre class="lang-html">
+		&lt;body>
+			&lt;div style="offset-path: 45deg; offset-distance: 100%">&lt;/div>
+			&lt;div style="offset-path: 180deg; offset-distance: 100%">&lt;/div>
+		&lt;/body>
+	</pre>
+	<div class=figure> 
+		<img alt="An image of elements positioned without contain" src="images/offset_distance_without_contain.png" style="width: 300px;"/>
+		<figcaption>'offset-path' without 'contain'</figcaption>
+	</div>
 
-    In the second example, 'contain' is given to the 'offset-path' value of each element to avoid overflowing.
+	In the second example, 'contain' is given to the 'offset-path' value of each element to avoid overflowing.
 
-    <pre class="lang-html">
-        &lt;body>
-          &lt;div style="offset-path: 45deg contain; offset-distance: 100%">&lt;/div>
-          &lt;div style="offset-path: 180deg contain; offset-distance: 100%">&lt;/div>
-        &lt;/body>
-    </pre>
-    <div class=figure>    
-        <img alt="An image of elements positioned without contain" src="images/offset_distance_with_contain.png" style="width: 300px;"/>
-        <figcaption>
-            'offset-path' with 'contain'
-        </figcaption>
-    </div>
+	<pre class="lang-html">
+		&lt;body>
+			&lt;div style="offset-path: 45deg contain; offset-distance: 100%">&lt;/div>
+			&lt;div style="offset-path: 180deg contain; offset-distance: 100%">&lt;/div>
+		&lt;/body>
+	</pre>
+	<div class=figure>
+		<img alt="An image of elements positioned without contain" src="images/offset_distance_with_contain.png" style="width: 300px;"/>
+		<figcaption>'offset-path' with 'contain'</figcaption>
+	</div>
 </div>
 
 <h3 id="offset-distance-property">Position on the path: The 'offset-distance' property</h3>
 
 <pre class='propdef'>
-Name: offset-distance
-Value: [ <<length>> | <<percentage>> <<size>>? ]
-Initial: 0
-Applies to: All elements. In SVG, it applies to <a>container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
-Inherited: no
-Percentages: refer to the total path length
-Computed value: as specified
-Media: visual
-Animatable: yes
+	Name: offset-distance
+	Value: [ <<length>> | <<percentage>> <<size>>? ]
+	Initial: 0
+	Applies to: All elements. In SVG, it applies to <a>container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
+	Inherited: no
+	Percentages: refer to the total path length
+	Computed value: as specified
+	Media: visual
+	Animatable: yes
 </pre>
 
 Describes the position of the element along the specified <a>path</a>.
 
 <dl dfn-for="offset-distance" dfn-type="value">
-  <dt><<length>></dt>
-    <dd>
-       The distance from the initial position of the shape or path to the position of the element. Percentages are relative to the total path length including all sub-paths.
-    </dd>
-    <dt><<percentage>></dt>
-    <dd>
-       Is relative to the length of the path. The length is a distance between the initial position and the end position of the path.
-    </dd>
-    <dt><<size>></dt>
-    <dd>Decides a point used for measuring the distance from the initial position of the path.             
-        It is defined as
+	<dt><<length>></dt>
+	<dd>The distance from the initial position of the shape or path to the position of the element.
+	Percentages are relative to the total path length including all sub-paths.
+	</dd>
+	<dt><<percentage>></dt>
+	<dd>Is relative to the length of the path. The length is a distance between the initial position and 
+	the end position of the path.
+	</dd>
+	<dt><<size>></dt>
+	<dd>Decides a point used for measuring the distance from the initial position of the path.
 
-        &nbsp;<b>&lt;size&gt;</b> = [ closest-side | closest-corner | farthest-side | farthest-corner ]
+	It is defined as
 
-        If omitted it defaults to <var>closest-side</var>.
+		&nbsp;<b>&lt;size&gt;</b> = [ closest-side | closest-corner | farthest-side | farthest-corner ]
 
-        <dl>
-          <dt><dfn>closet-side</dfn></dt>
-          <dd>The distance is measured between the initial position and the closest side of the box from it.</dd>
-          <dt><dfn>closest-corner</dfn></dt>
-          <dd>The distance is measured between the initial position and the closest corner of the box from it.</dd>
-          <dt><dfn>farthest-side</dfn></dt>
-          <dd>The distance is measured between the initial position and the farthest side of the box from it.</dd>
-          <dt><dfn>farthest-corner</dfn></dt>
-          <dd>The distance is measured between the initial position and the farthest corner of the box from it.</dd>
-        </dl>
-        <p class='note'>Note: When the initial position is at one of the corners of the containing block, the closest side takes the edge where the initial position is on. Even if the offset given by <<length>> or <<percentage>> changes, the position of the element specified with closest-side is the same.</p>
-    </dd>
+	If omitted it defaults to <var>closest-side</var>.
+
+		<dl>
+			<dt><dfn>closet-side</dfn></dt>
+			<dd>The distance is measured between the initial position and the closest side of the box from it.</dd>
+
+			<dt><dfn>closest-corner</dfn></dt>
+			<dd>The distance is measured between the initial position and the closest corner of the box from it.</dd>
+
+			<dt><dfn>farthest-side</dfn></dt>
+			<dd>The distance is measured between the initial position and the farthest side of the box from it.</dd>
+
+			<dt><dfn>farthest-corner</dfn></dt>
+			<dd>The distance is measured between the initial position and the farthest corner of the box from it.</dd>
+		</dl>
+		<p class='note'>
+			Note: When the initial position is at one of the corners of the containing block, the closest side takes the edge where the initial position is on. 
+			Even if the offset given by <<length>> or <<percentage>> changes, the position of the element specified with closest-side is the same.
+		</p>
+	</dd>
 </dl>
 
 See the section <a href="#offset-processing">“Offset processing”</a> for how to process an 'offset-distance'.
 
 <div class='example'>
-    This example shows a way to align elements within the polar coordinate system using 'offset-path', 'offset-distance'.
-    <pre class="lang-html">
-        &lt;body>
-          &lt;div id="circle1"&lt;/div>
-          &lt;div id="circle2"&lt;/div>
-          &lt;div id="circle3"&lt;/div>
-        &lt;/body>
-        &lt;style>
-            #circle1 {
-               offset-path: 0deg;
-               offset-distance: 50%;
-            }
-            #circle2 {
-               offset-path: 90deg;
-               offset-distance: 20%;
-            }
-            #circle3 {
-               offset-path: 225deg;
-               offset-distance: 100%;
-            }
-        &lt;/style>
-    </pre>
-    <div class=figure> 
-        <img alt="An image of three elements positioned to polar coordinates" src="images/simple_offset_position.png" style="width: 300px;"/>
-        <figcaption>
-            An example of positioning element in polar coordinates
-        </figcaption>
-    </div>
+	This example shows a way to align elements within the polar coordinate system using 'offset-path', 'offset-distance'.
+	<pre class="lang-html">
+		&lt;body>
+			&lt;div id="circle1"&lt;/div>
+			&lt;div id="circle2"&lt;/div>
+			&lt;div id="circle3"&lt;/div>
+		&lt;/body>
+		&lt;style>
+			#circle1 {
+				offset-path: 0deg;
+				offset-distance: 50%;
+			}
+			#circle2 {
+				offset-path: 90deg;
+				offset-distance: 20%;
+			}
+			#circle3 {
+				offset-path: 225deg;
+				offset-distance: 100%;
+			}
+		&lt;/style>
+	</pre>
+	<div class=figure> 
+		<img alt="An image of three elements positioned to polar coordinates" src="images/simple_offset_position.png" style="width: 300px;"/>
+		<figcaption>An example of positioning element in polar coordinates</figcaption>
+	</div>
 </div>
 
 <h3 id="offset-position-property">Define the initial position of the path: The 'offset-position' property</h3>
 <pre class='propdef'>
-    Name: offset-position
-    Applies to: all elements
-    Value: auto | <<position>>
-    Initial: auto
-    Media: visual
-    Inherited: no
-    Percentages: Refer to the size of containing block
-    Animatable: as <a href="https://www.w3.org/TR/css3-transitions/#animtype-lpcalc">position</a>
+	Name: offset-position
+	Applies to: all elements
+	Value: auto | <<position>>
+	Initial: auto
+	Media: visual
+	Inherited: no
+	Percentages: Refer to the size of containing block
+	Animatable: as <a href="https://www.w3.org/TR/css3-transitions/#animtype-lpcalc">position</a>
 </pre>
 Specifies the initial position of the path.
 
 Values are defined as follows:
 <dl dfn-for="offset-position" dfn-type="value">
-  <dt><var>'auto'</var></dt>
-  <dd>
-    Computes to the current position of the element.
-  </dd>
-  <dt><<position>></dt>
-  <dd>
-    The <<position>> represents the horizontal position and the vertical position as specified in CSS Backgrounds [[CSS3-BACKGROUND]]. Values of <<position>> are defined like below:
-    <dl>
-      <dt><<percentage>></dt>
-      <dd>
-        A percentage for the horizontal offset is relative to the width of the containing block. A percentage for the vertical offset is relative to the height of the containing block.
-      </dd>
-      <dt><<length>></dt>
-      <dd>
-        A length value gives the fixed length as an offset. The offset is from the top left corner of the containing block.
-      </dd>
-      <dt><dfn>top</dfn></dt>
-      <dd>
-        Computes to 0% for the vertical position.
-      </dd>
-      <dt><dfn>right</dfn></dt>
-      <dd>
-        Computes to 100% for the horizontal position.
-      </dd>
-      <dt><dfn>bottom</dfn></dt>
-      <dd>
-        Computes to 100% for the vertical position.
-      </dd>
-      <dt><dfn>left</dfn></dt>
-      <dd>
-        Computes to 0% for the horizontal position.
-      </dd>
-      <dt><dfn>center</dfn></dt>
-      <dd>
-        Computes to 50% (left 50%) for the horizontal position if the horizontal position is not otherwise specified, or 50% (top 50%) for the vertical position if it is.
-      </dd>
-    </dl>
-  </dd>
+	<dt><var>'auto'</var></dt>
+	<dd>Computes to the current position of the element.</dd>
+	<dt><<position>></dt>
+	<dd>The <<position>> represents the horizontal position and the vertical position as specified in CSS Backgrounds [[CSS3-BACKGROUND]].
+	
+	Values of <<position>> are defined like below:
+	<dl>
+		<dt><<percentage>></dt>
+		<dd>A percentage for the horizontal offset is relative to the width of the containing block.
+		A percentage for the vertical offset is relative to the height of the containing block.
+		</dd>
+
+		<dt><<length>></dt>
+		<dd>A length value gives the fixed length as an offset.
+		The offset is from the top left corner of the containing block.
+		</dd>
+
+		<dt><dfn>top</dfn></dt>
+		<dd>Computes to 0% for the vertical position.</dd>
+
+		<dt><dfn>right</dfn></dt>
+		<dd>Computes to 100% for the horizontal position.</dd>
+
+		<dt><dfn>bottom</dfn></dt>
+		<dd>Computes to 100% for the vertical position.</dd>
+
+		<dt><dfn>left</dfn></dt>
+		<dd>Computes to 0% for the horizontal position.</dd>
+
+		<dt><dfn>center</dfn></dt>
+		<dd>Computes to 50% (left 50%) for the horizontal position if the horizontal position is not otherwise specified, 
+		or 50% (top 50%) for the vertical position if it is.</dd>
+	</dl>
+	</dd>
 </dl>
 
 <h3 id="offset-anchor-property">Define an anchor point: The 'offset-anchor' property</h3>
 <pre class='propdef'>
-    Name: offset-anchor
-    Applies to: All elements
-    Value: <<position>>
-    Initial: 'auto'
-    Media: visual
-    Inherited: no
-    Percentages: Relative to the width and the height of an element
-    Animatable: as <<position>>
+	Name: offset-anchor
+	Applies to: All elements
+	Value: <<position>>
+	Initial: 'auto'
+	Media: visual
+	Inherited: no
+	Percentages: Relative to the width and the height of an element
+	Animatable: as <<position>>
 </pre>
 
-Defines an anchor point of the element positioned along the path. The anchor specifies a position which is a representative point of the element and could be set as any point within the content area of the element. The anchor point is placed along the path.
+Defines an anchor point of the element positioned along the path. 
+The anchor specifies a position which is a representative point of the element and could be set as any point within the content area of the element. 
+The anchor point is placed along the path.
 
 Values have the following meanings:
 <dl dfn-for="offset-anchor" dfn-type="value">
-  <dt><var>'auto'</var></dt>
-  <dd>
-    Computes to the value from 'offset-position'. When 'auto' is given to 'offset-anchor', 'offset-position' behaves similar to 'background-position'.
-  </dd>
-  <dt><<position>></dt>
-  <dd>
-    <dl>
-      <dt><<percentage>></dt>
-      <dd>A percentage for the horizontal offset is relative to width of content box area of the element. A percentage for the vertical offset is relative to the height of the content box area of the element. For example, with a value pair of '100%, 0%', an anchor point is on the upper right corner of the element.</dd>
-      <dt><<length>></dt>
-      <dd>A length value gives a length offset from the upper left corner of the element's content area.</dd>
-    </dl>
-  </dd>
+	<dt><var>'auto'</var></dt>
+	<dd>Computes to the value from 'offset-position'. When 'auto' is given to 'offset-anchor', 
+	'offset-position' behaves similar to 'background-position'.
+	</dd>
+	<dt><<position>></dt>
+	<dd>
+		<dl>
+			<dt><<percentage>></dt>
+			<dd>A percentage for the horizontal offset is relative to width of content box area of the element.
+			A percentage for the vertical offset is relative to the height of the content box area of the element.
+			For example, with a value pair of '100%, 0%', an anchor point is on the upper right corner of the element.</dd>
+
+			<dt><<length>></dt>
+			<dd>A length value gives a length offset from the upper left corner of the element's content area.</dd>
+		</dl>
+	</dd>
 </dl>
 
 <div class='example'>
-  The following explains how to set the anchor point of the element.
-  <pre class="lang-css">
-    #plane {
-      offset-anchor: center;
-    }
-  </pre>
-  
-  The red dot in the middle of the shape indicates the anchor point of the shape.
-  <div class=figure>
-    <img src="images/plane.svg" width="160" height="140" alt="Shape with its anchor point">
-    <figcaption>A red dot in the middle of a plane shape indicates the shape's anchor point.</figcaption>
-  </div>
+	The following explains how to set the anchor point of the element.
+	<pre class="lang-css">
+		#plane {
+			offset-anchor: center;
+		}
+	</pre>
+
+	The red dot in the middle of the shape indicates the anchor point of the shape.
+	<div class=figure>
+		<img src="images/plane.svg" width="160" height="140" alt="Shape with its anchor point">
+		<figcaption>A red dot in the middle of a plane shape indicates the shape's anchor point.</figcaption>
+	</div>
 </div>
 
 <div class='example'>
-  This example shows an alignment of four elements with different anchor points.
-  <pre class="lang-html">
-    &lt;style>
-      #item1 {
-        offset-path: 45deg;
-        offset-distance: 100%;
-        offset-anchor: right top;
-      }
-      #item2 {
-        offset-path: 135deg;
-        offset-distance: 100%;
-        offset-anchor: right bottom;
-      }
-      #item3 {
-        offset-path: 225deg;
-        offset-distance: 100%;
-        offset-anchor: left bottom;
-      }
-      #item4 {
-        offset-path: 315deg;
-        offset-distance: 100%;
-        offset-anchor: left top;
-      }
-    &lt;/style>
-    &lt;body>
-      &lt;div id="item1">&lt;/div>
-      &lt;div id="item2">&lt;/div>
-      &lt;div id="item3">&lt;/div>
-      &lt;div id="item4">&lt;/div>
-    &lt;/body>
-  </pre>
-  <div class=figure>
-    <img src="images/offset_anchor.png" alt="An example of offset-anchor" style="width: 300px;">
-    <figcaption>An example of 'offset-anchor'</figcaption>
-  </div>
+	This example shows an alignment of four elements with different anchor points.
+	<pre class="lang-html">
+		&lt;style>
+			#item1 {
+				offset-path: 45deg;
+				offset-distance: 100%;
+				offset-anchor: right top;
+			}
+			#item2 {
+				offset-path: 135deg;
+				offset-distance: 100%;
+				offset-anchor: right bottom;
+			}
+			#item3 {
+				offset-path: 225deg;
+				offset-distance: 100%;
+				offset-anchor: left bottom;
+			}
+			#item4 {
+				offset-path: 315deg;
+				offset-distance: 100%;
+				offset-anchor: left top;
+			}
+		&lt;/style>
+		&lt;body>
+			&lt;div id="item1">&lt;/div>
+			&lt;div id="item2">&lt;/div>
+			&lt;div id="item3">&lt;/div>
+			&lt;div id="item4">&lt;/div>
+		&lt;/body>
+	</pre>
+	<div class=figure>
+		<img src="images/offset_anchor.png" alt="An example of offset-anchor" style="width: 300px;">
+		<figcaption>An example of 'offset-anchor'</figcaption>
+	</div>
 </div>
 
 <h3 id="offset-rotation-property">Rotation at point: The 'offset-rotation' property</h3>
 
 <pre class='propdef'>
-Name: offset-rotation
-Value: [ auto | reverse ] && <<angle>>
-Initial: auto
-Applies to: All elements. In SVG, it applies to <a href="">container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
-Inherited: no
-Percentages: n/a
-Computed value: as specified
-Media: visual
-Animatable: yes
+	Name: offset-rotation
+	Value: [ auto | reverse ] && <<angle>>
+	Initial: auto
+	Applies to: All elements. In SVG, it applies to <a href="">container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
+	Inherited: no
+	Percentages: n/a
+	Computed value: as specified
+	Media: visual
+	Animatable: yes
 </pre>
 
 Defines the direction of the element while positioning along the <a>path</a>.
@@ -430,98 +456,114 @@ Defines the direction of the element while positioning along the <a>path</a>.
 Values have the following meanings:
 
 <dl dfn-for="offset-rotation" dfn-type="value">
-  <dt><dfn>auto</dfn></dt>
-  <dd>Indicates that the object is rotated (over time if 'offset-distance' is animated) by the angle of the direction (i.e., directional tangent vector) of the <a>path</a>. If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''auto''.</dd>
-  <dt><dfn>reverse</dfn></dt>
-  <dd>
-    <p>Indicates that the object is rotated (over time if 'offset-distance' is animated) by the angle of the direction (i.e., directional tangent vector) of the <a>path</a> plus 180 degrees. If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''reverse''.
-      <p class="note">This is the same as specifying ''auto 180deg''.
-  </dd>
-  <dt><<angle>></dt>
-  <dd>Indicates that the element has a constant rotation transformation applied to it by the specified rotation angle. See definitions of ''auto'' or ''reverse'' if specified in combination with either one of the keywords. For the purpose of this argument, ''0deg'' points to the right side in the direction of the positive y-axis, and positive angles represent clockwise rotation, so ''90deg'' point toward the direction of the positive x-axis.</dd>
+	<dt><dfn>auto</dfn></dt>
+	<dd>Indicates that the object is rotated (over time if 'offset-distance' is animated) by the angle of the direction 
+	(i.e., directional tangent vector) of the <a>path</a>. 
+	If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''auto''.</dd>
+
+	<dt><dfn>reverse</dfn></dt>
+	<dd>Indicates that the object is rotated (over time if 'offset-distance' is animated) by the angle of the direction 
+	(i.e., directional tangent vector) of the <a>path</a> plus 180 degrees. 
+	If specified in combination with <<angle>>, the computed value of <<angle>> is added to the computed value of ''reverse''.
+	<p class="note">This is the same as specifying ''auto 180deg''.
+	</dd>
+
+	<dt><<angle>></dt>
+	<dd>Indicates that the element has a constant rotation transformation applied to it by the specified rotation angle.
+	See definitions of ''auto'' or ''reverse'' if specified in combination with either one of the keywords.
+	For the purpose of this argument, ''0deg'' points to the right side in the direction of the positive y-axis,
+	and positive angles represent clockwise rotation, so ''90deg'' point toward the direction of the positive x-axis.</dd>
 </dl>
 
 Note: The rotation described here does not override or replace any rotation defined by the 'transform' property.
 
 <div class="example">
-  The following examples use the shape of a plane. The red dot in the middle of the shape indicates the origin of the shape.
-  <div class=figure>
-    <img src="images/plane.svg" width="160" height="140" alt="Shape with its origin">
-    <figcaption>A red dot in the middle of a plane shape indicates the shape's origin.</figcaption>
-  </div>
-  When the shape's point of origin is placed at different positions along the path and 'offset-rotation' isn't specified, the shape points to the positive direction of the x-axis.
-  <div class=figure>
-    <img src="images/offset-rotation-none.svg" width="470" height="120" alt="Path without rotation">
-    <figcaption>A black plane at different positions on a blue dotted path without rotation transforms.</figcaption>
-  </div>
-  <p>If the 'offset-rotation' property is set to ''auto'', the shape's point of origin is placed at different positions along the path. The shape is rotated based on the gradient at the current position and faces the direction of the path at this position.</p>
-  <div class=figure>
-    <img src="images/offset-rotation-auto.svg" width="470" height="120" alt="Path with auto rotation">
-    <figcaption>A black plane at different positions on a blue dotted path, rotated in the direction of the path.</figcaption>
-  </div>
-  <p>In this example, the 'offset-rotation' property is set to ''reverse''. The plane faces the opposite direction of the path at each position on the path.
-  <div class=figure>
-    <img src="images/offset-rotation-reverse.svg" width="470" height="120" alt="Path with reverse auto rotation">
-    <figcaption>A black plane at different positions on a blue dotted path, rotated in the opposite direction of the path.</figcaption>
-  </div>
-  <p>The last example sets the 'offset-rotation' property to ''45deg''. The shape is rotated by 45 degree once and keeps the rotation at each position on the path.
-  <div class=figure>
-    <img src="images/offset-rotation-45.svg" width="470" height="120" alt="Path with fixed rotation">
-    <figcaption>A black plane at different positions on a blue dotted path, rotated by a fixed amount of degree.</figcaption>
-  </div>
+	The following examples use the shape of a plane. The red dot in the middle of the shape indicates the origin of the shape.
+	<div class=figure>
+		<img src="images/plane.svg" width="160" height="140" alt="Shape with its origin">
+		<figcaption>A red dot in the middle of a plane shape indicates the shape's origin.</figcaption>
+	</div>
+
+	When the shape's point of origin is placed at different positions along the path and 'offset-rotation' isn't specified, 
+	the shape points to the positive direction of the x-axis.
+	<div class=figure>
+		<img src="images/offset-rotation-none.svg" width="470" height="120" alt="Path without rotation">
+		<figcaption>A black plane at different positions on a blue dotted path without rotation transforms.</figcaption>
+	</div>
+
+	If the 'offset-rotation' property is set to ''auto'', the shape's point of origin is placed at different positions along the path.
+	The shape is rotated based on the gradient at the current position and faces the direction of the path at this position.
+	<div class=figure>
+		<img src="images/offset-rotation-auto.svg" width="470" height="120" alt="Path with auto rotation">
+		<figcaption>A black plane at different positions on a blue dotted path, rotated in the direction of the path.</figcaption>
+	</div>
+
+	In this example, the 'offset-rotation' property is set to ''reverse''.
+	The plane faces the opposite direction of the path at each position on the path.
+	<div class=figure>
+		<img src="images/offset-rotation-reverse.svg" width="470" height="120" alt="Path with reverse auto rotation">
+		<figcaption>A black plane at different positions on a blue dotted path, rotated in the opposite direction of the path.</figcaption>
+	</div>
+
+	The last example sets the 'offset-rotation' property to ''45deg''.
+	The shape is rotated by 45 degree once and keeps the rotation at each position on the path.
+	<div class=figure>
+		<img src="images/offset-rotation-45.svg" width="470" height="120" alt="Path with fixed rotation">
+		<figcaption>A black plane at different positions on a blue dotted path, rotated by a fixed amount of degree.</figcaption>
+	</div>
 </div>
 
 <div class='example'>
-  This example shows how ''auto'' or ''reverse'' works specified in combination with <<angle>>. The computed value of <<angle>> is added to the computed value of ''auto'' or ''reverse''.
-  <pre class="lang-html">
-    &lt;style>
-      body {
-        border-radius: 50%;
-      }
-      #item1 {
-        offset-path: 0deg;
-        offset-distance: 90%;
-        offset-rotate: auto 90deg;
-      }
-      #item2 {
-        offset-path: 45deg;
-        offset-distance: 90%;
-        offset-rotate: auto 90deg;
-      }
-      #item3 {
-        offset-path: 135deg;
-        offset-distance: 90%;
-        offset-rotate: auto -90deg;
-      }
-      #item4 {
-        offset-path: 180deg;
-        offset-distance: 90%;
-        offset-rotate: auto -90deg;
-      }
-      #item5 {
-        offset-path: 225deg;
-        offset-distance: 90%;
-        offset-rotate: auto -90deg;
-      }
-      #item6 {
-        offset-path: -45deg;
-        offset-distance: 90%;
-        offset-rotate: auto 90deg;
-      }
-    &lt;/style>
-    &lt;body>
-      &lt;div id="item1">1&lt;/div>
-      &lt;div id="item2">2&lt;/div>
-      &lt;div id="item3">3&lt;/div>
-      &lt;div id="item4">4&lt;/div>
-      &lt;div id="item5">5&lt;/div>
-      &lt;div id="item6">6&lt;/div>
-    &lt;/body>
-  </pre>
-  <div class="figure">
-    <img alt="An image of example for offset-rotation" src="images/rotate_by_angle_with_auto.png" style="width: 250px; text-align: center"/>
-    <figcaption>The elements are rotated by the value of ''auto'' with a fixed amount of degree.</figcaption>
-  </div>
+	This example shows how ''auto'' or ''reverse'' works specified in combination with <<angle>>. The computed value of <<angle>> is added to the computed value of ''auto'' or ''reverse''.
+	<pre class="lang-html">
+		&lt;style>
+			body {
+				border-radius: 50%;
+			}
+			#item1 {
+				offset-path: 0deg;
+				offset-distance: 90%;
+				offset-rotate: auto 90deg;
+			}
+			#item2 {
+				offset-path: 45deg;
+				offset-distance: 90%;
+				offset-rotate: auto 90deg;
+			}
+			#item3 {
+				offset-path: 135deg;
+				offset-distance: 90%;
+				offset-rotate: auto -90deg;
+			}
+			#item4 {
+				offset-path: 180deg;
+				offset-distance: 90%;
+				offset-rotate: auto -90deg;
+			}
+			#item5 {
+				offset-path: 225deg;
+				offset-distance: 90%;
+				offset-rotate: auto -90deg;
+			}
+			#item6 {
+				offset-path: -45deg;
+				offset-distance: 90%;
+				offset-rotate: auto 90deg;
+			}
+		&lt;/style>
+		&lt;body>
+			&lt;div id="item1">1&lt;/div>
+			&lt;div id="item2">2&lt;/div>
+			&lt;div id="item3">3&lt;/div>
+			&lt;div id="item4">4&lt;/div>
+			&lt;div id="item5">5&lt;/div>
+			&lt;div id="item6">6&lt;/div>
+		&lt;/body>
+	</pre>
+	<div class="figure">
+		<img alt="An image of example for offset-rotation" src="images/rotate_by_angle_with_auto.png" style="width: 250px; text-align: center"/>
+		<figcaption>The elements are rotated by the value of ''auto'' with a fixed amount of degree.</figcaption>
+	</div>
 </div>
 
 ISSUE: More natural names requested for ''auto'' and ''reverse''.
@@ -529,20 +571,20 @@ ISSUE: More natural names requested for ''auto'' and ''reverse''.
 See the section <a href="#offset-processing">“Offset processing”</a> for how to process an 'offset-rotation'.
 
 <h3 id="motion-shorthand">Offset shorthand: The 'offset' property</h3>
-
 <pre class='propdef'>
-Name: offset
-Value: &lt;'offset-path'> && &lt;'offset-distance'> && &lt;'offset-position'> && &lt;'offset-anchor'> && &lt;'offset-rotation'>
-Initial: see individual properties
-Applies to: All elements. In SVG, it applies to <a href="">container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
-Inherited: no
-Percentages: see individual properties
-Computed value: see individual properties
-Media: visual
-Animatable: see individual properties
+	Name: offset
+	Value: &lt;'offset-path'> && &lt;'offset-distance'> && &lt;'offset-position'> && &lt;'offset-anchor'> && &lt;'offset-rotation'>
+	Initial: see individual properties
+	Applies to: All elements. In SVG, it applies to <a href="">container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
+	Inherited: no
+	Percentages: see individual properties
+	Computed value: see individual properties
+	Media: visual
+	Animatable: see individual properties
 </pre>
 
-This is a shorthand property for setting 'offset-path', 'offset-distance', 'offset-position', 'offset-anchor' and 'offset-rotation'. Omitted values are set to their initial values.
+This is a shorthand property for setting 'offset-path', 'offset-distance', 'offset-position', 'offset-anchor' and 'offset-rotation'.
+Omitted values are set to their initial values.
 
 <h3 id="offset-processing">Offset processing</h3>
 
@@ -554,7 +596,7 @@ the path is open or closed:
 *   References to <<angle>> lines are closed.
 *   All basic CSS shapes are closed. 
 *   Paths (including references to SVG Paths) are closed only if the final command 
-    in the path list is a closepath command ("z" or "Z").
+	in the path list is a closepath command ("z" or "Z").
 *   References to SVG circles, ellipses, images, polygons and rects are closed.
 *   References to SVG lines and polylines are open.
 
@@ -563,7 +605,7 @@ To determine the <dfn>computed distance</dfn> for a given <var>path</var> and <v
 <div class="switch">
 
 1.  Let the <var>total length</var> be the total length of <var>path</var> with all
-    sub-paths.
+	sub-paths.
 
 2.  
     :   If <var>distance</var> is a length:
