@@ -266,6 +266,78 @@ Fills {#fills}
 	Values are interpreted identically to 'background-size',
 	mutatis mutandi.
 
+## Winding Rule for SVG shapes: the 'fill-rule' property ## {#fill-rule}
+
+	<pre class=propdef>
+		Name: fill-rule
+		Value: [ nonzero | evenodd ]#
+		Initial: nonzero
+		Applies to: SVG shapes
+		Inherited: yes
+		Percentages: N/A
+		Media: visual
+		Computed Value: as specified
+		Animatable: no
+	</pre>
+
+	The 'fill-rule' property indicates the rule
+	used to determine what parts of the canvas are included inside the shape.
+	For a simple, non-intersecting path,
+	it is intuitively clear what region lies “inside”;
+	however, for a more complex path,
+	such as a path that intersects itself
+	or where one subpath encloses another,
+	the interpretation of “inside” is not so obvious.
+
+	The 'fill-rule' property provides two options for how the inside of a shape is determined:
+
+	<dl dfn-type=value dfn-for=fill-rule>
+		<dt><dfn>nonzero</dfn>
+		<dd>
+			This rule determines the “insideness” of a point on the canvas
+			by drawing a ray from that point to infinity in any direction
+			and then examining the places where a segment of the shape crosses the ray.
+			Starting with a count of zero,
+			add one each time a path segment crosses the ray from left to right
+			and subtract one each time a path segment crosses the ray from right to left.
+			After counting the crossings,
+			if the result is zero then the point is outside the path.
+			Otherwise, it is inside.
+
+			<figure>
+				<img src="images/fillrule-nonzero.svg">
+				<figcaption>
+					The effect of a nonzero fill rule on paths with self-intersections and enclosed subpaths.
+				</figcaption>
+			</figure>
+
+		<dt><dfn>evenodd</dfn>
+		<dd>
+			This rule determines the “insideness” of a point on the canvas
+			by drawing a ray from that point to infinity in any direction
+			and counting the number of path segments from the given shape that the ray crosses.
+			If this number is odd,
+			the point is inside;
+			if even,
+			the point is outside.
+
+			<figure>
+				<img src="images/fillrule-evenodd.svg">
+				<figcaption>
+					The effect of an evenodd fill rule on paths with self-intersections and enclosed subpaths.
+				</figcaption>
+			</figure>
+	</dl>
+
+	Note: The above descriptions do not specify what to do
+	if a path segment coincides with or is tangent to the ray.
+	Since any ray will do,
+	one may simply choose a different ray that does not have such problem intersections.
+
+	This property does not apply to text
+	(whether SVG or CSS),
+	as the “inside” of a text glyph is intrinsically defined.
+
 ## Fill Shorthand: the 'fill' property ## {#fill-shorthand}
 
 	<pre class="propdef">
