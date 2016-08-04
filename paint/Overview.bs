@@ -399,7 +399,7 @@ Fill Transparency {#fill-filter}
 	</pre>
 
 	The 'fill-opacity' property specifies the opacity of the painting operation
-	used to stroke the current object.
+	used to fill the element.
 	As with 'opacity',
 	a value of ''0'' or ''0%'' means fully transparent,
 	and a value of ''1'' or ''100%'' means fully opaque.
@@ -498,33 +498,27 @@ Stroke Geometry {#stroke-geometry}
 		Animatable: no
 	</pre>
 
-	This property allows the author to align a stroke along the outline of the current object.
+	This property allows the author to align a <a>stroke</a> along the outline.
 
 	<dl dfn-type=value dfn-for=stroke-align>
 		<dt><dfn>center</dfn>
 		<dd>
-			This value indicates that the stroke for each subpath
-			is positioned along the outline of the current stroke.
-			The extends of the stroke increase to both sides of the outline accordingly
-			dependent on the 'stroke-width'.
+			The stroke for each subpath
+			is centered on the outline.
 
-		<dt><dfn>inner</dfn>
+		<dt><dfn>inset</dfn>
 		<dd>
-			This value indicates that the stroke area
-			is defined by the outline of each subpath of the current object
-			and the computed value of the 'stroke-width' property
-			as offset orthogonal from the outline
-			into the fill area of each subpath.
+			The stroke for each subpath
+			lies on the “inside” of the outline
+			(into the fill area).
 
 			The 'stroke-linejoin' property must be ignored.
 
-		<dt><dfn>outer</dfn>
+		<dt><dfn>outset</dfn>
 		<dd>
-			This value indicates that the stroke area
-			is defined by the outline of each subpath of the current object
-			and the computed value of the 'stroke-width' property
-			as offset orthogonal from the outline
-			away from the fill area of each subpath.
+			The stroke for each subpath
+			lies on the “outside” of the outline
+			(outside the fill area).
 	</dl>
 
 	<div class=issue>
@@ -532,7 +526,7 @@ Stroke Geometry {#stroke-geometry}
 		but the other categories exist and need good definitions.
 
 		How does this apply to open path segments?
-		One suggestion is to alias ''outer'' to ''stroke-align/left'' and ''inner'' to ''stroke-align/right'' for open paths.
+		One suggestion is to alias ''outset'' to ''stroke-align/left'' and ''inset'' to ''stroke-align/right'' for open paths.
 		How are end caps handled?
 
 		<figure>
@@ -540,10 +534,10 @@ Stroke Geometry {#stroke-geometry}
 			<figcaption>
 				1. Stroke with 'stroke-align' ''center'' value.
 				2. Fill region.
-				3. Stroke with 'stroke-align' ''inner'' value per spec (? stroke only paints inside fill region).
-				4. Stroke with 'stroke-align' ''outer'' value (implemented by blocking out fill region).
-				5. Stroke with 'stroke-align' ''inner'' value, alternative interpretation.
-				6. Stroke with 'stroke-align' ''outer'' value per spec (?).
+				3. Stroke with 'stroke-align' ''inset'' value per spec (? stroke only paints inside fill region).
+				4. Stroke with 'stroke-align' ''outset'' value (implemented by blocking out fill region).
+				5. Stroke with 'stroke-align' ''inset'' value, alternative interpretation.
+				6. Stroke with 'stroke-align' ''outset'' value per spec (?).
 				7. Stroke with 'stroke-align' alternative ''stroke-align/left'' value; pink shows round line-cap.
 			</figcaption>
 		</figure>
