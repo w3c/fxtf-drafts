@@ -865,7 +865,7 @@ Stroke Painting {#stroke-paint}
 
 	<pre class="propdef">
 		Name: stroke-origin
-		Value: match-parent | content-box
+		Value: match-parent | fill-box | stroke-box | content-box | padding-box | border-box
 		Initial: match-parent
 		Applies to: all elements
 		Inherited: no
@@ -886,14 +886,46 @@ Stroke Painting {#stroke-paint}
 			If it has no parent, use the <a>initial containing block</a>.
 
 		<dt><dfn>content-box</dfn>
+		<dt><dfn>padding-box</dfn>
+		<dt><dfn>border-box</dfn>
 		<dd>
-			Use the box’s own content-box as the <a>stroke positioning area</a>.
+			Use the box’s own content-box/padding-box/border-box as the <a>stroke positioning area</a>.
+			For <a>SVG shapes</a>,
+			''stroke-origin/content-box'' and ''stroke-origin/padding-box'' are treated as ''stroke-origin/fill-box'',
+			while ''stroke-origin/border-box'' is treated as ''stroke-origin/stroke-box''.
+
+		<dt><dfn>fill-box</dfn>
+		<dd>
+			For <a>SVG shapes</a> or SVG text,
+			use the <a>object bounding box</a> of the element.
+			For CSS boxes,
+			use the bounding box of the text glyph outlines
+			of the element and all in-flow or floated descendants.
+
+		<dt><dfn>stroke-box</dfn>
+		<dd>
+			For <a>SVG shapes</a> or SVG text,
+			use the <a>stroke bounding box</a> of the element.
+			For CSS boxes,
+			use the bounding box of the text glyph stroke outlines
+			of the element and all in-flow or floated descendants.
 	</dl>
+
+	The SVG UA style sheet is amended to include the following rules:
+
+	<pre class="lang-css">
+	svg:svg {
+		stroke-origin: content-box;
+	}
+	</pre>
 
 	The <dfn export>stroke painting area</dfn> is infinite in size.
 	When painting,
-	the stroke color/images are intersected with the stroked outlines of the affected text,
+	the stroke color/images are intersected with the glyph strokes of the affected text,
 	or the stroke geometry of the affected <a>SVG shape</a>.
+
+	Issue: SVG paint servers carry around their own originator information in *Units attributes,
+	but maybe SVGWG can add a new value that makes them pay attention to the CSS originator.
 
 ### Tiling Stroke Images: the 'stroke-repeat' property ### {#stroke-repeat}
 
