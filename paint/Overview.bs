@@ -280,24 +280,6 @@ Fill Painting {#fill-paint}
 	Issue: SVG paint servers carry around their own originator information in *Units attributes,
 	but maybe SVGWG can add a new value that makes them pay attention to the CSS originator.
 
-### Tiling Fill Images: the 'fill-repeat' property ### {#fill-repeat}
-
-	<pre class='propdef'>
-		Name: fill-repeat
-		Value: <<repeat-style>>#
-		Initial: repeat
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: n/a
-		Media: visual
-		Computed value: A list, each item consisting of: two keywords, one per dimension
-		Animatable: no
-	</pre>
-
-	Specifies how fill images are tiled and they have been sized and positioned.
-	Values are interpreted identically to 'background-repeat',
-	mutatis mutandi.
-
 ### Positioning Fill Images: the 'fill-position' property ### {#fill-position}
 
 	<pre class='propdef'>
@@ -337,6 +319,24 @@ Fill Painting {#fill-paint}
 	Values are interpreted identically to 'background-size',
 	mutatis mutandi.
 
+### Tiling Fill Images: the 'fill-repeat' property ### {#fill-repeat}
+
+	<pre class='propdef'>
+		Name: fill-repeat
+		Value: <<repeat-style>>#
+		Initial: repeat
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: n/a
+		Media: visual
+		Computed value: A list, each item consisting of: two keywords, one per dimension
+		Animatable: no
+	</pre>
+
+	Specifies how fill images are tiled after they have been sized and positioned.
+	Values are interpreted identically to 'background-repeat',
+	mutatis mutandi.
+
 ### Fill Shorthand: the 'fill' property ### {#fill-shorthand}
 
 	<pre class="propdef">
@@ -351,11 +351,13 @@ Fill Painting {#fill-paint}
 		Animatable: See individual properties
 	</pre>
 
-	This property is a <a>shorthand</a> that sets all of
-	  'fill-color',
-	  'fill-image',
-	  'fill-repeat',
-	  ETC
+	This property is a <a>shorthand</a> that sets all of the fill painting properties--
+	'fill-color',
+	'fill-image',
+	'fill-origin',
+	'fill-position',
+	'fill-size',
+	and 'fill-repeat'--
 	in one declaration.
 	Omitted values are set to their initial value,
 	except that an omitted 'fill-color' is set to ''transparent'',
@@ -363,8 +365,18 @@ Fill Painting {#fill-paint}
 
 	Issue: What should be the default value for fill-origin when set via this shorthand?
 	content-box or fill-box?
+	fill-box works better for fancy/overflowing fonts like Zapfino,
+	but it's much more expensive to calculate than content-box.
 
-	Issue: See 'stroke' for discussion of SVG's image/color fallback syntax.
+	Issue: SVG has special color fallback syntax--
+	a color following an image is only drawn if the image fails.
+	This conflicts with our desire to match 'background',
+	because ''fill: url(#foo) red;'' does *not* fill with red and then draw #foo.
+	Compromise: fill-color is a fallback color,
+	but both ''fill-image/none'' and <a>invalid images</a> trigger the fallback.
+	So ''fill: url(#foo) red;'' will only draw the red if there is no #foo (like SVG),
+	but ''fill: url(#foo), red'' (equivalent to ''none red'' on the last layer)
+	will draw the red <em>and</em> the #foo (like 'background').
 
 Fill Transparency {#fill-filter}
 --------------------------------
@@ -927,24 +939,6 @@ Stroke Painting {#stroke-paint}
 	Issue: SVG paint servers carry around their own originator information in *Units attributes,
 	but maybe SVGWG can add a new value that makes them pay attention to the CSS originator.
 
-### Tiling Stroke Images: the 'stroke-repeat' property ### {#stroke-repeat}
-
-	<pre class='propdef'>
-		Name: stroke-repeat
-		Value: <<repeat-style>>#
-		Initial: repeat
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: n/a
-		Media: visual
-		Computed value: A list, each item consisting of: two keywords, one per dimension
-		Animatable: no
-	</pre>
-
-	Specifies how stroke fill images are tiled and they have been sized and positioned.
-	Values are interpreted identically to 'background-repeat',
-	mutatis mutandi.
-
 ### Positioning Stroke Images: the 'stroke-position' property ### {#stroke-position}
 
 	<pre class='propdef'>
@@ -984,6 +978,24 @@ Stroke Painting {#stroke-paint}
 	Values are interpreted identically to 'background-size',
 	mutatis mutandi.
 
+### Tiling Stroke Images: the 'stroke-repeat' property ### {#stroke-repeat}
+
+	<pre class='propdef'>
+		Name: stroke-repeat
+		Value: <<repeat-style>>#
+		Initial: repeat
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: n/a
+		Media: visual
+		Computed value: A list, each item consisting of: two keywords, one per dimension
+		Animatable: no
+	</pre>
+
+	Specifies how stroke fill images are tiled after they have been sized and positioned.
+	Values are interpreted identically to 'background-repeat',
+	mutatis mutandi.
+
 ### Stroke Shorthand: the 'stroke' property ### {#stroke-shorthand}
 
 	<pre class="propdef">
@@ -998,27 +1010,17 @@ Stroke Painting {#stroke-paint}
 		Animatable: See individual properties
 	</pre>
 
-	Issue: SVG has special color fallback syntax--
-	a color following an image is only drawn if the image fails.
-	This conflicts with our desire to match 'background',
-	because ''stroke: url(#foo) red;'' does *not* fill with red and then draw #foo.
-	Compromise: stroke-color is a fallback color,
-	but both ''stroke-image/none'' and <a>invalid images</a> trigger the fallback.
-	So ''stroke: url(#foo) red;'' will only draw the red if there is no #foo (like SVG),
-	but ''stroke: url(#foo), red'' (equivalent to ''none red'' on the last layer)
-	will draw the red <em>and</em> the #foo (like 'background').
-
-	This property is a <a>shorthand</a> that sets all of
-	  'stroke-color',
-	  'stroke-image',
-	  'stroke-repeat',
-	  ETC
+	This property is a <a>shorthand</a> that sets all of the stroke painting properties--
+	'stroke-color',
+	'stroke-image',
+	'stroke-origin',
+	'stroke-position',
+	'stroke-size',
+	and 'stroke-repeat'--
 	in one declaration.
 	Omitted values are set to their initial value,
 	except that an omitted 'stroke-color' is set to ''transparent'',
 	and an omitted 'stroke-origin' is set to ''stroke-origin/content-box''.
-
-	Issue: See issue in 'fill' about the value that 'fill-origin' gets reset to.
 
 ## Stroke Transparency ## {#stroke-filter}
 
