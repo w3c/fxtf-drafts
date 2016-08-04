@@ -1380,4 +1380,28 @@ A subpath (see Paths) consisting of a single moveto shall not be stroked. Any ze
 	If ''[ bevel | round | stupid ]'' is omitted,
 	it defaults to ''stupid''.
 
+
+A <paint> value is defined as follows:
+
+<paint> = [ [ <paint-layer> , ]* <final-paint-layer> ] | context-fill | context-stroke
+
+<paint-layer> = <paint-source>
+
+<final-paint-layer> = <paint-source> || <color>
+
+<paint-source> = none | child | child(<integer>) | <url>
+
+The ability to apply more than one paint layer to an element is new in SVG 2.
+
+A <paint> value can either be a comma-separated list of paint layers, or one of the context keywords, which reference the paint value of fill or stroke from a context element. Each paint layer can take one of the following values:
+
+<url>
+A URL reference to a paint server element, which is an element that defines a paint server: ‘hatch’, ‘linearGradient’, ‘meshgradient’, ‘pattern’, ‘radialGradient’ and ‘solidcolor’.
+child
+A reference to the last child paint server element of the element being painted.
+child(n)
+A reference to the nth child paint server element of the element being painted.
+none
+No paint is applied in this layer.
+
 -->
