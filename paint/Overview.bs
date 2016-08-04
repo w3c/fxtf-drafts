@@ -10,12 +10,28 @@ Editor: Elika J. Etemad / fantasai, Invited Expert, http://fantasai.inkedblade.n
 Editor: Tab Atkins-Bittner, Google, http://xanthir.com
 Abstract: This module contains the features of CSS relating to filling and stroking text and SVG shapes.
 Ignored Terms: svg shape, svg shapes, invalid, repeatable list, simple list, valid image
+Ignored Vars: start, end
 </pre>
 
 <pre class=link-defaults>
 spec:css-color-4; type:property; text:color
 spec:css-break-3; type:dfn; text:fragment
+spec:svg2; type:dfn; text:equivalent path
 </pre>
+
+Introduction {#intro}
+=====================
+
+	Text and SVG graphical elements that define a shape--
+	<{path}> elements, basic shapes such as <{rect}>--
+	are rendered by being <dfn>filled</dfn>,
+	which is painting the interior of the object,
+	and <dfn>stroked</dfn>,
+	which is painting along the outline of the object.
+
+	This specification describes how text and SVG graphical elements are filled and stroked,
+	by defining a number of properties that control the appearance and shape
+	of an element's fill and stroke.
 
 <!--
 ████████ ████ ██       ██
@@ -313,11 +329,17 @@ Stroke Geometry {#stroke-geometry}
 		Initial: 1px
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
-		Percentages: N/A
+		Percentages: relative to the <a>scaled viewport size</a>
 		Media: visual
-		Computed value: the computed color
-		Animatable: as color
+		Computed value: the absolute length, or percentage
+		Animatable: as <<length-percentage>>
 	</pre>
+
+	This property specifies the width of the stroke on the current object.
+	A zero value causes no stroke to be painted.
+	A negative value is invalid.
+
+	The <dfn>scaled viewport size</dfn> is the geometric mean of the viewport width and height.
 
 ### Stroke Positioning: the 'stroke-align' property ### {#stroke-align}
 
@@ -333,11 +355,149 @@ Stroke Geometry {#stroke-geometry}
 		Animatable: no
 	</pre>
 
+	This property allows the author to align a stroke along the outline of the current object.
+
+	<dl dfn-type=value dfn-for=stroke-align>
+		<dt><dfn>center</dfn>
+		<dd>
+			This value indicates that the stroke for each subpath
+			is positioned along the outline of the current stroke.
+			The extends of the stroke increase to both sides of the outline accordingly
+			dependent on the 'stroke-width'.
+
+		<dt><dfn>inner</dfn>
+		<dd>
+			This value indicates that the stroke area
+			is defined by the outline of each subpath of the current object
+			and the computed value of the 'stroke-width' property
+			as offset orthogonal from the outline
+			into the fill area of each subpath.
+
+			The 'stroke-linejoin' property must be ignored.
+
+		<dt><dfn>outer</dfn>
+		<dd>
+			This value indicates that the stroke area
+			is defined by the outline of each subpath of the current object
+			and the computed value of the 'stroke-width' property
+			as offset orthogonal from the outline
+			away from the fill area of each subpath.
+	</dl>
+
+	<div class=issue>
+		Text is easy, as are simple closed, non-self-intersecting paths,
+		but the other categories exist and need good definitions.
+
+		How does this apply to open path segments?
+		One suggestion is to alias ''outer'' to ''stroke-align/left'' and ''inner'' to ''stroke-align/right'' for open paths.
+		How are end caps handled?
+
+		<figure>
+			<img src="images/stroke-align-open-path.svg">
+			<figcaption>
+				1. Stroke with 'stroke-align' ''center'' value.
+				2. Fill region.
+				3. Stroke with 'stroke-align' ''inner'' value per spec (? stroke only paints inside fill region).
+				4. Stroke with 'stroke-align' ''outer'' value (implemented by blocking out fill region).
+				5. Stroke with 'stroke-align' ''inner'' value, alternative interpretation.
+				6. Stroke with 'stroke-align' ''outer'' value per spec (?).
+				7. Stroke with 'stroke-align' alternative ''stroke-align/left'' value; pink shows round line-cap.
+			</figcaption>
+		</figure>
+
+		How does this apply to paths with loops?
+		Is the region inside the red circle in the below figure part of the stroked (as shown)?
+		Are internal edges stroked if the fill rule is ''nonzero''; if so how?
+		(Shown without stroking below.)
+
+		<figure>
+			<img src="images/stroke-align-intersecting-path.svg">
+			<figcaption>
+				* Top row: Normal stroke. Stroke left. Stroke right.
+				* Middle row: Fill rule ''nonzero'', no stroke. Stroke outside. Stroke inside.
+				* Bottom row: Fill rule ''evenodd'', no stroke. Stroke outside. Stroke inside.
+			</figcaption>
+		</figure>
+
+		How are dashes handled? Are they based on original path?
+
+		<figure>
+			<img src="images/stroke-align-dashes.svg">
+			<figcaption>
+				1. Normal dash pattern.
+				2. Dash pattern based on dash pattern or original path.
+					Note light-gray region which is from inside dash part
+					(simply using clipping path does not yield proper result).
+				3. Dash pattern based on center of offset path.
+					Light gray represents dash pattern based on center of inset path.
+			</figcaption>
+		</figure>
+	</div>
+
+### Stroke End Shapes: the 'stroke-linecap' property ### {#stroke-linecap}
+
+	<pre class="propdef">
+		Name: stroke-linecap
+		Value: butt | round | square
+		Initial: butt
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: N/A
+		Media: visual
+		Computed value: as specified
+		Animatable: no
+	</pre>
+
+	'stroke-linecap' specifies the shape to be used at the end of open subpaths
+	(such as the segments of a dashed stroke,
+	or an unclosed <{path}> element)
+	when they are stroked.
+	The possible values are:
+
+	<dl dfn-type=value dfn-for=stroke-linecap>
+		<dt><dfn>butt</dfn>
+		<dd>
+			This value indicates that the stroke for each subpath
+			does not extend beyond its two endpoints.
+			A zero length subpath will therefore not have any stroke.
+
+		<dt><dfn>round</dfn>
+		<dd>
+			This value indicates that at each end of each subpath,
+			the shape representing the stroke will be extended by a half circle
+			with a radius equal to the stroke width.
+			If a subpath has zero length,
+			then the resulting effect is that the stroke for that subpath
+			consists solely of a full circle centered at the subpath's point.
+
+		<dt><dfn>square</dfn>
+		<dd>
+			This value indicates that at the end of each subpath,
+			the shape representing the stroke will be extended by a rectangle
+			with the same width as the stroke width and whose length is half of the stroke width.
+			If a subpath has zero length,
+			then the resulting effect is that the stroke for that subpath
+			consists solely of a square with side length equal to the stroke width,
+			centered at the subpath's point,
+			and oriented such that two of its sides are parallel to the effective tangent at that subpath's point.
+			See [[#path-notes]] for details on how to determine the tangent at a zero-length subpath.
+	</dl>
+
+	<figure>
+		<img src="images/linecap.svg">
+		<figcaption>
+			The three types of line caps.
+		</figcaption>
+	</figure>
+
+	See the definition of the <a>cap shape</a> below
+	for a more precise description of the shape a line cap will have.
+
 ### Stroke Corner Shapes: the 'stroke-linejoin' property ### {#stroke-linejoin}
 
 	<pre class="propdef">
 		Name: stroke-linejoin
-		Value: miter | round | bevel
+		Value: [ arcs | miter ] || [ bevel | round ]
 		Initial: miter
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -347,11 +507,18 @@ Stroke Geometry {#stroke-geometry}
 		Animatable: no
 	</pre>
 
+	<figure>
+		<img src="images/linejoin-four.svg">
+		<figcaption>
+			Four types of line joins
+		</figcaption>
+	</figure>
+
 ### Stroke Corner Limits: the 'stroke-miterlimit' property ### {#stroke-miterlimit}
 
 	<pre class="propdef">
 		Name: stroke-miterlimit
-		Value: <<number>>
+		Value: <<number>> | <<angle>>
 		Initial: 4
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -376,6 +543,23 @@ Stroke Geometry {#stroke-geometry}
 			when the limit is exceeded,
 			the join is converted from a miter to a bevel.
 			Values less than 1 are invalid (and make the declaration <a>invalid</a>).
+
+			For a ''miter'' linejoin,
+			the length of the miter diagonal is calculated
+			from the angle between the two segments
+			as <code>'stroke-width' / sin(θ/2)</code>.
+			The linejoin is clipped by a line perpendicular to
+			the line bisecting the angle between the two path segments
+
+			For an ''arcs'' linejoin,
+			the length of the miter diagonal is calculated
+			along a circular arc that is tangent to
+			the line bisecting the angle between the two segments
+			at the point the two segments intersect
+			and passes through the end point of the join.
+			The linejoin is clipped by a line perpendicular to this arc.
+
+
 		<dt><dfn><<angle>></dfn>
 		<dd>
 			The limit on the angle of the miter:
@@ -386,35 +570,18 @@ Stroke Geometry {#stroke-geometry}
 	The miterlimit number has physical justification,
 	but it's difficult to understand without experimentation.
 
-	Issue: Should the computed value be always a number, or should it be number or angle?
-	(They are perfectly equivalent except in syntax.)
-
 Dashed Strokes {#stroke-dashes}
 -------------------------------
-
-### Stroke End Shapes: the 'stroke-linecap' property ### {#stroke-linecap}
-
-	<pre class="propdef">
-		Name: stroke-linecap
-		Value: butt | round | square
-		Initial: butt
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: N/A
-		Media: visual
-		Computed value: as specified
-		Animatable: no
-	</pre>
 
 ### Stroke Dash Patterns: the 'stroke-dasharray' property ### {#stroke-dasharray}
 
 	<pre class="propdef">
 		Name: stroke-dasharray
-		Value: none | <<length-percentage>>+
+		Value: none | <<length-percentage>>+#
 		Initial: none
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
-		Percentages: relative to the length of the stroked path
+		Percentages: relative to the <a>scaled viewport size</a>
 		Media: visual
 		Computed value: as specified
 		Animatable: as repeated list of length, percentage or calc
@@ -427,17 +594,33 @@ Dashed Strokes {#stroke-dashes}
 		<dd>
 			No dashing: the stroke is drawn continuously.
 
-		<dt><dfn><<length-percentage>>+</dfn>
+		<dt><dfn><<length-percentage>>+#</dfn>
 		<dd>
-			Each <<length-percentage>> value represents a distance of the next dash or gap
-			(beginning with the first dash)
+			Specifies a dashing pattern to use.
+			Each <<length-percentage>> value represents the length of the next dash or gap
+			(beginning with the first dash and alternating from there)
 			of the stroke.
 			The pattern repeats over the length of the stroke.
+			(If the number of values is odd,
+			the pattern behaves as if it was duplicated to yield an even number of values.)
+			The dashing pattern is reset and begins anew at the start of each subpath.
+
 			Negative values are invalid.
 			If all values are zero, it is treated as ''stroke-dasharray/none''.
 	</dl>
 
 	Issue: SVG allows comma separation. Do we need to allow this in CSS for back-compat? (Please say no.)
+
+	Issue: Need a way to specify dash lengths relative to the width of the stroke.
+
+	<figure>
+		<img src="images/dashes.svg">
+		<figcaption>
+			A dashed stroke.
+			The dashing pattern is ''20 10''.
+			The red line shows the actual path that is stroked.
+		</figcaption>
+	</figure>
 
 ### Stroke Dash Start Position: the 'stroke-dashoffset' property ### {#stroke-dashoffset}
 
@@ -447,14 +630,65 @@ Dashed Strokes {#stroke-dashes}
 		Initial: 0
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
-		Percentages: relative to the length of the stroked path
+		Percentages: relative to the <a>scaled viewport size</a>
 		Media: visual
 		Computed value: as specified
 		Animatable: as repeated list of integers
 	</pre>
 
-	This property specifies the distance into the dash pattern to start dashing.
+	This property specifies the distance into the repeated dash pattern to start dashing at the beginning of the path.
 	Values can be negative.
+
+	<figure>
+		<img src="images/dashoffset.svg">
+		<figcaption>
+			A dashed stroke with a non-zero dash offset.
+			The dashing pattern is ''20 10'' and the dash offset is ''15''.
+			The red line shows the actual path that is stroked.
+		</figcaption>
+	</figure>
+
+	See [[#algo-dash-positions]] for a more precise description of positions along a path that dashes will be placed.
+
+### Corner Control: the 'stroke-dash-corner' and 'stroke-dash-justify' properties ### {#corner-control}
+
+	<pre class=propdef>
+	Name: stroke-dash-corner
+	Value: none | <<length>>
+	Initial: none
+	Applies to: inline boxes and <a>SVG shapes</a>
+	Inherited: yes
+	Percentages: N/A
+	Media: visual
+	Computed Value: specified value, with lengths made absolute
+	Animatable: yes, if <<length>>
+	</pre>
+
+	Issue: <a href="https://svgwg.org/specs/strokes/#StrokeDashcornerProperty">spec text, needs work</a>
+
+	Issue: The corner needs to take over the role of the first dash in the dash pattern,
+	so the "interior" of each segment starts and ends with a gap.
+	Automatically skip the first dash in the pattern in each segment?
+
+	Issue: Keyword to use the length of the first dash as the corner.
+
+	<pre class=propdef>
+	Name: stroke-dash-justify
+	Value: none | [ stretch | compress ] || [ dashes || gaps ]
+	Initial: none
+	Applies to: inline boxes and <a>SVG shapes</a>
+	Inherited: yes
+	Percentages: N/A
+	Media: visual
+	Computed Value: specified value, with lengths made absolute
+	Animatable: no
+	</pre>
+
+	Issue: <a href="https://svgwg.org/specs/strokes/#StrokeDashadjustProperty">spec text, needs work</a>
+
+	Issue: Default should probably be to adjust the gaps only.
+
+
 
 Stroke Painting {#stroke-paint}
 -------------------------------
@@ -472,6 +706,20 @@ Stroke Painting {#stroke-paint}
 		Computed value: the computed color
 		Animatable: as color
 	</pre>
+
+	This property sets the stroke color of an element.
+	This color is drawn behind any stroke images.
+
+	Unlike 'background-color',
+	the stroke color must only be drawn if the final layer of 'stroke-image'
+	is <css>none</css> or an <a>invalid image</a>.
+	If it's a <a>valid image</a>,
+	the stroke color must not be drawn.
+
+	Note: This is required to match the legacy behavior of SVG's 'stroke' property,
+	which built in a "fallback color" to the single-layer image syntax.
+	In CSS this is better achieved with the ''image()'' function,
+	which makes fallback explicit.
 
 ### Stroke Image Sources: the 'stroke-image' property ### {#stroke-image}
 
@@ -543,15 +791,21 @@ Stroke Painting {#stroke-paint}
 
 	<pre class="propdef">
 		Name: stroke-opacity
-		Value: <<'opacity'>>
+		Value: <<number-percentage>>
 		Initial: 1
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
 		Percentages: N/A
 		Media: visual
-		Computed value: the computed color
-		Animatable: as color
+		Computed value: he specified value, clamped to the range [0,1].
+		Animatable: as <<number-percentage>>
 	</pre>
+
+	The 'stroke-opacity' property specifies the opacity of the painting operation
+	used to stroke the current object.
+	As with 'opacity',
+	a value of ''0'' or ''0%'' means fully transparent,
+	and a value of ''1'' or ''100%'' means fully opaque.
 
 ### Tiling Stroke Images: the 'stroke-repeat' property ### {#stroke-repeat}
 
@@ -711,8 +965,334 @@ Stroke Painting {#stroke-paint}
 				<td>stroke-dash shorthand
 	</table>
 
+## Computing the Shape of the Stroke ## {#path-notes}
+
+	Issue: This section doesn't handle 'stroke-dash-corner' and 'stroke-dash-justify' yet.
+
+### Stroke Shape ### {#algo-stroke-shape}
+
+	<div algorithm="stroke shape">
+		The <dfn>stroke shape</dfn> of an element is the shape that is filled by the 'stroke' property.
+		The following algorithm describes what the stroke shape of text, a <{path}>, or basic shape is,
+		taking into account the stroking properties above:
+
+		1. Let |shape| be an empty shape.
+		2. Let |path| be the <a>equivalent path</a> of the element.
+		3. For each |subpath| of |path|:
+			1. Let |positions| be the <a>dash positions</a> for the |subpath|.
+			2. For each pair (|start|, |end|) in |positions|:
+				1. Let |dash| be the shape that includes,
+					for all distances between |start| and |end| along the |subpath|,
+					all points that lie on the line perpendicular to the |subpath| at that distance
+					and which are within distance stroke-width
+					of the point on the |subpath| at that position.
+				2. Set |dash| to be the union of |dash| and the starting <a>cap shape</a> for the subpath at position |start|.
+				3. Set |dash| to be the union of |dash| and the ending <a>cap shape</a> for the subpath at position |end|.
+				4. Let |index| and |last| be the indexes of the path segments in the subpath at distance start and end along the subpath.
+
+					Note: It does not matter whether any zero length segments are included when choosing index and last.
+
+				5. While |index| < |last|:
+					1. Set |dash| to be the union of |dash| and the <a>line join shape</a> for the subpath at segment index |index|.
+					2. Set |index| to index + 1.
+				6. Set |shape| to be the union of |shape| and |dash|.
+		4. Return |shape|.
+	</div>
+
+### Dash Positions ### {#algo-dash-positions}
+
+	<div algorithm="dash positions">
+		The <dfn>dash positions</dfn> for a given subpath
+		of the equivalent path of a <{path}> or basic shape
+		is a sequence of pairs of values,
+		which represent the starting and ending distance along the subpath
+		for each of the dashes that form the subpath's stroke.
+		It is determined as follows:
+
+		1. Let |pathlength| be the length of the subpath.
+		2. Let |dashes| be the list of values of 'stroke-dasharray' on the element,
+			repeated if necessary so that it has an even number of elements;
+			if the property has the value none,
+			then the list has a single value ''0''.
+		3. Let |count| be the number of values in |dashes|.
+		4. Let |sum| be the sum of the values in |dashes|.
+		5. If |sum| = 0, then return a sequence with the single pair (0, |pathlength|).
+		6. Let |positions| be an empty sequence.
+		7. Let |offset| be the value of the 'stroke-dashoffset' property on the element.
+		8. If |offset| is negative, then set |offset| to <code>|sum| − abs(|offset|)</code>.
+		9. Set |offset| to <code>|offset| mod |sum|</code>.
+		10. Let |index| be the smallest integer such that <code>sum(|dashes|<sub>i</sub>, 0 ≤ i ≤ |index|) ≥ |offset|</code>.
+		11. Let |dashlength| be <code>min(sum(|dashes|<sub>i</sub>, 0 ≤ i ≤ |index|) − |offset|, |pathlength|)</code>.
+		12. If <code>|index| mod 2 = 0</code>, then append to |positions| the pair (0, |dashlength|).
+		13. Let |position| be |dashlength|.
+		14. While |position| < |pathlength|:
+			1. Set |index| to <code>(|index| + 1) mod |count|</code>.
+			2. Let |dashlength| be <code>min(|dashes|<sub>|index|</sub>, |pathlength| − |position|)</code>.
+			3. If |index| mod 2 = 0, then append to |positions| the pair (|position|, |position| + |dashlength|).
+			4. Set |position| to <code>|position| + |dashlength|</code>.
+		15. Return |positions|.
+	</div>
+
+### Cap Shapes ### {#algo-cap-shapes}
+
+	<div algorithm="cap shapes">
+		The starting and ending <dfn>cap shapes</dfn> at a given |position| along a subpath are determined as follows:
+
+		1. If 'stroke-linecap' is ''butt'', then return an empty shape.
+		2. Otherwise, if 'stroke-linecap' is ''stroke-linecap/round'', then:
+			1. If this is a starting cap,
+				then return a semicircle of radius 'stroke-width'
+				positioned such that:
+
+				* Its straight edge is parallel to
+					the line perpendicular to the subpath
+					at distance |position| along it.
+				* The midpoint of its straight edge is at
+					the point that is along the subpath at distance |position|.
+				* The direction from the midpoint of its arc to the midpoint of its straight edge
+					is the same as the direction of the subpath
+					at distance |position| along it.
+			2. Otherwise, this is an ending cap.
+				Return a semicircle of radius stroke-width
+				positioned such that:
+
+					* Its straight edge is parallel to
+						the line perpendicular to the subpath
+						at distance |position| along it.
+					* The midpoint of its straight edge is at
+						the point that is along the subpath at distance |position|.
+					* The direction from the midpoint of its straight edge to the midpoint of its arc
+						is the same as the direction of the subpath
+						at distance |position| along it.
+		3. Otherwise, 'stroke-linecap' is ''square'':
+			1. If this is a starting cap,
+				then return a rectangle with side lengths 'stroke-width' and 'stroke-width' / 2
+				positioned such that:
+
+				* Its longer edges, A and B, are parallel to
+					the line perpendicular to the subpath
+					at distance |position| along it.
+				* The midpoint of A is at |start|.
+				* The direction from the midpoint of B to the midpoint of A
+					is the same as the direction of the subpath
+					at distance |position| along it.
+			2. Otherwise, this is an ending cap.
+				Return a rectangle with side lengths 'stroke-width' and 'stroke-width' / 2
+				positioned such that:
+
+				* Its longer edges, A and B, are parallel to
+					the line perpendicular to the subpath
+					at distance |position| along it.
+				* The midpoint of A is at |end|.
+				* The direction from the midpoint of A to the midpoint of B
+					is the same as the direction of the subpath
+					at distance |position| along it.
+
+		<figure>
+			<img src="images/linecap-construction.svg">
+			<figcaption>
+				The three different stroke-linecap values used on paths with a single, non-zero length subpath.
+				The white line is the path itself
+				and the thick gray area is the stroke.
+
+				On the top row, the green lines indicate the perpendicular to the tangent at the path endpoints
+				and the pink areas are the caps.
+				The bottom row shows the stroke without the perpendicular and cap highlighting.
+			</figcaption>
+		</figure>
+	</div>
+
+### Line Join Shape ### {#algo-line-join-shape}
+
+	<div algorithm="line join shape">
+		The <dfn>line join shape</dfn> for a given segment of a subpath is determined as follows:
+
+		1. Let |P| be the point at the end of the segment.
+		2. Let |A| be the line parallel to the tangent at the end of the segment.
+		3. Let |B| be the line parallel to the tangent at the start of the following segment.
+		4. If |A| and |B| are the same line,
+			then return an empty shape.
+		5. Let |A<sub>left</sub>| and |A<sub>right</sub>|
+			be lines parallel to |A|
+			at a distance of 'stroke-width' / 2
+			to the left and to the right of |A|
+			relative to the subpath direction,
+			respectively.
+		6. Let |B<sub>left</sub>| and |B<sub>right</sub>|
+			be lines parallel to |B|
+			at a distance of 'stroke-width' / 2
+			to the left and to the right of |B|
+			relative to the subpath direction,
+			respectively.
+		7. Let |P<sub>1</sub>|, |P<sub>2</sub>| and |P<sub>3</sub>| be points determined as follows:
+			1. If the smaller angle between |A| and |B| is on the right of these lines,
+				considering the direction of the subpath,
+				then |P<sub>1</sub>| and |P<sub>2</sub>|
+				are the points on |A<sub>left</sub>| and |B<sub>left</sub>| closest to |P|,
+				and |P<sub>3</sub>| is the intersection of |A<sub>left</sub>| and |B<sub>left</sub>|.
+			2. Otherwise, |P<sub>1</sub>| and |P<sub>2</sub>|
+				are the points on |A<sub>right</sub>| and |B<sub>right</sub>| closest to |P|,
+				and |P<sub>3</sub>| is the intersection of |A<sub>right</sub>| and |B<sub>right</sub>|.
+		8. Let |bevel| be the triangle formed from the three points
+			|P|, |P<sub>1</sub>| and |P<sub>2</sub>|.
+		9. If 'stroke-linejoin' is ''round'',
+			then return the union of |bevel|
+			and a circular sector of radius 'stroke-width',
+			centered on |P|,
+			and which has |P<sub>1</sub>| and |P<sub>2</sub>| as the two endpoints of the arc.
+		10. If 'stroke-linejoin' is ''arcs'',
+			then find the circles that are tangent to the stroke edges at |P<sub>1</sub>| and |P<sub>2</sub>|
+			with the same curvature as the edges at those points (see below).
+			If both curvatures are zero, fall through to ''miter-clip''.
+
+			Extend the stroke edges using these circles
+			(or a line, in the case of zero curvature):
+
+			* If the two circles (or circle and line) do not intersect,
+				fall through to ''miter-clip''.
+
+			* If the two circles (or circle and line) intersect,
+				the line join region is defined by the lines that connect |P| with |P<sub>1</sub>| and |P<sub>2</sub>|
+				and the arcs defined by the circles (or arc and line)
+				between the closest intersection point to |P|, and |P<sub>1</sub>| and |P<sub>2</sub>|.
+
+				Next, calculate the |miter limit| as defined in [[#stroke-miterlimit]].
+				Clip any part of the line join region that extends past the |miter limit|.
+				Return the resulting region.
+
+				Note: Note that the curvatures are calculated in user-space
+				before any transforms are applied.
+		11. If 'stroke-linejoin' is ''miter'' or ''miter-clip''
+			then the line join region is the union of |bevel|
+			and the triangle formed from the three points |P<sub>1</sub>|, |P<sub>2</sub>| and |P<sub>3</sub>|.
+		12. Let θ be the angle between A and B.
+			If <code>1 / sin(θ / 2) ≤ 'stroke-miterlimit'</code>,
+			then return the line join region.
+		13. If 'stroke-linejoin' is ''miter-clip'',
+			then clip any part of the line join region that extends past the miter limit
+			and return this region.
+		14. Return bevel.
+
+		<figure>
+			<img src="images/linejoin-construction.svg">
+			<figcaption>
+				Construction of a round line join shape, shown in pink.
+				The white line is the original path,
+				which has two segments that come to a point,
+				and the gray region is the stroke.
+			</figcaption>
+		</figure>
+
+		<figure>
+			<img src="images/linejoin-construction-arcs.svg">
+			<figcaption>
+				Construction of an arcs line join shape, shown in pink.
+				The white line is the original path,
+				which has two segments that come to a point,
+				and the gray region is the stroke.
+				The dashed lines show circles that are tangent to
+				and have the curvature of
+				the segments at the join.
+				The olive-green circles
+				(concentric with the dashed circles)
+				define the join shape.
+			</figcaption>
+		</figure>
+	</div>
+
+### Arcs Linejoin ### {#algo-arcs-linejoin}
+
+	<div algorithm="arcs linejoin">
+		The <dfn>arcs linejoin</dfn> requires finding circles
+		that are both tangent to and have the same curvatures as
+		the outer stroke edges at the ends of path segments.
+		To find one of these circles,
+		first calculate the curvature κ of the path segment at its end (see below).
+		Next, find the radius of a circle corresponding to this curvature:
+		r = 1/κ.
+		Increase or decrease the radius by 'stroke-width' / 2
+		to account for the stroke:
+		rc = r ± stroke-width/2.
+		The center of the circle will be on a line normal to the path end
+		a distance of rc away from the outer stroke edge at the end.
+
+		Issue: <a href="https://svgwg.org/specs/strokes/#CurvatureCalculation">More text that really needs MathJax to be comprehensible.</a>
+	</div>
+
 
 Privacy and Security Considerations {#priv-sec}
 ===============================================
 
 This specification introduces no new privacy or security considerations.
+
+
+<!--
+
+Some scratch:
+
+
+In all cases, all stroking properties which are affected by directionality, such as those having to do with dash patterns, must be rendered such that the stroke operation starts at the same point at which the graphics element starts. In particular, for ‘path’ elements, the start of the path is the first point of the initial "moveto" command.
+
+For stroking properties such as dash patterns whose computations are dependent on progress along the outline of the graphics element, distance calculations are required to utilize the SVG user agent's standard Distance along a path algorithms.
+
+When stroking is performed using a complex paint server, such as a gradient or a pattern, the stroke operation must be identical to the result that would have occurred if the geometric shape defined by the geometry of the current graphics element and its associated stroking properties were converted to an equivalent ‘path’ element and then filled using the given paint server.
+
+A subpath (see Paths) consisting of a single moveto shall not be stroked. Any zero length subpath shall not be stroked if the stroke-linecap property has a value of butt but shall be stroked if the stroke-linecap property has a value of round or square, producing respectively a circle or a square centered at the given point. Examples of zero length subpaths include 'M 10,10 L 10,10', 'M 20,20 h 0', 'M 30,30 z' and 'M 40,40 c 0,0 0,0 0,0'. (Issue: This should be redundant with the stroke shape computation requirements below. In this section, we should phrase the requirements descriptively rather than normatively.)
+
+	<pre class="propdef">
+		Name: stroke-linejoin
+		Value: [ crop | arcs | miter ] || [ bevel | round | stupid ]
+		Initial: miter
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: N/A
+		Media: visual
+		Computed value: as specified
+		Animatable: no
+	</pre>
+
+	'stroke-linejoin' specifies the shape to be used at the corners of paths or basic shapes when they are stroked.
+	It has two parts:
+	''[ crop | arcs | miter ]'' specifies whether or not, and how, to extend the corner of the stroke;
+	''[ bevel | round | stupid ]'' specifies how to render the "cap" of the corner when it's limited in length by 'stroke-miterlimit'.
+
+	<dl dfn-type=value dfn-for=stroke-linejoin>
+		<dt><dfn>crop</dfn>
+		<dd>
+			The stroke does not extend past the corner of the path at all.
+
+		<dt><dfn>arcs</dfn>
+		<dd>
+			An arcs corner is used to join path segments.
+			The arcs shape is formed by extending the outer edges of the stroke at the join point
+			with arcs that have the same curvature as the outer edges at the join point.
+
+		<dt><dfn>miter</dfn>
+		<dd>
+			A sharp corner is used to join path segments.
+			The corner is formed by extending the outer edges of the stroke at the tangents of the path segments
+			until they intersect.
+
+		<dt><dfn>bevel</dfn>
+		<dd>
+			When the 'stroke-miterlimit' is exceeded,
+			the corners are joined with a triangle that fills the area between the two stroked segments.
+
+		<dt><dfn>round</dfn>
+		<dd>
+			When the 'stroke-miterlimit' is exceeded,
+			the corner is clipped to the specified miter length,
+			then a half-circle is appended to the corner.
+
+		<dt><dfn>stupid</dfn>
+		<dd>
+			When the 'stroke-miterlimit' is exceeded,
+			this behaves as if ''clip bevel'' were specified.
+	</dl>
+
+	If ''[ crop | arcs | miter ]'' is omitted,
+	it defaults to ''crop''.
+	If ''[ bevel | round | stupid ]'' is omitted,
+	it defaults to ''stupid''.
+
+-->
