@@ -44,7 +44,7 @@ Introduction {#intro}
 -->
 
 Fills {#fills}
-========================
+==============
 
 	A <dfn>fill</dfn> paints within
 	the outlines of an SVG shape or the glyphs of an inline (or SVG text) box.
@@ -55,218 +55,20 @@ Fills {#fills}
 
 	Issue: Add a <css>box-break</css> property that is a shorthand for 'box-decoration-break', 'fill-break', and 'stroke-break'?
 
-## Fill Color: the 'fill-color' property ## {#fill-color}
+Layering Multiple Fills {#fill-layering}
+----------------------------------------
 
-	<pre class="propdef">
-		Name: fill-color
-		Value: <<color>>
-		Initial: currentColor
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: N/A
-		Media: visual
-		Computed value: the computed color
-		Animatable: as color
-	</pre>
+	The fill of a box can have multiple layers.
+	The number of layers is determined by the number of comma-separated values for the 'fill-image' property.
+	A value of ''fill-image/none'' still creates a layer.
 
-	This property sets the fill color of an element.
-	This color is drawn behind any fill images.
+	List-valued properties interact exactly as for background images,
+	defined in [[css-backgrounds-3#layering]].
 
-	Advisement: It's recommended that authors use the 'color' property to set the color of text,
-	rather than 'fill-color'.
+Fill Geometry {#fill-geometry}
+------------------------------
 
-	Unlike 'background-color',
-	the fill color must only be drawn if the final layer of 'fill-image'
-	is <css>none</css> or an <a>invalid image</a>.
-	If it's a <a>valid image</a>,
-	the fill color must not be drawn.
-
-	Note: This is required to match the legacy behavior of SVG's 'fill' property,
-	which built in a "fallback color" to the single-layer image syntax.
-	In CSS this is better achieved with the ''image()'' function,
-	which makes fallback explicit.
-
-## Fill Image Sources: the 'fill-image' property ## {#fill-image}
-
-	<pre class="propdef">
-		Name: fill-image
-		Value: [ none | <<image>> ]#
-		Initial: none
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: N/A
-		Media: visual
-		Computed value: as specified, with URLs made absolute
-		Animatable: as repeatable list of images
-	</pre>
-
-	This property sets the fill images of an element.
-	Images are drawn with the first specified one on top (closest to the user)
-	and each subsequent image behind the previous one.
-	Values are interpreted identically to 'background-image',
-	mutatis mutandi.
-
-## Fill Positioning Area: the 'fill-origin' property ## {#fill-origin}
-
-	<pre class="propdef">
-		Name: fill-origin
-		Value: match-parent | fill-box | stroke-box | content-box | padding-box | border-box
-		Initial: match-parent
-		Applies to: all elements
-		Inherited: no
-		Percentages: N/A
-		Media: visual
-		Computed value: as specified
-		Animatable: no
-	</pre>
-
-	This property specifies the coordinate system of the <a>fill</a>,
-	setting the <dfn export>fill positioning area</dfn>.
-	Values have the following meanings:
-
-	<dl dfn-for="fill-origin" dfn-type="value">
-		<dt><dfn>match-parent</dfn>
-		<dd>
-			Use the same <a>fill positioning area</a> as the parent.
-			If it has no parent, use the <a>initial containing block</a>.
-
-		<dt><dfn>content-box</dfn>
-		<dt><dfn>padding-box</dfn>
-		<dt><dfn>border-box</dfn>
-		<dd>
-			Use the box’s own content-box/padding-box/border-box as the <a>fill positioning area</a>.
-			For <a>SVG shapes</a>,
-			''fill-origin/content-box'' and ''fill-origin/padding-box'' are treated as ''fill-origin/fill-box'',
-			while ''fill-origin/border-box'' is treated as ''fill-origin/stroke-box''.
-
-		<dt><dfn>fill-box</dfn>
-		<dd>
-			For <a>SVG shapes</a> or SVG text,
-			use the <a>object bounding box</a> of the element.
-			For CSS boxes,
-			use the bounding box of the text glyph outlines
-			of the element and all in-flow or floated descendants.
-
-		<dt><dfn>stroke-box</dfn>
-		<dd>
-			For <a>SVG shapes</a> or SVG text,
-			use the <a>stroke bounding box</a> of the element.
-			For CSS boxes,
-			use the bounding box of the text glyph stroke outlines
-			of the element and all in-flow or floated descendants.
-	</dl>
-
-	The SVG UA style sheet is amended to include the following rules:
-
-	<pre class="lang-css">
-	svg:svg {
-		fill-origin: content-box;
-	}
-	svg:g {
-		fill-origin: match-parent !important;
-		/* &lt;g> elements don't have a coordinate space of their own,
-		   so they can't declare ''fill-origin/content-box''. */
-	}
-	</pre>
-
-	The <dfn export>fill painting area</dfn> is infinite in size.
-	When painting,
-	the fill color/images are intersected with the glyph areas of the affected text,
-	or the fill geometry of the affected <a>SVG shape</a>.
-
-	Issue: SVG paint servers carry around their own originator information in *Units attributes,
-	but maybe SVGWG can add a new value that makes them pay attention to the CSS originator.
-
-## Fragmented Fills: the 'fill-break' property ## {#fill-break}
-
-	<pre class="propdef">
-		Name: fill-break
-		Value: bounding-box | slice | clone
-		Initial: bounding-box
-		Applies to: all elements
-		Inherited: yes?
-		Percentages: N/A
-		Media: visual
-		Computed value: as specified
-		Animatable: No
-	</pre>
-
-	This property specifies how the geometry of a <a>fragmented</a> box is treated for <a>fills</a>.
-
-	Values have the following meanings: COPY FROM FRAGMENTATION
-
-## Fill Opacity: the 'fill-opacity' property ## {#fill-opacity}
-
-	<pre class="propdef">
-		Name: fill-opacity
-		Value: <<'opacity'>>
-		Initial: 1
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: N/A
-		Media: visual
-		Computed value: the computed color
-		Animatable: as color
-	</pre>
-
-## Tiling Fill Images: the 'fill-repeat' property ## {#fill-repeat}
-
-	<pre class='propdef'>
-		Name: fill-repeat
-		Value: <<repeat-style>>#
-		Initial: repeat
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: n/a
-		Media: visual
-		Computed value: A list, each item consisting of: two keywords, one per dimension
-		Animatable: no
-	</pre>
-
-	Specifies how fill images are tiled and they have been sized and positioned.
-	Values are interpreted identically to 'background-repeat',
-	mutatis mutandi.
-
-## Positioning Fill Images: the 'fill-position' property ## {#fill-position}
-
-	<pre class='propdef'>
-		Name: fill-position
-		Value: <<position>>#
-		Initial: 0% 0%
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: n/a
-		Media: visual
-		Computed value: A list, each item consisting of: a pair of offsets (horizontal and vertical) from the top left origin each given as a combination of an absolute length and a percentage
-		Animatable: as <a>repeatable list</a> of <a>simple list</a> of length, percentage, or calc
-	</pre>
-
-	If fill images have been specified,
-	this property specifies their initial position
-	(after any resizing)
-	within their corresponding <a>fill positioning area</a>.
-	Values are interpreted identically to 'background-position',
-	mutatis mutandi.
-
-## Sizing Fill Images: the 'fill-size' property ## {#fill-size}
-
-	<pre class='propdef'>
-		Name: fill-size
-		Value: <<bg-size>>#
-		Initial: auto
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: n/a
-		Media: visual
-		Computed value: as specified, but with lengths made absolute and omitted ''background-size/auto'' keywords filled in
-		Animatable: as <a>repeatable list</a> of <a>simple list</a> of length, percentage, or calc
-	</pre>
-
-	Specifies the size of the fill images.
-	Values are interpreted identically to 'background-size',
-	mutatis mutandi.
-
-## Winding Rule for SVG shapes: the 'fill-rule' property ## {#fill-rule}
+### Winding Rule for SVG shapes: the 'fill-rule' property ### {#fill-rule}
 
 	<pre class=propdef>
 		Name: fill-rule
@@ -338,7 +140,207 @@ Fills {#fills}
 	(whether SVG or CSS),
 	as the “inside” of a text glyph is intrinsically defined.
 
-## Fill Shorthand: the 'fill' property ## {#fill-shorthand}
+### Fragmented Fills: the 'fill-break' property ### {#fill-break}
+
+	<pre class="propdef">
+		Name: fill-break
+		Value: bounding-box | slice | clone
+		Initial: bounding-box
+		Applies to: all elements
+		Inherited: yes?
+		Percentages: N/A
+		Media: visual
+		Computed value: as specified
+		Animatable: No
+	</pre>
+
+	This property specifies how the geometry of a <a>fragmented</a> box is treated for <a>fills</a>.
+
+	Values have the following meanings: COPY FROM FRAGMENTATION
+
+Fill Painting {#fill-paint}
+---------------------------
+
+### Fill Color: the 'fill-color' property ### {#fill-color}
+
+	<pre class="propdef">
+		Name: fill-color
+		Value: <<color>>
+		Initial: currentColor
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: N/A
+		Media: visual
+		Computed value: the computed color
+		Animatable: as color
+	</pre>
+
+	This property sets the fill color of an element.
+	This color is drawn behind any fill images.
+
+	Advisement: It's recommended that authors use the 'color' property to set the color of text,
+	rather than 'fill-color'.
+
+	Unlike 'background-color',
+	the fill color must only be drawn if the final layer of 'fill-image'
+	is <css>none</css> or an <a>invalid image</a>.
+	If it's a <a>valid image</a>,
+	the fill color must not be drawn.
+
+	Note: This is required to match the legacy behavior of SVG's 'fill' property,
+	which built in a "fallback color" to the single-layer image syntax.
+	In CSS this is better achieved with the ''image()'' function,
+	which makes fallback explicit.
+
+### Fill Image Sources: the 'fill-image' property ### {#fill-image}
+
+	<pre class="propdef">
+		Name: fill-image
+		Value: [ none | <<image>> ]#
+		Initial: none
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: N/A
+		Media: visual
+		Computed value: as specified, with URLs made absolute
+		Animatable: as repeatable list of images
+	</pre>
+
+	This property sets the fill images of an element.
+	Images are drawn with the first specified one on top (closest to the user)
+	and each subsequent image behind the previous one.
+	Values are interpreted identically to 'background-image',
+	mutatis mutandi.
+
+### Fill Positioning Area: the 'fill-origin' property ### {#fill-origin}
+
+	<pre class="propdef">
+		Name: fill-origin
+		Value: match-parent | fill-box | stroke-box | content-box | padding-box | border-box
+		Initial: match-parent
+		Applies to: all elements
+		Inherited: no
+		Percentages: N/A
+		Media: visual
+		Computed value: as specified
+		Animatable: no
+	</pre>
+
+	This property specifies the coordinate system of the <a>fill</a>,
+	setting the <dfn export>fill positioning area</dfn>.
+	Values have the following meanings:
+
+	<dl dfn-for="fill-origin" dfn-type="value">
+		<dt><dfn>match-parent</dfn>
+		<dd>
+			Use the same <a>fill positioning area</a> as the parent.
+			If it has no parent, use the <a>initial containing block</a>.
+
+		<dt><dfn>content-box</dfn>
+		<dt><dfn>padding-box</dfn>
+		<dt><dfn>border-box</dfn>
+		<dd>
+			Use the box’s own content-box/padding-box/border-box as the <a>fill positioning area</a>.
+			For <a>SVG shapes</a>,
+			''fill-origin/content-box'' and ''fill-origin/padding-box'' are treated as ''fill-origin/fill-box'',
+			while ''fill-origin/border-box'' is treated as ''fill-origin/stroke-box''.
+
+		<dt><dfn>fill-box</dfn>
+		<dd>
+			For <a>SVG shapes</a> or SVG text,
+			use the <a>object bounding box</a> of the element.
+			For CSS boxes,
+			use the bounding box of the text glyph outlines
+			of the element and all in-flow or floated descendants.
+
+		<dt><dfn>stroke-box</dfn>
+		<dd>
+			For <a>SVG shapes</a> or SVG text,
+			use the <a>stroke bounding box</a> of the element.
+			For CSS boxes,
+			use the bounding box of the text glyph stroke outlines
+			of the element and all in-flow or floated descendants.
+	</dl>
+
+	The SVG UA style sheet is amended to include the following rules:
+
+	<pre class="lang-css">
+	svg:svg {
+		fill-origin: content-box;
+	}
+	svg:g {
+		fill-origin: match-parent !important;
+		/* &lt;g> elements don't have a coordinate space of their own,
+		   so they can't declare ''fill-origin/content-box''. */
+	}
+	</pre>
+
+	The <dfn export>fill painting area</dfn> is infinite in size.
+	When painting,
+	the fill color/images are intersected with the glyph areas of the affected text,
+	or the fill geometry of the affected <a>SVG shape</a>.
+
+	Issue: SVG paint servers carry around their own originator information in *Units attributes,
+	but maybe SVGWG can add a new value that makes them pay attention to the CSS originator.
+
+### Tiling Fill Images: the 'fill-repeat' property ### {#fill-repeat}
+
+	<pre class='propdef'>
+		Name: fill-repeat
+		Value: <<repeat-style>>#
+		Initial: repeat
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: n/a
+		Media: visual
+		Computed value: A list, each item consisting of: two keywords, one per dimension
+		Animatable: no
+	</pre>
+
+	Specifies how fill images are tiled and they have been sized and positioned.
+	Values are interpreted identically to 'background-repeat',
+	mutatis mutandi.
+
+### Positioning Fill Images: the 'fill-position' property ### {#fill-position}
+
+	<pre class='propdef'>
+		Name: fill-position
+		Value: <<position>>#
+		Initial: 0% 0%
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: n/a
+		Media: visual
+		Computed value: A list, each item consisting of: a pair of offsets (horizontal and vertical) from the top left origin each given as a combination of an absolute length and a percentage
+		Animatable: as <a>repeatable list</a> of <a>simple list</a> of length, percentage, or calc
+	</pre>
+
+	If fill images have been specified,
+	this property specifies their initial position
+	(after any resizing)
+	within their corresponding <a>fill positioning area</a>.
+	Values are interpreted identically to 'background-position',
+	mutatis mutandi.
+
+### Sizing Fill Images: the 'fill-size' property ### {#fill-size}
+
+	<pre class='propdef'>
+		Name: fill-size
+		Value: <<bg-size>>#
+		Initial: auto
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: n/a
+		Media: visual
+		Computed value: as specified, but with lengths made absolute and omitted ''background-size/auto'' keywords filled in
+		Animatable: as <a>repeatable list</a> of <a>simple list</a> of length, percentage, or calc
+	</pre>
+
+	Specifies the size of the fill images.
+	Values are interpreted identically to 'background-size',
+	mutatis mutandi.
+
+### Fill Shorthand: the 'fill' property ### {#fill-shorthand}
 
 	<pre class="propdef">
 		Name: fill
@@ -367,14 +369,28 @@ Fills {#fills}
 
 	Issue: See 'stroke' for discussion of SVG's image/color fallback syntax.
 
-## Layering Multiple Fill Images ## {#fill-layering}
+Fill Transparency {#fill-filter}
+--------------------------------
 
-	The fill of a box can have multiple layers.
-	The number of layers is determined by the number of comma-separated values for the 'fill-image' property.
-	A value of ''fill-image/none'' still creates a layer.
+### Fill Opacity: the 'fill-opacity' property ### {#fill-opacity}
 
-	List-valued properties interact exactly as for background images,
-	defined in [[css-backgrounds-3#layering]].
+	<pre class="propdef">
+		Name: fill-opacity
+		Value: <<'opacity'>>
+		Initial: 1
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: N/A
+		Media: visual
+		Computed value: the specified value converted to a <<number>>, clamped to the range [0,1]
+		Animatable: as number
+	</pre>
+
+	The 'fill-opacity' property specifies the opacity of the painting operation
+	used to stroke the current object.
+	As with 'opacity',
+	a value of ''0'' or ''0%'' means fully transparent,
+	and a value of ''1'' or ''100%'' means fully opaque.
 
 <!--
  ██████  ████████ ████████   ███████  ██    ██ ████████
@@ -402,6 +418,16 @@ Strokes (Outlines) {#strokes}
 	the drawing order is controlled by the 'paint-order' property.
 
 	Issue: Should 'paint-order' apply to non-SVG text too?
+
+Layering Multiple Strokes {#stroke-layering}
+--------------------------------------------
+
+	The stroke of a box can have multiple layers.
+	The number of layers is determined by the number of comma-separated values for the 'stroke-image' property.
+	A value of ''stroke-image/none'' still creates a layer.
+
+	List-valued properties interact exactly as for background images,
+	defined in [[css-backgrounds-3#layering]].
 
 Stroke Geometry {#stroke-geometry}
 ----------------------------------
@@ -655,7 +681,25 @@ Stroke Geometry {#stroke-geometry}
 	The miterlimit number has physical justification,
 	but it's difficult to understand without experimentation.
 
-Dashed Strokes {#stroke-dashes}
+### Fragmented Strokes: the 'stroke-break' property ### {#stroke-break}
+
+	<pre class="propdef">
+		Name: stroke-break
+		Value: bounding-box | slice | clone
+		Initial: bounding-box
+		Applies to: all elements
+		Inherited: ?
+		Percentages: N/A
+		Media: visual
+		Computed value: as specified
+		Animatable: No
+	</pre>
+
+	This property specifies how the geometry of a <a>fragmented</a> box is treated for <a>strokes</a>.
+
+	Values have the following meanings: COPY FROM FRAGMENTATION
+
+Stroke Dashing {#stroke-dashes}
 -------------------------------
 
 ### Stroke Dash Patterns: the 'stroke-dasharray' property ### {#stroke-dasharray}
@@ -854,44 +898,6 @@ Stroke Painting {#stroke-paint}
 	the stroke color/images are intersected with the stroked outlines of the affected text,
 	or the stroke geometry of the affected <a>SVG shape</a>.
 
-### Fragmented Strokes: the 'stroke-break' property ### {#stroke-break}
-
-	<pre class="propdef">
-		Name: stroke-break
-		Value: bounding-box | slice | clone
-		Initial: bounding-box
-		Applies to: all elements
-		Inherited: ?
-		Percentages: N/A
-		Media: visual
-		Computed value: as specified
-		Animatable: No
-	</pre>
-
-	This property specifies how the geometry of a <a>fragmented</a> box is treated for <a>strokes</a>.
-
-	Values have the following meanings: COPY FROM FRAGMENTATION
-
-### Stroke Opacity: the 'stroke-opacity' property ### {#stroke-opacity}
-
-	<pre class="propdef">
-		Name: stroke-opacity
-		Value: <<number-percentage>>
-		Initial: 1
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: N/A
-		Media: visual
-		Computed value: he specified value, clamped to the range [0,1].
-		Animatable: as <<number-percentage>>
-	</pre>
-
-	The 'stroke-opacity' property specifies the opacity of the painting operation
-	used to stroke the current object.
-	As with 'opacity',
-	a value of ''0'' or ''0%'' means fully transparent,
-	and a value of ''1'' or ''100%'' means fully opaque.
-
 ### Tiling Stroke Images: the 'stroke-repeat' property ### {#stroke-repeat}
 
 	<pre class='propdef'>
@@ -985,14 +991,27 @@ Stroke Painting {#stroke-paint}
 
 	Issue: See issue in 'fill' about the value that 'fill-origin' gets reset to.
 
-## Layering Multiple Stroke Images ## {#stroke-layering}
+## Stroke Transparency ## {#stroke-filter}
 
-	The stroke of a box can have multiple layers.
-	The number of layers is determined by the number of comma-separated values for the 'stroke-image' property.
-	A value of ''stroke-image/none'' still creates a layer.
+### Stroke Opacity: the 'stroke-opacity' property ### {#stroke-opacity}
 
-	List-valued properties interact exactly as for background images,
-	defined in [[css-backgrounds-3#layering]].
+	<pre class="propdef">
+		Name: stroke-opacity
+		Value: <<'opacity'>>
+		Initial: 1
+		Applies to: inline boxes and <a>SVG shapes</a>
+		Inherited: yes
+		Percentages: N/A
+		Media: visual
+		Computed value: the specified value converted to a <<number>>, clamped to the range [0,1]
+		Animatable: as number
+	</pre>
+
+	The 'stroke-opacity' property specifies the opacity of the painting operation
+	used to stroke the current object.
+	As with 'opacity',
+	a value of ''0'' or ''0%'' means fully transparent,
+	and a value of ''1'' or ''100%'' means fully opaque.
 
 ## Perfect-World Syntax ## {#perfect-world}
 
