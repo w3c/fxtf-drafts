@@ -435,11 +435,24 @@ Layering Multiple Strokes {#stroke-layering}
 --------------------------------------------
 
 	The stroke of a box can have multiple layers.
-	The number of layers is determined by the number of comma-separated values for the 'stroke-image' property.
+	The number of layers is determined by the larger of
+	the number of comma-separated values for the 'stroke-image' property
+	and the number of comma-separated values for the 'stroke-color' property.
 	A value of ''stroke-image/none'' still creates a layer.
+
+	If the two properties have different lengths,
+	the values are aligned from the end,
+	with missing front values for 'stroke-color' defaulting to ''transparent'',
+	and missing front values for 'stroke-image' defaulting to ''none''.
 
 	List-valued properties interact exactly as for background images,
 	defined in [[css-backgrounds-3#layering]].
+
+	Issue: 'stroke-color' must front-fill with ''transparent'',
+	otherwise multiple image layers will randomly fall back to solid colors
+	if the image fails to load.
+	Do we want to have strokes and fills front-fill with initial values in general,
+	or should the rest of these properties repeat their lists as they do for backgrounds?
 
 Stroke Geometry {#stroke-geometry}
 ----------------------------------
@@ -448,7 +461,7 @@ Stroke Geometry {#stroke-geometry}
 
 	<pre class="propdef">
 		Name: stroke-width
-		Value: <<length-percentage>>
+		Value: <<length-percentage>>#
 		Initial: 1px
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -458,9 +471,9 @@ Stroke Geometry {#stroke-geometry}
 		Animatable: as <<length-percentage>>
 	</pre>
 
-	This property specifies the width of the stroke on the outline.
-	A zero value causes no stroke to be painted.
-	A negative value is invalid.
+	This property specifies the width of the strokes on the outline.
+	A zero value causes no stroke to be painted for that layer.
+	Negative values are invalid.
 
 	The <dfn>scaled viewport size</dfn> is the geometric mean of the viewport width and height.
 
@@ -838,7 +851,7 @@ Stroke Painting {#stroke-paint}
 
 	<pre class="propdef">
 		Name: stroke-color
-		Value: <<color>>
+		Value: <<color>>#
 		Initial: transparent
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -848,14 +861,17 @@ Stroke Painting {#stroke-paint}
 		Animatable: as color
 	</pre>
 
-	This property sets the stroke color of an element.
-	This color is drawn behind any stroke images.
+	This property sets the stroke colors of an element.
+	Like 'stroke-image',
+	stroke colors are drawn with the first specified one on top
+	(closest to the user)
+	and each subsequent color behind the previous one.
 
-	Unlike 'background-color',
-	the stroke color must only be drawn if the final layer of 'stroke-image'
-	is <css>none</css> or an <a>invalid image</a>.
-	If it's a <a>valid image</a>,
-	the stroke color must not be drawn.
+	Stroke colors are only drawn if the 'stroke-image' on the corresponding layer
+	is ''stroke-image/none'' or an <a>invalid image</a>.
+	(In other words,
+	each layer draws <em>either</em> an image or a color,
+	with images winning if both are specified.)
 
 	Note: This is required to match the legacy behavior of SVG's 'stroke' property,
 	which built in a "fallback color" to the single-layer image syntax.
@@ -875,6 +891,12 @@ Stroke Painting {#stroke-paint}
 		Computed value: as specified, with URLs made absolute
 		Animatable: as repeatable list of images
 	</pre>
+
+	This property sets the stroke images of an element.
+	Images are drawn with the first specified one on top
+	(closest to the user)
+	and each subsequent image behind the previous one.
+	Values are interpreted identically to 'background-image', mutatis mutandi.
 
 ### Stroke Positioning Area: the 'stroke-origin' property ### {#stroke-origin}
 
