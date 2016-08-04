@@ -594,30 +594,32 @@ Stroke Geometry {#stroke-geometry}
 	<dl dfn-type=value dfn-for=stroke-linecap>
 		<dt><dfn>butt</dfn>
 		<dd>
-			This value indicates that the stroke for each subpath
+			The stroke for each subpath
 			does not extend beyond its two endpoints.
-			A zero length subpath will therefore not have any stroke.
+			(A zero length subpath will therefore not have any stroke.)
 
 		<dt><dfn>round</dfn>
 		<dd>
-			This value indicates that at each end of each subpath,
-			the shape representing the stroke will be extended by a half circle
-			with a radius equal to the stroke width.
-			If a subpath has zero length,
-			then the resulting effect is that the stroke for that subpath
-			consists solely of a full circle centered at the subpath's point.
+			At each end of each subpath,
+			the stroke is extended by a half circle
+			with a radius equal to half the stroke width.
+			(The stroke for a zero-length subpath
+			is a full circle centered at the subpath's point.)
 
 		<dt><dfn>square</dfn>
 		<dd>
-			This value indicates that at the end of each subpath,
-			the shape representing the stroke will be extended by a rectangle
+			At the end of each subpath,
+			the stroke is extended by a rectangle
 			with the same width as the stroke width and whose length is half of the stroke width.
-			If a subpath has zero length,
-			then the resulting effect is that the stroke for that subpath
-			consists solely of a square with side length equal to the stroke width,
+			(The stroke for a zero-length subpath
+			is a square with side length equal to the stroke width,
 			centered at the subpath's point,
 			and oriented such that two of its sides are parallel to the effective tangent at that subpath's point.
-			See [[#path-notes]] for details on how to determine the tangent at a zero-length subpath.
+			See [[#path-notes]] for details on how to determine the tangent at a zero-length subpath.)
+
+			Issue: Adding a rectangle to the end of dashes on a curved outline looks bad.
+			It should just extend the dash by 'stroke-width'/2,
+			following the outline.
 	</dl>
 
 	<figure>
