@@ -636,7 +636,7 @@ Stroke Geometry {#stroke-geometry}
 
 	<pre class="propdef">
 		Name: stroke-linejoin
-		Value: [ arcs | miter ] || [ bevel | round ]
+		Value: [ crop | arcs | miter ] || [ bevel | round | stupid ]
 		Initial: miter
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -645,6 +645,64 @@ Stroke Geometry {#stroke-geometry}
 		Computed value: as specified
 		Animatable: no
 	</pre>
+
+	'stroke-linejoin' specifies the shape to be used at the corners of paths or basic shapes when they are stroked.
+	It has two parts:
+	''[ crop | arcs | miter ]'' specifies whether or not, and how, to extend the corner of the stroke;
+	''[ bevel | round | stupid ]'' specifies how to render the "cap" of the corner when it's limited in length by 'stroke-miterlimit'.
+
+	<dl dfn-type=value dfn-for=stroke-linejoin>
+		<dt><dfn>crop</dfn>
+		<dd>
+			The stroke does not extend past the corner of the path at all.
+
+			Issue: Crop actually does extend slightly past the corner;
+			it just fills in the little triangle gap between the two butted stroke ends.
+
+		<dt><dfn>arcs</dfn>
+		<dd>
+			An arcs corner is used to join path segments.
+			The arcs shape is formed by extending the outer edges of the stroke at the join point
+			with arcs that have the same curvature as the outer edges at the join point.
+
+		<dt><dfn>miter</dfn>
+		<dd>
+			A sharp corner is used to join path segments.
+			The corner is formed by extending the outer edges of the stroke at the tangents of the path segments
+			until they intersect.
+
+		<dt><dfn>bevel</dfn>
+		<dd>
+			When the 'stroke-miterlimit' is exceeded,
+			the corners are joined with a triangle that fills the area between the two stroked segments.
+
+		<dt><dfn>round</dfn>
+		<dd>
+			When the 'stroke-miterlimit' is exceeded,
+			the corner is clipped to the specified miter length,
+			then a half-circle is appended to the corner.
+
+		<dt><dfn>stupid</dfn>
+		<dd>
+			When the 'stroke-miterlimit' is exceeded,
+			this behaves as if ''clip bevel'' were specified.
+
+			Issue: Can we just remove ''stupid''?
+			It's a stupid value,
+			useful only because we didn't have the clip-at-miterlimit behavior in SVG1.
+			Question is if people are mostly just *accidentally* getting the bevel behavior right now,
+			and would be okay with their joins extending up to the miterlimit
+			and only getting the excess corners clipped,
+			or if they actually wanted the discontinuous behavior currently specified.
+			<a href="http://software.hixie.ch/utilities/js/live-dom-viewer/?%3C!DOCTYPE%20html%3E%0A%3Csvg%3E%0A%20%20%3Cpath%20fill%3Dnone%20stroke%3Dblack%20stroke-width%3D10%20d%3D%22M%2010%2010%20h%20100%20l%20-100%2055%22%20%2F%3E%0A%20%20%3Cpath%20fill%3Dnone%20stroke%3Dblack%20stroke-width%3D10%20d%3D%22M%2010%2050%20h%20100%20l%20-100%2056deg%22%20%2F%3E">
+				The breakpoint is between 29 and 30 degrees.
+			</a>
+	</dl>
+
+	If ''[ crop | arcs | miter ]'' is omitted,
+	it defaults to ''crop''.
+	If ''[ bevel | round | stupid ]'' is omitted,
+	it defaults to ''stupid''.
 
 	<figure>
 		<img src="images/linejoin-four.svg">
@@ -1401,61 +1459,7 @@ When stroking is performed using a complex paint server, such as a gradient or a
 
 A subpath (see Paths) consisting of a single moveto shall not be stroked. Any zero length subpath shall not be stroked if the stroke-linecap property has a value of butt but shall be stroked if the stroke-linecap property has a value of round or square, producing respectively a circle or a square centered at the given point. Examples of zero length subpaths include 'M 10,10 L 10,10', 'M 20,20 h 0', 'M 30,30 z' and 'M 40,40 c 0,0 0,0 0,0'. (Issue: This should be redundant with the stroke shape computation requirements below. In this section, we should phrase the requirements descriptively rather than normatively.)
 
-	<pre class="propdef">
-		Name: stroke-linejoin
-		Value: [ crop | arcs | miter ] || [ bevel | round | stupid ]
-		Initial: miter
-		Applies to: inline boxes and <a>SVG shapes</a>
-		Inherited: yes
-		Percentages: N/A
-		Media: visual
-		Computed value: as specified
-		Animatable: no
-	</pre>
 
-	'stroke-linejoin' specifies the shape to be used at the corners of paths or basic shapes when they are stroked.
-	It has two parts:
-	''[ crop | arcs | miter ]'' specifies whether or not, and how, to extend the corner of the stroke;
-	''[ bevel | round | stupid ]'' specifies how to render the "cap" of the corner when it's limited in length by 'stroke-miterlimit'.
-
-	<dl dfn-type=value dfn-for=stroke-linejoin>
-		<dt><dfn>crop</dfn>
-		<dd>
-			The stroke does not extend past the corner of the path at all.
-
-		<dt><dfn>arcs</dfn>
-		<dd>
-			An arcs corner is used to join path segments.
-			The arcs shape is formed by extending the outer edges of the stroke at the join point
-			with arcs that have the same curvature as the outer edges at the join point.
-
-		<dt><dfn>miter</dfn>
-		<dd>
-			A sharp corner is used to join path segments.
-			The corner is formed by extending the outer edges of the stroke at the tangents of the path segments
-			until they intersect.
-
-		<dt><dfn>bevel</dfn>
-		<dd>
-			When the 'stroke-miterlimit' is exceeded,
-			the corners are joined with a triangle that fills the area between the two stroked segments.
-
-		<dt><dfn>round</dfn>
-		<dd>
-			When the 'stroke-miterlimit' is exceeded,
-			the corner is clipped to the specified miter length,
-			then a half-circle is appended to the corner.
-
-		<dt><dfn>stupid</dfn>
-		<dd>
-			When the 'stroke-miterlimit' is exceeded,
-			this behaves as if ''clip bevel'' were specified.
-	</dl>
-
-	If ''[ crop | arcs | miter ]'' is omitted,
-	it defaults to ''crop''.
-	If ''[ bevel | round | stupid ]'' is omitted,
-	it defaults to ''stupid''.
 
 
 A <paint> value is defined as follows:
