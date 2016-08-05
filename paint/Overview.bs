@@ -514,6 +514,9 @@ Stroke Geometry {#stroke-geometry}
 
 			The 'stroke-linejoin' property must be ignored.
 
+			Issue: Why is 'stroke-linejoin' ignored?
+			It's still needed for interior corners.
+
 		<dt><dfn>outset</dfn>
 		<dd>
 			The stroke for each subpath
@@ -673,15 +676,25 @@ Stroke Geometry {#stroke-geometry}
 
 		<dt><dfn>bevel</dfn>
 		<dd>
-			When the 'stroke-miterlimit' is exceeded,
-			the corners are joined with a triangle that fills the area between the two stroked segments.
+			For ''crop'' corners,
+			this means the strokes are joined
+			with a triangle that fills the hollow area between the two butted stroke ends.
+
+			Otherwise,
+			the corner is cropped at the 'stroke-miterlimit'
+			by the perpendicular to its <a lt="corner diagonal">diagonal</a>.
 
 		<dt><dfn>round</dfn>
 		<dd>
-			When the 'stroke-miterlimit' is exceeded,
-			a filled arc centered at the corner
-			and with a radius of half the stroke width
-			is appended to complete the corner.
+			For ''crop'' corners,
+			this means the strokes are joined
+			with a filled arc with a radius of the external half of the stroke width,
+			centered at the corner.
+
+			Otherwise,
+			the corner is cropped as for ''bevel'',
+			and a filled arc tangent to the truncated stroke edges
+			is appended to round the corner.
 
 			Issue: Turn <a href="http://software.hixie.ch/utilities/js/live-dom-viewer/?%3C!DOCTYPE%20html%3E%0A%3Csvg%3E%0A%20%20%3Cpath%20fill%3Dnone%20stroke%3Dblack%20%20stroke-linejoin%3Dround%20stroke-width%3D100%20d%3D%22M%2010%2050%20h%20100%20l%20-100%20200%22%20%2F%3E%0A%20%20%3Cpath%20fill%3Dnone%20stroke%3Dwhite%20%20stroke-linejoin%3Dround%20stroke-width%3D1%20d%3D%22M%2010%2050%20h%20100%20l%20-100%20200%22%20%2F%3E%0A%20%20%3Ccircle%20cx%3D110%20cy%3D50%20r%3D50%20fill%3D%22rgba(255%2C255%2C0%2C.2)%22%20%2F%3E">this</a>
 			into a diagram using the spec's color scheme,
@@ -689,8 +702,11 @@ Stroke Geometry {#stroke-geometry}
 
 		<dt><dfn>stupid</dfn>
 		<dd>
-			When the 'stroke-miterlimit' is exceeded,
-			this behaves as if ''clip bevel'' were specified.
+			For ''crop'' corners,
+			this is the same as ''bevel''.
+
+			Otherwise, when the 'stroke-miterlimit' is exceeded,
+			this behaves as if ''crop bevel'' were specified.
 
 			Issue: Can we just remove ''stupid''?
 			It's a stupid value,
@@ -744,18 +760,18 @@ Stroke Geometry {#stroke-geometry}
 		<dt><dfn><<number>></dfn>
 		<dd>
 			Specifies the limit on the join's size
-			as a ratio of its diagonal to the 'stroke-width'.
+			as a ratio of its <dfn lt="corner diagonal">diagonal</dfn> to the 'stroke-width'.
 			Values less than 1 are invalid (and make the declaration <a>invalid</a>).
 
 			For a ''miter'' linejoin,
-			the length of the diagonal is calculated
+			the length of the <a lt="corner diagonal">diagonal</a> is calculated
 			from the angle between the two segments
 			as <code>'stroke-width' / sin(θ/2)</code>.
 			The linejoin is clipped perpendicular to
 			the line bisecting the angle between the two path segments.
 
 			For an ''arcs'' linejoin,
-			the length of the diagonal is calculated
+			the length of the <a lt="corner diagonal">diagonal</a> is calculated
 			along a circular arc that is tangent to
 			the line bisecting the angle between the two segments
 			at the point the two segments intersect
@@ -1304,7 +1320,7 @@ Stroke Painting {#stroke-paint}
 				and |P<sub>3</sub>| is the intersection of |A<sub>right</sub>| and |B<sub>right</sub>|.
 		8. Let |bevel| be the triangle formed from the three points
 			|P|, |P<sub>1</sub>| and |P<sub>2</sub>|.
-		9. If 'stroke-linejoin' is ''round'',
+		9. If 'stroke-linejoin' is ''stroke-linejoin/round'',
 			then return the union of |bevel|
 			and a circular sector of radius 'stroke-width',
 			centered on |P|,
