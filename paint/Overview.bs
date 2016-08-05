@@ -657,7 +657,7 @@ Stroke Geometry {#stroke-geometry}
 
 	<pre class="propdef">
 		Name: stroke-miterlimit
-		Value: <<number>> | <<angle>>
+		Value: <<number>>
 		Initial: 4
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -667,45 +667,40 @@ Stroke Geometry {#stroke-geometry}
 		Animatable: no
 	</pre>
 
-	This property converts miter joins to bevels when the angle is too small
-	(since the apparent "size" of a miter join--
+	This property specifies the maximum size of a ''miter'' or ''arcs'' join
+	when two stroke segments meet at a corner.
+	(The apparent “size” of the join--
 	the distance between the inner and outer corner--
-	approaches infinity as the angle decreases).
-	This property only has an effect if 'stroke-linejoin' is set to ''miter''.
+	approaches infinity as the angle decreases.)
+
+	This property has no effect when 'stroke-align' is ''inset''.
 
 	Values have the following meanings:
 
-	<dl dfn-for="stroke-miterlimit">
+	<dl dfn-for="stroke-miterlimit" dfn-type=value>
 		<dt><dfn><<number>></dfn>
 		<dd>
-			The limit on the ratio of the miter diagonal to the 'stroke-width':
-			when the limit is exceeded,
-			the join is converted from a miter to a bevel.
+			Specifies the limit on the join's size
+			as a ratio of its diagonal to the 'stroke-width'.
 			Values less than 1 are invalid (and make the declaration <a>invalid</a>).
 
 			For a ''miter'' linejoin,
-			the length of the miter diagonal is calculated
+			the length of the diagonal is calculated
 			from the angle between the two segments
 			as <code>'stroke-width' / sin(θ/2)</code>.
-			The linejoin is clipped by a line perpendicular to
-			the line bisecting the angle between the two path segments
+			The linejoin is clipped perpendicular to
+			the line bisecting the angle between the two path segments.
 
 			For an ''arcs'' linejoin,
-			the length of the miter diagonal is calculated
+			the length of the diagonal is calculated
 			along a circular arc that is tangent to
 			the line bisecting the angle between the two segments
 			at the point the two segments intersect
 			and passes through the end point of the join.
-			The linejoin is clipped by a line perpendicular to this arc.
-
-
-		<dt><dfn><<angle>></dfn>
-		<dd>
-			The limit on the angle of the miter:
-			line joins less than this angle are converted from a miter to a bevel.
+			The linejoin is clipped perpendicular to this arc.
 	</dl>
 
-	Issue: Should we add angles as described above?
+	Issue: Should we add angles?
 	The miterlimit number has physical justification,
 	but it's difficult to understand without experimentation.
 
