@@ -97,42 +97,87 @@ ISSUE: Add more details and examples.
 <pre class='propdef'>
 Name: offset-path
 Value: <<url>> | <<angle>> && contain? | [ <<basic-shape>> | <<path()>> ] || <<geometry-box>> | none
-Initial: 0deg for <<angle>>, otherwise none
+Initial: none
 Applies to: All elements. In SVG, it applies to <a>container elements</a> excluding the <{defs}> element and all <a>graphics elements</a>
 Inherited: no
 Percentages: n/a
 Computed value: as specified
 Media: visual
-Animatable: as specified for <a href="https://www.w3.org/TR/css3-transitions/#animatable-types">angle</a>, otherwise no
+Animatable: If the start and end values are <<angle>> values, otherwise no
 </pre>
 
-Specifies the <a>path</a> the element gets positioned at. The element's exact position on the path is determined by the 'offset-distance' property. A <dfn>path</dfn> is either a specified path with one or multiple sub-paths or the geometry of a not styled basic shape. Each shape or path must define an <dfn>initial position</dfn> for the computed value of "0" for 'offset-distance' and an <dfn>initial direction</dfn> which specifies the rotation of the object on the initial position.
+Specifies the <a>path</a> the element gets positioned at.
+The element's exact position on the path is determined by the 'offset-distance' property.
+A <dfn>path</dfn> is either a specified path with one or multiple sub-paths or the geometry
+of a not styled basic shape.
+Each shape or path must define an <dfn>initial position</dfn> for the computed value of "0"
+for 'offset-distance' and an <dfn>initial direction</dfn> which specifies the rotation of 
+the object on the initial position.
 
-In this specification, a direction (or rotation) of 0 degree is equivalent to the direction of the positive y-axis in the object's <a>local coordinate system</a>. E.g a rotation of 0 degree points to the upper side of the UA if the object and its ancestors have no transformation applied.
+In this specification, a direction (or rotation) of ''0 degree'' is equivalent to the direction of 
+the positive y-axis in the object's <a>local coordinate system</a>.<br>
+E.g. A rotation of ''0 degree'' points to the upper side of the UA if the object 
+and its ancestors have no transformation applied.
 
 Values have the following meanings:
 
 <dl dfn-for="offset-path">
-  <dt><<angle>></dt>
-  <dd>
-    The path is a closed line segment that starts from the current position of the element and has the degree of the angle as specified in <<angle>> from the Y-axis. The path ends at the edge of the containing block.
-    <dl>
-        <dt><dfn>contain</dfn></dt>
-        <dd>
-           Adjust the value of 'offset-distance' when the element goes out of the path. When overflowing occurs, the distance value is reduced, until the end point of the path is on the edge of the element.
-        </dd>
-    </dl>
-
+<dt><<angle>></dt>
+<dd>
+	The path is a line segment that starts from the position of the element 
+	and proceeds in the direction defined by  the specified <<angle>> from the y axis. 
+	The path ends at the edge of the containing block.
+	For <<angle>>, the initial value ''none'' is interpreted as ''0deg'',
+	the element can be positioned along the y axis.
+	If the <<angle>> value increases in the positive direction, the element moves clockwise.
+	
 	<p class="note">Note: Defining a path with <<angle>>, 
-	the element can be positioned in the polar coordinate system.
-	In polar coordinates, a pole is the reference point and points are described 
-	as been a certain distance from it, as also a certain angle from the polar axis.
+	the element can be positioned in the used of polar coordinates.
+	The polar coordinate system is a two-dimensional coordinate system in which each point on a plane
+	is determined by a distance from a fixed point and an angle from a fixed line.
+	The fixed point which is similar to the origin of a Cartesian coordinate system is called the pole,
+	and the fixed line which is a ray from the pole is the polar axis.
+	This coordinate system specifies the position of a point with a certain distance from the pole
+	and a certain angle measured from the polar axis to the segment connecting the pole.<br>
 	In mathematical theory, the polar axis is commonly defined as the positive direction 
-	of the x-axis, but we consider the polar axis as the positive direction of the y-axis 
-	position as other CSS specifications such as [[!CSS3VAL]], <<angle>> value. 
-	Therefore, when 0deg is given to 'offset-path', the element is positioned along the y-axis.
-	If the <<angle>> value increases in the positive direction from 0, the element moves clockwise.
+	of the x axis, but we consider the polar axis as the positive direction of the y axis 
+	position for consistency with other CSS specifications such as [[!CSS3VAL]], <<angle>> value.
 	</p>
+	<dl>
+		<dt><dfn>contain</dfn></dt>
+		<dd>
+			When the value of 'offset-distance' would select a point on the path 
+			which is outside the edge of the containing element, the value is instead clipped 
+			so that the selected point lies on the edge of the element.
+		</dd>
+		<div class='example'>
+		Here are some examples.
+		The first example shows that some parts of elements are outside of the path.
+		<pre class="lang-html">
+			&lt;body>
+				&lt;div style="offset-path: 45deg; offset-distance: 100%">&lt;/div>
+				&lt;div style="offset-path: 180deg; offset-distance: 100%">&lt;/div>
+			&lt;/body>
+		</pre>
+		<div class=figure> 
+			<img alt="An image of elements positioned without contain" src="images/offset_distance_without_contain.png" style="width: 200px;"/>
+			<figcaption>'offset-path' without 'contain'</figcaption>
+		</div>
+
+		In the second example, 'contain' is given to the 'offset-path' value of each element 
+		to avoid overflowing.
+		<pre class="lang-html">
+			&lt;body>
+				&lt;div style="offset-path: 45deg contain; offset-distance: 100%">&lt;/div>
+				&lt;div style="offset-path: 180deg contain; offset-distance: 100%">&lt;/div>
+			&lt;/body>
+		</pre>
+		<div class=figure>
+			<img alt="An image of elements positioned without contain" src="images/offset_distance_with_contain.png" style="width: 200px;"/>
+			<figcaption>'offset-path' with 'contain'</figcaption>
+		</div>
+		</div>
+	</dl>
 </dd>
 
 <dt><<basic-shape>></dt>
@@ -192,36 +237,6 @@ For SVG elements without associated CSS layout box, the <a>used value</a> for <a
 For elements with associated CSS layout box, the <a>used value</a> for <a value for=clip-path>fill-box</a>, 
 <a value for=clip-path>stroke-box</a> and <a value for=clip-path>view-box</a> is <a value for=mask-clip>border-box</a>.
 
-<div class='example'>
-Here are some examples.
-The first example shows that some parts of elements are outside of the path.
-
-<pre class="lang-html">
-	&lt;body>
-		&lt;div style="offset-path: 45deg; offset-distance: 100%">&lt;/div>
-		&lt;div style="offset-path: 180deg; offset-distance: 100%">&lt;/div>
-	&lt;/body>
-</pre>
-<div class=figure> 
-	<img alt="An image of elements positioned without contain" src="images/offset_distance_without_contain.png" style="width: 300px;"/>
-	<figcaption>'offset-path' without 'contain'</figcaption>
-</div>
-
-In the second example, 'contain' is given to the 'offset-path' value of each element 
-to avoid overflowing.
-
-<pre class="lang-html">
-	&lt;body>
-		&lt;div style="offset-path: 45deg contain; offset-distance: 100%">&lt;/div>
-		&lt;div style="offset-path: 180deg contain; offset-distance: 100%">&lt;/div>
-	&lt;/body>
-</pre>
-<div class=figure>
-	<img alt="An image of elements positioned without contain" src="images/offset_distance_with_contain.png" style="width: 300px;"/>
-	<figcaption>'offset-path' with 'contain'</figcaption>
-</div>
-</div>
-
 <h3 id="offset-distance-property">Position on the path: The 'offset-distance' property</h3>
 <pre class='propdef'>
 Name: offset-distance
@@ -242,12 +257,14 @@ Describes the position of the element along the specified <a>path</a>.
 <dd>The distance from the initial position of the shape or path to the position 
 of the element.
 
-Percentages are relative to the length of the path that is the distance between 
+Percentages are relative to the length of the path - that is the distance between 
 the initial position and the end position of the path.</dd>
 
 <dt><<size>></dt>
-<dd>Decides a point used for measuring the distance from the initial position 
-	of the path.
+<dd>Decides the position of the end point of the path when it is used with <<percentage>>.
+	When the offset of the element on the path is specified with <<percentage>>, 
+	it needs to guarantee the constant calculated value regardless of <<angle>>. 
+	To do that, <<size>> gives a distance between the start point and the end point of the path.
 
 	It is defined as
 
@@ -275,7 +292,8 @@ the initial position and the end position of the path.</dd>
 	<p class='note'>Note: When the initial position is at one of the corners of 
 	the containing block, the closest side takes the edge where the initial position 
 	is on. 
-	Even if the offset given by <<length>> or <<percentage>> changes, the position of the element specified with closest-side is the same.
+	Even if the offset given by <<length>> or <<percentage>> changes, 
+	the position of the element specified with <var>closest-side</var> is the same.
 	</p>
 </dd>
 
@@ -325,44 +343,13 @@ Specifies the initial position of the path.
 
 Values are defined as follows:
 <dl dfn-for="offset-position" dfn-type="value">
-<dt><var>'auto'</var></dt>
+<dt><var>auto</var></dt>
 <dd>Computes to the current position of the element.</dd>
 
 <dt><<position>></dt>
-<dd>The <<position>> represents the horizontal position and the vertical position 
-	as specified in CSS Backgrounds [[CSS3-BACKGROUND]].
-
-	Values of <<position>> are defined like below:
-	<dl>
-		<dt><<percentage>></dt>
-		<dd>A percentage for the horizontal offset is relative to the width of 
-		the containing block.
-		A percentage for the vertical offset is relative to the height of 
-		the containing block.
-		</dd>
-
-		<dt><<length>></dt>
-		<dd>A length value gives the fixed length as an offset.
-		The offset is from the top left corner of the containing block.
-		</dd>
-
-		<dt><dfn>top</dfn></dt>
-		<dd>Computes to 0% for the vertical position.</dd>
-
-		<dt><dfn>right</dfn></dt>
-		<dd>Computes to 100% for the horizontal position.</dd>
-
-		<dt><dfn>bottom</dfn></dt>
-		<dd>Computes to 100% for the vertical position.</dd>
-
-		<dt><dfn>left</dfn></dt>
-		<dd>Computes to 0% for the horizontal position.</dd>
-
-		<dt><dfn>center</dfn></dt>
-		<dd>Computes to 50% (left 50%) for the horizontal position 
-		if the horizontal position is not otherwise specified, 
-		or 50% (top 50%) for the vertical position if it is.</dd>
-	</dl>
+<dd>Represents the horizontal and the vertical offsets 
+	of the initial position of the path from the top left corner of the containing block
+	that are computed as specified in CSS Backgrounds [[CSS3-BACKGROUND]].
 </dd>
 </dl>
 
@@ -371,7 +358,7 @@ Values are defined as follows:
 Name: offset-anchor
 Applies to: All elements
 Value: <<position>>
-Initial: 'auto'
+Initial: auto
 Media: visual
 Inherited: no
 Percentages: Relative to the width and the height of an element
@@ -379,15 +366,14 @@ Animatable: as <<position>>
 </pre>
 
 Defines an anchor point of the element positioned along the path. 
-The anchor specifies a position which is a representative point of the element 
-and could be set as any point within the content area of the element. 
-The anchor point is placed along the path.
+The anchor specifies the point of the element which is to be considered 
+as the point that is moved along the path.
 
 Values have the following meanings:
 <dl dfn-for="offset-anchor" dfn-type="value">
-<dt><var>'auto'</var></dt>
+<dt><var>auto</var></dt>
 <dd>Computes to the value from 'offset-position'.
-	When 'auto' is given to 'offset-anchor', 
+	When ''auto'' is given to 'offset-anchor', 
 	'offset-position' behaves similar to 'background-position'.
 </dd>
 <dt><<position>></dt>
@@ -634,7 +620,6 @@ This is a shorthand property for setting 'offset-path', 'offset-distance',
 Omitted values are set to their initial values.
 
 <h3 id="offset-processing">Offset processing</h3>
-
 <h4 id="calculating-the-computed-distance-along-a-path">Calculating the computed distance along a path</h4>
 
 Processing the distance along a path operates differently depending upon whether
@@ -662,7 +647,7 @@ To determine the <dfn>computed distance</dfn> for a given <var>path</var> and <v
 
 3.  
     :   If <var>path</var> is a closed path:
-    ::  Let <a>computed distance</a> be equal to <var>distance</var> modulus <var>upper bound</bar>.
+    ::  Let <a>computed distance</a> be equal to <var>distance</var> modulus <var>upper bound</var>.
     :   Otherwise:
     ::  Let <a>computed distance</a> be equal to <var>distance</var> clamped by 0 and <var>upper bound</var>.
 
