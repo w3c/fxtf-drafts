@@ -1049,6 +1049,9 @@ Stroke Dashing {#stroke-dashes}
 
 	Issue: Need to define what happens when corner dashes would overlap.
 
+	Issue: Should we auto-trigger justification when this property is active?
+	Without it, you'll get some dumb-looking results by default.
+
 	<figure>
 		<img src="images/dashcorner.svg" alt="Image showing a rectangle at each corner and short dashes in between.">
 		<figcaption>
@@ -1069,9 +1072,94 @@ Stroke Dashing {#stroke-dashes}
 	Animatable: no
 	</pre>
 
-	Issue: <a href="https://svgwg.org/specs/strokes/#StrokeDashadjustProperty">spec text, needs work</a>
+	The 'stroke-dash-justify' property specifies
+	whether and how a stroke's dash pattern will be adjusted
+	so that it is repeated a whole number of times
+	along each of an element's subpaths.
+
+	<dl dfn-type=value dfn-for=stroke-dash-justify>
+		: <dfn>none</dfn>
+		::
+			No adjustment of the dash pattern is made:
+			it's clipped at the end of the subpath
+			with however much progress it made to that point.
+
+		: <dfn>stretch</dfn>
+		::
+			Indicates that when the dash pattern does not fit into a subpath a whole number times,
+			the dashes or gaps (or both) will be lengthened so that it does.
+
+		: <dfn>compress</dfn>
+		::
+			Indicates that when the dash pattern does not fit into a subpath a whole number times,
+			the dashes or gaps (or both) will be shortened so that it does.
+
+		: <dfn>dashes</dfn>
+		::
+			Indicates that when a dash pattern is to be stretched or compressed,
+			the length of the dashes will be adjusted.
+
+		: <dfn>gaps</dfn>
+		::
+			Indicates that when a dash pattern is to be stretched or compressed,
+			the length of the gaps will be adjusted.
+	</dl>
+
+	If neither ''stroke-dash-justify/stretch'' nor ''stroke-dash-justify/compress'' is specified,
+	it defaults to whichever would result in less adjustment.
+
+	If neither ''stroke-dash-justify/dashes'' nor ''stroke-dash-justify/gaps'' is specified,
+	it defaults to ???.
 
 	Issue: Default should probably be to adjust the gaps only.
+
+	The target length that a dash pattern will be adjusted to
+	depends on the value of the 'stroke-dash-corner' property:
+
+	* If 'stroke-dash-corner' is ''stroke-dash-corner/none'',
+		then the dash pattern will be adjusted
+		to fit within the length of the subpath a whole number of times.
+	* If 'stroke-dash-corner' has any other value,
+		including a zero length,
+		then the dash pattern will be adjusted differently for each path segment of the subpath
+		such that it fits between the two corner dashes at the ends of the segment
+		a whole number of times.
+
+	The adjustment of dash and gap length in a dash pattern is done by scaling the lengths by a factor,
+	which is the number closest to 1
+	that will result in the dash pattern fitting in the target length
+	a whole number of times.
+	If ''stroke-dash-justify/stretch'' is used,
+	the factor is a number between 1 and 2,
+	while if ''stroke-dash-justify/compress'' is used,
+	the factor is a number between 0 and 1.
+
+	If ''stroke-dash-justify/stretch'' is specified,
+	but the dash pattern is longer than the target length,
+	no adjustment is performed.
+
+	Issue: Should it center the segment when it's too long?
+
+	If ''stroke-dash-justify/compress'' is specified,
+	but the adjustable parts of the dash pattern
+	can't be compressed enough to fit the dash pattern into the target length,
+	the compressible parts must be set to zero.
+
+	Issue: Do we want to allow control of whether the stroke ends with a dash or with a gap?
+	For a closed path,
+	you probably want a gap at the end,
+	while for an open path,
+	a dash at the end is probably better.
+	Maybe omit control for this,
+	and just do it automatically based on whether the path is closed?
+
+	<figure>
+		<img src="images/dashadjust.svg">
+		<figcaption>
+			The same dash stroke used on three different paths,
+			adjusted to fit a whole number of times on each.
+		</figcaption>
+	</figure>
 
 
 
