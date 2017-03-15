@@ -1004,13 +1004,58 @@ Stroke Dashing {#stroke-dashes}
 	Animatable: yes, if <<length>>
 	</pre>
 
-	Issue: <a href="https://svgwg.org/specs/strokes/#StrokeDashcornerProperty">spec text, needs work</a>
+	The 'stroke-dash-corner' property controls
+	whether a dash is always painted at the vertices of a stroked shape.
+	The points at which a dash corner is painted include
+	the start and end points of every segment within the shape's [=equivalent path=].
+
+	<dl dfn-type=value dfn-for=stroke-dash-corner>
+		: <dfn>none</dfn>
+		::
+			This property has no special effect on dashing:
+			the dashes are positioned/sized continuously along the path.
+
+		: <<length>>
+		::
+			A dash of the given <<length>>
+			must be painted at each vertex of the shape.
+			For an open shape,
+			the first corner dash is positioned so that it begins at the start of the path,
+			and the last corner dash so that it ends at the end of the path.
+			The other corner dashes of an open shape,
+			and all corner dashes of a closed shape,
+			are positioned so that they are centered on their vertex.
+	</dl>
+
+	Issue: Should the corner dash at the first and last vertex of an open shape
+	be half the length of the others?
+	Should this be author controllable?
+
+	Issue: Should there be a way to specify a padding,
+	so that any dash pattern between the corner dashes
+	does not not run up against them?
 
 	Issue: The corner needs to take over the role of the first dash in the dash pattern,
 	so the "interior" of each segment starts and ends with a gap.
 	Automatically skip the first dash in the pattern in each segment?
 
 	Issue: Keyword to use the length of the first dash as the corner.
+
+	When 'stroke-dash-corner' is not ''stroke-dash-corner/none'',
+	dash patterns
+	(as specified by ''stroke-dasharray'')
+	are repeated separately on each path segment,
+	in the space between the segment's corner dashes.
+
+	Issue: Need to define what happens when corner dashes would overlap.
+
+	<figure>
+		<img src="images/dashcorner.svg" alt="Image showing a rectangle at each corner and short dashes in between.">
+		<figcaption>
+			A rectangle painted with a dashed stroke and with corner dashes,
+			set with ''stroke-dasharray: 0 8px; stroke-dash-corner: 32px;''.
+		</figcaption>
+	</figure>
 
 	<pre class=propdef>
 	Name: stroke-dash-justify
