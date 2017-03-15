@@ -447,7 +447,7 @@ Layering Multiple Strokes {#stroke-layering}
 	If the two properties have different lengths,
 	the values are aligned from the end,
 	with missing front values for 'stroke-color' defaulting to ''transparent'',
-	and missing front values for 'stroke-image' defaulting to ''none''.
+	and missing front values for 'stroke-image' defaulting to ''stroke-image/none''.
 
 	List-valued properties interact exactly as for background images,
 	defined in [[css-backgrounds-3#layering]].
@@ -533,18 +533,18 @@ Stroke Geometry {#stroke-geometry}
 		but the other categories exist and need good definitions.
 
 		How does this apply to open path segments?
-		One suggestion is to alias ''outset'' to ''stroke-align/left'' and ''inset'' to ''stroke-align/right'' for open paths.
+		One suggestion is to alias ''stroke-align/outset'' to ''stroke-align/left'' and ''stroke-align/inset'' to ''stroke-align/right'' for open paths.
 		How are end caps handled?
 
 		<figure>
 			<img src="images/stroke-align-open-path.svg">
 			<figcaption>
-				1. Stroke with 'stroke-align' ''center'' value.
+				1. Stroke with 'stroke-align' ''stroke-align/center'' value.
 				2. Fill region.
-				3. Stroke with 'stroke-align' ''inset'' value per spec (? stroke only paints inside fill region).
-				4. Stroke with 'stroke-align' ''outset'' value (implemented by blocking out fill region).
-				5. Stroke with 'stroke-align' ''inset'' value, alternative interpretation.
-				6. Stroke with 'stroke-align' ''outset'' value per spec (?).
+				3. Stroke with 'stroke-align' ''stroke-align/inset'' value per spec (? stroke only paints inside fill region).
+				4. Stroke with 'stroke-align' ''stroke-align/outset'' value (implemented by blocking out fill region).
+				5. Stroke with 'stroke-align' ''stroke-align/inset'' value, alternative interpretation.
+				6. Stroke with 'stroke-align' ''stroke-align/outset'' value per spec (?).
 				7. Stroke with 'stroke-align' alternative ''stroke-align/left'' value; pink shows round line-cap.
 			</figcaption>
 		</figure>
@@ -770,7 +770,7 @@ Stroke Geometry {#stroke-geometry}
 	the distance between the inner and outer corner--
 	approaches infinity as the angle decreases.)
 
-	This property has no effect when 'stroke-align' is ''inset''.
+	This property has no effect when 'stroke-align' is ''stroke-align/inset''.
 
 	Values have the following meanings:
 
@@ -778,7 +778,7 @@ Stroke Geometry {#stroke-geometry}
 		<dt><dfn><<number>></dfn>
 		<dd>
 			Specifies the limit on the join's size
-			as a ratio of its <dfn lt="corner diagonal">diagonal</dfn> to the 'stroke-width'.
+			as a ratio of its <dfn for=/ dfn lt="corner diagonal">diagonal</dfn> to the 'stroke-width'.
 			Values less than 1 are invalid (and make the declaration <a>invalid</a>).
 
 			For a ''miter'' linejoin,
@@ -1170,7 +1170,42 @@ Stroke Paint {#stroke-paint}
 
 ## Computing the Shape of the Stroke ## {#path-notes}
 
-	Issue: This section doesn't handle 'stroke-dash-corner' and 'stroke-dash-justify' yet.
+### Stroke Paths ### {#stroke-paths}
+
+	In all cases,
+	all stroking properties which are affected by directionality,
+	such as those having to do with dash patterns,
+	must be rendered such that the stroke operation
+	starts at the same point at which the graphics element starts.
+	In particular, for <{path}> elements,
+	the start of the path is the first point of the initial “moveto” command.
+
+	For stroking properties such as dash patterns
+	whose computations are dependent on progress along the outline of the graphics element,
+	distance calculations are required to utilize
+	the SVG user agent's standard <a href="https://svgwg.org/svg2-draft/paths.html#DistanceAlongAPath">Distance along a path algorithms</a>.
+
+	When stroking is performed using a complex paint server,
+	such as a gradient or a <{pattern}>,
+	the stroke operation must be identical to the result that would have occurred
+	if the geometric shape defined by the geometry of the current graphics element
+	and its associated stroking properties
+	were converted to an equivalent <{path}> element
+	and then filled using the given paint server.
+
+	A subpath consisting of a single “moveto” shall not be stroked.
+	Any zero length subpath shall not be stroked
+	if the 'stroke-linecap' property has a value of ''stroke-linecap/butt''
+	but shall be stroked if the 'stroke-linecap' property has a value of ''stroke-linecap/round'' or ''stroke-linecap/square'',
+	producing respectively a circle or a square centered at the given point.
+	Examples of zero-length subpaths include
+	<code>'M 10,10 L 10,10'</code>,
+	<code>'M 20,20 h 0'</code>,
+	<code>'M 30,30 z'</code>,
+	and <code>'M 40,40 c 0,0 0,0 0,0'</code>.
+
+	Issue: This should be redundant with the stroke shape computation requirements below.
+	In this section, we should phrase the requirements descriptively rather than normatively.
 
 ### Stroke Shape ### {#algo-stroke-shape}
 
@@ -1203,6 +1238,8 @@ Stroke Paint {#stroke-paint}
 	</div>
 
 ### Dash Positions ### {#algo-dash-positions}
+
+	Issue: This section doesn't handle 'stroke-dash-corner' and 'stroke-dash-justify' yet.
 
 	<div algorithm="dash positions">
 		The <dfn>dash positions</dfn> for a given subpath
@@ -1267,7 +1304,7 @@ Stroke Paint {#stroke-paint}
 					* The direction from the midpoint of its straight edge to the midpoint of its arc
 						is the same as the direction of the subpath
 						at distance |position| along it.
-		3. Otherwise, 'stroke-linecap' is ''square'':
+		3. Otherwise, 'stroke-linecap' is ''stroke-linecap/square'':
 			1. If this is a starting cap,
 				then return a rectangle with side lengths 'stroke-width' and 'stroke-width' / 2
 				positioned such that:
@@ -1889,13 +1926,6 @@ This specification introduces no new privacy or security considerations.
 Some scratch:
 
 
-In all cases, all stroking properties which are affected by directionality, such as those having to do with dash patterns, must be rendered such that the stroke operation starts at the same point at which the graphics element starts. In particular, for ‘path’ elements, the start of the path is the first point of the initial "moveto" command.
-
-For stroking properties such as dash patterns whose computations are dependent on progress along the outline of the graphics element, distance calculations are required to utilize the SVG user agent's standard Distance along a path algorithms.
-
-When stroking is performed using a complex paint server, such as a gradient or a pattern, the stroke operation must be identical to the result that would have occurred if the geometric shape defined by the geometry of the current graphics element and its associated stroking properties were converted to an equivalent ‘path’ element and then filled using the given paint server.
-
-A subpath (see Paths) consisting of a single moveto shall not be stroked. Any zero length subpath shall not be stroked if the stroke-linecap property has a value of butt but shall be stroked if the stroke-linecap property has a value of round or square, producing respectively a circle or a square centered at the given point. Examples of zero length subpaths include 'M 10,10 L 10,10', 'M 20,20 h 0', 'M 30,30 z' and 'M 40,40 c 0,0 0,0 0,0'. (Issue: This should be redundant with the stroke shape computation requirements below. In this section, we should phrase the requirements descriptively rather than normatively.)
 
 
 
