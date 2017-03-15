@@ -11,12 +11,15 @@ Editor: Tab Atkins-Bittner, Google, http://xanthir.com
 Abstract: This module contains the features of CSS relating to filling and stroking text and SVG shapes.
 Ignored Terms: svg shape, svg shapes, invalid, repeatable list, simple list, valid image
 Ignored Vars: start, end
+Inline Github Issues: title
 </pre>
 
 <pre class=link-defaults>
 spec:css-color-4; type:property; text:color
 spec:css-break-3; type:dfn; text:fragment
-spec:svg2; type:dfn; text:equivalent path
+spec:svg2; type:dfn;
+	text:equivalent path
+	text:paint server element
 </pre>
 
 Introduction {#intro}
@@ -36,6 +39,83 @@ Introduction {#intro}
 Issue: Insert <a href="https://svgwg.org/svg2-draft/painting.html#SpecifyingPaint">Specifying Paint from SVG2</a>.
 
 Issue: Deal with text decoration. See <a href="https://www.w3.org/mid/20160422204811.GA17804@pescadero.dbaron.org">issue</a>.
+
+<!--
+████████     ███    ████ ██    ██ ████████
+██     ██   ██ ██    ██  ███   ██    ██
+██     ██  ██   ██   ██  ████  ██    ██
+████████  ██     ██  ██  ██ ██ ██    ██
+██        █████████  ██  ██  ████    ██
+██        ██     ██  ██  ██   ███    ██
+██        ██     ██ ████ ██    ██    ██
+-->
+
+Paint {#paint}
+==============
+
+	Paint is what makes abstract geometries visible.
+	It consists of colors, patterns, images, gradients, and other 2D graphics.
+	The <<color>> type represents 0-dimensional paint;
+	it is defined in [[!CSS3-COLOR]].
+	The <<paint>> type represents 2-dimensional paint,
+	and its syntax is:
+
+	<pre class=prod>
+		<dfn>&lt;paint></dfn> = none | <<image>> | <<svg-paint>>
+	</pre>
+
+	<dl dfn-for="<paint>" dfn-type=value>
+		: <dfn>none</dfn>
+		:: Indicates no paint is applied.
+
+		: <<image>>
+		:: Defined in [[!CSS3-IMAGES]]
+			and includes image references and gradients.
+
+		: <<svg-paint>>
+		:: References SVG paint servers,
+			and is defined in [[#svg-paint]].
+	</dl>
+
+SVG-Specific Paints {#svg-paint}
+--------------------------------
+
+	<pre class=prod>
+		<dfn>&lt;svg-paint></dfn> = child | child( <<integer>> )
+	</pre>
+
+	<dl dfn-type=value dfn-for="<svg-paint>">
+		: <dfn>child</dfn>
+		::
+			Refers to the last child [=paint server element=]
+			of the element being painted.
+
+			If there is no such child,
+			behaves as ''&lt;paint>/none''.
+
+		: <dfn>child(<<integer>>)</dfn>
+		::
+			This [=functional notation=],
+			which accepts a positive integer as its argument,
+			refers to the nth child [=paint server element=]
+			(1-indexed, as for ''::nth-child()'')
+			of the element being painted.
+
+			If there is no such child,
+			behaves as ''&lt;paint>/none''.
+
+			Arguments less than 1 are invalid.
+	</dl>
+
+	Issue(w3c/csswg-drafts#383):
+
+	Issue: <css>context-fill</css> and <css>context-stroke</css> need to be worked into the spec,
+	but they belong as keywords on each individual 'stroke' and 'fill' sub-property,
+	not as a <<paint>> value.
+	Needs more WG discussion,
+	and confirmation that this is an SVG2 feature that will be kept,
+	before we do the relatively substantial edits for it.
+
 
 <!--
 ████████ ████ ██       ██
@@ -205,7 +285,7 @@ Fill Paint {#fill-paint}
 
 	<pre class="propdef">
 		Name: fill-image
-		Value: [ none | <<image>> ]#
+		Value: <<paint>>#
 		Initial: none
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -981,7 +1061,7 @@ Stroke Paint {#stroke-paint}
 
 	<pre class="propdef">
 		Name: stroke-image
-		Value: [ none | <<image>> ]#
+		Value: <<paint>>#
 		Initial: none
 		Applies to: inline boxes and <a>SVG shapes</a>
 		Inherited: yes
@@ -1920,40 +2000,6 @@ Privacy and Security Considerations {#priv-sec}
 
 This specification introduces no new privacy or security considerations.
 
-
-<!--
-
-Some scratch:
-
-
-
-
-
-
-A <paint> value is defined as follows:
-
-<paint> = [ [ <paint-layer> , ]* <final-paint-layer> ] | context-fill | context-stroke
-
-<paint-layer> = <paint-source>
-
-<final-paint-layer> = <paint-source> || <color>
-
-<paint-source> = none | child | child(<integer>) | <url>
-
-The ability to apply more than one paint layer to an element is new in SVG 2.
-
-A <paint> value can either be a comma-separated list of paint layers, or one of the context keywords, which reference the paint value of fill or stroke from a context element. Each paint layer can take one of the following values:
-
-<url>
-A URL reference to a paint server element, which is an element that defines a paint server: ‘hatch’, ‘linearGradient’, ‘meshgradient’, ‘pattern’, ‘radialGradient’ and ‘solidcolor’.
-child
-A reference to the last child paint server element of the element being painted.
-child(n)
-A reference to the nth child paint server element of the element being painted.
-none
-No paint is applied in this layer.
-
--->
 
 <style type="text/css">.mjx-chtml {display: inline-block; line-height: 0; text-indent: 0; text-align: left; text-transform: none; font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; letter-spacing: normal; word-wrap: normal; word-spacing: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; margin: 0; padding: 1px 0}
 .MJXc-display {display: block; text-align: center; margin: 1em 0; padding: 0}
