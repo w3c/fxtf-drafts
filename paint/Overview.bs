@@ -9,7 +9,7 @@ ED: https://drafts.fxtf.org/paint/
 Editor: Elika J. Etemad / fantasai, Invited Expert, http://fantasai.inkedblade.net/contact
 Editor: Tab Atkins-Bittner, Google, http://xanthir.com
 Abstract: This module contains the features of CSS relating to filling and stroking text and SVG shapes.
-Ignored Terms: svg shape, svg shapes, invalid, repeatable list, simple list, valid image
+Ignored Terms: svg shape, svg shapes, invalid, repeatable list, simple list, valid image, user agent style sheet
 Ignored Vars: start, end
 Inline Github Issues: title
 </pre>
@@ -283,6 +283,20 @@ Fill Paint {#fill-paint}
 
 	Issue: 'fill-color' should be layerized, like 'stroke-color',
 	so the two sets of properties are maximally consistent.
+
+	SVG user agents must include the following rules
+	(or their equivalent)
+	in their [=user agent style sheet=]:
+
+	<pre class=lang-css>
+		@namespace svg "http://www.w3.org/2000/svg";
+		svg:svg {
+			fill-color: black;
+		}
+		svg:svg svg:svg {
+			fill-color: inherit;
+		}
+	</pre>
 
 ### Fill Image Sources: the 'fill-image' property ### {#fill-image}
 
