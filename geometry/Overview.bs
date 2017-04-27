@@ -436,7 +436,7 @@ In the following sections, terms have the following meaning:
 </dl>
 
 <pre class='idl'>
-[Constructor(optional (DOMString or sequence&lt;unrestricted double>) init = [1, 0, 0, 1, 0, 0]),
+[Constructor(optional (DOMString or sequence&lt;unrestricted double>) init),
  Exposed=(Window,Worker)]
 interface DOMMatrixReadOnly {
     [NewObject] static DOMMatrixReadOnly fromMatrix(optional DOMMatrixInit other);
@@ -508,7 +508,7 @@ interface DOMMatrixReadOnly {
                         serializer = { attribute };
 };
 
-[Constructor(optional (DOMString or sequence&lt;unrestricted double>) init = [1, 0, 0, 1, 0, 0]),
+[Constructor(optional (DOMString or sequence&lt;unrestricted double>) init),
  Exposed=(Window,Worker)]
 interface DOMMatrix : DOMMatrixReadOnly {
     [NewObject] static DOMMatrix fromMatrix(optional DOMMatrixInit other);
@@ -677,6 +677,9 @@ The <dfn dfn-type=constructor dfn-for=DOMMatrixReadOnly><code>DOMMatrixReadOnly(
 the <dfn dfn-type=constructor dfn-for=DOMMatrix><code>DOMMatrix(<var>init</var>)</code></dfn> constructors must follow these steps:
 
 <dl class=switch>
+  <dt>If <var>init</var> is omitted</dt>
+  <dd>Return the result of invoking <a>create a 2d matrix</a> of type {{DOMMatrixReadOnly}} or
+   {{DOMMatrix}} as appropriate, with the sequence [''1'', ''0'', ''0'', ''1'', ''0'', ''0''].</dd>
   <dt>If <var>init</var> is a {{DOMString}}</dt>
   <dd>
     <ol>
