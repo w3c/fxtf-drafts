@@ -2105,7 +2105,8 @@ href="https://www.w3.org/TR/2014/WD-geometry-1-20140918/">18 September 2014 Work
 
 <ul>
  <li><p>Changed the interfaces to generally use specific static operations for construction instead
- of using overloaded constructors, and made the interfaces more consistent.
+ of using overloaded constructors, and made the interfaces more consistent. However, {{DOMMatrix}}
+ still uses an overloaded constructor for compatibility with {{WebKitCSSMatrix}}.
 
  <li><p>Introduced the {{DOMMatrixInit}} dictionary.
 
@@ -2128,17 +2129,16 @@ href="https://www.w3.org/TR/2014/WD-geometry-1-20140918/">18 September 2014 Work
    <li><p>Made all arguments optional for {{DOMMatrix}}/{{DOMMatrixReadOnly}} methods, except for
    {{DOMMatrix/setMatrixValue()}}.
 
-   <li><p>Changed <code>fromString()</code> static method to overloaded constructor.
-
    <li><p>Added no-argument constructor.
 
    <li><p>Defined {{WebKitCSSMatrix}} to be a legacy window alias for {{DOMMatrix}}.
   </ul>
 
  <li><p>Exposed {{DOMPointReadOnly}}, {{DOMPoint}}, {{DOMRectReadOnly}}, {{DOMRect}}, {{DOMQuad}},
- {{DOMMatrixReadOnly}} and {{DOMMatrix}} to {{Window}} and {{Worker}}. Defined structured
- serialization of the interfaces. In workers, {{DOMMatrix}} and {{DOMMatrixReadOnly}} do not support
- parsing or stringifying with CSS syntax.
+ {{DOMMatrixReadOnly}} and {{DOMMatrix}} to {{Window}} and {{Worker}}. In workers, {{DOMMatrix}} and
+ {{DOMMatrixReadOnly}} do not support parsing or stringifying with CSS syntax.
+
+ <li><p>Defined structured serialization of the interfaces.
 
  <li><p>The live <code>bounds</code> attribute on {{DOMQuad}} was replaced with a non-live
  {{DOMQuad/getBounds()}} method. The "associated bounding rectangle" concept was also removed.
