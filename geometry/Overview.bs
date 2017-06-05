@@ -25,7 +25,6 @@ Can I Use URL: https://www.w3.org/TR/geometry-1/
 Ignore Can I Use URL Failure: https://drafts.fxtf.org/geometry/
 Ignore Can I Use URL Failure: https://www.w3.org/TR/geometry-1/
 Complain About: accidental-2119 true
-At Risk: The {{DOMRectList}} interface is at-risk. The authors of this specification await feedback from implementers if the item() function of {{DOMRectList}} is currently in use on legacy interfaces. If there is no/not enough content to justify {{DOMRectList}}, legacy interfaces must use sequences instead and {{DOMRectList}} will be removed from this specification.
 </pre>
 
 <pre class=anchors>
@@ -373,9 +372,9 @@ steps:
 </div>
 
 
-<h2 id=DOMRectList>The DOMRectList Interface</h2>
+<h2 id=DOMRectList>The DOMRectList interface</h2>
 
-<pre class='idl'>
+<pre class=idl>
 [NoInterfaceObject,
  ArrayClass]
 interface DOMRectList {
@@ -384,11 +383,16 @@ interface DOMRectList {
 };
 </pre>
 
-The <dfn dfn-type=attribute dfn-for='DOMRectList'>length</dfn> attribute must return the total number of <a interface>DOMRect</a> objects associated with the object.
+The <dfn dfn-type=attribute dfn-for=DOMRectList>length</dfn> attribute must return the total
+number of {{DOMRect}} objects associated with the object.
 
-The <dfn dfn-type=method dfn-for='DOMRectList'>item(<var>index</var>)</dfn> method, when invoked, must return a ''null'' value when <var>index</var> is greater than or equal to the number of <a interface>DOMRect</a> objects associated with the <a interface>DOMRectList</a>. Otherwise, the <a interface>DOMRect</a> object at <var>index</var> must be returned. Indices are zero-based.
+The <dfn dfn-type=method dfn-for=DOMRectList>item(<var>index</var>)</dfn> method, when invoked, must
+return ''null'' when <var>index</var> is greater than or equal to the number of {{DOMRect}} objects
+associated with the {{DOMRectList}}. Otherwise, the {{DOMRect}} object at <var>index</var> must be
+returned. Indices are zero-based.
 
-ADVISEMENT: <a interface>DOMRectList</a> must be supported for legacy reasons. New interfaces must not use <a interface>DOMRectList</a> and may use Sequences [[!WEBIDL]] instead.
+ADVISEMENT: {{DOMRectList}} only exists for compatibility with legacy Web content. When specifying a
+new API, {{DOMRectList}} must not be used. Use <code>sequence&lt;DOMRect></code> instead. [[WEBIDL]]
 
 
 <h2 id=DOMQuad>The DOMQuad interface</h2>
@@ -2106,8 +2110,6 @@ href="https://www.w3.org/TR/2014/WD-geometry-1-20140918/">18 September 2014 Work
 
  <li><p>Introduced the {{DOMMatrixInit}} dictionary.
 
- <li><p>Removed the <code>DOMRectList</code> interface.
-
  <li><p>Added JSON serializers for the interfaces.
 
  <li>
@@ -2161,7 +2163,8 @@ Draft</a>.
 
  <li><p>{{DOMMatrixReadOnly}} got a constructor taking a sequence of numbers as argument.
 
- <li><p>DOMRectList turned to an ArrayClass. The interfaces can just be used for legacy interfaces.
+ <li><p>{{DOMRectList}} turned to an ArrayClass. The interfaces can just be used for legacy
+ interfaces.
 
  <li><p>Put {{DOMRectList}} on at-Risk awaiting browser feedback.
 
