@@ -388,7 +388,7 @@ sub elementSummary {
     for my $cat (@{$elements{$name}{attributecategories}}) {
       if ($cat eq 'presentation') {
         $attributes .= "<li><a href='$attributeCategories{$cat}{href}'>$cat attributes</a><span class=expanding> — ";
-        $attributes .= join(', ', map { "<a property>$_</a>" }
+        $attributes .= join(', ', map { "'$_''" }
                             sort keys(%properties));
         $attributes .= '</span></li>';
       } elsif ($cat eq 'filter primitive') {

@@ -15,20 +15,20 @@ Test Suite: http://test.csswg.org/suites/filter-effects/nightly-unstable/
 Abstract: Filter effects are a way of processing an element's rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually be described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.
 Abstract:
 Abstract: Although originally designed for use in SVG, filter effects are a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the 'filter' property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <<image>> value.
-!Issues List: <a href="https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&component=Filter%20Effects&resolution=---">in Bugzilla</a>
+Issue Tracking: Legacy open bugs https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&component=Filter%20Effects&resolution=---
 Use <i> Autolinks: yes
 Ignored Vars: Va, 5s, 10s
 </pre>
+
 <pre class=link-defaults>
 spec:compositing-1; type:value;
 	text:screen
 	text:normal
 spec:css21;
-	type:dfn; text:containing block
 	type:type; text:<margin-width>
 spec:css-text-decor-3; type:value; text:currentcolor
 spec:css-color-3; type:property; text:color
-spec:css-flexbox-1; type:property; text:display
+spec:css-color-4; type:value; text:srgb
 spec:css-fonts-3; type:property
 	text:font-family
 	text:font-stretch
@@ -73,6 +73,12 @@ spec:svg; type:property
 spec:svg2; type:element
 	text:script
 	text:title
+</pre>
+
+<pre class=anchors>
+spec:svg12t; url:http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermUnsupportedValue; type:dfn; for:svg; text:unsupported
+spec:svg2; url:https://svgwg.org/svg2-draft/coords.html#ObjectBoundingBoxUnits; type:dfn; for:svg; text:object bounding box units
+spec:svg; url:https://www.w3.org/TR/SVG11/masking.html#SimpleAlphaBlending; type:dfn; for:svg; text:simple alpha compositing
 </pre>
 
 <style type="text/css">
@@ -234,7 +240,7 @@ The following pictures show the intermediate image results from each of the six 
 
 <h2 id="placement">Module interactions</h2>
 
-This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="https://www.w3.org/TR/CSS2/visuren.html" lt="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <a spec="css21">containing block</a>, and/or the creation of a <a spec="css21">stacking context</a>.
+This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="https://www.w3.org/TR/CSS2/visuren.html" lt="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <i>containing block</i>, and/or the creation of a <a spec="css21">stacking context</a>.
 
 The compositing model follows the SVG compositing model [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such as 'border' [[!CSS3BG]].
 
@@ -266,7 +272,7 @@ The description of the 'filter' property is as follows:
 Name: filter
 Value: none | <<filter-function-list>>
 Initial: none
-Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a>'defs'</a> element and all <a>graphics elements</a>
+Applies to: All elements. In SVG, it applies to <i>container elements</i> without the <a element>defs</a> element and all <i>graphics elements</i>
 Inherited: no
 Percentages: n/a
 Computed value: as specified
@@ -276,7 +282,7 @@ Animatable: yes
 
 If the value of the 'filter' property is ''filter/none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
-<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<url>> <!--| <<child-selector>> -->]+</pre>
+<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
 
 <pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>> | <br>
   <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
@@ -386,6 +392,8 @@ The compositing model follows the <a href="https://www.w3.org/TR/SVG11/render.ht
 
 The description of the <a element>filter</a> element follows:
 
+<pre class=prod><dfn>&lt;number-optional-number></dfn> = <<number>> <<number>>?</pre>
+
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=filter>
   <dt>
@@ -400,8 +408,8 @@ The description of the <a element>filter</a> element follows:
   <dd>
     <p>Specifies the coordinate system for the various length values within the <i>filter primitives</i> and for the attributes that define the <i>filter primitive subregion</i>.</p>
     <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>userSpaceOnUse</a>, any length values within the filter definitions represent values in the current <i>user coordinate system</i> in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
-    <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>). Note that if only one number was specified in a <a>&lt;number-optional-number&gt;</a> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>primitiveUnits</a> is <a attr-value for=primitiveUnits>userSpaceOnUse</a>.</p>
+    <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>). Note that if only one number was specified in a <<number-optional-number>> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
+    <p>The <i>initial value</i> for <a element-attr>primitiveUnits</a> is <a attr-value for=primitiveUnits>userSpaceOnUse</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -429,7 +437,7 @@ The description of the <a element>filter</a> element follows:
     See <i>filter region</i>.
   </dd>
   <dt>
-    <dfn>filterRes</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn>filterRes</dfn> = "<<number-optional-number>>"
   </dt>
   <dd>
     <p>The <em>filterRes</em> attribute was removed from the specification. See SVG 1.1 specification for the defintion [[!SVG11]].</p>
@@ -451,8 +459,8 @@ A <a element>filter</a> element can define a <dfn>filter region</dfn> on the can
   <dd>
     <p>Defines the coordinate system for attributes <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>.</p>
     <p>If <a element-attr for=filter>filterUnits</a> is equal to <a attr-value for=filterUnits>userSpaceOnUse</a>, <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent values in the current user coordinate system in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
-    <p>If <a element-attr for=filter>filterUnits</a> is equal to <a attr-value for=filterUnits>objectBoundingBox</a>, then <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>).</p>
-    <p>The <a>lacuna value</a> for <a element-attr>filterUnits</a> is <a attr-value for=filterUnits>objectBoundingBox</a>.</p>
+    <p>If <a element-attr for=filter>filterUnits</a> is equal to <a attr-value for=filterUnits>objectBoundingBox</a>, then <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>).</p>
+    <p>The <i>initial value</i> for <a element-attr>filterUnits</a> is <a attr-value for=filterUnits>objectBoundingBox</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt id="FilterRegionXYWidthHeightAttributes">
@@ -463,8 +471,8 @@ A <a element>filter</a> element can define a <dfn>filter region</dfn> on the can
     <p>These attributes define a rectangular region on the canvas to which this filter applies.</p>
     <p>The coordinate system for these attributes depends on the value for attribute <a element-attr>filterUnits</a>.</p>
     <p>The bounds of this rectangle act as a hard clipping region for each <i>filter primitive</i> included with a given <a element>filter</a> element; thus, if the effect of a given filter primitive would extend beyond the bounds of the rectangle (this sometimes happens when using a <a element>feGaussianBlur</a> filter primitive with a very large <a element-attr for=feGaussianBlur>stdDeviation</a>), parts of the effect will get clipped.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=filter>x</a> and <a element-attr for=filter>y</a> is ''-10%''.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=filter>width</a> and <a element-attr for=filter>height</a> is ''120%''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=filter>x</a> and <a element-attr for=filter>y</a> is ''-10%''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=filter>width</a> and <a element-attr for=filter>height</a> is ''120%''.</p>
     <p>Negative or zero values for <a element-attr for=filter>width</a> or <a element-attr for=filter>height</a> disable rendering of the element which referenced the filter.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -474,7 +482,7 @@ Note: Both of the two possible value for <a element-attr>filterUnits</a> (i.e., 
 
 Note: Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <i>filter region</i> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.
 
-Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
+Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <i>bounding box</i> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
 
 <h2 id="FilterPrimitivesOverview">Filter primitives</h2>
 
@@ -511,7 +519,7 @@ The following <dfn id="filter-primitive-attributes">filter primitive attributes<
   </dt>
   <dd>
     <p>The minimum x coordinate for the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=filter-primitive>x</a> is ''0%''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>x</a> is ''0%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -519,7 +527,7 @@ The following <dfn id="filter-primitive-attributes">filter primitive attributes<
   </dt>
   <dd>
     <p>The minimum y coordinate for the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=filter-primitive>y</a> is ''0%''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>y</a> is ''0%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -528,7 +536,7 @@ The following <dfn id="filter-primitive-attributes">filter primitive attributes<
   <dd>
     <p>The width of the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
     <p>A negative or zero value disables the effect of the given filter primitive (i.e., the result is a transparent black image).</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=filter-primitive>width</a> is ''100%''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>width</a> is ''100%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -537,7 +545,7 @@ The following <dfn id="filter-primitive-attributes">filter primitive attributes<
   <dd>
     <p>The height of the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
     <p>A negative or zero value must disable the effect of the given filter primitive (i.e., the result is a transparent black image).</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=filter-primitive>height</a> is ''100%''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>height</a> is ''100%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -731,7 +739,7 @@ This filter blends two objects together using commonly used imaging software ble
   </dd>
 </dl>
 
-The ''normal'' blend mode with alpha compositing is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
+The ''normal'' blend mode with alpha compositing is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <i>simple alpha compositing</i> technique used in SVG for all compositing outside of filter effects.
 
 <div class="example">
 <pre class="xml">
@@ -817,7 +825,7 @@ The calculations are performed on non-premultiplied color values.
     luminanceToAlpha</em>"
   </dt>
   <dd>
-    <p>Indicates the type of matrix operation. The keyword ''matrix'' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix. The <a>lacuna value</a> for <a element-attr for=feColorMatrix>type</a> is ''matrix''.</p>
+    <p>Indicates the type of matrix operation. The keyword ''matrix'' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix. The <i>initial value</i> for <a element-attr for=feColorMatrix>type</a> is ''matrix''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1050,7 +1058,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
       </li>
       <li>
         <p>For <dfn attr-value for=type>gamma</dfn>, the function is defined by the following exponential function:</p>
-        <p class="filterformula">C' = <a element-attr for=feComponentTransfer>amplitude</a> * pow(C, <a element-attr=feComponentTransfer>exponent</a>) + <a element-attr=feComponentTransfer>offset</a></p>
+        <p class="filterformula">C' = <a element-attr for=feComponentTransfer>amplitude</a> * pow(C, <a element-attr=feComponentTransfer>exponent</a>) + <a element-attr for=feComponentTransfer>offset</a></p>
       </li>
     </ul><p>Animatable: yes.</p>
   </dd>
@@ -1066,7 +1074,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="linear"</code>, the slope of the linear function.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>slope</a> is ''1''.</p>
+    <p>The <i>initial value</i> for <a element-attr>slope</a> is ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1074,7 +1082,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="linear"</code>, the intercept of the linear function.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>intercept</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>intercept</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1082,7 +1090,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="gamma"</code>, the amplitude of the gamma function.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>amplitude</a> is ''1''.</p>
+    <p>The <i>initial value</i> for <a element-attr>amplitude</a> is ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1090,7 +1098,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="gamma"</code>, the exponent of the gamma function.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>exponent</a> is ''1''.</p>
+    <p>The <i>initial value</i> for <a element-attr>exponent</a> is ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1098,7 +1106,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="gamma"</code>, the offset of the gamma function.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feComponentTransfer>offset</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feComponentTransfer>offset</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -1181,7 +1189,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
 
 <!--elementsummary feComposite-->
 
-This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: ''over'', ''in'', ''atop'', ''out'', ''xor'', ''lighter'' [[!COMPOSITING-1]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
+This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: <a attr-value>over</a>, ''in'', ''atop'', ''out'', ''xor'', ''lighter'' [[!COMPOSITING-1]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
 
 The <em>arithmetic</em> operation is useful for combining the output from the <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filters with texture data. It is also useful for implementing <em>dissolve</em>. If the <em>arithmetic</em> operation is chosen, each result pixel is computed using the following formula:
 
@@ -1206,7 +1214,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
     <dfn>operator</dfn> = "<span dfn-type=attr-value dfn-for=operator><dfn>over</dfn> | <dfn>in</dfn> | <dfn>out</dfn> | <dfn>atop</dfn> | <dfn>xor</dfn> | <dfn>lighter</dfn> | <dfn>arithmetic</dfn></span>"
   </dt>
   <dd>
-    <p>The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING-1]]. The ''arithmetic'' operator is described above. The <a>lacuna value</a> for <a element-attr for=feComposite>operator</a> is ''over''.</p>
+    <p>The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING-1]]. The ''arithmetic'' operator is described above. The <i>initial value</i> for <a element-attr for=feComposite>operator</a> is <a attr-value>over</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1214,7 +1222,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>k1</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>k1</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1222,7 +1230,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>k2</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>k2</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1230,7 +1238,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>k3</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>k3</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1238,7 +1246,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>k4</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>k4</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1475,12 +1483,12 @@ When the image must be resampled to match the coordinate system defined by <a el
 
 <dl dfn-type=element-attr dfn-for=feConvolveMatrix>
   <dt>
-    <dfn id="element-attrdef-order">order</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn id="element-attrdef-order">order</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>Indicates the number of cells in each dimension for <a element-attr>kernelMatrix</a>. The values provided must be <<integer>> s greater than zero. Values that are not integers will be truncated, i.e. rounded to the closest integer value towards zero. The first number, &lt;orderX&gt;, indicates the number of columns in the matrix. The second number, &lt;orderY&gt;, indicates the number of rows in the matrix. If &lt;orderY&gt; is not provided, it defaults to &lt;orderX&gt;.<br>
     It is recommended that only small values (e.g., ''3'') be used; higher values may result in very high CPU overhead and usually do not produce results that justify the impact on performance.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>order</a> is ''3''.</p>
+    <p>The <i>initial value</i> for <a element-attr>order</a> is ''3''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1494,7 +1502,7 @@ When the image must be resampled to match the coordinate system defined by <a el
     <dfn>divisor</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>After applying the <a element-attr>kernelMatrix</a> to the input image to yield a number, that number is divided by <a element-attr>divisor</a> to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result. If the specified divisor is zero then the default value will be used instead. The <a>lacuna value</a> is the sum of all values in <a element-attr>kernelMatrix</a>, with the exception that if the sum is zero, then the divisor is set to ''1''.</p>
+    <p>After applying the <a element-attr>kernelMatrix</a> to the input image to yield a number, that number is divided by <a element-attr>divisor</a> to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result. If the specified divisor is zero then the default value will be used instead. The <i>initial value</i> is the sum of all values in <a element-attr>kernelMatrix</a>, with the exception that if the sum is zero, then the divisor is set to ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1502,7 +1510,7 @@ When the image must be resampled to match the coordinate system defined by <a el
   </dt>
   <dd>
     <p>After applying the <a element-attr>kernelMatrix</a> to the input image to yield a number and applying the <a element-attr>divisor</a>, the <a element-attr>bias</a> attribute is added to each component. One application of <a element-attr>bias</a> is when it is desirable to have ''.5'' gray value be the zero response of the filter. The bias property shifts the range of the filter. This allows representation of values that would otherwise be clamped to 0 or 1.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>bias</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>bias</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1533,18 +1541,18 @@ When the image must be resampled to match the coordinate system defined by <a el
     <p>
       <math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>n</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>n</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>n</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>n</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>nm</mi></mrow></mtd><mtd><mrow><mi>nM</mi></mrow></mtd><mtd><mrow><mi>nM</mi></mrow></mtd><mtd><mrow><mi>nM</mi></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>Nm</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>Nm</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>Nm</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
     </p>
-    <p>''wrap'' indicates that the input image is extended by taking the color values from the opposite edge of the image.</p>
-    <p>Extended by two pixels using ''wrap'':</p>
+    <p><a attr-value>wrap</a> indicates that the input image is extended by taking the color values from the opposite edge of the image.</p>
+    <p>Extended by two pixels using <a attr-value>wrap</a>:</p>
     <p>
       <math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr><mtr><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
     </p>
     <p>The value ''feConvolveMatrix/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feConvolveMatrix>edgeMode</a> is ''duplicate''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feConvolveMatrix>edgeMode</a> is ''duplicate''.</p>
     <p>Animatable: yes.</p>
   </dd>
 
   <dt>
-    <dfn element-attr dfn-for=feConvolveMatrix>kernelUnitLength</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn element-attr dfn-for=feConvolveMatrix>kernelUnitLength</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) between successive columns and rows, respectively, in the <a element-attr>kernelMatrix</a>. By specifying value(s) for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feConvolveMatrix>kernelUnitLength</a> is not specified, the default value is one pixel in the offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feConvolveMatrix>kernelUnitLength</a>. In some implementations, the most consistent results and the fastest performance will be achieved if the pixel grid of the temporary off-screen images aligns with the pixel grid of the kernel.</p>
@@ -1577,7 +1585,7 @@ When the image must be resampled to match the coordinate system defined by <a el
     </p>
     <p>A value of "true" indicates that the convolution will only apply to the color channels. In this case, the filter will temporarily unpremultiply the color component values and apply the kernel. In this case the <code>ALPHA<sub>X,Y</sub></code> of the <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given pixel is:</p>
     <p class="filterformula">ALPHA<sub>X,Y</sub>&nbsp;=&nbsp;SOURCE<sub>X,Y</sub></p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feConvolveMatrix>preserveAlpha</a> is ''false''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feConvolveMatrix>preserveAlpha</a> is ''false''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -1899,7 +1907,7 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>kernelUnitLength</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn>kernelUnitLength</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feDiffuseLighting>kernelUnitLength</a> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>.<br>
@@ -1944,21 +1952,21 @@ The 'color-interpolation-filters' property only applies to the <a element-attr f
   <dd>
     <p>Displacement scale factor. The amount is expressed in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
     <p>When the value of this attribute is ''0'', this operation has no effect on the source image.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feDisplacementMap>scale</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feDisplacementMap>scale</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>xChannelSelector</dfn> = "<em>R | G | B | A</em>"
   </dt>
   <dd>
-    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the x-axis. The <a>lacuna value</a> for <a element-attr>xChannelSelector</a> is ''A''.</p>
+    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the x-axis. The <i>initial value</i> for <a element-attr>xChannelSelector</a> is ''A''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>yChannelSelector</dfn> = "<em>R | G | B | A</em>"
   </dt>
   <dd>
-    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the y-axis. The <a>lacuna value</a> for <a element-attr>yChannelSelector</a> is ''A''.</p>
+    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the y-axis. The <i>initial value</i> for <a element-attr>yChannelSelector</a> is ''A''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2034,7 +2042,7 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
   </dt>
   <dd>
     <p>The x offset of the drop shadow.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feDropShadow>dx</a> is ''2''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feDropShadow>dx</a> is ''2''.</p>
     <p>This attribute is then forwarded to the <a element-attr for=feOffset>dx</a> attribute of the internal <a element>feOffset</a> element.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2043,16 +2051,16 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
   </dt>
   <dd>
     <p>The y offset of the drop shadow.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feDropShadow>dy</a> is ''2''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feDropShadow>dy</a> is ''2''.</p>
     <p>This attribute is then forwarded to the <a element-attr for=feOffset>dy</a> attribute of the internal <a element>feOffset</a> element.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>stdDeviation</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn>stdDeviation</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>The standard deviation for the blur operation in the drop shadow.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feDropShadow>stdDeviation</a> is ''2''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feDropShadow>stdDeviation</a> is ''2''.</p>
     <p>This attribute is then forwarded to the <a element-attr for=feGaussianBlur>stdDeviation</a> attribute of the internal <a element>feGaussianBlur</a> element.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2136,13 +2144,13 @@ Frequently this operation will take place on alpha-only images, such as that pro
 
 <dl dfn-type=element-attr dfn-for=feGaussianBlur>
   <dt>
-    <dfn>stdDeviation</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn>stdDeviation</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>The standard deviation for the blur operation. If two <<number>> s are provided, the first number represents a standard deviation value along the x-axis of the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The second value represents a standard deviation in Y. If one number is provided, then that value is used for both X and Y.</p>
     <p>A negative value or a value of zero disables the effect of the given filter primitive (i.e., the result is the filter input image).</p>
     <p>If <a element-attr for=feGaussianBlur>stdDeviation</a> is ''0'' in only one of X or Y, then the effect is that the blur is only applied in the direction that has a non-zero value.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feGaussianBlur>stdDeviation</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feGaussianBlur>stdDeviation</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2154,7 +2162,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
     <p>Original N-by-M image, where m=M-1 and n=N-1:</p>
     <p><dfn dfn-type=attr-value dfn-for=edgeMode>wrap</dfn> indicates that the input image is extended by taking the color values from the opposite edge of the image.</p>
     <p>The value ''feGaussianBlur/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feGaussianBlur>edgeMode</a> is ''feGaussianBlur/none''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feGaussianBlur>edgeMode</a> is ''feGaussianBlur/none''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2169,7 +2177,7 @@ This filter primitive refers to a graphic external to this filter element, which
 
 This filter primitive can refer to an external image or can be a reference to another piece of SVG. It produces an image similar to the built-in image source <a attr-value>SourceGraphic</a> except that the graphic comes from an external source.
 
-If the <a element-attr for=feImage>href</a> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a element>image</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a element>use</a> element. In either case, the current user coordinate system depends on the value of attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The processing of the <a element-attr for=feImage>preserveAspectRatio</a> attribute on the <a element>feImage</a> element is identical to that of the <a>'image'</a> element.
+If the <a element-attr for=feImage>href</a> references a stand-alone image resource such as a JPEG, PNG or SVG file, then the image resource is rendered according to the behavior of the <a element>image</a> element; otherwise, the referenced resource is rendered according to the behavior of the <a element>use</a> element. In either case, the current user coordinate system depends on the value of attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The processing of the <a element-attr for=feImage>preserveAspectRatio</a> attribute on the <a element>feImage</a> element is identical to that of the <a element>image</a> element.
 
 A <a element-attr for=feImage>href</a> reference that is an empty image (zero width or zero height), that fails to download, is non-existent, or that cannot be displayed (e.g. because it is not in a supported image format) fills the filter primitive subregion with transparent black.
 
@@ -2178,7 +2186,7 @@ A <a element-attr for=feImage>href</a> reference that is an empty image (zero wi
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feImage>
   <dt>
-    <dfn>xlink:href</dfn> = "<<url>>"
+    <dfn>xlink:href</dfn> = "<<filter/url>>"
   </dt>
   <dd>
     <p>See <a element-attr for=feImage>href</a> attribute.</p>
@@ -2186,10 +2194,10 @@ A <a element-attr for=feImage>href</a> reference that is an empty image (zero wi
     <p class=note>This <em>xlink:href</em> attribute is deprecated and should not be used in new content, it's included for backwards compatibility reasons only. Authors should use the <a element-attr for=feImage>href</a> attribute instead.</p>
   </dd>
   <dt>
-    <dfn>href</dfn> = "<<url>>"
+    <dfn>href</dfn> = "<<filter/url>>"
   </dt>
   <dd>
-    <p>An <<url>> to an image resource or to an element. If both, the <a element-attr for=feImage>xlink:href</a> and the <a element-attr for=feImage>href</a> attribute are specified, the latter overrides the first definition.</p>
+    <p>An <<filter/url>> to an image resource or to an element. If both, the <a element-attr for=feImage>xlink:href</a> and the <a element-attr for=feImage>href</a> attribute are specified, the latter overrides the first definition.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2304,7 +2312,7 @@ Because <a element>feMorphology</a> operates on premultipied color values, it wi
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>radius</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn>radius</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>The radius (or radii) for the operation. If two <<number>> s are provided, the first number represents a x-radius and the second value represents a y-radius. If one number is provided, then that value is used for both X and Y. The values are in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
@@ -2463,7 +2471,7 @@ The <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> filte
     <p>Animatable: yes.</p>
   </dd>
   <dt>
-    <dfn>kernelUnitLength</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn>kernelUnitLength</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <a element-attr for=feSpecularLighting>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feSpecularLighting>kernelUnitLength</a> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feSpecularLighting>kernelUnitLength</a>.</p>
@@ -2691,12 +2699,12 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feTurbulence>
   <dt>
-    <dfn>baseFrequency</dfn> = "<em><a>&lt;number-optional-number&gt;</a></em>"
+    <dfn>baseFrequency</dfn> = "<em><<number-optional-number>></em>"
   </dt>
   <dd>
     <p>The base frequency (frequencies) parameter(s) for the noise function. If two <<number>>s are provided, the first number represents a base frequency in the X direction and the second value represents a base frequency in the Y direction. If one number is provided, then that value is used for both X and Y.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>baseFrequency</a> is ''0''.</p>
-    <p>Negative values are <a>unsupported</a>.</p>
+    <p>The <i>initial value</i> for <a element-attr>baseFrequency</a> is ''0''.</p>
+    <p>Negative values are <i>unsupported</i>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2704,8 +2712,8 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   </dt>
   <dd>
     <p>The numOctaves parameter for the noise function.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>numOctaves</a> is ''1''.</p>
-    <p>Negative values are <a>unsupported</a>.</p>
+    <p>The <i>initial value</i> for <a element-attr>numOctaves</a> is ''1''.</p>
+    <p>Negative values are <i>unsupported</i>.</p>
     <p><p>Animatable: yes.</p>
     <p class=note>The contribution of each additional octave to the color and alpha values in the final image is one-half of the preceding octave. At some point, the contribution of additional octaves becomes smaller than the color resolution for a given color depth. UAs may clamp the specified value for numOctaves during the processing depending on the supported color depth. (For example: For a color depth of 8 bits per channel, the UA may clamp the value of numOctaves to 9.)
   </dd>
@@ -2714,7 +2722,7 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   </dt>
   <dd>
     <p>The starting number for the pseudo random number generator.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>seed</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>seed</a> is ''0''.</p>
     <p>When the seed number is handed over to the algorithm above it must first be truncated, i.e. rounded to the closest integer value towards zero.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2724,7 +2732,7 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   <dd>
     <p>If <code>stitchTiles="noStitch"</code>, no attempt is made to achieve smooth transitions at the border of tiles which contain a turbulence function. Sometimes the result will show clear discontinuities at the tile borders.</p>
     <p>If <code>stitchTiles="stitch"</code>, then the user agent will automatically adjust baseFrequency-x and baseFrequency-y values such that the <a element>feTurbulence</a> node's width and height (i.e., the width and height of the current subregion) contains an integral number of the Perlin tile width and height for the first octave. The baseFrequency will be adjusted up or down depending on which way has the smallest relative (not absolute) change as follows: Given the frequency, calculate <code>lowFreq=floor(width*frequency)/width</code> and <code>hiFreq=ceil(width*frequency)/width</code>. If frequency/lowFreq &lt; hiFreq/frequency then use lowFreq, else use hiFreq. While generating turbulence values, generate lattice vectors as normal for Perlin Noise, except for those lattice points that lie on the right or bottom edges of the active area (the size of the resulting tile). In those cases, copy the lattice vector from the opposite edge of the active area.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>stitchTiles</a> is ''noStitch''.</p>
+    <p>The <i>initial value</i> for <a element-attr>stitchTiles</a> is ''noStitch''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2732,7 +2740,7 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   </dt>
   <dd>
     <p>Indicates whether the filter primitive should perform a noise or turbulence function.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feTurbulence>type</a> is ''turbulence''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feTurbulence>type</a> is ''turbulence''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2872,7 +2880,7 @@ The following sections define the elements that define a <dfn id="light-source">
   </dt>
   <dd>
     <p>Direction angle for the light source on the XY plane (clockwise), in degrees from the x axis.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>azimuth</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>azimuth</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2880,7 +2888,7 @@ The following sections define the elements that define a <dfn id="light-source">
   </dt>
   <dd>
     <p>Direction angle for the light source from the XY plane towards the Z-axis, in degrees. Note that the positive Z-axis points towards the viewer.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>elevation</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>elevation</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2904,7 +2912,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>X location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=fePointLight>x</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=fePointLight>x</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2912,15 +2920,15 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Y location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=fePointLight>y</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=fePointLight>y</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>z</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the <a>initial coordinate system</a> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=fePointLight>z</a> is ''0''.</p>
+    <p>Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the initial <i>local coordinate system</i> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
+    <p>The <i>initial value</i> for <a element-attr for=fePointLight>z</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2937,7 +2945,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>X location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.<p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feSpotLight>x</a> is ''0''.<p>
+    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>x</a> is ''0''.<p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2945,15 +2953,15 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Y location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feSpotLight>y</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>y</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>z</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the <a>initial coordinate system</a>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feSpotLight>z</a> is ''0''.</p>
+    Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the initial <i>local coordinate system</i>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>z</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2961,7 +2969,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>X location in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>pointsAtX</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>pointsAtX</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2969,15 +2977,15 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Y location in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>pointsAtY</a> is ''0''.</p>
+    <p>The <i>initial value</i> for <a element-attr>pointsAtY</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>pointsAtZ</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>Z location in the coordinate system established by the attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing, assuming that, in the <a>initial coordinate system</a>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
-    <p>The <a>lacuna value</a> for <a element-attr>pointsAtZ</a> is ''0''.</p>
+    <p>Z location in the coordinate system established by the attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing, assuming that, in the initial <i>local coordinate system</i>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
+    <p>The <i>initial value</i> for <a element-attr>pointsAtZ</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2985,7 +2993,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Exponent value controlling the focus for the light source.</p>
-    <p>The <a>lacuna value</a> for <a element-attr for=feSpotLight>specularExponent</a> is ''1''.</p>
+    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>specularExponent</a> is ''1''.</p>
     <p>See section <a href="#feDiffuseLightingElement">Filter primitive &lt;feDiffuseLighting></a> for how to use <a element-attr for=feSpotLight>specularExponent</a>.</p>
     <p class=note>Note: <a element-attr for=feSpotLight>specularExponent</a> for <a element>feSpotLight</a> serves a different use case than <a element-attr for=feSpecularLighting>specularExponent</a> for <a element>feSpecularLighting</a>.</p>
     <p>Animatable: yes.</p>
@@ -3155,16 +3163,16 @@ Note: For the handling of <a href="#FilterElement">filter sources</a> see sectio
 For interpolation between one filter and a second, the steps corresponding to the first matching condition in the following list must be run:
 
 <dl class=switch>
-  <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<url>> and for each <<filter-function>> for which there is a corresponding item in each list
+  <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
   <dd>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</dd>
-  <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<url>> and for each <<filter-function>> for which there is a corresponding item in each list
+  <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
   <dd>
     <ol class=algorithm>
       <li>Append the missing equivalent <<filter-function>>s from the longer list to the end of the shorter list. The new added <<filter-function>>s must be initialized to their default values.</li>
       <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</li>
     </ol>
   </dd>
-  <dt id='interpolation-none-filter-functions'>If one filter is ''filter/none'' and the other is a <<filter-function-list>> without <<url>></dt>
+  <dt id='interpolation-none-filter-functions'>If one filter is ''filter/none'' and the other is a <<filter-function-list>> without <<filter/url>></dt>
   <dd>
     <ol class=algorithm>
       <li>Replace ''filter/none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their default values.</li>
@@ -3203,7 +3211,7 @@ It is possible to combine independent animations of <<filter-function-list>>s [[
 Given two filter values representing an base value (<var>base filter list</var>) and a value to add (<var>added filter list</var>), returns the concatenation of the the two lists: &lsquo;<var>base filter list</var> <var>added filter list</var>&rsquo;.
 
 <div class=example>
-The following SVG animation has two <a>'animate'</a> elements animating 'filter' property of the <a>'rect'</a> element. Both specified animations are additive and have a duration of <var>10s</var>.
+The following SVG animation has two <a element>animate</a> elements animating 'filter' property of the <a element>rect</a> element. Both specified animations are additive and have a duration of <var>10s</var>.
 
 <pre><code class=html>
 &lt;rect width="200px" filter="none" ...>
@@ -3233,14 +3241,14 @@ The following <i>filter primitives</i> may have access to pixel values that pote
 2. <a element>feDropShadow</a> when the <i>specified value</i> value of the 'flood-color' property computes to ''currentColor'',
 3. <a element>feDiffuseLighting</a>, when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor''
 4. <a element>feSpecularLighting</a> when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor'',
-5. <a element>feImage</a>, when the <<url>> reference points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and
+5. <a element>feImage</a>, when the <<filter/url>> reference points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and
 6. the filter primitives: <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> and <a attr-value>StrokePaint</a>.
 
 <a element>feFlood</a>, <a element>feDropShadow</a>, <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> are primitives with one or more CSS properties that take <<color>> as property value. <<color>> consists of (amongst others) the ''currentColor'' keyword. The <i>used value</i> for ''currentColor'' derives from the 'color' property. Since 'color' can be set by the '':visited'' pseudo selector, it potentially contains privacy-sensitive information and therefore these primitives must be marked as tainted.
 
-<a element>feImage</a> can reference cross-domain images as well as document fragments such as SVG <a>graphics elements</a>. These references potentially contain privacy-sensitive information and therefore the primitive must be marked as tainted.
+<a element>feImage</a> can reference cross-domain images as well as document fragments such as SVG <i>graphics elements</i>. These references potentially contain privacy-sensitive information and therefore the primitive must be marked as tainted.
 
-The filter primitives <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> and <a attr-value>StrokePaint</a> either reference document fragments such as SVG <a>graphics elements</a> or style information that may derive directly or indirectly from the 'color' property. Therefore these primitives must be marked as tainted.
+The filter primitives <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> and <a attr-value>StrokePaint</a> either reference document fragments such as SVG <i>graphics elements</i> or style information that may derive directly or indirectly from the 'color' property. Therefore these primitives must be marked as tainted.
 
 Every <i>filter primitive</i> that has a "tainted" flagged <i>filter primitive</i> as input must be flagged as "tainted" as well.
 
@@ -3274,23 +3282,23 @@ This specification does not support the 'enable-background' property. UAs must s
 
 <h3 id="InterfaceSVGFilterElement">Interface SVGFilterElement</h3>
 
-The <a>SVGFilterElement</a> interface corresponds to the <a element>filter</a> element.
+The <a interface>SVGFilterElement</a> interface corresponds to the <a element>filter</a> element.
 
 <pre class="idl" data-no-idl>
 interface <b>SVGFilterElement</b> : SVGElement {
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFilterElement__filterUnits">filterUnits</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFilterElement__primitiveUnits">primitiveUnits</a>;
-  readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGFilterElement__x">x</a>;
-  readonly attribute <a>SVGAnimatedLength</a> <a href="#SVGFilterElement__y">y</a>;
-  readonly attribute <a>SVGAnimatedLength</a> <a href=
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href="#SVGFilterElement__x">x</a>;
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href="#SVGFilterElement__y">y</a>;
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href=
   "#SVGFilterElement__width">width</a>;
-  readonly attribute <a>SVGAnimatedLength</a> <a href=
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href=
   "#SVGFilterElement__height">height</a>;
 };
 
-<a>SVGFilterElement</a> implements <a>SVGURIReference</a>;
+<a interface>SVGFilterElement</a> implements <a interface>SVGURIReference</a>;
 </pre>
 <dl class="interface">
   <dt class="attributes-header">
@@ -3300,42 +3308,42 @@ interface <b>SVGFilterElement</b> : SVGElement {
     <dl class="attributes">
       <dt id="SVGFilterElement__filterUnits">
         <b>filterUnits</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a element-attr>filterUnits</a> on the given <a element>filter</a> element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
+        Corresponds to attribute <a element-attr>filterUnits</a> on the given <a element>filter</a> element. Takes one of the constants defined in <a interface>SVGUnitTypes</a>.
       </dd>
       <dt id="SVGFilterElement__primitiveUnits">
         <b>primitiveUnits</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
-        Corresponds to attribute <a element-attr>primitiveUnits</a> on the given <a element>filter</a> element. Takes one of the constants defined in <a>SVGUnitTypes</a>.
+        Corresponds to attribute <a element-attr>primitiveUnits</a> on the given <a element>filter</a> element. Takes one of the constants defined in <a interface>SVGUnitTypes</a>.
       </dd>
       <dt id="SVGFilterElement__x">
         <b>x</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=filter>x</a> on the given <a element>filter</a> element.
       </dd>
       <dt id="SVGFilterElement__y">
         <b>y</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=filter>y</a> on the given <a element>filter</a> element.
       </dd>
       <dt id="SVGFilterElement__width">
         <b>width</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=filter>width</a> on the given <a element>filter</a> element.
       </dd>
       <dt id="SVGFilterElement__height">
         <b>height</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=filter>height</a> on the given <a element>filter</a> element.
@@ -3354,15 +3362,15 @@ This interface defines the set of DOM attributes that are common across the filt
 <pre class="idl" data-no-idl>
 [NoInterfaceObject]
 interface <b>SVGFilterPrimitiveStandardAttributes</b> {
-  readonly attribute <a>SVGAnimatedLength</a> <a href=
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href=
   "#SVGFilterPrimitiveStandardAttributes__x">x</a>;
-  readonly attribute <a>SVGAnimatedLength</a> <a href=
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href=
   "#SVGFilterPrimitiveStandardAttributes__y">y</a>;
-  readonly attribute <a>SVGAnimatedLength</a> <a href=
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href=
   "#SVGFilterPrimitiveStandardAttributes__width">width</a>;
-  readonly attribute <a>SVGAnimatedLength</a> <a href=
+  readonly attribute <a interface>SVGAnimatedLength</a> <a href=
   "#SVGFilterPrimitiveStandardAttributes__height">height</a>;
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFilterPrimitiveStandardAttributes__result">result</a>;
 };
 </pre>
@@ -3374,7 +3382,7 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
     <dl class="attributes">
       <dt id="SVGFilterPrimitiveStandardAttributes__x">
         <b>x</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3383,7 +3391,7 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
       </dd>
       <dt id="SVGFilterPrimitiveStandardAttributes__y">
         <b>y</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3392,7 +3400,7 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
       </dd>
       <dt id="SVGFilterPrimitiveStandardAttributes__width">
         <b>width</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3402,7 +3410,7 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
       </dd>
       <dt id="SVGFilterPrimitiveStandardAttributes__height">
         <b>height</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedLength</a>)</span>
+        <a interface>SVGAnimatedLength</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3412,7 +3420,7 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
       </dd>
       <dt id="SVGFilterPrimitiveStandardAttributes__result">
         <b>result</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3428,10 +3436,10 @@ interface <b>SVGFilterPrimitiveStandardAttributes</b> {
   Interface SVGFEBlendElement
 </h3>
 
-The <a>SVGFEBlendElement</a> interface corresponds to the <a element>feBlend</a> element.
+The <a interface>SVGFEBlendElement</a> interface corresponds to the <a element>feBlend</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEBlendElement</b> : <a interface>SVGElement</a> {
 
   // Blend Mode Types
   const unsigned short <a href=
@@ -3447,13 +3455,13 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFEBlendElement__SVG_FEBLEND_MODE_LIGHTEN">SVG_FEBLEND_MODE_LIGHTEN</a> = 5;
 
-  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEBlendElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEBlendElement__in2">in2</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href="#SVGFEBlendElement__in1">in1</a>;
+  readonly attribute <a interface>SVGAnimatedString</a> <a href="#SVGFEBlendElement__in2">in2</a>;
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFEBlendElement__mode">mode</a>;
 };
 
-<a>SVGFEBlendElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEBlendElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 <dl class="interface">
   <dt>
@@ -3526,7 +3534,7 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEBlendElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3536,14 +3544,14 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEBlendElement__in2">
         <b>in2</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=feBlend>in2</a> on the given <a element>feBlend</a> element.
       </dd>
       <dt id="SVGFEBlendElement__mode">
         <b>mode</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=feBlend>mode</a> on the given <a element>feBlend</a> element. Takes one of the SVG_FEBLEND_MODE_* constants defined on this interface.
@@ -3556,10 +3564,10 @@ interface <b>SVGFEBlendElement</b> : <a>SVGElement</a> {
   Interface SVGFEColorMatrixElement
 </h3>
 
-The <a>SVGFEColorMatrixElement</a> interface corresponds to the <a element>feColorMatrix</a> element.
+The <a interface>SVGFEColorMatrixElement</a> interface corresponds to the <a element>feColorMatrix</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEColorMatrixElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEColorMatrixElement</b> : <a interface>SVGElement</a> {
 
   // Color Matrix Types
   const unsigned short <a href=
@@ -3573,15 +3581,15 @@ interface <b>SVGFEColorMatrixElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFEColorMatrixElement__SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA">SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA</a> = 4;
 
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEColorMatrixElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFEColorMatrixElement__type">type</a>;
-  readonly attribute <a>SVGAnimatedNumberList</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumberList</a> <a href=
   "#SVGFEColorMatrixElement__values">values</a>;
 };
 
-<a>SVGFEColorMatrixElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEColorMatrixElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 <dl class="interface">
   <dt>
@@ -3645,7 +3653,7 @@ interface <b>SVGFEColorMatrixElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEColorMatrixElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3655,7 +3663,7 @@ interface <b>SVGFEColorMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEColorMatrixElement__type">
         <b>type</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3666,7 +3674,7 @@ interface <b>SVGFEColorMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEColorMatrixElement__values">
         <b>values</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumberList</a>)</span>
+        <a interface>SVGAnimatedNumberList</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3681,16 +3689,16 @@ interface <b>SVGFEColorMatrixElement</b> : <a>SVGElement</a> {
   Interface SVGFEComponentTransferElement
 </h3>
 <p>
-  The <a>SVGFEComponentTransferElement</a> interface corresponds to the
+  The <a interface>SVGFEComponentTransferElement</a> interface corresponds to the
   <a element>feComponentTransfer</a> element.
 </p>
 <pre class="idl" data-no-idl>
-interface <b>SVGFEComponentTransferElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+interface <b>SVGFEComponentTransferElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEComponentTransferElement__in1">in1</a>;
 };
 
-<a>SVGFEComponentTransferElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEComponentTransferElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 <dl class="interface">
   <dt>
@@ -3700,7 +3708,7 @@ interface <b>SVGFEComponentTransferElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEComponentTransferElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3719,7 +3727,7 @@ interface <b>SVGFEComponentTransferElement</b> : <a>SVGElement</a> {
 This interface defines a base interface used by the component transfer function interfaces.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
+interface <b>SVGComponentTransferFunctionElement</b> : <a interface>SVGElement</a> {
 
   // Component Transfer Types
   const unsigned short <a href=
@@ -3735,19 +3743,19 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGComponentTransferFunctionElement__SVG_FECOMPONENTTRANSFER_TYPE_GAMMA">SVG_FECOMPONENTTRANSFER_TYPE_GAMMA</a> = 5;
 
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGComponentTransferFunctionElement__type">type</a>;
-  readonly attribute <a>SVGAnimatedNumberList</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumberList</a> <a href=
   "#SVGComponentTransferFunctionElement__tableValues">tableValues</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGComponentTransferFunctionElement__slope">slope</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGComponentTransferFunctionElement__intercept">intercept</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGComponentTransferFunctionElement__amplitude">amplitude</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGComponentTransferFunctionElement__exponent">exponent</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGComponentTransferFunctionElement__offset">offset</a>;
 };
 </pre>
@@ -3828,7 +3836,7 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGComponentTransferFunctionElement__type">
         <b>type</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3839,7 +3847,7 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGComponentTransferFunctionElement__tableValues">
         <b>tableValues</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumberList</a>)</span>
+        <a interface>SVGAnimatedNumberList</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3849,7 +3857,7 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGComponentTransferFunctionElement__slope">
         <b>slope</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3859,7 +3867,7 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGComponentTransferFunctionElement__intercept">
         <b>intercept</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3869,7 +3877,7 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGComponentTransferFunctionElement__amplitude">
         <b>amplitude</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3879,7 +3887,7 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGComponentTransferFunctionElement__exponent">
         <b>exponent</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3889,7 +3897,7 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGComponentTransferFunctionElement__offset">
         <b>offset</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -3905,21 +3913,21 @@ interface <b>SVGComponentTransferFunctionElement</b> : <a>SVGElement</a> {
   Interface SVGFEFuncRElement
 </h3>
 
-The <a>SVGFEFuncRElement</a> interface corresponds to the <a element>feFuncR</a> element.
+The <a interface>SVGFEFuncRElement</a> interface corresponds to the <a element>feFuncR</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEFuncRElement</b> : <a>SVGComponentTransferFunctionElement</a> {
+interface <b>SVGFEFuncRElement</b> : <a interface>SVGComponentTransferFunctionElement</a> {
 };
 </pre>
 <h3 id="InterfaceSVGFEFuncGElement">
   Interface SVGFEFuncGElement
 </h3>
 <p>
-  The <a>SVGFEFuncRElement</a> interface corresponds to the <a element>feFuncG</a>
+  The <a interface>SVGFEFuncRElement</a> interface corresponds to the <a element>feFuncG</a>
   element.
 </p>
 <pre class="idl" data-no-idl>
-interface <b>SVGFEFuncGElement</b> : <a>SVGComponentTransferFunctionElement</a> {
+interface <b>SVGFEFuncGElement</b> : <a interface>SVGComponentTransferFunctionElement</a> {
 };
 </pre>
 
@@ -3927,21 +3935,21 @@ interface <b>SVGFEFuncGElement</b> : <a>SVGComponentTransferFunctionElement</a> 
   Interface SVGFEFuncBElement
 </h3>
 
-The <a>SVGFEFuncBElement</a> interface corresponds to the <a element>feFuncB</a> element.
+The <a interface>SVGFEFuncBElement</a> interface corresponds to the <a element>feFuncB</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEFuncBElement</b> : <a>SVGComponentTransferFunctionElement</a> {
+interface <b>SVGFEFuncBElement</b> : <a interface>SVGComponentTransferFunctionElement</a> {
 };
 </pre>
 <h3 id="InterfaceSVGFEFuncAElement">
   Interface SVGFEFuncAElement
 </h3>
 <p>
-  The <a>SVGFEFuncAElement</a> interface corresponds to the <a element>feFuncA</a>
+  The <a interface>SVGFEFuncAElement</a> interface corresponds to the <a element>feFuncA</a>
   element.
 </p>
 <pre class="idl" data-no-idl>
-interface <b>SVGFEFuncAElement</b> : <a>SVGComponentTransferFunctionElement</a> {
+interface <b>SVGFEFuncAElement</b> : <a interface>SVGComponentTransferFunctionElement</a> {
 };
 </pre>
 
@@ -3949,10 +3957,10 @@ interface <b>SVGFEFuncAElement</b> : <a>SVGComponentTransferFunctionElement</a> 
   Interface SVGFECompositeElement
 </h3>
 
-The <a>SVGFECompositeElement</a> interface corresponds to the <a element>feComposite</a> element.
+The <a interface>SVGFECompositeElement</a> interface corresponds to the <a element>feComposite</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
+interface <b>SVGFECompositeElement</b> : <a interface>SVGElement</a> {
 
   // Composite Operators
   const unsigned short <a href=
@@ -3970,23 +3978,23 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_ARITHMETIC">SVG_FECOMPOSITE_OPERATOR_ARITHMETIC</a> = 6;
 
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFECompositeElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFECompositeElement__in2">in2</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFECompositeElement__operator">operator</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFECompositeElement__k1">k1</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFECompositeElement__k2">k2</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFECompositeElement__k3">k3</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFECompositeElement__k4">k4</a>;
 };
 
-<a>SVGFECompositeElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFECompositeElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 <dl class="interface">
   <dt>
@@ -4011,7 +4019,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
       </dt>
       <dd>
         <div>
-          Corresponds to value ''over''.
+          Corresponds to value <a attr-value>over</a>.
         </div>
       </dd>
       <dt id="SVGFECompositeElement__SVG_FECOMPOSITE_OPERATOR_IN">
@@ -4068,7 +4076,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFECompositeElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4078,7 +4086,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFECompositeElement__in2">
         <b>in2</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4088,7 +4096,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFECompositeElement__operator">
         <b>operator</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4099,7 +4107,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFECompositeElement__k1">
         <b>k1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4109,7 +4117,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFECompositeElement__k2">
         <b>k2</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4119,7 +4127,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFECompositeElement__k3">
         <b>k3</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4129,7 +4137,7 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFECompositeElement__k4">
         <b>k4</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4145,10 +4153,10 @@ interface <b>SVGFECompositeElement</b> : <a>SVGElement</a> {
   Interface SVGFEConvolveMatrixElement
 </h3>
 
-The <a>SVGFEConvolveMatrixElement</a> interface corresponds to the <a element>feConvolveMatrix</a> element.
+The <a interface>SVGFEConvolveMatrixElement</a> interface corresponds to the <a element>feConvolveMatrix</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEConvolveMatrixElement</b> : <a interface>SVGElement</a> {
 
   // Edge Mode Values
   const unsigned short <a href=
@@ -4160,31 +4168,31 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFEConvolveMatrixElement__SVG_EDGEMODE_NONE">SVG_EDGEMODE_NONE</a> = 3;
 
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEConvolveMatrixElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedInteger</a> <a href=
+  readonly attribute <a interface>SVGAnimatedInteger</a> <a href=
   "#SVGFEConvolveMatrixElement__orderX">orderX</a>;
-  readonly attribute <a>SVGAnimatedInteger</a> <a href=
+  readonly attribute <a interface>SVGAnimatedInteger</a> <a href=
   "#SVGFEConvolveMatrixElement__orderY">orderY</a>;
-  readonly attribute <a>SVGAnimatedNumberList</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumberList</a> <a href=
   "#SVGFEConvolveMatrixElement__kernelMatrix">kernelMatrix</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEConvolveMatrixElement__divisor">divisor</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEConvolveMatrixElement__bias">bias</a>;
-  readonly attribute <a>SVGAnimatedInteger</a> <a href=
+  readonly attribute <a interface>SVGAnimatedInteger</a> <a href=
   "#SVGFEConvolveMatrixElement__targetX">targetX</a>;
-  readonly attribute <a>SVGAnimatedInteger</a> <a href=
+  readonly attribute <a interface>SVGAnimatedInteger</a> <a href=
   "#SVGFEConvolveMatrixElement__targetY">targetY</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFEConvolveMatrixElement__edgeMode">edgeMode</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEConvolveMatrixElement__kernelUnitLengthX">kernelUnitLengthX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEConvolveMatrixElement__kernelUnitLengthY">kernelUnitLengthY</a>;
 };
 
-<a>SVGFEConvolveMatrixElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEConvolveMatrixElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 <dl class="interface">
   <dt>
@@ -4218,7 +4226,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dt>
       <dd>
         <div>
-          Corresponds to value ''wrap''.
+          Corresponds to value <a attr-value>wrap</a>.
         </div>
       </dd>
       <dt id="SVGFEConvolveMatrixElement__SVG_EDGEMODE_NONE">
@@ -4239,7 +4247,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEConvolveMatrixElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4249,7 +4257,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__orderX">
         <b>orderX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedInteger</a>)</span>
+        <a interface>SVGAnimatedInteger</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4259,7 +4267,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__orderY">
         <b>orderY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedInteger</a>)</span>
+        <a interface>SVGAnimatedInteger</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4269,7 +4277,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__kernelMatrix">
         <b>kernelMatrix</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumberList</a>)</span>
+        <a interface>SVGAnimatedNumberList</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4279,7 +4287,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__divisor">
         <b>divisor</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4289,7 +4297,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__bias">
         <b>bias</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4299,7 +4307,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__targetX">
         <b>targetX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedInteger</a>)</span>
+        <a interface>SVGAnimatedInteger</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4309,7 +4317,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__targetY">
         <b>targetY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedInteger</a>)</span>
+        <a interface>SVGAnimatedInteger</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4319,7 +4327,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__edgeMode">
         <b>edgeMode</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4330,7 +4338,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__kernelUnitLengthX">
         <b>kernelUnitLengthX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4340,7 +4348,7 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEConvolveMatrixElement__kernelUnitLengthY">
         <b>kernelUnitLengthY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4356,23 +4364,23 @@ interface <b>SVGFEConvolveMatrixElement</b> : <a>SVGElement</a> {
   Interface SVGFEDiffuseLightingElement
 </h3>
 
-The <a>SVGFEDiffuseLightingElement</a> interface corresponds to the <a element>feDiffuseLighting</a> element.
+The <a interface>SVGFEDiffuseLightingElement</a> interface corresponds to the <a element>feDiffuseLighting</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+interface <b>SVGFEDiffuseLightingElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEDiffuseLightingElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDiffuseLightingElement__surfaceScale">surfaceScale</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDiffuseLightingElement__diffuseConstant">diffuseConstant</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDiffuseLightingElement__kernelUnitLengthX">kernelUnitLengthX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDiffuseLightingElement__kernelUnitLengthY">kernelUnitLengthY</a>;
 };
 
-<a>SVGFEDiffuseLightingElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEDiffuseLightingElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -4383,7 +4391,7 @@ interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEDiffuseLightingElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4393,7 +4401,7 @@ interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDiffuseLightingElement__surfaceScale">
         <b>surfaceScale</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4403,7 +4411,7 @@ interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDiffuseLightingElement__diffuseConstant">
         <b>diffuseConstant</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4413,7 +4421,7 @@ interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDiffuseLightingElement__kernelUnitLengthX">
         <b>kernelUnitLengthX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4423,7 +4431,7 @@ interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDiffuseLightingElement__kernelUnitLengthY">
         <b>kernelUnitLengthY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4439,13 +4447,13 @@ interface <b>SVGFEDiffuseLightingElement</b> : <a>SVGElement</a> {
   Interface SVGFEDistantLightElement
 </h3>
 
-<a>SVGFEDistantLightElement</a> interface corresponds to the <a element>feDistantLight</a> element.
+<a interface>SVGFEDistantLightElement</a> interface corresponds to the <a element>feDistantLight</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEDistantLightElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+interface <b>SVGFEDistantLightElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDistantLightElement__azimuth">azimuth</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDistantLightElement__elevation">elevation</a>;
 };
 </pre>
@@ -4458,7 +4466,7 @@ interface <b>SVGFEDistantLightElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEDistantLightElement__azimuth">
         <b>azimuth</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4468,7 +4476,7 @@ interface <b>SVGFEDistantLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDistantLightElement__elevation">
         <b>elevation</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4484,13 +4492,13 @@ interface <b>SVGFEDistantLightElement</b> : <a>SVGElement</a> {
   Interface SVGFEPointLightElement
 </h3>
 
-The <a>SVGFEPointLightElement</a> interface corresponds to the <a element>fePointLight</a> element.
+The <a interface>SVGFEPointLightElement</a> interface corresponds to the <a element>fePointLight</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEPointLightElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__x">x</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__y">y</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__z">z</a>;
+interface <b>SVGFEPointLightElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__x">x</a>;
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__y">y</a>;
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFEPointLightElement__z">z</a>;
 };
 </pre>
 
@@ -4502,7 +4510,7 @@ interface <b>SVGFEPointLightElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEPointLightElement__x">
         <b>x</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4512,7 +4520,7 @@ interface <b>SVGFEPointLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEPointLightElement__y">
         <b>y</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4522,7 +4530,7 @@ interface <b>SVGFEPointLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEPointLightElement__z">
         <b>z</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4538,22 +4546,22 @@ interface <b>SVGFEPointLightElement</b> : <a>SVGElement</a> {
   Interface SVGFESpotLightElement
 </h3>
 
-The <a>SVGFESpotLightElement</a> interface corresponds to the <a element>feSpotLight</a> element.
+The <a interface>SVGFESpotLightElement</a> interface corresponds to the <a element>feSpotLight</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__x">x</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__y">y</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__z">z</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+interface <b>SVGFESpotLightElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__x">x</a>;
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__y">y</a>;
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFESpotLightElement__z">z</a>;
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpotLightElement__pointsAtX">pointsAtX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpotLightElement__pointsAtY">pointsAtY</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpotLightElement__pointsAtZ">pointsAtZ</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpotLightElement__specularExponent">specularExponent</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpotLightElement__limitingConeAngle">limitingConeAngle</a>;
 };
 </pre>
@@ -4566,7 +4574,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFESpotLightElement__x">
         <b>x</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4576,7 +4584,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpotLightElement__y">
         <b>y</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4586,7 +4594,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpotLightElement__z">
         <b>z</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4596,7 +4604,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpotLightElement__pointsAtX">
         <b>pointsAtX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4606,7 +4614,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpotLightElement__pointsAtY">
         <b>pointsAtY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4616,7 +4624,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpotLightElement__pointsAtZ">
         <b>pointsAtZ</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4626,7 +4634,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpotLightElement__specularExponent">
         <b>specularExponent</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4636,7 +4644,7 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpotLightElement__limitingConeAngle">
         <b>limitingConeAngle</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4652,10 +4660,10 @@ interface <b>SVGFESpotLightElement</b> : <a>SVGElement</a> {
   Interface SVGFEDisplacementMapElement
 </h3>
 
-The <a>SVGFEDisplacementMapElement</a> interface corresponds to the <a element>feDisplacementMap</a> element.
+The <a interface>SVGFEDisplacementMapElement</a> interface corresponds to the <a element>feDisplacementMap</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEDisplacementMapElement</b> : <a interface>SVGElement</a> {
 
   // Channel Selectors
   const unsigned short <a href=
@@ -4669,19 +4677,19 @@ interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFEDisplacementMapElement__SVG_CHANNEL_A">SVG_CHANNEL_A</a> = 4;
 
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEDisplacementMapElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEDisplacementMapElement__in2">in2</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDisplacementMapElement__scale">scale</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFEDisplacementMapElement__xChannelSelector">xChannelSelector</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFEDisplacementMapElement__yChannelSelector">yChannelSelector</a>;
 };
 
-<a>SVGFEDisplacementMapElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEDisplacementMapElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -4746,7 +4754,7 @@ interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEDisplacementMapElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4756,7 +4764,7 @@ interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDisplacementMapElement__in2">
         <b>in2</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4766,7 +4774,7 @@ interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDisplacementMapElement__scale">
         <b>scale</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4776,7 +4784,7 @@ interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDisplacementMapElement__xChannelSelector">
         <b>xChannelSelector</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4787,7 +4795,7 @@ interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDisplacementMapElement__yChannelSelector">
         <b>yChannelSelector</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4804,26 +4812,26 @@ interface <b>SVGFEDisplacementMapElement</b> : <a>SVGElement</a> {
   Interface SVGFEDropShadowElement
 </h3>
 
-<a>SVGFEDropShadowElement</a> interface corresponds to the <a element>feDropShadow</a> element.
+<a interface>SVGFEDropShadowElement</a> interface corresponds to the <a element>feDropShadow</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+interface <b>SVGFEDropShadowElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEDropShadowElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDropShadowElement__dx">dx</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDropShadowElement__dy">dy</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDropShadowElement__stdDeviationX">stdDeviationX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEDropShadowElement__stdDeviationY">stdDeviationY</a>;
 
   void <a href=
   "#SVGFEDropShadowElement__setStdDeviation">setStdDeviation</a>(float stdDeviationX, float stdDeviationY);
 };
 
-<a>SVGFEDropShadowElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEDropShadowElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -4834,7 +4842,7 @@ interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEDropShadowElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4844,7 +4852,7 @@ interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDropShadowElement__dx">
         <b>dx</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4854,7 +4862,7 @@ interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDropShadowElement__dy">
         <b>dy</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4864,7 +4872,7 @@ interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDropShadowElement__stdDeviationX">
         <b>stdDeviationX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4875,7 +4883,7 @@ interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEDropShadowElement__stdDeviationY">
         <b>stdDeviationY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -4949,24 +4957,24 @@ interface <b>SVGFEDropShadowElement</b> : <a>SVGElement</a> {
   Interface SVGFEFloodElement
 </h3>
 <p>
-  The <a>SVGFEFloodElement</a> interface corresponds to the <a element>feFlood</a>
+  The <a interface>SVGFEFloodElement</a> interface corresponds to the <a element>feFlood</a>
   element.
 </p>
 <pre class="idl" data-no-idl>
-interface <b>SVGFEFloodElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEFloodElement</b> : <a interface>SVGElement</a> {
 };
 
-<a>SVGFEFloodElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEFloodElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <h3 id="InterfaceSVGFEGaussianBlurElement">
   Interface SVGFEGaussianBlurElement
 </h3>
 
-The <a>SVGFEGaussianBlurElement</a> interface corresponds to the <a element>feGaussianBlur</a> element.
+The <a interface>SVGFEGaussianBlurElement</a> interface corresponds to the <a element>feGaussianBlur</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEGaussianBlurElement</b> : <a interface>SVGElement</a> {
 
   // Edge Mode Values
   const unsigned short <a href=
@@ -4978,20 +4986,20 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFEGaussianBlurElement__SVG_EDGEMODE_NONE">SVG_EDGEMODE_NONE</a> = 3;
 
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEGaussianBlurElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEGaussianBlurElement__stdDeviationX">stdDeviationX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEGaussianBlurElement__stdDeviationY">stdDeviationY</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFEGaussianBlurElement__edgeMode">edgeMode</a>;
 
   void <a href=
   "#SVGFEGaussianBlurElement__setStdDeviation">setStdDeviation</a>(float stdDeviationX, float stdDeviationY);
 };
 
-<a>SVGFEGaussianBlurElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEGaussianBlurElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -5026,7 +5034,7 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
       </dt>
       <dd>
         <div>
-          Corresponds to value ''wrap''.
+          Corresponds to value <a attr-value>wrap</a>.
         </div>
       </dd>
       <dt id="SVGFEGaussianBlurElement__SVG_EDGEMODE_NONE">
@@ -5047,7 +5055,7 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEGaussianBlurElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5057,7 +5065,7 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEGaussianBlurElement__stdDeviationX">
         <b>stdDeviationX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5068,7 +5076,7 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEGaussianBlurElement__stdDeviationY">
         <b>stdDeviationY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5079,7 +5087,7 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEGaussianBlurElement__edgeMode">
         <b>edgeMode</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5153,16 +5161,16 @@ interface <b>SVGFEGaussianBlurElement</b> : <a>SVGElement</a> {
   Interface SVGFEImageElement
 </h3>
 
-The <a>SVGFEImageElement</a> interface corresponds to the <a element>feImage</a> element.
+The <a interface>SVGFEImageElement</a> interface corresponds to the <a element>feImage</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEImageElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedPreserveAspectRatio</a> <a href="#SVGFEImageElement__preserveAspectRatio">preserveAspectRatio</a>;
-  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEImageElement__crossOrigin">crossOrigin</a>;
+interface <b>SVGFEImageElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedPreserveAspectRatio</a> <a href="#SVGFEImageElement__preserveAspectRatio">preserveAspectRatio</a>;
+  readonly attribute <a interface>SVGAnimatedString</a> <a href="#SVGFEImageElement__crossOrigin">crossOrigin</a>;
 };
 
-<a>SVGFEImageElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
-<a>SVGFEImageElement</a> implements <a>SVGURIReference</a>;
+<a interface>SVGFEImageElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEImageElement</a> implements <a interface>SVGURIReference</a>;
 </pre>
 
 <dl class="interface">
@@ -5173,7 +5181,7 @@ interface <b>SVGFEImageElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEImageElement__preserveAspectRatio">
         <b>preserveAspectRatio</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedPreserveAspectRatio</a>)</span>
+        <a interface>SVGAnimatedPreserveAspectRatio</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5183,7 +5191,7 @@ interface <b>SVGFEImageElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEImageElement__crossOrigin">
         <b>crossOrigin</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         The crossOrigin IDL attribute must reflect the <a element-attr for=feImage>crossorigin</a> content attribute, limited to only known values.
@@ -5196,24 +5204,24 @@ interface <b>SVGFEImageElement</b> : <a>SVGElement</a> {
   Interface SVGFEMergeElement
 </h3>
 
-The <a>SVGFEMergeElement</a> interface corresponds to the <a element>feMerge</a> element.
+The <a interface>SVGFEMergeElement</a> interface corresponds to the <a element>feMerge</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEMergeElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEMergeElement</b> : <a interface>SVGElement</a> {
 };
 
-<a>SVGFEMergeElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEMergeElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <h3 id="InterfaceSVGFEMergeNodeElement">
   Interface SVGFEMergeNodeElement
 </h3>
 
-The <a>SVGFEMergeNodeElement</a> interface corresponds to the <a element>feMergeNode</a> element.
+The <a interface>SVGFEMergeNodeElement</a> interface corresponds to the <a element>feMergeNode</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEMergeNodeElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+interface <b>SVGFEMergeNodeElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
 "#SVGFEMergeNodeElement__in1">in1</a>;
 };
 </pre>
@@ -5226,7 +5234,7 @@ interface <b>SVGFEMergeNodeElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEMergeNodeElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5242,10 +5250,10 @@ interface <b>SVGFEMergeNodeElement</b> : <a>SVGElement</a> {
   Interface SVGFEMorphologyElement
 </h3>
 
-The <a>SVGFEMorphologyElement</a> interface corresponds to the <a element>feMorphology</a> element.
+The <a interface>SVGFEMorphologyElement</a> interface corresponds to the <a element>feMorphology</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
+interface <b>SVGFEMorphologyElement</b> : <a interface>SVGElement</a> {
 
   // Morphology Operators
   const unsigned short <a href=
@@ -5255,17 +5263,17 @@ interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFEMorphologyElement__SVG_MORPHOLOGY_OPERATOR_DILATE">SVG_MORPHOLOGY_OPERATOR_DILATE</a> = 2;
 
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFEMorphologyElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFEMorphologyElement__operator">operator</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEMorphologyElement__radiusX">radiusX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFEMorphologyElement__radiusY">radiusY</a>;
 };
 
-<a>SVGFEMorphologyElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEMorphologyElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -5312,7 +5320,7 @@ interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEMorphologyElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5322,7 +5330,7 @@ interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEMorphologyElement__operator">
         <b>operator</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedEnumeration</a>)</span>
+        <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5333,7 +5341,7 @@ interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEMorphologyElement__radiusX">
         <b>radiusX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5343,7 +5351,7 @@ interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEMorphologyElement__radiusY">
         <b>radiusY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5359,16 +5367,16 @@ interface <b>SVGFEMorphologyElement</b> : <a>SVGElement</a> {
   Interface SVGFEOffsetElement
 </h3>
 
-The <a>SVGFEOffsetElement</a> interface corresponds to the <a element>feOffset</a> element.
+The <a interface>SVGFEOffsetElement</a> interface corresponds to the <a element>feOffset</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFEOffsetElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFEOffsetElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dx">dx</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dy">dy</a>;
+interface <b>SVGFEOffsetElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedString</a> <a href="#SVGFEOffsetElement__in1">in1</a>;
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dx">dx</a>;
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href="#SVGFEOffsetElement__dy">dy</a>;
 };
 
-<a>SVGFEOffsetElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFEOffsetElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -5379,7 +5387,7 @@ interface <b>SVGFEOffsetElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFEOffsetElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5389,14 +5397,14 @@ interface <b>SVGFEOffsetElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFEOffsetElement__dx">
         <b>dx</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=feOffset>dx</a> on the given <a element>feOffset</a> element.
       </dd>
       <dt id="SVGFEOffsetElement__dy">
         <b>dy</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         Corresponds to attribute <a element-attr for=feOffset>dy</a> on the given <a element>feOffset</a> element.
@@ -5409,25 +5417,25 @@ interface <b>SVGFEOffsetElement</b> : <a>SVGElement</a> {
   Interface SVGFESpecularLightingElement
 </h3>
 
-The <a>SVGFESpecularLightingElement</a> interface corresponds to the <a element>feSpecularLighting</a> element.
+The <a interface>SVGFESpecularLightingElement</a> interface corresponds to the <a element>feSpecularLighting</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedString</a> <a href=
+interface <b>SVGFESpecularLightingElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedString</a> <a href=
   "#SVGFESpecularLightingElement__in1">in1</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpecularLightingElement__surfaceScale">surfaceScale</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpecularLightingElement__specularConstant">specularConstant</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpecularLightingElement__specularExponent">specularExponent</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpecularLightingElement__kernelUnitLengthX">kernelUnitLengthX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFESpecularLightingElement__kernelUnitLengthY">kernelUnitLengthY</a>;
 };
 
-<a>SVGFESpecularLightingElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFESpecularLightingElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -5438,7 +5446,7 @@ interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFESpecularLightingElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5448,7 +5456,7 @@ interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpecularLightingElement__surfaceScale">
         <b>surfaceScale</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5458,7 +5466,7 @@ interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpecularLightingElement__specularConstant">
         <b>specularConstant</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5468,7 +5476,7 @@ interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpecularLightingElement__specularExponent">
         <b>specularExponent</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5478,7 +5486,7 @@ interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpecularLightingElement__kernelUnitLengthX">
         <b>kernelUnitLengthX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5488,7 +5496,7 @@ interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
       </dd>
       <dt id="SVGFESpecularLightingElement__kernelUnitLengthY">
         <b>kernelUnitLengthY</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5504,14 +5512,14 @@ interface <b>SVGFESpecularLightingElement</b> : <a>SVGElement</a> {
   Interface SVGFETileElement
 </h3>
 
-The <a>SVGFETileElement</a> interface corresponds to the <a element>feTile</a> element.
+The <a interface>SVGFETileElement</a> interface corresponds to the <a element>feTile</a> element.
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFETileElement</b> : <a>SVGElement</a> {
-  readonly attribute <a>SVGAnimatedString</a> <a href="#SVGFETileElement__in1">in1</a>;
+interface <b>SVGFETileElement</b> : <a interface>SVGElement</a> {
+  readonly attribute <a interface>SVGAnimatedString</a> <a href="#SVGFETileElement__in1">in1</a>;
 };
 
-<a>SVGFETileElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFETileElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -5522,7 +5530,7 @@ interface <b>SVGFETileElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFETileElement__in1">
         <b>in1</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedString</a>)</span>
+        <a interface>SVGAnimatedString</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5538,12 +5546,12 @@ interface <b>SVGFETileElement</b> : <a>SVGElement</a> {
   Interface SVGFETurbulenceElement
 </h3>
 <p>
-  The <a>SVGFETurbulenceElement</a> interface corresponds to the <a element>feTurbulence</a>
+  The <a interface>SVGFETurbulenceElement</a> interface corresponds to the <a element>feTurbulence</a>
   element.
 </p>
 
 <pre class="idl" data-no-idl>
-interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
+interface <b>SVGFETurbulenceElement</b> : <a interface>SVGElement</a> {
 
   // Turbulence Types
   const unsigned short <a href=
@@ -5561,21 +5569,21 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
   const unsigned short <a href=
   "#SVGFETurbulenceElement__SVG_STITCHTYPE_NOSTITCH">SVG_STITCHTYPE_NOSTITCH</a> = 2;
 
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFETurbulenceElement__baseFrequencyX">baseFrequencyX</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFETurbulenceElement__baseFrequencyY">baseFrequencyY</a>;
-  readonly attribute <a>SVGAnimatedInteger</a> <a href=
+  readonly attribute <a interface>SVGAnimatedInteger</a> <a href=
   "#SVGFETurbulenceElement__numOctaves">numOctaves</a>;
-  readonly attribute <a>SVGAnimatedNumber</a> <a href=
+  readonly attribute <a interface>SVGAnimatedNumber</a> <a href=
   "#SVGFETurbulenceElement__seed">seed</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFETurbulenceElement__stitchTiles">stitchTiles</a>;
-  readonly attribute <a>SVGAnimatedEnumeration</a> <a href=
+  readonly attribute <a interface>SVGAnimatedEnumeration</a> <a href=
   "#SVGFETurbulenceElement__type">type</a>;
 };
 
-<a>SVGFETurbulenceElement</a> implements <a>SVGFilterPrimitiveStandardAttributes</a>;
+<a interface>SVGFETurbulenceElement</a> implements <a interface>SVGFilterPrimitiveStandardAttributes</a>;
 </pre>
 
 <dl class="interface">
@@ -5654,7 +5662,7 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
     <dl class="attributes">
       <dt id="SVGFETurbulenceElement__baseFrequencyX">
         <b>baseFrequencyX</b> <span class="idl-type-parenthetical">(readonly
-        <a>SVGAnimatedNumber</a>)</span>
+        <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5662,7 +5670,7 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__baseFrequencyY">
-        <b>baseFrequencyY</b> <span class="idl-type-parenthetical">(readonly <a>SVGAnimatedNumber</a>)</span>
+        <b>baseFrequencyY</b> <span class="idl-type-parenthetical">(readonly <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5670,7 +5678,7 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__numOctaves">
-        <b>numOctaves</b> <span class="idl-type-parenthetical">(readonly <a>SVGAnimatedInteger</a>)</span>
+        <b>numOctaves</b> <span class="idl-type-parenthetical">(readonly <a interface>SVGAnimatedInteger</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5678,7 +5686,7 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__seed">
-        <b>seed</b> <span class="idl-type-parenthetical">(readonly <a>SVGAnimatedNumber</a>)</span>
+        <b>seed</b> <span class="idl-type-parenthetical">(readonly <a interface>SVGAnimatedNumber</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5686,7 +5694,7 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__stitchTiles">
-        <b>stitchTiles</b> <span class="idl-type-parenthetical">(readonly <a>SVGAnimatedEnumeration</a>)</span>
+        <b>stitchTiles</b> <span class="idl-type-parenthetical">(readonly <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
@@ -5694,7 +5702,7 @@ interface <b>SVGFETurbulenceElement</b> : <a>SVGElement</a> {
         </div>
       </dd>
       <dt id="SVGFETurbulenceElement__type">
-        <b>type</b> <span class="idl-type-parenthetical">(readonly <a>SVGAnimatedEnumeration</a>)</span>
+        <b>type</b> <span class="idl-type-parenthetical">(readonly <a interface>SVGAnimatedEnumeration</a>)</span>
       </dt>
       <dd>
         <div>
