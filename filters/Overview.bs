@@ -276,10 +276,14 @@ Animatable: yes
 
 If the value of the 'filter' property is ''filter/none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
+Issue: Should establish a containing block for values not-''filter/none'' for absolutely and fixed positioned elements. <a href="https://github.com/w3c/fxtf-drafts/issues/11">https://github.com/w3c/fxtf-drafts/issues/11</a>
+
 <pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
 
 <pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>> | <br>
   <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
+
+Issue: Make parameters optional? <a href="https://github.com/w3c/fxtf-drafts/issues/1">https://github.com/w3c/fxtf-drafts/issues/1</a>
 
 <div id="FilterFunction" dfn-for="filter">
     : <dfn>&lt;url></dfn>
@@ -441,6 +445,8 @@ Note: Sometimes implementers can achieve faster performance when the filter regi
 Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
 
 # Filter primitives # {#FilterPrimitivesOverview}
+
+Issue: Add description elements to content model of all elements? <a href="https://github.com/w3c/fxtf-drafts/issues/9">https://github.com/w3c/fxtf-drafts/issues/9</a>
 
 ## Overview ## {#FilterPrimitivesOverviewIntro}
 
@@ -1904,6 +1910,8 @@ macros:
     attributes: <li><a element-attr for=feDisplacementMap>scale</a></li><li><a element-attr for=feDisplacementMap>xChannelSelector</a></li><li><a element-attr for=feDisplacementMap>yChannelSelector</a></li>
 </pre>
 
+Issue: Consider taking `image-rendering` into account to control smooth re-sampling. <a href="https://github.com/w3c/fxtf-drafts/issues/21">https://github.com/w3c/fxtf-drafts/issues/21</a>
+
 This filter primitive uses the pixels values from the image from <a element-attr for=feDisplacementMap>in2</a> to spatially displace the image from <a element-attr>in</a>. This is the transformation to be performed:
 
 <pre>
@@ -3229,6 +3237,8 @@ Where edge mode computes to ''filter/none'' for the 'filter' property and to ''d
 <h3 id="filter-region-for-shorthands">Filter region for shorthands</h3>
 
 All shorthand filters implemented with filter primitives in the previous subsection must have a UA defined <a>filter region</a>. The filter region must cover the visual content of an element including overflowing content, graphical control elements such as scrollbars, 'border'/'border-image', 'box-shadow', 'text-shadow' and 'outline'. Furthermore, if a shorthand filter expands this visible area like it is the case for <<blur()>> or <<drop-shadow()>> the filter region must cover this area as well.
+
+Issue: Explicitly define how to compute the filter region? <a href="https://github.com/w3c/fxtf-drafts/issues/23">https://github.com/w3c/fxtf-drafts/issues/23</a>
 
 Note: For the handling of <a href="#FilterElement">filter sources</a> see section <a href="#FilterEffectsRegion">Filter region</a>.
 
