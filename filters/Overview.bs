@@ -1,4 +1,4 @@
-<pre class='metadata'>
+<pre class=metadata>
 Title: Filter Effects Module Level 1
 Status: ED
 ED: https://drafts.fxtf.org/filters/
@@ -16,7 +16,6 @@ Abstract: Filter effects are a way of processing an element's rendering before i
 Abstract:
 Abstract: Although originally designed for use in SVG, filter effects are a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the 'filter' property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <<image>> value.
 Issue Tracking: Legacy open bugs https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&component=Filter%20Effects&resolution=---
-Use <i> Autolinks: yes
 Ignored Vars: Va, 5s, 10s
 </pre>
 
@@ -240,11 +239,11 @@ The following pictures show the intermediate image results from each of the six 
 
 <h2 id="placement">Module interactions</h2>
 
-This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="https://www.w3.org/TR/CSS2/visuren.html" lt="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <i>containing block</i>, and/or the creation of a <a spec="css21">stacking context</a>.
+This specification defines a set of CSS properties that affect the visual rendering of elements to which those properties are applied; these effects are applied after elements have been sized and positioned according to the <a href="https://www.w3.org/TR/CSS2/visuren.html" lt="Visual formatting model">Visual formatting model</a> from [[!CSS21]]. Some values of these properties result in the creation of a <a>containing block</a>, and/or the creation of a <a spec="css21">stacking context</a>.
 
 The compositing model follows the SVG compositing model [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity [[CSS3COLOR]]. These effects all apply after any other CSS effects such as 'border' [[!CSS3BG]].
 
-Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and 'lighting-color' properties as well as the <a element>filter</a> element, the <a element>feMergeNode</a> element, the <i>transfer function elements</i> and the <i>filter primitive</i> elements.
+Some property and element definitions in this specification require an SVG 1.1 implementation [[!SVG11]]. UAs without support for SVG must not implement the 'color-interpolation-filters', 'flood-color', 'flood-opacity' and 'lighting-color' properties as well as the <a element>filter</a> element, the <a element>feMergeNode</a> element, the <a>transfer function elements</a> and the <a>filter primitive</a> elements.
 
 
 <h2 id="values">Values</h2>
@@ -272,7 +271,7 @@ The description of the 'filter' property is as follows:
 Name: filter
 Value: none | <<filter-function-list>>
 Initial: none
-Applies to: All elements. In SVG, it applies to <i>container elements</i> without the <a element>defs</a> element and all <i>graphics elements</i>
+Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a element>defs</a> element and all <a>graphics elements</a>
 Inherited: no
 Percentages: n/a
 Computed value: as specified
@@ -382,13 +381,15 @@ A computed value of other than ''filter/none'' results in the creation of a <a h
 
 The 'filter' property has no effect on the geometry of the target element's CSS boxes, even though 'filter' can cause painting outside of an element's border box.
 
-Conceptually, any parts of the drawing are effected by filter operations. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the filter is applied, and those of its descendants. The filter operations are applied in the element's <i>user coordinate system</i>.
+Conceptually, any parts of the drawing are effected by filter operations. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the filter is applied, and those of its descendants. The filter operations are applied in the element's <a>local coordinate system</a>.
 
 The compositing model follows the <a href="https://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing model</a> [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of 'filter' has no effect on hit-testing.
 
 <h2 id="FilterElement">SVG Filter Sources: the <a element>filter</a> element</h2>
 
-<!--elementsummary filter-->
+<pre class=include>
+path: templates/filter.md
+</pre>
 
 The description of the <a element>filter</a> element follows:
 
@@ -400,41 +401,41 @@ The description of the <a element>filter</a> element follows:
     <dfn>filterUnits</dfn> = "<dfn attr-value for=filterUnits>userSpaceOnUse</dfn> | <dfn attr-value for=filterUnits>objectBoundingBox</dfn>"
   </dt>
   <dd>
-    See <i>filter region</i>.
+    See <a>filter region</a>.
   </dd>
   <dt>
     <dfn>primitiveUnits</dfn> = "<dfn attr-value for=primitiveUnits>userSpaceOnUse</dfn> | <dfn attr-value for=primitiveUnits>objectBoundingBox</dfn>"
   </dt>
   <dd>
-    <p>Specifies the coordinate system for the various length values within the <i>filter primitives</i> and for the attributes that define the <i>filter primitive subregion</i>.</p>
-    <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>userSpaceOnUse</a>, any length values within the filter definitions represent values in the current <i>user coordinate system</i> in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
-    <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>). Note that if only one number was specified in a <<number-optional-number>> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
-    <p>The <i>initial value</i> for <a element-attr>primitiveUnits</a> is <a attr-value for=primitiveUnits>userSpaceOnUse</a>.</p>
+    <p>Specifies the coordinate system for the various length values within the <a>filter primitives</a> and for the attributes that define the <a>filter primitive subregion</a>.</p>
+    <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>userSpaceOnUse</a>, any length values within the filter definitions represent values in the current <a>local coordinate system</a> in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
+    <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>). Note that if only one number was specified in a <<number-optional-number>> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
+    <p>The <a>initial value</a> for <a element-attr>primitiveUnits</a> is <a attr-value for=primitiveUnits>userSpaceOnUse</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>x</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    See <i>filter region</i>.
+    See <a>filter region</a>.
   </dd>
   <dt>
     <dfn>y</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    See <i>filter region</i>.
+    See <a>filter region</a>.
   </dd>
   <dt>
     <dfn>width</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    See <i>filter region</i>.
+    See <a>filter region</a>.
   </dd>
   <dt>
     <dfn>height</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    See <i>filter region</i>.
+    See <a>filter region</a>.
   </dd>
   <dt>
     <dfn>filterRes</dfn> = "<<number-optional-number>>"
@@ -450,7 +451,7 @@ Properties inherit into the <a element>filter</a> element from its ancestors; pr
 
 <h2 id="FilterEffectsRegion">Filter Region</h2>
 
-A <a element>filter</a> element can define a <dfn>filter region</dfn> on the canvas to which a given filter effect applies and can provide a resolution for any intermediate continuous tone images used to process any raster-based <i>filter primitives</i>. The <a element>filter</a> element has the following attributes which work together to define the filter region:
+A <a element>filter</a> element can define a <dfn>filter region</dfn> on the canvas to which a given filter effect applies and can provide a resolution for any intermediate continuous tone images used to process any raster-based <a>filter primitives</a>. The <a element>filter</a> element has the following attributes which work together to define the filter region:
 
 <dl class='definitions unemphasized-names'>
   <dt id="FilterUnitsAttribute">
@@ -459,8 +460,8 @@ A <a element>filter</a> element can define a <dfn>filter region</dfn> on the can
   <dd>
     <p>Defines the coordinate system for attributes <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>.</p>
     <p>If <a element-attr for=filter>filterUnits</a> is equal to <a attr-value for=filterUnits>userSpaceOnUse</a>, <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent values in the current user coordinate system in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
-    <p>If <a element-attr for=filter>filterUnits</a> is equal to <a attr-value for=filterUnits>objectBoundingBox</a>, then <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent fractions or percentages of the bounding box on the referencing element (see <i>object bounding box units</i>).</p>
-    <p>The <i>initial value</i> for <a element-attr>filterUnits</a> is <a attr-value for=filterUnits>objectBoundingBox</a>.</p>
+    <p>If <a element-attr for=filter>filterUnits</a> is equal to <a attr-value for=filterUnits>objectBoundingBox</a>, then <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a>, <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a> represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>).</p>
+    <p>The <a>initial value</a> for <a element-attr>filterUnits</a> is <a attr-value for=filterUnits>objectBoundingBox</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt id="FilterRegionXYWidthHeightAttributes">
@@ -470,19 +471,19 @@ A <a element>filter</a> element can define a <dfn>filter region</dfn> on the can
   <dd>
     <p>These attributes define a rectangular region on the canvas to which this filter applies.</p>
     <p>The coordinate system for these attributes depends on the value for attribute <a element-attr>filterUnits</a>.</p>
-    <p>The bounds of this rectangle act as a hard clipping region for each <i>filter primitive</i> included with a given <a element>filter</a> element; thus, if the effect of a given filter primitive would extend beyond the bounds of the rectangle (this sometimes happens when using a <a element>feGaussianBlur</a> filter primitive with a very large <a element-attr for=feGaussianBlur>stdDeviation</a>), parts of the effect will get clipped.</p>
-    <p>The <i>initial value</i> for <a element-attr for=filter>x</a> and <a element-attr for=filter>y</a> is ''-10%''.</p>
-    <p>The <i>initial value</i> for <a element-attr for=filter>width</a> and <a element-attr for=filter>height</a> is ''120%''.</p>
+    <p>The bounds of this rectangle act as a hard clipping region for each <a>filter primitive</a> included with a given <a element>filter</a> element; thus, if the effect of a given filter primitive would extend beyond the bounds of the rectangle (this sometimes happens when using a <a element>feGaussianBlur</a> filter primitive with a very large <a element-attr for=feGaussianBlur>stdDeviation</a>), parts of the effect will get clipped.</p>
+    <p>The <a>initial value</a> for <a element-attr for=filter>x</a> and <a element-attr for=filter>y</a> is ''-10%''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=filter>width</a> and <a element-attr for=filter>height</a> is ''120%''.</p>
     <p>Negative or zero values for <a element-attr for=filter>width</a> or <a element-attr for=filter>height</a> disable rendering of the element which referenced the filter.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
 
-Note: Both of the two possible value for <a element-attr>filterUnits</a> (i.e., <a attr-value for=filterUnits>objectBoundingBox</a> and <a attr-value for=filterUnits>userSpaceOnUse</a>) result in a <i>filter region</i> whose coordinate system has its X-axis and Y-axis each parallel to the X-axis and Y-axis, respectively, of the <i>user coordinate system</i> for the element to which the filter will be applied.
+Note: Both of the two possible value for <a element-attr>filterUnits</a> (i.e., <a attr-value for=filterUnits>objectBoundingBox</a> and <a attr-value for=filterUnits>userSpaceOnUse</a>) result in a <a>filter region</a> whose coordinate system has its X-axis and Y-axis each parallel to the X-axis and Y-axis, respectively, of the <a>local coordinate system</a> for the element to which the filter will be applied.
 
-Note: Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <i>filter region</i> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.
+Note: Sometimes implementers can achieve faster performance when the filter region can be mapped directly to device pixels; thus, for best performance on display devices, it is suggested that authors define their region such that the user agent can align the <a>filter region</a> pixel-for-pixel with the background. In particular, for best filter effects performance, avoid rotating or skewing the user coordinate system.
 
-Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <i>bounding box</i> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
+Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
 
 <h2 id="FilterPrimitivesOverview">Filter primitives</h2>
 
@@ -496,17 +497,17 @@ Note: All input images are assumed to be in premultiplied RGBA. User agents may 
 
 All raster effect filtering operations take 1 to N input RGBA images, additional attributes as parameters, and produce a single output RGBA image.
 
-The RGBA result from each filter primitive will be clamped into the allowable ranges for colors and opacity values. Thus, for example, the result from a given <i>filter primitive</i> will have any negative color values or opacity values adjusted up to color/opacity of zero.
+The RGBA result from each filter primitive will be clamped into the allowable ranges for colors and opacity values. Thus, for example, the result from a given <a>filter primitive</a> will have any negative color values or opacity values adjusted up to color/opacity of zero.
 
-<p id="filtersColorSpace">The color space in which a particular <i>filter primitive</i> performs its operations is determined by the value of the property 'color-interpolation-filters' on the given <i>filter primitive</i>. A different property, 'color-interpolation' determines the color space for other color operations. Because these two properties have different initial values ('color-interpolation-filters' has an initial value of ''linearRGB'' whereas 'color-interpolation' has an initial value of ''sRGB''), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set 'color-interpolation' to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples below do not explicitly set either 'color-interpolation' or 'color-interpolation-filters', so the initial values for these properties apply to the examples.</p>
+<p id="filtersColorSpace">The color space in which a particular <a>filter primitive</a> performs its operations is determined by the value of the property 'color-interpolation-filters' on the given <a>filter primitive</a>. A different property, 'color-interpolation' determines the color space for other color operations. Because these two properties have different initial values ('color-interpolation-filters' has an initial value of ''linearRGB'' whereas 'color-interpolation' has an initial value of ''sRGB''), in some cases to achieve certain results (e.g., when coordinating gradient interpolation with a filtering operation) it will be necessary to explicitly set 'color-interpolation' to ''linearRGB'' or 'color-interpolation-filters' to ''sRGB'' on particular elements. Note that the examples below do not explicitly set either 'color-interpolation' or 'color-interpolation-filters', so the initial values for these properties apply to the examples.</p>
 
-Sometimes <i>filter primitives</i> result in undefined pixels. For example, filter primitive <a element>feOffset</a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
+Sometimes <a>filter primitives</a> result in undefined pixels. For example, filter primitive <a element>feOffset</a> can shift an image down and to the right, leaving undefined pixels at the top and left. In these cases, the undefined pixels are set to transparent black.
 
-To provide high quality rendering, all filter primitives should operate in a device dependent coordinate space, the <dfn>operating coordinate space</dfn>, taking device pixel density, user space transformations and zooming into account. To provide a platform independent alignment, attribute and property values are often relative to a coordinate system described by the <a element-attr>primitiveUnits</a> attribute. User agents must scale these relative attributes and properties to the <i>operating coordinate space</i>.
+To provide high quality rendering, all filter primitives should operate in a device dependent coordinate space, the <dfn>operating coordinate space</dfn>, taking device pixel density, user space transformations and zooming into account. To provide a platform independent alignment, attribute and property values are often relative to a coordinate system described by the <a element-attr>primitiveUnits</a> attribute. User agents must scale these relative attributes and properties to the <a>operating coordinate space</a>.
 
 Note: On high resolution devices, attribute and property values that are relative to the <a element-attr>primitiveUnits</a> usually need to be scaled up. User agents may reduce the resolution of filter primitives on limited platform resources.
 
-Note: Some attribute or property values from the filter primitives <a element>feConvolveMatrix</a> and <i>light sources</i> can not be mapped from the coordinate space defined by the <a element-attr>primitiveUnits</a> attribute to the <i>operating coordinate space</i>.
+Note: Some attribute or property values from the filter primitives <a element>feConvolveMatrix</a> and <a>light sources</a> can not be mapped from the coordinate space defined by the <a element-attr>primitiveUnits</a> attribute to the <a>operating coordinate space</a>.
 
 <h3 id="CommonAttributes">Common filter primitive attributes</h3>
 
@@ -518,41 +519,41 @@ The following <dfn id="filter-primitive-attributes">filter primitive attributes<
     <dfn>x</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    <p>The minimum x coordinate for the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
-    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>x</a> is ''0%''.</p>
+    <p>The minimum x coordinate for the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
+    <p>The <a>initial value</a> for <a element-attr for=filter-primitive>x</a> is ''0%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>y</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    <p>The minimum y coordinate for the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
-    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>y</a> is ''0%''.</p>
+    <p>The minimum y coordinate for the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
+    <p>The <a>initial value</a> for <a element-attr for=filter-primitive>y</a> is ''0%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>width</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    <p>The width of the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
+    <p>The width of the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
     <p>A negative or zero value disables the effect of the given filter primitive (i.e., the result is a transparent black image).</p>
-    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>width</a> is ''100%''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=filter-primitive>width</a> is ''100%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>height</dfn> = "<<length-percentage>>"
   </dt>
   <dd>
-    <p>The height of the subregion which restricts calculation and rendering of the given <i>filter primitive</i>. See <i>filter primitive subregion</i>.</p>
+    <p>The height of the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
     <p>A negative or zero value must disable the effect of the given filter primitive (i.e., the result is a transparent black image).</p>
-    <p>The <i>initial value</i> for <a element-attr for=filter-primitive>height</a> is ''100%''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=filter-primitive>height</a> is ''100%''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>result</dfn> = "<em><dfn type dfn-for=result>&lt;filter-primitive-reference></dfn></em>"
   </dt>
   <dd>
-    <<filter-primitive-reference>> is an <<custom-ident>> [[CSS3VAL]] and an assigned name for this <i>filter primitive</i>. If supplied, then graphics that result from processing this <i>filter primitive</i> can be referenced by an <a element-attr>in</a> attribute on a subsequent filter primitive within the same <a element>filter</a> element. If no value is provided, the output will only be available for re-use as the implicit input into the next <i>filter primitive</i> if that <i>filter primitive</i> provides no value for its <a element-attr>in</a> attribute.
+    <<filter-primitive-reference>> is an <<custom-ident>> [[CSS3VAL]] and an assigned name for this <a>filter primitive</a>. If supplied, then graphics that result from processing this <a>filter primitive</a> can be referenced by an <a element-attr>in</a> attribute on a subsequent filter primitive within the same <a element>filter</a> element. If no value is provided, the output will only be available for re-use as the implicit input into the next <a>filter primitive</a> if that <a>filter primitive</a> provides no value for its <a element-attr>in</a> attribute.
   </dd>
 </dl>
 
@@ -564,8 +565,8 @@ Most filter primitives take other filter primitives as input. The following attr
     <dfn>in</dfn> = "<em><a attr-value>SourceGraphic</a> | <a attr-value>SourceAlpha</a> | <a attr-value>BackgroundImage</a> | <a attr-value>BackgroundAlpha</a> | <a attr-value>FillPaint</a> | <a attr-value>StrokePaint</a> | <<filter-primitive-reference>></em>"
   </dt>
   <dd>
-    <p>Identifies input for the given filter primitive. The value can be either one of six keywords or can be a string which matches a previous <a element-attr>result</a> attribute value within the same <a element>filter</a> element. If no value is provided and this is the first <i>filter primitive</i>, then this <i>filter primitive</i> will use <a attr-value>SourceGraphic</a> as its input. If no value is provided and this is a subsequent <i>filter primitive</i>, then this <i>filter primitive</i> will use the result from the previous <i>filter primitive</i> as its input.</p>
-    <p>If the value for <a element-attr for=filter-primitive>result</a> appears multiple times within a given <a element>filter</a> element, then a reference to that result will use the closest preceding <i>filter primitive</i> with the given value for attribute <a element-attr>result</a>.</p>
+    <p>Identifies input for the given filter primitive. The value can be either one of six keywords or can be a string which matches a previous <a element-attr>result</a> attribute value within the same <a element>filter</a> element. If no value is provided and this is the first <a>filter primitive</a>, then this <a>filter primitive</a> will use <a attr-value>SourceGraphic</a> as its input. If no value is provided and this is a subsequent <a>filter primitive</a>, then this <a>filter primitive</a> will use the result from the previous <a>filter primitive</a> as its input.</p>
+    <p>If the value for <a element-attr for=filter-primitive>result</a> appears multiple times within a given <a element>filter</a> element, then a reference to that result will use the closest preceding <a>filter primitive</a> with the given value for attribute <a element-attr>result</a>.</p>
     <p>Forward references to results are not allowed, and will be treated as if no result was specified.</p>
     <p>References to non-existent results will be treated as if no result was specified.</p>
     <p>Definitions for the six keywords:</p>
@@ -575,7 +576,7 @@ Most filter primitives take other filter primitives as input. The following attr
       </dt>
       <dd>
         <p>
-          This keyword represents the graphics elements that were the original input into the <a element>filter</a> element. For raster effects <i>filter primitives</i>, the graphics elements will be rasterized into  an initially clear RGBA raster in image space. Pixels left untouched by the original graphic will be left clear. The image is specified to be rendered in linear RGBA pixels. The alpha channel of this image captures any anti-aliasing specified by SVG. (Since the raster is linear, the alpha channel of this image will represent the exact percent coverage of each pixel.)
+          This keyword represents the graphics elements that were the original input into the <a element>filter</a> element. For raster effects <a>filter primitives</a>, the graphics elements will be rasterized into  an initially clear RGBA raster in image space. Pixels left untouched by the original graphic will be left clear. The image is specified to be rendered in linear RGBA pixels. The alpha channel of this image captures any anti-aliasing specified by SVG. (Since the raster is linear, the alpha channel of this image will represent the exact percent coverage of each pixel.)
         </p>
       </dd>
       <dt>
@@ -593,7 +594,7 @@ Most filter primitives take other filter primitives as input. The following attr
         <dfn>BackgroundImage</dfn>
       </dt>
       <dd>
-        This keyword represents the back drop defined by the current isolation group behind the <i>filter region</i> at the time that the <a element>filter</a> element was invoked. See 'isolation' property [[!COMPOSITING-1]].
+        This keyword represents the back drop defined by the current isolation group behind the <a>filter region</a> at the time that the <a element>filter</a> element was invoked. See 'isolation' property [[!COMPOSITING-1]].
       </dd>
       <dt>
         <dfn>BackgroundAlpha</dfn>
@@ -605,7 +606,7 @@ Most filter primitives take other filter primitives as input. The following attr
         <dfn>FillPaint</dfn>
       </dt>
       <dd>
-        <p>This keyword represents the value of the 'fill' property on the target element for the filter effect. The <a attr-value>FillPaint</a> image has conceptually infinite extent. Frequently this image is opaque everywhere, but it might not be if the "paint" itself has alpha, as in the case of a gradient or pattern which itself includes transparent or semi-transparent parts. If 'fill' references a paint server, then the coordinate space of the paint server is the coordinate space defined for the filtered object. E.g if the paint server requires to use the <a attr-value for=primitiveUnits>objectBoundingBox</a> of the object, the object bounding box of the filtered object defines the reference size of the paint server. If the paint server requires to use the <a attr-value for=primitiveUnits>userSpaceOnUse</a>, the nearest viewport in the <i>user coordinate system</i> of the filtered object defines the reference size of the paint server.
+        <p>This keyword represents the value of the 'fill' property on the target element for the filter effect. The <a attr-value>FillPaint</a> image has conceptually infinite extent. Frequently this image is opaque everywhere, but it might not be if the "paint" itself has alpha, as in the case of a gradient or pattern which itself includes transparent or semi-transparent parts. If 'fill' references a paint server, then the coordinate space of the paint server is the coordinate space defined for the filtered object. E.g if the paint server requires to use the <a attr-value for=primitiveUnits>objectBoundingBox</a> of the object, the object bounding box of the filtered object defines the reference size of the paint server. If the paint server requires to use the <a attr-value for=primitiveUnits>userSpaceOnUse</a>, the nearest viewport in the <a>local coordinate system</a> of the filtered object defines the reference size of the paint server.
       </dd>
       <dt>
         <dfn>StrokePaint</dfn>
@@ -622,20 +623,20 @@ Most filter primitives take other filter primitives as input. The following attr
 
 <h3 id="FilterPrimitiveSubRegion">Filter primitive subregion</h3>
 
-All <i>filter primitives</i> have attributes <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> which together identify a <dfn id="filter-primitive-subregion">filter primitive subregion</dfn> which restricts calculation and rendering of the given <i>filter primitive</i>. The <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> attributes are defined according to the same rules as other <i>filter primitives</i> coordinate and length attributes and thus represent values in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.
+All <a>filter primitives</a> have attributes <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> which together identify a <dfn id="filter-primitive-subregion">filter primitive subregion</dfn> which restricts calculation and rendering of the given <a>filter primitive</a>. The <a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> attributes are defined according to the same rules as other <a>filter primitives</a> coordinate and length attributes and thus represent values in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.
 
-<a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> default to the union (i.e., tightest fitting bounding box) of the subregions defined for all referenced nodes. If there are no referenced nodes (e.g., for <a element>feImage</a> or <a element>feTurbulence</a>), or one or more of the referenced nodes is a standard input (one of <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> or <a attr-value>StrokePaint</a>), or for <a element>feTile</a> (which is special because its principal function is to replicate the referenced node in X and Y and thereby produce a usually larger result), the default subregion is ''0%, 0%, 100%, 100%'', where as a special-case the percentages are relative to the dimensions of the <i>filter region</i>, thus making the default <i>filter primitive subregion</i> equal to the <i>filter region</i>.
+<a element-attr for=filter-primitive>x</a>, <a element-attr for=filter-primitive>y</a>, <a element-attr for=filter-primitive>width</a> and <a element-attr for=filter-primitive>height</a> default to the union (i.e., tightest fitting bounding box) of the subregions defined for all referenced nodes. If there are no referenced nodes (e.g., for <a element>feImage</a> or <a element>feTurbulence</a>), or one or more of the referenced nodes is a standard input (one of <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> or <a attr-value>StrokePaint</a>), or for <a element>feTile</a> (which is special because its principal function is to replicate the referenced node in X and Y and thereby produce a usually larger result), the default subregion is ''0%, 0%, 100%, 100%'', where as a special-case the percentages are relative to the dimensions of the <a>filter region</a>, thus making the default <a>filter primitive subregion</a> equal to the <a>filter region</a>.
 
-If the <i>filter primitive subregion</i> has a negative or zero width or height, the effect of the filter primitive is disabled.
+If the <a>filter primitive subregion</a> has a negative or zero width or height, the effect of the filter primitive is disabled.
 
-The <i>filter region</i> acts as a hard clip clipping rectangle on the filter primitive's input image(s).
+The <a>filter region</a> acts as a hard clip clipping rectangle on the filter primitive's input image(s).
 
-The <i>filter primitive subregion</i> acts as a hard clip clipping rectangle on the filter primitive result.
+The <a>filter primitive subregion</a> acts as a hard clip clipping rectangle on the filter primitive result.
 
-All intermediate offscreens are defined to not exceed the intersection of the <i>filter primitive subregion</i> with the <i>filter region</i>. The <i>filter region</i> and any of the filter primitive subregions are to be set up such that all offscreens are made big enough to accommodate any pixels which even partly intersect with either the <i>filter region</i> or the filter primitive subregions.
+All intermediate offscreens are defined to not exceed the intersection of the <a>filter primitive subregion</a> with the <a>filter region</a>. The <a>filter region</a> and any of the filter primitive subregions are to be set up such that all offscreens are made big enough to accommodate any pixels which even partly intersect with either the <a>filter region</a> or the filter primitive subregions.
 
 <div class="example">
-  <p><a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <i>filter primitive subregion</i> of the referenced filter primitive in order to fill its own <i>filter primitive subregion</i>.</p>
+  <p><a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <a>filter primitive subregion</a> of the referenced filter primitive in order to fill its own <a>filter primitive subregion</a>.</p>
 
   <pre class="xml">&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt;
   &lt;defs&gt;
@@ -694,7 +695,7 @@ All intermediate offscreens are defined to not exceed the intersection of the <i
     </p>
   </div>
   <p class="view-as-svg"><a href="examples/filtersubregion00.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
-  <p>In the example above there are three rectangles that each have a cross and a circle in them. The circle element in each one has a different filter applied, but with the same <i>filter primitive subregion</i>. The filter output should be limited to the <i>filter primitive subregion</i>, so you should never see the circles themselves, just the rectangles that make up the <i>filter primitive subregion</i>.</p>
+  <p>In the example above there are three rectangles that each have a cross and a circle in them. The circle element in each one has a different filter applied, but with the same <a>filter primitive subregion</a>. The filter output should be limited to the <a>filter primitive subregion</a>, so you should never see the circles themselves, just the rectangles that make up the <a>filter primitive subregion</a>.</p>
   <ul>
     <li>
       The upper left rectangle shows an <a element>feFlood</a> with ''flood-opacity: 75%'' so the cross should be visible through the green rect in the middle.
@@ -710,7 +711,14 @@ All intermediate offscreens are defined to not exceed the intersection of the <i
 
 <h3 id="feBlendElement">Filter primitive <a element>feBlend</a></h3>
 
-<!--elementsummary feBlend-->
+<pre class=include>
+path: templates/effect-in2.md
+macros:
+    name: feBlend
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEBlendElement
+    attributes: <li><a element-attr for=feBlend>mode</a></li>
+</pre>
 
 This filter blends two objects together using commonly used imaging software blending modes. It performs a pixel-wise combination of two input images. (See [[COMPOSITING-1]].)
 
@@ -739,7 +747,7 @@ This filter blends two objects together using commonly used imaging software ble
   </dd>
 </dl>
 
-The ''normal'' blend mode with alpha compositing is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <i>simple alpha compositing</i> technique used in SVG for all compositing outside of filter effects.
+The ''normal'' blend mode with alpha compositing is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
 
 <div class="example">
 <pre class="xml">
@@ -798,7 +806,14 @@ The ''normal'' blend mode with alpha compositing is equivalent to <code>operator
 
 <h3 id="feColorMatrixElement">Filter primitive <a element>feColorMatrix</a></h3>
 
-<!--elementsummary feColorMatrix-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feColorMatrix
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEColorMatrixElement
+    attributes: <li><a element-attr for=feColorMatrix>type</a></li><li><a element-attr for=feColorMatrix>values</a></li>
+</pre>
 
 This filter applies a matrix transformation:
 
@@ -825,7 +840,7 @@ The calculations are performed on non-premultiplied color values.
     luminanceToAlpha</em>"
   </dt>
   <dd>
-    <p>Indicates the type of matrix operation. The keyword ''matrix'' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix. The <i>initial value</i> for <a element-attr for=feColorMatrix>type</a> is ''matrix''.</p>
+    <p>Indicates the type of matrix operation. The keyword ''matrix'' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix. The <a>initial value</a> for <a element-attr for=feColorMatrix>type</a> is ''matrix''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -975,7 +990,13 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 
 <h3 id="feComponentTransferElement">Filter primitive <a element>feComponentTransfer</a></h3>
 
-<!--elementsummary feComponentTransfer-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feComponentTransfer
+    model: <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a>, <a element>feFuncA</a>, <a element>script</a>
+    interface: SVGFEComponentTransferElement
+</pre>
 
 This filter primitive performs component-wise remapping of data as follows:
 
@@ -999,26 +1020,54 @@ The set of <a element>feFuncR</a>, <a element>feFuncG</a>, <a element>feFuncB</a
 
 The following rules apply to the processing of the <a element>feComponentTransfer</a> element:
 
-* If more than one <i>transfer function element</i> of the same kind is specified, the last occurrence is to be used.
-* If any of the <i>transfer function elements</i> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <i>transfer function elements</i> were specified with their <a element-attr for=feComponentTransfer>type</a> attributes set to ''identity''.
+* If more than one <a>transfer function element</a> of the same kind is specified, the last occurrence is to be used.
+* If any of the <a>transfer function elements</a> are unspecified, the <a element>feComponentTransfer</a> must be processed as if those <a>transfer function elements</a> were specified with their <a element-attr for=feComponentTransfer>type</a> attributes set to ''identity''.
 
 <div id="feFuncRElement"></div>
 
-<!--elementsummary feFuncR-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: feFuncR
+    interface: SVGFEFuncRElement
+    catagories: <a>transfer function element</a>
+    attributes: <li><a href='#transfer-function-element-attributes'>transfer function element attributes</a><span class=expanding> — <a element-attr for=feComponentTransfer>type</a>, <a element-attr for=feComponentTransfer>tableValues</a>, <a element-attr for=feComponentTransfer>slope</a>, <a element-attr for=feComponentTransfer>intercept</a>, <a element-attr for=feComponentTransfer>amplitude</a>, <a element-attr for=feComponentTransfer>exponent</a>, <a element-attr for=feComponentTransfer>offset</a></span></li>
+</pre>
 
 <div id="feFuncGElement"></div>
 
-<!--elementsummary feFuncG-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: feFuncG
+    interface: SVGFEFuncGElement
+    catagories: <a>transfer function element</a>
+    attributes: <li><a href='#transfer-function-element-attributes'>transfer function element attributes</a><span class=expanding> — <a element-attr for=feComponentTransfer>type</a>, <a element-attr for=feComponentTransfer>tableValues</a>, <a element-attr for=feComponentTransfer>slope</a>, <a element-attr for=feComponentTransfer>intercept</a>, <a element-attr for=feComponentTransfer>amplitude</a>, <a element-attr for=feComponentTransfer>exponent</a>, <a element-attr for=feComponentTransfer>offset</a></span></li>
+</pre>
 
 <div id="feFuncBElement"></div>
 
-<!--elementsummary feFuncB-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: feFuncB
+    interface: SVGFEFuncBElement
+    catagories: <a>transfer function element</a>
+    attributes: <li><a href='#transfer-function-element-attributes'>transfer function element attributes</a><span class=expanding> — <a element-attr for=feComponentTransfer>type</a>, <a element-attr for=feComponentTransfer>tableValues</a>, <a element-attr for=feComponentTransfer>slope</a>, <a element-attr for=feComponentTransfer>intercept</a>, <a element-attr for=feComponentTransfer>amplitude</a>, <a element-attr for=feComponentTransfer>exponent</a>, <a element-attr for=feComponentTransfer>offset</a></span></li>
+</pre>
 
 <div id="feFuncAElement"></div>
 
-<!--elementsummary feFuncA-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: feFuncA
+    interface: SVGFEFuncAElement
+    catagories: <a>transfer function element</a>
+    attributes: <li><a href='#transfer-function-element-attributes'>transfer function element attributes</a><span class=expanding> — <a element-attr for=feComponentTransfer>type</a>, <a element-attr for=feComponentTransfer>tableValues</a>, <a element-attr for=feComponentTransfer>slope</a>, <a element-attr for=feComponentTransfer>intercept</a>, <a element-attr for=feComponentTransfer>amplitude</a>, <a element-attr for=feComponentTransfer>exponent</a>, <a element-attr for=feComponentTransfer>offset</a></span></li>
+</pre>
 
-The attributes below are the <dfn id="transfer-function-element-attributes">transfer function element attributes</dfn>, which apply to the <i>transfer function elements</i>.
+The attributes below are the <dfn id="transfer-function-element-attributes">transfer function element attributes</dfn>, which apply to the <a>transfer function elements</a>.
 
 <em>Attribute definitions:</em>
 
@@ -1074,7 +1123,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="linear"</code>, the slope of the linear function.</p>
-    <p>The <i>initial value</i> for <a element-attr>slope</a> is ''1''.</p>
+    <p>The <a>initial value</a> for <a element-attr>slope</a> is ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1082,7 +1131,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="linear"</code>, the intercept of the linear function.</p>
-    <p>The <i>initial value</i> for <a element-attr>intercept</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>intercept</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1090,7 +1139,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="gamma"</code>, the amplitude of the gamma function.</p>
-    <p>The <i>initial value</i> for <a element-attr>amplitude</a> is ''1''.</p>
+    <p>The <a>initial value</a> for <a element-attr>amplitude</a> is ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1098,7 +1147,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="gamma"</code>, the exponent of the gamma function.</p>
-    <p>The <i>initial value</i> for <a element-attr>exponent</a> is ''1''.</p>
+    <p>The <a>initial value</a> for <a element-attr>exponent</a> is ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1106,7 +1155,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
   </dt>
   <dd>
     <p>When <code>type="gamma"</code>, the offset of the gamma function.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feComponentTransfer>offset</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feComponentTransfer>offset</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -1187,7 +1236,14 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
 
 <h3 id="feCompositeElement">Filter primitive <a element>feComposite</a></h3>
 
-<!--elementsummary feComposite-->
+<pre class=include>
+path: templates/effect-in2.md
+macros:
+    name: feComposite
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFECompositeElement
+    attributes: <li><a element-attr for=feComposite>operator</a></li><li><a element-attr for=feComposite>k1</a></li><li><a element-attr for=feComposite>k2</a></li><li><a element-attr for=feComposite>k3</a></li><li><a element-attr for=feComposite>k4</a></li>
+</pre>
 
 This filter performs the combination of the two input images pixel-wise in image space using one of the Porter-Duff [[PORTERDUFF]] compositing operations: <a attr-value>over</a>, ''in'', ''atop'', ''out'', ''xor'', ''lighter'' [[!COMPOSITING-1]]. Additionally, a component-wise <em>arithmetic</em> operation (with the result clamped between [0..1]) can be applied.
 
@@ -1205,7 +1261,7 @@ result = k1*i1*i2 + k2*i1 + k3*i2 + k4
   </li>
 </ul>
 
-For this filter primitive, the extent of the resulting image might grow as described in the section that describes the <i>filter primitive subregion</i>.
+For this filter primitive, the extent of the resulting image might grow as described in the section that describes the <a>filter primitive subregion</a>.
 
 <em>Attribute definitions:</em>
 
@@ -1214,7 +1270,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
     <dfn>operator</dfn> = "<span dfn-type=attr-value dfn-for=operator><dfn>over</dfn> | <dfn>in</dfn> | <dfn>out</dfn> | <dfn>atop</dfn> | <dfn>xor</dfn> | <dfn>lighter</dfn> | <dfn>arithmetic</dfn></span>"
   </dt>
   <dd>
-    <p>The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING-1]]. The ''arithmetic'' operator is described above. The <i>initial value</i> for <a element-attr for=feComposite>operator</a> is <a attr-value>over</a>.</p>
+    <p>The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING-1]]. The ''arithmetic'' operator is described above. The <a>initial value</a> for <a element-attr for=feComposite>operator</a> is <a attr-value>over</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1222,7 +1278,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <i>initial value</i> for <a element-attr>k1</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>k1</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1230,7 +1286,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <i>initial value</i> for <a element-attr>k2</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>k2</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1238,7 +1294,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <i>initial value</i> for <a element-attr>k3</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>k3</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1246,7 +1302,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
   </dt>
   <dd>
     <p>Only applicable if <code>operator="arithmetic"</code>.</p>
-    <p>The <i>initial value</i> for <a element-attr>k4</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>k4</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1441,7 +1497,14 @@ Note: Compositing and Blending [[!COMPOSITING-1]] defines more compositing keywo
 
 <h3 id="feConvolveMatrixElement">Filter primitive <a element>feConvolveMatrix</a></h3>
 
-<!--elementsummary feConvolveMatrix-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feConvolveMatrix
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEConvolveMatrixElement
+    attributes: <li><a element-attr for=feConvolveMatrix>order</a></li><li><a element-attr for=feConvolveMatrix>kernelMatrix</a></li><li><a element-attr for=feConvolveMatrix>divisor</a></li><li><a element-attr for=feConvolveMatrix>bias</a></li><li><a element-attr for=feConvolveMatrix>targetX</a></li><li><a element-attr for=feConvolveMatrix>targetY</a></li><li><a element-attr for=feConvolveMatrix>edgeMode</a></li><li><a element-attr for=feConvolveMatrix>kernelUnitLength</a></li><li><a element-attr for=feConvolveMatrix>preserveAlpha</a></li>
+</pre>
 
 feConvolveMatrix applies a matrix convolution filter effect. A convolution combines pixels in the input image with neighboring pixels to produce a resulting image. A wide variety of imaging operations can be achieved through convolutions, including blurring, edge detection, sharpening, embossing and beveling.
 
@@ -1488,7 +1551,7 @@ When the image must be resampled to match the coordinate system defined by <a el
   <dd>
     <p>Indicates the number of cells in each dimension for <a element-attr>kernelMatrix</a>. The values provided must be <<integer>> s greater than zero. Values that are not integers will be truncated, i.e. rounded to the closest integer value towards zero. The first number, &lt;orderX&gt;, indicates the number of columns in the matrix. The second number, &lt;orderY&gt;, indicates the number of rows in the matrix. If &lt;orderY&gt; is not provided, it defaults to &lt;orderX&gt;.<br>
     It is recommended that only small values (e.g., ''3'') be used; higher values may result in very high CPU overhead and usually do not produce results that justify the impact on performance.</p>
-    <p>The <i>initial value</i> for <a element-attr>order</a> is ''3''.</p>
+    <p>The <a>initial value</a> for <a element-attr>order</a> is ''3''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1502,7 +1565,7 @@ When the image must be resampled to match the coordinate system defined by <a el
     <dfn>divisor</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>After applying the <a element-attr>kernelMatrix</a> to the input image to yield a number, that number is divided by <a element-attr>divisor</a> to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result. If the specified divisor is zero then the default value will be used instead. The <i>initial value</i> is the sum of all values in <a element-attr>kernelMatrix</a>, with the exception that if the sum is zero, then the divisor is set to ''1''.</p>
+    <p>After applying the <a element-attr>kernelMatrix</a> to the input image to yield a number, that number is divided by <a element-attr>divisor</a> to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result. If the specified divisor is zero then the default value will be used instead. The <a>initial value</a> is the sum of all values in <a element-attr>kernelMatrix</a>, with the exception that if the sum is zero, then the divisor is set to ''1''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1510,7 +1573,7 @@ When the image must be resampled to match the coordinate system defined by <a el
   </dt>
   <dd>
     <p>After applying the <a element-attr>kernelMatrix</a> to the input image to yield a number and applying the <a element-attr>divisor</a>, the <a element-attr>bias</a> attribute is added to each component. One application of <a element-attr>bias</a> is when it is desirable to have ''.5'' gray value be the zero response of the filter. The bias property shifts the range of the filter. This allows representation of values that would otherwise be clamped to 0 or 1.</p>
-    <p>The <i>initial value</i> for <a element-attr>bias</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>bias</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1547,7 +1610,7 @@ When the image must be resampled to match the coordinate system defined by <a el
       <math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr><mtr><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
     </p>
     <p>The value ''feConvolveMatrix/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feConvolveMatrix>edgeMode</a> is ''duplicate''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feConvolveMatrix>edgeMode</a> is ''duplicate''.</p>
     <p>Animatable: yes.</p>
   </dd>
 
@@ -1585,18 +1648,24 @@ When the image must be resampled to match the coordinate system defined by <a el
     </p>
     <p>A value of "true" indicates that the convolution will only apply to the color channels. In this case, the filter will temporarily unpremultiply the color component values and apply the kernel. In this case the <code>ALPHA<sub>X,Y</sub></code> of the <a href="#feConvolveMatrixElementFormula">convolution formula</a> for a given pixel is:</p>
     <p class="filterformula">ALPHA<sub>X,Y</sub>&nbsp;=&nbsp;SOURCE<sub>X,Y</sub></p>
-    <p>The <i>initial value</i> for <a element-attr for=feConvolveMatrix>preserveAlpha</a> is ''false''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feConvolveMatrix>preserveAlpha</a> is ''false''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
 
 <h3 id="feDiffuseLightingElement">Filter primitive <a element>feDiffuseLighting</a></h3>
 
-<!--elementsummary feDiffuseLighting-->
+<pre class=include>
+path: templates/effect-lighting.md
+macros:
+    name: feDiffuseLighting
+    interface: SVGFEDiffuseLightingElement
+    attributes: <li><a element-attr for=feDiffuseLighting>surfaceScale</a></li><li><a element-attr for=feDiffuseLighting>diffuseConstant</a></li><li><a element-attr for=feDiffuseLighting>kernelUnitLength</a></li>
+</pre>
 
 This filter primitive lights an image using the alpha channel as a bump map. The resulting image is an RGBA opaque image based on the light color with alpha = 1.0 everywhere. The lighting calculation follows the standard diffuse component of the Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map.
 
-The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a element>feComposite</a> compositing method. Multiple <i>light sources</i> can be simulated by adding several of these light maps together before applying it to the texture image.
+The light map produced by this filter primitive can be combined with a texture image using the multiply term of the <em>arithmetic</em> <a element>feComposite</a> compositing method. Multiple <a>light sources</a> can be simulated by adding several of these light maps together before applying it to the texture image.
 
 The formulas below make use of 3x3 filters. Because they operate on pixels, such filters are inherently resolution-dependent. To make <a element>feDiffuseLighting</a> produce resolution-independent results, an explicit value should be provided for the attribute <a element-attr for=feDiffuseLighting>kernelUnitLength</a>.
 
@@ -1846,7 +1915,7 @@ In these formulas, the <code>dx</code> and <code>dy</code> values (e.g., <code>I
 
 L, the unit vector from the image sample to the light, is calculated as follows:
 
-For Infinite <i>light sources</i> it is constant:
+For Infinite <a>light sources</a> it is constant:
 
 <p class="filterformula">
   L<sub>x</sub> = cos(azimuth)*cos(elevation)<br>
@@ -1917,11 +1986,18 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
   </dd>
 </dl>
 
-The <i>light source</i> is defined by one of the child elements <a element>feDistantLight</a>, <a element>fePointLight</a> or <a element>feSpotLight</a>. The light color is specified by property 'lighting-color'.
+The <a>light source</a> is defined by one of the child elements <a element>feDistantLight</a>, <a element>fePointLight</a> or <a element>feSpotLight</a>. The light color is specified by property 'lighting-color'.
 
 <h3 id="feDisplacementMapElement">Filter primitive <a element>feDisplacementMap</a></h3>
 
-<!--elementsummary feDisplacementMap-->
+<pre class=include>
+path: templates/effect-in2.md
+macros:
+    name: feDisplacementMap
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEDisplacementMapElement
+    attributes: <li><a element-attr for=feDisplacementMap>scale</a></li><li><a element-attr for=feDisplacementMap>xChannelSelector</a></li><li><a element-attr for=feDisplacementMap>yChannelSelector</a></li>
+</pre>
 
 This filter primitive uses the pixels values from the image from <a element-attr for=feDisplacementMap>in2</a> to spatially displace the image from <a element-attr>in</a>. This is the transformation to be performed:
 
@@ -1952,21 +2028,21 @@ The 'color-interpolation-filters' property only applies to the <a element-attr f
   <dd>
     <p>Displacement scale factor. The amount is expressed in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
     <p>When the value of this attribute is ''0'', this operation has no effect on the source image.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feDisplacementMap>scale</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feDisplacementMap>scale</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>xChannelSelector</dfn> = "<em>R | G | B | A</em>"
   </dt>
   <dd>
-    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the x-axis. The <i>initial value</i> for <a element-attr>xChannelSelector</a> is ''A''.</p>
+    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the x-axis. The <a>initial value</a> for <a element-attr>xChannelSelector</a> is ''A''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>yChannelSelector</dfn> = "<em>R | G | B | A</em>"
   </dt>
   <dd>
-    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the y-axis. The <i>initial value</i> for <a element-attr>yChannelSelector</a> is ''A''.</p>
+    <p>Indicates which channel from <a element-attr for=feDisplacementMap>in2</a> to use to displace the pixels in <a element-attr>in</a> along the y-axis. The <a>initial value</a> for <a element-attr>yChannelSelector</a> is ''A''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -1980,9 +2056,16 @@ The 'color-interpolation-filters' property only applies to the <a element-attr f
 
 <h3 id="feDropShadowElement">Filter primitive <a element>feDropShadow</a></h3>
 
-<!--elementsummary feDropShadow-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feDropShadow
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEDropShadowElement
+    attributes: <li><a element-attr for=feDropShadow>stdDeviation</a></li><li><a element-attr for=feDropShadow>dx</a></li><li><a element-attr for=feDropShadow>dy</a></li>
+</pre>
 
-This filter creates a drop shadow of the input image. It is a shorthand filter, and is defined in terms of combinations of other <i>filter primitives</i>. The expectation is that it can be optimized more easily by implementations.
+This filter creates a drop shadow of the input image. It is a shorthand filter, and is defined in terms of combinations of other <a>filter primitives</a>. The expectation is that it can be optimized more easily by implementations.
 
 The result of a <a element>feDropShadow</a> filter primitive is equivalent to the following:
 
@@ -2042,7 +2125,7 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
   </dt>
   <dd>
     <p>The x offset of the drop shadow.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feDropShadow>dx</a> is ''2''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feDropShadow>dx</a> is ''2''.</p>
     <p>This attribute is then forwarded to the <a element-attr for=feOffset>dx</a> attribute of the internal <a element>feOffset</a> element.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2051,7 +2134,7 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
   </dt>
   <dd>
     <p>The y offset of the drop shadow.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feDropShadow>dy</a> is ''2''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feDropShadow>dy</a> is ''2''.</p>
     <p>This attribute is then forwarded to the <a element-attr for=feOffset>dy</a> attribute of the internal <a element>feOffset</a> element.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2060,7 +2143,7 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
   </dt>
   <dd>
     <p>The standard deviation for the blur operation in the drop shadow.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feDropShadow>stdDeviation</a> is ''2''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feDropShadow>stdDeviation</a> is ''2''.</p>
     <p>This attribute is then forwarded to the <a element-attr for=feGaussianBlur>stdDeviation</a> attribute of the internal <a element>feGaussianBlur</a> element.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2068,9 +2151,15 @@ Beyond the DOM interface <a href="#InterfaceSVGFEDropShadowElement">SVGFEDropSha
 
 <h3 id="feFloodElement">Filter primitive <a element>feFlood</a></h3>
 
-<!--elementsummary feFlood-->
+<pre class=include>
+path: templates/effect.md
+macros:
+    name: feFlood
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEFloodElement
+</pre>
 
-This filter primitive creates a rectangle filled with the color and opacity values from properties 'flood-color' and 'flood-opacity'. The rectangle is as large as the <i>filter primitive subregion</i> established by the <a element>feFlood</a> element.
+This filter primitive creates a rectangle filled with the color and opacity values from properties 'flood-color' and 'flood-opacity'. The rectangle is as large as the <a>filter primitive subregion</a> established by the <a element>feFlood</a> element.
 
 <h4 id="FloodColorProperty">The 'flood-color' property</h4>
 
@@ -2086,7 +2175,7 @@ Media: visual
 Animatable: yes
 </pre>
 
-The 'flood-color' property indicates what color to used to flood the current <i>filter primitive subregion</i>.
+The 'flood-color' property indicates what color to used to flood the current <a>filter primitive subregion</a>.
 
 <h4 id="FloodOpacityProperty">The 'flood-opacity' property</h4>
 
@@ -2102,11 +2191,18 @@ Media: visual
 Animatable: yes
 </pre>
 
-The 'flood-opacity' property defines the opacity value to use across the entire <i>filter primitive subregion</i>. If the 'flood-color' value includes an alpha channel, the alpha channel gets multiplied with the computed value of the 'flood-opacity' property.
+The 'flood-opacity' property defines the opacity value to use across the entire <a>filter primitive subregion</a>. If the 'flood-color' value includes an alpha channel, the alpha channel gets multiplied with the computed value of the 'flood-opacity' property.
 
 <h3 id="feGaussianBlurElement">Filter primitive <a element>feGaussianBlur</a></h3>
 
-<!--elementsummary feGaussianBlur-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feGaussianBlur
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEGaussianBlurElement
+    attributes: <li><a element-attr for=feGaussianBlur>stdDeviation</a></li><li><a element-attr for=feGaussianBlur>edgeMode</a></li>
+</pre>
 
 This filter primitive performs a Gaussian blur on the input image.
 
@@ -2150,7 +2246,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
     <p>The standard deviation for the blur operation. If two <<number>> s are provided, the first number represents a standard deviation value along the x-axis of the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element. The second value represents a standard deviation in Y. If one number is provided, then that value is used for both X and Y.</p>
     <p>A negative value or a value of zero disables the effect of the given filter primitive (i.e., the result is the filter input image).</p>
     <p>If <a element-attr for=feGaussianBlur>stdDeviation</a> is ''0'' in only one of X or Y, then the effect is that the blur is only applied in the direction that has a non-zero value.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feGaussianBlur>stdDeviation</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feGaussianBlur>stdDeviation</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2162,7 +2258,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
     <p>Original N-by-M image, where m=M-1 and n=N-1:</p>
     <p><dfn dfn-type=attr-value dfn-for=edgeMode>wrap</dfn> indicates that the input image is extended by taking the color values from the opposite edge of the image.</p>
     <p>The value ''feGaussianBlur/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feGaussianBlur>edgeMode</a> is ''feGaussianBlur/none''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feGaussianBlur>edgeMode</a> is ''feGaussianBlur/none''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2171,7 +2267,14 @@ Frequently this operation will take place on alpha-only images, such as that pro
 
 <h3 id="feImageElement">Filter primitive <a element>feImage</a></h3>
 
-<!--elementsummary feImage-->
+<pre class=include>
+path: templates/effect.md
+macros:
+    name: feImage
+    model: <a element>animate</a>, <a element>animateTransform</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEImageElement
+    attributes: <li><a href='https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute'><span class=attr-name>externalResourcesRequired</span></a></li><li><a element-attr for=feImage>preserveAspectRatio</a></li><li><a element-attr for=feImage>xlink:href</a></li><li><a element-attr for=feImage>href</a></li><li><a element-attr for=feImage>crossorigin</a></li>
+</pre>
 
 This filter primitive refers to a graphic external to this filter element, which is loaded or rendered into an RGBA raster and becomes the result of the filter primitive.
 
@@ -2219,11 +2322,11 @@ A <a element-attr for=feImage>href</a> reference that is an empty image (zero wi
 <div class=example>
   <p>The following example illustrates how images are placed relative to an object. From left to right:</p>
   <ul>
-    <li>The default placement of an image. Note that the image is centered in the <i>filter region</i> and has the maximum size that will fit in the region consistent with preserving the aspect ratio.
+    <li>The default placement of an image. Note that the image is centered in the <a>filter region</a> and has the maximum size that will fit in the region consistent with preserving the aspect ratio.
     </li>
     <li>The image stretched to fit the bounding box of an object.
     </li>
-    <li>The image placed using user coordinates. Note that the image is first centered in a box the size of the <i>filter region</i> and has the maximum size that will fit in the box consistent with preserving the aspect ratio. This box is then shifted by the given <a element-attr for=filter-primitive>x</a> and <a element-attr for=filter-primitive>y</a> values relative to the viewport the object is in.
+    <li>The image placed using user coordinates. Note that the image is first centered in a box the size of the <a>filter region</a> and has the maximum size that will fit in the box consistent with preserving the aspect ratio. This box is then shifted by the given <a element-attr for=filter-primitive>x</a> and <a element-attr for=filter-primitive>y</a> values relative to the viewport the object is in.
     </li>
   </ul>
 
@@ -2271,7 +2374,13 @@ A <a element-attr for=feImage>href</a> reference that is an empty image (zero wi
 
 <h3 id="feMergeElement">Filter primitive <a element>feMerge</a></h3>
 
-<!--elementsummary feMerge-->
+<pre class=include>
+path: templates/effect.md
+macros:
+    name: feMerge
+    model: <a element>feMergeNode</a>, <a element>script</a>
+    interface: SVGFEMergeElement
+</pre>
 
 This filter primitive composites input image layers on top of each other using the <em>over</em> operator with <em>Input1</em> (corresponding to the first <a element>feMergeNode</a> child element) on the bottom and the last specified input, <em>InputN</em> (corresponding to the last <a element>feMergeNode</a> child element), on top.
 
@@ -2279,7 +2388,14 @@ Many effects produce a number of intermediate layers in order to create the fina
 
 Each <a element>feMerge</a> element can have any number of <a element>feMergeNode</a> subelements, each of which has an <a element-attr>in</a> attribute.
 
-<!--elementsummary feMergeNode-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: feMergeNode
+    interface: SVGFEMergeNodeElement
+    catagories: None.
+    attributes: <li><a element-attr for=filter-primitive>in</a></li>
+</pre>
 
 The canonical implementation of feMerge is to render the entire effect into one RGBA layer, and then render the resulting layer on the output device. In certain cases (in particular if the output device itself is a continuous tone device), and since merging is associative, it might be a sufficient approximation to evaluate the effect one layer at a time and render each layer individually onto the output device bottom to top.
 
@@ -2289,7 +2405,14 @@ If the topmost image input is <a attr-value>SourceGraphic</a> and this <a elemen
 
 <h3 id="feMorphologyElement">Filter primitive <a element>feMorphology</a></h3>
 
-<!--elementsummary feMorphology-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feMorphology
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEMorphologyElement
+    attributes: <li><a element-attr for=feMorphology>operator</a></li><li><a element-attr for=feMorphology>radius</a></li>
+</pre>
 
 This filter primitive performs "fattening" or "thinning" of artwork. It is particularly useful for fattening or thinning an alpha channel.
 
@@ -2371,7 +2494,14 @@ Because <a element>feMorphology</a> operates on premultipied color values, it wi
 
 <h3 id="feOffsetElement">Filter primitive <a element>feOffset</a></h3>
 
-<!--elementsummary feOffset-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feOffset
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFEOffsetElement
+    attributes: <li><a element-attr for=feOffset>dx</a></li><li><a element-attr for=feOffset>dy</a></li>
+</pre>
 
 This filter primitive offsets the input image relative to its current position in the image space by the specified vector.
 
@@ -2404,11 +2534,17 @@ When applying this filter, the destination location may be offset by a fraction 
 
 <h3 id="feSpecularLightingElement">Filter primitive <a element>feSpecularLighting</a></h3>
 
-<!--elementsummary feSpecularLighting-->
+<pre class=include>
+path: templates/effect-lighting.md
+macros:
+    name: feSpecularLighting
+    interface: SVGFESpecularLightingElement
+    attributes: <li><a element-attr for=feSpecularLighting>surfaceScale</a></li><li><a element-attr for=feSpecularLighting>specularConstant</a></li><li><a element-attr for=feSpecularLighting>specularExponent</a></li><li><a element-attr for=feSpecularLighting>kernelUnitLength</a></li>
+</pre>
 
 This filter primitive lights a source graphic using the alpha channel as a bump map. The resulting image is an RGBA image based on the light color. The lighting calculation follows the standard specular component of the Blinn-Phong lighting model. The resulting image depends on the light color, light position and surface geometry of the input bump map. The result of the lighting calculation is added. The filter primitive assumes that the viewer is at infinity in the z direction (i.e., the unit vector in the eye direction is (0,0,1) everywhere).
 
-Note: This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture from a second filter primitive using the <em>add</em> term of the <em>arithmetic</em> <a element>feComposite</a> method. Multiple <i>light sources</i> can be simulated by adding several of these light maps before applying it to the texture image.
+Note: This filter primitive produces an image which contains the specular reflection part of the lighting calculation. Such a map is intended to be combined with a texture from a second filter primitive using the <em>add</em> term of the <em>arithmetic</em> <a element>feComposite</a> method. Multiple <a>light sources</a> can be simulated by adding several of these light maps before applying it to the texture image.
 
 The resulting RGBA image is computed as follows:
 
@@ -2485,11 +2621,17 @@ The light source is defined by one of the child elements <a element>feDistantLig
 
 <h3 id="feTileElement">Filter primitive <a element>feTile</a></h3>
 
-<!--elementsummary feTile-->
+<pre class=include>
+path: templates/effect-in1.md
+macros:
+    name: feTile
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFETileElement
+</pre>
 
-This filter primitive fills a target rectangle with a repeated, tiled pattern of an input image. The target rectangle is as large as the <i>filter primitive subregion</i> established by the <a element>feTile</a> element.
+This filter primitive fills a target rectangle with a repeated, tiled pattern of an input image. The target rectangle is as large as the <a>filter primitive subregion</a> established by the <a element>feTile</a> element.
 
-Typically, the input image has been defined with its own <i>filter primitive subregion</i> in order to define a reference tile. <a element>feTile</a> replicates the reference tile in both X and Y to completely fill the target rectangle. The top/left corner of each given tile is at location <code>(x + i*width, y + j*height)</code>, where <code>(x,y)</code> represents the top/left of the input image's <i>filter primitive subregion</i>, <code>width</code> and <code>height</code> represent the width and height of the input image's <i>filter primitive subregion</i>, and <code>i</code> and <code>j</code> can be any integer value. In most cases, the input image will have a smaller <i>filter primitive subregion</i> than the <a element>feTile</a> in order to achieve a repeated pattern effect.
+Typically, the input image has been defined with its own <a>filter primitive subregion</a> in order to define a reference tile. <a element>feTile</a> replicates the reference tile in both X and Y to completely fill the target rectangle. The top/left corner of each given tile is at location <code>(x + i*width, y + j*height)</code>, where <code>(x,y)</code> represents the top/left of the input image's <a>filter primitive subregion</a>, <code>width</code> and <code>height</code> represent the width and height of the input image's <a>filter primitive subregion</a>, and <code>i</code> and <code>j</code> can be any integer value. In most cases, the input image will have a smaller <a>filter primitive subregion</a> than the <a element>feTile</a> in order to achieve a repeated pattern effect.
 
 Implementers must take appropriate measures in constructing the tiled image to avoid artifacts between tiles, particularly in situations where the user to device transform includes shear and/or rotation. Unless care is taken, interpolation can lead to edge pixels in the tile having opacity values lower or higher than expected due to the interaction of painting adjacent tiles which each have partial overlap with particular pixels.
 
@@ -2497,13 +2639,20 @@ Implementers must take appropriate measures in constructing the tiled image to a
 
 <h3 id="feTurbulenceElement">Filter primitive <a element>feTurbulence</a></h3>
 
-<!--elementsummary feTurbulence-->
+<pre class=include>
+path: templates/effect.md
+macros:
+    name: feTurbulence
+    model: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+    interface: SVGFETurbulenceElement
+    attributes: <li><a element-attr for=feTurbulence>baseFrequency</a></li><li><a element-attr for=feTurbulence>numOctaves</a></li><li><a element-attr for=feTurbulence>seed</a></li><li><a element-attr for=feTurbulence>stitchTiles</a></li><li><a element-attr for=feTurbulence>type</a></li>
+</pre>
 
-This filter primitive creates an image using the Perlin turbulence function. It allows the synthesis of artificial textures like clouds or marble. For a detailed description the of the Perlin turbulence function, see "Texturing and Modeling", Ebert et al, AP Professional, 1994. The resulting image will fill the entire <i>filter primitive subregion</i> for this filter primitive.
+This filter primitive creates an image using the Perlin turbulence function. It allows the synthesis of artificial textures like clouds or marble. For a detailed description the of the Perlin turbulence function, see "Texturing and Modeling", Ebert et al, AP Professional, 1994. The resulting image will fill the entire <a>filter primitive subregion</a> for this filter primitive.
 
 It is possible to create bandwidth-limited noise by synthesizing only one octave.
 
-The C code below shows the exact algorithm used for this filter effect. The <i>filter primitive subregion</i> is to be passed as the arguments fTileX, fTileY, fTileWidth and fTileHeight.
+The C code below shows the exact algorithm used for this filter effect. The <a>filter primitive subregion</a> is to be passed as the arguments fTileX, fTileY, fTileWidth and fTileHeight.
 
 For fractalSum, you get a turbFunctionResult that is aimed at a range of -1 to 1 (the actual result might exceed this range in some cases). To convert to a color value, use the formula <code>colorValue = ((turbFunctionResult * 255) + 255) / 2</code>, then clamp to the range 0 to 255.
 
@@ -2703,8 +2852,8 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   </dt>
   <dd>
     <p>The base frequency (frequencies) parameter(s) for the noise function. If two <<number>>s are provided, the first number represents a base frequency in the X direction and the second value represents a base frequency in the Y direction. If one number is provided, then that value is used for both X and Y.</p>
-    <p>The <i>initial value</i> for <a element-attr>baseFrequency</a> is ''0''.</p>
-    <p>Negative values are <i>unsupported</i>.</p>
+    <p>The <a>initial value</a> for <a element-attr>baseFrequency</a> is ''0''.</p>
+    <p>Negative values are <a>unsupported</a>.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2712,8 +2861,8 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   </dt>
   <dd>
     <p>The numOctaves parameter for the noise function.</p>
-    <p>The <i>initial value</i> for <a element-attr>numOctaves</a> is ''1''.</p>
-    <p>Negative values are <i>unsupported</i>.</p>
+    <p>The <a>initial value</a> for <a element-attr>numOctaves</a> is ''1''.</p>
+    <p>Negative values are <a>unsupported</a>.</p>
     <p><p>Animatable: yes.</p>
     <p class=note>The contribution of each additional octave to the color and alpha values in the final image is one-half of the preceding octave. At some point, the contribution of additional octaves becomes smaller than the color resolution for a given color depth. UAs may clamp the specified value for numOctaves during the processing depending on the supported color depth. (For example: For a color depth of 8 bits per channel, the UA may clamp the value of numOctaves to 9.)
   </dd>
@@ -2722,7 +2871,7 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   </dt>
   <dd>
     <p>The starting number for the pseudo random number generator.</p>
-    <p>The <i>initial value</i> for <a element-attr>seed</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>seed</a> is ''0''.</p>
     <p>When the seed number is handed over to the algorithm above it must first be truncated, i.e. rounded to the closest integer value towards zero.</p>
     <p>Animatable: yes.</p>
   </dd>
@@ -2732,7 +2881,7 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   <dd>
     <p>If <code>stitchTiles="noStitch"</code>, no attempt is made to achieve smooth transitions at the border of tiles which contain a turbulence function. Sometimes the result will show clear discontinuities at the tile borders.</p>
     <p>If <code>stitchTiles="stitch"</code>, then the user agent will automatically adjust baseFrequency-x and baseFrequency-y values such that the <a element>feTurbulence</a> node's width and height (i.e., the width and height of the current subregion) contains an integral number of the Perlin tile width and height for the first octave. The baseFrequency will be adjusted up or down depending on which way has the smallest relative (not absolute) change as follows: Given the frequency, calculate <code>lowFreq=floor(width*frequency)/width</code> and <code>hiFreq=ceil(width*frequency)/width</code>. If frequency/lowFreq &lt; hiFreq/frequency then use lowFreq, else use hiFreq. While generating turbulence values, generate lattice vectors as normal for Perlin Noise, except for those lattice points that lie on the right or bottom edges of the active area (the size of the resulting tile). In those cases, copy the lattice vector from the opposite edge of the active area.</p>
-    <p>The <i>initial value</i> for <a element-attr>stitchTiles</a> is ''noStitch''.</p>
+    <p>The <a>initial value</a> for <a element-attr>stitchTiles</a> is ''noStitch''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2740,7 +2889,7 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
   </dt>
   <dd>
     <p>Indicates whether the filter primitive should perform a noise or turbulence function.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feTurbulence>type</a> is ''turbulence''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feTurbulence>type</a> is ''turbulence''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2832,7 +2981,7 @@ The description of the 'color-interpolation-filters' property is as follows:
 Name: color-interpolation-filters
 Value: auto | sRGB | linearRGB
 Initial: auto
-Applies to: All <i>filter primitives</i>
+Applies to: All <a>filter primitives</a>
 Inherited: yes
 Percentages: n/a
 Computed value: as specified
@@ -2871,7 +3020,14 @@ The following sections define the elements that define a <dfn id="light-source">
 
 <h3 id="feDistantLightElement">Light source <a element>feDistantLight</a></h3>
 
-<!--elementsummary feDistantLight-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: feDistantLight
+    interface: SVGFEDistantLightElement
+    catagories: <a>light source</a>
+    attributes: <li><a element-attr for=feDistantLight>azimuth</a></li><li><a element-attr for=feDistantLight>elevation</a></li>
+</pre>
 
 <p><em>Attribute definitions:</em></p>
 <dl dfn-type=element-attr dfn-for=feDistantLight>
@@ -2880,7 +3036,7 @@ The following sections define the elements that define a <dfn id="light-source">
   </dt>
   <dd>
     <p>Direction angle for the light source on the XY plane (clockwise), in degrees from the x axis.</p>
-    <p>The <i>initial value</i> for <a element-attr>azimuth</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>azimuth</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2888,7 +3044,7 @@ The following sections define the elements that define a <dfn id="light-source">
   </dt>
   <dd>
     <p>Direction angle for the light source from the XY plane towards the Z-axis, in degrees. Note that the positive Z-axis points towards the viewer.</p>
-    <p>The <i>initial value</i> for <a element-attr>elevation</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>elevation</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
@@ -2902,7 +3058,14 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
 
 <h3 id="fePointLightElement">Light source <a element>fePointLight</a></h3>
 
-<!--elementsummary fePointLight-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: fePointLight
+    interface: SVGFEPointLightElement
+    catagories: <a>light source</a>
+    attributes: <li><a element-attr for=fePointLight>x</a></li><li><a element-attr for=fePointLight>y</a></li><li><a element-attr for=fePointLight>z</a></li>
+</pre>
 
 <em>Attribute definitions:</em>
 
@@ -2912,7 +3075,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>X location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
-    <p>The <i>initial value</i> for <a element-attr for=fePointLight>x</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=fePointLight>x</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2920,22 +3083,29 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Y location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
-    <p>The <i>initial value</i> for <a element-attr for=fePointLight>y</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=fePointLight>y</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>z</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the initial <i>local coordinate system</i> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
-    <p>The <i>initial value</i> for <a element-attr for=fePointLight>z</a> is ''0''.</p>
+    <p>Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the initial <a>local coordinate system</a> , the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
+    <p>The <a>initial value</a> for <a element-attr for=fePointLight>z</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
 </dl>
 
 <h3 id="feSpotLightElement">Light source <a element>feSpotLight</a></h3>
 
-<!--elementsummary feSpotLight-->
+<pre class=include>
+path: templates/effect-source.md
+macros:
+    name: feSpotLight
+    interface: SVGFESpotLightElement
+    catagories: <a>light source</a>
+    attributes: <li><a element-attr for=feSpotLight>x</a></li><li><a element-attr for=feSpotLight>y</a></li><li><a element-attr for=feSpotLight>z</a></li><li><a element-attr for=feSpotLight>pointsAtX</a></li><li><a element-attr for=feSpotLight>pointsAtY</a></li><li><a element-attr for=feSpotLight>pointsAtZ</a></li><li><a element-attr for=feSpotLight>specularExponent</a></li><li><a element-attr for=feSpotLight>limitingConeAngle</a></li>
+</pre>
 
 <em>Attribute definitions:</em>
 
@@ -2945,7 +3115,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>X location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.<p>
-    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>x</a> is ''0''.<p>
+    <p>The <a>initial value</a> for <a element-attr for=feSpotLight>x</a> is ''0''.<p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2953,15 +3123,15 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Y location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>y</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feSpotLight>y</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>z</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the initial <i>local coordinate system</i>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>z</a> is ''0''.</p>
+    Z location for the light source in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element, assuming that, in the initial <a>local coordinate system</a>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feSpotLight>z</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2969,7 +3139,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>X location in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing.</p>
-    <p>The <i>initial value</i> for <a element-attr>pointsAtX</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>pointsAtX</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2977,15 +3147,15 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Y location in the coordinate system established by attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing.</p>
-    <p>The <i>initial value</i> for <a element-attr>pointsAtY</a> is ''0''.</p>
+    <p>The <a>initial value</a> for <a element-attr>pointsAtY</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
     <dfn>pointsAtZ</dfn> = "<em><<number>></em>"
   </dt>
   <dd>
-    <p>Z location in the coordinate system established by the attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing, assuming that, in the initial <i>local coordinate system</i>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
-    <p>The <i>initial value</i> for <a element-attr>pointsAtZ</a> is ''0''.</p>
+    <p>Z location in the coordinate system established by the attribute <a element-attr>primitiveUnits</a> on the <a element>filter</a> element of the point at which the light source is pointing, assuming that, in the initial <a>local coordinate system</a>, the positive Z-axis comes out towards the person viewing the content and assuming that one unit along the Z-axis equals <a href="https://www.w3.org/TR/SVG11/coords.html#Units_viewport_percentage">one unit in X and Y</a>.</p>
+    <p>The <a>initial value</a> for <a element-attr>pointsAtZ</a> is ''0''.</p>
     <p>Animatable: yes.</p>
   </dd>
   <dt>
@@ -2993,7 +3163,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
   </dt>
   <dd>
     <p>Exponent value controlling the focus for the light source.</p>
-    <p>The <i>initial value</i> for <a element-attr for=feSpotLight>specularExponent</a> is ''1''.</p>
+    <p>The <a>initial value</a> for <a element-attr for=feSpotLight>specularExponent</a> is ''1''.</p>
     <p>See section <a href="#feDiffuseLightingElement">Filter primitive &lt;feDiffuseLighting></a> for how to use <a element-attr for=feSpotLight>specularExponent</a>.</p>
     <p class=note>Note: <a element-attr for=feSpotLight>specularExponent</a> for <a element>feSpotLight</a> serves a different use case than <a element-attr for=feSpecularLighting>specularExponent</a> for <a element>feSpecularLighting</a>.</p>
     <p>Animatable: yes.</p>
@@ -3022,7 +3192,7 @@ Media: visual
 Animatable: yes
 </pre>
 
-The 'lighting-color' property defines the color of the light source for <i>filter primitives</i> <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a>.
+The 'lighting-color' property defines the color of the light source for <a>filter primitives</a> <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a>.
 
 <h2 id="FilterCSSImageValue">Filter CSS <<image>> values</h2>
 
@@ -3153,7 +3323,7 @@ Where edge mode computes to ''filter/none'' for the 'filter' property and to ''d
 
 <h3 id="filter-region-for-shorthands">Filter region for shorthands</h3>
 
-All shorthand filters implemented with filter primitives in the previous subsection must have a UA defined <i>filter region</i>. The filter region must cover the visual content of an element including overflowing content, graphical control elements such as scrollbars, 'border'/'border-image', 'box-shadow', 'text-shadow' and 'outline'. Furthermore, if a shorthand filter expands this visible area like it is the case for <<blur()>> or <<drop-shadow()>> the filter region must cover this area as well.
+All shorthand filters implemented with filter primitives in the previous subsection must have a UA defined <a>filter region</a>. The filter region must cover the visual content of an element including overflowing content, graphical control elements such as scrollbars, 'border'/'border-image', 'box-shadow', 'text-shadow' and 'outline'. Furthermore, if a shorthand filter expands this visible area like it is the case for <<blur()>> or <<drop-shadow()>> the filter region must cover this area as well.
 
 Note: For the handling of <a href="#FilterElement">filter sources</a> see section <a href="#FilterEffectsRegion">Filter region</a>.
 
@@ -3222,7 +3392,7 @@ The following SVG animation has two <a element>animate</a> elements animating 'f
 &lt;/rect>
 </code></pre>
 
-After <var>5s</var>, the <i>used value</i> of 'filter' is ''blur(5px) sepia(0.5)''.
+After <var>5s</var>, the <a>used value</a> of 'filter' is ''blur(5px) sepia(0.5)''.
 </div>
 
 <h3 id="accumulation">Accumulation</h3>
@@ -3235,22 +3405,22 @@ Given two filter values <var>V<sub>a</sub></var> and <var>V<sub>b</sub></var>, r
 
 It is important that the timing of any filter operation is independent of pixel values derived from the filtered content or other sources potentially containing privacy-sensitive information.
 
-The following <i>filter primitives</i> may have access to pixel values that potentially contain privacy-sensitive information, either from the filtered object itself or other sources such as CSS styling. These primitives must be flagged as "tainted".
+The following <a>filter primitives</a> may have access to pixel values that potentially contain privacy-sensitive information, either from the filtered object itself or other sources such as CSS styling. These primitives must be flagged as "tainted".
 
-1. <a element>feFlood</a> when the <i>specified value</i> of the 'flood-color' property computes to ''currentColor'',
-2. <a element>feDropShadow</a> when the <i>specified value</i> value of the 'flood-color' property computes to ''currentColor'',
-3. <a element>feDiffuseLighting</a>, when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor''
-4. <a element>feSpecularLighting</a> when the <i>specified value</i> value of the 'lighting-color' property computes to ''currentColor'',
+1. <a element>feFlood</a> when the <a>specified value</a> of the 'flood-color' property computes to ''currentColor'',
+2. <a element>feDropShadow</a> when the <a>specified value</a> value of the 'flood-color' property computes to ''currentColor'',
+3. <a element>feDiffuseLighting</a>, when the <a>specified value</a> value of the 'lighting-color' property computes to ''currentColor''
+4. <a element>feSpecularLighting</a> when the <a>specified value</a> value of the 'lighting-color' property computes to ''currentColor'',
 5. <a element>feImage</a>, when the <<filter/url>> reference points to an element or fetches a resource with the fetching mode <em>No-CORS</em> and
 6. the filter primitives: <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> and <a attr-value>StrokePaint</a>.
 
-<a element>feFlood</a>, <a element>feDropShadow</a>, <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> are primitives with one or more CSS properties that take <<color>> as property value. <<color>> consists of (amongst others) the ''currentColor'' keyword. The <i>used value</i> for ''currentColor'' derives from the 'color' property. Since 'color' can be set by the '':visited'' pseudo selector, it potentially contains privacy-sensitive information and therefore these primitives must be marked as tainted.
+<a element>feFlood</a>, <a element>feDropShadow</a>, <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a> are primitives with one or more CSS properties that take <<color>> as property value. <<color>> consists of (amongst others) the ''currentColor'' keyword. The <a>used value</a> for ''currentColor'' derives from the 'color' property. Since 'color' can be set by the '':visited'' pseudo selector, it potentially contains privacy-sensitive information and therefore these primitives must be marked as tainted.
 
-<a element>feImage</a> can reference cross-domain images as well as document fragments such as SVG <i>graphics elements</i>. These references potentially contain privacy-sensitive information and therefore the primitive must be marked as tainted.
+<a element>feImage</a> can reference cross-domain images as well as document fragments such as SVG <a>graphics elements</a>. These references potentially contain privacy-sensitive information and therefore the primitive must be marked as tainted.
 
-The filter primitives <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> and <a attr-value>StrokePaint</a> either reference document fragments such as SVG <i>graphics elements</i> or style information that may derive directly or indirectly from the 'color' property. Therefore these primitives must be marked as tainted.
+The filter primitives <a attr-value>SourceGraphic</a>, <a attr-value>SourceAlpha</a>, <a attr-value>BackgroundImage</a>, <a attr-value>BackgroundAlpha</a>, <a attr-value>FillPaint</a> and <a attr-value>StrokePaint</a> either reference document fragments such as SVG <a>graphics elements</a> or style information that may derive directly or indirectly from the 'color' property. Therefore these primitives must be marked as tainted.
 
-Every <i>filter primitive</i> that has a "tainted" flagged <i>filter primitive</i> as input must be flagged as "tainted" as well.
+Every <a>filter primitive</a> that has a "tainted" flagged <a>filter primitive</a> as input must be flagged as "tainted" as well.
 
 Filter operations must be implemented in such a way that they always take the same amount of time regardless of the pixel values if one of the input filter primitives is flagged as "tainted".
 
@@ -3273,7 +3443,7 @@ A timing attack is a method of obtaining information about content that is other
 
 <h2 id="AccessBackgroundImage" class="no-num">Appendix A: The deprecated 'enable-background' property</h2>
 
-SVG 1.1 introduced the 'enable-background' property [[SVG11]]. The property defined the back drop under the <i>filter region</i> at the time that the <a element>filter</a> element was invoked. The concept defined by this property was identified to be incompatible with the model of stacking context in CSS at the time writing this specification. UAs can choose to implement the 'enable-background' property as defined in SVG 1.1 but will not be compatible to this specification or to CSS Compositing and Blending [[!COMPOSITING-1]].
+SVG 1.1 introduced the 'enable-background' property [[SVG11]]. The property defined the back drop under the <a>filter region</a> at the time that the <a element>filter</a> element was invoked. The concept defined by this property was identified to be incompatible with the model of stacking context in CSS at the time writing this specification. UAs can choose to implement the 'enable-background' property as defined in SVG 1.1 but will not be compatible to this specification or to CSS Compositing and Blending [[!COMPOSITING-1]].
 
 This specification does not support the 'enable-background' property. UAs must support the 'isolation' property instead [[!COMPOSITING-1]].
 
