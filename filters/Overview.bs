@@ -306,7 +306,7 @@ Issue: Make parameters optional? <a href="https://github.com/w3c/fxtf-drafts/iss
 
         Note that spread values or multiple shadows are not accepted for this level of the specification.
 
-        The lacuna value for interpolation is all length values set to 0 and the used color is taken from the color property.
+        The <a for=svg>initial value</a> for interpolation is all length values set to 0 and the used color is taken from the color property.
 
         Issue: "blur radius" or a standard deviation? <a href="https://github.com/w3c/fxtf-drafts/issues/102">https://github.com/w3c/fxtf-drafts/issues/102</a>
     : <dfn>grayscale()</dfn> = grayscale( <<number-percentage>> )
@@ -647,12 +647,16 @@ This filter blends two objects together using commonly used imaging software ble
 <dl dfn-type=element-attr dfn-for=feBlend>
     : <dfn>mode</dfn> = "<<blend-mode>>"
     ::
-        One of the blend modes defined by “Compositing and Blending Level 1” [[!COMPOSITING-1]]. The lacuna value for <a element-attr>mode</a> is ''normal''.
+        One of the blend modes defined by “Compositing and Blending Level 1” [[!COMPOSITING-1]] with the input <a element-attr>in</a> representing the source <code>Cs</code> and the second input <a element-attr for=feBlend>in2</a> representing the <a>backdrop</a> <code>Cb</code>. The output of this filter primitive <code>Cm</code> is the result of blending <code>Cs</code> with <code>Cb</code>.
+
+        The <a for=svg>initial value</a> for <a element-attr>mode</a> is ''normal''.
 
         Animatable: yes.
     : <dfn>no-composite</dfn> = "<dfn attr-value for=no-composite>no-composite</dfn>"
     ::
         If the <a element-attr>no-composite</a> attribute is present, the specified blend mode must not use alpha compositing. The necessary modifications are defined by “Compositing and Blending Level 1” [[!COMPOSITING-1]].
+
+        Issue: no-compsite blending not specified? <a href="https://github.com/w3c/fxtf-drafts/issues/173">https://github.com/w3c/fxtf-drafts/issues/173</a>
 
         Animatable: no.</p>
     : <dfn>in2</dfn> = "<em>(see <a element-attr>in</a> attribute)</em>"
@@ -1176,7 +1180,7 @@ For this filter primitive, the extent of the resulting image might grow as descr
 <dl dfn-type=element-attr dfn-for=feComposite>
     : <dfn>operator</dfn> = "<span dfn-type=attr-value dfn-for=operator><dfn>over</dfn> | <dfn>in</dfn> | <dfn>out</dfn> | <dfn>atop</dfn> | <dfn>xor</dfn> | <dfn>lighter</dfn> | <dfn>arithmetic</dfn></span>"
     ::
-        The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING-1]]. The ''arithmetic'' operator is described above.
+        The compositing operation that is to be performed. All of the <a element-attr for=feComposite>operator</a> types except ''arithmetic'' match the corresponding operation as described in [[!COMPOSITING-1]] with <a element-attr>in</a> representing the source and <a element-attr for=feComposite>in2</a> representing the destination. The ''arithmetic'' operator is described above.
 
         The <a for=svg>initial value</a> for <a element-attr for=feComposite>operator</a> is <a attr-value>over</a>.
 
@@ -3340,41 +3344,27 @@ path: appendix/interfaces.md
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2014/WD-filter-effects-1-20141125/">25 November 2014 Working Draft</a>.
 
-<ul>
-  <li>Editorial changes.</li>
-</ul>
+* Editorial changes.
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2013/WD-filter-effects-1-20131126/">26 November 2013 Working Draft</a>.
 
-<ul>
-  <li>Removed Custom Filters.</li>
-  <li>Allow the <a element>script</a> element in the content model everywhere.</li>
-  <li>Support all blend modes from CSS Blending specification for <a element>feBlend</a>.</li>
-  <li>Support all non-duplicated compositing modes from CSS Blending specification for <a element>feComposite</a>.</li>
-  <li>Added no-composite attribute to <a element>feBlend</a> to avoid double compositing.</li>
-  <li>Corrections on shorthands syntax.</li>
-  <li>Added definition for shorthand filter regions.</li>
-</ul>
+* Removed Custom Filters.
+* Allow the <a element>script</a> element in the content model everywhere.
+* Support all blend modes from CSS Blending specification for <a element>feBlend</a>.
+* Support all non-duplicated compositing modes from CSS Blending specification for <a element>feComposite</a>.
+* Added no-composite attribute to <a element>feBlend</a> to avoid double compositing.
+* Corrections on shorthands syntax.
+* Added definition for shorthand filter regions.
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2012/WD-filter-effects-20121025/">25 October 2012 Working Draft</a>.
 
-<ul>
-  <li>Correction of brightness short hand filter.
-  </li>
-  <li>New syntax for Custom Filter function.
-  </li>
-  <li>Add at-function rule for Custom Filters.
-  </li>
-  <li>Allow Custom Filter function to be used as extension for future filter
-  features.
-  </li>
-  <li>Remove unnecessary attributes and uniforms on shaders.
-  </li>
-  <li>Redefine origin of shader coordinate space to bottom left.
-  </li>
-  <li>Remove now unnecessary filter-margin properties.
-  </li>
-</ul>
+* Correction of brightness short hand filter.
+* New syntax for Custom Filter function.
+* Add at-function rule for Custom Filters.
+* Allow Custom Filter function to be used as extension for future filter features.
+* Remove unnecessary attributes and uniforms on shaders.
+* Redefine origin of shader coordinate space to bottom left.
+* Remove now unnecessary filter-margin properties.
 
 See more detailed and longterm changes in the <a href="ChangeLog">ChangeLog</a>.
 
