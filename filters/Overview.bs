@@ -105,27 +105,31 @@ Filter effects are exposed with two levels of complexity:
 2. A graph of individual filter effects described in markup that define an overall effect. The graph is agnostic to its input in that the effect can be applied to any content. While such graphs are the combination of effects that may be simple in isolation, the graph as a whole can produce complex effects. An example is given below.
 
 <div class=example>
-  <p>In this example, an image is filtered with the <<grayscale()>> filter function.</p>
+    In this example, an image is filtered with the <<grayscale()>> filter function.
 
-  <pre><code class=css>#image { filter: grayscale(100%); }</code></pre>
+    <pre><code highlight=css>
+        #image {
+            filter: grayscale(100%);
+        }
+    </code></pre>
 
-  <div class=figure>
-    <img src="images/grayscale.svg" width="451" height="260" alt="Example for grayscale filter applied to image">
-    <p class=caption>An image without filter (left) and the same filter with a 100% grayscale filter (right).</p>
-  </div>
+    <div class=figure>
+        <img src="images/grayscale.svg" width="451" height="260" alt="Example for grayscale filter applied to image">
+        <p class=caption>An image without filter (left) and the same filter with a 100% grayscale filter (right).</p>
+    </div>
 </div>
 
 <div class=example>
     The following shows an example of graph of individual filter effects.
 
-  <div class=figure>
-    <img src="examples/filters01.png" alt="Example Filter">
-    <p class=capture>Initial example for a filtered object.</p>
-  </div>
+    <div class=figure>
+        <img src="examples/filters01.png" alt="Example Filter">
+        <p class=caption>Initial example for a filtered object.</p>
+    </div>
 
-  <p><a href="examples/filters01.svg">View this example</a> as SVG</p>
+    <a href="examples/filters01.svg">View this example as SVG</a>
 
-  <p>The filter effect used in the example above is repeated here with reference numbers in the left column before each of the six filter primitives:
+    The filter effect used in the example above is repeated here with reference numbers in the left column before each of the six filter primitives:
 
 <table>
   <tbody>
@@ -147,7 +151,7 @@ Filter effects are exposed with two levels of complexity:
  <br>
  <br>
       </td>
-      <td style="vertical-align: top"><pre>&lt;filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="120"&gt;
+      <td style="vertical-align: top"><pre highlight=svg data-line="3,4,5,10,11,13">&lt;filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="120"&gt;
   &lt;desc&gt;Produces a 3D lighting effect.&lt;/desc&gt;
   &lt;feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/&gt;
   &lt;feOffset in="blur" dx="4" dy="4" result="offsetBlur"/&gt;
@@ -264,14 +268,14 @@ Animatable: yes
 
 If the value of the 'filter' property is ''filter/none'' then there is no filter effect applied. Otherwise, the list of functions are applied in the order provided.
 
-Issue: Should establish a containing block for values not-''filter/none'' for absolutely and fixed positioned elements. <a href="https://github.com/w3c/fxtf-drafts/issues/11">https://github.com/w3c/fxtf-drafts/issues/11</a>
+Issue(11): Should establish a containing block for values not-''filter/none'' for absolutely and fixed positioned elements.
 
 <pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
 
 <pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>> | <br>
   <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
 
-Issue: Make parameters optional? <a href="https://github.com/w3c/fxtf-drafts/issues/1">https://github.com/w3c/fxtf-drafts/issues/1</a>
+Issue(1): Make parameters optional?
 
 <dl id="FilterFunction" dfn-for="filter">
     : <dfn>&lt;url></dfn>
@@ -285,7 +289,7 @@ Issue: Make parameters optional? <a href="https://github.com/w3c/fxtf-drafts/iss
 
         The <a for=svg>initial value</a> for interpolation is ''0px''.
 
-        Issue: "blur radius" or a standard deviation? <a href="https://github.com/w3c/fxtf-drafts/issues/102">https://github.com/w3c/fxtf-drafts/issues/102</a>
+        Issue(102): "blur radius" or a standard deviation?
     : <dfn>brightness()</dfn> = brightness( <<number-percentage>> )
     ::
         Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
@@ -308,7 +312,7 @@ Issue: Make parameters optional? <a href="https://github.com/w3c/fxtf-drafts/iss
 
         The <a for=svg>initial value</a> for interpolation is all length values set to 0 and the used color is taken from the color property.
 
-        Issue: "blur radius" or a standard deviation? <a href="https://github.com/w3c/fxtf-drafts/issues/102">https://github.com/w3c/fxtf-drafts/issues/102</a>
+        Issue(102): "blur radius" or a standard deviation?
     : <dfn>grayscale()</dfn> = grayscale( <<number-percentage>> )
     ::
         Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
@@ -381,11 +385,15 @@ The description of the <a element>filter</a> element follows:
     :: See <a>filter region</a>.
     : <dfn>primitiveUnits</dfn> = "<dfn attr-value for=primitiveUnits>userSpaceOnUse</dfn> | <dfn attr-value for=primitiveUnits>objectBoundingBox</dfn>"
     ::
-        <p>Specifies the coordinate system for the various length values within the <a>filter primitives</a> and for the attributes that define the <a>filter primitive subregion</a>.</p>
-        <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>userSpaceOnUse</a>, any length values within the filter definitions represent values in the current <a>local coordinate system</a> in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).</p>
-        <p>If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>). Note that if only one number was specified in a <<number-optional-number>> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.</p>
-        <p>The <a for=svg>initial value</a> for <a element-attr>primitiveUnits</a> is <a attr-value for=primitiveUnits>userSpaceOnUse</a>.</p>
-        <p>Animatable: yes.</p>
+        Specifies the coordinate system for the various length values within the <a>filter primitives</a> and for the attributes that define the <a>filter primitive subregion</a>.
+
+        If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>userSpaceOnUse</a>, any length values within the filter definitions represent values in the current <a>local coordinate system</a> in place at the time when the <a element>filter</a> element is referenced (i.e., the user coordinate system for the element referencing the <a element>filter</a> element via a 'filter' property).
+
+        If <a element-attr>primitiveUnits</a> is equal to <a attr-value for=primitiveUnits>objectBoundingBox</a>, then any length values within the filter definitions represent fractions or percentages of the bounding box on the referencing element (see <a>object bounding box units</a>). Note that if only one number was specified in a <<number-optional-number>> value this number is expanded out before the <a element-attr>primitiveUnits</a> computation takes place.
+
+        The <a for=svg>initial value</a> for <a element-attr>primitiveUnits</a> is <a attr-value for=primitiveUnits>userSpaceOnUse</a>.
+
+        Animatable: yes.
     : <dfn>x</dfn> = "<<length-percentage>>"
     :: See <a>filter region</a>.
     : <dfn>y</dfn> = "<<length-percentage>>"
@@ -444,7 +452,7 @@ Note: It is often necessary to provide padding space because the filter effect m
 
 # Filter primitives # {#FilterPrimitivesOverview}
 
-Issue: Add description elements to content model of all elements? <a href="https://github.com/w3c/fxtf-drafts/issues/9">https://github.com/w3c/fxtf-drafts/issues/9</a>
+Issue(9): Add description elements to content model of all elements?
 
 ## Overview ## {#FilterPrimitivesOverviewIntro}
 
@@ -476,26 +484,36 @@ The following <dfn id="filter-primitive-attributes">filter primitive attributes<
 <dl dfn-type=element-attr dfn-for=filter-primitive>
     : <dfn>x</dfn> = "<<length-percentage>>"
     ::
-        <p>The minimum x coordinate for the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
-        <p>The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>x</a> is ''0%''.</p>
-        <p>Animatable: yes.</p>
+        The minimum x coordinate for the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.
+
+        The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>x</a> is ''0%''.
+
+        Animatable: yes.
     : <dfn>y</dfn> = "<<length-percentage>>"
     ::
-        <p>The minimum y coordinate for the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
-        <p>The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>y</a> is ''0%''.</p>
-        <p>Animatable: yes.</p>
+        The minimum y coordinate for the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.
+
+        The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>y</a> is ''0%''.
+
+        Animatable: yes.
     : <dfn>width</dfn> = "<<length-percentage>>"
     ::
-        <p>The width of the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
-        <p>A negative or zero value disables the effect of the given filter primitive (i.e., the result is a transparent black image).</p>
-        <p>The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>width</a> is ''100%''.</p>
-        <p>Animatable: yes.</p>
+        The width of the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.
+
+        A negative or zero value disables the effect of the given filter primitive (i.e., the result is a transparent black image).
+
+        The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>width</a> is ''100%''.
+
+        Animatable: yes.
     : <dfn>height</dfn> = "<<length-percentage>>"
     ::
-        <p>The height of the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.</p>
-        <p>A negative or zero value must disable the effect of the given filter primitive (i.e., the result is a transparent black image).</p>
-        <p>The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>height</a> is ''100%''.</p>
-        <p>Animatable: yes.</p>
+        The height of the subregion which restricts calculation and rendering of the given <a>filter primitive</a>. See <a>filter primitive subregion</a>.
+
+        A negative or zero value must disable the effect of the given filter primitive (i.e., the result is a transparent black image).
+
+        The <a for=svg>initial value</a> for <a element-attr for=filter-primitive>height</a> is ''100%''.
+
+        Animatable: yes.
     : <dfn>result</dfn> = "<em><dfn type dfn-for=result>&lt;filter-primitive-reference></dfn></em>"
     ::
         <<filter-primitive-reference>> is an <<custom-ident>> [[CSS3VAL]] and an assigned name for this <a>filter primitive</a>. If supplied, then graphics that result from processing this <a>filter primitive</a> can be referenced by an <a element-attr>in</a> attribute on a subsequent filter primitive within the same <a element>filter</a> element. If no value is provided, the output will only be available for re-use as the implicit input into the next <a>filter primitive</a> if that <a>filter primitive</a> provides no value for its <a element-attr>in</a> attribute.
@@ -557,77 +575,65 @@ The <a>filter primitive subregion</a> acts as a hard clip clipping rectangle on 
 All intermediate offscreens are defined to not exceed the intersection of the <a>filter primitive subregion</a> with the <a>filter region</a>. The <a>filter region</a> and any of the filter primitive subregions are to be set up such that all offscreens are made big enough to accommodate any pixels which even partly intersect with either the <a>filter region</a> or the filter primitive subregions.
 
 <div class=example>
-  <p><a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <a>filter primitive subregion</a> of the referenced filter primitive in order to fill its own <a>filter primitive subregion</a>.</p>
+    <a element>feTile</a> references a previous filter primitive and then stitches the tiles together based on the <a>filter primitive subregion</a> of the referenced filter primitive in order to fill its own <a>filter primitive subregion</a>.
 
-  <pre class="xml">&lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt;
-  &lt;defs&gt;
-    &lt;filter id="flood" x="0" y="0" width="100%" height="100%" primitiveUnits="objectBoundingBox"&gt;
-       &lt;feFlood x="25%" y="25%" width="50%" height="50%"
-          flood-color="green" flood-opacity="0.75"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="blend" primitiveUnits="objectBoundingBox"&gt;
-       &lt;feBlend x="25%" y="25%" width="50%" height="50%"
-          in2="SourceGraphic" mode="multiply"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="merge" primitiveUnits="objectBoundingBox"&gt;
-       &lt;feMerge x="25%" y="25%" width="50%" height="50%"&gt;
-        &lt;feMergeNode in="SourceGraphic"/&gt;
-        &lt;feMergeNode in="FillPaint"/&gt;
-       &lt;/feMerge&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
+    <pre><code highlight=svg>
+        &lt;svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"&gt;
+          &lt;defs&gt;
+            &lt;filter id="flood" x="0" y="0" width="100%" height="100%" primitiveUnits="objectBoundingBox"&gt;
+               &lt;feFlood x="25%" y="25%" width="50%" height="50%"
+                  flood-color="green" flood-opacity="0.75"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="blend" primitiveUnits="objectBoundingBox"&gt;
+               &lt;feBlend x="25%" y="25%" width="50%" height="50%"
+                  in2="SourceGraphic" mode="multiply"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="merge" primitiveUnits="objectBoundingBox"&gt;
+               &lt;feMerge x="25%" y="25%" width="50%" height="50%"&gt;
+                &lt;feMergeNode in="SourceGraphic"/&gt;
+                &lt;feMergeNode in="FillPaint"/&gt;
+               &lt;/feMerge&gt;
+            &lt;/filter&gt;
+          &lt;/defs&gt;
+        
+          &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
+             &lt;rect width="200" height="200"/&gt;
+             &lt;line x2="200" y2="200"/&gt;
+             &lt;line x1="200" y2="200"/&gt;
+          &lt;/g&gt;
+          &lt;circle fill="green" filter="url(#flood)" cx="100" cy="100" r="90"/&gt;
 
-  &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
-     &lt;rect width="200" height="200"/&gt;
-     &lt;line x2="200" y2="200"/&gt;
-     &lt;line x1="200" y2="200"/&gt;
-  &lt;/g&gt;
-  &lt;circle fill="green" filter="url(#flood)" cx="100" cy="100" r="90"/&gt;
+          &lt;g transform="translate(200 0)"&gt;
+            &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
+               &lt;rect width="200" height="200"/&gt;
+               &lt;line x2="200" y2="200"/&gt;
+               &lt;line x1="200" y2="200"/&gt;
+            &lt;/g&gt;
+            &lt;circle fill="green" filter="url(#blend)" cx="100" cy="100" r="90"/&gt;
+          &lt;/g&gt;
 
-  &lt;g transform="translate(200 0)"&gt;
-    &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
-       &lt;rect width="200" height="200"/&gt;
-       &lt;line x2="200" y2="200"/&gt;
-       &lt;line x1="200" y2="200"/&gt;
-    &lt;/g&gt;
-    &lt;circle fill="green" filter="url(#blend)" cx="100" cy="100" r="90"/&gt;
-  &lt;/g&gt;
+          &lt;g transform="translate(0 200)"&gt;
+            &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
+               &lt;rect width="200" height="200"/&gt;
+               &lt;line x2="200" y2="200"/&gt;
+               &lt;line x1="200" y2="200"/&gt;
+            &lt;/g&gt;
+            &lt;circle fill="green" fill-opacity="0.5" filter="url(#merge)" cx="100" cy="100" r="90"/&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-  &lt;g transform="translate(0 200)"&gt;
-    &lt;g fill="none" stroke="blue" stroke-width="4"&gt;
-       &lt;rect width="200" height="200"/&gt;
-       &lt;line x2="200" y2="200"/&gt;
-       &lt;line x1="200" y2="200"/&gt;
-    &lt;/g&gt;
-    &lt;circle fill="green" fill-opacity="0.5" filter="url(#merge)" cx="100" cy="100" r="90"/&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
+    <div class=figure>
+        <img alt="Example for subregions" src="examples/filtersubregion00.png">
+        <p class=caption>Example for subregions</p>
+    </div>
+    
+    <a href="examples/filtersubregion00.svg">View this example as SVG</a>
 
-  <div class=figure>
-    <table>
-      <tr>
-        <td>
-          <img alt="Example" src="examples/filtersubregion00.png">
-        </td>
-      </tr>
-    </table>
-    <p class="caption">
-      Example for subregions
-    </p>
-  </div>
-  <p class="view-as-svg"><a href="examples/filtersubregion00.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
-  <p>In the example above there are three rectangles that each have a cross and a circle in them. The circle element in each one has a different filter applied, but with the same <a>filter primitive subregion</a>. The filter output should be limited to the <a>filter primitive subregion</a>, so you should never see the circles themselves, just the rectangles that make up the <a>filter primitive subregion</a>.</p>
-  <ul>
-    <li>
-      The upper left rectangle shows an <a element>feFlood</a> with ''flood-opacity: 75%'' so the cross should be visible through the green rect in the middle.
-    </li>
-    <li>
-      The lower left rectangle shows an <a element>feMerge</a> that merges <a attr-value>SourceGraphic</a> with <a attr-value>FillPaint</a>. Since the circle has <code>fill-opacity="0.5"</code> it will also be transparent so that the cross is visible through the green rect in the middle.
-    </li>
-    <li>
-      The upper right rectangle shows an <a element>feBlend</a> that has <code>mode="multiply"</code>. Since the circle in this case isn't transparent the result is totally opaque. The rect should be dark green and the cross should not be visible through it.
-    </li>
-  </ul>
+    In the example above there are three rectangles that each have a cross and a circle in them. The circle element in each one has a different filter applied, but with the same <a>filter primitive subregion</a>. The filter output should be limited to the <a>filter primitive subregion</a> so you should never see the circles themselves, just the rectangles that make up the <a>filter primitive subregion</a>.
+    * The upper left rectangle shows an <a element>feFlood</a> with ''flood-opacity: 75%'' so the cross should be visible through the green rect in the middle.
+    * The lower left rectangle shows an <a element>feMerge</a> that merges <a attr-value>SourceGraphic</a> with <a attr-value>FillPaint</a>. Since the circle has <code>fill-opacity="0.5"</code> it will also be transparent so that the cross is visible through the green rect in the middle.
+    * The upper right rectangle shows an <a element>feBlend</a> that has <code>mode="multiply"</code>. Since the circle in this case isn't transparent the result is totally opaque. The rect should be dark green and the cross should not be visible through it.
 </div>
 
 ## Filter primitive <a element>feBlend</a> ## {#feBlendElement}
@@ -656,7 +662,7 @@ This filter blends two objects together using commonly used imaging software ble
     ::
         If the <a element-attr>no-composite</a> attribute is present, the specified blend mode must not use alpha compositing. The necessary modifications are defined by “Compositing and Blending Level 1” [[!COMPOSITING-1]].
 
-        Issue: no-compsite blending not specified? <a href="https://github.com/w3c/fxtf-drafts/issues/173">https://github.com/w3c/fxtf-drafts/issues/173</a>
+        Issue(173): no-compsite blending not specified?
 
         Animatable: no.</p>
     : <dfn>in2</dfn> = "<em>(see <a element-attr>in</a> attribute)</em>"
@@ -669,58 +675,57 @@ This filter blends two objects together using commonly used imaging software ble
 The ''normal'' blend mode with alpha compositing is equivalent to <code>operator="over"</code> on the <a element>feComposite</a> filter primitive, matches the blending method used by <a element>feMerge</a> and matches the <a>simple alpha compositing</a> technique used in SVG for all compositing outside of filter effects.
 
 <div class=example>
-<pre class="xml">
-&lt;svg width="5cm" height="5cm" viewBox="0 0 500 500"
-     xmlns="http://www.w3.org/2000/svg"&gt;
-  &lt;title&gt;Example feBlend - Examples of feBlend modes&lt;/title&gt;
-  &lt;desc&gt;Five text strings blended into a gradient,
-        with one text string for each of the five feBlend modes.&lt;/desc&gt;
-  &lt;defs&gt;
-    &lt;linearGradient id="MyGradient" gradientUnits="userSpaceOnUse"
-            x1="100" y1="0" x2="300" y2="0"&gt;
-      &lt;stop offset="0" stop-color="#000000" /&gt;
-      &lt;stop offset=".33" stop-color="#ffffff" /&gt;
-      &lt;stop offset=".67" stop-color="#ff0000" /&gt;
-      &lt;stop offset="1" stop-color="#808080" /&gt;
-    &lt;/linearGradient&gt;
-    &lt;filter id="Normal"&gt;
-      &lt;feBlend mode="normal" in2="BackgroundImage" in="SourceGraphic"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Multiply"&gt;
-      &lt;feBlend mode="multiply" in2="BackgroundImage" in="SourceGraphic"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Screen"&gt;
-      &lt;feBlend mode="screen" in2="BackgroundImage" in="SourceGraphic"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Darken"&gt;
-      &lt;feBlend mode="darken" in2="BackgroundImage" in="SourceGraphic"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Lighten"&gt;
-      &lt;feBlend mode="lighten" in2="BackgroundImage" in="SourceGraphic"/&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"
-        x="1" y="1" width="498" height="498"/&gt;
-  &lt;g isolation="isolate" &gt;
-    &lt;rect x="100" y="20" width="300" height="460" fill="url(#MyGradient)" /&gt;
-    &lt;g font-family="Verdana" font-size="75" fill="#888888" fill-opacity=".6" &gt;
-      &lt;text x="50" y="90" filter="url(#Normal)" &gt;Normal&lt;/text&gt;
-      &lt;text x="50" y="180" filter="url(#Multiply)" &gt;Multiply&lt;/text&gt;
-      &lt;text x="50" y="270" filter="url(#Screen)" &gt;Screen&lt;/text&gt;
-      &lt;text x="50" y="360" filter="url(#Darken)" &gt;Darken&lt;/text&gt;
-      &lt;text x="50" y="450" filter="url(#Lighten)" &gt;Lighten&lt;/text&gt;
-    &lt;/g&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
+    <pre><code highlight=svg>
+        &lt;svg width="5cm" height="5cm" viewBox="0 0 500 500"
+             xmlns="http://www.w3.org/2000/svg"&gt;
+          &lt;title&gt;Example feBlend - Examples of feBlend modes&lt;/title&gt;
+          &lt;desc&gt;Five text strings blended into a gradient,
+                with one text string for each of the five feBlend modes.&lt;/desc&gt;
+          &lt;defs&gt;
+            &lt;linearGradient id="MyGradient" gradientUnits="userSpaceOnUse"
+                    x1="100" y1="0" x2="300" y2="0"&gt;
+              &lt;stop offset="0" stop-color="#000000" /&gt;
+              &lt;stop offset=".33" stop-color="#ffffff" /&gt;
+              &lt;stop offset=".67" stop-color="#ff0000" /&gt;
+              &lt;stop offset="1" stop-color="#808080" /&gt;
+            &lt;/linearGradient&gt;
+            &lt;filter id="Normal"&gt;
+              &lt;feBlend mode="normal" in2="BackgroundImage" in="SourceGraphic"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Multiply"&gt;
+              &lt;feBlend mode="multiply" in2="BackgroundImage" in="SourceGraphic"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Screen"&gt;
+              &lt;feBlend mode="screen" in2="BackgroundImage" in="SourceGraphic"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Darken"&gt;
+              &lt;feBlend mode="darken" in2="BackgroundImage" in="SourceGraphic"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Lighten"&gt;
+              &lt;feBlend mode="lighten" in2="BackgroundImage" in="SourceGraphic"/&gt;
+            &lt;/filter&gt;
+          &lt;/defs&gt;
+          &lt;rect fill="none" stroke="blue"
+                x="1" y="1" width="498" height="498"/&gt;
+          &lt;g isolation="isolate" &gt;
+            &lt;rect x="100" y="20" width="300" height="460" fill="url(#MyGradient)" /&gt;
+            &lt;g font-family="Verdana" font-size="75" fill="#888888" fill-opacity=".6" &gt;
+              &lt;text x="50" y="90" filter="url(#Normal)" &gt;Normal&lt;/text&gt;
+              &lt;text x="50" y="180" filter="url(#Multiply)" &gt;Multiply&lt;/text&gt;
+              &lt;text x="50" y="270" filter="url(#Screen)" &gt;Screen&lt;/text&gt;
+              &lt;text x="50" y="360" filter="url(#Darken)" &gt;Darken&lt;/text&gt;
+              &lt;text x="50" y="450" filter="url(#Lighten)" &gt;Lighten&lt;/text&gt;
+            &lt;/g&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-  <div class=figure>
-    <img alt="Example " src="examples/feBlend.png">
-    <p class="caption">Example of feBlend</p>
-  </div>
+    <div class=figure>
+        <img alt="Example of feBlend" src="examples/feBlend.png">
+        <p class=caption>Example of feBlend</p>
+    </div>
 
-  <p class="view-as-svg">
-    <a href="examples/feBlend.svg">View this example as SVG (SVG-enabled UA only)</a>
-  </p>
+    <a href="examples/feBlend.svg">View this example as SVG</a>
 </div>
 
 ## Filter primitive <a element>feColorMatrix</a> ## {#feColorMatrixElement}
@@ -736,7 +741,7 @@ macros:
 
 This filter applies a matrix transformation:
 
-<math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><msub><mi>a</mi><mn>00</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>01</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>02</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>03</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>04</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>10</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>11</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>12</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>13</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>14</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>20</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>21</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>22</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>23</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>24</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>30</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>31</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>32</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>33</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>34</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></mrow></semantics></math>
+<pre class=include>path: mathml/feColorMatrix00.mml</pre>
 <!--<object data="mathml/feColorMatrix00.mml" type="application/mathml+xml" width="100%" height="140">
 <pre>| R' |     | a00 a01 a02 a03 a04 |   | R |
 | G' |     | a10 a11 a12 a13 a14 |   | G |
@@ -751,11 +756,11 @@ The calculations are performed on non-premultiplied color values.
 
 <em>Attribute definitions:</em>
 <dl dfn-type=element-attr dfn-for=feColorMatrix>
-    : <dfn>type</dfn> = "<em>matrix | saturate | hueRotate | luminanceToAlpha</em>"
+    : <dfn>type</dfn> = "<span dfn-type=attr-value dfn-for=type><dfn>matrix</dfn> | <dfn>saturate</dfn> | <dfn>hueRotate</dfn> | <dfn>luminanceToAlpha</dfn></span>"
     ::
-        Indicates the type of matrix operation. The keyword ''matrix'' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix.
+        Indicates the type of matrix operation. The keyword <a attr-value>matrix</a> indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix.
         
-        The <a for=svg>initial value</a> for <a element-attr for=feColorMatrix>type</a> is ''matrix''.
+        The <a for=svg>initial value</a> for <a element-attr for=feColorMatrix>type</a> is <a attr-value>matrix</a>.
 
         Animatable: yes.
     : <dfn>values</dfn> = "<em>list of <<number>>s</em>"
@@ -765,8 +770,8 @@ The calculations are performed on non-premultiplied color values.
             <pre>
 type="matrix"
 values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
-        * For <code>type="saturate"</code>, <a element-attr for=feColorMatrix>values</a> is a single real number value. A ''saturate'' operation is equivalent to the following matrix operation:
-            <math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mrow><mn>0.213</mn><mo stretchy="false">+</mo><mn>0.787s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.715</mn><mo stretchy="false">−</mo><mn>0.715s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.072</mn><mo stretchy="false">−</mo><mn>0.072s</mn></mrow></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mn>0.213</mn><mo stretchy="false">−</mo><mn>0.213s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.715</mn><mo stretchy="false">+</mo><mn>0.285s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.072</mn><mo stretchy="false">−</mo><mn>0.072s</mn></mrow></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mn>0.213</mn><mo stretchy="false">−</mo><mn>0.213s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.715</mn><mo stretchy="false">−</mo><mn>0.715s</mn></mrow></mrow></mtd><mtd><mrow><mrow><mn>0.072</mn><mo stretchy="false">+</mo><mn>0.928s</mn></mrow></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></mrow></semantics></math>
+        * For <code>type="saturate"</code>, <a element-attr for=feColorMatrix>values</a> is a single real number value. A <a attr-value>saturate</a> operation is equivalent to the following matrix operation:
+            <pre class=include>path: mathml/feColorMatrix01.mml</pre>
 <!--<object data="mathml/feColorMatrix01.mml" type="application/mathml+xml" width="100%" height="130">
 <pre>| R' |     | (0.2126 + 0.7873s)  (0.7152 - 0.7152s)  (0.0722 - 0.0722s) 0  0 |   | R |
 | G' |     | (0.2126 - 0.2126s)  (0.7152 + 0.2848s)  (0.0722 - 0.0722s) 0  0 |   | G |
@@ -775,8 +780,8 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 | 1  |     |           0                   0                   0        0  1 |   | 1 |</pre></object>-->
 
             Note: A value of ''0'' produces a fully desaturated (grayscale) filter result, while a value of ''1'' passes the filter input image through unchanged. Values outside the 0..1 range under- or oversaturates the filter input image respectively.
-        * For <code>type="hueRotate"</code>, <a element-attr for=feColorMatrix>values</a> is a single one real number value (degrees). A ''hueRotate'' operation is equivalent to the following matrix operation:
-            <math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><msub><mi>a</mi><mn>00</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>01</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>02</mn></msub></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>10</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>11</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>12</mn></msub></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>20</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>21</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>22</mn></msub></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></mrow></semantics></math>
+        * For <code>type="hueRotate"</code>, <a element-attr for=feColorMatrix>values</a> is a single one real number value (degrees). A <a attr-value>hueRotate</a> operation is equivalent to the following matrix operation:
+            <pre class=include>path: mathml/feColorMatrix02.mml</pre>
 <!--<object data="mathml/feColorMatrix02.mml" type="application/mathml+xml" width="100%" height="130">
 <pre>| R' |     | a00  a01  a02  0  0 |   | R |
 | G' |     | a10  a11  a12  0  0 |   | G |
@@ -787,7 +792,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 
             where the terms a00, a01, etc. are calculated as follows:
 
-            <math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><msub><mi>a</mi><mn>00</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>01</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>02</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>10</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>11</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>12</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>a</mi><mn>20</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>21</mn></msub></mrow></mtd><mtd><mrow><msub><mi>a</mi><mn>22</mn></msub></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">+</mo><mi>cos</mi></mrow></mrow><mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.787</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.285</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.072</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.928</mn></mrow></mrow></mtd></mtr></mtable></mrow></mfenced></mrow><mo stretchy="false">+</mo><mi>sin</mi></mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.213</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.928</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.143</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.140</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.283</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mo stretchy="false">−</mo><mn>0.787</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.715</mn></mrow></mrow></mtd><mtd><mrow><mrow><mo stretchy="false">+</mo><mn>0.072</mn></mrow></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></semantics></math>
+            <pre class=include>path: mathml/feColorMatrix03.mml</pre>
 <!--<object data="mathml/feColorMatrix03.mml" type="application/mathml+xml" width="100%" height="230">
 <pre>| a00 a01 a02 |     [0.2126 0.7152 0.0722]
 | a10 a11 a12 | =   [0.2126 0.7152 0.0722] +
@@ -803,13 +808,13 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
   </object>-->
             Thus, the upper left term of the hue matrix turns out to be:
 
-            <math><semantics><mrow><mrow><msub><mi>a</mi><mn>00</mn></msub><mo stretchy="false">=</mo><mrow><mn>0.2127</mn><mo stretchy="false">+</mo><mi>cos</mi></mrow></mrow><mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mn>0.7873</mn></mrow><mo stretchy="false">−</mo><mi>sin</mi></mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="italic">hueRotate</mi><mi mathvariant="italic">value</mi></mrow><mo stretchy="false">)</mo></mrow><mo stretchy="false">⋅</mo><mn>0.2127</mn></mrow></mrow></semantics></math>
+            <pre class=include>path: mathml/feColorMatrix04.mml</pre>
 <!--<object data="mathml/feColorMatrix04.mml" type="application/mathml+xml" width="100%" height="30">
 <pre>0.2127 + cos(hueRotate value) * 0.7873 - sin(hueRotate value) * 0.2127</pre>
 </object>-->
-        * For <code>type="luminanceToAlpha"</code>, <a element-attr for=feColorMatrix>values</a> is not applicable. A ''luminanceToAlpha'' operation is equivalent to the following matrix operation:
+        * For <code>type="luminanceToAlpha"</code>, <a element-attr for=feColorMatrix>values</a> is not applicable. A <a attr-value>luminanceToAlpha</a> operation is equivalent to the following matrix operation:
 
-            <math><semantics><mrow><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><mi>&apos;</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">=</mo><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0.2126</mn></mrow></mtd><mtd><mrow><mn>0.7152</mn></mrow></mtd><mtd><mrow><mn>0.0722</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced><mo stretchy="false">⋅</mo><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi>R</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>G</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></mrow></mrow></semantics></math>
+            <pre class=include>path: mathml/feColorMatrix05.mml</pre>
 <!--<object data="mathml/feColorMatrix05.mml" type="application/mathml+xml" width="100%" height="130">
 <pre>   | R' |     |      0        0        0  0  0 |   | R |
  | G' |     |      0        0        0  0  0 |   | G |
@@ -832,68 +837,66 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
 </dl>
 
 <div class=example>
-<pre class="xml">
-&lt;svg width="8cm" height="5cm" viewBox="0 0 800 500"
-     xmlns="http://www.w3.org/2000/svg"&gt;
-  &lt;title&gt;Example feColorMatrix - Examples of feColorMatrix operations&lt;/title&gt;
-  &lt;desc&gt;Five text strings showing the effects of feColorMatrix:
-        an unfiltered text string acting as a reference,
-        use of the feColorMatrix matrix option to convert to grayscale,
-        use of the feColorMatrix saturate option,
-        use of the feColorMatrix hueRotate option,
-        and use of the feColorMatrix luminanceToAlpha option.&lt;/desc&gt;
-  &lt;defs&gt;
-    &lt;linearGradient id="MyGradient" gradientUnits="userSpaceOnUse"
-            x1="100" y1="0" x2="500" y2="0"&gt;
-      &lt;stop offset="0" stop-color="#ff00ff" /&gt;
-      &lt;stop offset=".33" stop-color="#88ff88" /&gt;
-      &lt;stop offset=".67" stop-color="#2020ff" /&gt;
-      &lt;stop offset="1" stop-color="#d00000" /&gt;
-    &lt;/linearGradient&gt;
-    &lt;filter id="Matrix" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feColorMatrix type="matrix" in="SourceGraphic"
-           values=".33 .33 .33 0 0
-                   .33 .33 .33 0 0
-                   .33 .33 .33 0 0
-                   .33 .33 .33 0 0"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Saturate40" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feColorMatrix type="saturate" in="SourceGraphic" values="0.4"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="HueRotate90" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feColorMatrix type="hueRotate" in="SourceGraphic" values="90"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="LuminanceToAlpha" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feColorMatrix type="luminanceToAlpha" in="SourceGraphic" result="a"/&gt;
-      &lt;feComposite in="SourceGraphic" in2="a" operator="in" /&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"
-        x="1" y="1" width="798" height="498"/&gt;
-  &lt;g font-family="Verdana" font-size="75"
-            font-weight="bold" fill="url(#MyGradient)" &gt;
-    &lt;rect x="100" y="0" width="500" height="20" /&gt;
-    &lt;text x="100" y="90"&gt;Unfiltered&lt;/text&gt;
-    &lt;text x="100" y="190" filter="url(#Matrix)" &gt;Matrix&lt;/text&gt;
-    &lt;text x="100" y="290" filter="url(#Saturate40)" &gt;Saturate&lt;/text&gt;
-    &lt;text x="100" y="390" filter="url(#HueRotate90)" &gt;HueRotate&lt;/text&gt;
-    &lt;text x="100" y="490" filter="url(#LuminanceToAlpha)" &gt;Luminance&lt;/text&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
+    <pre><code highlight=svg>
+        &lt;svg width="8cm" height="5cm" viewBox="0 0 800 500"
+             xmlns="http://www.w3.org/2000/svg"&gt;
+          &lt;title&gt;Example feColorMatrix - Examples of feColorMatrix operations&lt;/title&gt;
+          &lt;desc&gt;Five text strings showing the effects of feColorMatrix:
+                an unfiltered text string acting as a reference,
+                use of the feColorMatrix matrix option to convert to grayscale,
+                use of the feColorMatrix saturate option,
+                use of the feColorMatrix hueRotate option,
+                and use of the feColorMatrix luminanceToAlpha option.&lt;/desc&gt;
+          &lt;defs&gt;
+            &lt;linearGradient id="MyGradient" gradientUnits="userSpaceOnUse"
+                    x1="100" y1="0" x2="500" y2="0"&gt;
+              &lt;stop offset="0" stop-color="#ff00ff" /&gt;
+              &lt;stop offset=".33" stop-color="#88ff88" /&gt;
+              &lt;stop offset=".67" stop-color="#2020ff" /&gt;
+              &lt;stop offset="1" stop-color="#d00000" /&gt;
+            &lt;/linearGradient&gt;
+            &lt;filter id="Matrix" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feColorMatrix type="matrix" in="SourceGraphic"
+                   values=".33 .33 .33 0 0
+                           .33 .33 .33 0 0
+                           .33 .33 .33 0 0
+                           .33 .33 .33 0 0"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Saturate40" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feColorMatrix type="saturate" in="SourceGraphic" values="0.4"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="HueRotate90" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feColorMatrix type="hueRotate" in="SourceGraphic" values="90"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="LuminanceToAlpha" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feColorMatrix type="luminanceToAlpha" in="SourceGraphic" result="a"/&gt;
+              &lt;feComposite in="SourceGraphic" in2="a" operator="in" /&gt;
+            &lt;/filter&gt;
+          &lt;/defs&gt;
+          &lt;rect fill="none" stroke="blue"
+                x="1" y="1" width="798" height="498"/&gt;
+          &lt;g font-family="Verdana" font-size="75"
+                    font-weight="bold" fill="url(#MyGradient)" &gt;
+            &lt;rect x="100" y="0" width="500" height="20" /&gt;
+            &lt;text x="100" y="90"&gt;Unfiltered&lt;/text&gt;
+            &lt;text x="100" y="190" filter="url(#Matrix)" &gt;Matrix&lt;/text&gt;
+            &lt;text x="100" y="290" filter="url(#Saturate40)" &gt;Saturate&lt;/text&gt;
+            &lt;text x="100" y="390" filter="url(#HueRotate90)" &gt;HueRotate&lt;/text&gt;
+            &lt;text x="100" y="490" filter="url(#LuminanceToAlpha)" &gt;Luminance&lt;/text&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-  <div class=figure>
-    <img alt="Example " src="examples/feColorMatrix.png"/>
-    <p class="caption">Example of feColorMatrix
-  </div>
+    <div class=figure>
+        <img alt="Example " src="examples/feColorMatrix.png"/>
+        <p class=caption>Example of feColorMatrix</p>
+    </div>
 
-  <p class="view-as-svg">
-    <a href="examples/feColorMatrix.svg">View this example as SVG (SVG-enabled browsers
-    only)</a>
-  </p>
+    <a href="examples/feColorMatrix.svg">View this example as SVG</a>
 </div>
 
 ## Filter primitive <a element>feComponentTransfer</a> ## {#feComponentTransferElement}
@@ -1035,77 +1038,76 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
 </dl>
 
 <div class=example>
-<pre class="xml">
-&lt;svg width="8cm" height="4cm" viewBox="0 0 800 400"
-     xmlns="http://www.w3.org/2000/svg"&gt;
-  &lt;title&gt;Example feComponentTransfer - Examples of feComponentTransfer operations&lt;/title&gt;
-  &lt;desc&gt;Four text strings showing the effects of feComponentTransfer:
-        an identity function acting as a reference,
-        use of the feComponentTransfer table option,
-        use of the feComponentTransfer linear option,
-        and use of the feComponentTransfer gamma option.&lt;/desc&gt;
-  &lt;defs&gt;
-    &lt;linearGradient id="MyGradient" gradientUnits="userSpaceOnUse"
-            x1="100" y1="0" x2="600" y2="0"&gt;
-      &lt;stop offset="0" stop-color="#ff0000" /&gt;
-      &lt;stop offset=".33" stop-color="#00ff00" /&gt;
-      &lt;stop offset=".67" stop-color="#0000ff" /&gt;
-      &lt;stop offset="1" stop-color="#000000" /&gt;
-    &lt;/linearGradient&gt;
-    &lt;filter id="Identity" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="identity"/&gt;
-        &lt;feFuncG type="identity"/&gt;
-        &lt;feFuncB type="identity"/&gt;
-        &lt;feFuncA type="identity"/&gt;
-      &lt;/feComponentTransfer&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Table" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="table" tableValues="0 0 1 1"/&gt;
-        &lt;feFuncG type="table" tableValues="1 1 0 0"/&gt;
-        &lt;feFuncB type="table" tableValues="0 1 1 0"/&gt;
-      &lt;/feComponentTransfer&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Linear" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="linear" slope=".5" intercept=".25"/&gt;
-        &lt;feFuncG type="linear" slope=".5" intercept="0"/&gt;
-        &lt;feFuncB type="linear" slope=".5" intercept=".5"/&gt;
-      &lt;/feComponentTransfer&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Gamma" filterUnits="objectBoundingBox"
-            x="0%" y="0%" width="100%" height="100%"&gt;
-      &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="gamma" amplitude="2" exponent="5" offset="0"/&gt;
-        &lt;feFuncG type="gamma" amplitude="2" exponent="3" offset="0"/&gt;
-        &lt;feFuncB type="gamma" amplitude="2" exponent="1" offset="0"/&gt;
-      &lt;/feComponentTransfer&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"
-        x="1" y="1" width="798" height="398"/&gt;
-  &lt;g font-family="Verdana" font-size="75"
-            font-weight="bold" fill="url(#MyGradient)" &gt;
-    &lt;rect x="100" y="0" width="600" height="20" /&gt;
-    &lt;text x="100" y="90"&gt;Identity&lt;/text&gt;
-    &lt;text x="100" y="190" filter="url(#Table)" &gt;TableLookup&lt;/text&gt;
-    &lt;text x="100" y="290" filter="url(#Linear)" &gt;LinearFunc&lt;/text&gt;
-    &lt;text x="100" y="390" filter="url(#Gamma)" &gt;GammaFunc&lt;/text&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
+    <pre><code highlight=svg>
+        &lt;svg width="8cm" height="4cm" viewBox="0 0 800 400"
+             xmlns="http://www.w3.org/2000/svg"&gt;
+          &lt;title&gt;Example feComponentTransfer - Examples of feComponentTransfer operations&lt;/title&gt;
+          &lt;desc&gt;Four text strings showing the effects of feComponentTransfer:
+                an identity function acting as a reference,
+                use of the feComponentTransfer table option,
+                use of the feComponentTransfer linear option,
+                and use of the feComponentTransfer gamma option.&lt;/desc&gt;
+          &lt;defs&gt;
+            &lt;linearGradient id="MyGradient" gradientUnits="userSpaceOnUse"
+                    x1="100" y1="0" x2="600" y2="0"&gt;
+              &lt;stop offset="0" stop-color="#ff0000" /&gt;
+              &lt;stop offset=".33" stop-color="#00ff00" /&gt;
+              &lt;stop offset=".67" stop-color="#0000ff" /&gt;
+              &lt;stop offset="1" stop-color="#000000" /&gt;
+            &lt;/linearGradient&gt;
+            &lt;filter id="Identity" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feComponentTransfer&gt;
+                &lt;feFuncR type="identity"/&gt;
+                &lt;feFuncG type="identity"/&gt;
+                &lt;feFuncB type="identity"/&gt;
+                &lt;feFuncA type="identity"/&gt;
+              &lt;/feComponentTransfer&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Table" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feComponentTransfer&gt;
+                &lt;feFuncR type="table" tableValues="0 0 1 1"/&gt;
+                &lt;feFuncG type="table" tableValues="1 1 0 0"/&gt;
+                &lt;feFuncB type="table" tableValues="0 1 1 0"/&gt;
+              &lt;/feComponentTransfer&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Linear" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feComponentTransfer&gt;
+                &lt;feFuncR type="linear" slope=".5" intercept=".25"/&gt;
+                &lt;feFuncG type="linear" slope=".5" intercept="0"/&gt;
+                &lt;feFuncB type="linear" slope=".5" intercept=".5"/&gt;
+              &lt;/feComponentTransfer&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Gamma" filterUnits="objectBoundingBox"
+                    x="0%" y="0%" width="100%" height="100%"&gt;
+              &lt;feComponentTransfer&gt;
+                &lt;feFuncR type="gamma" amplitude="2" exponent="5" offset="0"/&gt;
+                &lt;feFuncG type="gamma" amplitude="2" exponent="3" offset="0"/&gt;
+                &lt;feFuncB type="gamma" amplitude="2" exponent="1" offset="0"/&gt;
+              &lt;/feComponentTransfer&gt;
+            &lt;/filter&gt;
+          &lt;/defs&gt;
+          &lt;rect fill="none" stroke="blue"
+                x="1" y="1" width="798" height="398"/&gt;
+          &lt;g font-family="Verdana" font-size="75"
+                    font-weight="bold" fill="url(#MyGradient)" &gt;
+            &lt;rect x="100" y="0" width="600" height="20" /&gt;
+            &lt;text x="100" y="90"&gt;Identity&lt;/text&gt;
+            &lt;text x="100" y="190" filter="url(#Table)" &gt;TableLookup&lt;/text&gt;
+            &lt;text x="100" y="290" filter="url(#Linear)" &gt;LinearFunc&lt;/text&gt;
+            &lt;text x="100" y="390" filter="url(#Gamma)" &gt;GammaFunc&lt;/text&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-  <div class=figure>
-    <img alt="Example " src="examples/feComponentTransfer.png"/>
-    <p class="caption">Example for feComponentTransfer</p>
-  </div>
+    <div class=figure>
+        <img alt="Example for feComponentTransfer" src="examples/feComponentTransfer.png"/>
+        <p class=caption>Example for feComponentTransfer</p>
+    </div>
 
-  <p class="view-as-svg">
-    <a href="examples/feComponentTransfer.svg">View this example as SVG (SVG-enabled browsers only)</a>
-  </p>
+    <a href="examples/feComponentTransfer.svg">View this example as SVG</a>
 </div>
 
 
@@ -1223,182 +1225,181 @@ For this filter primitive, the extent of the resulting image might grow as descr
 Note: Compositing and Blending [[!COMPOSITING-1]] defines more compositing keywords. The functionality of the additional keywords can be archived by switching the input filter primitives <a element-attr>in</a> and <a element-attr for=feComposite>in2</a>.
 
 <div class=example>
-<pre class="xml">
-&lt;svg width="330" height="195" viewBox="0 0 1100 650"
-     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
-  &lt;title&gt;Example feComposite - Examples of feComposite operations&lt;/title&gt;
-  &lt;desc&gt;Four rows of six pairs of overlapping triangles depicting
-        the six different feComposite operators under different
-        opacity values and different clearing of the background.&lt;/desc&gt;
-  &lt;defs&gt;
-    &lt;desc&gt;Define two sets of six filters for each of the six compositing operators.
-          The first set wipes out the background image by flooding with opaque white.
-          The second set does not wipe out the background, with the result
-          that the background sometimes shines through and is other cases
-          is blended into itself (i.e., "double-counting").&lt;/desc&gt;
-    &lt;filter id="overFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="over" result="comp"/&gt;
-      &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
-    &lt;/filter&gt;
-    &lt;filter id="inFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="in" result="comp"/&gt;
-      &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
-    &lt;/filter&gt;
-    &lt;filter id="outFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="out" result="comp"/&gt;
-      &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
-    &lt;/filter&gt;
-    &lt;filter id="atopFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="atop" result="comp"/&gt;
-      &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
-    &lt;/filter&gt;
-    &lt;filter id="xorFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/&gt;
-      &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
-    &lt;/filter&gt;
-    &lt;filter id="arithmeticFlood" filterUnits="objectBoundingBox"
-            x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
-                   operator="arithmetic" k1=".5" k2=".5" k3=".5" k4=".5"/&gt;
-      &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
-    &lt;/filter&gt;
-    &lt;filter id="overNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="over" result="comp"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="inNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="in" result="comp"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="outNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="out" result="comp"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="atopNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="atop" result="comp"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="xorNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="arithmeticNoFlood" filterUnits="objectBoundingBox"
-            x="-5%" y="-5%" width="110%" height="110%"&gt;
-      &lt;feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
-                   operator="arithmetic" k1=".5" k2=".5" k3=".5" k4=".5"/&gt;
-    &lt;/filter&gt;
-    &lt;path id="Blue100" d="M 0 0 L 100 0 L 100 100 z" fill="#00ffff" /&gt;
-    &lt;path id="Red100" d="M 0 0 L 0 100 L 100 0 z" fill="#ff00ff" /&gt;
-    &lt;path id="Blue50" d="M 0 125 L 100 125 L 100 225 z" fill="#00ffff" fill-opacity=".5" /&gt;
-    &lt;path id="Red50" d="M 0 125 L 0 225 L 100 125 z" fill="#ff00ff" fill-opacity=".5" /&gt;
-    &lt;g id="TwoBlueTriangles"&gt;
-      &lt;use xlink:href="#Blue100"/&gt;
-      &lt;use xlink:href="#Blue50"/&gt;
-    &lt;/g&gt;
-    &lt;g id="BlueTriangles"&gt;
-      &lt;use transform="translate(275,25)" xlink:href="#TwoBlueTriangles"/&gt;
-      &lt;use transform="translate(400,25)" xlink:href="#TwoBlueTriangles"/&gt;
-      &lt;use transform="translate(525,25)" xlink:href="#TwoBlueTriangles"/&gt;
-      &lt;use transform="translate(650,25)" xlink:href="#TwoBlueTriangles"/&gt;
-      &lt;use transform="translate(775,25)" xlink:href="#TwoBlueTriangles"/&gt;
-      &lt;use transform="translate(900,25)" xlink:href="#TwoBlueTriangles"/&gt;
-    &lt;/g&gt;
-  &lt;/defs&gt;
+    <pre><code highlight=svg>
+        &lt;svg width="330" height="195" viewBox="0 0 1100 650"
+             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+          &lt;title&gt;Example feComposite - Examples of feComposite operations&lt;/title&gt;
+          &lt;desc&gt;Four rows of six pairs of overlapping triangles depicting
+                the six different feComposite operators under different
+                opacity values and different clearing of the background.&lt;/desc&gt;
+          &lt;defs&gt;
+            &lt;desc&gt;Define two sets of six filters for each of the six compositing operators.
+                  The first set wipes out the background image by flooding with opaque white.
+                  The second set does not wipe out the background, with the result
+                  that the background sometimes shines through and is other cases
+                  is blended into itself (i.e., "double-counting").&lt;/desc&gt;
+            &lt;filter id="overFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="over" result="comp"/&gt;
+              &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
+            &lt;/filter&gt;
+            &lt;filter id="inFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="in" result="comp"/&gt;
+              &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
+            &lt;/filter&gt;
+            &lt;filter id="outFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="out" result="comp"/&gt;
+              &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
+            &lt;/filter&gt;
+            &lt;filter id="atopFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="atop" result="comp"/&gt;
+              &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
+            &lt;/filter&gt;
+            &lt;filter id="xorFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/&gt;
+              &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
+            &lt;/filter&gt;
+            &lt;filter id="arithmeticFlood" filterUnits="objectBoundingBox"
+                    x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feFlood flood-color="#ffffff" flood-opacity="1" result="flood"/&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
+                           operator="arithmetic" k1=".5" k2=".5" k3=".5" k4=".5"/&gt;
+              &lt;feMerge&gt; &lt;feMergeNode in="flood"/&gt; &lt;feMergeNode in="comp"/&gt; &lt;/feMerge&gt;
+            &lt;/filter&gt;
+            &lt;filter id="overNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="over" result="comp"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="inNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="in" result="comp"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="outNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="out" result="comp"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="atopNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="atop" result="comp"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="xorNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="arithmeticNoFlood" filterUnits="objectBoundingBox"
+                    x="-5%" y="-5%" width="110%" height="110%"&gt;
+              &lt;feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
+                           operator="arithmetic" k1=".5" k2=".5" k3=".5" k4=".5"/&gt;
+            &lt;/filter&gt;
+            &lt;path id="Blue100" d="M 0 0 L 100 0 L 100 100 z" fill="#00ffff" /&gt;
+            &lt;path id="Red100" d="M 0 0 L 0 100 L 100 0 z" fill="#ff00ff" /&gt;
+            &lt;path id="Blue50" d="M 0 125 L 100 125 L 100 225 z" fill="#00ffff" fill-opacity=".5" /&gt;
+            &lt;path id="Red50" d="M 0 125 L 0 225 L 100 125 z" fill="#ff00ff" fill-opacity=".5" /&gt;
+            &lt;g id="TwoBlueTriangles"&gt;
+              &lt;use xlink:href="#Blue100"/&gt;
+              &lt;use xlink:href="#Blue50"/&gt;
+            &lt;/g&gt;
+            &lt;g id="BlueTriangles"&gt;
+              &lt;use transform="translate(275,25)" xlink:href="#TwoBlueTriangles"/&gt;
+              &lt;use transform="translate(400,25)" xlink:href="#TwoBlueTriangles"/&gt;
+              &lt;use transform="translate(525,25)" xlink:href="#TwoBlueTriangles"/&gt;
+              &lt;use transform="translate(650,25)" xlink:href="#TwoBlueTriangles"/&gt;
+              &lt;use transform="translate(775,25)" xlink:href="#TwoBlueTriangles"/&gt;
+              &lt;use transform="translate(900,25)" xlink:href="#TwoBlueTriangles"/&gt;
+            &lt;/g&gt;
+          &lt;/defs&gt;
+        
+          &lt;rect fill="none" stroke="blue" x="1" y="1" width="1098" height="648"/&gt;
+          &lt;g font-family="Verdana" font-size="40" shape-rendering="crispEdges"&gt;
+            &lt;desc&gt;Render the examples using the filters that draw on top of
+                  an opaque white surface, thus obliterating the background.&lt;/desc&gt;
+            &lt;g isolation="isolate"&gt;
+              &lt;text x="15" y="75"&gt;opacity 1.0&lt;/text&gt;
+              &lt;text x="15" y="115" font-size="27"&gt;(with feFlood)&lt;/text&gt;
+              &lt;text x="15" y="200"&gt;opacity 0.5&lt;/text&gt;
+              &lt;text x="15" y="240" font-size="27"&gt;(with feFlood)&lt;/text&gt;
+              &lt;use xlink:href="#BlueTriangles"/&gt;
+              &lt;g transform="translate(275,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#overFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#overFlood)" /&gt;
+                &lt;text x="5" y="275"&gt;over&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(400,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#inFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#inFlood)" /&gt;
+                &lt;text x="35" y="275"&gt;in&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(525,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#outFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#outFlood)" /&gt;
+                &lt;text x="15" y="275"&gt;out&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(650,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#atopFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#atopFlood)" /&gt;
+                &lt;text x="10" y="275"&gt;atop&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(775,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#xorFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#xorFlood)" /&gt;
+                &lt;text x="15" y="275"&gt;xor&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(900,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#arithmeticFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#arithmeticFlood)" /&gt;
+                &lt;text x="-25" y="275"&gt;arithmetic&lt;/text&gt;
+              &lt;/g&gt;
+            &lt;/g&gt;
+            &lt;g transform="translate(0,325)" isolation="isolate"&gt;
+            &lt;desc&gt;Render the examples using the filters that do not obliterate
+                  the background, thus sometimes causing the background to continue
+                  to appear in some cases, and in other cases the background
+                  image blends into itself ("double-counting").&lt;/desc&gt;
+              &lt;text x="15" y="75"&gt;opacity 1.0&lt;/text&gt;
+              &lt;text x="15" y="115" font-size="27"&gt;(without feFlood)&lt;/text&gt;
+              &lt;text x="15" y="200"&gt;opacity 0.5&lt;/text&gt;
+              &lt;text x="15" y="240" font-size="27"&gt;(without feFlood)&lt;/text&gt;
+              &lt;use xlink:href="#BlueTriangles"/&gt;
+              &lt;g transform="translate(275,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#overNoFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#overNoFlood)" /&gt;
+                &lt;text x="5" y="275"&gt;over&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(400,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#inNoFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#inNoFlood)" /&gt;
+                &lt;text x="35" y="275"&gt;in&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(525,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#outNoFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#outNoFlood)" /&gt;
+                &lt;text x="15" y="275"&gt;out&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(650,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#atopNoFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#atopNoFlood)" /&gt;
+                &lt;text x="10" y="275"&gt;atop&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(775,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#xorNoFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#xorNoFlood)" /&gt;
+                &lt;text x="15" y="275"&gt;xor&lt;/text&gt;
+              &lt;/g&gt;
+              &lt;g transform="translate(900,25)"&gt;
+                &lt;use xlink:href="#Red100" filter="url(#arithmeticNoFlood)" /&gt;
+                &lt;use xlink:href="#Red50" filter="url(#arithmeticNoFlood)" /&gt;
+                &lt;text x="-25" y="275"&gt;arithmetic&lt;/text&gt;
+              &lt;/g&gt;
+            &lt;/g&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-  &lt;rect fill="none" stroke="blue" x="1" y="1" width="1098" height="648"/&gt;
-  &lt;g font-family="Verdana" font-size="40" shape-rendering="crispEdges"&gt;
-    &lt;desc&gt;Render the examples using the filters that draw on top of
-          an opaque white surface, thus obliterating the background.&lt;/desc&gt;
-    &lt;g isolation="isolate"&gt;
-      &lt;text x="15" y="75"&gt;opacity 1.0&lt;/text&gt;
-      &lt;text x="15" y="115" font-size="27"&gt;(with feFlood)&lt;/text&gt;
-      &lt;text x="15" y="200"&gt;opacity 0.5&lt;/text&gt;
-      &lt;text x="15" y="240" font-size="27"&gt;(with feFlood)&lt;/text&gt;
-      &lt;use xlink:href="#BlueTriangles"/&gt;
-      &lt;g transform="translate(275,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#overFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#overFlood)" /&gt;
-        &lt;text x="5" y="275"&gt;over&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(400,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#inFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#inFlood)" /&gt;
-        &lt;text x="35" y="275"&gt;in&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(525,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#outFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#outFlood)" /&gt;
-        &lt;text x="15" y="275"&gt;out&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(650,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#atopFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#atopFlood)" /&gt;
-        &lt;text x="10" y="275"&gt;atop&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(775,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#xorFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#xorFlood)" /&gt;
-        &lt;text x="15" y="275"&gt;xor&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(900,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#arithmeticFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#arithmeticFlood)" /&gt;
-        &lt;text x="-25" y="275"&gt;arithmetic&lt;/text&gt;
-      &lt;/g&gt;
-    &lt;/g&gt;
-    &lt;g transform="translate(0,325)" isolation="isolate"&gt;
-    &lt;desc&gt;Render the examples using the filters that do not obliterate
-          the background, thus sometimes causing the background to continue
-          to appear in some cases, and in other cases the background
-          image blends into itself ("double-counting").&lt;/desc&gt;
-      &lt;text x="15" y="75"&gt;opacity 1.0&lt;/text&gt;
-      &lt;text x="15" y="115" font-size="27"&gt;(without feFlood)&lt;/text&gt;
-      &lt;text x="15" y="200"&gt;opacity 0.5&lt;/text&gt;
-      &lt;text x="15" y="240" font-size="27"&gt;(without feFlood)&lt;/text&gt;
-      &lt;use xlink:href="#BlueTriangles"/&gt;
-      &lt;g transform="translate(275,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#overNoFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#overNoFlood)" /&gt;
-        &lt;text x="5" y="275"&gt;over&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(400,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#inNoFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#inNoFlood)" /&gt;
-        &lt;text x="35" y="275"&gt;in&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(525,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#outNoFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#outNoFlood)" /&gt;
-        &lt;text x="15" y="275"&gt;out&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(650,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#atopNoFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#atopNoFlood)" /&gt;
-        &lt;text x="10" y="275"&gt;atop&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(775,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#xorNoFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#xorNoFlood)" /&gt;
-        &lt;text x="15" y="275"&gt;xor&lt;/text&gt;
-      &lt;/g&gt;
-      &lt;g transform="translate(900,25)"&gt;
-        &lt;use xlink:href="#Red100" filter="url(#arithmeticNoFlood)" /&gt;
-        &lt;use xlink:href="#Red50" filter="url(#arithmeticNoFlood)" /&gt;
-        &lt;text x="-25" y="275"&gt;arithmetic&lt;/text&gt;
-      &lt;/g&gt;
-    &lt;/g&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
+    <div class=figure>
+        <img alt="Example of feComposite" src="examples/feComposite.png">
+        <p class=caption>Example of feComposite</p>
+    </div>
 
-  <div class=figure>
-    <img alt="Example " src="examples/feComposite.png">
-    <p class="caption">Example of feComposite</p>
-  </div>
-
-  <p class="view-as-svg">
-    <a href="examples/feComposite.svg">View this example as SVG (SVG-enabled browsers only)</a>
-  </p>
+    <a href="examples/feComposite.svg">View this example as SVG</a>
 </div>
 
 
@@ -1418,7 +1419,7 @@ feConvolveMatrix applies a matrix convolution filter effect. A convolution combi
 A matrix convolution is based on an n-by-m matrix (the convolution kernel) which describes how a given pixel value in the input image is combined with its neighboring pixel values to produce a resulting pixel value. Each result pixel is determined by applying the kernel matrix to the corresponding source pixel and its neighboring pixels. The basic convolution formula which is applied to each color value for a given pixel is:
 
 <p id="feConvolveMatrixElementFormula">
-  <math><semantics><mrow><mrow><msub><mi>color</mi><mrow><mi>X</mi><mi>,</mi><mi>Y</mi></mrow></msub><mo stretchy="false">=</mo><mrow><mfrac><mrow><mrow><mrow><munderover><mo stretchy="false">∑</mo><mrow><mrow><mi>i</mi><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow><mrow><mrow><mi>orderY</mi><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></munderover><mrow><munderover><mo stretchy="false">∑</mo><mrow><mrow><mi>j</mi><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow><mrow><mrow><mi>orderX</mi><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></munderover><msub><mi>source</mi><mrow><mrow><mrow><mi>x</mi><mo stretchy="false">−</mo><mi>targetX</mi></mrow><mo stretchy="false">+</mo><mi>j</mi></mrow><mi>,</mi><mrow><mrow><mi>y</mi><mo stretchy="false">−</mo><mi mathvariant="italic">targetY</mi></mrow><mo stretchy="false">+</mo><mi>i</mi></mrow></mrow></msub></mrow></mrow><mo stretchy="false">⋅</mo><msub><mi>kernalMatrix</mi><mrow><mrow><mrow><mi>orderX</mi><mo stretchy="false">−</mo><mi>j</mi></mrow><mo stretchy="false">−</mo><mn>1,</mn></mrow><mrow><mrow><mi>orderY</mi><mo stretchy="false">−</mo><mi>i</mi></mrow><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></msub></mrow></mrow><mrow><mi>divisor</mi></mrow></mfrac><mo stretchy="false">+</mo><mrow><mi>bias</mi><mo stretchy="false">⋅</mo><msub><mi>alpha</mi><mrow><mi>x</mi><mi>,</mi><mi>y</mi></mrow></msub></mrow></mrow></mrow></mrow></semantics></math>
+    <pre class=include>path: mathml/feConvolveMatrix00.mml</pre>
 </p>
 
 where "orderX" and "orderY" represent the X and Y values for the <a element-attr>order</a> attribute, "targetX" represents the value of the <a element-attr>targetX</a> attribute, "targetY" represents the value of the <a element-attr>targetY</a> attribute, "kernelMatrix" represents the value of the <a element-attr>kernelMatrix</a> attribute, "divisor" represents the value of the <a element-attr>divisor</a> attribute, and "bias" represents the value of the <a element-attr>bias</a> attribute.
@@ -1427,15 +1428,15 @@ In the above formulas the values in the kernel matrix are applied such that the 
 
 To illustrate, suppose you have a input image which is 5 pixels by 5 pixels, whose color values for one of the color channels are as follows:
 
-<math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mn>20</mn></mrow></mtd><mtd><mrow><mn>40</mn></mrow></mtd><mtd><mrow><mn>235</mn></mrow></mtd><mtd><mrow><mn>235</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>100</mn></mrow></mtd><mtd><mrow><mn>120</mn></mrow></mtd><mtd><mrow><mn>140</mn></mrow></mtd><mtd><mrow><mn>235</mn></mrow></mtd><mtd><mrow><mn>235</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>200</mn></mrow></mtd><mtd><mrow><mn>220</mn></mrow></mtd><mtd><mrow><mn>240</mn></mrow></mtd><mtd><mrow><mn>235</mn></mrow></mtd><mtd><mrow><mn>235</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd><mtd><mrow><mn>255</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
+<pre class=include>path: mathml/feConvolveMatrix01.mml</pre>
 
 and you define a 3-by-3 convolution kernel as follows:
 
-<math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mn>1</mn></mrow></mtd><mtd><mrow><mn>2</mn></mrow></mtd><mtd><mrow><mn>3</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>4</mn></mrow></mtd><mtd><mrow><mn>5</mn></mrow></mtd><mtd><mrow><mn>6</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>7</mn></mrow></mtd><mtd><mrow><mn>8</mn></mrow></mtd><mtd><mrow><mn>9</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
+<pre class=include>path: mathml/feConvolveMatrix02.mml</pre>
 
 Let's focus on the color value at the second row and second column of the image (source pixel value is 120). Assuming the simplest case (where the input image's pixel grid aligns perfectly with the kernel's pixel grid) and assuming default values for attributes <a element-attr>divisor</a>, <a element-attr>targetX</a> and <a element-attr>targetY</a>, then resulting color value will be:
 
-<math><semantics><mrow><mrow><msub><mi>resultChannel</mi><mn>2,2</mn></msub><mo stretchy="false">=</mo><mfrac><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy="false">⋅</mo><mn>0</mn></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>8</mn><mo stretchy="false">⋅</mo><mn>20</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>7</mn><mo stretchy="false">⋅</mo><mn>40</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>6</mn><mo stretchy="false">⋅</mo><mn>100</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>5</mn><mo stretchy="false">⋅</mo><mn>120</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>4</mn><mo stretchy="false">⋅</mo><mn>140</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>3</mn><mo stretchy="false">⋅</mo><mn>200</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>2</mn><mo stretchy="false">⋅</mo><mn>220</mn></mrow></mrow></mrow><mo stretchy="false">+</mo><mrow><mrow><mn>1</mn><mo stretchy="false">⋅</mo><mn>240</mn></mrow></mrow></mrow></mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mrow><mn>9</mn><mo stretchy="false">+</mo><mn>8</mn></mrow><mo stretchy="false">+</mo><mn>7</mn></mrow><mo stretchy="false">+</mo><mn>6</mn></mrow><mo stretchy="false">+</mo><mn>5</mn></mrow><mo stretchy="false">+</mo><mn>4</mn></mrow><mo stretchy="false">+</mo><mn>3</mn></mrow><mo stretchy="false">+</mo><mn>2</mn></mrow><mo stretchy="false">+</mo><mn>1</mn></mrow></mrow></mfrac></mrow></mrow></semantics></math>
+<pre class=include>path: mathml/feConvolveMatrix03.mml</pre>
 
 Because they operate on pixels, matrix convolutions are inherently resolution-dependent. To make <a element>feConvolveMatrix</a> produce resolution-independent results, an explicit value should be provided for the attribute <a element-attr for=feConvolveMatrix>kernelUnitLength</a>.
 
@@ -1493,17 +1494,17 @@ When the image must be resampled to match the coordinate system defined by <a el
 
         Original N-by-M image, where m=M-1 and n=N-1:
 
-        <math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>n</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>n</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mi>nm</mi></mrow></mtd><mtd><mrow><mi>nM</mi></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mrow><mtext>.</mtext><mtext>.</mtext><mtext>.</mtext></mrow></mrow></mtd><mtd><mrow><mi>Nm</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
-
+        <pre class=include>path: mathml/feConvolveMatrix04.mml</pre>
+  
         Extended by two pixels using ''duplicate'':
 
-        <math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>1</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>m</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>M</mi></mrow></mrow></mtd><mtd><mrow><mrow><mn>2</mn><mi>M</mi></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>n</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>n</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>n</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>n</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>nm</mi></mrow></mtd><mtd><mrow><mi>nM</mi></mrow></mtd><mtd><mrow><mi>nM</mi></mrow></mtd><mtd><mrow><mi>nM</mi></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>Nm</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>Nm</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd></mtr><mtr><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>1</mn></mrow></mrow></mtd><mtd><mrow><mrow><mi>N</mi><mn>2</mn></mrow></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi>Nm</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd><mtd><mrow><mi>NM</mi></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
+        <pre class=include>path: mathml/feConvolveMatrix05.mml</pre>
 
         <a attr-value>wrap</a> indicates that the input image is extended by taking the color values from the opposite edge of the image.
 
         Extended by two pixels using <a attr-value>wrap</a>:
 
-        <math><semantics><mrow><mfenced open="[" close="]"><mrow><mtable><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr><mtr><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">nM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">n2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mi mathvariant="italic">Nm</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">NM</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N1</mi></mrow></mtd><mtd><mrow><mi mathvariant="italic">N2</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>1m</mn></mrow></mtd><mtd><mrow><mn>1M</mn></mrow></mtd><mtd><mrow><mn>11</mn></mrow></mtd><mtd><mrow><mn>12</mn></mrow></mtd></mtr><mtr><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd><mtd><mrow><mo stretchy="false">&#8230;</mo></mrow></mtd><mtd><mrow><mn>2m</mn></mrow></mtd><mtd><mrow><mn>2M</mn></mrow></mtd><mtd><mrow><mn>21</mn></mrow></mtd><mtd><mrow><mn>22</mn></mrow></mtd></mtr></mtable></mrow></mfenced></mrow></semantics></math>
+        <pre class=include>path: mathml/feConvolveMatrix06.mml</pre>
 
         The value ''feConvolveMatrix/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.
 
@@ -1893,7 +1894,7 @@ macros:
     attributes: <li><a element-attr for=feDisplacementMap>scale</a></li><li><a element-attr for=feDisplacementMap>xChannelSelector</a></li><li><a element-attr for=feDisplacementMap>yChannelSelector</a></li>
 </pre>
 
-Issue: Consider taking `image-rendering` into account to control smooth re-sampling. <a href="https://github.com/w3c/fxtf-drafts/issues/21">https://github.com/w3c/fxtf-drafts/issues/21</a>
+Issue(21): Consider taking `image-rendering` into account to control smooth re-sampling.
 
 This filter primitive uses the pixels values from the image from <a element-attr for=feDisplacementMap>in2</a> to spatially displace the image from <a element-attr>in</a>. This is the transformation to be performed:
 
@@ -1962,42 +1963,42 @@ This filter creates a drop shadow of the input image. It is a shorthand filter, 
 
 The result of a <a element>feDropShadow</a> filter primitive is equivalent to the following:
 
-<pre class="examplesource">
-  &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;
-  &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;
-  &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;
-  &lt;feComposite in2="offsetblur" operator="in"/&gt;
-  &lt;feMerge&gt;
-    &lt;feMergeNode/&gt;
-    &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
-  &lt;/feMerge&gt;
-</pre>
+<pre><code highlight=svg>
+    &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>"   stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;
+    &lt;feOffset dx="<b>dx-of-feDropShadow</b>"   dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;
+    &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>"  flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;
+    &lt;feComposite in2="offsetblur" operator="in"/&gt;
+    &lt;feMerge&gt;
+      &lt;feMergeNode/&gt;
+      &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
+    &lt;/feMerge&gt;
+</code></pre>
 
 The above divided into steps:
 
 1. Take the alpha channel of the input to the <a element>feDropShadow</a> filter primitive and the <a element-attr for=feDropShadow>stdDeviation</a> on the <a element>feDropShadow</a> and do processing as if the following <a element>feGaussianBlur</a> was applied:
-    <pre class="examplesource">
-&lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;
-</pre>
+    <pre><code highlight=svg>
+        &lt;feGaussianBlur in="<b>alpha-channel-of-feDropShadow-in</b>" stdDeviation="<b>stdDeviation-of-feDropShadow</b>"/&gt;
+    </code></pre>
 2. Offset the result of step 1 by <a element-attr for=feDropShadow>dx</a> and <a element-attr for=feDropShadow>dy</a> as specified on the <a element>feDropShadow</a> element, equivalent to applying an <a element>feOffset</a> with these parameters:
-    <pre class="examplesource">
-&lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;
-</pre>
+    <pre><code highlight=svg>
+        &lt;feOffset dx="<b>dx-of-feDropShadow</b>" dy="<b>dy-of-feDropShadow</b>" result="offsetblur"/&gt;
+    </code></pre>
 3. Do processing as if an <a element>feFlood</a> element with 'flood-color' and 'flood-opacity' as specified on the <a element>feDropShadow</a> was applied:
-    <pre class="examplesource">
-&lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;
-</pre>
+    <pre><code highlight=svg>
+        &lt;feFlood flood-color="<b>flood-color-of-feDropShadow</b>" flood-opacity="<b>flood-opacity-of-feDropShadow</b>"/&gt;
+    </code></pre>
 4. Composite the result of the <a element>feFlood</a> in step 3 with the result of the <a element>feOffset</a> in step 2 as if an <a element>feComposite</a> filter primitive with <code>operator="in"</code> was applied:
-    <pre class="examplesource">
-&lt;feComposite in2="offsetblur" operator="in"/&gt;
-</pre>
+    <pre><code highlight=svg>
+        &lt;feComposite in2="offsetblur" operator="in"/&gt;
+    </code></pre>
 5. Finally merge the result of the previous step, doing processing as if the following <a element>feMerge</a> was performed:
-    <pre class="examplesource">
-&lt;feMerge&gt;
-  &lt;feMergeNode/&gt;
-  &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
-&lt;/feMerge&gt;
-</pre>
+    <pre><code highlight=svg>
+        &lt;feMerge&gt;
+          &lt;feMergeNode/&gt;
+          &lt;feMergeNode in="<b>in-of-feDropShadow</b>"/&gt;
+        &lt;/feMerge&gt;
+    </code></pre>
 
 Note: that while the definition of the <a element>feDropShadow</a> filter primitive says that it can be expanded into an equivalent tree it is not required that it is implemented like that. The expectation is that user agents can optimize the handling by not having to do all the steps separately.
 
@@ -2213,46 +2214,48 @@ A <a element-attr for=feImage>href</a> reference that is an empty image (zero wi
     * The image stretched to fit the bounding box of an object.
     * The image placed using user coordinates. Note that the image is first centered in a box the size of the <a>filter region</a> and has the maximum size that will fit in the box consistent with preserving the aspect ratio. This box is then shifted by the given <a element-attr for=filter-primitive>x</a> and <a element-attr for=filter-primitive>y</a> values relative to the viewport the object is in.
 
-  <pre class="xml">&lt;svg width="600" height="250" viewBox="0 0 600 250"
-     xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
-  &lt;title&gt;Example feImage - Examples of feImage use&lt;/title&gt;
-  &lt;desc&gt;Three examples of using feImage, the first showing the
-        default rendering, the second showing the image fit
-        to a box and the third showing the image
-        shifted and clipped.&lt;/desc&gt;
-  &lt;defs&gt;
-    &lt;filter id="Default"&gt;
-      &lt;feImage xlink:href="smiley.png" /&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Fitted" primitiveUnits="objectBoundingBox"&gt;
-      &lt;feImage xlink:href="smiley.png"
-         x="0" y="0" width="100%" height="100%"
-         preserveAspectRatio="none"/&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Shifted"&gt;
-      &lt;feImage xlink:href="smiley.png"
-         x="500" y="5"/&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue"
-        x="1" y="1" width="598" height="248"/&gt;
-  &lt;g&gt;
-    &lt;rect x="50"  y="25" width="100" height="200" filter="url(#Default)"/&gt;
-    &lt;rect x="50"  y="25" width="100" height="200" fill="none" stroke="green"/&gt;
-    &lt;rect x="250" y="25" width="100" height="200" filter="url(#Fitted)"/&gt;
-    &lt;rect x="250" y="25" width="100" height="200" fill="none" stroke="green"/&gt;
-    &lt;rect x="450" y="25" width="100" height="200" filter="url(#Shifted)"/&gt;
-    &lt;rect x="450" y="25" width="100" height="200" fill="none" stroke="green"/&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
+    <pre><code highlight=svg>
+        &lt;svg width="600" height="250" viewBox="0 0 600 250"
+             xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+          &lt;title&gt;Example feImage - Examples of feImage use&lt;/title&gt;
+          &lt;desc&gt;Three examples of using feImage, the first showing the
+                default rendering, the second showing the image fit
+                to a box and the third showing the image
+                shifted and clipped.&lt;/desc&gt;
+          &lt;defs&gt;
+            &lt;filter id="Default"&gt;
+              &lt;feImage xlink:href="smiley.png" /&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Fitted" primitiveUnits="objectBoundingBox"&gt;
+              &lt;feImage xlink:href="smiley.png"
+                 x="0" y="0" width="100%" height="100%"
+                 preserveAspectRatio="none"/&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Shifted"&gt;
+              &lt;feImage xlink:href="smiley.png"
+                 x="500" y="5"/&gt;
+            &lt;/filter&gt;
+          &lt;/defs&gt;
+          &lt;rect fill="none" stroke="blue"
+                x="1" y="1" width="598" height="248"/&gt;
+          &lt;g&gt;
+            &lt;rect x="50"  y="25" width="100" height="200" filter="url(#Default)"/&gt;
+            &lt;rect x="50"  y="25" width="100" height="200" fill="none" stroke="green"/&gt;
+            &lt;rect x="250" y="25" width="100" height="200" filter="url(#Fitted)"/&gt;
+            &lt;rect x="250" y="25" width="100" height="200" fill="none" stroke="green"/&gt;
+            &lt;rect x="450" y="25" width="100" height="200" filter="url(#Shifted)"/&gt;
+            &lt;rect x="450" y="25" width="100" height="200" fill="none" stroke="green"/&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-  <div class=figure>
-    <img alt="Example feImage &mdash; Examples of feImage use"
-         src="examples/feImage-01.png">
-    <p class="caption">Example of feImage</p>
-  </div>
-  <p class="view-as-svg"><a href="examples/feImage-01.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+    <div class=figure>
+        <img alt="Example feImage &mdash; Examples of feImage use" src="examples/feImage-01.png">
+        <p class=caption>Example of feImage</p>
+    </div>
+
+    <a href="examples/feImage-01.svg">View this example as SVG</a>
 </div>
 
 
@@ -2332,50 +2335,48 @@ Because <a element>feMorphology</a> operates on premultipied color values, it wi
 </dl>
 
 <div class=example>
-<pre class="xml">
-&lt;svg width="5cm" height="7cm" viewBox="0 0 700 500"
-     xmlns="http://www.w3.org/2000/svg"&gt;
-  &lt;title&gt;Example feMorphology - Examples of erode and dilate&lt;/title&gt;
-  &lt;desc&gt;Five text strings drawn as outlines.
-        The first is unfiltered. The second and third use 'erode'.
-        The fourth and fifth use 'dilate'.&lt;/desc&gt;
-  &lt;defs&gt;
-    &lt;filter id="Erode3"&gt;
-      &lt;feMorphology operator="erode" in="SourceGraphic" radius="3" /&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Erode6"&gt;
-      &lt;feMorphology operator="erode" in="SourceGraphic" radius="6" /&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Dilate3"&gt;
-      &lt;feMorphology operator="dilate" in="SourceGraphic" radius="3" /&gt;
-    &lt;/filter&gt;
-    &lt;filter id="Dilate6"&gt;
-      &lt;feMorphology operator="dilate" in="SourceGraphic" radius="6" /&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect fill="none" stroke="blue" stroke-width="2"
-        x="1" y="1" width="698" height="498"/&gt;
-  &lt;g isolation="isolate" &gt;
-    &lt;g font-family="Verdana" font-size="75"
-              fill="none" stroke="black" stroke-width="6" &gt;
-      &lt;text x="50" y="90"&gt;Unfiltered&lt;/text&gt;
-      &lt;text x="50" y="180" filter="url(#Erode3)" &gt;Erode radius 3&lt;/text&gt;
-      &lt;text x="50" y="270" filter="url(#Erode6)" &gt;Erode radius 6&lt;/text&gt;
-      &lt;text x="50" y="360" filter="url(#Dilate3)" &gt;Dilate radius 3&lt;/text&gt;
-      &lt;text x="50" y="450" filter="url(#Dilate6)" &gt;Dilate radius 6&lt;/text&gt;
-    &lt;/g&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
+    <pre><code highlight=svg>
+        &lt;svg width="5cm" height="7cm" viewBox="0 0 700 500"
+             xmlns="http://www.w3.org/2000/svg"&gt;
+          &lt;title&gt;Example feMorphology - Examples of erode and dilate&lt;/title&gt;
+          &lt;desc&gt;Five text strings drawn as outlines.
+                The first is unfiltered. The second and third use 'erode'.
+                The fourth and fifth use 'dilate'.&lt;/desc&gt;
+          &lt;defs&gt;
+            &lt;filter id="Erode3"&gt;
+              &lt;feMorphology operator="erode" in="SourceGraphic" radius="3" /&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Erode6"&gt;
+              &lt;feMorphology operator="erode" in="SourceGraphic" radius="6" /&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Dilate3"&gt;
+              &lt;feMorphology operator="dilate" in="SourceGraphic" radius="3" /&gt;
+            &lt;/filter&gt;
+            &lt;filter id="Dilate6"&gt;
+              &lt;feMorphology operator="dilate" in="SourceGraphic" radius="6" /&gt;
+            &lt;/filter&gt;
+          &lt;/defs&gt;
+          &lt;rect fill="none" stroke="blue" stroke-width="2"
+                x="1" y="1" width="698" height="498"/&gt;
+          &lt;g isolation="isolate" &gt;
+            &lt;g font-family="Verdana" font-size="75"
+                      fill="none" stroke="black" stroke-width="6" &gt;
+              &lt;text x="50" y="90"&gt;Unfiltered&lt;/text&gt;
+              &lt;text x="50" y="180" filter="url(#Erode3)" &gt;Erode radius 3&lt;/text&gt;
+              &lt;text x="50" y="270" filter="url(#Erode6)" &gt;Erode radius 6&lt;/text&gt;
+              &lt;text x="50" y="360" filter="url(#Dilate3)" &gt;Dilate radius 3&lt;/text&gt;
+              &lt;text x="50" y="450" filter="url(#Dilate6)" &gt;Dilate radius 6&lt;/text&gt;
+            &lt;/g&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-  <div class=figure>
-    <img alt="Example" src="examples/feMorphology.png">
-    <p class="caption">
-      Example of feMorphology
-    </p>
-  </div>
-  <p class="view-as-svg">
-    <a href="examples/feMorphology.svg">View this example as SVG (SVG-enabled browsers only)</a>
-  </p>
+    <div class=figure>
+        <img alt="Example of feMorphology" src="examples/feMorphology.png">
+        <p class=caption>Example of feMorphology</p>
+    </div>
+
+    <a href="examples/feMorphology.svg">View this example as SVG</a>
 </div>
 
 
@@ -2542,7 +2543,8 @@ The following order is used for applying the pseudo random numbers. An initial s
 
 The generated color and alpha values are in the color space determined by the 'color-interpolation-filters' property:
 
-<pre class="svgsamplecompressed">/* Produces results in the range [1, 2**31 - 2].
+<pre class="svgsamplecompressed"><code highlight=c>
+/* Produces results in the range [1, 2**31 - 2].
 Algorithm is: r = (a * r) mod m
 where a = 16807 and m = 2**31 - 1 = 2147483647
 See [Park &amp; Miller], CACM vol. 31 no. 10 p. 1195, Oct. 1988
@@ -2723,7 +2725,8 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
     }
   }
   return fSum;
-}</pre>
+}
+</code></pre>
 
 <em>Attribute definitions:</em>
 <dl dfn-type=element-attr dfn-for=feTurbulence>
@@ -2775,80 +2778,82 @@ double turbulence(int nColorChannel, double *point, double fBaseFreqX, double fB
 </dl>
 
 <div class=example>
-<pre class="xml">
-&lt;svg width="450px" height="325px" viewBox="0 0 450 325"
-     xmlns="http://www.w3.org/2000/svg"&gt;
-  &lt;title&gt;Example feTurbulence - Examples of feTurbulence operations&lt;/title&gt;
-  &lt;desc&gt;Six rectangular areas showing the effects of
-        various parameter settings for feTurbulence.&lt;/desc&gt;
-  &lt;g  font-family="Verdana" text-anchor="middle" font-size="10" &gt;
-    &lt;defs&gt;
-      &lt;filter id="Turb1" filterUnits="objectBoundingBox"
-              x="0%" y="0%" width="100%" height="100%"&gt;
-        &lt;feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2"/&gt;
-      &lt;/filter&gt;
-      &lt;filter id="Turb2" filterUnits="objectBoundingBox"
-              x="0%" y="0%" width="100%" height="100%"&gt;
-        &lt;feTurbulence type="turbulence" baseFrequency="0.1" numOctaves="2"/&gt;
-      &lt;/filter&gt;
-      &lt;filter id="Turb3" filterUnits="objectBoundingBox"
-              x="0%" y="0%" width="100%" height="100%"&gt;
-        &lt;feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="8"/&gt;
-      &lt;/filter&gt;
-      &lt;filter id="Turb4" filterUnits="objectBoundingBox"
-              x="0%" y="0%" width="100%" height="100%"&gt;
-        &lt;feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="4"/&gt;
-      &lt;/filter&gt;
-      &lt;filter id="Turb5" filterUnits="objectBoundingBox"
-              x="0%" y="0%" width="100%" height="100%"&gt;
-        &lt;feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="4"/&gt;
-      &lt;/filter&gt;
-      &lt;filter id="Turb6" filterUnits="objectBoundingBox"
-              x="0%" y="0%" width="100%" height="100%"&gt;
-        &lt;feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1"/&gt;
-      &lt;/filter&gt;
-    &lt;/defs&gt;
+    <pre><code highlight=svg>
+        &lt;svg width="450px" height="325px" viewBox="0 0 450 325"
+             xmlns="http://www.w3.org/2000/svg"&gt;
+          &lt;title&gt;Example feTurbulence - Examples of feTurbulence operations&lt;/title&gt;
+          &lt;desc&gt;Six rectangular areas showing the effects of
+                various parameter settings for feTurbulence.&lt;/desc&gt;
+          &lt;g  font-family="Verdana" text-anchor="middle" font-size="10" &gt;
+            &lt;defs&gt;
+              &lt;filter id="Turb1" filterUnits="objectBoundingBox"
+                      x="0%" y="0%" width="100%" height="100%"&gt;
+                &lt;feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2"/&gt;
+              &lt;/filter&gt;
+              &lt;filter id="Turb2" filterUnits="objectBoundingBox"
+                      x="0%" y="0%" width="100%" height="100%"&gt;
+                &lt;feTurbulence type="turbulence" baseFrequency="0.1" numOctaves="2"/&gt;
+              &lt;/filter&gt;
+              &lt;filter id="Turb3" filterUnits="objectBoundingBox"
+                      x="0%" y="0%" width="100%" height="100%"&gt;
+                &lt;feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="8"/&gt;
+              &lt;/filter&gt;
+              &lt;filter id="Turb4" filterUnits="objectBoundingBox"
+                      x="0%" y="0%" width="100%" height="100%"&gt;
+                &lt;feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="4"/&gt;
+              &lt;/filter&gt;
+              &lt;filter id="Turb5" filterUnits="objectBoundingBox"
+                      x="0%" y="0%" width="100%" height="100%"&gt;
+                &lt;feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="4"/&gt;
+              &lt;/filter&gt;
+              &lt;filter id="Turb6" filterUnits="objectBoundingBox"
+                      x="0%" y="0%" width="100%" height="100%"&gt;
+                &lt;feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1"/&gt;
+              &lt;/filter&gt;
+            &lt;/defs&gt;
+          
+            &lt;rect x="1" y="1" width="448" height="323"
+                  fill="none" stroke="blue" stroke-width="1"  /&gt;
+                
+            &lt;rect x="25" y="25" width="100" height="75" filter="url(#Turb1)"  /&gt;
+            &lt;text x="75" y="117"&gt;type=turbulence&lt;/text&gt;
+            &lt;text x="75" y="129"&gt;baseFrequency=0.05&lt;/text&gt;
+            &lt;text x="75" y="141"&gt;numOctaves=2&lt;/text&gt;
+          
+            &lt;rect x="175" y="25" width="100" height="75" filter="url(#Turb2)"  /&gt;
+            &lt;text x="225" y="117"&gt;type=turbulence&lt;/text&gt;
+            &lt;text x="225" y="129"&gt;baseFrequency=0.1&lt;/text&gt;
+            &lt;text x="225" y="141"&gt;numOctaves=2&lt;/text&gt;
+          
+            &lt;rect x="325" y="25" width="100" height="75" filter="url(#Turb3)"  /&gt;
+            &lt;text x="375" y="117"&gt;type=turbulence&lt;/text&gt;
+            &lt;text x="375" y="129"&gt;baseFrequency=0.05&lt;/text&gt;
+            &lt;text x="375" y="141"&gt;numOctaves=8&lt;/text&gt;
+          
+            &lt;rect x="25" y="180" width="100" height="75" filter="url(#Turb4)"  /&gt;
+            &lt;text x="75" y="272"&gt;type=fractalNoise&lt;/text&gt;
+            &lt;text x="75" y="284"&gt;baseFrequency=0.1&lt;/text&gt;
+            &lt;text x="75" y="296"&gt;numOctaves=4&lt;/text&gt;
+          
+            &lt;rect x="175" y="180" width="100" height="75" filter="url(#Turb5)"  /&gt;
+            &lt;text x="225" y="272"&gt;type=fractalNoise&lt;/text&gt;
+            &lt;text x="225" y="284"&gt;baseFrequency=0.4&lt;/text&gt;
+            &lt;text x="225" y="296"&gt;numOctaves=4&lt;/text&gt;
+          
+            &lt;rect x="325" y="180" width="100" height="75" filter="url(#Turb6)"  /&gt;
+            &lt;text x="375" y="272"&gt;type=fractalNoise&lt;/text&gt;
+            &lt;text x="375" y="284"&gt;baseFrequency=0.1&lt;/text&gt;
+            &lt;text x="375" y="296"&gt;numOctaves=1&lt;/text&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+    </code></pre>
 
-    &lt;rect x="1" y="1" width="448" height="323"
-          fill="none" stroke="blue" stroke-width="1"  /&gt;
+    <div class=figure>
+        <img alt="Example of feTurbulence" src="examples/feTurbulence.png">
+        <p class=caption>Example of feTurbulence</p>
+    </div>
 
-    &lt;rect x="25" y="25" width="100" height="75" filter="url(#Turb1)"  /&gt;
-    &lt;text x="75" y="117"&gt;type=turbulence&lt;/text&gt;
-    &lt;text x="75" y="129"&gt;baseFrequency=0.05&lt;/text&gt;
-    &lt;text x="75" y="141"&gt;numOctaves=2&lt;/text&gt;
-
-    &lt;rect x="175" y="25" width="100" height="75" filter="url(#Turb2)"  /&gt;
-    &lt;text x="225" y="117"&gt;type=turbulence&lt;/text&gt;
-    &lt;text x="225" y="129"&gt;baseFrequency=0.1&lt;/text&gt;
-    &lt;text x="225" y="141"&gt;numOctaves=2&lt;/text&gt;
-
-    &lt;rect x="325" y="25" width="100" height="75" filter="url(#Turb3)"  /&gt;
-    &lt;text x="375" y="117"&gt;type=turbulence&lt;/text&gt;
-    &lt;text x="375" y="129"&gt;baseFrequency=0.05&lt;/text&gt;
-    &lt;text x="375" y="141"&gt;numOctaves=8&lt;/text&gt;
-
-    &lt;rect x="25" y="180" width="100" height="75" filter="url(#Turb4)"  /&gt;
-    &lt;text x="75" y="272"&gt;type=fractalNoise&lt;/text&gt;
-    &lt;text x="75" y="284"&gt;baseFrequency=0.1&lt;/text&gt;
-    &lt;text x="75" y="296"&gt;numOctaves=4&lt;/text&gt;
-
-    &lt;rect x="175" y="180" width="100" height="75" filter="url(#Turb5)"  /&gt;
-    &lt;text x="225" y="272"&gt;type=fractalNoise&lt;/text&gt;
-    &lt;text x="225" y="284"&gt;baseFrequency=0.4&lt;/text&gt;
-    &lt;text x="225" y="296"&gt;numOctaves=4&lt;/text&gt;
-
-    &lt;rect x="325" y="180" width="100" height="75" filter="url(#Turb6)"  /&gt;
-    &lt;text x="375" y="272"&gt;type=fractalNoise&lt;/text&gt;
-    &lt;text x="375" y="284"&gt;baseFrequency=0.1&lt;/text&gt;
-    &lt;text x="375" y="296"&gt;numOctaves=1&lt;/text&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;</pre>
-
-  <div class=figure>
-    <img alt="Example" src="examples/feTurbulence.png">
-    <p class="caption">Example of feTurbulence</p>
-  </div>
-  <p class="view-as-svg"><a href="examples/feTurbulence.svg">View this example as SVG (SVG-enabled browsers only)</a></p>
+    <a href="examples/feTurbulence.svg">View this example as SVG</a>
 </div>
 
 
@@ -2926,7 +2931,7 @@ The following diagram illustrates the angles which <a element-attr>azimuth</a> a
 
 <div class=figure>
   <img src="examples/azimuth-elevation.svg" alt="Angles which azimuth and elevation represent" width="480" height="360">
-  <p class="caption">Angles which azimuth and elevation represent</p>
+  <p class=caption>Angles which azimuth and elevation represent</p>
 </div>
 
 
@@ -3089,123 +3094,133 @@ Below are the equivalents for each of the filter functions expressed in terms of
 
 ### grayscale ### {#grayscaleEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="grayscale"&gt;
-    &lt;feColorMatrix type="matrix"
-               values="(0.2126 + 0.7874 * [1 - amount]) (0.7152 - 0.7152 * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
-                       (0.2126 - 0.2126 * [1 - amount]) (0.7152 + 0.2848 * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
-                       (0.2126 - 0.2126 * [1 - amount]) (0.7152 - 0.7152 * [1 - amount]) (0.0722 + 0.9278 * [1 - amount]) 0 0
-                       0 0 0 1 0"/&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="grayscale"&gt;
+      &lt;feColorMatrix type="matrix"
+                 values="(0.2126 + 0.7874 * [1 - amount]) (0.7152 - 0.7152  * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
+                         (0.2126 - 0.2126 * [1 - amount]) (0.7152 + 0.2848  * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
+                         (0.2126 - 0.2126 * [1 - amount]) (0.7152 - 0.7152  * [1 - amount]) (0.0722 + 0.9278 * [1 - amount]) 0 0
+                         0 0 0 1 0"/&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 
 ### sepia ### {#sepiaEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="sepia"&gt;
-    &lt;feColorMatrix type="matrix"
-               values="(0.393 + 0.607 * [1 - amount]) (0.769 - 0.769 * [1 - amount]) (0.189 - 0.189 * [1 - amount]) 0 0
-                       (0.349 - 0.349 * [1 - amount]) (0.686 + 0.314 * [1 - amount]) (0.168 - 0.168 * [1 - amount]) 0 0
-                       (0.272 - 0.272 * [1 - amount]) (0.534 - 0.534 * [1 - amount]) (0.131 + 0.869 * [1 - amount]) 0 0
-                       0 0 0 1 0"/&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="sepia"&gt;
+      &lt;feColorMatrix type="matrix"
+                 values="(0.393 + 0.607 * [1 - amount]) (0.769 - 0.769 * [1 - amount]) (0.189 - 0.189 * [1 - amount]) 0 0
+                         (0.349 - 0.349 * [1 - amount]) (0.686 + 0.314 * [1 - amount]) (0.168 - 0.168 * [1 - amount]) 0 0
+                         (0.272 - 0.272 * [1 - amount]) (0.534 - 0.534 * [1 - amount]) (0.131 + 0.869 * [1 - amount]) 0 0
+                         0 0 0 1 0"/&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ### saturate ### {#saturateEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="saturate"&gt;
-    &lt;feColorMatrix type="saturate"
-               values="(1 - [amount])"/&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="saturate"&gt;
+      &lt;feColorMatrix type="saturate"
+                 values="(1 - [amount])"/&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ### hue-rotate ### {#huerotateEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="hue-rotate"&gt;
-    &lt;feColorMatrix type="hueRotate"
-               values="[angle]"/&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="hue-rotate"&gt;
+      &lt;feColorMatrix type="hueRotate"
+                 values="[angle]"/&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ### invert ### {#invertEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="invert"&gt;
-    &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="table" tableValues="[amount] (1 - [amount])"/&gt;
-        &lt;feFuncG type="table" tableValues="[amount] (1 - [amount])"/&gt;
-        &lt;feFuncB type="table" tableValues="[amount] (1 - [amount])"/&gt;
-    &lt;/feComponentTransfer&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="invert"&gt;
+      &lt;feComponentTransfer&gt;
+          &lt;feFuncR type="table" tableValues="[amount] (1 - [amount])"/&gt;
+          &lt;feFuncG type="table" tableValues="[amount] (1 - [amount])"/&gt;
+          &lt;feFuncB type="table" tableValues="[amount] (1 - [amount])"/&gt;
+      &lt;/feComponentTransfer&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ### opacity ### {#opacityEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="opacity"&gt;
-    &lt;feComponentTransfer&gt;
-        &lt;feFuncA type="table" tableValues="0 [amount]"/&gt;
-    &lt;/feComponentTransfer&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="opacity"&gt;
+      &lt;feComponentTransfer&gt;
+          &lt;feFuncA type="table" tableValues="0 [amount]"/&gt;
+      &lt;/feComponentTransfer&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ### brightness ### {#brightnessEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="brightness"&gt;
-    &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="linear" slope="[amount]"/&gt;
-        &lt;feFuncG type="linear" slope="[amount]"/&gt;
-        &lt;feFuncB type="linear" slope="[amount]"/&gt;
-    &lt;/feComponentTransfer&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="brightness"&gt;
+      &lt;feComponentTransfer&gt;
+          &lt;feFuncR type="linear" slope="[amount]"/&gt;
+          &lt;feFuncG type="linear" slope="[amount]"/&gt;
+          &lt;feFuncB type="linear" slope="[amount]"/&gt;
+      &lt;/feComponentTransfer&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ### contrast ### {#contrastEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="contrast"&gt;
-    &lt;feComponentTransfer&gt;
-        &lt;feFuncR type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
-        &lt;feFuncG type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
-        &lt;feFuncB type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
-    &lt;/feComponentTransfer&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="contrast"&gt;
+      &lt;feComponentTransfer&gt;
+          &lt;feFuncR type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
+          &lt;feFuncG type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
+          &lt;feFuncB type="linear" slope="[amount]" intercept="-(0.5 * [amount]) + 0.5"/&gt;
+      &lt;/feComponentTransfer&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ### blur ### {#blurEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="blur"&gt;
-    &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="blur"&gt;
+      &lt;feGaussianBlur stdDeviation="[radius radius]" edgeMode="[edge mode]" &gt;
+    &lt;/filter&gt;
+</code></pre>
 
 Where edge mode computes to ''filter/none'' for the 'filter' property and to ''duplicate'' for the CSS Image <<filter()>> function.
 
 
 ### drop-shadow ### {#dropshadowEquivalent}
 
-<pre class="examplesource">
-  &lt;filter id="drop-shadow"&gt;
-    &lt;feGaussianBlur in="[alpha-channel-of-input]" stdDeviation="[radius]"/&gt;
-    &lt;feOffset dx="[offset-x]" dy="[offset-y]" result="offsetblur"/&gt;
-    &lt;feFlood flood-color="[color]"/&gt;
-    &lt;feComposite in2="offsetblur" operator="in"/&gt;
-    &lt;feMerge&gt;
-      &lt;feMergeNode/&gt;
-      &lt;feMergeNode in="[input-image]"/&gt;
-    &lt;/feMerge&gt;
-  &lt;/filter&gt; </pre>
+<pre><code highlight=svg>
+    &lt;filter id="drop-shadow"&gt;
+      &lt;feGaussianBlur in="[alpha-channel-of-input]" stdDeviation="[radius]"/&gt;
+      &lt;feOffset dx="[offset-x]" dy="[offset-y]" result="offsetblur"/&gt;
+      &lt;feFlood flood-color="[color]"/&gt;
+      &lt;feComposite in2="offsetblur" operator="in"/&gt;
+      &lt;feMerge&gt;
+        &lt;feMergeNode/&gt;
+        &lt;feMergeNode in="[input-image]"/&gt;
+      &lt;/feMerge&gt;
+    &lt;/filter&gt;
+</code></pre>
 
 
 ## Filter region for shorthands ## {#filter-region-for-shorthands}
 
 All shorthand filters implemented with filter primitives in the previous subsection must have a UA defined <a>filter region</a>. The filter region must cover the visual content of an element including overflowing content, graphical control elements such as scrollbars, 'border'/'border-image', 'box-shadow', 'text-shadow' and 'outline'. Furthermore, if a shorthand filter expands this visible area like it is the case for <<blur()>> or <<drop-shadow()>> the filter region must cover this area as well.
 
-Issue: Explicitly define how to compute the filter region? <a href="https://github.com/w3c/fxtf-drafts/issues/23">https://github.com/w3c/fxtf-drafts/issues/23</a>
+Issue(23): Explicitly define how to compute the filter region?
 
 Note: For the handling of <a href="#FilterElement">filter sources</a> see section <a href="#FilterEffectsRegion">Filter region</a>.
 
