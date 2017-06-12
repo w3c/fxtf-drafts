@@ -3097,10 +3097,11 @@ Below are the equivalents for each of the filter functions expressed in terms of
 <pre><code highlight=svg>
     &lt;filter id="grayscale"&gt;
       &lt;feColorMatrix type="matrix"
-                 values="(0.2126 + 0.7874 * [1 - amount]) (0.7152 - 0.7152  * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
-                         (0.2126 - 0.2126 * [1 - amount]) (0.7152 + 0.2848  * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
-                         (0.2126 - 0.2126 * [1 - amount]) (0.7152 - 0.7152  * [1 - amount]) (0.0722 + 0.9278 * [1 - amount]) 0 0
-                         0 0 0 1 0"/&gt;
+                 values="
+        (0.2126 + 0.7874 * [1 - amount]) (0.7152 - 0.7152  * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
+        (0.2126 - 0.2126 * [1 - amount]) (0.7152 + 0.2848  * [1 - amount]) (0.0722 - 0.0722 * [1 - amount]) 0 0
+        (0.2126 - 0.2126 * [1 - amount]) (0.7152 - 0.7152  * [1 - amount]) (0.0722 + 0.9278 * [1 - amount]) 0 0
+        0 0 0 1 0"/&gt;
     &lt;/filter&gt;
 </code></pre>
 
@@ -3111,10 +3112,11 @@ Below are the equivalents for each of the filter functions expressed in terms of
 <pre><code highlight=svg>
     &lt;filter id="sepia"&gt;
       &lt;feColorMatrix type="matrix"
-                 values="(0.393 + 0.607 * [1 - amount]) (0.769 - 0.769 * [1 - amount]) (0.189 - 0.189 * [1 - amount]) 0 0
-                         (0.349 - 0.349 * [1 - amount]) (0.686 + 0.314 * [1 - amount]) (0.168 - 0.168 * [1 - amount]) 0 0
-                         (0.272 - 0.272 * [1 - amount]) (0.534 - 0.534 * [1 - amount]) (0.131 + 0.869 * [1 - amount]) 0 0
-                         0 0 0 1 0"/&gt;
+                 values="
+        (0.393 + 0.607 * [1 - amount]) (0.769 - 0.769 * [1 - amount]) (0.189 - 0.189 * [1 - amount]) 0 0
+        (0.349 - 0.349 * [1 - amount]) (0.686 + 0.314 * [1 - amount]) (0.168 - 0.168 * [1 - amount]) 0 0
+        (0.272 - 0.272 * [1 - amount]) (0.534 - 0.534 * [1 - amount]) (0.131 + 0.869 * [1 - amount]) 0 0
+        0 0 0 1 0"/&gt;
     &lt;/filter&gt;
 </code></pre>
 
@@ -3123,8 +3125,7 @@ Below are the equivalents for each of the filter functions expressed in terms of
 
 <pre><code highlight=svg>
     &lt;filter id="saturate"&gt;
-      &lt;feColorMatrix type="saturate"
-                 values="(1 - [amount])"/&gt;
+      &lt;feColorMatrix type="saturate" values="(1 - [amount])"/&gt;
     &lt;/filter&gt;
 </code></pre>
 
@@ -3133,8 +3134,7 @@ Below are the equivalents for each of the filter functions expressed in terms of
 
 <pre><code highlight=svg>
     &lt;filter id="hue-rotate"&gt;
-      &lt;feColorMatrix type="hueRotate"
-                 values="[angle]"/&gt;
+      &lt;feColorMatrix type="hueRotate" values="[angle]"/&gt;
     &lt;/filter&gt;
 </code></pre>
 
@@ -3282,18 +3282,18 @@ It is possible to combine independent animations of <<filter-function-list>>s [[
 Given two filter values representing an base value (<var>base filter list</var>) and a value to add (<var>added filter list</var>), returns the concatenation of the the two lists: &lsquo;<var>base filter list</var> <var>added filter list</var>&rsquo;.
 
 <div class=example>
-The following SVG animation has two <a element>animate</a> elements animating 'filter' property of the <a element>rect</a> element. Both specified animations are additive and have a duration of <var>10s</var>.
+    The following SVG animation has two <a element>animate</a> elements animating 'filter' property of the <a element>rect</a> element. Both specified animations are additive and have a duration of <var>10s</var>.
 
-<pre><code class=html>
-&lt;rect width="200px" filter="none" ...>
-  &lt;animate attributeName="filter" from="blur(0px)" to="blur(10px)" dur="10s"
-           additive="sum"/>
-  &lt;animate attributeName="filter" from="sepia(0)" to="sepia(1)" dur="10s"
-           additive="sum"/>
-&lt;/rect>
-</code></pre>
+    <pre><code highlight=svg>
+        &lt;rect width="200px" filter="none" ...>
+          &lt;animate attributeName="filter" from="blur(0px)" to="blur(10px)" dur="10s"
+                   additive="sum"/>
+          &lt;animate attributeName="filter" from="sepia(0)" to="sepia(1)" dur="10s"
+                   additive="sum"/>
+        &lt;/rect>
+    </code></pre>
 
-After <var>5s</var>, the <a>used value</a> of 'filter' is ''blur(5px) sepia(0.5)''.
+    After <var>5s</var>, the <a>used value</a> of 'filter' is ''blur(5px) sepia(0.5)''.
 </div>
 
 
