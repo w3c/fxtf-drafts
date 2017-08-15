@@ -817,7 +817,7 @@ interface DOMMatrix : DOMMatrixReadOnly {
     [Exposed=Window] DOMMatrix setMatrixValue(DOMString transformList);
 };
 
-dictionary DOMMatrixInit {
+dictionary DOMMatrix2dInit {
     unrestricted double a;
     unrestricted double b;
     unrestricted double c;
@@ -826,18 +826,21 @@ dictionary DOMMatrixInit {
     unrestricted double f;
     unrestricted double m11;
     unrestricted double m12;
-    unrestricted double m13 = 0;
-    unrestricted double m14 = 0;
     unrestricted double m21;
     unrestricted double m22;
+    unrestricted double m41;
+    unrestricted double m42;
+};
+
+dictionary DOMMatrixInit : DOMMatrix2dInit {
+    unrestricted double m13 = 0;
+    unrestricted double m14 = 0;
     unrestricted double m23 = 0;
     unrestricted double m24 = 0;
     unrestricted double m31 = 0;
     unrestricted double m32 = 0;
     unrestricted double m33 = 1;
     unrestricted double m34 = 0;
-    unrestricted double m41;
-    unrestricted double m42;
     unrestricted double m43 = 0;
     unrestricted double m44 = 1;
     boolean is2D;
@@ -867,8 +870,8 @@ interface from SVG. [[SVG11]]
 
 <h3 id=dommatrixinit-dictionary>DOMMatrixInit dictionary</h3>
 
-<p>To <dfn dfn-for=matrix>validate and fixup</dfn> a {{DOMMatrixInit}} dictionary <var>dict</var>,
-run the following steps:
+<p>To <dfn dfn-for=matrix>validate and fixup</dfn> a {{DOMMatrix2dInit}} or {{DOMMatrixInit}}
+dictionary <var>dict</var>, run the following steps:
 
 <ol>
   <li>
@@ -876,48 +879,50 @@ run the following steps:
    {{TypeError}} exception and abort these steps.
 
    <ul>
-    <li><p>{{DOMMatrixInit/a}} and {{DOMMatrixInit/m11}} are both present and
-    [=SameValueZero=]({{DOMMatrixInit/a}}, {{DOMMatrixInit/m11}}) is <code>false</code>.
+    <li><p>{{DOMMatrix2dInit/a}} and {{DOMMatrix2dInit/m11}} are both present and
+    [=SameValueZero=]({{DOMMatrix2dInit/a}}, {{DOMMatrix2dInit/m11}}) is <code>false</code>.
 
-    <li><p>{{DOMMatrixInit/b}} and {{DOMMatrixInit/m12}} are both present and
-    [=SameValueZero=]({{DOMMatrixInit/b}}, {{DOMMatrixInit/m12}}) is <code>false</code>.
+    <li><p>{{DOMMatrix2dInit/b}} and {{DOMMatrix2dInit/m12}} are both present and
+    [=SameValueZero=]({{DOMMatrix2dInit/b}}, {{DOMMatrix2dInit/m12}}) is <code>false</code>.
 
-    <li><p>{{DOMMatrixInit/c}} and {{DOMMatrixInit/m21}} are both present and
-    [=SameValueZero=]({{DOMMatrixInit/c}}, {{DOMMatrixInit/m21}}) is <code>false</code>.
+    <li><p>{{DOMMatrix2dInit/c}} and {{DOMMatrix2dInit/m21}} are both present and
+    [=SameValueZero=]({{DOMMatrix2dInit/c}}, {{DOMMatrix2dInit/m21}}) is <code>false</code>.
 
-    <li><p>{{DOMMatrixInit/d}} and {{DOMMatrixInit/m22}} are both present and
-    [=SameValueZero=]({{DOMMatrixInit/d}}, {{DOMMatrixInit/m22}}) is <code>false</code>.
+    <li><p>{{DOMMatrix2dInit/d}} and {{DOMMatrix2dInit/m22}} are both present and
+    [=SameValueZero=]({{DOMMatrix2dInit/d}}, {{DOMMatrix2dInit/m22}}) is <code>false</code>.
 
-    <li><p>{{DOMMatrixInit/e}} and {{DOMMatrixInit/m41}} are both present and
-    [=SameValueZero=]({{DOMMatrixInit/e}}, {{DOMMatrixInit/m41}}) is <code>false</code>.
+    <li><p>{{DOMMatrix2dInit/e}} and {{DOMMatrix2dInit/m41}} are both present and
+    [=SameValueZero=]({{DOMMatrix2dInit/e}}, {{DOMMatrix2dInit/m41}}) is <code>false</code>.
 
-    <li><p>{{DOMMatrixInit/f}} and {{DOMMatrixInit/m42}} are both present and
-    [=SameValueZero=]({{DOMMatrixInit/f}}, {{DOMMatrixInit/m42}}) is <code>false</code>.
+    <li><p>{{DOMMatrix2dInit/f}} and {{DOMMatrix2dInit/m42}} are both present and
+    [=SameValueZero=]({{DOMMatrix2dInit/f}}, {{DOMMatrix2dInit/m42}}) is <code>false</code>.
 
-    <li><p>{{DOMMatrixInit/is2D}} is <code>true</code> and at least one of {{DOMMatrixInit/m13}},
-    {{DOMMatrixInit/m14}}, {{DOMMatrixInit/m23}}, {{DOMMatrixInit/m24}}, {{DOMMatrixInit/m31}},
-    {{DOMMatrixInit/m32}}, {{DOMMatrixInit/m34}}, {{DOMMatrixInit/m43}} are present with a value
-    other than ''0'' or ''-0'', or at least one of {{DOMMatrixInit/m33}}, {{DOMMatrixInit/m44}} are
-    present with a value other than ''1''.
+    <li><p><var>dict</var> is a {{DOMMatrixInit}} and {{DOMMatrixInit/is2D}} is <code>true</code>
+    and at least one of {{DOMMatrixInit/m13}}, {{DOMMatrixInit/m14}}, {{DOMMatrixInit/m23}},
+    {{DOMMatrixInit/m24}}, {{DOMMatrixInit/m31}}, {{DOMMatrixInit/m32}}, {{DOMMatrixInit/m34}},
+    {{DOMMatrixInit/m43}} are present with a value other than ''0'' or ''-0'', or at least one of
+    {{DOMMatrixInit/m33}}, {{DOMMatrixInit/m44}} are present with a value other than ''1''.
    </ul>
 
-  <li><p>If {{DOMMatrixInit/m11}} is not present then set it to the value of member
-  {{DOMMatrixInit/a}}, or value ''1'' if {{DOMMatrixInit/a}} is also not present.
+  <li><p>If <var>dict</var> is not a {{DOMMatrixInit}}, then return.
 
-  <li><p>If {{DOMMatrixInit/m12}} is not present then set it to the value of member
-  {{DOMMatrixInit/b}}, or value ''0'' if {{DOMMatrixInit/b}} is also not present.
+  <li><p>If {{DOMMatrix2dInit/m11}} is not present then set it to the value of member
+  {{DOMMatrix2dInit/a}}, or value ''1'' if {{DOMMatrix2dInit/a}} is also not present.
 
-  <li><p>If {{DOMMatrixInit/m21}} is not present then set it to the value of member
-  {{DOMMatrixInit/c}}, or value ''0'' if {{DOMMatrixInit/c}} is also not present.
+  <li><p>If {{DOMMatrix2dInit/m12}} is not present then set it to the value of member
+  {{DOMMatrix2dInit/b}}, or value ''0'' if {{DOMMatrix2dInit/b}} is also not present.
 
-  <li><p>If {{DOMMatrixInit/m22}} is not present then set it to the value of member
-  {{DOMMatrixInit/d}}, or value ''1'' if {{DOMMatrixInit/d}} is also not present.
+  <li><p>If {{DOMMatrix2dInit/m21}} is not present then set it to the value of member
+  {{DOMMatrix2dInit/c}}, or value ''0'' if {{DOMMatrix2dInit/c}} is also not present.
 
-  <li><p>If {{DOMMatrixInit/m41}} is not present then set it to the value of member
-  {{DOMMatrixInit/e}}, or value ''0'' if {{DOMMatrixInit/e}} is also not present.
+  <li><p>If {{DOMMatrix2dInit/m22}} is not present then set it to the value of member
+  {{DOMMatrix2dInit/d}}, or value ''1'' if {{DOMMatrix2dInit/d}} is also not present.
 
-  <li><p>If {{DOMMatrixInit/m42}} is not present then set it to the value of member
-  {{DOMMatrixInit/f}}, or value ''0'' if {{DOMMatrixInit/f}} is also not present.
+  <li><p>If {{DOMMatrix2dInit/m41}} is not present then set it to the value of member
+  {{DOMMatrix2dInit/e}}, or value ''0'' if {{DOMMatrix2dInit/e}} is also not present.
+
+  <li><p>If {{DOMMatrix2dInit/m42}} is not present then set it to the value of member
+  {{DOMMatrix2dInit/f}}, or value ''0'' if {{DOMMatrix2dInit/f}} is also not present.
 
   <li><p>If {{DOMMatrixInit/is2D}} is not present and at least one of {{DOMMatrixInit/m13}},
   {{DOMMatrixInit/m14}}, {{DOMMatrixInit/m23}}, {{DOMMatrixInit/m24}}, {{DOMMatrixInit/m31}},
@@ -1084,13 +1089,13 @@ DOMMatrix from the dictionary">create a <code>DOMMatrix</code> from a dictionary
    <dt>If the {{DOMMatrixInit/is2D}} dictionary member of <var>other</var> is <code>true</code>
    <dd><p>Return the result of invoking <a>create a 2d matrix</a> of type {{DOMMatrixReadOnly}} or
    {{DOMMatrix}} as appropriate, with a sequence of numbers, the values being the 6 elements
-   {{DOMMatrixInit/m11}}, {{DOMMatrixInit/m12}}, {{DOMMatrixInit/m21}}, {{DOMMatrixInit/m22}},
-   {{DOMMatrixInit/m41}} and {{DOMMatrixInit/m42}} of <var>other</var> in the given order.
+   {{DOMMatrix2dInit/m11}}, {{DOMMatrix2dInit/m12}}, {{DOMMatrix2dInit/m21}}, {{DOMMatrix2dInit/m22}},
+   {{DOMMatrix2dInit/m41}} and {{DOMMatrix2dInit/m42}} of <var>other</var> in the given order.
 
    <dt>Otherwise
    <dd><p>Return the result of invoking <a>create a 3d matrix</a> of type {{DOMMatrixReadOnly}} or
    {{DOMMatrix}} as appropriate, with a sequence of numbers, the values being the 16 elements
-   {{DOMMatrixInit/m11}}, {{DOMMatrixInit/m12}}, {{DOMMatrixInit/m13}}, ..., {{DOMMatrixInit/m44}}
+   {{DOMMatrix2dInit/m11}}, {{DOMMatrix2dInit/m12}}, {{DOMMatrixInit/m13}}, ..., {{DOMMatrixInit/m44}}
    of <var>other</var> in the given order.
   </dl>
 </ol>
