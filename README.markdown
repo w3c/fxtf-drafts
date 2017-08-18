@@ -4,4 +4,3 @@ groups related to graphics.
 The repository is based at: https://hg.fxtf.org/drafts/
 
 Editor's drafts: https://drafts.fxtf.org/
-
