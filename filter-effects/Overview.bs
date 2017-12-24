@@ -293,13 +293,13 @@ Issue(1): Make parameters optional?
         A filter reference to a <a element>filter</a> element. For example ''url(commonfilters.svg#filter)''. If the filter references a non-existent object or the referenced object is not a <a element>filter</a> element, then the whole filter chain is ignored. No filter is applied to the object.
     : <dfn>blur()</dfn> = blur( <<length>> )
     ::
-        Applies a Gaussian blur to the input image. The passed parameter (the radius) defines the value of the standard deviation to the Gaussian function. The parameter is specified a CSS length, but does not accept percentage values. The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
+        Applies a Gaussian blur to the input image. The passed parameter defines the value of the standard deviation to the Gaussian function. The parameter is specified a CSS length, but does not accept percentage values. The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
 
         Negative values are not allowed.
 
         The <a for=svg>initial value</a> for interpolation is ''0px''.
 
-        Issue(102): "blur radius" or a standard deviation?
+        Note: Standard deviation is different to 'box-shadow' s blur radius.
     : <dfn>brightness()</dfn> = brightness( <<number-percentage>> )
     ::
         Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
@@ -314,15 +314,15 @@ Issue(1): Make parameters optional?
         Negative values are not allowed.
 
         The <a for=svg>initial value</a> for interpolation is ''1''.
-    : <dfn>drop-shadow()</dfn> = drop-shadow( <<length>>{2,3} <<color>>? )
+    : <dfn>drop-shadow()</dfn> = drop-shadow( <<length>>{2,3} && <<color>>? )
     ::
-        Applies a drop shadow effect to the input image. A drop shadow is effectively a blurred, offset version of the input image's alpha mask drawn in a particular color, composited below the image. Values are interpreted as for 'box-shadow' [[!CSS3BG]]. The markup equivalent of this function is <a href="#dropshadowEquivalent">given below</a>.
+        Applies a drop shadow effect to the input image. A drop shadow is effectively a blurred, offset version of the input image's alpha mask drawn in a particular color, composited below the image. Values are interpreted as for 'box-shadow' [[!CSS3BG]] but with the optional 3rd <<length>> value being the standard deviation instead of blur radius. The markup equivalent of this function is <a href="#dropshadowEquivalent">given below</a>.
 
-        Note that spread values or multiple shadows are not accepted for this level of the specification.
+        Note: Spread values or multiple shadows are not accepted for this level of the specification.
 
         The <a for=svg>initial value</a> for interpolation is all length values set to 0 and the used color is taken from the color property.
 
-        Issue(102): "blur radius" or a standard deviation?
+        Note: Standard deviation is different to 'box-shadow' s blur radius.
     : <dfn>grayscale()</dfn> = grayscale( <<number-percentage>> )
     ::
         Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
