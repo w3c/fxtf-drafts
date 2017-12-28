@@ -2565,8 +2565,6 @@ macros:
     attributes: <li><a element-attr for=feTurbulence>baseFrequency</a></li><li><a element-attr for=feTurbulence>numOctaves</a></li><li><a element-attr for=feTurbulence>seed</a></li><li><a element-attr for=feTurbulence>stitchTiles</a></li><li><a element-attr for=feTurbulence>type</a></li>
 </pre>
 
-Issue(112): Clarify alpha channel description.
-
 Issue(115): Pseudo code breaks required uniformity in all directions.
 
 This filter primitive creates an image using the Perlin turbulence function. It allows the synthesis of artificial textures like clouds or marble. For a detailed description the of the Perlin turbulence function, see "Texturing and Modeling", Ebert et al, AP Professional, 1994. The resulting image will fill the entire <a>filter primitive subregion</a> for this filter primitive.
@@ -2575,9 +2573,9 @@ It is possible to create bandwidth-limited noise by synthesizing only one octave
 
 The C code below shows the exact algorithm used for this filter effect. The <a>filter primitive subregion</a> is to be passed as the arguments fTileX, fTileY, fTileWidth and fTileHeight.
 
-For fractalSum, you get a turbFunctionResult that is aimed at a range of -1 to 1 (the actual result might exceed this range in some cases). To convert to a color value, use the formula <code>colorValue = (turbFunctionResult + 1) / 2</code>, then clamp to the range 0 to 1.
+For fractalSum, you get a turbFunctionResult that is aimed at a range of -1 to 1 (the actual result might exceed this range in some cases). To convert to a color or alpha value, use the formula <code>colorValue = (turbFunctionResult + 1) / 2</code>, then clamp to the range 0 to 1.
 
-For turbulence, you get a turbFunctionResult that is aimed at a range of 0 to 1 (the actual result might exceed this range in some cases). To convert to a color value, use the formula <code>colorValue = turbFunctionResult</code>, then clamp to the range 0 to 1.
+For turbulence, you get a turbFunctionResult that is aimed at a range of 0 to 1 (the actual result might exceed this range in some cases). To convert to a color or alpha value, use the formula <code>colorValue = turbFunctionResult</code>, then clamp to the range 0 to 1.
 
 The following order is used for applying the pseudo random numbers. An initial seed value is computed based on the <a element-attr>seed</a> attribute. Then the implementation computes the lattice points for R, then continues getting additional pseudo random numbers relative to the last generated pseudo random number and computes the lattice points for G, and so on for B and A.
 
