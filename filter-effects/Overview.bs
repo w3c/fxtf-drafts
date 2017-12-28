@@ -15,7 +15,6 @@ Test Suite: http://test.csswg.org/suites/filter-effects/nightly-unstable/
 Abstract: Filter effects are a way of processing an element's rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually be described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.
 Abstract:
 Abstract: Although originally designed for use in SVG, filter effects are a set of operations to apply on an image buffer and therefore can be applied to nearly any presentational environment, including CSS. They are triggered by a style instruction (the 'filter' property). This specification describes filters in a manner that allows them to be used in content styled by CSS, such as HTML and SVG. It also defines a CSS property value function that produces a CSS <<image>> value.
-Issue Tracking: Legacy open bugs https://www.w3.org/bugzilla_public/buglist.cgi?product=CSS&component=Filter%20Effects&resolution=---
 Ignored Vars: Va, 5s, 10s
 </pre>
 <pre class=link-defaults>
@@ -287,12 +286,18 @@ If the value of the 'filter' property is ''filter/none'' then there is no filter
 
 Issue(11): Should establish a containing block for values not-''filter/none'' for absolutely and fixed positioned elements.
 
+Issue(32): Specify animation type for all CSS properties.
+
+Issue(238): How does filter behave on fixed background images?
+
 <pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
 
 <pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>> | <br>
   <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
 
 Issue(1): Make parameters optional?
+
+Issue(221): Do not clamp color values of filter function results between filter functions?
 
 <dl id="FilterFunction" dfn-for="filter">
     : <dfn>&lt;url></dfn>
@@ -307,6 +312,8 @@ Issue(1): Make parameters optional?
         The <a for=svg>initial value</a> for interpolation is ''0px''.
 
         Note: Standard deviation is different to 'box-shadow' s blur radius.
+
+        Issue(229): Allow 2nd length value to control horizontal/vertical blur independent of each other?
     : <dfn>brightness()</dfn> = brightness( <<number-percentage>> )
     ::
         Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
@@ -340,7 +347,6 @@ Issue(1): Make parameters optional?
 
         The <a for=svg>initial value</a> for interpolation is ''0''.
 
-        Issue(1): Make arguments optional.
     : <dfn>hue-rotate()</dfn> = hue-rotate( [ <<angle>> | <<zero>> ] )
     ::
         Applies a hue rotation on the input image. The passed parameter defines the number of degrees around the color circle the input samples will be adjusted. A value of ''0deg'' leaves the input unchanged. Implementations must not normalize this value in order to allow animations beyond ''360deg''. The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
@@ -431,6 +437,8 @@ The description of the <a element>filter</a> element follows:
     :: The <em>filterRes</em> attribute was removed from the specification. See SVG 1.1 specification for the defintion [[!SVG11]].
 </dl>
 
+Issue(25): Use geometry CSS properties instead of x, y, width and height attributes?
+
 Properties inherit into the <a element>filter</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a element>filter</a> element.
 
 <a element>filter</a> elements are never rendered directly; their only usage is as something that can be referenced using the 'filter' property. The 'display' property does not apply to the <a element>filter</a> element; thus, <a element>filter</a> elements are not directly rendered even if the 'display' property is set to a value other than ''filter/none'', and <a element>filter</a> elements are available for referencing even when the 'display' property on the <a element>filter</a> element or any of its ancestors is set to ''filter/none''.
@@ -476,8 +484,6 @@ Note: Sometimes implementers can achieve faster performance when the filter regi
 Note: It is often necessary to provide padding space because the filter effect might impact bits slightly outside the tight-fitting <a>bounding box</a> on a given object. For these purposes, it is possible to provide negative percentage values for <a element-attr for=filter>x</a>, <a element-attr for=filter>y</a> and percentages values greater than ''100%'' for <a element-attr for=filter>width</a>, <a element-attr for=filter>height</a>. This, for example, is why the defaults for the filter region are <code>x="-10%" y="-10%" width="120%" height="120%"</code>.
 
 # Filter primitives # {#FilterPrimitivesOverview}
-
-Issue(9): Add description elements to content model of all elements?
 
 ## Overview ## {#FilterPrimitivesOverviewIntro}
 
@@ -584,6 +590,8 @@ Most filter primitives take other filter primitives as input. The following attr
         </dl>
         Animatable: yes.
 </dl>
+
+Issue(160): Allow nesting of filter primitives instead of referencing with in, in2 and result.
 
 ## Filter primitive subregion ## {#FilterPrimitiveSubRegion}
 
@@ -1486,7 +1494,7 @@ When the image must be resampled to match the coordinate system defined by <a el
     ::
         The list of <<number>> s that make up the kernel matrix for the convolution. Values are separated by space characters and/or a comma. The number of entries in the list must equal &lt;orderX&gt; times &lt;orderY&gt;.
 
-        Issue: What happens if the conditions are not fulfilled or the attribute was not specified.
+        Issue(237): What happens if the conditions are not fulfilled or the attribute was not specified.
 
         Animatable: yes.
     : <dfn>divisor</dfn> = "<em><<number>></em>"
@@ -2198,6 +2206,8 @@ macros:
     interface: SVGFEImageElement
     attributes: <li><a href='https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute'><span class=attr-name>externalResourcesRequired</span></a></li><li><a element-attr for=feImage>preserveAspectRatio</a></li><li><a element-attr for=feImage>xlink:href</a></li><li><a element-attr for=feImage>href</a></li><li><a element-attr for=feImage>crossorigin</a></li>
 </pre>
+
+Issue(193): Clarify what to do on invalid/unavailable image resources.
 
 This filter primitive refers to a graphic external to this filter element, which is loaded or rendered into an RGBA raster and becomes the result of the filter primitive.
 
@@ -2923,6 +2933,7 @@ Note: The 'color-interpolation-filters' has a different initial value than 'colo
 
 Note: The 'color-interpolation-filters' property has no effect on <span>Filter Functions</span>, which operate in the sRGB color space.
 
+Issue(127): Better clarify used color space. E.g. sepia effect with feColorMatrix.
 
 # Light source elements and properties # {#LightSourceDefinitions}
 
@@ -3286,6 +3297,7 @@ For interpolation between one filter and a second, the steps corresponding to th
   <dd>Use discrete interpolation.</dd>
 </dl>
 
+Issue(91): Compute distance of filter functions.
 
 ### Interpolation of <<filter-function>>s ### {#interpolation-of-filter-functions}
 

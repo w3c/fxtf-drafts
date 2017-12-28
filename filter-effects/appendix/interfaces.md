@@ -370,6 +370,8 @@ interface SVGFEConvolveMatrixElement : SVGElement {
 SVGFEConvolveMatrixElement implements SVGFilterPrimitiveStandardAttributes;
 </pre>
 
+Issue(114): Restore already implemented `preserveAlpha` attribute.
+
 <div dfn-type=const dfn-for=SVGFEConvolveMatrixElement>
     : Constants in group “Edge Mode Values”:
     ::
