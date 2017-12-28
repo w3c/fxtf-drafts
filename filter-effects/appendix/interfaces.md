@@ -35,8 +35,7 @@ SVGFilterElement implements SVGURIReference;
 ## Interface SVGFilterPrimitiveStandardAttributes ## {#InterfaceSVGFilterPrimitiveStandardAttributes}
 
 <pre class=idl>
-[NoInterfaceObject]
-interface SVGFilterPrimitiveStandardAttributes {
+interface mixin SVGFilterPrimitiveStandardAttributes {
   readonly attribute SVGAnimatedLength x;
   readonly attribute SVGAnimatedLength y;
   readonly attribute SVGAnimatedLength width;
@@ -80,7 +79,7 @@ interface SVGFEBlendElement : SVGElement {
   readonly attribute SVGAnimatedEnumeration mode;
 };
 
-SVGFEBlendElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEBlendElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=const dfn-for=SVGFEBlendElement>
@@ -130,7 +129,7 @@ interface SVGFEColorMatrixElement : SVGElement {
   readonly attribute SVGAnimatedNumberList values;
 };
 
-SVGFEColorMatrixElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEColorMatrixElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=const dfn-for=SVGFEColorMatrixElement>
@@ -168,7 +167,7 @@ interface SVGFEComponentTransferElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
 };
 
-SVGFEComponentTransferElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEComponentTransferElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFEComponentTransferElement>
@@ -300,7 +299,7 @@ interface SVGFECompositeElement : SVGElement {
   readonly attribute SVGAnimatedNumber k4;
 };
 
-SVGFECompositeElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFECompositeElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=const dfn-for=SVGFECompositeElement>
@@ -367,7 +366,7 @@ interface SVGFEConvolveMatrixElement : SVGElement {
   readonly attribute SVGAnimatedNumber kernelUnitLengthY;
 };
 
-SVGFEConvolveMatrixElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEConvolveMatrixElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 Issue(114): Restore already implemented `preserveAlpha` attribute.
@@ -425,7 +424,7 @@ interface SVGFEDiffuseLightingElement : SVGElement {
   readonly attribute SVGAnimatedNumber kernelUnitLengthY;
 };
 
-SVGFEDiffuseLightingElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEDiffuseLightingElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFEDiffuseLightingElement>
@@ -545,7 +544,7 @@ interface SVGFEDisplacementMapElement : SVGElement {
   readonly attribute SVGAnimatedEnumeration yChannelSelector;
 };
 
-SVGFEDisplacementMapElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEDisplacementMapElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=const dfn-for=SVGFEDisplacementMapElement>
@@ -593,7 +592,7 @@ interface SVGFEDropShadowElement : SVGElement {
   void setStdDeviation(float stdDeviationX, float stdDeviationY);
 };
 
-SVGFEDropShadowElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEDropShadowElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFEDropShadowElement>
@@ -633,7 +632,7 @@ The <dfn dfn-type=interface>SVGFEFloodElement</dfn> interface corresponds to the
 interface SVGFEFloodElement : SVGElement {
 };
 
-SVGFEFloodElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEFloodElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 ## Interface SVGFEGaussianBlurElement ## {#InterfaceSVGFEGaussianBlurElement}
@@ -657,7 +656,7 @@ interface SVGFEGaussianBlurElement : SVGElement {
   void setStdDeviation(float stdDeviationX, float stdDeviationY);
 };
 
-SVGFEGaussianBlurElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEGaussianBlurElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=const dfn-for=SVGFEGaussianBlurElement>
@@ -710,7 +709,7 @@ interface SVGFEImageElement : SVGElement {
   readonly attribute SVGAnimatedString crossOrigin;
 };
 
-SVGFEImageElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEImageElement includes SVGFilterPrimitiveStandardAttributes;
 SVGFEImageElement implements SVGURIReference;
 </pre>
 
@@ -731,7 +730,7 @@ The <dfn dfn-type=interface>SVGFEMergeElement</dfn> interface corresponds to the
 interface SVGFEMergeElement : SVGElement {
 };
 
-SVGFEMergeElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEMergeElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 ## Interface SVGFEMergeNodeElement ## {#InterfaceSVGFEMergeNodeElement}
@@ -769,7 +768,7 @@ interface SVGFEMorphologyElement : SVGElement {
   readonly attribute SVGAnimatedNumber radiusY;
 };
 
-SVGFEMorphologyElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEMorphologyElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=const dfn-for=SVGFEMorphologyElement>
@@ -807,7 +806,7 @@ interface SVGFEOffsetElement : SVGElement {
   readonly attribute SVGAnimatedNumber dy;
 };
 
-SVGFEOffsetElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFEOffsetElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFEOffsetElement>
@@ -835,7 +834,7 @@ interface SVGFESpecularLightingElement : SVGElement {
   readonly attribute SVGAnimatedNumber kernelUnitLengthY;
 };
 
-SVGFESpecularLightingElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFESpecularLightingElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFESpecularLightingElement>
@@ -864,7 +863,7 @@ interface SVGFETileElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
 };
 
-SVGFETileElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFETileElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFETileElement>
@@ -899,7 +898,7 @@ interface SVGFETurbulenceElement : SVGElement {
   readonly attribute SVGAnimatedEnumeration type;
 };
 
-SVGFETurbulenceElement implements SVGFilterPrimitiveStandardAttributes;
+SVGFETurbulenceElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
 
 <div dfn-type=const dfn-for=SVGFETurbulenceElement>
