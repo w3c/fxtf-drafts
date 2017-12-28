@@ -10,7 +10,7 @@
   <tr>
     <th>Content model:</th>
     <td>
-      Any number of the following elements, in any order: <a element>animate</a>, <a element>script</a>, <a element>set</a>
+      Any number of <a>descriptive elements</a>, <a element>animate</a>, <a element>script</a>, <a element>set</a> elements, in any order.
     </td>
   </tr>
   <tr>
