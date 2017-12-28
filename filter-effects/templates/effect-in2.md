@@ -10,7 +10,7 @@
   <tr>
     <th>Content model:</th>
     <td>
-      Any number of the following elements, in any order: [MODEL]
+      Any number of <a>descriptive elements</a>, [MODEL] elements, in any order.
     </td>
   </tr>
   <tr>

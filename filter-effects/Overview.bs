@@ -330,6 +330,8 @@ Issue(1): Make parameters optional?
         The <a for=svg>initial value</a> for interpolation is all length values set to 0 and the used color is taken from the color property.
 
         Note: Standard deviation is different to 'box-shadow' s blur radius.
+
+        Issue(204): The initial values shall not be used for interpolation from `none` filters to `drop-shadow()`.
     : <dfn>grayscale()</dfn> = grayscale( <<number-percentage>> )
     ::
         Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
@@ -337,6 +339,8 @@ Issue(1): Make parameters optional?
         Negative values are not allowed.
 
         The <a for=svg>initial value</a> for interpolation is ''0''.
+
+        Issue(1): Make arguments optional.
     : <dfn>hue-rotate()</dfn> = hue-rotate( [ <<angle>> | <<zero>> ] )
     ::
         Applies a hue rotation on the input image. The passed parameter defines the number of degrees around the color circle the input samples will be adjusted. A value of ''0deg'' leaves the input unchanged. Implementations must not normalize this value in order to allow animations beyond ''360deg''. The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
@@ -360,6 +364,8 @@ Issue(1): Make parameters optional?
         The <a for=svg>initial value</a> for interpolation is ''1''.
 
         Note: The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
+
+        Issue(178): Allow intermediate/input results/values to exceed range of 0..1 e.g `opacity(200%)`.
     : <dfn>saturate()</dfn> = saturate( <<number-percentage>> )
     ::
         Saturates the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely un-saturated. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over ''100%'' are allowed, providing super-saturated results. The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
@@ -1917,6 +1923,8 @@ macros:
 
 Issue(21): Consider taking `image-rendering` into account to control smooth re-sampling.
 
+Issue(113): Implementations do not match specification.
+
 This filter primitive uses the pixels values from the image from <a element-attr for=feDisplacementMap>in2</a> to spatially displace the image from <a element-attr>in</a>. This is the transformation to be performed:
 
 <pre>
@@ -2550,6 +2558,10 @@ macros:
     attributes: <li><a element-attr for=feTurbulence>baseFrequency</a></li><li><a element-attr for=feTurbulence>numOctaves</a></li><li><a element-attr for=feTurbulence>seed</a></li><li><a element-attr for=feTurbulence>stitchTiles</a></li><li><a element-attr for=feTurbulence>type</a></li>
 </pre>
 
+Issue(112): Clarify alpha channel description.
+
+Issue(115): Pseudo code breaks required uniformity in all directions.
+
 This filter primitive creates an image using the Perlin turbulence function. It allows the synthesis of artificial textures like clouds or marble. For a detailed description the of the Perlin turbulence function, see "Texturing and Modeling", Ebert et al, AP Professional, 1994. The resulting image will fill the entire <a>filter primitive subregion</a> for this filter primitive.
 
 It is possible to create bandwidth-limited noise by synthesizing only one octave.
@@ -3100,6 +3112,7 @@ Note: Since the dimension and origin of the original image must be preserved, so
 
 For the <<blur()>> function the <a element-attr for=feGaussianBlur>edgeMode</a> attribute on the <a element>feGaussianBlur</a> element is set to ''duplicate''. This produces more pleasant results on the edges of the filtered input image.
 
+Issue(177): Intrinsic or extrinsic image dimensions?
 
 ## Interpolating filter() ## {#interpolating-filter-image}
 
@@ -3383,6 +3396,7 @@ path: appendix/interfaces.md
 The following significant changes were made since the <a href="https://www.w3.org/TR/2014/WD-filter-effects-1-20141125/">25 November 2014 Working Draft</a>.
 
 * Editorial changes.
+* Add description elements to content model of all elements.
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2013/WD-filter-effects-1-20131126/">26 November 2013 Working Draft</a>.
 
@@ -3409,4 +3423,4 @@ See more detailed and longterm changes in the <a href="ChangeLog">ChangeLog</a>.
 
 <h2 class=no-num id='acknowledgments'>Acknowledgments</h2>
 
-The editors would like to thank Robert O’Callahan, Coralie Mercier, Chris Lilley, Nikos Andronikos, Stephen Chenney, Tavmjong Bah, Robert Longson, Cameron McCormack, Brad Kemper, Tab Atkins, Brian Birtles, Michael Mullany, Rik Cabanier, Anne van Kesteren, Boris Zbarsky, Kristopher Giesing, Stephen White, Jasper van de Gronde, Kang-Hao Lu, Paul LeBeau, Amelia Bellamy-Royds and Max Vujovic for their careful reviews, comments, and corrections.
+The editors would like to thank Robert O’Callahan, Coralie Mercier, Chris Lilley, Nikos Andronikos, Stephen Chenney, Tavmjong Bah, Robert Longson, Cameron McCormack, Brad Kemper, Tab Atkins, Brian Birtles, Michael Mullany, Rik Cabanier, Anne van Kesteren, Boris Zbarsky, Kristopher Giesing, Stephen White, Jasper van de Gronde, Kang-Hao Lu, Paul LeBeau, Jarek Foksa, Amelia Bellamy-Royds and Max Vujovic for their careful reviews, comments, and corrections.
