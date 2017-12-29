@@ -283,109 +283,11 @@ Media: visual
 Animatable: See prose in <a href="#animation-of-filters">Animation of Filters</a>.
 </pre>
 
+<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
+
 A value of ''filter/none'' for the 'filter' property means no filter effect gets applied.
 
 A value other than ''filter/none'' for the 'filter' property results in the creation of a <a>containing block</a> for absolute and fixed positioned elements that are no document root element in the <a>browsing context</a> of that element. The list of functions are applied in the order provided.
-
-Issue(238): How does filter behave on fixed background images?
-
-<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
-
-<pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>> | <br>
-  <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
-
-Issue(1): Make parameters optional?
-
-Issue(221): Do not clamp color values of filter function results between filter functions?
-
-<dl id="FilterFunction" dfn-for="filter">
-    : <dfn>&lt;url></dfn>
-    ::
-        A filter reference to a <a element>filter</a> element. For example ''url(commonfilters.svg#filter)''. If the filter references a non-existent object or the referenced object is not a <a element>filter</a> element, then the whole filter chain is ignored. No filter is applied to the object.
-    : <dfn>blur()</dfn> = blur( <<length>> )
-    ::
-        Applies a Gaussian blur to the input image. The passed parameter defines the value of the standard deviation to the Gaussian function. The parameter is specified a CSS length, but does not accept percentage values. The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''0px''.
-
-        Note: Standard deviation is different to 'box-shadow' s blur radius.
-
-        Issue(229): Allow 2nd length value to control horizontal/vertical blur independent of each other?
-    : <dfn>brightness()</dfn> = brightness( <<number-percentage>> )
-    ::
-        Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''1''.
-    : <dfn>contrast()</dfn> = contrast( <<number-percentage>> )
-    ::
-        Adjusts the contrast of the input. A value of ''0%'' will create an image that is completely gray. A value of ''100%'' leaves the input unchanged. Values of amount over 100% are allowed, providing results with more contrast. The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''1''.
-    : <dfn>drop-shadow()</dfn> = drop-shadow( <<length>>{2,3} && <<color>>? )
-    ::
-        Applies a drop shadow effect to the input image. A drop shadow is effectively a blurred, offset version of the input image's alpha mask drawn in a particular color, composited below the image. Values are interpreted as for 'box-shadow' [[!CSS3BG]] but with the optional 3rd <<length>> value being the standard deviation instead of blur radius. The markup equivalent of this function is <a href="#dropshadowEquivalent">given below</a>.
-
-        Note: Spread values or multiple shadows are not accepted for this level of the specification.
-
-        The <a for=svg>initial value</a> for interpolation is all length values set to 0 and the used color is taken from the color property.
-
-        Note: Standard deviation is different to 'box-shadow' s blur radius.
-
-        Issue(204): The initial values shall not be used for interpolation from `none` filters to `drop-shadow()`.
-    : <dfn>grayscale()</dfn> = grayscale( <<number-percentage>> )
-    ::
-        Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''0''.
-
-    : <dfn>hue-rotate()</dfn> = hue-rotate( [ <<angle>> | <<zero>> ] )
-    ::
-        Applies a hue rotation on the input image. The passed parameter defines the number of degrees around the color circle the input samples will be adjusted. A value of ''0deg'' leaves the input unchanged. Implementations must not normalize this value in order to allow animations beyond ''360deg''. The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
-
-        The unit identifier may be omitted if the <<angle>> is zero.
-
-        The <a for=svg>initial value</a> for interpolation is ''0deg''.
-    : <dfn>invert()</dfn> = invert( <<number-percentage>> )
-    ::
-        Inverts the samples in the input image. The passed parameter defines the proportion of the conversion. A value of 100% is completely inverted. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''0''.
-    : <dfn>opacity()</dfn> = opacity( <<number-percentage>> )
-    ::
-        Applies transparency to the samples in the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely transparent. A value of ''100%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. This is equivalent to multiplying the input image samples by amount. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''1''.
-
-        Note: The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
-
-        Issue(178): Allow intermediate/input results/values to exceed range of 0..1 e.g `opacity(200%)`.
-    : <dfn>saturate()</dfn> = saturate( <<number-percentage>> )
-    ::
-        Saturates the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely un-saturated. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over ''100%'' are allowed, providing super-saturated results. The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''1''.
-    : <dfn>sepia()</dfn> = sepia( <<number-percentage>> )
-    ::
-        Converts the input image to sepia. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely sepia. A value of ''0%'' leaves the input unchanged. Values between 0% and 100% are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
-
-        Negative values are not allowed.
-
-        The <a for=svg>initial value</a> for interpolation is ''0''.
-</dl>
 
 The first filter function or <a element>filter</a> reference in the list takes the element (<a attr-value>SourceGraphic</a>) as the input image. Subsequent operations take the output from the previous filter function or <a element>filter</a> reference as the input image. <a element>filter</a> element reference functions can specify an alternate input, but still uses the previous output as its <a attr-value>SourceGraphic</a>.
 
@@ -398,6 +300,140 @@ The 'filter' property has no effect on the geometry of the target element's CSS 
 Conceptually, any parts of the drawing are effected by filter operations. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the filter is applied, and those of its descendants. The filter operations are applied in the element's <a>local coordinate system</a>.
 
 The compositing model follows the <a href="https://www.w3.org/TR/SVG11/render.html#Introduction">SVG compositing model</a> [[!SVG11]]: first any filter effect is applied, then any clipping, masking and opacity. As per SVG, the application of 'filter' has no effect on hit-testing.
+
+Issue(238): How does filter behave on fixed background images?
+
+# Filter Functions # {#filter-functions}
+
+## Supported Filter Functions ## {#supported-filter-functions}
+
+<pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>> | <br>
+  <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
+
+Issue(1): Make parameters optional?
+
+Issue(221): Do not clamp color values of filter function results between filter functions?
+
+<dl id="FilterFunction" dfn-for="filter">
+    : <dfn>&lt;url></dfn>
+    ::
+        A filter reference to a <a element>filter</a> element. For example ''url(commonfilters.svg#filter)''. If the filter references a non-existent object or the referenced object is not a <a element>filter</a> element, then the whole filter chain is ignored. No filter is applied to the object.
+    : <pre class=prod><dfn>blur()</dfn> = blur( <<length>> )</pre>
+    ::
+        Applies a Gaussian blur to the input image. The passed parameter defines the value of the standard deviation to the Gaussian function. The parameter is specified a CSS length, but does not accept percentage values. The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''0px''.
+
+        Note: Standard deviation is different to 'box-shadow' s blur radius.
+
+        Issue(229): Allow 2nd length value to control horizontal/vertical blur independent of each other?
+    : <pre class=prod><dfn>brightness()</dfn> = brightness( <<number-percentage>> )</pre>
+    ::
+        Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''1''.
+    : <pre class=prod><dfn>contrast()</dfn> = contrast( <<number-percentage>> )</pre>
+    ::
+        Adjusts the contrast of the input. A value of ''0%'' will create an image that is completely gray. A value of ''100%'' leaves the input unchanged. Values of amount over 100% are allowed, providing results with more contrast. The markup equivalent of this function is <a href="#contrastEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''1''.
+    : <pre class=prod><dfn>drop-shadow()</dfn> = drop-shadow( <<color>>? && <<length>>{2,3} )</pre>
+    ::
+        Applies a drop shadow effect to the input image. A drop shadow is effectively a blurred, offset version of the input image's alpha mask drawn in a particular color, composited below the image. Values are interpreted as for 'box-shadow' [[!CSS3BG]] but with the optional 3rd <<length>> value being the standard deviation instead of blur radius. The markup equivalent of this function is <a href="#dropshadowEquivalent">given below</a>.
+
+        Note: Spread values or multiple shadows are not accepted for this level of the specification.
+
+        The <a for=svg>initial value</a> for interpolation is all length values set to 0 and the used color is taken from the color property.
+
+        Note: Standard deviation is different to 'box-shadow' s blur radius.
+
+        Issue(204): The initial values shall not be used for interpolation from `none` filters to `drop-shadow()`.
+    : <pre class=prod><dfn>grayscale()</dfn> = grayscale( <<number-percentage>> )</pre>
+    ::
+        Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''0''.
+
+    : <pre class=prod><dfn>hue-rotate()</dfn> = hue-rotate( [ <<angle>> | <<zero>> ] )</pre>
+    ::
+        Applies a hue rotation on the input image. The passed parameter defines the number of degrees around the color circle the input samples will be adjusted. A value of ''0deg'' leaves the input unchanged. Implementations must not normalize this value in order to allow animations beyond ''360deg''. The markup equivalent of this function is <a href="#huerotateEquivalent">given below</a>.
+
+        The unit identifier may be omitted if the <<angle>> is zero.
+
+        The <a for=svg>initial value</a> for interpolation is ''0deg''.
+    : <pre class=prod><dfn>invert()</dfn> = invert( <<number-percentage>> )</pre>
+    ::
+        Inverts the samples in the input image. The passed parameter defines the proportion of the conversion. A value of 100% is completely inverted. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#invertEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''0''.
+    : <pre class=prod><dfn>opacity()</dfn> = opacity( <<number-percentage>> )</pre>
+    ::
+        Applies transparency to the samples in the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely transparent. A value of ''100%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. This is equivalent to multiplying the input image samples by amount. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#opacityEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''1''.
+
+        Note: The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
+
+        Issue(178): Allow intermediate/input results/values to exceed range of 0..1 e.g `opacity(200%)`.
+    : <pre class=prod><dfn>saturate()</dfn> = saturate( <<number-percentage>> )</pre>
+    ::
+        Saturates the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely un-saturated. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over ''100%'' are allowed, providing super-saturated results. The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''1''.
+    : <pre class=prod><dfn>sepia()</dfn> = sepia( <<number-percentage>> )</pre>
+    ::
+        Converts the input image to sepia. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely sepia. A value of ''0%'' leaves the input unchanged. Values between 0% and 100% are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#sepiaEquivalent">given below</a>.
+
+        Negative values are not allowed.
+
+        The <a for=svg>initial value</a> for interpolation is ''0''.
+</dl>
+
+## Computed Values of Filter Functions ## {#computed-values-of-filter-functions}
+
+The values in a <<filter-function>> are computed as specified, with these exceptions:
+
+* Omitted values are included and compute to their defaults.
+* <<drop-shadow()>> starts with the computed value of <<color>> followed by the computed value of the <<length>> values.
+
+## Serialization of Filter Functions ## {#serialization-of-filter-functions}
+
+To serialize the <<filter-function>>, serialize as per their individual grammars, in the order the grammars are written in, avoiding <<calc()>> expressions where possible, avoiding <<calc()>> transformations, omitting components when possible without changing the meaning, joining space-separated tokens with a single space, and following each serialized comma with a single space.
+
+## Interpolation of Filter Functions ## {#interpolation-of-filter-functions}
+
+For interpolation of values in <<filter-function>>s, the steps corresponding to the first matching condition in the following list must be run:
+
+<dl class=switch>
+    : <<blur()>>
+    :: Interpolate values as [[css3-transitions#animtype-length|length]].
+    : <<brightness()>>
+    : <<contrast()>>
+    : <<grayscale()>>
+    : <<invert()>>
+    : <<opacity()>>
+    : <<saturate()>>
+    : <<sepia()>>
+    :: Convert percentage values to numbers with 0% being relative to 0 and 100% relative to 1. Interpolate values as real numbers.
+    : <<hue-rotate()>>
+    :: Interpolate values as [[css3-transitions#animtype-number|number]].
+    : <<drop-shadow()>>
+    :: Interpolate values as [[css3-transitions#animtype-shadow-list|shadow list]].
+</dl>
 
 # SVG Filter Sources: the <a element>filter</a> element # {#FilterElement}
 
@@ -2096,7 +2132,7 @@ Inherited: no
 Percentages: n/a
 Computed value: as specified
 Media: visual
-Animatable: as <a href="https://www.w3.org/TR/css3-transitions/#animtype-color">color</a>
+Animatable: as [[css3-transitions#animtype-color|color]]
 </pre>
 
 The 'flood-color' property indicates what color to used to flood the current <a>filter primitive subregion</a>.
@@ -2113,7 +2149,7 @@ Inherited: no
 Percentages: n/a
 Computed value: as specified
 Media: visual
-Animatable: as <a href="https://drafts.csswg.org/css-transitions/#animtype-number">number</a> or <a href="https://drafts.csswg.org/css-transitions/#animtype-percentage">percentage</a>
+Animatable: as [[css3-transitions#animtype-number|number]] or [[css3-transitions#animtype-precentage|percentage]]
 </pre>
 
 The 'flood-opacity' property defines the opacity value to use across the entire <a>filter primitive subregion</a>. If the 'flood-color' value includes an alpha channel, the alpha channel gets multiplied with the computed value of the 'flood-opacity' property.
@@ -3098,7 +3134,7 @@ Inherited: no
 Percentages: n/a
 Computed value: as specified
 Media: visual
-Animatable: as <a href="https://www.w3.org/TR/css3-transitions/#animtype-color">color</a>
+Animatable: as [[css3-transitions#animtype-color|color]]
 </pre>
 
 The 'lighting-color' property defines the color of the light source for <a>filter primitives</a> <a element>feDiffuseLighting</a> and <a element>feSpecularLighting</a>.
@@ -3267,7 +3303,7 @@ Note: For the handling of <a href="#FilterElement">filter sources</a> see sectio
 
 # Animation of Filters # {#animation-of-filters}
 
-## Interpolation ## {#interpolation-of-filters}
+## Interpolation of Filter Function Lists## {#interpolation-of-filters}
 
 For interpolation between one filter and a second, the steps corresponding to the first matching condition in the following list must be run:
 
@@ -3293,28 +3329,6 @@ For interpolation between one filter and a second, the steps corresponding to th
 </dl>
 
 Issue(91): Compute distance of filter functions.
-
-### Interpolation of <<filter-function>>s ### {#interpolation-of-filter-functions}
-
-For interpolation of values in <<filter-function>>s, the steps corresponding to the first matching condition in the following list must be run:
-
-<dl class=switch>
-    : <<blur()>>
-    :: Interpolate values as <a href='https://www.w3.org/TR/css3-transitions/#animtype-length'>length</a>.
-    : <<brightness()>>
-    : <<contrast()>>
-    : <<grayscale()>>
-    : <<invert()>>
-    : <<opacity()>>
-    : <<saturate()>>
-    : <<sepia()>>
-    :: Convert percentage values to numbers with 0% being relative to 0 and 100% relative to 1. Interpolate values as real numbers.
-    : <<hue-rotate()>>
-    :: Interpolate values as real numbers.
-    : <<drop-shadow()>>
-    :: Interpolate values as <a href='https://www.w3.org/TR/css3-transitions/#animtype-shadow-list'>shadow list</a>s.
-</dl>
-
 
 ## Addition ## {#addition}
 
@@ -3406,7 +3420,7 @@ The following significant changes were made since the <a href="https://www.w3.or
 * Add description elements to content model of all elements.
 * Clarify that crossorigin is not animatable.
 * <<hue-rotate()>> takes unitless zero.
-* Allow author to change order of <<color>> and <<length>> values for <<drop-shadow()>>.
+* Allow author to change order of <<color>> and <<length>> values of <<drop-shadow()>>. Change grammar to put <<color>> first.
 * Define animation type of CSS properties.
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2013/WD-filter-effects-1-20131126/">26 November 2013 Working Draft</a>.
