@@ -291,7 +291,7 @@ A value other than ''filter/none'' for the 'filter' property results in the crea
 
 The first filter function or <a element>filter</a> reference in the list takes the element (<a attr-value>SourceGraphic</a>) as the input image. Subsequent operations take the output from the previous filter function or <a element>filter</a> reference as the input image. <a element>filter</a> element reference functions can specify an alternate input, but still uses the previous output as its <a attr-value>SourceGraphic</a>.
 
-Filter functions must operate in the sRGB color space.
+`color-interpolation-filters` has no affect for Filter Functions. Filter Functions must operate in the sRGB color space.
 
 A computed value of other than ''filter/none'' results in the creation of a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' does. All the elements descendants are rendered together as a group with the filter effect applied to the group as a whole.
 
@@ -2952,7 +2952,7 @@ Animatable: no
 
 <dl dfn-for=color-interpolation-filters>
     : <dfn>auto</dfn>
-    :: Indicates that the user agent can choose either the ''sRGB'' or ''linearRGB'' spaces for filter effects color operations. This option indicates that the author doesn't require that color operations occur in a particular color space.
+    :: Indicates that the user agent can choose either the ''color-interpolation-filters/sRGB'' or ''color-interpolation-filters/linearRGB'' spaces for filter effects color operations. This option indicates that the author doesn't require that color operations occur in a particular color space.
     : <dfn>sRGB</dfn>
     :: Indicates that filter effects color operations should occur in the sRGB color space.
     : <dfn>linearRGB</dfn>
@@ -2961,13 +2961,11 @@ Animatable: no
 
 The 'color-interpolation-filters' property specifies the color space for imaging operations performed via filter effects.
 
-Note: The 'color-interpolation-filters' property just has an effect on filter operations. Therefore, it has no effect on filter primitives like <a element>feOffset</a>, <a element>feImage</a>, <a element>feTile</a>, <a element>feFlood</a> or <a element>feTurbulence</a>.
+Note: The 'color-interpolation-filters' property just has an affect on filter operations. Therefore, it has no effect on filter primitives like <a element>feOffset</a>, <a element>feImage</a>, <a element>feTile</a> or <a element>feFlood</a>.
 
 Note: The 'color-interpolation-filters' has a different initial value than 'color-interpolation'. 'color-interpolation-filters' has an initial value of  ''linearRGB'', where as 'color-interpolation' has an initial value of ''sRGB''. Thus, in the default case, filter effects operations occur in the linearRGB color space, whereas all other color interpolations occur by default in the sRGB color space.
 
-Note: The 'color-interpolation-filters' property has no effect on <span>Filter Functions</span>, which operate in the sRGB color space.
-
-Issue(127): Better clarify used color space. E.g. sepia effect with feColorMatrix.
+Note: The 'color-interpolation-filters' property has no affect on <span>Filter Functions</span>, which operate in the sRGB color space.
 
 # Light source elements and properties # {#LightSourceDefinitions}
 
@@ -3447,4 +3445,4 @@ See more detailed and longterm changes in the <a href="ChangeLog">ChangeLog</a>.
 
 <h2 class=no-num id='acknowledgments'>Acknowledgments</h2>
 
-The editors would like to thank Robert O’Callahan, Coralie Mercier, Chris Lilley, Nikos Andronikos, Stephen Chenney, Tavmjong Bah, Robert Longson, Cameron McCormack, Brad Kemper, Tab Atkins, Brian Birtles, Michael Mullany, Rik Cabanier, Anne van Kesteren, Boris Zbarsky, Kristopher Giesing, Stephen White, Jasper van de Gronde, Kang-Hao Lu, Paul LeBeau, Jarek Foksa, Sebastian Zartner, Amelia Bellamy-Royds and Max Vujovic for their careful reviews, comments, and corrections.
+The editors would like to thank Robert O’Callahan, Coralie Mercier, Chris Lilley, Nikos Andronikos, Stephen Chenney, Tavmjong Bah, Robert Longson, Cameron McCormack, Brad Kemper, Tab Atkins, Brian Birtles, Michael Mullany, Rik Cabanier, Anne van Kesteren, Boris Zbarsky, Kristopher Giesing, Stephen White, Jasper van de Gronde, Kang-Hao Lu, Paul LeBeau, Debarshi Ray, Jarek Foksa, Sebastian Zartner, Amelia Bellamy-Royds and Max Vujovic for their careful reviews, comments, and corrections.
