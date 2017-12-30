@@ -310,6 +310,8 @@ Issue(238): How does filter behave on fixed background images?
 <pre class=prod><dfn>&lt;filter-function></dfn> = <<blur()>> | <<brightness()>> | <<contrast()>> | <<drop-shadow()>> | <br>
   <<grayscale()>> | <<hue-rotate()>> | <<invert()>> | <<opacity()>> | <<sepia()>> | <<saturate()>></pre>
 
+Unless defined otherwise, omitted values default to the <a for=svg>initial value</a> for interpolation.
+
 Issue(1): Make parameters optional?
 
 Issue(221): Do not clamp color values of filter function results between filter functions?
@@ -347,13 +349,14 @@ Issue(221): Do not clamp color values of filter function results between filter 
     ::
         Applies a drop shadow effect to the input image. A drop shadow is effectively a blurred, offset version of the input image's alpha mask drawn in a particular color, composited below the image. Values are interpreted as for 'box-shadow' [[!CSS3BG]] but with the optional 3rd <<length>> value being the standard deviation instead of blur radius. The markup equivalent of this function is <a href="#dropshadowEquivalent">given below</a>.
 
-        Note: Spread values or multiple shadows are not accepted for this level of the specification.
+        The default value for omitted values is missing length values set to ''0'' and the missing used color is taken from the color property.
 
-        The <a for=svg>initial value</a> for interpolation is all length values set to 0 and the used color is taken from the color property.
+        The <a for=svg>initial value</a> for interpolation is all length values set to ''0'' and the used color set to ''transparent''.
+
+        Note: Spread values or multiple shadows are not accepted for this level of the specification.
 
         Note: Standard deviation is different to 'box-shadow' s blur radius.
 
-        Issue(204): The initial values shall not be used for interpolation from `none` filters to `drop-shadow()`.
     : <pre class=prod><dfn>grayscale()</dfn> = grayscale( <<number-percentage>> )</pre>
     ::
         Converts the input image to grayscale. The passed parameter defines the proportion of the conversion. A value of ''100%'' is completely grayscale. A value of ''0%'' leaves the input unchanged. Values between ''0%'' and ''100%'' are linear multipliers on the effect. Values of amount over ''100%'' are allowed but UAs must clamp the values to ''1''. The markup equivalent of this function is <a href="#grayscaleEquivalent">given below</a>.
@@ -428,7 +431,7 @@ For interpolation of values in <<filter-function>>s, the steps corresponding to 
     : <<opacity()>>
     : <<saturate()>>
     : <<sepia()>>
-    :: Convert percentage values to numbers with 0% being relative to 0 and 100% relative to 1. Interpolate values as real numbers.
+    :: Convert percentage values to numbers with 0% being relative to 0 and 100% relative to 1. Interpolate values [[css3-transitions#animtype-number|number]].
     : <<hue-rotate()>>
     :: Interpolate values as [[css3-transitions#animtype-number|number]].
     : <<drop-shadow()>>
@@ -3309,19 +3312,19 @@ For interpolation between one filter and a second, the steps corresponding to th
 
 <dl class=switch>
   <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
-  <dd>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</dd>
+  <dd>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of Filter Functions</a>.</dd>
   <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
   <dd>
     <ol class=algorithm>
-      <li>Append the missing equivalent <<filter-function>>s from the longer list to the end of the shorter list. The new added <<filter-function>>s must be initialized to their default values.</li>
-      <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</li>
+      <li>Append the missing equivalent <<filter-function>>s from the longer list to the end of the shorter list. The new added <<filter-function>>s must be initialized to their initial values for interpolation.</li>
+      <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of Filter Functions</a>.</li>
     </ol>
   </dd>
   <dt id='interpolation-none-filter-functions'>If one filter is ''filter/none'' and the other is a <<filter-function-list>> without <<filter/url>></dt>
   <dd>
     <ol class=algorithm>
-      <li>Replace ''filter/none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their default values.</li>
-      <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of &lt;filter-function>s</a>.</li>
+      <li>Replace ''filter/none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their initial values for interpolation.</li>
+      <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of Filter Functions</a>.</li>
     </ol>
   </dd>
   <dt id='no-interpolation'>Otherwise</dt>
@@ -3420,7 +3423,7 @@ The following significant changes were made since the <a href="https://www.w3.or
 * Add description elements to content model of all elements.
 * Clarify that crossorigin is not animatable.
 * <<hue-rotate()>> takes unitless zero.
-* Allow author to change order of <<color>> and <<length>> values of <<drop-shadow()>>. Change grammar to put <<color>> first.
+* Allow author to change order of <<color>> and <<length>> values of <<drop-shadow()>>. Change grammar to put <<color>> first. Differentiate between initial value for interpolation and default values for omitted values.
 * Define animation type of CSS properties.
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2013/WD-filter-effects-1-20131126/">26 November 2013 Working Draft</a>.
