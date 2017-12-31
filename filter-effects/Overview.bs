@@ -266,6 +266,9 @@ When used in this specification, terms have the meanings assigned in this sectio
 : <dfn>filter primitive</dfn>, <dfn dfn-type=element id="elementdef-filter-primitive">filter-primitive</dfn>
 ::
     The set of elements that control the output of a <a element>filter</a> element, particularly: <a element>feSpotLight</a>, <a element>feBlend</a>, <a element>feColorMatrix</a>, <a element>feComponentTransfer</a>, <a element>feComposite</a>, <a element>feConvolveMatrix</a>, <a element>feDiffuseLighting</a>, <a element>feDisplacementMap</a>, <a element>feDropShadow</a>, <a element>feFlood</a>, <a element>feGaussianBlur</a>, <a element>feImage</a>, <a element>feMerge</a>, <a element>feMorphology</a>, <a element>feOffset</a>, <a element>feSpecularLighting</a>, <a element>feTile</a>, <a element>feTurbulence</a>.
+: <dfn>pass through filter</dfn>
+::
+    The pass through filter output is equal to the primary input of the filter primitive.
 
 # Graphic filters: the 'filter' property # {#FilterProperty}
 
@@ -629,7 +632,57 @@ Most filter primitives take other filter primitives as input. The following attr
         Animatable: yes.
 </dl>
 
+## Filter primitive tree ## {#FilterPrimitiveTree}
+
 Issue(160): Allow nesting of filter primitives instead of referencing with in, in2 and result.
+
+Filter primitives with no or one filter primitive input can be linked together to a filter chain. E.g. the filter primitive representation of a <<filter-function-list>> with two or more <<filter-function>>s is an example of a filter chain. Every filter primitive takes the result of the previous filter primitive as input.
+
+<div class=example>
+    A simple example of a <a element>filter</a> element with its filter primitive children.
+    <pre><code highlight=svg>
+        &lt;filter id="filter">
+          &lt;feColorMatrix type="hueRotate" values="45"/>
+          &lt;feOffset dx="10" dy="10"/>
+          &lt;feGaussianBlur stdDeviation="3"/>
+        &lt;/filter>
+    </code></pre>
+
+    <a element>feColorMatrix</a>, <a element>feOffset</a> and <a element>feGaussianBlur</a> create a filter chain.
+
+    <a element>feColorMatrix</a> takes ''SourceGraphic'' as input. The result is the input of <a element>feOffset</a> with its result being the input of <a element>feGaussianBlur</a>.
+</div>
+
+Some filter primitives may have more than one filter primitive inputs. With the use of the <a element-attr>in</a> and <a element-attr>result</a> attributes it is possible to combine multiple filter primitives to a complex filter structure. Due to the non-forward reference restriction of filter primitives, every filter structure can be represented as a tree, the <dfn>filter primitive tree</dfn>. The root filter primitive of the filter primitive tree is the most subsequential primitive of <a element>filter</a> elements filter primitive children.
+
+A filter chain is one possible filter structure that can also be represented in a filter primitive tree. Therefore, filter chains are referred to as filter primitive trees onwards as well.
+
+A <a element>filter</a> element may have one or more filter primitive trees. The filter primitive tree whose subsequent filter primitive is the last filter primitive child of the <a element>filter</a> elements is the <dfn>primary filter primitive tree</dfn>.
+
+Only the primary filter primitive tree contributes to the filter process. Implementations may chose to ignore all other possible filter primitive trees.
+
+If a <a element>filter</a> element has no filter primitive tree then the element the filter applies to does not get rendered.
+
+<div class=example>
+    An example of multiple filter primitive trees:
+    <pre><code highlight=svg>
+        &lt;filter id="filter">
+          &lt-- The first filter primitive tree. Ignored for filter process. -->
+          &lt;feColorMatrix type="hueRotate" values="45"/>
+          &lt;feOffset dx="10" dy="10"/>
+          &lt;feGaussianBlur stdDeviation="3"/>
+          &lt-- The primary filter primitive tree. -->
+          &lt;feFlood flood-color="green" result="flood"/>
+          &lt;feComposite operator="in" in="SourceAlpha" in2="flood"/>
+        &lt;/filter>
+    </code></pre>
+
+    The above filter has 2 filter primitive trees with the filter primitives:
+    1. <a element>feColorMatrix</a>, <a element>feOffset</a> and <a element>feGaussianBlur</a> (with <a element>feGaussianBlur</a> being the root filter primitive of the tree) as well as
+    2. <a element>feFlood</a> and <a element>feComposite</a> (with <a element>feComposite</a> as the root filter primitive of the tree).
+
+    Both filter primitive trees are not connected. Only the 2nd, the primary filter primitive tree contributes to the filter process. The first tree can get ignored by implementations.
+</div>
 
 ## Filter primitive subregion ## {#FilterPrimitiveSubRegion}
 
@@ -905,6 +958,8 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
             : if <code>type="hueRotate"</code>
             :: defaults to the value ''0'' which results in the identity matrix.
         </dl>
+
+        If the number of entries in the <a element-attr for=feColorMatrix>values</a> list does not match the required number of entries by the <a element-attr for=feColorMatrix>type</a>, the filter primitive acts as a <a>pass through filter</a>.
 
         Animatable: yes.
 </dl>
@@ -1532,7 +1587,9 @@ When the image must be resampled to match the coordinate system defined by <a el
     ::
         The list of <<number>> s that make up the kernel matrix for the convolution. Values are separated by space characters and/or a comma. The number of entries in the list must equal &lt;orderX&gt; times &lt;orderY&gt;.
 
-        Issue(237): What happens if the conditions are not fulfilled or the attribute was not specified.
+        If the result of <code>orderX * orderY</code> is not equal to the the number of entries in the value list, the filter primitive acts as a <a>pass through filter</a>.
+
+        Issue(237): How to behave on invalid number of entries in the value list?
 
         Animatable: yes.
     : <dfn>divisor</dfn> = "<em><<number>></em>"
@@ -3383,7 +3440,7 @@ Note: This specification aggravates the restrictions to filter primitives based 
 
 <h3 id="fedisplacemnentmap-restrictions"><a element>feDisplacementMap</a> Restrictions</h3>
 
-If <a element>feDisplacementMap</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a element-attr for=feDisplacementMap>in2</a>), then <a element>feDisplacementMap</a> must not proceed with the filter operation and acts as a <dfn>pass through filter</dfn>. The pass through filter output is equal to the primary input of the filter.
+If <a element>feDisplacementMap</a> has a "tainted" flagged filter primitive as input and this input filter primitive is used as displacement map (referenced by <a element-attr for=feDisplacementMap>in2</a>), then <a element>feDisplacementMap</a> must not proceed with the filter operation and acts as a <a>pass through filter</a>.
 
 <h3 id="origin-restrictions">Origin Restrictions</h3>
 
@@ -3420,6 +3477,7 @@ The following significant changes were made since the <a href="https://www.w3.or
 * <<hue-rotate()>> takes unitless zero.
 * Allow author to change order of <<color>> and <<length>> values of <<drop-shadow()>>. Change grammar to put <<color>> first. Differentiate between initial value for interpolation and default values for omitted values.
 * Define animation type of CSS properties.
+* Make <a element>feColorMatrix</a> and <a element>feConvolveMatrix</a> a pass through on unfulfilled pre-conditions.
 
 The following significant changes were made since the <a href="https://www.w3.org/TR/2013/WD-filter-effects-1-20131126/">26 November 2013 Working Draft</a>.
 
