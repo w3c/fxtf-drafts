@@ -784,7 +784,9 @@ This filter blends two objects together using commonly used imaging software ble
         Animatable: yes.
     : <dfn>no-composite</dfn> = "<dfn attr-value for=no-composite>no-composite</dfn>"
     ::
-        If the <a element-attr>no-composite</a> attribute is present, the specified blend mode must not apply alpha compositing. See [[compositing-1#blending|Blending]] [[!COMPOSITING-1]] for the "mixing" formula without compositing.
+        If the <a element-attr>no-composite</a> attribute is present, the specified blend mode must not apply alpha compositing. See [[compositing-1#blending|Blending]] [[!COMPOSITING-1]] for the "mixing" formula without compositing. Otherwise, implementations must combine the blend mode specified by <a element-attr>mode</a> with the [[compositing-1#porterduffcompositingoperators_srcover|Source Over]] composite operator. See [[compositing-1#blending|Blending]] [[!COMPOSITING-1]] for the "mixing" formula with compositing.
+
+        Note: This attribute is an addition to the <a element>feBlend</a> element defintion in SVG 1.1. <a element-attr>no-composite</a>, when specified, is meant to avoid "double-compositing" effects when blending an input source with the backdrop of the filtered object (E.g. using the <a attr-value>BackgroundImage</a> filter primitive). For the majority of use cases authors will not need to specify the <a element-attr>no-composite</a> attribute.
 
         Animatable: no.</p>
     : <dfn>in2</dfn> = "<em>(see <a element-attr>in</a> attribute)</em>"
