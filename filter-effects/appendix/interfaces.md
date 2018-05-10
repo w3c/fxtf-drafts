@@ -125,7 +125,7 @@ SVGFEBlendElement includes SVGFilterPrimitiveStandardAttributes;
         : <dfn>SVG_FEBLEND_MODE_HUE</dfn>
         :: Corresponds to value ''hue''.
         : <dfn>SVG_FEBLEND_MODE_SATURATION</dfn>
-        :: Corresponds to value ''saturate''.
+        :: Corresponds to value ''saturation''.
         : <dfn>SVG_FEBLEND_MODE_COLOR</dfn>
         :: Corresponds to value ''color''.
         : <dfn>SVG_FEBLEND_MODE_LUMINOSITY</dfn>
