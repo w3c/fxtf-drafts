@@ -73,6 +73,17 @@ interface SVGFEBlendElement : SVGElement {
   const unsigned short SVG_FEBLEND_MODE_SCREEN = 3;
   const unsigned short SVG_FEBLEND_MODE_DARKEN = 4;
   const unsigned short SVG_FEBLEND_MODE_LIGHTEN = 5;
+  const unsigned short SVG_FEBLEND_MODE_OVERLAY = 6;
+  const unsigned short SVG_FEBLEND_MODE_COLOR_DODGE = 7;
+  const unsigned short SVG_FEBLEND_MODE_COLOR_BURN = 8;
+  const unsigned short SVG_FEBLEND_MODE_HARD_LIGHT = 9;
+  const unsigned short SVG_FEBLEND_MODE_SOFT_LIGHT = 10;
+  const unsigned short SVG_FEBLEND_MODE_DIFFERENCE = 11;
+  const unsigned short SVG_FEBLEND_MODE_EXCLUSION = 12;
+  const unsigned short SVG_FEBLEND_MODE_HUE = 13;
+  const unsigned short SVG_FEBLEND_MODE_SATURATION = 14;
+  const unsigned short SVG_FEBLEND_MODE_COLOR = 15;
+  const unsigned short SVG_FEBLEND_MODE_LUMINOSITY = 16;
 
   readonly attribute SVGAnimatedString in1;
   readonly attribute SVGAnimatedString in2;
@@ -97,6 +108,28 @@ SVGFEBlendElement includes SVGFilterPrimitiveStandardAttributes;
         :: Corresponds to value ''darken''.
         : <dfn>SVG_FEBLEND_MODE_LIGHTEN</dfn>
         :: Corresponds to value ''lighten''.
+        : <dfn>SVG_FEBLEND_MODE_OVERLAY</dfn>
+        :: Corresponds to value ''overlay''.
+        : <dfn>SVG_FEBLEND_MODE_COLOR_DODGE</dfn>
+        :: Corresponds to value ''color-dodge''.
+        : <dfn>SVG_FEBLEND_MODE_COLOR_BURN</dfn>
+        :: Corresponds to value ''color-burn''.
+        : <dfn>SVG_FEBLEND_MODE_HARD_LIGHT</dfn>
+        :: Corresponds to value ''hard-light''.
+        : <dfn>SVG_FEBLEND_MODE_SOFT_LIGHT</dfn>
+        :: Corresponds to value ''soft-light''.
+        : <dfn>SVG_FEBLEND_MODE_DIFFERENCE</dfn>
+        :: Corresponds to value ''difference''.
+        : <dfn>SVG_FEBLEND_MODE_EXCLUSION</dfn>
+        :: Corresponds to value ''exclusion''.
+        : <dfn>SVG_FEBLEND_MODE_HUE</dfn>
+        :: Corresponds to value ''hue''.
+        : <dfn>SVG_FEBLEND_MODE_SATURATION</dfn>
+        :: Corresponds to value ''saturate''.
+        : <dfn>SVG_FEBLEND_MODE_COLOR</dfn>
+        :: Corresponds to value ''color''.
+        : <dfn>SVG_FEBLEND_MODE_LUMINOSITY</dfn>
+        :: Corresponds to value ''luminosity''.
 </div>
 
 <div dfn-type=attribute dfn-for=SVGFEBlendElement>
