@@ -287,7 +287,7 @@ The description of the 'filter' property is as follows:
 
 <pre class='propdef'>
 Name: filter
-Value: none | <<filter-function-list>>
+Value: none | <<filter-value-list>>
 Initial: none
 Applies to: All elements. In SVG, it applies to <a>container elements</a> without the <a element>defs</a> element, all <a>graphics elements</a> and the <a element>use</a> element.
 Inherited: no
@@ -297,9 +297,19 @@ Media: visual
 Animatable: See prose in <a href="#animation-of-filters">Animation of Filters</a>.
 </pre>
 
-<pre class=prod><dfn>&lt;filter-function-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
+<pre class=prod><dfn>&lt;filter-value-list></dfn> = [ <<filter-function>> | <<filter/url>> <!--| <<child-selector>> -->]+</pre>
 
-A value of ''filter/none'' for the 'filter' property means no filter effect gets applied.
+<dl dfn-for="filter">
+    : <dfn>&lt;url></dfn>
+    ::
+        A filter reference to a <a element>filter</a> element. For example ''url(commonfilters.svg#filter)''. If the filter references a non-existent object or the referenced object is not a <a element>filter</a> element, then the whole filter chain is ignored. No filter is applied to the object.
+    : <<filter-function>>
+    ::
+        See <a href="#filter-functions">Filter Functions</a>.
+    : none
+    ::
+        No filter effect gets applied.
+</dl>
 
 A value other than ''filter/none'' for the 'filter' property results in the creation of a <a>containing block</a> for absolute and fixed positioned descendants unless the element it applies to is a document root element in the current <a>browsing context</a>. The list of functions are applied in the order provided.
 
@@ -333,9 +343,6 @@ Note: For some filter functions the default value for omitted values differes fr
 Issue(221): Do not clamp color values of filter function results between filter functions?
 
 <dl id="FilterFunction" dfn-for="filter">
-    : <dfn>&lt;url></dfn>
-    ::
-        A filter reference to a <a element>filter</a> element. For example ''url(commonfilters.svg#filter)''. If the filter references a non-existent object or the referenced object is not a <a element>filter</a> element, then the whole filter chain is ignored. No filter is applied to the object.
     : <pre class=prod><dfn>blur()</dfn> = blur( <<length>>? )</pre>
     ::
         Applies a Gaussian blur to the input image. The passed parameter defines the value of the standard deviation to the Gaussian function. The parameter is specified a CSS length, but does not accept percentage values. The markup equivalent of this function is <a href="#blurEquivalent">given below</a>.
@@ -666,7 +673,7 @@ Most filter primitives take other filter primitives as input. The following attr
 
 Issue(160): Allow nesting of filter primitives instead of referencing with in, in2 and result.
 
-Filter primitives with no or one filter primitive input can be linked together to a filter chain. E.g. the filter primitive representation of a <<filter-function-list>> with two or more <<filter-function>>s is an example of a filter chain. Every filter primitive takes the result of the previous filter primitive as input.
+Filter primitives with no or one filter primitive input can be linked together to a filter chain. E.g. the filter primitive representation of a <<filter-value-list>> with two or more <<filter-function>>s is an example of a filter chain. Every filter primitive takes the result of the previous filter primitive as input.
 
 <div class=example>
     A simple example of a <a element>filter</a> element with its filter primitive children.
@@ -3240,7 +3247,7 @@ The 'lighting-color' property is a <a href="https://www.w3.org/TR/2011/REC-SVG11
 
 CSS <<image>> values can be filtered with the filter functions specified for the CSS 'filter' property. This specification introduces the <<image>> <<filter()>> function with the following syntax:
 
-<pre class=prod><dfn>filter()</dfn> = filter( [ <<image>> | <<string>> ], <<filter-function-list>> )</pre>
+<pre class=prod><dfn>filter()</dfn> = filter( [ <<image>> | <<string>> ], <<filter-value-list>> )</pre>
 
 The <<filter()>> function takes two arguments. The first argument is an <<image>>. The second is a filter function list as specified for the CSS 'filter' property. The function takes the <<image>> parameter and applies the filter rules, returning a processing image. Filter- and filter effect regions are sized according to the <a>concrete object size</a> of the input <<image>>.
 
@@ -3402,19 +3409,19 @@ Note: For the handling of <a href="#FilterElement">filter sources</a> see sectio
 For interpolation between one filter and a second, the steps corresponding to the first matching condition in the following list must be run:
 
 <dl class=switch>
-  <dt id='from-to-animation-equal'>If both filters have a <<filter-function-list>> of same length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
+  <dt id='from-to-animation-equal'>If both filters have a <<filter-value-list>> of same length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
   <dd>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of Filter Functions</a>.</dd>
-  <dt id='from-to-animation-unequal'>If both filters have a <<filter-function-list>> of different length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
+  <dt id='from-to-animation-unequal'>If both filters have a <<filter-value-list>> of different length without <<filter/url>> and for each <<filter-function>> for which there is a corresponding item in each list
   <dd>
     <ol class=algorithm>
       <li>Append the missing equivalent <<filter-function>>s from the longer list to the end of the shorter list. The new added <<filter-function>>s must be initialized to their initial values for interpolation.</li>
       <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of Filter Functions</a>.</li>
     </ol>
   </dd>
-  <dt id='interpolation-none-filter-functions'>If one filter is ''filter/none'' and the other is a <<filter-function-list>> without <<filter/url>></dt>
+  <dt id='interpolation-none-filter-functions'>If one filter is ''filter/none'' and the other is a <<filter-value-list>> without <<filter/url>></dt>
   <dd>
     <ol class=algorithm>
-      <li>Replace ''filter/none'' with the corresponding <<filter-function-list>> of the other filter. The new <<filter-function>>s must be initialized to their initial values for interpolation.</li>
+      <li>Replace ''filter/none'' with the corresponding <<filter-value-list>> of the other filter. The new <<filter-function>>s must be initialized to their initial values for interpolation.</li>
       <li>Interpolate each <<filter-function>> pair following the rules in section <a href='#interpolation-of-filter-functions'>Interpolation of Filter Functions</a>.</li>
     </ol>
   </dd>
@@ -3426,7 +3433,7 @@ Issue(91): Compute distance of filter functions.
 
 ## Addition ## {#addition}
 
-It is possible to combine independent animations of <<filter-function-list>>s [[SVG11]].
+It is possible to combine independent animations of <<filter-value-list>>s [[SVG11]].
 
 Given two filter values representing an base value (<var>base filter list</var>) and a value to add (<var>added filter list</var>), returns the concatenation of the the two lists: &lsquo;<var>base filter list</var> <var>added filter list</var>&rsquo;.
 
