@@ -397,12 +397,11 @@ interface SVGFEConvolveMatrixElement : SVGElement {
   readonly attribute SVGAnimatedEnumeration edgeMode;
   readonly attribute SVGAnimatedNumber kernelUnitLengthX;
   readonly attribute SVGAnimatedNumber kernelUnitLengthY;
+  readonly attribute SVGAnimatedBoolean preserveAlpha;
 };
 
 SVGFEConvolveMatrixElement includes SVGFilterPrimitiveStandardAttributes;
 </pre>
-
-Issue(114): Restore already implemented `preserveAlpha` attribute.
 
 <div dfn-type=const dfn-for=SVGFEConvolveMatrixElement>
     : Constants in group “Edge Mode Values”:
@@ -442,6 +441,8 @@ Issue(114): Restore already implemented `preserveAlpha` attribute.
         :: Corresponds to attribute <a element-attr for=feConvolveMatrix>kernelUnitLength</a> on the given <a element>feConvolveMatrix</a> element.
         : <dfn>kernelUnitLengthY</dfn>
         :: Corresponds to attribute <a element-attr for=feConvolveMatrix>kernelUnitLength</a> on the given <a element>feConvolveMatrix</a> element.
+        : <dfn>preserveAlpha</dfn>
+        :: Corresponds to attribute <a element-attr for=feConvolveMatrix>preserveAlpha</a> on the given <a element>feConvolveMatrix</a> element.
 </div>
 
 ## Interface SVGFEDiffuseLightingElement ## {#InterfaceSVGFEDiffuseLightingElement}
