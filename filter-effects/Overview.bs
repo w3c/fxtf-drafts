@@ -340,8 +340,6 @@ Unless defined otherwise, omitted values default to the <a for=svg>initial value
 
 Note: For some filter functions the default value for omitted values differes from their <a for=svg>initial value</a> for interpolation. For the convenience of content creators, the default value for omitted values for <<grayscale()>>, <<sepia()>> and <<invert()>> is ''1'' (apply the effect to 100%) while the <a for=svg>initial value</a> for interpolation is ''0'' (no effect).
 
-Issue(221): Do not clamp color values of filter function results between filter functions?
-
 <dl id="FilterFunction" dfn-for="filter">
     : <pre class=prod><dfn>blur()</dfn> = blur( <<length>>? )</pre>
     ::
@@ -425,7 +423,6 @@ Issue(221): Do not clamp color values of filter function results between filter 
 
         Note: The opacity filter function is not meant to be a shorthand of the 'opacity' property. Furthermore, it allows setting the transparency of intermediate filter primitive results before passing to the next filter primitive. If the opacity filter function is set as last filter primitive, the value of the 'opacity' property is multiplied on top of the value of the filter function, which may result in a more transparent content.
 
-        Issue(178): Allow intermediate/input results/values to exceed range of 0..1 e.g `opacity(200%)`.
     : <pre class=prod><dfn>saturate()</dfn> = saturate( <<number-percentage>>? )</pre>
     ::
         Saturates the input image. The passed parameter defines the proportion of the conversion. A value of ''0%'' is completely un-saturated. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over ''100%'' are allowed, providing super-saturated results. The markup equivalent of this function is <a href="#saturateEquivalent">given below</a>.
@@ -514,8 +511,6 @@ The description of the <a element>filter</a> element follows:
     : <dfn>filterRes</dfn> = "<<number-optional-number>>"
     :: The <em>filterRes</em> attribute was removed from the specification. See SVG 1.1 specification for the defintion [[!SVG11]].
 </dl>
-
-Issue(25): Use geometry CSS properties instead of x, y, width and height attributes?
 
 Properties inherit into the <a element>filter</a> element from its ancestors; properties do <em>not</em> inherit from the element referencing the <a element>filter</a> element.
 
@@ -690,11 +685,11 @@ Filter primitives with no or one filter primitive input can be linked together t
     <a element>feColorMatrix</a> takes ''SourceGraphic'' as input. The result is the input of <a element>feOffset</a> with its result being the input of <a element>feGaussianBlur</a>.
 </div>
 
-Some filter primitives may have more than one filter primitive inputs. With the use of the <a element-attr>in</a> and <a element-attr>result</a> attributes it is possible to combine multiple filter primitives to a complex filter structure. Due to the non-forward reference restriction of filter primitives, every filter structure can be represented as a tree, the <dfn>filter primitive tree</dfn>. The root filter primitive of the filter primitive tree is the most subsequential primitive of <a element>filter</a> elements filter primitive children.
+Some filter primitives may have more than one filter primitive inputs. With the use of the <a element-attr>in</a> and <a element-attr>result</a> attributes it is possible to combine multiple filter primitives to a complex filter structure. Due to the non-forward reference restriction of filter primitives, every filter structure can be represented as a tree, the <dfn data-export>filter primitive tree</dfn>. The root filter primitive of the filter primitive tree is the most subsequential primitive of <a element>filter</a> elements filter primitive children.
 
 A filter chain is one possible filter structure that can also be represented in a filter primitive tree. Therefore, filter chains are referred to as filter primitive trees onwards as well.
 
-A <a element>filter</a> element may have one or more filter primitive trees. The filter primitive tree whose subsequent filter primitive is the last filter primitive child of the <a element>filter</a> elements is the <dfn>primary filter primitive tree</dfn>.
+A <a element>filter</a> element may have one or more filter primitive trees. The filter primitive tree whose subsequent filter primitive is the last filter primitive child of the <a element>filter</a> elements is the <dfn data-export>primary filter primitive tree</dfn>.
 
 Only the primary filter primitive tree contributes to the filter process. Implementations may chose to ignore all other possible filter primitive trees.
 
