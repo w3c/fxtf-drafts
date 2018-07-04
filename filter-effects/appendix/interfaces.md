@@ -12,7 +12,7 @@ interface SVGFilterElement : SVGElement {
   readonly attribute SVGAnimatedLength height;
 };
 
-SVGFilterElement implements SVGURIReference;
+SVGFilterElement includes SVGURIReference;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFilterElement>
@@ -744,7 +744,7 @@ interface SVGFEImageElement : SVGElement {
 };
 
 SVGFEImageElement includes SVGFilterPrimitiveStandardAttributes;
-SVGFEImageElement implements SVGURIReference;
+SVGFEImageElement includes SVGURIReference;
 </pre>
 
 <div dfn-type=attribute dfn-for=SVGFEImageElement>
