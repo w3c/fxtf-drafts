@@ -81,6 +81,7 @@ spec:css-display-3; type:property; text:display
 spec:filter-effects-1; type:value; text:in
 spec:filter-effects-1; type:value; text:table
 spec:filter-effects-1; type:value; text:linear
+spec:filter-effects-1; type:value; text:lighter
 </pre>
 <pre class=anchors>
 spec:svg12t; url:http://www.w3.org/TR/2008/REC-SVGTiny12-20081222/intro.html#TermUnsupportedValue; type:dfn; for:svg; text:unsupported
@@ -2029,22 +2030,22 @@ If L.S is positive, no light is present. (L<sub>r</sub> = L<sub>g</sub> = L<sub>
         If the attribute is not specified, then the effect is as if a value of ''1'' were specified.
 
         Animatable: yes.
-  : <dfn>diffuseConstant</dfn> = "<em><<number>></em>"
-  ::
-      kd in Phong lighting model. In SVG, this can be any non-negative number.
+    : <dfn>diffuseConstant</dfn> = "<em><<number>></em>"
+    ::
+        kd in Phong lighting model. In SVG, this can be any non-negative number.
 
-      If the attribute is not specified, then the effect is as if a value of ''1'' were specified.
-    
-      Animatable: yes.
-  : <dfn>kernelUnitLength</dfn> = "<em><<number-optional-number>></em>"
-  ::
-      The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feDiffuseLighting>kernelUnitLength</a> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>.
+        If the attribute is not specified, then the effect is as if a value of ''1'' were specified.
 
-      If a negative or zero value is specified the default value will be used instead.
+        Animatable: yes.
+    : <dfn>kernelUnitLength</dfn> = "<em><<number-optional-number>></em>"
+    ::
+        The first number is the &lt;dx&gt; value. The second number is the &lt;dy&gt; value. If the &lt;dy&gt; value is not specified, it defaults to the same value as &lt;dx&gt;. Indicates the intended distance in current filter units (i.e., units as determined by the value of attribute <a element-attr>primitiveUnits</a>) for <code>dx</code> and <code>dy</code>, respectively, in the <a href="#SurfaceNormalCalculations">surface normal calculation formulas</a>. By specifying value(s) for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>, the kernel becomes defined in a scalable, abstract coordinate system. If <a element-attr for=feDiffuseLighting>kernelUnitLength</a> is not specified, the <code>dx</code> and <code>dy</code> values should represent very small deltas relative to a given <code>(x,y)</code> position, which might be implemented in some cases as one pixel in the intermediate image offscreen bitmap, which is a pixel-based coordinate system, and thus potentially not scalable. For some level of consistency across display media and user agents, it is necessary that a value be provided for <a element-attr for=feDiffuseLighting>kernelUnitLength</a>.
 
-      Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.
+        If a negative or zero value is specified the default value will be used instead.
 
-      Animatable: yes.
+        Note: This attribute is deprecated and will be removed. It does not provide a reliable way to create platform independent results. Future versions of this specification will cover this use case.
+
+        Animatable: yes.
 
 </dl>
 
@@ -2624,7 +2625,7 @@ See <a element>feDiffuseLighting</a> for definition of N and (L<sub>r</sub>, L<s
 
 The definition of H reflects our assumption of the constant eye vector E = (0,0,1):
 
-<cpde>
+<code>
   H = (L + E) / Norm(L+E)
 </code>
 
