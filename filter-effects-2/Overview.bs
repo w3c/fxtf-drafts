@@ -17,6 +17,8 @@ Abstract:
 Abstract: This is Level 2 of the Filter Effects Module.
 </pre>
 
+Issue: This specification is under discussion, <a href="https://github.com/w3c/fxtf-drafts/issues/53">here</a>.
+
 <h2 id="intro">Introduction</h2>
 
 <em>This section is not normative</em>
@@ -90,15 +92,6 @@ href="https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block">Contain
 Block</a> for absolute and fixed position descendants, in the same way that CSS
 'filter' does.
 
-Note: In addition to the stacking context and containing block formed by the element
-with backdrop-filter, the corresponding <a>Backdrop Root</a> element also forms
-a <a
-href="https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block">Containing
-Block</a> for all descendants. This is to avoid child absolute or fixed position
-elements that do not get clipped by parent clips or overflow:scroll elements,
-but which need to be read back to form the <a>Backdrop Root Image</a>.
-
-
 # Backdrop Root # {#BackdropRoot}
 
 The <dfn>Backdrop Root Image</dfn> is defined as the entire painted output produced by
@@ -114,7 +107,6 @@ A <dfn>Backdrop Root</dfn> is formed, anywhere in the document, by an element in
  * An element with a filter property other than "none".
  * An element with an opacity value less than 1.
  * An element with mask, mask-image, mask-border, clip, clip-path properties with values other than “none”.
- * An element with an overflow property other than "visible" and a border-radius other than 0.
  * An element with a backdrop-filter value other than "none".
  * An element with a mix-blend-mode value other than "normal".
  * An element with a will-change value specifying any property that would create a Backdrop Root on non-initial value.
@@ -325,7 +317,7 @@ Less obvious triggers:
  * <b>A filter element.</b> Filters apply to an element and all of its children, rendered together. Allowing the Backdrop Root to read back content above a filtered element necessitates breaking the atomicity of the filter, with undefined results. See [[#BackdropRootMotivation]] for more a much more detailed explanation and some examples.
  * <b>An element with opacity < 1.</b> Elements with an opacity value less than 1.0 suffer from a very similar problem as filter elements. Because the opacity applies to the element and all children, rendered together, the opacity value would be "applied twice" if the Backdrop Root Image were to read back content above the semi-transparent element. Effectively, the backdrop-filtered portion of the backdrop would be rendered with (Opacity)^2. See [[#BackdropRootMotivation]] for more details and an example.
  * <b>CSS Masks.</b> There are two reasons why a CSS mask triggers a Backdrop Root element. The first is that masks are exactly analogous to the opacity problem described in the bullet above. Masks can contain regions of partial opacity (e.g. <code>style="mask-image: linear-gradient(to bottom, transparent 25%, black 75%);"</code>). If the Backdrop Root Image were to read back content above the mask, those partially-opaque regions would be double-applied to the final backdrop image, which would result in incorrect rendering. See [[#BackdropRootMotivation]] for more details and an example.
- * <b>Elements with clip-path, and rounded-corner overflow clips.</b> These elements are effectively rendered as if they were a mask. While in general that mask doesn't explicitly contain partially-opaque regions, it is usually rendered with antialiasing, which introduces semi-transparent portions around the edges of the clip. Therefore, for the same reasons as described above for masks, those semi-transparent regions will be incorrectly rendered, producing visual artifacts near the edges of the clip. Disabling antialiasing for rounded corner clips and clip-paths would produce poor rendering quality, and relaxing the Backdrop Root restriction on these elements would similarly lead to observable artifacts. Note that rectangular clips are not included in this list, as they do not require antialiasing.
+ * <b>Elements with clip-path.</b> These elements are effectively rendered as if they were a mask. While in general that mask doesn't explicitly contain partially-opaque regions, it is usually rendered with antialiasing, which introduces semi-transparent portions around the edges of the clip. Therefore, for the same reasons as described above for masks, those semi-transparent regions will be incorrectly rendered, producing visual artifacts near the edges of the clip. Disabling antialiasing for clip-paths would produce poor rendering quality, and relaxing the Backdrop Root restriction on these elements would similarly lead to observable artifacts.
  * <b>Backdrop-filter and mix-blend-mode.</b> These elements themselves must form a Backdrop Root for two reasons. First, they cause the same problems that filters and opacity cause: there is an ambiguity about what constitutes the image to be filtered or blended, given the atomicity of the operations. Second, there would likely be an exponential performance degradation in the case of nested backdrop-filter or mix-blend-mode elements, due to the need to re-paint the content behind each element. Each nesting level will double the number of these required re-paint cycles, leading to significant performance problems.
 
 For all of the above triggers, performance is also an important motivation. In all of these cases, relaxing the Backdrop Root constraint would lead to a potential doubling of the CPU/GPU memory and bandwidth. See [[#BackdropRootMotivation]] for a more detailed discussion.
