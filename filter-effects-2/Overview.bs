@@ -106,10 +106,20 @@ A <dfn>Backdrop Root</dfn> is formed, anywhere in the document, by an element in
  * The root element of the document (HTML).
  * An element with a filter property other than "none".
  * An element with an opacity value less than 1.
- * An element with mask, mask-image, mask-border, clip, clip-path properties with values other than “none”.
+ * An element with mask, mask-image, mask-border, or clip-path properties with values other than “none”.
  * An element with a backdrop-filter value other than "none".
  * An element with a mix-blend-mode value other than "normal".
  * An element with a will-change value specifying any property that would create a Backdrop Root on non-initial value.
+
+Note: this definition encompases fewer element types than the definition for a
+Stacking Context. In particular, a Backdrop Root is not formed by elements with
+z-index applied, fixed or sticky-positioned elements, and elements with
+transforms applied. This allows elements with backdrop-filter or mix-blend-mode
+to apply to elements higher up the DOM tree than would otherwise apply if they
+stopped at the parent Stacking Context. For example, a container can be used to
+contain elements with backdrop-filter applied, and that container can use
+transforms for animation or positioning, while still allowing the
+backdrop-filter to apply to the background behind the container.
 
 
 ## Motivation ## {#BackdropRootMotivation}
@@ -168,16 +178,6 @@ performance breakdown. One set of nested backdrop-filtered elements would
 require four (4) times the CPU/GPU and memory. Two nested sets would require
 eight (8) times the CPU and memory. Clearly, this is not a scalable approach.
 
-Note: this definition encompases fewer element types than the definition for a
-Stacking Context. In particular, a Backdrop Root is not formed by elements with
-z-index applied, fixed or sticky-positioned elements, and elements with
-transforms applied. This allows elements with backdrop-filter or mix-blend-mode
-to apply to elements higher up the DOM tree than would otherwise apply if they
-stopped at the parent Stacking Context. For example, a container can be used to
-contain elements with backdrop-filter applied, and that container can use
-transforms for animation or positioning, while still allowing the
-backdrop-filter to apply to the background behind the container.
-
 <div class="example">
 <p>Given the following html code:</p>
 <pre><code highlight=html>
@@ -225,7 +225,7 @@ backdrop-filter to apply to the background behind the container.
     backdrop-filter applied. Since, for this example, the backdrop-filter "sees"
     all the way to the root, the "Box" element needs to be temporarily
     "completed" so that the final product can be used as input to "Dialog". This
-    means applying it's "filter: invert(1)" style. Note, this is where the
+    means applying its "filter: invert(1)" style. Note, this is where the
     atomicity of the Stacking Context created by "Box" is broken. This is also
     where the performance penalty applies - the GPU draw work that is
     performed here will end up being done twice.</p>
@@ -314,8 +314,8 @@ Obvious triggers:
  * <b>Will-change values.</b> The will-change hint means that the element might take on a value that creates a Backdrop Root. For this reason, the Backdrop Root should be created immediately, to avoid changing it (and therefore changing the rendered appearance) during animation.
 
 Less obvious triggers:
- * <b>A filter element.</b> Filters apply to an element and all of its children, rendered together. Allowing the Backdrop Root to read back content above a filtered element necessitates breaking the atomicity of the filter, with undefined results. See [[#BackdropRootMotivation]] for more a much more detailed explanation and some examples.
- * <b>An element with opacity < 1.</b> Elements with an opacity value less than 1.0 suffer from a very similar problem as filter elements. Because the opacity applies to the element and all children, rendered together, the opacity value would be "applied twice" if the Backdrop Root Image were to read back content above the semi-transparent element. Effectively, the backdrop-filtered portion of the backdrop would be rendered with (Opacity)^2. See [[#BackdropRootMotivation]] for more details and an example.
+ * <b>An element with a filter.</b> Filters apply to an element and all of its children, rendered together. Allowing the Backdrop Root to read back content above a filtered element necessitates breaking the atomicity of the filter, with undefined results. See [[#BackdropRootMotivation]] for more a much more detailed explanation and some examples.
+ * <b>An element with opacity < 1.</b> Elements with an opacity value less than 1.0 suffer from a very similar problem as elements with filters. Because the opacity applies to the element and all children, rendered together, the opacity value would be "applied twice" if the Backdrop Root Image were to read back content above the semi-transparent element. Effectively, the backdrop-filtered portion of the backdrop would be rendered with (Opacity)^2. See [[#BackdropRootMotivation]] for more details and an example.
  * <b>CSS Masks.</b> There are two reasons why a CSS mask triggers a Backdrop Root element. The first is that masks are exactly analogous to the opacity problem described in the bullet above. Masks can contain regions of partial opacity (e.g. <code>style="mask-image: linear-gradient(to bottom, transparent 25%, black 75%);"</code>). If the Backdrop Root Image were to read back content above the mask, those partially-opaque regions would be double-applied to the final backdrop image, which would result in incorrect rendering. See [[#BackdropRootMotivation]] for more details and an example.
  * <b>Elements with clip-path.</b> These elements are effectively rendered as if they were a mask. While in general that mask doesn't explicitly contain partially-opaque regions, it is usually rendered with antialiasing, which introduces semi-transparent portions around the edges of the clip. Therefore, for the same reasons as described above for masks, those semi-transparent regions will be incorrectly rendered, producing visual artifacts near the edges of the clip. Disabling antialiasing for clip-paths would produce poor rendering quality, and relaxing the Backdrop Root restriction on these elements would similarly lead to observable artifacts.
  * <b>Backdrop-filter and mix-blend-mode.</b> These elements themselves must form a Backdrop Root for two reasons. First, they cause the same problems that filters and opacity cause: there is an ambiguity about what constitutes the image to be filtered or blended, given the atomicity of the operations. Second, there would likely be an exponential performance degradation in the case of nested backdrop-filter or mix-blend-mode elements, due to the need to re-paint the content behind each element. Each nesting level will double the number of these required re-paint cycles, leading to significant performance problems.
