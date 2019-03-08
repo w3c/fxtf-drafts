@@ -9,7 +9,7 @@
   <link href="../default.css" rel="stylesheet" type="text/css">
   <link href="../csslogo.ico" rel="shortcut icon" type="image/x-icon">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version 1cff2db4ee2c3bba7a4077d3007528ec73b0485d" name="generator">
+  <meta content="Bikeshed version c03af8da7325f5ae3f9ca742161b5d270bbce12f" name="generator">
   <link href="https://www.w3.org/TR/filter-effects-2/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -257,7 +257,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Filter Effects Module Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-02-25">25 February 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-03-08">8 March 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -306,7 +306,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/32061/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
 	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2018/Process-20180201/" id="w3c_process_revision">1 February 2018 W3C Process Document</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2019/Process-20190301/" id="w3c_process_revision">1 March 2019 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -454,7 +454,7 @@ Backdrop Root Image.</p>
     <li data-md>
      <p>An element with an opacity value less than 1.</p>
     <li data-md>
-     <p>An element with mask, mask-image, mask-border, clip, clip-path properties with values other than “none”.</p>
+     <p>An element with mask, mask-image, mask-border, or clip-path properties with values other than “none”.</p>
     <li data-md>
      <p>An element with a backdrop-filter value other than "none".</p>
     <li data-md>
@@ -462,6 +462,15 @@ Backdrop Root Image.</p>
     <li data-md>
      <p>An element with a will-change value specifying any property that would create a Backdrop Root on non-initial value.</p>
    </ul>
+   <p class="note" role="note"><span>Note:</span> this definition encompases fewer element types than the definition for a
+Stacking Context. In particular, a Backdrop Root is not formed by elements with
+z-index applied, fixed or sticky-positioned elements, and elements with
+transforms applied. This allows elements with backdrop-filter or mix-blend-mode
+to apply to elements higher up the DOM tree than would otherwise apply if they
+stopped at the parent Stacking Context. For example, a container can be used to
+contain elements with backdrop-filter applied, and that container can use
+transforms for animation or positioning, while still allowing the
+backdrop-filter to apply to the background behind the container.</p>
    <h3 class="heading settled" data-level="3.1" id="BackdropRootMotivation"><span class="secno">3.1. </span><span class="content">Motivation</span><a class="self-link" href="#BackdropRootMotivation"></a></h3>
    <p><em>This section is not normative</em></p>
    <p>There are currently three related, but distinct, concepts in the web
@@ -516,17 +525,8 @@ mix-blend-mode elements were allowed, this doubling would become an exponential
 performance breakdown. One set of nested backdrop-filtered elements would
 require four (4) times the CPU/GPU and memory. Two nested sets would require
 eight (8) times the CPU and memory. Clearly, this is not a scalable approach.</p>
-   <p class="note" role="note"><span>Note:</span> this definition encompases fewer element types than the definition for a
-Stacking Context. In particular, a Backdrop Root is not formed by elements with
-z-index applied, fixed or sticky-positioned elements, and elements with
-transforms applied. This allows elements with backdrop-filter or mix-blend-mode
-to apply to elements higher up the DOM tree than would otherwise apply if they
-stopped at the parent Stacking Context. For example, a container can be used to
-contain elements with backdrop-filter applied, and that container can use
-transforms for animation or positioning, while still allowing the
-backdrop-filter to apply to the background behind the container.</p>
-   <div class="example" id="example-4d387848">
-    <a class="self-link" href="#example-4d387848"></a> 
+   <div class="example" id="example-2baed611">
+    <a class="self-link" href="#example-2baed611"></a> 
     <p>Given the following html code:</p>
 <pre><code class="highlight"><c- p>&lt;</c-><c- f>html</c-> <c- e>style</c-><c- o>=</c-><c- s>"background:lightgrey;"</c-><c- p>></c->
   <c- p>&lt;</c-><c- f>div</c-> <c- e>class</c-><c- o>=</c-><c- s>"box"</c-><c- p>></c->
@@ -571,7 +571,7 @@ backdrop-filter to apply to the background behind the container.</p>
     backdrop-filter applied. Since, for this example, the backdrop-filter "sees"
     all the way to the root, the "Box" element needs to be temporarily
     "completed" so that the final product can be used as input to "Dialog". This
-    means applying it’s "filter: invert(1)" style. Note, this is where the
+    means applying its "filter: invert(1)" style. Note, this is where the
     atomicity of the Stacking Context created by "Box" is broken. This is also
     where the performance penalty applies - the GPU draw work that is
     performed here will end up being done twice.</p>
@@ -655,9 +655,9 @@ backdrop-filter to apply to the background behind the container.</p>
    <p>Less obvious triggers:</p>
    <ul>
     <li data-md>
-     <p><b>A filter element.</b> Filters apply to an element and all of its children, rendered together. Allowing the Backdrop Root to read back content above a filtered element necessitates breaking the atomicity of the filter, with undefined results. See <a href="#BackdropRootMotivation">§3.1 Motivation</a> for more a much more detailed explanation and some examples.</p>
+     <p><b>An element with a filter.</b> Filters apply to an element and all of its children, rendered together. Allowing the Backdrop Root to read back content above a filtered element necessitates breaking the atomicity of the filter, with undefined results. See <a href="#BackdropRootMotivation">§3.1 Motivation</a> for more a much more detailed explanation and some examples.</p>
     <li data-md>
-     <p><b>An element with opacity &lt; 1.</b> Elements with an opacity value less than 1.0 suffer from a very similar problem as filter elements. Because the opacity applies to the element and all children, rendered together, the opacity value would be "applied twice" if the Backdrop Root Image were to read back content above the semi-transparent element. Effectively, the backdrop-filtered portion of the backdrop would be rendered with (Opacity)^2. See <a href="#BackdropRootMotivation">§3.1 Motivation</a> for more details and an example.</p>
+     <p><b>An element with opacity &lt; 1.</b> Elements with an opacity value less than 1.0 suffer from a very similar problem as elements with filters. Because the opacity applies to the element and all children, rendered together, the opacity value would be "applied twice" if the Backdrop Root Image were to read back content above the semi-transparent element. Effectively, the backdrop-filtered portion of the backdrop would be rendered with (Opacity)^2. See <a href="#BackdropRootMotivation">§3.1 Motivation</a> for more details and an example.</p>
     <li data-md>
      <p><b>CSS Masks.</b> There are two reasons why a CSS mask triggers a Backdrop Root element. The first is that masks are exactly analogous to the opacity problem described in the bullet above. Masks can contain regions of partial opacity (e.g. <code>style="mask-image: linear-gradient(to bottom, transparent 25%, black 75%);"</code>). If the Backdrop Root Image were to read back content above the mask, those partially-opaque regions would be double-applied to the final backdrop image, which would result in incorrect rendering. See <a href="#BackdropRootMotivation">§3.1 Motivation</a> for more details and an example.</p>
     <li data-md>
