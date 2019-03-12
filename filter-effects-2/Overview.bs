@@ -10,7 +10,7 @@ Link Defaults: css-transforms-1 (property) transform, svg (property) color-inter
 Group: fxtf
 Editor: Dean Jackson, Apple Inc. http://www.apple.com/, dino@apple.com, w3cid 42080
 Former Editor: Dirk Schulze, Adobe Inc., dschulze@adobe.com, w3cid 51803
-!Author: Mason Freed, Google, http://www.google.com/, masonfreed@google.com
+!Author: <a href="mailto: masonfreed@google.com">Mason Freed</a> (<a href="http://www.google.com">Google</a>)
 Test Suite: http://test.csswg.org/suites/filter-effects/nightly-unstable/
 Abstract: Filter effects are a way of processing an element's rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.
 Abstract:
@@ -21,7 +21,7 @@ Issue: This specification is under discussion, <a href="https://github.com/w3c/f
 
 <h2 id="intro">Introduction</h2>
 
-<em>This section is not normative</em>
+<em>This section is non-normative</em>
 
 A filter effect is a graphical operation that is applied to an element as it is
 drawn into the document. It is an image-based effect, in that it takes zero or
@@ -66,12 +66,6 @@ the following steps are performed:
 6. If element B has any transforms, effects, or clips, apply those to T’.
 7. Composite the contents of T’ into element B's parent, using source-over compositing.
 
-Note that the effect of the backdrop-filter will not be visible unless some
-portion of element B is semi-transparent. Also note that any opacity applied to
-element B will be applied to the filtered backdrop image as well. Therefore, to
-create a "transparent" element that allows the full filtered backdrop image to
-be seen, you can use "background-color: transparent;".
-
 <pre class=link-defaults>
   spec:filter-effects-1; type:element; text:filter
 </pre>
@@ -84,6 +78,12 @@ reference functions can specify an alternate input, but still uses the previous
 output as its SourceGraphic.
 
 Filter functions must operate in the sRGB color space.
+
+Note: that the effect of the backdrop-filter will not be visible unless some
+portion of element B is semi-transparent. Also note that any opacity applied to
+element B will be applied to the filtered backdrop image as well. Therefore, to
+create a "transparent" element that allows the full filtered backdrop image to
+be seen, you can use "background-color: transparent;".
 
 Note: A computed value of other than ''backdrop-filter/none'' results in the
 creation of both a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking
@@ -124,7 +124,7 @@ backdrop-filter to apply to the background behind the container.
 
 ## Motivation ## {#BackdropRootMotivation}
 
-<em>This section is not normative</em>
+<em>This section is non-normative</em>
 
 There are currently three related, but distinct, concepts in the web
 platform:
@@ -174,9 +174,7 @@ double the required rendering time, and would potentially require twice the
 memory usage and GPU bandwidth to store the intermediate graphics texture
 holding the contents to be filtering. And assuming nested backdrop-filters or
 mix-blend-mode elements were allowed, this doubling would become an exponential
-performance breakdown. One set of nested backdrop-filtered elements would
-require four (4) times the CPU/GPU and memory. Two nested sets would require
-eight (8) times the CPU and memory. Clearly, this is not a scalable approach.
+performance breakdown. Clearly, this is not a scalable approach.
 
 <div class="example">
 <p>Given the following html code:</p>
@@ -305,7 +303,7 @@ eight (8) times the CPU and memory. Clearly, this is not a scalable approach.
 
 ## Backdrop Root Triggers ## {#BackdropRootTriggers}
 
-<em>This section is not normative</em>
+<em>This section is non-normative</em>
 
 As described in [[#BackdropRootMotivation]], several operations pose fundamental problems for operations that need to read back content that was painted before, and then re-paint that content (possibly filtered or blended) again. The list of element types that trigger a [[#BackdropRoot]] each pose one of these problems. Some are obvious and some are more nuanced. This section describes why each trigger is necessary.
 
@@ -324,7 +322,7 @@ For all of the above triggers, performance is also an important motivation. In a
 
 ## Mix Blend Mode ## {#mix-blend-mode}
 
-<em>This section is not normative</em>
+<em>This section is non-normative</em>
 
 The current definition of mix-blend-mode <a href="https://www.w3.org/TR/compositing-1/#csscompositingrules_CSS">defines</a> the input (backdrop) image for mix-blend-mode as being all of the underlying content of the parent stacking context. This definition could likely be relaxed to use the Backdrop Root definition instead, allowing more elements to be blended.
 

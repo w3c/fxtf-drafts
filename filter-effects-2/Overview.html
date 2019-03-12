@@ -9,7 +9,7 @@
   <link href="../default.css" rel="stylesheet" type="text/css">
   <link href="../csslogo.ico" rel="shortcut icon" type="image/x-icon">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version c03af8da7325f5ae3f9ca742161b5d270bbce12f" name="generator">
+  <meta content="Bikeshed version 9c9e00cfdaddb9b81439182b02ae23e5d5b65b2d" name="generator">
   <link href="https://www.w3.org/TR/filter-effects-2/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -257,7 +257,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Filter Effects Module Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-03-08">8 March 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-03-12">12 March 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -276,7 +276,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <dt>Suggest an Edit for this Spec:
      <dd><a href="https://github.com/w3c/fxtf-drafts/blob/master/filter-effects-2/Overview.bs">GitHub Editor</a>
      <dt>Author:
-     <dd>Mason Freed, Google, http://www.google.com/, masonfreed@google.com
+     <dd><a href="mailto: masonfreed@google.com">Mason Freed</a> (<a href="http://www.google.com">Google</a>)
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -358,7 +358,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <main>
    <p class="issue" id="issue-cbfded64"><a class="self-link" href="#issue-cbfded64"></a> This specification is under discussion, <a href="https://github.com/w3c/fxtf-drafts/issues/53">here</a>.</p>
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
-   <p><em>This section is not normative</em></p>
+   <p><em>This section is non-normative</em></p>
    <p>A filter effect is a graphical operation that is applied to an element as it is
 drawn into the document. It is an image-based effect, in that it takes zero or
 more images as input, a number of parameters specific to the effect, and then
@@ -424,16 +424,16 @@ the following steps are performed:</p>
     <li data-md>
      <p>Composite the contents of T’ into element B’s parent, using source-over compositing.</p>
    </ol>
-   <p>Note that the effect of the backdrop-filter will not be visible unless some
-portion of element B is semi-transparent. Also note that any opacity applied to
-element B will be applied to the filtered backdrop image as well. Therefore, to
-create a "transparent" element that allows the full filtered backdrop image to
-be seen, you can use "background-color: transparent;".</p>
    <p>The first <a data-link-type="element" href="https://drafts.fxtf.org/filter-effects-1/#elementdef-filter" id="ref-for-elementdef-filter">filter</a> function or filter reference in the <a class="production css" data-link-type="type" href="https://drafts.fxtf.org/filter-effects-1/#typedef-filter-value-list" id="ref-for-typedef-filter-value-list①">&lt;filter-value-list></a> takes the element’s <a data-link-type="dfn" href="#backdrop-root-image" id="ref-for-backdrop-root-image①">Backdrop Root Image</a> as the input image. Subsequent
 operations take the output from the previous filter function or <span id="ref-for-elementdef-filter①">filter</span> reference as the input image. The <span id="ref-for-elementdef-filter②">filter</span> element
 reference functions can specify an alternate input, but still uses the previous
 output as its SourceGraphic.</p>
    <p>Filter functions must operate in the sRGB color space.</p>
+   <p class="note" role="note"><span>Note:</span> that the effect of the backdrop-filter will not be visible unless some
+portion of element B is semi-transparent. Also note that any opacity applied to
+element B will be applied to the filtered backdrop image as well. Therefore, to
+create a "transparent" element that allows the full filtered backdrop image to
+be seen, you can use "background-color: transparent;".</p>
    <p class="note" role="note"><span>Note:</span> A computed value of other than <span class="css">none</span> results in the
 creation of both a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking
 context</a> <a data-link-type="biblio" href="#biblio-css21">[CSS21]</a> and a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block">Containing
@@ -472,7 +472,7 @@ contain elements with backdrop-filter applied, and that container can use
 transforms for animation or positioning, while still allowing the
 backdrop-filter to apply to the background behind the container.</p>
    <h3 class="heading settled" data-level="3.1" id="BackdropRootMotivation"><span class="secno">3.1. </span><span class="content">Motivation</span><a class="self-link" href="#BackdropRootMotivation"></a></h3>
-   <p><em>This section is not normative</em></p>
+   <p><em>This section is non-normative</em></p>
    <p>There are currently three related, but distinct, concepts in the web
 platform:</p>
    <ul>
@@ -522,9 +522,7 @@ double the required rendering time, and would potentially require twice the
 memory usage and GPU bandwidth to store the intermediate graphics texture
 holding the contents to be filtering. And assuming nested backdrop-filters or
 mix-blend-mode elements were allowed, this doubling would become an exponential
-performance breakdown. One set of nested backdrop-filtered elements would
-require four (4) times the CPU/GPU and memory. Two nested sets would require
-eight (8) times the CPU and memory. Clearly, this is not a scalable approach.</p>
+performance breakdown. Clearly, this is not a scalable approach.</p>
    <div class="example" id="example-2baed611">
     <a class="self-link" href="#example-2baed611"></a> 
     <p>Given the following html code:</p>
@@ -643,7 +641,7 @@ eight (8) times the CPU and memory. Clearly, this is not a scalable approach.</p
     </div>
    </div>
    <h3 class="heading settled" data-level="3.2" id="BackdropRootTriggers"><span class="secno">3.2. </span><span class="content">Backdrop Root Triggers</span><a class="self-link" href="#BackdropRootTriggers"></a></h3>
-   <p><em>This section is not normative</em></p>
+   <p><em>This section is non-normative</em></p>
    <p>As described in <a href="#BackdropRootMotivation">§3.1 Motivation</a>, several operations pose fundamental problems for operations that need to read back content that was painted before, and then re-paint that content (possibly filtered or blended) again. The list of element types that trigger a <a href="#BackdropRoot">§3 Backdrop Root</a> each pose one of these problems. Some are obvious and some are more nuanced. This section describes why each trigger is necessary.</p>
    <p>Obvious triggers:</p>
    <ul>
@@ -667,7 +665,7 @@ eight (8) times the CPU and memory. Clearly, this is not a scalable approach.</p
    </ul>
    <p>For all of the above triggers, performance is also an important motivation. In all of these cases, relaxing the Backdrop Root constraint would lead to a potential doubling of the CPU/GPU memory and bandwidth. See <a href="#BackdropRootMotivation">§3.1 Motivation</a> for a more detailed discussion.</p>
    <h3 class="heading settled" data-level="3.3" id="mix-blend-mode"><span class="secno">3.3. </span><span class="content">Mix Blend Mode</span><a class="self-link" href="#mix-blend-mode"></a></h3>
-   <p><em>This section is not normative</em></p>
+   <p><em>This section is non-normative</em></p>
    <p>The current definition of mix-blend-mode <a href="https://www.w3.org/TR/compositing-1/#csscompositingrules_CSS">defines</a> the input (backdrop) image for mix-blend-mode as being all of the underlying content of the parent stacking context. This definition could likely be relaxed to use the Backdrop Root definition instead, allowing more elements to be blended.</p>
    <h2 class="heading settled" data-level="4" id="priv-sec"><span class="secno">4. </span><span class="content">Privacy and Security Considerations</span><a class="self-link" href="#priv-sec"></a></h2>
    <p>All of the same privacy and security concerns exist for backdrop-filter as do for "standard" filters. See <a href="https://www.w3.org/TR/filter-effects-1/#tainted-filter-primitives">Filter Effects Module Level 1 §tainted-filter-primitives</a> for more details.</p>
