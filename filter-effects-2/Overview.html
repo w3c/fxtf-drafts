@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="exploring" name="csswg-work-status">
   <meta content="ED" name="w3c-status">
-  <meta content="Filter effects are a way of processing an element&apos;s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.    This is Level 2 of the Filter Effects Module." name="abstract">
+  <meta content="Filter effects are a way of processing an element&apos;s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.  This is Level 2 of the Filter Effects Module." name="abstract">
   <link href="../default.css" rel="stylesheet" type="text/css">
   <link href="../csslogo.ico" rel="shortcut icon" type="image/x-icon">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
@@ -257,7 +257,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Filter Effects Module Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-03-12">12 March 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-03-14">14 March 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -269,14 +269,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <dt>Issue Tracking:
      <dd><a href="#issues-index">Inline In Spec</a>
      <dd><a href="https://github.com/w3c/fxtf-drafts/labels/filter-effects-2">GitHub Issues</a>
-     <dt class="editor">Editor:
+     <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard" data-editor-id="42080"><a class="p-name fn u-email email" href="mailto:dino@apple.com">Dean Jackson</a> (<a class="p-org org" href="http://www.apple.com/">Apple Inc.</a>)
+     <dd class="editor p-author h-card vcard" data-editor-id="90243"><a class="p-name fn u-email email" href="mailto:chrishtr@chromium.org">Chris Harrelson</a> (<a class="p-org org" href="http://www.google.com/">Google Inc.</a>)
      <dt class="editor">Former Editor:
      <dd class="editor p-author h-card vcard" data-editor-id="51803"><a class="p-name fn u-email email" href="mailto:dschulze@adobe.com">Dirk Schulze</a> (<span class="p-org org">Adobe Inc.</span>)
      <dt>Suggest an Edit for this Spec:
      <dd><a href="https://github.com/w3c/fxtf-drafts/blob/master/filter-effects-2/Overview.bs">GitHub Editor</a>
-     <dt>Author:
-     <dd><a href="mailto: masonfreed@google.com">Mason Freed</a> (<a href="http://www.google.com">Google</a>)
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -285,8 +284,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>Filter effects are a way of processing an element’s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.</p>
-   <p>This is Level 2 of the Filter Effects Module.</p>
+   <p>Filter effects are a way of processing an element’s rendering before it is displayed in the document. Typically, rendering an element via CSS or SVG can conceptually described as if the element, including its children, are drawn into a buffer (such as a raster image) and then that buffer is composited into the elements parent. Filters apply an effect before the compositing stage. Examples of such effects are blurring, changing color intensity and warping the image.
+
+This is Level 2 of the Filter Effects Module.</p>
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
@@ -327,6 +327,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <li><a href="#mix-blend-mode"><span class="secno">3.3</span> <span class="content">Mix Blend Mode</span></a>
      </ol>
     <li><a href="#priv-sec"><span class="secno">4</span> <span class="content">Privacy and Security Considerations</span></a>
+    <li><a href="#acknowledgments"><span class="secno"></span> <span class="content">Acknowledgments</span></a>
     <li>
      <a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
      <ol class="toc">
@@ -669,6 +670,8 @@ performance breakdown. Clearly, this is not a scalable approach.</p>
    <p>The current definition of mix-blend-mode <a href="https://www.w3.org/TR/compositing-1/#csscompositingrules_CSS">defines</a> the input (backdrop) image for mix-blend-mode as being all of the underlying content of the parent stacking context. This definition could likely be relaxed to use the Backdrop Root definition instead, allowing more elements to be blended.</p>
    <h2 class="heading settled" data-level="4" id="priv-sec"><span class="secno">4. </span><span class="content">Privacy and Security Considerations</span><a class="self-link" href="#priv-sec"></a></h2>
    <p>All of the same privacy and security concerns exist for backdrop-filter as do for "standard" filters. See <a href="https://www.w3.org/TR/filter-effects-1/#tainted-filter-primitives">Filter Effects Module Level 1 §tainted-filter-primitives</a> for more details.</p>
+   <h2 class="no-num heading settled" id="acknowledgments"><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
+   <p>The editors would like to thank Mason Freed, Marcus Stange, Matt Rakow, Simon Fraser, Amelia Bellamy-Royds, Dirk Schulze, and Tab Atkins for their careful reviews, comments, and corrections.</p>
   </main>
   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
   <h3 class="heading settled" id="document-conventions"><span class="content"> Document conventions</span><a class="self-link" href="#document-conventions"></a></h3>
