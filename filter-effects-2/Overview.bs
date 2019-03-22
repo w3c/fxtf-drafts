@@ -55,12 +55,12 @@ order provided.
 
 ## Filtering and Clipping ## {#backdrop-filter-operation}
 
-An element (call it B) with a backdrop-filter property other than ''backdrop-filter/none'' is conceptually rendered as if
+An element (call it B) with a backdrop-filter property other than ''backdrop-filter/none'' is rendered as if
 the following steps are performed:
 1. Copy the <a>Backdrop Root Image</a> into a temporary buffer, such as a raster image. Call this buffer T’.
 2. Apply the backdrop-filter’s filter operations to the entire contents of T'.
-3. If element B has any transforms, apply the <b>inverse</b> of those transforms to the contents of T’.
-4. Apply a clip to the contents of T’, using the border box of element B, included <a href="https://drafts.csswg.org/css-backgrounds-3/#border-radius">border-radius</a> if specified. Note that the children of B are not considered for the sizing or location of this clip.
+3. If element B has any transforms (between B and the Backdrop Root), apply the <b>inverse</b> of those transforms to the contents of T’.
+4. Apply a clip to the contents of T’, using the border box of element B, including <a href="https://drafts.csswg.org/css-backgrounds-3/#border-radius">border-radius</a> if specified. Note that the children of B are not considered for the sizing or location of this clip.
 5. Draw all of element B, including its background, border, and any children elements, into T’.
 6. If element B has any transforms, effects, or clips, apply those to T’.
 7. Composite the contents of T’ into element B's parent, using source-over compositing.
@@ -78,18 +78,18 @@ output as its SourceGraphic.
 
 Filter functions must operate in the sRGB color space.
 
-Note: that the effect of the backdrop-filter will not be visible unless some
-portion of element B is semi-transparent. Also note that any opacity applied to
-element B will be applied to the filtered backdrop image as well. Therefore, to
-create a "transparent" element that allows the full filtered backdrop image to
-be seen, you can use "background-color: transparent;".
-
-Note: A computed value of other than ''backdrop-filter/none'' results in the
+A computed value of other than ''backdrop-filter/none'' results in the
 creation of both a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking
 context</a> [[!CSS21]] and a <a
 href="https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block">Containing
 Block</a> for absolute and fixed position descendants, in the same way that CSS
 'filter' does.
+
+Note: that the effect of the backdrop-filter will not be visible unless some
+portion of element B is semi-transparent. Also note that any opacity applied to
+element B will be applied to the filtered backdrop image as well. Therefore, to
+create a "transparent" element that allows the full filtered backdrop image to
+be seen, you can use "background-color: transparent;".
 
 # Backdrop Root # {#BackdropRoot}
 

@@ -9,7 +9,7 @@
   <link href="../default.css" rel="stylesheet" type="text/css">
   <link href="../csslogo.ico" rel="shortcut icon" type="image/x-icon">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version 9c9e00cfdaddb9b81439182b02ae23e5d5b65b2d" name="generator">
+  <meta content="Bikeshed version 8ac92da89bb2253e0da87e20a9b9caa745f5f5b6" name="generator">
   <link href="https://www.w3.org/TR/filter-effects-2/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -257,7 +257,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Filter Effects Module Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-03-14">14 March 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-03-22">22 March 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -407,7 +407,7 @@ a "delta", describing any differences from Level 1.</p>
 filter effect applied. Otherwise, the list of functions are applied in the
 order provided.</p>
    <h3 class="heading settled" data-level="2.1" id="backdrop-filter-operation"><span class="secno">2.1. </span><span class="content">Filtering and Clipping</span><a class="self-link" href="#backdrop-filter-operation"></a></h3>
-   <p>An element (call it B) with a backdrop-filter property other than <span class="css">none</span> is conceptually rendered as if
+   <p>An element (call it B) with a backdrop-filter property other than <span class="css">none</span> is rendered as if
 the following steps are performed:</p>
    <ol>
     <li data-md>
@@ -415,9 +415,9 @@ the following steps are performed:</p>
     <li data-md>
      <p>Apply the backdrop-filter’s filter operations to the entire contents of T'.</p>
     <li data-md>
-     <p>If element B has any transforms, apply the <b>inverse</b> of those transforms to the contents of T’.</p>
+     <p>If element B has any transforms (between B and the Backdrop Root), apply the <b>inverse</b> of those transforms to the contents of T’.</p>
     <li data-md>
-     <p>Apply a clip to the contents of T’, using the border box of element B, included <a href="https://drafts.csswg.org/css-backgrounds-3/#border-radius">border-radius</a> if specified. Note that the children of B are not considered for the sizing or location of this clip.</p>
+     <p>Apply a clip to the contents of T’, using the border box of element B, including <a href="https://drafts.csswg.org/css-backgrounds-3/#border-radius">border-radius</a> if specified. Note that the children of B are not considered for the sizing or location of this clip.</p>
     <li data-md>
      <p>Draw all of element B, including its background, border, and any children elements, into T’.</p>
     <li data-md>
@@ -430,15 +430,15 @@ operations take the output from the previous filter function or <span id="ref-fo
 reference functions can specify an alternate input, but still uses the previous
 output as its SourceGraphic.</p>
    <p>Filter functions must operate in the sRGB color space.</p>
+   <p>A computed value of other than <span class="css">none</span> results in the
+creation of both a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking
+context</a> <a data-link-type="biblio" href="#biblio-css21">[CSS21]</a> and a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block">Containing
+Block</a> for absolute and fixed position descendants, in the same way that CSS <a class="property" data-link-type="propdesc" href="https://drafts.fxtf.org/filter-effects-1/#propdef-filter" id="ref-for-propdef-filter">filter</a> does.</p>
    <p class="note" role="note"><span>Note:</span> that the effect of the backdrop-filter will not be visible unless some
 portion of element B is semi-transparent. Also note that any opacity applied to
 element B will be applied to the filtered backdrop image as well. Therefore, to
 create a "transparent" element that allows the full filtered backdrop image to
 be seen, you can use "background-color: transparent;".</p>
-   <p class="note" role="note"><span>Note:</span> A computed value of other than <span class="css">none</span> results in the
-creation of both a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking
-context</a> <a data-link-type="biblio" href="#biblio-css21">[CSS21]</a> and a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block">Containing
-Block</a> for absolute and fixed position descendants, in the same way that CSS <a class="property" data-link-type="propdesc" href="https://drafts.fxtf.org/filter-effects-1/#propdef-filter" id="ref-for-propdef-filter">filter</a> does.</p>
    <h2 class="heading settled" data-level="3" id="BackdropRoot"><span class="secno">3. </span><span class="content">Backdrop Root</span><a class="self-link" href="#BackdropRoot"></a></h2>
    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="backdrop-root-image">Backdrop Root Image</dfn> is defined as the entire painted output produced by
 drawing, in <a href="https://www.w3.org/TR/CSS2/zindex.html#painting-order">painting order</a>,
