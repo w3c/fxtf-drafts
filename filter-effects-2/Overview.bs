@@ -93,10 +93,11 @@ be seen, you can use "background-color: transparent;".
 
 # Backdrop Root # {#BackdropRoot}
 
-The <dfn>Backdrop Root Image</dfn> for an element E is defined as the image produced by:
-1. Starting at the <a>Backdrop Root</a> element that is the nearest ancestor of E.
-2. Painting all content, in <a href="https://www.w3.org/TR/CSS2/zindex.html#painting-order">painting order</a>, between (and including) the ancestor Backdrop Root element and element E.
-3. Clipping this final painted output to the border box of element E.
+The <dfn>Backdrop Root Image</dfn> for an element E is the final image that would be produced by the following steps:
+1. Start at the <a>Backdrop Root</a> element that is the nearest ancestor of E.
+2. Paint all content, in <a href="https://www.w3.org/TR/CSS2/zindex.html#painting-order">painting order</a>, between (and including) the ancestor Backdrop Root element and element E.
+3. Flatten the painted content into a 2D screen-space buffer.
+4. Transform the border box of element E to 2D screen-space, and clip the final painted output to this border quad.
 
 Note: No content that is a DOM ancestor of the Backdrop Root element should
 contribute to or affect the Backdrop Root Image.
