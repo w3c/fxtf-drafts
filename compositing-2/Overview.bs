@@ -18,6 +18,15 @@ Abstract: <ul><li>additional Porter Duff compositing operators</li><li>advanced 
 Abstract: In addition, this specification will define CSS properties for blending and group isolation and the properties of the {{globalCompositeOperation}} attribute.
 </pre>
 
+
+<pre class="link-defaults">
+spec: css2;
+    type: dfn; text: stacking context
+spec: css-cascade-3
+    type: dfn; text: inherit
+spec: css-position-3;
+    type: dfn; text: containing block
+</pre>
 <style type="text/css">
 a[data-link-type=element]::before,span[data-link-type=element]::before {
   content: '<';
@@ -41,10 +50,9 @@ Each section of this document is normative unless otherwise specified.
 
 This specification defines a set of CSS properties that affect the visual rendering of elements to which
 those properties are applied; these effects are applied after elements have been sized and positioned according
-to the <a href="https://www.w3.org/TR/CSS2/visuren.html" title="Visual formatting model">Visual formatting model</a>
-from [[!CSS21]]. Some values of these properties result in the creation of a
-<a href="https://www.w3.org/TR/CSS2/visuren.html#containing-block" title="Visual formatting model">containing block</a>,
-and/or the creation of a <a spec="css21">stacking context</a>.
+to the [[css2#visual-model-intro|Visual formatting model]]. Some values of these properties result in the creation of a
+[=containing block=],
+and/or the creation of a [=stacking context=].
 
 The 'background-blend-mode' property also builds upon the properties defined in the <a href="https://www.w3.org/TR/css3-background/#placement" title="Backgrounds and Borders">CSS  Backgrounds and Borders</a> module [[!CSS3BG]].
 
@@ -55,16 +63,15 @@ This module also extends the
 
 <h3 id="values">Values</h3>
 
-This specification follows the <a href="https://www.w3.org/TR/CSS21/about.html#property-defs">CSS property
-definition conventions</a> from [[!CSS21]]. Value types not defined in
+This specification follows the [[css2#property-defs|CSS property
+definition conventions]]. Value types not defined in
 this specification are defined in CSS Level 2 Revision 1 [[!CSS21]]. Other CSS
 modules may expand the definitions of these value types: for example [[!CSS3COLOR]],
 when combined with this module, expands the definition of the &lt;color>
 value type as used in this specification.
 
 In addition to the property-specific values listed in their definitions,
-all properties defined in this specification also accept the <a
-href="https://www.w3.org/TR/CSS21/cascade.html#value-def-inherit">inherit</a>
+all properties defined in this specification also accept the [=inherit=]
 keyword as their property value. For readability it has not been repeated
 explicitly.
 
@@ -76,11 +83,11 @@ The compositing model must follow the <a href="https://www.w3.org/TR/SVG11/rende
 <h3 id="csscompositingrules_CSS">Behavior specific to HTML</h3>
 <!-- <p>
 If an element specifies non-default blending or <a href="https://www.w3.org/TR/css3-color/#transparency">'opacity'</a>, its <a href="https://www.w3.org/TR/css3-2d-transforms/#transform-style-property">transform-style</a> [[CSS3-TRANSFORMS]] and that of all of its children must revert to 'flat'.<br>
-The application of blending other than 'normal' to an element must also establish a <a spec="css21">stacking context</a> [[!CSS21]] the same way that CSS <a href="https://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br> -->
+The application of blending other than 'normal' to an element must also establish a [=stacking context=] the same way that CSS <a href="https://www.w3.org/TR/css3-color/#transparency">'opacity'</a> does. One of the consequences is that elements with z-index must not honor the depth of elements outside of the group.<br> -->
 
-Everything in CSS that creates a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking context</a> must be considered an <a href="#isolatedgroups">‘isolated’ group</a>. HTML elements themselves should not create groups.
+Everything in CSS that creates a [=stacking context=] must be considered an <a href="#isolatedgroups">‘isolated’ group</a>. HTML elements themselves should not create groups.
 
-An element that has blending applied, must blend with all the underlying content of the <a spec="css21">stacking context</a> [[!CSS21]] that that element belongs to.
+An element that has blending applied, must blend with all the underlying content of the [=stacking context=] that that element belongs to.
 
 <h3 id="csscompositingrules_SVG">Behavior specific to SVG</h3>
 
@@ -123,7 +130,7 @@ The syntax of the property of <<blend-mode>> is given with:
   <a value>color-burn</a> | <a value>hard-light</a> | <a value>soft-light</a> | <a value>difference</a> | <a value>exclusion</a> | <a value>hue</a> |
   <a value>saturation</a> | <a value>color</a> | <a value>luminosity</a></pre>
 
-Note: Applying a blendmode other than <a value>normal</a> to the element must establish a new <a spec="css21">stacking context</a> [[!CSS21]]. This group must then be blended and composited with the <a spec="css21">stacking context</a> that contains the element.
+Note: Applying a blendmode other than <a value>normal</a> to the element must establish a new [=stacking context=]. This group must then be blended and composited with the [=stacking context=] that contains the element.
 
 <div class="example">
 <p>Given the following sample markup:</p>
@@ -246,7 +253,7 @@ Text with a blend overlay on top of an image.
 In SVG, this defines whether an element is isolated or not.<br>
 For CSS, setting 'isolation' to ''isolation/isolate'' will turn the element into a stacking context.
 
-By default, elements use the ''isolation/auto'' keyword which implies that they are not isolated. However operations that cause the creation of stacking context [[!CSS21]] must cause a group to be isolated. These operations are described in <a href="#csscompositingrules_CSS">'behavior specific to HTML'</a> and <a href="#csscompositingrules_SVG">'behavior specific to SVG'</a>.
+By default, elements use the ''isolation/auto'' keyword which implies that they are not isolated. However operations that cause the creation of [=stacking context=] must cause a group to be isolated. These operations are described in <a href="#csscompositingrules_CSS">'behavior specific to HTML'</a> and <a href="#csscompositingrules_SVG">'behavior specific to SVG'</a>.
 
 <pre class='propdef'>
 Name: isolation
