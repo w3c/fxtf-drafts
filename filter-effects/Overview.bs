@@ -79,6 +79,8 @@ spec:svg; type:property
 spec:svg2; type:element
 	text:script
     text:title
+spec:web-animations-1;
+	type:dfn; text: composite operation replace;
 spec:html; type:dfn; for:/; text:browsing context
 spec:css-display-3; type:property; text:display
 spec:filter-effects-1; type:value;
@@ -3456,7 +3458,16 @@ Given two filter values representing an base value (<var>base filter list</var>)
 
 ## Accumulation ## {#accumulation}
 
-Given two filter values <var>V<sub>a</sub></var> and <var>V<sub>b</sub></var>, returns the filter value, <var>V<sub>b</sub></var>.
+Accumulation of <<filter-value-list>>s follows the same matching and extending
+rules as <a href='#interpolation-of-filters'>interpolation</a>, falling back to
+[=composite operation replace|replace=] behavior if the lists do not match.
+However instead of interpolating the matching <<filter-function>> pairs, their
+arguments are arithmetically added together - except in the case of
+<<filter-function>>s whose initial value for interpolation is 1, which combine
+using one-based addition:
+
+  <var ignore>V<sub>result</sub></var> =
+  <var>V<sub>a</sub></var> + <var ignore>V<sub>b</sub></var> - 1
 
 <h2 id="priv-sec">Privacy and Security Considerations</h2>
 
