@@ -3,6 +3,7 @@
 The <dfn dfn-type=interface>SVGFilterElement</dfn> interface corresponds to the <a element>filter</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFilterElement : SVGElement {
   readonly attribute SVGAnimatedEnumeration filterUnits;
   readonly attribute SVGAnimatedEnumeration primitiveUnits;
@@ -64,6 +65,7 @@ interface mixin SVGFilterPrimitiveStandardAttributes {
 The <dfn dfn-type=interface>SVGFEBlendElement</dfn> interface corresponds to the <a element>feBlend</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEBlendElement : SVGElement {
 
   // Blend Mode Types
@@ -148,6 +150,7 @@ SVGFEBlendElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEColorMatrixElement</dfn> interface corresponds to the <a element>feColorMatrix</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEColorMatrixElement : SVGElement {
 
   // Color Matrix Types
@@ -196,6 +199,7 @@ SVGFEColorMatrixElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEComponentTransferElement</dfn> interface corresponds to the <a element>feComponentTransfer</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEComponentTransferElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
 };
@@ -215,6 +219,7 @@ SVGFEComponentTransferElement includes SVGFilterPrimitiveStandardAttributes;
 This interface defines a base interface used by the component transfer function interfaces.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGComponentTransferFunctionElement : SVGElement {
 
   // Component Transfer Types
@@ -276,6 +281,7 @@ interface SVGComponentTransferFunctionElement : SVGElement {
 The <dfn dfn-type=interface>SVGFEFuncRElement</dfn> interface corresponds to the <a element>feFuncR</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEFuncRElement : SVGComponentTransferFunctionElement {
 };
 </pre>
@@ -285,6 +291,7 @@ interface SVGFEFuncRElement : SVGComponentTransferFunctionElement {
 The <dfn dfn-type=interface>SVGFEFuncGElement</dfn> interface corresponds to the <a element>feFuncG</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEFuncGElement : SVGComponentTransferFunctionElement {
 };
 </pre>
@@ -294,6 +301,7 @@ interface SVGFEFuncGElement : SVGComponentTransferFunctionElement {
 The <dfn dfn-type=interface>SVGFEFuncBElement</dfn> interface corresponds to the <a element>feFuncB</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEFuncBElement : SVGComponentTransferFunctionElement {
 };
 </pre>
@@ -303,6 +311,7 @@ interface SVGFEFuncBElement : SVGComponentTransferFunctionElement {
 The <dfn dfn-type=interface>SVGFEFuncAElement</dfn> interface corresponds to the <a element>feFuncA</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEFuncAElement : SVGComponentTransferFunctionElement {
 };
 </pre>
@@ -312,6 +321,7 @@ interface SVGFEFuncAElement : SVGComponentTransferFunctionElement {
 The <dfn dfn-type=interface>SVGFECompositeElement</dfn> interface corresponds to the <a element>feComposite</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFECompositeElement : SVGElement {
 
   // Composite Operators
@@ -378,6 +388,7 @@ SVGFECompositeElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEConvolveMatrixElement</dfn> interface corresponds to the <a element>feConvolveMatrix</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEConvolveMatrixElement : SVGElement {
 
   // Edge Mode Values
@@ -450,6 +461,7 @@ SVGFEConvolveMatrixElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEDiffuseLightingElement</dfn> interface corresponds to the <a element>feDiffuseLighting</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEDiffuseLightingElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
   readonly attribute SVGAnimatedNumber surfaceScale;
@@ -481,6 +493,7 @@ SVGFEDiffuseLightingElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEDistantLightElement</dfn> interface corresponds to the <a element>feDistantLight</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEDistantLightElement : SVGElement {
   readonly attribute SVGAnimatedNumber azimuth;
   readonly attribute SVGAnimatedNumber elevation;
@@ -501,6 +514,7 @@ interface SVGFEDistantLightElement : SVGElement {
 The <dfn dfn-type=interface>SVGFEPointLightElement</dfn> interface corresponds to the <a element>fePointLight</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEPointLightElement : SVGElement {
   readonly attribute SVGAnimatedNumber x;
   readonly attribute SVGAnimatedNumber y;
@@ -524,6 +538,7 @@ interface SVGFEPointLightElement : SVGElement {
 The <dfn dfn-type=interface>SVGFESpotLightElement</dfn> interface corresponds to the <a element>feSpotLight</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFESpotLightElement : SVGElement {
   readonly attribute SVGAnimatedNumber x;
   readonly attribute SVGAnimatedNumber y;
@@ -562,6 +577,7 @@ interface SVGFESpotLightElement : SVGElement {
 The <dfn dfn-type=interface>SVGFEDisplacementMapElement</dfn> interface corresponds to the <a element>feDisplacementMap</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEDisplacementMapElement : SVGElement {
 
   // Channel Selectors
@@ -616,6 +632,7 @@ SVGFEDisplacementMapElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEDropShadowElement</dfn> interface corresponds to the <a element>feDropShadow</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEDropShadowElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
   readonly attribute SVGAnimatedNumber dx;
@@ -663,6 +680,7 @@ SVGFEDropShadowElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEFloodElement</dfn> interface corresponds to the <a element>feFlood</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEFloodElement : SVGElement {
 };
 
@@ -674,6 +692,7 @@ SVGFEFloodElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEGaussianBlurElement</dfn> interface corresponds to the <a element>feGaussianBlur</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEGaussianBlurElement : SVGElement {
 
   // Edge Mode Values
@@ -738,6 +757,7 @@ SVGFEGaussianBlurElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEImageElement</dfn> interface corresponds to the <a element>feImage</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEImageElement : SVGElement {
   readonly attribute SVGAnimatedPreserveAspectRatio preserveAspectRatio;
   readonly attribute SVGAnimatedString crossOrigin;
@@ -761,6 +781,7 @@ SVGFEImageElement includes SVGURIReference;
 The <dfn dfn-type=interface>SVGFEMergeElement</dfn> interface corresponds to the <a element>feMerge</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEMergeElement : SVGElement {
 };
 
@@ -772,6 +793,7 @@ SVGFEMergeElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEMergeNodeElement</dfn> interface corresponds to the <a element>feMergeNode</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEMergeNodeElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
 };
@@ -789,6 +811,7 @@ interface SVGFEMergeNodeElement : SVGElement {
 The <dfn dfn-type=interface>SVGFEMorphologyElement</dfn> interface corresponds to the <a element>feMorphology</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEMorphologyElement : SVGElement {
 
   // Morphology Operators
@@ -834,6 +857,7 @@ SVGFEMorphologyElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFEOffsetElement</dfn> interface corresponds to the <a element>feOffset</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFEOffsetElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
   readonly attribute SVGAnimatedNumber dx;
@@ -859,6 +883,7 @@ SVGFEOffsetElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFESpecularLightingElement</dfn> interface corresponds to the <a element>feSpecularLighting</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFESpecularLightingElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
   readonly attribute SVGAnimatedNumber surfaceScale;
@@ -893,6 +918,7 @@ SVGFESpecularLightingElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFETileElement</dfn> interface corresponds to the <a element>feTile</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFETileElement : SVGElement {
   readonly attribute SVGAnimatedString in1;
 };
@@ -912,6 +938,7 @@ SVGFETileElement includes SVGFilterPrimitiveStandardAttributes;
 The <dfn dfn-type=interface>SVGFETurbulenceElement</dfn> interface corresponds to the <a element>feTurbulence</a> element.
 
 <pre class=idl>
+[Exposed=Window]
 interface SVGFETurbulenceElement : SVGElement {
 
   // Turbulence Types
