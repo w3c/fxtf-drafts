@@ -640,7 +640,7 @@ interface SVGFEDropShadowElement : SVGElement {
   readonly attribute SVGAnimatedNumber stdDeviationX;
   readonly attribute SVGAnimatedNumber stdDeviationY;
 
-  void setStdDeviation(float stdDeviationX, float stdDeviationY);
+  undefined setStdDeviation(float stdDeviationX, float stdDeviationY);
 };
 
 SVGFEDropShadowElement includes SVGFilterPrimitiveStandardAttributes;
@@ -706,7 +706,7 @@ interface SVGFEGaussianBlurElement : SVGElement {
   readonly attribute SVGAnimatedNumber stdDeviationY;
   readonly attribute SVGAnimatedEnumeration edgeMode;
 
-  void setStdDeviation(float stdDeviationX, float stdDeviationY);
+  undefined setStdDeviation(float stdDeviationX, float stdDeviationY);
 };
 
 SVGFEGaussianBlurElement includes SVGFilterPrimitiveStandardAttributes;
