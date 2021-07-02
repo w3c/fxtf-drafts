@@ -60,11 +60,12 @@ An element (call it B) with a backdrop-filter property other than ''backdrop-fil
 the following steps are performed:
 1. Copy the <a>Backdrop Root Image</a> into a temporary buffer, such as a raster image. Call this buffer T’.
 2. Apply the backdrop-filter’s filter operations to the entire contents of T'.
-3. If element B has any transforms (between B and the Backdrop Root), apply the <b>inverse</b> of those transforms to the contents of T’.
-4. Apply a clip to the contents of T’, using the border box of element B, including <a href="https://drafts.csswg.org/css-backgrounds-3/#border-radius">border-radius</a> if specified. Note that the children of B are not considered for the sizing or location of this clip.
-5. Draw all of element B, including its background, border, and any children elements, into T’.
-6. If element B has any transforms, effects, or clips, apply those to T’.
-7. Composite the contents of T’ into element B's parent, using source-over compositing.
+3. If element B has any effects, opacity, or clips, apply those to T’.
+4. Apply a clip to the contents of T’, using the transformed border box of element B, including <a href="https://drafts.csswg.org/css-backgrounds-3/#border-radius">border-radius</a> if specified. Note that the children of B are not considered for the sizing or location of this clip.
+5. Composite the contents of T’ into element B's parent, using source-over compositing.
+6. Draw all of element B, including its background, border, and any children elements, into another temporary buffer B'.
+7. If element B has any transforms, effects, opacity, or clips, apply those to B’.
+8. Composite the contents of B’ into element B's parent, using source-over compositing.
 
 <pre class=link-defaults>
   spec:filter-effects-1; type:element; text:filter
