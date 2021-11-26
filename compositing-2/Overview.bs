@@ -132,7 +132,7 @@ The syntax of the property of <<blend-mode>> is given with:
 
 <pre class="blendmode prod"><dfn id="ltblendmodegt">&lt;blend-mode></dfn> = <a value>normal</a> | <a value>multiply</a> | <a value>screen</a> | <a value>overlay</a> | <a value>darken</a> | <a value>lighten</a> | <a value>color-dodge</a> |
   <a value>color-burn</a> | <a value>hard-light</a> | <a value>soft-light</a> | <a value>difference</a> | <a value>exclusion</a> | <a value>hue</a> |
-  <a value>saturation</a> | <a value>color</a> | <a value>luminosity</a></pre>
+  <a value>saturation</a> | <a value>color</a> | <a value>luminosity</a> | <a value>plus-lighter</a></pre>
 
 Note: Applying a blendmode other than <a value>normal</a> to the element must establish a new [=stacking context=]. This group must then be blended and composited with the [=stacking context=] that contains the element.
 
@@ -363,7 +363,7 @@ This property takes the following value:
 
 The syntax of the property of <<composite-mode>> is given with:
 
-<pre class="compositemode prod"><dfn id="compositemode">&lt;composite-mode></dfn> = <a>clear</a> | <a>copy</a> | <a>source-over</a> | <a>destination-over</a> | <a>source-in</a> | <br><a>destination-in</a> | <a>source-out</a> | <a>destination-out</a> | <a>source-atop</a> | <br><a>destination-atop</a> | <a>xor</a> | <a>lighter</a> | <a>plus-darker</a> | <a>plus-lighter</a></pre>
+<pre class="compositemode prod"><dfn id="compositemode">&lt;composite-mode></dfn> = <a>clear</a> | <a>copy</a> | <a>source-over</a> | <a>destination-over</a> | <a>source-in</a> | <br><a>destination-in</a> | <a>source-out</a> | <a>destination-out</a> | <a>source-atop</a> | <br><a>destination-atop</a> | <a>xor</a> | <a>lighter</a> | <a>plus-darker</a></pre>
 
 <h2 id="whatiscompositing">Introduction to compositing</h2>
 
@@ -1008,6 +1008,72 @@ With the <dfn>plus-lighter</dfn> compositing operator, the following steps are p
     co = min(1, αs x Cs + αb x Cb);
     αo = min(1, αs + αb);
 </pre>
+
+This operation is the same as <a>lighter</a>, except the upper-end is clamped to 1.
+
+<div class="example">
+<p><a>plus-lighter</a> is particularly useful for cross-fade effects.</p>
+
+<p>Given the following sample markup:</p>
+
+<pre>
+&lt;div class="container">
+  &lt;div class="from">&lt;/div>
+  &lt;div class="to">&lt;/div>
+&lt;/div>
+</pre>
+
+<p>And the following styles:</p>
+
+<pre>
+  .container {
+    display: grid;
+  }
+  .container > div {
+    width: 100px;
+    height: 100px;
+    /* Place the elements on top of each other */
+    grid-area: 1 / 1;
+  }
+  .from {
+    background-color: rgb(100% 0 0 / 50%);
+  }
+  .to {
+    background-color: rgb(0 0 100% / 50%);
+  }
+</pre>
+
+<p>If you wanted to produce a 50% cross-fade between <code>from</code> and <code>to</code>, a naive approach would be to give each 50% opacity:</p>
+
+<pre>
+  .from {
+    opacity: 0.5;
+  }
+  .to {
+    opacity: 0.5;
+  }
+</pre>
+
+<p>However, with default <a>source-over</a> compositing, this produces a result of roughly <code>rgb(43% 0 57% / 44%)</code>. This is correct value when "layering" elements, but it's incorrect for a 50% cross-fade.</p>
+
+<p>Instead, using <a>plus-lighter</a>:</p>
+
+<pre>
+  .container {
+    /* Limit the scope of the plus-lighter operation */
+    isolation: isolate;
+  }
+  .from {
+    opacity: 0.5;
+  }
+  .to {
+    opacity: 0.5;
+    mix-blend-mode: plus-lighter;
+  }
+</pre>
+
+<p>This results in <code>rgb(50% 0 50% / 50%)</code>, which is correctly "half-way" between the <code>from</code> and <code>to</code> colors.</p>
+</div>
 
 <h3 id="groupcompositing">Group compositing behavior with Porter Duff modes</h3>
 <!--<h4 id="groupcompositingisolation">Isolated groups and Porter Duff modes</h4>-->
