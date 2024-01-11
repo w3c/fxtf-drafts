@@ -47,6 +47,9 @@ spec:css-masking-1; type:property
 	text:clip
 	text:clip-rule
 	text:mask
+spec:css-overflow-3;
+	type:dfn; text:ink overflow area
+	type:dfn; text:ink overflow rectangle
 spec:css-transforms-1;
 	type:property; text:transform
 	type:type; text:<transform-function>
@@ -84,7 +87,7 @@ spec:svg2; type:element
 spec:web-animations-1;
 	type:dfn; text: composite operation replace;
 spec:html; type:dfn; for:/; text:browsing context
-  https://html.spec.whatwg.org/multipage/browsers.html#browsing-context
+    https://html.spec.whatwg.org/multipage/browsers.html#browsing-context
 spec:css-display-3; type:property; text:display
 spec:filter-effects-1; type:value;
     text:in
@@ -336,7 +339,7 @@ The first filter function or <a element>filter</a> reference in the list takes t
 
 A computed value of other than ''filter/none'' results in the creation of a <a href="https://www.w3.org/TR/CSS21/zindex.html">stacking context</a> [[!CSS21]] the same way that CSS 'opacity' does. All the elements descendants are rendered together as a group with the filter effect applied to the group as a whole.
 
-The 'filter' property has no effect on the geometry of the target element's CSS boxes, even though 'filter' can cause painting outside of an element's border box.
+The 'filter' property has no effect on the geometry of the target element's CSS boxes, although 'filter' can contribute to the element's [=ink overflow area=].
 
 Conceptually, any parts of the drawing are effected by filter operations. This includes any content, background, borders, text decoration, outline and visible scrolling mechanism of the element to which the filter is applied, and those of its descendants. The filter operations are applied in the element's <a>local coordinate system</a>.
 
@@ -370,6 +373,11 @@ Note: For some filter functions the default value for omitted values differes fr
 
         Note: Standard deviation is different to 'box-shadow' s blur radius.
 
+        Note: A true Gaussian blur has theoretically infinite extent, but the
+        [=ink overflow rectangle=] of a blur filter is defined to be the extent of the
+        widely-used three-pass box blur approximation, i.e.,<br>
+        <code>((3 * sqrt(2 * &pi;) / 4) * &sigma;)</code>.
+
     : <pre class=prod><dfn>brightness()</dfn> = brightness( [ <<number>> |  <<percentage>> ]? )</pre>
     ::
         Applies a linear multiplier to input image, making it appear more or less bright. A value of ''0%'' will create an image that is completely black. A value of ''100%'' leaves the input unchanged. Other values are linear multipliers on the effect. Values of amount over 100% are allowed, providing brighter results. The markup equivalent of this function is <a href="#brightnessEquivalent">given below</a>.
@@ -399,6 +407,9 @@ Note: For some filter functions the default value for omitted values differes fr
         Note: Spread values or multiple shadows are not accepted for this level of the specification.
 
         Note: Standard deviation is different to 'box-shadow' s blur radius.
+
+        Note: The [=ink overflow rectangle=] for a drop shadow is the extent of the offsets,
+        plus the extent of the blur (if any) as described for <<blur()>>.
 
     : <pre class=prod><dfn>grayscale()</dfn> = grayscale( [ <<number>> |  <<percentage>> ]? )</pre>
     ::
@@ -1067,7 +1078,7 @@ values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"</pre>
     </code></pre>
 
     <div class=figure>
-        <img alt="Example " src="examples/feColorMatrix.png"/>
+        <img alt="Example " src="examples/feColorMatrix.png">
         <p class=caption>Example of feColorMatrix</p>
     </div>
 
@@ -1278,7 +1289,7 @@ The attributes below are the <dfn id="transfer-function-element-attributes">tran
     </code></pre>
 
     <div class=figure>
-        <img alt="Example for feComponentTransfer" src="examples/feComponentTransfer.png"/>
+        <img alt="Example for feComponentTransfer" src="examples/feComponentTransfer.png">
         <p class=caption>Example for feComponentTransfer</p>
     </div>
 
