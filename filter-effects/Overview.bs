@@ -1674,7 +1674,7 @@ When the image must be resampled to match the coordinate system defined by <a el
         Determines the positioning in Y of the convolution matrix relative to a given target pixel in the input image. The topmost row of the matrix is row number zero. The value must be such that: 0 &lt;= targetY &lt; orderY. By default, the convolution matrix is centered in Y over each pixel of the input image (i.e., targetY = floor ( orderY / 2 )).</p>
 
         Animatable: yes.
-    : <dfn>edgeMode</dfn> = "<a attr-value>duplicate</a> | <a attr-value>wrap</a> | none</span>"
+    : <dfn>edgeMode</dfn> = "<a attr-value>duplicate</a> | <a attr-value>wrap</a> | <a attr-value>mirror</a> | none</span>"
     ::
         Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image.
 
@@ -1693,6 +1693,12 @@ When the image must be resampled to match the coordinate system defined by <a el
         Extended by two pixels using <a attr-value>wrap</a>:
 
         <pre class=include>path: mathml/feConvolveMatrix06.mml</pre>
+
+        <a attr-value>mirror</a> indicates that the input image is extended by taking color values mirrored across the edge being sampled beyond.
+
+        Extended by two pixels using <a attr-value>mirror</a>:
+
+        <pre class=include>path: mathml/feConvolveMatrix07.mml</pre>
 
         The value ''feConvolveMatrix/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.
 
@@ -2331,7 +2337,7 @@ Frequently this operation will take place on alpha-only images, such as that pro
         The <a for=svg>initial value</a> for <a element-attr for=feGaussianBlur>stdDeviation</a> is ''0''.
 
         Animatable: yes.
-    : <dfn>edgeMode</dfn> = "<a attr-value>duplicate</a> | <a attr-value>wrap</a> | none"
+    : <dfn>edgeMode</dfn> = "<a attr-value>duplicate</a> | <a attr-value>wrap</a> | <a attr-value>mirror</a> | none"
     ::
         Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image.
 
@@ -2340,6 +2346,8 @@ Frequently this operation will take place on alpha-only images, such as that pro
         Original N-by-M image, where m=M-1 and n=N-1:
 
         <dfn dfn-type=attr-value dfn-for=feGaussianBlur/edgeMode>wrap</dfn> indicates that the input image is extended by taking the color values from the opposite edge of the image.
+
+        <dfn dfn-type=attr-value dfn-for=feGuassianBlur/edgeMode>mirror</dfn> indicates that the input image is extended by taking color values mirrored across the edge being sampled beyond.
 
         The value ''feGaussianBlur/none'' indicates that the input image is extended with pixel values of zero for R, G, B and A.
 
