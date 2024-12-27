@@ -61,7 +61,7 @@ rectangles, quadrilaterals and transformation matrices with the dimension of 3x2
 
 The SVG interfaces {{SVGPoint}}, {{SVGRect}} and {{SVGMatrix}} are aliasing the here defined
 interfaces in favor for common interfaces used by SVG, Canvas 2D Context and CSS
-Transforms. [[SVG11]] [[HTML]] [[CSS3-TRANSFORMS]]
+Transforms. [[SVG11]] [[HTML]] [[CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
 
 
 The DOMPoint interfaces {#DOMPoint}
@@ -890,13 +890,13 @@ means to run the following steps. It will either return a <a>4x4 abstract matrix
     for the CSS 'transform' property. The result will be a <<transform-list>>, the keyword
     ''transform/none'', or failure. If <var>parsedValue</var> is failure, or any <<transform-function>>
     has <<length>> values without <a spec=css-values>absolute length</a> units, or any keyword other
-    than ''transform/none'' is used, then return failure. [[!CSS3-SYNTAX]] [[!CSS3-TRANSFORMS]]
+    than ''transform/none'' is used, then return failure. [[!CSS3-SYNTAX]] [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
 3. If <var>parsedValue</var> is ''transform/none'', set <var>parsedValue</var> to a
     <<transform-list>> containing a single identity matrix.
-4. Let <var>2dTransform</var> track the 2D/3D dimension status of <var>parsedValue</var>.
+4. Let <var>2dTransform</var> track whether <var>parsedValue</var> is a 2D or 3D transform.
     <dl class=switch>
         : If <var>parsedValue</var> consists of any <a
-            href="https://drafts.csswg.org/css-transforms-1/#transform-primitives">three-dimensional
+            href="https://drafts.csswg.org/css-transforms-2/#transform-primitives">three-dimensional
             transform functions</a>
         ::
             Set <var>2dTransform</var> to <code>false</code>.
@@ -905,9 +905,8 @@ means to run the following steps. It will either return a <a>4x4 abstract matrix
             Set <var>2dTransform</var> to <code>true</code>.
     </dl>
 5. Transform all <<transform-function>>s to <a lt="4x4 abstract matrix">4x4 abstract
-    matrices</a> by following the “<a
-    href=https://drafts.csswg.org/css-transforms-1/#mathematical-description>Mathematical Description
-    of Transform Functions</a>”. [[!CSS3-TRANSFORMS]]
+    matrices</a> by following the “<a href="https://drafts.csswg.org/css-transforms-1/#mathematical-description">Mathematical Description</a>
+    <a href="https://drafts.csswg.org/css-transforms-2/#mathematical-description">of Transform Functions</a>”. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
 6. Let <var>matrix</var> be a <a>4x4 abstract matrix</a> as shown in the initial
     figure of this section. <a>Post-multiply</a> all matrices from left to right and set
     <var>matrix</var> to this product.
@@ -1371,7 +1370,7 @@ The following methods do not modify the current matrix.
             13. Append "<code>)</code>" to <var>string</var>.
 
             Note: The string will be in the form of a a CSS Transforms <<matrix()>> function.
-            [[CSS3-TRANSFORMS]]
+            [[CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         4. Otherwise:
             1. Append "<code>matrix3d(</code>" to <var>string</var>.
             2. Append [=!=] [=ToString=](<a for=matrix>m11 element</a>) to <var>string</var>.
@@ -1400,7 +1399,7 @@ The following methods do not modify the current matrix.
             25. Append "<code>)</code>" to <var>string</var>.
 
             Note: The string will be in the form of a a CSS Transforms <<matrix3d()>> function.
-            [[CSS3-TRANSFORMS]]
+            [[CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         5. Return <var>string</var>.
 </dl>
 
@@ -1486,10 +1485,10 @@ user agents.
         4. Return the current matrix.
     : <dfn>translateSelf(<var>tx</var>, <var>ty</var>, <var>tz</var>)</dfn>
     ::
-        1. <a>Post-multiply</a> a translation transformation on the current matrix. The 3D
-            translation matrix is <a
-            href="https://drafts.csswg.org/css-transforms-1/#TranslateDefined">described</a> in CSS
-            Transforms. [[!CSS3-TRANSFORMS]]
+        1. <a>Post-multiply</a> a translation transformation on the current matrix. The 2D translation matrix is
+            <a href="https://drafts.csswg.org/css-transforms-1/#TranslateDefined">described</a>, and the 3D
+            translation matrix is <a href="https://drafts.csswg.org/css-transforms-2/#Translate3dDefined">described</a>,
+            in CSS Transforms. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         2. If <var>tz</var> is specified and not ''0'' or ''-0'', set <a for=matrix>is 2D</a> of the
             current matrix to <code>false</code>.
         3. Return the current matrix.
@@ -1500,10 +1499,11 @@ user agents.
         1. Perform a {{DOMMatrix/translateSelf()}} transformation on the current matrix with the
             arguments <var>originX</var>, <var>originY</var>, <var>originZ</var>.
         2. If <var>scaleY</var> is missing, set <var>scaleY</var> to the value of <var>scaleX</var>.
-        3. <a>Post-multiply</a> a non-uniform scale transformation on the current matrix. The 3D
-            scale matrix is <a href="https://drafts.csswg.org/css-transforms-1/#ScaleDefined">described</a>
+        3. <a>Post-multiply</a> a non-uniform scale transformation on the current matrix. The 2D scale matrix is
+            <a href="https://drafts.csswg.org/css-transforms-1/#ScaleDefined">described</a>, and the 3D
+            scale matrix is <a href="https://drafts.csswg.org/css-transforms-2/#Scale3dDefined">described</a>,
             in CSS Transforms with <var>sx</var> = <var>scaleX</var>,  <var>sy</var> = <var>scaleY</var> and
-            <var>sz</var> = <var>scaleZ</var>. [[!CSS3-TRANSFORMS]]
+            <var>sz</var> = <var>scaleZ</var>. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         4. Negate <var>originX</var>, <var>originY</var> and <var>originZ</var>.
         5. Perform a {{DOMMatrix/translateSelf()}}</a> transformation on the current matrix with the
             arguments <var>originX</var>, <var>originY</var>, <var>originZ</var>.
@@ -1518,9 +1518,10 @@ user agents.
             arguments <var>originX</var>, <var>originY</var>, <var>originZ</var>.
         2. <a>Post-multiply</a> a uniform 3D scale transformation ({{DOMMatrixReadOnly/m11}} =
             {{DOMMatrixReadOnly/m22}} = {{DOMMatrixReadOnly/m33}} = <var>scale</var>) on the current matrix.
-            The 3D scale matrix is <a
-            href="https://drafts.csswg.org/css-transforms-1/#ScaleDefined">described</a> in CSS Transforms
-            with <var>sx</var> = <var>sy</var> = <var>sz</var> = <var>scale</var>. [[!CSS3-TRANSFORMS]]
+            The 2D scale matrix is
+            <a href="https://drafts.csswg.org/css-transforms-1/#ScaleDefined">described</a>, and the 3D
+            scale matrix is <a href="https://drafts.csswg.org/css-transforms-2/#Scale3dDefined">described</a>, in CSS Transforms
+            with <var>sx</var> = <var>sy</var> = <var>sz</var> = <var>scale</var>. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         3. Apply a {{DOMMatrix/translateSelf()}} transformation to the current matrix with the
             arguments -<var>originX</var>, -<var>originY</var>, -<var>originZ</var>.
         4. If <var>scale</var> is not ''1'', set <a for=matrix>is 2D</a> of the current matrix to
@@ -1535,25 +1536,28 @@ user agents.
         4. If <var>rotX</var> or <var>rotY</var> are not ''0'' or ''-0'', set <a for=matrix>is 2D</a>
             of the current matrix to <code>false</code>.
         5. <a>Post-multiply</a> a rotation transformation on the current matrix around the vector 0,
-            0, 1 by the specified rotation <var>rotZ</var> in degrees. The 3D rotation matrix is <a
-            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a> in CSS Transforms
-            with <var>alpha</var> = <var>rotZ</var> in degrees. [[!CSS3-TRANSFORMS]]
+            0, 1 by the specified rotation <var>rotZ</var> in degrees. The 2D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a>, and the 3D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-2/#Rotate3dDefined">described</a>, in CSS Transforms
+            with <var>alpha</var> = <var>rotZ</var> in degrees. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         6. <a>Post-multiply</a> a rotation transformation on the current matrix around the vector 0,
-            1, 0 by the specified rotation <var>rotY</var> in degrees. The 3D rotation matrix is <a
-            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a> in CSS Transforms
-            with <var>alpha</var> = <var>rotY</var> in degrees. [[!CSS3-TRANSFORMS]]
+            1, 0 by the specified rotation <var>rotY</var> in degrees. The 2D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a>, and the 3D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-2/#Rotate3dDefined">described</a>, in CSS Transforms
+            with <var>alpha</var> = <var>rotY</var> in degrees. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         7. <a>Post-multiply</a> a rotation transformation on the current matrix around the vector 1,
-            0, 0 by the specified rotation <var>rotX</var> in degrees. The 3D rotation matrix is <a
-            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a> in CSS Transforms
-            with <var>alpha</var> = <var>rotX</var> in degrees. [[!CSS3-TRANSFORMS]]
+            0, 0 by the specified rotation <var>rotX</var> in degrees. The 2D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a>, and the 3D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-2/#Rotate3dDefined">described</a>, in CSS Transforms
+            with <var>alpha</var> = <var>rotX</var> in degrees. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         8. Return the current matrix.
     : <dfn>rotateFromVectorSelf(<var>x</var>, <var>y</var>)</dfn>
     ::
-        1. <a>Post-multiply</a> a rotation transformation on the current matrix. The rotation angle
+        1. <a>Post-multiply</a> a 2D rotation transformation on the current matrix. The rotation angle
             is determined by the angle between the vector (1,0)<sup>T</sup> and
             (<var>x</var>,<var>y</var>)<sup>T</sup> in the clockwise direction. If <var>x</var> and
-            <var>y</var> should both be ''0'' or ''-0'', the angle is specified as ''0''. The 2D rotation
-            matrix is <a href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a> in CSS
+            <var>y</var> should both be ''0'' or ''-0'', the angle is specified as ''0''. The 2D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a> in CSS
             Transforms where <code>alpha</code> is the angle between the vector (1,0)<sup>T</sup> and
             (<var>x</var>,<var>y</var>)<sup>T</sup> in degrees. [[!CSS3-TRANSFORMS]]
         2. Return the current matrix.
@@ -1561,9 +1565,10 @@ user agents.
     ::
         1. <a>Post-multiply</a> a rotation transformation on the current matrix around the specified
             vector <var>x</var>, <var>y</var>, <var>z</var> by the specified rotation <var>angle</var> in
-            degrees. The 3D rotation matrix is <a
-            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a> in CSS Transforms
-            with <var>alpha</var> = <var>angle</var> in degrees. [[!CSS3-TRANSFORMS]]
+            degrees. The 2D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-1/#RotateDefined">described</a>, and the 3D rotation matrix is <a
+            href="https://drafts.csswg.org/css-transforms-2/#Rotate3dDefined">described</a>, in CSS Transforms
+            with <var>alpha</var> = <var>angle</var> in degrees. [[!CSS3-TRANSFORMS]] [[!CSS3-TRANSFORMS-2]]
         2. If <var>x</var> or <var>y</var> are not ''0'' or ''-0'', set <a for=matrix>is 2D</a> of
             the current matrix to <code>false</code>.
         3. Return the current matrix.
